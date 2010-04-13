@@ -1,10 +1,12 @@
 #include "charclass.ih"
 
+// lhs length == 2
+
 void CharClass::concatenate2(CharClass &lhs, std::string const &rChars)
 {
     if (rChars.length() == 1)           // README cell[2][0]: range in d_last
     {
-        if (lhs.d_last[1] != '-')           // range with rChars
+        if (lhs.d_last[1] == '-')           // range with rChars
         {
             lhs.addRange(lhs.d_last[0], rChars[0]);
             lhs.d_last.clear();

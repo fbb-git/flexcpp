@@ -23,5 +23,3 @@ inline void CharClass::addSet(std::string const &str)
                 
 using namespace std;
 using namespace FBB;
-
-

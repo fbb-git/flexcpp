@@ -6,7 +6,7 @@ spSemVal &CharClass::concatenate(spSemVal &left, SemVal const &right)
 {
     CharClass &lhs = downCast<CharClass>(*left);
     CharClass const &rhs = downCast<CharClass>(right);
-    
+
     lhs.addSet(rhs.d_set);                   // add rhs.set 
 
     switch (lhs.d_last.length())
@@ -23,6 +23,5 @@ spSemVal &CharClass::concatenate(spSemVal &left, SemVal const &right)
             concatenate2(lhs, rhs.d_last);
         break;
     }
-
     return left;    
 }
