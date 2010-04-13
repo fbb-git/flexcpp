@@ -1,0 +1,7 @@
+#include "fstreaminfo.h"
+
+#include <bobcat/msg>
+
+using namespace std;
+using namespace FBB;
+

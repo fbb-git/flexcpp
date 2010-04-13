@@ -1,0 +1,32 @@
+#include "startconditions.h"
+
+#include <algorithm>
+
+#include <bobcat/msg>
+#include <bobcat/fnwrap>
+
+#include "../textval/textval.h"
+
+using namespace std;
+using namespace FBB;
+
+inline void StartConditions::addVector(Hash::value_type &mini, 
+                                 vector<StartCondition *> &active)
+{
+    active.push_back(&mini.second);
+}
+
+inline StartConditions::StartCondition::StartCondition(Type type)
+:
+    d_type(type)
+{}
+
+inline string const &StartConditions::strOf(SemVal const &nameVal)
+{
+    return SemVal::downCast<TextVal>(nameVal).str();
+}
+
+inline void StartConditions::addRule(StartCondition *sc, size_t ruleIdx)
+{
+    sc->d_rules.push_back(ruleIdx);
+}

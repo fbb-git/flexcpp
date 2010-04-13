@@ -1,0 +1,26 @@
+<option>{
+
+    [[:blank:]]+
+    
+    "\""                    {
+                                more();
+                                begin(str);
+                            }
+    
+    =                       return '=';
+    
+    classname               return Parser::CLASSNAME;
+    lexfunctionname         return Parser::LEXFUNCTIONNAME;
+    baseclassheader         return Parser::BASECLASSHEADER;
+    classheader             return Parser::CLASSHEADER;
+    implementationheader    return Parser::IMPLEMENTATIONHEADER;
+    lexsource               return Parser::LEXSOURCE;
+    namespace               return Parser::NAMESPACE;
+    skeletondirectory       return Parser::SKELETON_DIRECTORY;
+    streaminfoclassname     return Parser::STREAM_INFO_CLASSNAME;
+    streaminfoinclude       return Parser::STREAM_INFO_INCLUDE;
+    interactive             return Parser::INTERACTIVE;
+    
+    .|\n                    return end(d_match[0]);
+}
+

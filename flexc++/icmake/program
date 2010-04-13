@@ -1,0 +1,19 @@
+
+void program(string strip, int program_only)
+{
+    string lopt;
+
+    #ifdef PROFILE
+        lopt = PROFILE;
+    #else
+        lopt = strip;
+    #endif
+
+    library(0);
+
+    exec(COMPILER, "-o", g_binary,
+            "-lflexc++", libs, "-L.", libpath , lopt);
+
+    if (program_only)
+        exit(0);
+}

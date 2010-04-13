@@ -1,0 +1,13 @@
+action:
+    SIMPLEACTION
+    {
+        debugstr << "ACTION FOUND: " << d_scanner.code() << '\n';
+        $$ = Factory::action(d_scanner.code());
+    }
+|
+    ACTION_BLOCK
+    {
+        debugstr << "ACTION BLOCK FOUND: " << d_scanner.code() << '\n';
+        $$ = Factory::action(d_scanner.code());
+    }
+;

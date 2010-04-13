@@ -1,0 +1,84 @@
+opt_rules:
+    rules
+|
+    // empty
+;
+
+rules:
+    rules rule_line
+|
+    rule_line
+;
+
+rule_line:                      
+    rule_definition '\n' mode_pattern
+;                               
+                                
+
+rule_definition:
+    rule
+|
+    startcondition_scope
+|
+    error
+|
+    // empty                    // allow empty lines between rule_definitions
+;
+
+startcondition_scope:
+    startcondition '{' regex_m opt_rules '}'
+    {
+        d_startConditions.reset();
+    }
+|
+    startcondition rule
+    {
+        d_startConditions.reset();
+    }
+;
+
+startcondition:
+    '<' start_condition_name_m mode_initial startcondition_spec 
+    '>' mode_pattern
+;
+
+startcondition_spec:
+    startcondition_list
+|
+    '*'
+    {
+        d_startConditions.useAll();
+    }
+;
+
+startcondition_list:
+    startcondition_list ',' miniscanner
+|
+    miniscanner
+;
+
+miniscanner:
+    name
+    {
+        d_startConditions.activate(*$1);
+    }
+;
+
+
+rule:
+    pattern_ws BLOCK
+    {
+        d_startConditions.add(
+            d_rules.add(SemVal::downCast<PatternVal>(*$1).begin(), 
+                    d_accept, d_inheriting, d_scanner.block())
+        );
+    }
+|
+    pattern_ws
+    {
+        d_startConditions.add(
+            d_rules.add(SemVal::downCast<PatternVal>(*$1).begin(), d_accept, 
+                        d_inheriting)
+        );
+    }
+;

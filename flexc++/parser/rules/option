@@ -1,0 +1,64 @@
+options:
+    options option
+|
+    // empty
+;
+
+option:
+    classname_m '=' STRING
+    {
+        d_options.setClassName(d_scanner.match());
+    }
+|
+    lexfunctionname_m '=' STRING
+    {
+        d_options.setLexFunctionName(d_scanner.match());
+    }
+|
+    baseclassheader_m '=' STRING
+    {
+        d_options.setBaseClassHeaderPath(d_scanner.match());
+    }
+|
+    classheader_m '=' STRING
+    {
+        d_options.setClassHeaderPath(d_scanner.match());
+    }
+|
+    implementationheader_m '=' STRING
+    {
+        d_options.setImplementationHeaderPath(d_scanner.match());
+    }
+|
+    lexsource_m '=' STRING
+    {
+        d_options.setLexSourcePath(d_scanner.match());
+    }
+|
+    skeleton_directory_m '=' STRING
+    {
+        d_options.setSkeletonDirectory(d_scanner.match());
+    }
+|
+    namespace_m '=' STRING
+    {
+        d_options.setNameSpace(d_scanner.match());
+    }
+|
+    stream_info_classname_m '=' STRING
+    {
+        d_options.setStreamInfoClassName(d_scanner.match());
+    }
+|
+    stream_info_include_m '=' STRING
+    {
+        d_options.setStreamInfoInclude(d_scanner.match());
+    }
+|
+    INTERACTIVE
+    {
+        d_options.setInteractive();
+    }
+|
+    error    
+;

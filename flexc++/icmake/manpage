@@ -1,0 +1,18 @@
+#define MANPAGE "../../src/tmp/man/flexc++.1"
+#define MANHTML "../../src/tmp/manhtml/flexc++man.html"
+
+void manpage()
+{
+    md("tmp/man tmp/manhtml");
+
+    special();
+
+    chdir("../documentation/man");
+
+    if ("flexc++.yo" younger MANPAGE || "release.yo" younger MANPAGE)
+    {
+        run("yodl2man  -o " MANPAGE " flexc++");
+        run("yodl2html  -o " MANHTML " flexc++");
+    }
+    exit(0);
+}

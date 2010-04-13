@@ -1,0 +1,12 @@
+#include <iostream>
+#include <string>
+
+#include <bobcat/arg>
+
+extern char version[];
+extern char year[];
+
+void usage(std::string const &progname);
+
+using namespace std;
+using namespace FBB;

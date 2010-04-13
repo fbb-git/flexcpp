@@ -1,0 +1,79 @@
+                        SemVal
+                            |
+        +-------------------+
+        |                   |
+    StateData               |
+        |                   |
+    StateString             |
+        |                   |
+      State                 |
+        |                   |
+      States                |                        FStreamInfo  Block   
+        |                   |                             |         |
+  +-----+   +-----+-------+-+------------+            +---+---------+
+  |     |   |     |       |              |            |
+  |     +---+     |       |            TextVal        |
+  |     |         |       |              |            |
+  +--------------------------------------+            |
+  |     |         |       |              |            |
+  |     |         |       |              |            |
+  |     | Range   |       |          +---+            |
+  |     |   |     |       |          |   |            |
+  |     |   +-----+       |          |   |            |
+  |     |         |       |          |   +------+-----+
+  |     |     CharClass   |          |          |              Rule
+  |     |         |       |          |          |                |
+  |     +---------+       |          |          |                |
+  |     |                 |          |          |                |
+  | PatternVal         Decimal  StartCond.   Scanner  Options  Rules
+  |     |                 |          |          |       |        |
+  |     +-----------------+----------+----------+-------+--------+
+  |                                  |                    
+  Usage                            Parser                  
+  |                                  |                
+  +----------------------------------+                
+                                     |                
+                                  flexc++
+
+    CharClass: The characters of a character-class
+    
+    Range: produces all predefined character ranges, constructing them only
+            once, when needed for the first time.
+
+    SemVal: parser's semantic value stack data type. A polymorphic base class
+
+    StartConditions: defines the rules that are defined in each of the Start
+        Conditions 
+
+    StateData: polymorphic base class of all kinds of data that may be stored
+        in a State. This basic form contains two fields defining states to
+        transit to from this state.
+
+    StateString: derived from StateData, also contains a string.
+
+    State:  initially a state in an NFA, defined by the parser
+
+    States: stores and manages all states
+
+    Block: stores action blocks associated with Rules 
+
+    FStreamInfo: interfaces Scanner to actual input stream(s)
+
+    Options: stores all otions/directives
+
+    Scanner: performs lexial analysis
+
+    Decimal: stores interval values ({x,y} specs)
+
+    PatternVal: stores a pattern's type and begin and end state #s
+
+    TextVal: plain textual string as-is
+
+    Rule: stores where to find the rule's State element in States and the
+        contents of the rule's action block.
+
+    Rules: the vector of Rule elements.
+
+    Parser: Handles syntax checks and builds State vector 
+
+

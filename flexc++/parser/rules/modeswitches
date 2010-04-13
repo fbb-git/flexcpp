@@ -1,0 +1,26 @@
+mode_initial:
+    {
+        d_scanner.reset(Scanner::INITIAL);
+    }
+;
+
+mode_block:
+    action_m
+    {
+        d_scanner.reset(Scanner::mblock);
+    }
+;
+
+mode_pattern:
+    regex_m
+    {
+        modePattern();
+    }
+;
+
+mode_patterntxt:
+    {
+        d_scanner.reset(Scanner::patterntxt);
+    }
+;
+

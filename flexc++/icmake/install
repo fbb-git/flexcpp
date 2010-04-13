@@ -1,0 +1,46 @@
+void install(string where, int all)
+{
+    printf("  installing the executable\n");
+    md(where + BIN);
+    run("cp tmp/bin/* " + where + BIN);
+
+    printf("  installing the skeleton files\n");
+    md(where + SKEL);
+    run("cp skeletons/* " + where + SKEL);
+
+    if (all)
+    {
+        printf("  installing the manual page flexc++.1\n");
+        md(where + MAN);
+        run("gzip -9 < tmp/man/flexc++.1 > " + 
+                                        where + MAN + "/flexc++.1.gz");
+
+        printf("  installing the manual page flexc++man.html\n");
+        md(where + DOC + "/man");
+        run("cp tmp/manhtml/flexc++man.html " + where + DOC + "/man");
+    
+        printf("  installing the information directly in and under $DOC\n");
+        run("gzip -9 < changelog > " + where + DOC + "/changelog.gz");
+    
+        // printf("  installing flex's docs\n");
+        // md(where + DOC + "/flex-docs");
+        // run("cp -r documentation/html documentation/flex.ps.org " + 
+        //                                 where + DOC + "/flex-docs");
+        
+        // printf("  installing examples\n");
+        // md(where + DOC + "/examples");
+        // run("cp -r documentation/examples " + where + DOC);
+        // run("cp -r documentation/regression " + where + DOC);
+    
+        printf("  installing manual\n");
+        run("cp -r tmp/manual " + where + DOC);
+    }
+
+    printf("  Installation completed\n");
+
+    exit(0);
+}
+
+
+
+

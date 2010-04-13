@@ -1,0 +1,16 @@
+#include "options.h"
+
+#include <iostream>
+#include <bobcat/arg>
+#include <bobcat/string>
+
+#include "SKEL"
+
+using namespace std;
+using namespace FBB;
+
+
+inline Options::Options()
+:
+    d_interactive(false)
+{}

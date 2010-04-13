@@ -1,0 +1,19 @@
+The State class contains the data describing various states.
+Each State has a type, defined in the Type enum, and depending on the state
+type different data are required. 
+
+State objects contain a Type and StateData *. Sometimes the StateData * can be
+0, (e.g., with type FINAL), usually it contains two size_t fields holding
+indices in vector<State> d_state where the next state is found on a
+transition, sometimes the transition is a concatenation of characters stored
+in a std::string, and StateData * points to a struct containing the indices
+and a std::string. 
+
+StateData, therefore is polymorphic. 
+
+To facilitate assignment to d_state State defines several static 
+`factory members' (called `factory' in various overloaded forms) 
+producing the required State object.
+
+State is a traditional class offering pointers. It has a copy constructor,
+overloaded assignment operator and swap-functionality.

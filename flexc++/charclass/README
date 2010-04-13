@@ -1,0 +1,44 @@
+concatenate:
+    
+    lhs: l1: d_last having 1 character, l2: d_last having 2 characters
+         l: d_last itself. 
+         lset: d_set
+
+    rhs: r1: d_last having 1 character, r2: d_last having 2 characters
+         r: d_last itself. 
+         rset: d_set
+
+    The result is returned as lhs
+
+    Always:    lset += rset
+
+    Specific:
+
+        ---------------------------------------------------------------------
+                                     rhs
+                    ---------------------------------------------------------
+                      r1                                 r2 
+        ---------------------------------------------------------------------
+        lset    assign r to l                     assign r to l
+
+        l1      add rhs char                       if r[0] == '-' then add
+                to lhs chars                       the range to lset, no
+                                                   more chars in l.
+                                                   if r[0] != '-' then add
+                                                   l to lset and copy r to l
+
+        l2      if l[1] == '-' then               if l[1] == '-'  then add 
+                add the range(l[0], r[1])         the range l[0] to r[0] to
+                to lset, and clear l              lset, assign r[1] to l  
+                if l[1] != '-' then                 if l[1] != '-' then
+                add l to the set, assign          first add l[0] to lset. Then,
+                r to l                            if r[0] == '-' add the range
+                                                  l[1], r[1] to the set and
+                                                  clear l. Otherwise add l[1]
+                                                  to lset, and assign r to l
+        ---------------------------------------------------------------------
+
+    AddRange() issues an error when l > r
+
+    Before a set is handled otherwise its d_last chars should be added to its
+    d_set value.

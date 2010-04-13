@@ -1,0 +1,9 @@
+How to add options/declarations to the program using an Options class
+
+1. Options
+==========
+
+    1. add the option to longOptions and/or the option list in Arg::initialize
+
+
+2. Declarations

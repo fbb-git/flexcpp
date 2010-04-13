@@ -1,0 +1,251 @@
+%option classname = "Scanner" 
+%option lexsource = "lex.cc"
+%option streaminfoclassname = "FStreamInfo"
+%option streaminfoinclude = "../fstreaminfo/fstreaminfo.h"
+
+%x pattern mblock comment option quote str vbar charclass patterntxt
+
+DECIMAL                 0|[1-9][[:digit:]]*
+OCTAL                   [0-7]
+NAME                    [A-Za-z_][-A-Za-z0-9_]*
+
+
+
+%%
+
+<INITIAL,pattern>{
+
+    [[:blank:]]*"|"     begin(vbar);
+    
+                        // rm all consecutive blank delimited \n chars
+    ([[:blank:]]*\n)+[[:blank:]]*   return '\n';
+    
+    "%%"                return Parser::SECTION_DELIMITER;
+    
+    "\""                {
+                            more();
+                            begin(str);
+                        }
+    
+    \\({OCTAL}{3})          |
+    \\x([[:xdigit:]]{2})    |
+    \\.                     return Parser::ESCAPE_SEQUENCE;
+    
+    "^"                 return d_beginOfPattern? '^' : Parser::CHARACTER;
+
+    [/.=*+?,{}<>()-]   return d_match[0];   // All single char tokens
+
+    ^"//include"[[:blank:]].*   maybeSwitchStream();
+}
+
+
+    // The top-level rules for recognizing directives
+    // The ^ requirement was relaxed: no clear need to require
+    // %-directives to begin at column 1
+
+<INITIAL>{
+
+    {NAME}[[:blank:]]*      return Parser::NAME;
+    
+    "%option"               return begin(option, Parser::OPTION_DIRECTIVE);
+    
+    "%s"                    return Parser::INCL_START_CONDITION;
+    "%x"                    return Parser::EXCL_START_CONDITION;
+    
+    [[:blank:]]+
+}
+
+
+<pattern>{
+
+    [[:blank:]]+        {
+                            d_block.clear();
+                            d_block.open(lineno(), filename()); 
+                            return Parser::WS;
+                        }
+
+    "[^"                return begin(charclass, Parser::CC_NEGATED);
+    "[^]"               {
+                            d_initialClosingBracket = true;
+                            less(2);        // redo the closing bracket
+                            return begin(charclass, Parser::CC_NEGATED);
+                        }   //_RBRACKET);
+
+    "["                 return begin(charclass, Parser::CC_START);
+    "[]"                {
+                            d_initialClosingBracket = true;
+                            less(1);        // redo the closing bracket
+                            return begin(charclass, Parser::CC_START);
+                        }   // _RBRACKET);
+    
+    "{+}"               return Parser::CC_PLUS;
+    "{-}"               return Parser::CC_MINUS;
+
+    \{{NAME}\}          pushNameExpansion();
+    
+    {DECIMAL}           return Parser::DECIMAL;
+
+    "$"/[^[:space:]\n]  return Parser::CHARACTER;
+
+    "$"                 pushEOLNlookahead();
+
+    "<<EOF>>"           return Parser::EOF_PATTERN;
+}
+
+
+<mblock>{
+
+[[:blank:]]+    d_block(' ');
+
+([[:blank:]]*\n)+   {
+                        if (d_block.level() == 1)    // close a block
+                        {
+                            d_block.close();
+                            less(leng() - 1);
+                            return end(Parser::BLOCK);
+                        }
+                    }
+
+"{"             d_block.open(lineno(), filename()); 
+                
+"}"             {
+                    if (d_block.close())    // close a block
+                        return end(Parser::BLOCK);
+                }
+"/*"            {
+                    begin(comment);
+                    d_block(' ');
+                }
+
+"'"             {
+                    more();
+                    begin(quote);
+                }
+
+NAME            d_block += d_match;
+
+.               d_block += d_match[0];
+
+}
+
+
+<comment>{
+
+"*/"    end();
+
+.|\n    
+
+}
+
+<option>{
+
+    [[:blank:]]+
+    
+    "\""                    {
+                                more();
+                                begin(str);
+                            }
+    
+    =                       return '=';
+    
+    classname               return Parser::CLASSNAME;
+    lexfunctionname         return Parser::LEXFUNCTIONNAME;
+    baseclassheader         return Parser::BASECLASSHEADER;
+    classheader             return Parser::CLASSHEADER;
+    implementationheader    return Parser::IMPLEMENTATIONHEADER;
+    lexsource               return Parser::LEXSOURCE;
+    namespace               return Parser::NAMESPACE;
+    skeletondirectory       return Parser::SKELETON_DIRECTORY;
+    streaminfoclassname     return Parser::STREAM_INFO_CLASSNAME;
+    streaminfoinclude       return Parser::STREAM_INFO_INCLUDE;
+    interactive             return Parser::INTERACTIVE;
+    
+    .|\n                    return end(d_match[0]);
+}
+
+
+<quote>{
+    '                       end();
+
+    \\.                     |
+    .                       more(); 
+
+    \n                      return end(-1);     // error-generating token
+}
+
+
+<str>{
+
+\"          {
+                if (!d_block)
+                    return end(Parser::STRING);
+                more();
+                end();
+            }
+            
+\\.         |
+.           more(); 
+            
+\n          return end(-1);
+
+}
+
+
+<vbar>{
+
+[[:blank:]\n]+    
+
+.               {
+                    less(0);
+                    return end('|');
+                }
+}
+
+<charclass>{
+
+    "[:"\^?"alnum:]"        |
+    "[:"\^?"alpha:]"        |
+    "[:"\^?"blank:]"        |
+    "[:"\^?"cntrl:]"        |
+    "[:"\^?"digit:]"        |
+    "[:"\^?"graph:]"        |
+    "[:"\^?"lower:]"        |
+    "[:"\^?"print:]"        |
+    "[:"\^?"punct:]"        |
+    "[:"\^?"space:]"        |
+    "[:"\^?"upper:]"        |
+    "[:"\^?"xdigit:]"       return Parser::PREDEFINED_CLASS;
+    
+    \\.                     return Parser::ESCAPE_SEQUENCE;
+    
+    "]"                     {
+                                if (d_initialClosingBracket)
+                                {
+                                    d_initialClosingBracket = false;
+                                    return end(Parser::CHARACTER);
+                                }
+                                return end(']');
+                            }
+    
+    \n                      return '\n';
+}
+
+<patterntxt>{
+    [[:blank:]]+        return Parser::WS;
+
+    \n                  return '\n';
+
+    "\""                {
+                            more();
+                            begin(str);
+                        }
+
+    [^[:blank:]\n]+     return Parser::STRING;
+}
+
+<INITIAL,mblock,option,pattern>[[:blank:]]*"//".*
+
+<INITIAL,option,pattern,vbar>"/*"       begin(comment);
+
+<INITIAL,charclass,pattern>.            return Parser::CHARACTER;
+

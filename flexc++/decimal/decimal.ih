@@ -1,0 +1,14 @@
+#include "decimal.h"
+
+#include <climits>
+#include <bobcat/a2x>
+
+using namespace std;
+using namespace FBB;
+
+inline Decimal::Decimal(size_t lower, size_t upper)
+:
+    d_lower(lower),
+    d_upper(upper)
+{}
+

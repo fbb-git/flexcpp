@@ -1,0 +1,75 @@
+void compile(string extra_flex_options)
+{
+    if (extra_flex_options)
+        printf("Extra options to flexc++: ", extra_flex_options, "\n");
+
+    exec("../../" + g_binary, extra_flex_options + " -S ../../skeletons lexer");
+	exec("echo", "'#include <cassert>' >> scanner.h");
+    exec("g++ -std=c++0x -Wall -o test main.cc lex.cc");
+}
+
+void run_test(string directory, string extra_flex_options)
+{
+    printf("Running tests in ", directory, "\n");
+
+    chdir(directory);
+    compile(extra_flex_options);
+    exec("./test");
+    exec("rm lex.cc scanner.h scanner.ih scannerbase.h test");
+    chdir("..");
+}
+
+void run_automated_test(string directory, string extra_flex_options)
+{
+    printf("Running tests in ", directory, "\n");
+    chdir(directory);
+    exec("python ../create_test.py lexer main.cc");
+    compile(extra_flex_options);
+    exec("./test");
+    exec("rm lex.cc main.cc scanner.h scanner.ih scannerbase.h test");
+    chdir("..");
+}
+
+void run_script(string directory, string executable)
+{
+    printf("Running test script in ", directory, "\n");
+    chdir(directory);
+    exec(executable);
+    chdir("..");
+}
+
+void test(string what)
+{
+    list automated_tests;
+    int idx;
+
+    program("", 0);
+    chdir("tests");
+
+    // Prevent echoing all commands for clean output.
+    echo(0);
+
+    if (what != "")
+    {
+        run_automated_test(what, "");
+        run_automated_test(what, "--interactive");
+        exit (0);
+    }
+        
+    // Automated tests
+    automated_tests = strtok("simple closingbracketincharclass miniscanners nameexpansions", " ");
+    for (idx = 0; idx != sizeof(automated_tests); ++idx)
+    {
+        run_automated_test(automated_tests[idx], "");
+        run_automated_test(automated_tests[idx], "--interactive");
+    }
+
+    run_test("less", "");
+    run_test("less", "--interactive");
+    run_test("more", "");
+    run_test("more", "--interactive");
+
+    run_script("interactive", "./run-test");
+
+    exit(0);
+}

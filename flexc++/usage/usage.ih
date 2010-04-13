@@ -1,0 +1,21 @@
+#include "usage.h"
+
+#include <climits>
+#include <algorithm>
+#include <functional>
+//#include <iterator>
+
+#include <bobcat/fnwrap>
+
+#include "../textval/textval.h"
+#include "../states/states.h"
+#include "../statestring/statestring.h"
+
+using namespace std;
+using namespace FBB;
+
+inline void Usage::incIf(char const &ch, size_t *next)
+{
+    ++next[static_cast<unsigned char>(ch)];
+}
+

@@ -1,0 +1,36 @@
+<pattern>{
+
+    [[:blank:]]+        {
+                            d_block.clear();
+                            d_block.open(lineno(), filename()); 
+                            return Parser::WS;
+                        }
+
+    "[^"                return begin(charclass, Parser::CC_NEGATED);
+    "[^]"               {
+                            d_initialClosingBracket = true;
+                            less(2);        // redo the closing bracket
+                            return begin(charclass, Parser::CC_NEGATED);
+                        }   //_RBRACKET);
+
+    "["                 return begin(charclass, Parser::CC_START);
+    "[]"                {
+                            d_initialClosingBracket = true;
+                            less(1);        // redo the closing bracket
+                            return begin(charclass, Parser::CC_START);
+                        }   // _RBRACKET);
+    
+    "{+}"               return Parser::CC_PLUS;
+    "{-}"               return Parser::CC_MINUS;
+
+    \{{NAME}\}          pushNameExpansion();
+    
+    {DECIMAL}           return Parser::DECIMAL;
+
+    "$"/[^[:space:]\n]  return Parser::CHARACTER;
+
+    "$"                 pushEOLNlookahead();
+
+    "<<EOF>>"           return Parser::EOF_PATTERN;
+}
+

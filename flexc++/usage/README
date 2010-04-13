@@ -1,0 +1,193 @@
+Het subsetbepalingsalgoritme. 
+=============================
+
+
+Notatie/terminologie:
+=====================
+    usage[] over alle chars initieel 0
+
+    in een set van chars beschouw aaneensluitende ranges (bv [a-dk-m] heeft
+ranges a-d en k-m. 
+
+    elke aansluitende range heeft een left (l) en right(r) index in
+usagecount. 
+
+Algoritme:
+==========
+    bereken een nieuwe usagecount door de elementen behorend bij de chars van
+de set te verhogen: stap 1: next = usage
+                    stap 2: ++next[a], ++next[b] ... ++next[m].
+
+    zodra geldt voor de aansluitende ranges: next[l-1] == next[l] of next[r+1]
+== next[r] bepaal dan usage += next. Anders: usage = next.
+
+Resultaat:
+==========
+
+    Gelijke usage counts -> te onderscheiden subset van chars.
+
+Voorbeelden:          
+============
+                           usage        (next op de erop volgende regel is 
+                        a b c d e f      usage voor die volgende regel)
+        [a-f]           1 1 1 1 1 1 
+
+dan:      a             2 1 1 1 1 1
+
+dan:     [bc]           2 2 2 1 1 1 ?? maar next[a] == next[b], dus:
+                        4 3 3 1 1 1  = usage nae [a-f], a en [bc]
+
+dan:      [ef]          4 3 3 1 2 2     subsets: a, [bc], d, [ef]
+
+voorbeeld 2:
+
+        [ab]            1 1 0 0 0 0
+
+        [cd]            1 1 1 1 0 0 ?? next[c] == next[b], dus:
+                        2 2 1 1 0 0
+
+        [ef]            2 2 1 1 1 1 ?? next[d] == next[e], dus:
+                        4 4 2 2 1 1     -> 3 subsets
+
+Voorbeeld 3 (andere volgorde)
+
+        [ab]            1 1 0 0 0 0 
+
+        [ef]            1 1 0 0 1 1         
+
+        [cd]            1 1 1 1 1 1 ?? next[b] == next[c] (of: next[d] == 
+                                                                next[e], dus:
+                        2 2 1 1 2 2 -> 3 subsets
+
+Voorbeeld 4:
+
+        [a-c]           1 1 1 0 0 0
+
+        [b-d]           1 2 2 1 0 0
+
+        [d-f]           1 2 2 2 1 1 ?? subsetcollisie, dus:
+                        
+                        2 4 4 3 1 1 subsets: a, [bc] d, [ef]
+
+Een set [ade] in een RE reduceert in het laatste voorbeeld dus tot sets a en
+[ef] en vereist slechts dat de bijbehorende NFA 2 x wordt afgelopen in plaats
+van 1 x.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
+
+> > Een set [ade] in een RE reduceert in het laatste voorbeeld dus tot sets a en
+> > [ef] en vereist slechts dat de bijbehorende NFA 2 x wordt afgelopen in plaats
+> > van 1 x.
+> Hoe bedoel je dit precies? Waarom moet de NFA tweemaal worden afgelopen?
+
+    Schrijffout. Hier moest staan: 
+
+    Een set [aef] in een RE reduceert in het laatste voorbeeld dus tot sets a
+    en [ef] en vereist slechts dat de bijbehorende NFA 2 x wordt afgelopen in
+    plaats van 3 x.
+
+    2 x: het alfabet bestaat nu niet meer uit de letters a, b, c, d, e, f en
+    in [aef] zitten a, e, f (vandaar 3 x); maar het alfabet bestaat nu uit de 
+    sets a, [bc], d, [ef] zodat voor [aef] slechts a en [ef] hoeven te worden
+    getest. 
+
+> 1) dit betekent dus dat *meteeen* aan het begin de mogelijke karakters
+> op de invoer bekend moeten zijn, samen met hun volgorde, maw: de locale
+> moet direct worden gebruikt. 
+
+    Klopt, omdat de mogelijke characters door hun type zijn gedefinieerd (bv:
+char: 256, wchar_t: 65.536). 
+
+> Het eventuele idee om dan een scanner te
+> genereren die runtime pas de locale gebruikt is dan van de baan. 
+
+    Klopt denk ik ook. Maar betekent dat dat bv in 't spaans [k-o] ll en \~n
+daar binnen worden geacht te liggen terwijl ll en \~n numeriek niet in de
+range k .. o (uiteraard hier niet bedoeld als ascii waarden maar als chars in
+de std. Spaanse collating sequence)? Als dat zo is voorzie ik problemen, want
+waar zitten die ll en \~n dan? Maar als de collating sequence is:
+        k l ll m n \~n o
+dan niet: dan heb je gewoon altijd een opeenvolgende serie bij x-y (met
+coll(x) <= coll(y) 
+
+> 2) Hoe generaliseert dit usage idee naar de operators {+} en {-} die werken op
+> hele characterclasses? Bijv [ac-dg-z]{-}[f-m]. Gaat het altijd goed als
+> je gewoon checkt op alle begin en eindpunten van alle ranges
+
+    In de grammatica is dat geen probleem. De uiteindelijke set wordt
+opgeleverd door de character_class nonterminal en die heeft uit z'n onderdelen
+een actuele characterclass gebouwd die dan aan usage wordt gevoerd. Dus
+[ac-dg-z]{-}[f-m] is voor de parser de set [ac-dn-z].
+
+> alle subsetcollisions en wanneer er ook maar 1 afwijkt, de vorige usage
+> erbijoptellen? 
+
+Volgens mij wel :-) 
+
+Ik denk dat doordat (als `chars' de vector is met 1-waarden op de plaatsen van de
+characters die door `chars' worden gerepresenteerd en `usage' je oude
+tellingen bevat) bij een willekeurige collisie gaat gelden (beschouw x en
+x+1, voor x en x-1 geldt uiteraard een analoge redenering):
+
+(chars+usage)[x] == (chars+usage)[x+1]. 
+
+Als nu chars[x] == 1, usage[x] == b en chars[x+1] == 0, usage[x+1] == c,
+zodat bij een collisie dus geldt b + 1 == c, 
+
+dan geldt dat (chars + 2 * usage) wordt: 1 + 2b != 2c, zodat de collisie is
+doorbroken.
+
+Omgekeerd zou je je kunnen afvragen of een collisie kan worden
+*geintroduceerd*. Dan zou dus moeten gelden:
+    1 + 2b == 2c
+maar dat kan niet want een oneven getal is nooit gelijk aan een even getal :-)
+
+Kortom: volgens mij worden de collisies doorbroken en worden er geen nieuwe
+geintroduceerd. 
+
+> 3) Zelfde vraag: stel, de [:print:] predefined class ziet er in een
+> locale zo uit: [a-zA-Z0-9#$%] etc. Welke checks moeten er dan worden
+> gedaan om een correcte usage te berekenen voor een class als:
+> [a-z[:print:]]
+
+Aannemend dat geen van de ranges direct aansluitend zijn:
+
+[a-z[:print:]] == [a-zA-Z0-9#$%]. Ranges: a-z, A-Z, 0-9, #, $, %
+
+Checks dan dus:  'a'-1 en 'a', 'z' en 'z' + 1 
+                 'A'-1 en 'A', 'Z' en 'Z' + 1 
+                 '#'-1 en '#', '#' en '#' + 1 
+                 '$'-1 en '$', '$' en '$' + 1 
+                 '%'-1 en '%', '%' en '%' + 1 
+Uiteraard slechts totdat een collisie optreedt, waarna usage += next de nieuwe
+situatie weergeeft.
+
+Verder geldt nog dat de usage afhandeling ook een lowest value bij zou moeten
+houden. Zodra lowest value > 0 kan van alle usage waarden `lowest value'
+worden afgetrokken en lowest weer op 0 worden gezet. Dat leidt ertoe dat de
+usage elementen niet snel aan `wrap around' zullen leiden.
+
+Vb:
+                                        lowest
+         [a-c]           1 1 1 0 0 0       0  
+
+         [b-d]           1 2 2 1 0 0       0
+
+         [d-f]           2 4 4 3 1 1       1
+                update:  1 3 3 2 0 0       0
+
+Zodra lowest 1 x is gereduceerd zijn alle chars in het alfabet gebruikt. Als
+lowest niet wordt gereduceerd hoef je in je NFA tests de 0-ranges
+niet te testen. Bv stel er worden gebruikt a-d, cd en a:
+
+        [a-d]           1 1 1 1 0 0 
+        [cd]            1 1 2 2 0 0    
+        a               2 1 2 2
+
+Het alfabet bestaat dan uit {a}, {b}, {cd}: 3 sets en e,f komen niet voor en
+kunnen worden genegeerd bij de DFA constructie.
+
+
+
+
+

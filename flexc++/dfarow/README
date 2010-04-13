@@ -1,0 +1,31 @@
+A DFARow defines a row in a DFA table. It contains
+
+    - d_final:  the rule matched when this state cannot continue (or 0)
+
+    - d_transit: the unordered map linking an input symbol (category) 
+                 to a row in a DFA table. The key is the input symbol
+                 category, the value the row index.
+
+    A Usage object determines the number of different input symbol
+categories. 
+
+Subset construction (ASU) is used to determine the row to transit to.
+
+When d_states contains the final state of a rule d_final is set to the rule's
+number. When d_final is already set then it is overwritten if the current rule
+number precedes d_final's value. This eventually allows us to find the active
+rules by simply walking the lines of the DFA and marking the d_final
+rules. Those that aren't marked aren't matched.
+
+When a rule's accept state is encountered DFAaccept[rule] is set to the DFA
+row index. DFA index 0 is never used. Moreover, the accept state is flagged as
+`inheriting' or `non inheriting' (see README.lookaheads)
+
+Subset construction results in a set of states, of the d_states array. For each
+character in the alphabet a new set of states is determined. If the set isn't
+already found in the DFA it is added to it.
+
+    - d_states: the set of states defining this row
+
+
+

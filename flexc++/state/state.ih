@@ -1,0 +1,8 @@
+#include "state.h"
+
+#include <string>
+
+#include "../statestring/statestring.h"
+
+using namespace std;
+

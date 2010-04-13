@@ -1,0 +1,121 @@
+classname_m:
+    CLASSNAME
+    {
+        d_msg = "class name";
+    }
+;
+
+lexfunctionname_m:
+    LEXFUNCTIONNAME
+    {
+        d_msg = "name of the lex() function";
+    }
+;
+
+baseclassheader_m:
+    BASECLASSHEADER
+    {
+        d_msg = "scanner base class header file name";
+    }
+;
+
+classheader_m:
+    CLASSHEADER
+    {
+        d_msg = "scanner class header file name";
+    }
+;
+
+implementationheader_m:
+    IMPLEMENTATIONHEADER
+    {
+        d_msg = "implementation header file name";
+    }
+;
+
+lexsource_m:
+    LEXSOURCE
+    {
+        d_msg = "source file name of the lex function";
+    }
+;
+
+skeleton_directory_m:
+    SKELETON_DIRECTORY
+    {
+        d_msg = "directory name of the flexc++ skeleton files";
+    }
+;
+
+namespace_m:
+    NAMESPACE
+    {
+        d_msg = "name of the namespace to use";
+    }
+;
+
+stream_info_classname_m:
+    STREAM_INFO_CLASSNAME
+    {
+        d_msg = "name of the StreamInfo class";
+    }
+;
+
+stream_info_include_m:
+    STREAM_INFO_INCLUDE
+    {
+        d_msg = "the StreamInfo class header file name";
+    }
+;
+
+start_condition_name_m:
+    {
+        d_msg = "list of start condition names";
+    }
+;
+
+cc_start_m:
+    CC_START
+    cc_contents_m
+;
+
+cc_negated_m:
+    CC_NEGATED
+    cc_contents_m
+;
+
+cc_contents_m:
+    {
+        d_msg = "character class contents";
+    }
+;
+
+cc_end_m:
+    ']'
+    regex_block_m
+;
+
+action_m:
+    {
+        d_msg = "action statement/block (C++ code)";
+    }
+;
+
+start_interval_m:
+    {
+        d_msg = "repetition interval";
+    }
+;
+
+regex_m:
+    {
+        d_msg = "regular expression";
+    }
+;
+
+regex_block_m:
+    {
+        d_msg = "pattern or action block";
+    }
+;
+

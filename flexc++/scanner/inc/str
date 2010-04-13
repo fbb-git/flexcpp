@@ -1,0 +1,16 @@
+<str>{
+
+\"          {
+                if (!d_block)
+                    return end(Parser::STRING);
+                more();
+                end();
+            }
+            
+\\.         |
+.           more(); 
+            
+\n          return end(-1);
+
+}
+

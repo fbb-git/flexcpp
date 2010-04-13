@@ -1,0 +1,4 @@
+#include "rule.h"
+
+using namespace std;
+

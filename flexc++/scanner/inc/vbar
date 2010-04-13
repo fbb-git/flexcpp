@@ -1,0 +1,9 @@
+<vbar>{
+
+[[:blank:]\n]+    
+
+.               {
+                    less(0);
+                    return end('|');
+                }
+}

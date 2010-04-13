@@ -1,0 +1,11 @@
+
+void rebuild(string strip)
+{
+    initialize();
+
+    chdir("scanner");
+    exec("../" + g_binary, "--skeletondirectory", "../skeletons", "lexer");
+    chdir("..");
+
+    program(strip, 1);      // terminates
+}

@@ -1,0 +1,27 @@
+#include "charclass.h"
+
+#include <algorithm>
+#include <iterator>
+
+#include <bobcat/string>
+#include "bobcat/msg"
+
+#include "../range/range.h"
+
+inline CharClass::CharClass()
+{}
+        
+inline void CharClass::addSet(std::set<char> const &rhs)
+{
+    std::copy(rhs.begin(), rhs.end(), std::inserter(d_set, d_set.begin()));
+}
+                
+inline void CharClass::addSet(std::string const &str)
+{
+    std::copy(str.begin(), str.end(), inserter(d_set, d_set.begin()));
+}
+                
+using namespace std;
+using namespace FBB;
+
+

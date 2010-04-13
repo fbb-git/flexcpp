@@ -1,0 +1,343 @@
+Notation and DFA-rules
+----------------------
+
+In this description of the LA procedure the following notation and rules are
+used: 
+
+    Notation: 
+        F - the final state of a pattern. If this state is reached and there
+            is no acceptable continuation then the pattern has been
+            recognized. This F indication is not needed in the discussion
+            below and so it is left out of the examples not needing the F
+            state indication.
+        A - an Accept-state. By default the F state is the A state. However,
+            with the LA operator it occurs earlier in the Regular Expression 
+            pattern, which has the syntactic form `pattern '/' pattern'. 
+
+
+With a rule (possibly consisting of multiple patterns, joined by the
+or-operator ('|')) an accept-length (AL) is maintained. Below notations like
+++AL are used to indicate operations on the accept-length.
+    
+    Rules:
+        I. At an A state: if (AL == 0) ++AL
+       II. At a DFA transition from state X having an accept flag to X: ++AL.
+
+    NFA notations:
+
+        1 -a- 2               - transit from 1 to 2 on a
+
+        1 -a- 2(1)            - transit from 1 to 2 and from 2 back to 1 
+
+        1(2) -a- 2(1) -b- 3   - transit from 1 to 2, empty or on a, and from
+                                2 to 1 (empty) and to 3 on b
+
+    These notations allow me to write down NFAs more efficiently than the
+traditional (ascii-art) drawings.
+
+
+Problematic lookahead patterns
+------------------------------
+
+While investigating this approach some examples caused problems. E.g.,
+
+        a/a+        (1)
+and
+        a+/a        (2)
+
+
+Their minimal (merging empty state transitions) NFA conversions are:
+
+    (1):        1 -a- 2 -a- 3(2)
+
+    (2):        1 -a- 2(1) -a- 3
+
+Now their DFAs are:
+
+    (1):                                (2)                         
+            -----------                         -----------         
+                    a                                   a           
+            -----------                         -----------         
+            1       2                           1       12          
+            2       23      A                   12      123     A   
+            23      23      A,F                 123     123     A,F 
+            -----------                         -----------         
+
+    Comparing these DFAs it becomes clear that they are equal: three rows,
+transitions on 'a', A and F rows at the same location. So how then, can we
+distinguish (1) from (2)? 
+
+    The solution is found in ASU's simple remark that a '/' operator returns
+in the NFA as an empty transition. Let's do the NFA constructions again:
+
+        a/a+        (1)
+and
+        a+/a        (2)
+
+
+The NFA conversions are:
+
+    (1):        1 -a- 2 - 3 -a- 4(3)
+
+                The important thing to note here is that the A-state is the 
+                {23} set.
+
+    (2):        1 -a- 2(1) - 3 -a- 4
+    
+                Again, the {23} set represents the A-state.
+
+In our DFA's the A-rows MUST have states 23. Here they are:
+
+
+  (1): a/a+                           (2) a+/a                    
+            -----------                       -------------       
+      row            a                  row           a           
+            -----------                       -------------       
+       1    1       23                   1    1       123         
+       2    23      34      A            2    123     1234     A  
+       3    34      34      F            3    1234    1234     A,F
+            -----------                       -------------       
+
+It's interesting to note that now the DFA's are indeed different.
+
+
+So, how to they behave? Below I'll use the following notation, numbers
+referring to DFA rows:
+
+    -------------
+    1 a 2 b 3 c 3       - start at 1, on a to 2, on b to 3 on c to 3
+    -------------
+        A   A   A       - rows 2 and 3 represent A-states    
+        1   1   2       - the A length value
+    -------------
+        I       II      - applied rules
+    -------------
+
+Let's feed 'aaa' to (1) and (2) and see what they produce:
+
+    (1): a/a+                           (2): a+/a
+            --------------                      --------------
+            1 a 2 a 3 a 3                       1 a 2 a 3 a 3
+            --------------                      --------------
+                A                                   A   A   A
+                1                                   1       2
+            --------------                      --------------
+                I                                   I       II
+            --------------                      --------------
+    F is reached, a is returned, aa     F is reached. aa is returned, a 
+    is read again                       is read again
+
+
+
+Inheriting and non-inheriting accept states
+-------------------------------------------
+
+However, we're not out of problems yet. Consider:
+    
+    a/a*        (3)
+
+    NFA:    1 -a- 2 - 3(4) -a- 4(3)
+
+    DFA: (3): a/a*
+            -----------  
+      row            a 
+            -----------  
+       1    1       234
+       2    234     234      A,F
+            -----------  
+
+Now feed this aaa
+            --------------
+            1 a 2 a 2 a 2 
+            --------------
+                A   A   A
+                1   2   3
+            --------------
+                I   II  II
+            --------------
+
+This clearly doesn't work, and that's why the distinction between `inheriting'
+and `non-inheriting' accept states is introduced. A non-inheriting accept
+state is used only in a DFA where a row's set of states contains the NFA's
+accept state, an inheriting accept state is, once set, set for all the DFA's
+remaining rows as well. The rules with non-inheriting accept states are:
+
+    Rules:
+        I. At an A state: if (AL == 0) ++AL
+       II. At a DFA transition from state X having an accept flag to X: 
+            only once do ++AL.
+            ~~~~~~~~~
+
+The addition to rule II means that we'll need two kind of flags in our DFA's,
+indicating inheriting and non-inheriting accept states. This doesn't introduce
+implementation problems and so below I'll only use A-flags, as the context
+unambiguously clarifies whether we talk about inheriting or non-inheriting
+accept states.
+
+To find inheriting accept states we start by taking the empty lookahead
+transition seriously when creating the NFA. To do this we define a pseudo
+input L to transit from the pre-lookahead pattern to the post-lookahead
+pattern. With a/a* and a+/a we get, respectively:
+
+
+  (1): a/a*                           (2) a+/a
+
+    1 -a- 2 -L- 3(4) -a- 4(3)             1 -a- 2(1) -L- 3 -a- 4
+              
+    Pseudo DFAs      
+            --------------                    -------------       
+      row            a  L               row           a    L      
+            --------------                    -------------       
+       1    1        2                   1    1       12          
+       2 A  2           34               2 A  12      12   3      
+       3 F  34       34                  3    3       4            
+            --------------               4 F  4       
+                                              -------------       
+    2 is the accept state,              2 is the accept state
+    3 is the final state.               4 is the final state.
+
+This thing to note here are the accept rows (rows 2): With a/a* (1) it
+contains a mere L transition, with a+/a (2) it contains an L transition and a
+character transition. This is used to distinguish non-inheriting accept states
+from inheriting accept states. When an accept state merely shows a L
+transition it is non-inheriting, otherwise it's inheriting.  a/a* gets a
+non-inheriting accept state, a+/a an inheriting accept state.
+
+
+From pseudo DFA to real DFA's
+-----------------------------
+
+Of course the pseudo DFAs aren't `true' DFAs, since there is no such thing
+like an L-character. Let's proceed by merging rows 2 and 3 of the above pseudo
+DFAs to get rid of the L transitions, and at the same time propagate a+/a's
+inheriting accept state:
+
+    DFA:    a/a+                        a+/a
+            --------------                     -------------       
+      row            a                  row            a           
+            --------------                     -------------       
+       1    1        23                  1     1       123         
+       2 A  23       34                  2 A   123     1234        
+       3 F  34       34                  3 A,F 1234    1234         
+            --------------                     -------------
+    2 is the accept state,              2 is the accept state
+    3 is the final state.               3 is the final state.
+
+Now feed aaaa to both DFAs and see what happens:
+
+    -----------------                   -----------------    
+    1 a 2 a 3 a 3 a 3                   1 a 2 a 3 a 3 a 3    
+    -----------------                   -----------------    
+        A                                   A   A   A   A           
+        1                                   1       2   3    
+    --------------                      -----------------    
+        I                                   I       II  II   
+    --------------                      ------------------   
+    a is returned, aaa is               aaa is returned, a is
+    read again                          read again           
+
+
+Now we do this again for, e.g., a+/aap
+
+NFA:  1 -a- 2(1) -L- 3 -a- 4 -a- 5 -p- 6
+
+Pseudo DFA:                         real DFA:
+      -------------------------       ------------------------     
+      row              a  L  p        row             a      p      
+              -----------------               ----------------     
+       1      1        12              1      1       123          
+       2 A    12       12 3            2 A    123     1234         
+       3 A    3        4               3 A    1234    12345         
+       4 A    4              5         4 A    12345   12345  6
+       5 A,F  5                        5 A,F  6                    
+       ------------------------        ------------------------
+    2 is the accept state,          2 is the inheriting accept state
+    3 is the final state.           5 is the final state.
+
+Feeding aaaaap we get:
+           ~~~
+        -------------------------
+        1 a 2 a 3 a 4 a 4 a 4 p 5   numbers are row-numbers in the DFA
+            A   A   A   A   A   A
+            1           2   3
+        -------------------------
+    We accept aaa and return aap
+
+
+
+Applying the OR-operator
+------------------------
+
+Here's a pattern using an or-operator:
+
+    (a|ab)/b+
+              ----a----    
+    NFA:    1            3 -L- 4 -b- 5(4)
+              -a- 2 -b-
+
+    Pseudo DFA:
+        -----------------------
+                    a   b   L
+                  -------------
+               1    23
+               23       3   4
+             A 3            4
+               4        45
+             F 45       45
+        -----------------------
+
+Since the accept state line only has the L transition, it's a non-inheriting
+accept state. But note that state 3 is the accept state, so there are two rows
+in the following DFA having the A flag, as these states contain the accept
+state A. The DFA thus becomes:
+
+    DFA:
+       --------------
+              a    b 
+            ---------
+          1   234
+      A 234       345
+    F,A 345       345
+       --------------
+
+Feeding ab we get:
+        
+            ----------
+            1 a 2 b 3
+                A   A
+                1
+            ----------
+    accept a, reread b
+
+Feeding abbb we get:
+        
+        -----------------
+        1 a 2 b 3 b 3 b 3 
+            A   A   A   A
+            1       2
+        -----------------
+    accept ab, reread bb
+
+
+Easy determination of the inheriting nature of accept states
+------------------------------------------------------------
+
+In fact the pseudo DFA doesn't have to be constructed to determine whether an
+accept state is inheriting or not. In the state-array, if a accept state
+has multiple transitions emanating from it is is inheriting, otherwise it is
+non-inheriting. 
+
+Some example:
+
+a/a+:       1 -a- 2 - 3 -a- 4(3)        2 is the accept state, non-inheriting
+
+a+/a:       1 -a- 2(1) - 3 -a- 4        2 is the accept state, inheriting
+
+a/a*:       1 -a- 2 - 3(4) -a- 4(3)     2 is the accept state. non-inheriting
+
+a+/aap:     1 -a- 2(1) - 3 -a- 4 -a- 5 -p- 6
+                                        2 is the accept state, non-inheriting
+
+(a|ab)/b+     ----a----                 3 is the accept state, non-inheriting
+            1            3 - 4 -b- 5(4)
+              -a- 2 -b-                  

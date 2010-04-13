@@ -1,0 +1,9 @@
+<quote>{
+    '                       end();
+
+    \\.                     |
+    .                       more(); 
+
+    \n                      return end(-1);     // error-generating token
+}
+

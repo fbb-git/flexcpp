@@ -1,0 +1,90 @@
+opt_directives:
+    opt_directives directive_line
+|
+    // empty
+;
+
+directive_line:
+    directive '\n' mode_initial
+;
+
+directive:
+    OPTION_DIRECTIVE options 
+|
+    start_condition_directive
+|
+    name_definition
+|
+    error
+|
+    // empty
+;
+
+start_condition_directive:
+    start_condition_type
+    start_condition_names
+;
+
+start_condition_type:
+    INCL_START_CONDITION 
+    start_condition_name_m
+    {
+        d_startConditions.setType(StartConditions::INCLUSIVE);
+    }
+|
+    EXCL_START_CONDITION 
+    start_condition_name_m
+    {
+        d_startConditions.setType(StartConditions::EXCLUSIVE);
+    }
+;
+
+start_condition_names:
+    start_condition_names name
+    {
+        d_startConditions.add(*$2);
+    }
+|
+    name
+    {
+        d_startConditions.add(*$1);
+    }
+;
+
+name_definition:
+    name_def  mode_patterntxt pattern_txt opt_ws
+    {
+        d_scanner.addDefinition(*$1, *$3);
+    }
+;
+
+pattern_txt:
+    pattern_txt patterntxt_string   // these aren't really STRINGs, but 
+    {                               // char-sequences defining a pattern.
+        $$ = TextVal::cat($1, $2);
+    }
+|
+    patterntxt_string
+;
+
+patterntxt_string:
+    STRING
+    {
+        $$ = TextVal::plain(d_scanner.match());   
+    }
+;
+
+name_def:
+    name
+    {
+        d_scanner.newDefinition();
+    }
+;
+
+name:
+    NAME
+    {
+        $$ = TextVal::trimmed(d_scanner.match());
+    }
+;
+        

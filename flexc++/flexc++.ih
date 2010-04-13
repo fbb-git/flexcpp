@@ -1,0 +1,29 @@
+#include <iostream>
+#include <vector>
+
+// #include <string>
+// #include <stdexcept>
+// #include <exception>
+
+#include <bobcat/arg>
+#include <bobcat/errno>
+
+#include "states/states.h"
+#include "rules/rules.h"
+#include "parser/parser.h"
+#include "usage/usage.h"
+
+// #include "debug/debug.h"
+// #include "statecounter/statecounter.h"
+// #include "locale/locale.h"
+// #include "dotwriter/dotwriter.h"
+// #include "cppwriter/cppwriter.h"
+
+
+extern char version[];
+extern char year[];
+
+void usage(std::string const &progname);
+
+using namespace std;
+using namespace FBB;
