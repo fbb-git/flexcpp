@@ -10,16 +10,15 @@
         |                   |
       States                |                        FStreamInfo  Block   
         |                   |                             |         |
-  +-----+   +-----+-------+-+------------+            +---+---------+
-  |     |   |     |       |              |            |
-  |     +---+     |       |            TextVal        |
-  |     |         |       |              |            |
+  +-----+   +--------+----+-+------------+            +---+---------+
+  |     |   |        |    |              |            |
+  |     +---+        |    |            TextVal        |
+  |     |            |    |              |            |
   +--------------------------------------+            |
-  |     |         |       |              |            |
-  |     |         |       |              |            |
-  |     | Range   |       |          +---+            |
-  |     |   |     |       |          |   |            |
-  |     |   +-----+       |          |   |            |
+  |     |            |    |              |            |
+  |     | CharRange  |    |          +---+            |
+  |     |     |      |    |          |   |            |
+  |     |     +------+    |          |   |            |
   |     |         |       |          |   +------+-----+
   |     |     CharClass   |          |          |              Rule
   |     |         |       |          |          |                |
@@ -37,8 +36,8 @@
 
     CharClass: The characters of a character-class
     
-    Range: produces all predefined character ranges, constructing them only
-            once, when needed for the first time.
+    CharRange: produces all predefined character ranges, constructing them
+            only once, when needed for the first time.
 
     SemVal: parser's semantic value stack data type. A polymorphic base class
 

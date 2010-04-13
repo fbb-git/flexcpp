@@ -1,6 +1,6 @@
-#include "range.ih"
+#include "charrange.ih"
 
-set<char> Range::negate(set<char> const &cSet)
+set<char> CharRange::negate(set<char> const &cSet)
 {
     AllChars begin(0);
     AllChars end(UCHAR_MAX);

@@ -1,6 +1,6 @@
-#include "range.ih"
+#include "charrange.ih"
 
-set<char> const &Range::predefined(std::string const &setName)
+set<char> const &CharRange::predefined(std::string const &setName)
 {
     auto &chSet = s_hash[setName];
 

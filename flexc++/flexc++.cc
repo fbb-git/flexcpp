@@ -72,9 +72,11 @@ try
 
     parser.parse();
 
-    Usage usage;
-    usage.add(states);
-    usage.display("Character ranges:");
+    Ranges ranges(states);
+    ranges.determineSubsets();
+    ranges.finalizeStates();
+
+    ranges.display("Character ranges:");
 
 }
 catch (int x)

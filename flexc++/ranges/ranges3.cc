@@ -1,10 +1,11 @@
-#include "usage.ih"
+#include "ranges.ih"
 
-Usage::Usage(Usage const &&tmp)
+Ranges::Ranges(Ranges const &&tmp)
 :
-    d_usage(tmp.d_usage),
+    d_ranges(tmp.d_ranges),
     d_size(tmp.d_size),
-    d_subsets(tmp.d_subsets)
+    d_subsets(tmp.d_subsets),
+    d_states(tmp.d_states)
 {
-    const_cast<Usage &>(tmp).d_usage = 0;
+    const_cast<Ranges &>(tmp).d_ranges = 0;
 }

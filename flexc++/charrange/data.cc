@@ -1,6 +1,6 @@
-#include "range.ih"
+#include "charrange.ih"
 
-std::unordered_map<std::string, std::set<char>> Range::s_hash =
+std::unordered_map<std::string, std::set<char>> CharRange::s_hash =
 {
     { "[:alnum:]" , set<char>()  },
     { "[:alpha:]" , set<char>() },
@@ -30,7 +30,7 @@ std::unordered_map<std::string, std::set<char>> Range::s_hash =
 };
 
 
-std::unordered_map<std::string, int (*)(int)> Range::s_funHash =
+std::unordered_map<std::string, int (*)(int)> CharRange::s_funHash =
 {
     { "[:alnum:]" , isalnum },
     { "[:alpha:]" , isalpha },

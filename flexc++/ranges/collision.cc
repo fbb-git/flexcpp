@@ -1,4 +1,4 @@
-#include "usage.ih"
+#include "ranges.ih"
 
 // Collision test: a number indicates a character to test. Series of x chars
 // indicate a range. p,q,r,s indicate char-values before and after a (series
@@ -29,7 +29,7 @@
 // So: pretest on s[0], rangetest from s[1] to s[3], posttest on s[3]
     #include <iostream>
 
-bool Usage::collision(std::string const &str, size_t const *next)
+bool Ranges::collision(std::string const &str, size_t const *next)
 {
     unsigned char pre = str[0];         
 

@@ -25,9 +25,9 @@ class StartConditions
             StartCondition() = default;
             StartCondition(Type type);
         };
+        typedef std::unordered_map<std::string, StartCondition> Hash;
         
         Type d_type;
-        typedef std::unordered_map<std::string, StartCondition> Hash;
 
         Hash d_hash;
         std::vector<StartCondition *> d_active;
@@ -43,6 +43,8 @@ class StartConditions
         void useAll();
         void activate(SemVal const &name);
         void setInitialSC();
+        Hash::const_iterator begin() const;
+        Hash::const_iterator end() const;
 
     private:
         static void addVector(Hash::value_type &mini, 
@@ -68,6 +70,19 @@ inline void StartConditions::reset()
     d_active.clear();
     d_inclusive = false;
 }
+
+// Allow for iterations over all elements of the vectors of all
+//  startconditions
+//  
+// inline std::vector<size_t>::const_iterator begin() const
+// {
+//     return d_hash.begin();
+// }
+// 
+// inline StartCondition::Hash::const_iterator end() const
+// {
+//     return d_hash.end();
+// }
 
 #endif
 

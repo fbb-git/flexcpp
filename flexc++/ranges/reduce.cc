@@ -1,13 +1,13 @@
-#include "usage.ih"
+#include "ranges.ih"
 
-void Usage::reduce(vector<size_t> &ranges)
+void Ranges::reduce(vector<size_t> &ranges)
 {
-    for_each(d_usage, d_usage + d_size, FnWrap::unary(reassign, ranges));
+    for_each(d_ranges, d_ranges + d_size, FnWrap::unary(reassign, ranges));
 
     d_subsets = 1;
     for 
     (
-        auto iter = d_usage + 1, end = d_usage + d_size; 
+        auto iter = d_ranges + 1, end = d_ranges + d_size; 
             iter != end;
                 ++iter
     )

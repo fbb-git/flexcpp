@@ -1,8 +1,8 @@
-#include "usage.ih"
+#include "ranges.ih"
 
-Usage &Usage::operator=(Usage const &&r_tmp)
+Ranges &Ranges::operator=(Ranges const &&r_tmp)
 {
-    Usage tmp(std::move(r_tmp));
+    Ranges tmp(std::move(r_tmp));
     swap(tmp);
     return *this;
 }

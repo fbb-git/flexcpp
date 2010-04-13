@@ -21,6 +21,8 @@ class States
 
         std::vector<State>::const_iterator begin() const;
         std::vector<State>::const_iterator end() const;
+        std::vector<State>::iterator begin();
+        std::vector<State>::iterator end();
 };
 
 inline State &States::operator[](size_t idx)
@@ -34,6 +36,16 @@ inline std::vector<State>::const_iterator States::begin() const
 }
 
 inline std::vector<State>::const_iterator States::end() const
+{
+    return d_state.end();
+}
+
+inline std::vector<State>::iterator States::begin()
+{
+    return d_state.begin();
+}
+
+inline std::vector<State>::iterator States::end() 
 {
     return d_state.end();
 }

@@ -1,6 +1,6 @@
-#include "usage.ih"
+#include "ranges.ih"
 
-Usage::~Usage()
+Ranges::~Ranges()
 {
-    delete[] d_usage;
+    delete[] d_ranges;
 }

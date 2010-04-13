@@ -1,21 +1,21 @@
-#include "usage.ih"
+#include "ranges.ih"
 
-void Usage::updateUsage(string const &str, size_t const *next)
+void Ranges::updateRanges(string const &str, size_t const *next)
 {
         // if pre- post- character range collisions
-        // add next to usage, otherwise copy next to usage
+        // add next to ranges, otherwise copy next to ranges
         //    
     if (collision(str, next))       
-        transform(d_usage, d_usage + d_size, next, d_usage, plus<size_t>());
+        transform(d_ranges, d_ranges + d_size, next, d_ranges, plus<size_t>());
     else
-        copy(next, next + d_size, d_usage);
+        copy(next, next + d_size, d_ranges);
     
         // Determine the ranges
         //
-    vector<size_t> ranges;
-    for_each(d_usage, d_usage + d_size, FnWrap::unary(countRanges, ranges));
+    vector<size_t> rangeNrs;
+    for_each(d_ranges, d_ranges + d_size, FnWrap::unary(countRanges, rangeNrs));
 
-    reduce(ranges);                     // reduce d_usage
+    reduce(rangeNrs);                     // reduce d_ranges
 }
 
 

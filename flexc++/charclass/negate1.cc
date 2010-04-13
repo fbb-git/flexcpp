@@ -3,7 +3,7 @@
 spSemVal CharClass::negate(spSemVal const &charClass)
 {
     spSemVal ret(
-                    new CharClass(Range::negate(
+                    new CharClass(CharRange::negate(
                         downCast<CharClass>(*charClass).d_set)
                     )
                 );

@@ -1,6 +1,6 @@
-#include "usage.ih"
+#include "ranges.ih"
 
-bool Usage::chCollision(unsigned char ch, unsigned char &pre, 
+bool Ranges::chCollision(unsigned char ch, unsigned char &pre, 
                                         size_t const *next)
 {
     if (pre + 1 == ch)              // in a range

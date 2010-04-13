@@ -3,17 +3,20 @@
 
 #include <string>
 #include <vector>
+#include <set>
 
 #include <bobcat/fswap>
 
 class States;
 class State;
-class Usage
+class StateData;
+class Ranges
 {
-    size_t *d_usage;
+    size_t *d_ranges;
     size_t d_size;
 
     size_t d_subsets;
+    States &d_states;
 
     public:
         enum Type
@@ -22,17 +25,25 @@ class Usage
             ORDERED
         };
         
-        Usage(size_t size = 256);       // default:   1 << (sizeof(char) * 8)
-        Usage(Usage const &other);
-        Usage(Usage const &&tmp);
-        ~Usage();
+        Ranges(States &states, size_t size = 256);  // default:   
+                                                    // 1 << (sizeof(char) * 8)
+        Ranges(Ranges const &other);
+        Ranges(Ranges const &&tmp);
+        ~Ranges();
 
-        Usage &operator=(Usage const &other);
-        Usage &operator=(Usage const &&tmp);
+        Ranges &operator=(Ranges const &other);
+        Ranges &operator=(Ranges const &&tmp);
 
-        void swap(Usage &other);
+        void swap(Ranges &other);
+        void determineSubsets();
+        void finalizeStates();      // all chars, strings and sets are 
+                                    // converted to character sets.
+                                    // there can be at most 256 character sets
+                                    // (one for each character) so there's no
+                                    // collision with the special characters
+                                    // like EMPTY and FINAL.
+
         void add(Type type, std::string const &str);
-        void add(States const &states);
         void add(size_t ch);
 
         void display(char const *hdr) const;
@@ -46,15 +57,20 @@ class Usage
         static void countRanges(size_t &count, std::vector<size_t> &ranges);
 
 
-        void updateUsage(std::string const &str, size_t const *next);
+        void updateRanges(std::string const &str, size_t const *next);
         void reduce(std::vector<size_t> &lowest);
         static void reassign(size_t &count, std::vector<size_t> &ranges);
 
-        static void inspectState(State const &state, Usage &usage);
+        static void inspectState(State const &state, Ranges &ranges);
 
+
+        static void finalizeState(State &state, size_t *ranges);
+        static void addRangeNr(char ch, size_t const *ranges, 
+                                      std::set<size_t> &rangeSet);
+        static void charsetToRanges(StateData &data, size_t *ranges);
 };
 
-inline void Usage::swap(Usage &other)
+inline void Ranges::swap(Ranges &other)
 {
     FBB::fswap(*this, other);
 }

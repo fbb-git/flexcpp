@@ -1,6 +1,6 @@
-#include "usage.ih"
+#include "ranges.ih"
 
-void Usage::reassign(size_t &count, vector<size_t> &ranges)
+void Ranges::reassign(size_t &count, vector<size_t> &ranges)
 {
     auto iter = find(ranges.begin(), ranges.end(), count);
 

@@ -1,19 +1,19 @@
-#include "usage.ih"
+#include "ranges.ih"
 
 #include <iostream>
 #include <iomanip>
 #include <cctype>
 
-void Usage::display(char const *hdr) const
+void Ranges::display(char const *hdr) const
 {
     cout << hdr << "\n"
             "Nsubsets: " << d_subsets << '\n';
 
     for (size_t idx = 0, last = UINT_MAX, count = 0; idx < 256; ++idx)
     {
-        if (d_usage[idx] != last)
+        if (d_ranges[idx] != last)
         {
-            last = d_usage[idx];
+            last = d_ranges[idx];
 
             if (idx != 0)
             {

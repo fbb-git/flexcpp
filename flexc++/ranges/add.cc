@@ -1,6 +1,6 @@
-#include "usage.ih"
+#include "ranges.ih"
 
-void Usage::add(Type type, string const &str)
+void Ranges::add(Type type, string const &str)
 {
     string tmp;
 
@@ -13,11 +13,11 @@ void Usage::add(Type type, string const &str)
 
     size_t *next = new size_t[d_size];
     
-        // initialize next values with d_usage
-    copy(d_usage, d_usage + d_size, next);
+        // initialize next values with d_ranges
+    copy(d_ranges, d_ranges + d_size, next);
 
         // increment next counts for chars in str
     for_each(strRef.begin(), strRef.end(), FnWrap::unary(incIf, next));
 
-    updateUsage(strRef, next);
+    updateRanges(strRef, next);
 }

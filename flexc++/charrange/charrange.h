@@ -1,11 +1,11 @@
-#ifndef INCLUDED_RANGE_
-#define INCLUDED_RANGE_
+#ifndef INCLUDED_CHARRANGE_
+#define INCLUDED_CHARRANGE_
 
 #include <unordered_map>
 #include <set>
 #include <string>
 
-class Range
+class CharRange
 {
     static std::unordered_map<std::string, std::set<char>> s_hash;
     static std::unordered_map<std::string, int (*)(int)>   s_funHash;

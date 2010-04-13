@@ -1,11 +1,11 @@
-#include "usage.ih"
+#include "ranges.ih"
 
 namespace
 {
     string str;
 }
 
-void Usage::add(size_t ch)
+void Ranges::add(size_t ch)
 {
     str = ch;
     add(ORDERED, str);

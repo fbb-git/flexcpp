@@ -1,10 +1,11 @@
-#include "usage.ih"
+#include "ranges.ih"
 
-Usage::Usage(size_t size)
+Ranges::Ranges(States &states, size_t size)
 :
-    d_usage(new size_t[size]),
+    d_ranges(new size_t[size]),
     d_size(size),
-    d_subsets(0)
+    d_subsets(0),
+    d_states(states)
 {
-    fill(d_usage, d_usage + d_size, 0);
+    fill(d_ranges, d_ranges + d_size, 0);
 }

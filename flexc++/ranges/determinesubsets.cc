@@ -1,7 +1,7 @@
-#include "usage.ih"
+#include "ranges.ih"
 
-void Usage::add(States const &states)
+void Ranges::determineSubsets()
 {
-    for_each(states.begin(), states.end(), 
+    for_each(d_states.begin(), d_states.end(), 
                 FnWrap::unary(inspectState, *this));
 }

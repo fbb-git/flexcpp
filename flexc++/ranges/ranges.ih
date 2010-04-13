@@ -1,9 +1,9 @@
-#include "usage.h"
+#include "ranges.h"
 
 #include <climits>
 #include <algorithm>
 #include <functional>
-//#include <iterator>
+#include <iterator>
 
 #include <bobcat/fnwrap>
 
@@ -14,8 +14,14 @@
 using namespace std;
 using namespace FBB;
 
-inline void Usage::incIf(char const &ch, size_t *next)
+inline void Ranges::incIf(char const &ch, size_t *next)
 {
     ++next[static_cast<unsigned char>(ch)];
+}
+
+inline void Ranges::addRangeNr(char ch, size_t const *ranges, 
+                                                    set<size_t> &rangeSet)
+{
+    rangeSet.insert(ranges[static_cast<unsigned char>(ch)]);
 }
 

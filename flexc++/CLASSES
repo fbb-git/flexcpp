@@ -15,5 +15,5 @@ rules
 rule
 startconditions
 charclass
-range
-usage
+charrange
+ranges

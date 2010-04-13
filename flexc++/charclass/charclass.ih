@@ -6,7 +6,7 @@
 #include <bobcat/string>
 #include "bobcat/msg"
 
-#include "../range/range.h"
+#include "../charrange/charrange.h"
 
 inline CharClass::CharClass()
 {}
