@@ -70,15 +70,14 @@ rule:
     {
         d_startConditions.add(
             d_rules.add(SemVal::downCast<PatternVal>(*$1).begin(), 
-                    d_accept, d_inheriting, d_scanner.block())
+                    d_accept, d_scanner.block())
         );
     }
 |
     pattern_ws
     {
         d_startConditions.add(
-            d_rules.add(SemVal::downCast<PatternVal>(*$1).begin(), d_accept, 
-                        d_inheriting)
+            d_rules.add(SemVal::downCast<PatternVal>(*$1).begin(), d_accept)
         );
     }
 ;

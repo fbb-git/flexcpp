@@ -13,7 +13,7 @@ class Rules
     public:
         Rules();
 
-        size_t add(size_t beginState, size_t accept, bool inheriting, 
+        size_t add(size_t beginState, size_t accept,
                                         std::string const &action = "");
 };
         
