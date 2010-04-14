@@ -4,13 +4,15 @@ void Ranges::charsetToRanges(StateData &data, size_t *ranges)
 {
     string const &str = SemVal::downCast<StateString>(data).str();
 
-    set<size_t> rangeSet;
-    for_each(str.begin(), str.end(), 
-                            FnWrap::unary(addRangeNr, ranges, rangeSet));
+    set<size_t> rangeSet;               // determine the ranges of the chars
+                                        // used in the string
+    for_each(str.begin(), str.end(),    
+             FnWrap::unary(addRangeNr, ranges, rangeSet));
 
-    string next;
+    string next;                        // create a new string
     copy(rangeSet.begin(), rangeSet.end(), inserter(next, next.end()));
 
-    
+                                        // assign the string of range-nrs
+                                        // to the state
     SemVal::downCast<StateString>(data).set(next);
 }

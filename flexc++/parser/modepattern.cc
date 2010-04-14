@@ -6,6 +6,5 @@ void Parser::modePattern()
     s_lastMsg.clear();
     d_parentheses = 0;
     d_accept = 0;
-    d_inheriting = false;
     d_patternTokenCount = 0;
 }

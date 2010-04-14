@@ -20,9 +20,9 @@ spSemVal Parser::lookahead(SemVal &left, SemVal &right)
 
     d_doError = true;
 
-    PatternVal &pval = SemVal::downCast<PatternVal>(right);
-    d_accept = pval.begin();
-    d_inheriting =  pval.end() != 0;
+    PatternVal &rval = SemVal::downCast<PatternVal>(right);
+    d_accept = rval.begin();
+    d_states[d_accept].setAccept();
 
     spSemVal ret = PatternVal::concatenate(d_states, left, right);
 

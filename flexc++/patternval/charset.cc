@@ -1,11 +1,10 @@
 #include "patternval.ih"
 
-spSemVal PatternVal::str(States &states, State::Type type, 
-                         SemVal const &charClass)
+spSemVal PatternVal::charSet(States &states, SemVal const &charClass)
 {
     States::Pair pair = states.next2();
 
-    states[pair.first] = State::factory(type, 
+    states[pair.first] = State::factory(State::CHARSET, 
                                         downCast<CharClass>(charClass).str(), 
                                         pair.second);
     

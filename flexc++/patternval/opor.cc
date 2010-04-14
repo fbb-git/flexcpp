@@ -9,8 +9,8 @@ spSemVal PatternVal::opOr(States &states, SemVal &left, SemVal &right)
     states[pair.first] = State::factory(State::EMPTY, lhs.begin(), 
                                                       rhs.begin());
 
-    states[lhs.end()] = State::factory(State::EMPTY, pair.second);
-    states[rhs.end()] = State::factory(State::EMPTY, pair.second);
+    states[lhs.end()] = State::factory(State::EMPTY, pair.second, 0);
+    states[rhs.end()] = State::factory(State::EMPTY, pair.second, 0);
 
     spSemVal ret(new PatternVal(pair));
 

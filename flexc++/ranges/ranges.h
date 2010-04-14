@@ -19,12 +19,6 @@ class Ranges
     States &d_states;
 
     public:
-        enum Type
-        {
-            NOT_ORDERED,
-            ORDERED
-        };
-        
         Ranges(States &states, size_t size = 256);  // default:   
                                                     // 1 << (sizeof(char) * 8)
         Ranges(Ranges const &other);
@@ -43,7 +37,7 @@ class Ranges
                                     // collision with the special characters
                                     // like EMPTY and FINAL.
 
-        void add(Type type, std::string const &str);
+        void add(std::string const &str);
         void add(size_t ch);
 
         void display(char const *hdr) const;

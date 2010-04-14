@@ -8,5 +8,5 @@ namespace
 void Ranges::add(size_t ch)
 {
     str = ch;
-    add(ORDERED, str);
+    add(str);
 }

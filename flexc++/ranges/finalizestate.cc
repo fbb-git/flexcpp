@@ -2,19 +2,11 @@
 
 void Ranges::finalizeState(State &state, size_t *ranges)
 {
-    switch (size_t type = state.type())
-    {
-        case State::CHARSET:
-            charsetToRanges(state.data(), ranges);
-        break;
+    size_t type = state.type();
 
-        case State::STRING:
-                             // TO DO
-        break;
-        default:
-            if (type < State::UNDETERMINED__)
-                type = ranges[type];
-        break;
-    }
+    if (type < State::UNDETERMINED__)
+        state.setType(ranges[type]);
 
+    else if (type == State::CHARSET)
+        charsetToRanges(state.data(), ranges);
 }

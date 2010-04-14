@@ -3,13 +3,12 @@
 spSemVal PatternVal::plus(States &states, SemVal &semVal)
 {
     size_t idx = states.next();
-    states[idx] = State::factory(State::FINAL);
+    states[idx] = State::factory(State::FINAL, 0, 0);
 
     PatternVal &pattern = downCast<PatternVal>(semVal);
 
     states[pattern.end()] = State::factory(State::EMPTY, pattern.begin(), 
-                                                            idx);
-
+                                                                        idx);
     spSemVal ret(new PatternVal( {pattern.begin(), idx} ));
 
     return ret;

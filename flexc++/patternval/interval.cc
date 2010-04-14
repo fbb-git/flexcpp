@@ -20,9 +20,9 @@ spSemVal PatternVal::interval(States &states, SemVal &semval, size_t lower,
     else
     {
         States::Pair pair = states.next2();
-        states[pair.first] = State::factory(State::EMPTY, pair.second);
+        states[pair.first] = State::factory(State::EMPTY, pair.second, 0);
 
-        ret = spSemVal(new PatternVal(pair));
+        ret.reset(new PatternVal(pair));
     }
 
     return ret;

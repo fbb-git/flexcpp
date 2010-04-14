@@ -17,12 +17,11 @@ class PatternVal: public SemVal
 
         size_t begin() const;
         size_t end() const;
+        void accept();
 
         static spSemVal eof(States &states);
-        static spSemVal str(States &states, State::Type type,
-                            std::string const &str);
-        static spSemVal str(States &states, State::Type type,
-                            SemVal const &charClass);
+        static spSemVal str(States &states, std::string const &str);
+        static spSemVal charSet(States &states, SemVal const &charClass);
         static spSemVal plain(States &states, size_t ch);
         static spSemVal plain(States &states, std::string const &ch);
         static spSemVal concatenate(States &states, SemVal &lhs, SemVal &rhs);

@@ -57,18 +57,18 @@ pattern:
 |
     STRING
     {                                                   
-        $$ = PatternVal::str(d_states, State::STRING, 
+        $$ = PatternVal::str(d_states,
                         d_scanner.match().substr(1, d_scanner.leng() - 2));
     }
 |
     SECTION_DELIMITER
     {
-        $$ = PatternVal::str(d_states, State::STRING, d_scanner.match());
+        $$ = PatternVal::str(d_states, d_scanner.match());
     }
 |
     character_class
     {
-        $$ = PatternVal::str(d_states, State::CHARSET, *$1);
+        $$ = PatternVal::charSet(d_states, *$1);
     }
 |
     plain_characters

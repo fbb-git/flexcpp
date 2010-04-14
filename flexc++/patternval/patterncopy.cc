@@ -27,7 +27,7 @@ size_t PatternVal::patternCopy(States &states, size_t begin, size_t end)
         // making sure that the proper transitions are set.
     copyStates(states, old2new);
 
-    states[nextFinal] = State::factory(State::FINAL);
+    states[nextFinal] = State::factory(State::FINAL, 0, 0);
 
     return nextFinal;
 }

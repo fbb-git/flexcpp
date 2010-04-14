@@ -1,12 +1,29 @@
 #include "patternval.ih"
 
-spSemVal PatternVal::str(States &states, State::Type type, string const &str)
+spSemVal PatternVal::str(States &states, string const &rawStr)
 {
-    States::Pair pair = states.next2();
+    string &&str = String::unescape(rawStr);
+    size_t length = str.length();
 
-    states[pair.first] = State::factory(type, String::unescape(str), 
-                                        pair.second);
+    States::Pair pair;
+    spSemVal ret;
 
-    spSemVal ret(new PatternVal(pair));
+    if (length == 0)            // pathological case: string without contents
+    {
+        pair = states.next2();
+        states[pair.first] = State::factory(State::EMPTY, pair.second, 0);
+
+        ret.reset(new PatternVal(pair));
+        return ret;
+    }
+
+    size_t *indices = states.next(length + 1);
+
+    for (size_t idx = 0; idx != length; ++idx)
+        states[indices[idx]] = State::factory(str[idx], indices[idx + 1]);
+
+    delete [] indices;
+
+    ret.reset(new PatternVal(pair));
     return ret;
 }

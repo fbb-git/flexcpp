@@ -8,7 +8,6 @@ Parser::Parser(Rules &rules, States &states)
     d_printTokens(d_arg.option('t')),
     d_parentheses(0),
     d_accept(0),
-    d_inheriting(false),
     d_patternTokenCount(0),
     d_doError(true),
     d_rules(rules),

@@ -34,9 +34,7 @@ class Parser: public ParserBase
     bool d_printTokens;
     size_t d_parentheses;
     size_t d_accept;                // index in States of ACCEPT state (or 0)
-    bool d_inheriting;              // true if an ACCEPT state is inheriting,
-                                    // false if not, undefined for other
-                                    // states. 
+
     size_t d_patternTokenCount;
     bool d_doError;                // use the error() function at ERROR
 

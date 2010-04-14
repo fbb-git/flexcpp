@@ -17,6 +17,9 @@ class States
         State &operator[](size_t idx);
         size_t next();
         Pair next2();                       // 2nd initialized to FINAL
+        size_t *next(size_t nStates);       // returned memory owned by caller
+                                            // returns nStates indices to use
+                                            // in d_state.
         void collect(size_t idx);
 
         std::vector<State>::const_iterator begin() const;
