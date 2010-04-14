@@ -17,3 +17,4 @@ startconditions
 charclass
 charrange
 ranges
+dfa

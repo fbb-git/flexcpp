@@ -14,6 +14,13 @@ class State
     std::shared_ptr<StateData> d_data;
 
     public:
+        enum AcceptType
+        {
+            NONE,
+            NON_INHERITING,
+            INHERITING
+        };
+
         enum Type       // values in the Alphabet range are simple character
         {
             UNDETERMINED__ =  1 << (8 * sizeof(Alphabet)),
@@ -40,7 +47,7 @@ class State
         size_t type() const;            // if < UNDETERMINED__ it's a char
         void setType(size_t type);      // change the char. type, keep ACCEPT
         void setAccept();               // flag a State as an ACCEPT state
-        bool accept() const;            // true if accepting state
+        AcceptType accept() const;      // return accept type
 };
         
 inline StateData &State::data()
@@ -58,9 +65,12 @@ inline size_t State::type() const
     return d_type & ~ACCEPT;
 }
 
-inline bool State::accept() const
+inline State::AcceptType State::accept() const
 {
-    return d_type & ACCEPT;
+    return d_type & ACCEPT ?
+                d_data.next2() ? INHERITING : NON_INHERITING
+            :
+                NONE;
 }
 
 inline void State::setAccept()

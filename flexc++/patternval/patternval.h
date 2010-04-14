@@ -17,7 +17,7 @@ class PatternVal: public SemVal
 
         size_t begin() const;
         size_t end() const;
-        void accept();
+        States::Pair const &pair() const;
 
         static spSemVal eof(States &states);
         static spSemVal str(States &states, std::string const &str);
@@ -58,6 +58,11 @@ inline size_t PatternVal::begin() const
 inline size_t PatternVal::end() const
 {
     return d_pair.second;
+}
+
+inline States::Pair const &PatternVal::pair() const
+{
+    return d_pair;
 }
 
 #endif

@@ -15,6 +15,7 @@ class States
 
         States();
         State &operator[](size_t idx);
+        State const &operator[](size_t idx) const;
         size_t next();
         Pair next2();                       // 2nd initialized to FINAL
         size_t *next(size_t nStates);       // returned memory owned by caller
@@ -29,6 +30,11 @@ class States
 };
 
 inline State &States::operator[](size_t idx)
+{
+    return d_state[idx];
+}
+
+inline State const &States::operator[](size_t idx) const
 {
     return d_state[idx];
 }

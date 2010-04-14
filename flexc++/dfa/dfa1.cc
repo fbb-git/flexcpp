@@ -1,6 +1,6 @@
 #include "dfa.ih"
 
-DFA::DFA()
-//:
-{
-}
+DFA::DFA(States const &states)
+:
+    d_states(states)
+{}

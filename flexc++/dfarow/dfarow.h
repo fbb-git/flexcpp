@@ -1,17 +1,23 @@
 #ifndef INCLUDED_DFAROW_
 #define INCLUDED_DFAROW_
 
-#include <unordered_map>
-
 class DFARow
 {
-    size_t d_final;     // matched rule when this state cannot continue
-    std::unordered_map<size_t, size_t> d_transit;
+    size_t d_finalRule;
     
     public:
-        DFARow();
+        DFARow(States const &states );
 
+        void transitions(std::vector<std::set<size_t>> &stateSet, 
+                         std::set<size_t> const &rowSet,
+                         size_t nRanges)
     private:
+        static void transit(size_t stateIdx,
+                            DFARow &dfaRow, 
+                            std::vector<std::set<size_t>> &stateSet,
+                            std::set<size_t> const &rowSet,
+                            size_t nRanges);
+
 };
         
 #endif

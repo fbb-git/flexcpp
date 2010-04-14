@@ -1,4 +1,19 @@
 #include "dfa.h"
 
+#include <algorithm>
+
+#include <bobcat/fnwrap>
+
+#include "../rules/rules.h"
+#include "../dfarow/dfarow.h"
+#include "../states/states.h"
+
+
 using namespace std;
+using namespace FBB;
+
+inline void DFA::fillStartSet(size_t idx, Rules const &rules, StateSet &start)
+{
+    start.insert(rules[idx].begin());
+}
 

@@ -1,3 +1,10 @@
 This is the DFA class, defining a Flexc++'s dfa matrix. One DFA matrix is
 built for every start state.
 
+The constructor receives the Rules and a vector of rule-numbers to use.
+
+The initial start condition is determined, considing of the start states of
+the DFA's rules.
+
+ the eClosure (ASU, par. 3.6,
+p. 118) of the initial states of the active rules.

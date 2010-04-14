@@ -40,6 +40,8 @@ class Ranges
         void add(std::string const &str);
         void add(size_t ch);
 
+        void size() const;
+
         void display(char const *hdr) const;
 
     private:
@@ -68,5 +70,10 @@ inline void Ranges::swap(Ranges &other)
 {
     FBB::fswap(*this, other);
 }
-        
+
+inline size_t size() const
+{
+    return d_subSets;
+}
+
 #endif
