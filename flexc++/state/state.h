@@ -20,7 +20,7 @@ class State
 
             EMPTY,
             FINAL,
-            STRING,
+            ACCEPT,
             BOL,        // begin of line
             CHARSET,    // string contents of [ ... ]
             EOF__
