@@ -12,12 +12,15 @@ class State;
 class StateData;
 class Ranges
 {
-    size_t *d_ranges;
+    size_t *d_ranges;       // all (by default) 256 characters
     size_t d_size;
 
     size_t d_subsets;
+    size_t d_bol;           // nrs for EOF__ and BOL
+    size_t d_eof;
     States &d_states;
 
+    
     public:
         Ranges(States &states, size_t size = 256);  // default:   
                                                     // 1 << (sizeof(char) * 8)
@@ -40,7 +43,7 @@ class Ranges
         void add(std::string const &str);
         void add(size_t ch);
 
-        void size() const;
+        size_t size() const;
 
         void display(char const *hdr) const;
 
@@ -60,7 +63,7 @@ class Ranges
         static void inspectState(State const &state, Ranges &ranges);
 
 
-        static void finalizeState(State &state, size_t *ranges);
+        static void finalizeState(State &state, Ranges &obj);
         static void addRangeNr(char ch, size_t const *ranges, 
                                       std::set<size_t> &rangeSet);
         static void charsetToRanges(StateData &data, size_t *ranges);
@@ -71,9 +74,9 @@ inline void Ranges::swap(Ranges &other)
     FBB::fswap(*this, other);
 }
 
-inline size_t size() const
+inline size_t Ranges::size() const
 {
-    return d_subSets;
+    return d_subsets;
 }
 
 #endif

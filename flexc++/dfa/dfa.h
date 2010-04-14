@@ -10,20 +10,18 @@ class States;
 
 class DFA
 {
-    States const &d_states;
-
     std::vector<DFARow> d_row;
     typedef std::set<size_t> StateSet;
 
     public:
-        DFA(States const &states);
+        DFA();
 
-        void build(std::vector<size_t> const &active, Rules const &rules);
+        void build(std::vector<size_t> const &active, 
+                   States const &states, Rules const &rules, size_t nRanges);
 
     private:
         static void fillStartSet(size_t idx, Rules const &rules, 
                                                         StateSet &start);
-        StateSet eClosure(StateSet &current);
 };
 
 #endif

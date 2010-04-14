@@ -1,8 +1,8 @@
-#include "dfa.ih"
+#include "states.ih"
 
-DFA::StateSet DFA::eClosure(StateSet &current)
+set<size_t> States::eClosure(set<size_t> &current) const
 {
-    StateSet ret;
+    set<size_t> ret;
     ret.insert(0);      // initialize to state 0, which is never inspected
 
     while (not current.empty())
@@ -10,7 +10,7 @@ DFA::StateSet DFA::eClosure(StateSet &current)
         size_t next = *current.begin();     // pick a state number
         ret.insert(next);                   // add it to the `ret' set
 
-        State const &nextState = d_states[next];
+        State const &nextState = d_state[next];
 
         if (nextState.type() == State::EMPTY)   // e-transition?
         {
@@ -24,5 +24,6 @@ DFA::StateSet DFA::eClosure(StateSet &current)
     }
 
     ret.erase(0);       // erase state 0 again
+
     return ret;
 }

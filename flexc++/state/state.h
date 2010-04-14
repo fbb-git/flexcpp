@@ -28,10 +28,12 @@ class State
 
             EMPTY          =  ACCEPT << 1,      // use as values
             FINAL,
-            BOL,                                // begin of line
             CHARSET,                            // string contents of [ ... ]
-            EOF__
-        };
+
+            BOL,                                // begin of line and
+            EOF__                               // EOF become special chars
+        };                                      // see README
+        
 
         State();
         explicit State(size_t type);
@@ -48,6 +50,10 @@ class State
         void setType(size_t type);      // change the char. type, keep ACCEPT
         void setAccept();               // flag a State as an ACCEPT state
         AcceptType accept() const;      // return accept type
+
+            // true is returned if the state's string contains rangeChar.
+            // Only defined for d_type == CHARSET
+        bool contains(size_t rangeChar) const;
 };
         
 inline StateData &State::data()
@@ -68,7 +74,7 @@ inline size_t State::type() const
 inline State::AcceptType State::accept() const
 {
     return d_type & ACCEPT ?
-                d_data.next2() ? INHERITING : NON_INHERITING
+                d_data->next2() ? INHERITING : NON_INHERITING
             :
                 NONE;
 }

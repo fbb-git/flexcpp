@@ -2,6 +2,7 @@
 #define INCLUDED_STATES_
 
 #include <vector>
+#include <set>
 
 #include "../state/state.h"
 
@@ -27,6 +28,8 @@ class States
         std::vector<State>::const_iterator end() const;
         std::vector<State>::iterator begin();
         std::vector<State>::iterator end();
+
+        std::set<size_t> eClosure(std::set<size_t> &current) const;
 };
 
 inline State &States::operator[](size_t idx)

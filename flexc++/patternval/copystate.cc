@@ -1,6 +1,7 @@
 #include "patternval.ih"
 
-void PatternVal::copyState(pair<size_t, size_t> const &fromTo, 
+void PatternVal::copyState(
+        std::pair<size_t, size_t> const &fromTo, 
                             unordered_map<size_t, size_t> const &old2new,
                             States &states)
 {

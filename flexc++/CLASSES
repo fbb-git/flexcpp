@@ -18,3 +18,4 @@ charclass
 charrange
 ranges
 dfa
+dfarow

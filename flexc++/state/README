@@ -17,3 +17,21 @@ producing the required State object.
 
 State is a traditional class offering pointers. It has a copy constructor,
 overloaded assignment operator and swap-functionality.
+
+
+The special characters BOL and EOF__
+====================================
+
+The special characters BOL and EOF__ are transformed by Ranges to d_nsubsets +
+1 and d_nsubsets + 2 and are entering the DFA as normal characters.
+
+However, when lex() executes it will inspect the DFA for a BOL transition when
+called following the processing of a \n character. If the DFA contains a BOL
+it handles that transition and only then it will process the next character
+from its input buffer. If the DFA does not contain a BOL transition the next
+character is directly processed.
+
+If an EOF is returned and the DFA contains an EOF transition it will perform
+that transition. If not and there are files on the FileInfo stack the next
+file is popped and processing continues with the next available character. If
+neither takes place lex returns -1.

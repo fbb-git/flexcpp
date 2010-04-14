@@ -1,12 +1,28 @@
 #include "ranges.ih"
 
-void Ranges::finalizeState(State &state, size_t *ranges)
+void Ranges::finalizeState(State &state, Ranges &obj)
 {
-    size_t type = state.type();
+    switch (size_t type = state.type())
+    {
+        case State::CHARSET:
+            charsetToRanges(state.data(), obj.d_ranges);
+        break;
 
-    if (type < State::UNDETERMINED__)
-        state.setType(ranges[type]);
+        case State::BOL:
+            if (obj.d_bol == 0)
+                obj.d_bol = ++obj.d_subsets;
+            state.setType(obj.d_bol);
+        break;
 
-    else if (type == State::CHARSET)
-        charsetToRanges(state.data(), ranges);
+        case State::EOF__:
+            if (obj.d_eof == 0)
+                obj.d_eof = ++obj.d_subsets;
+            state.setType(obj.d_eof);
+        break;
+
+        default:
+            if (type < State::UNDETERMINED__)
+                state.setType(obj.d_ranges[type]);
+        break;
+    }
 }

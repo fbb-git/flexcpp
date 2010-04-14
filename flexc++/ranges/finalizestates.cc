@@ -12,5 +12,5 @@
 void Ranges::finalizeStates()
 {
     for_each(d_states.begin(), d_states.end(), 
-                                FnWrap::unary(finalizeState, d_ranges));
+                                FnWrap::unary(finalizeState, *this));
 }
