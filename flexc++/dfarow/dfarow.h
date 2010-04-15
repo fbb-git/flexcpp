@@ -22,8 +22,9 @@ class DFARow
     typedef std::vector<StateSet> StateSetVector;
 
     size_t d_finalRule;                     // Final state for which rule?
+
         // Accept state and type for which rule(s)?
-    std::vector<std::pair<size_t, size_t>> d_acceptRules;   
+    std::set<std::pair<size_t, size_t>> d_acceptRules;   
 
     std::unordered_map<size_t, size_t> d_map;   // Relate input symbols (key) 
                                                 // to the row to transit to 

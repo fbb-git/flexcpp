@@ -3,16 +3,15 @@
 // States:
 //          B1 -> E1  and B2 -> E2
 // becomes:
-//          B1 -> B2 -> E2
-//  E1 is no longer used and is collected by States
+//          B1 -> E1 -e-> B2 -> E2
 
 spSemVal PatternVal::concatenate(States &states, SemVal &left, SemVal &right)
 {
     PatternVal &lhs = downCast<PatternVal>(left);
     PatternVal &rhs = downCast<PatternVal>(right);
 
-    states.collect(lhs.end());
-    states[lhs.begin()].data().set(rhs.begin());
+    states[lhs.end()].data().set(rhs.begin());
+    states[lhs.end()].setType(State::EMPTY);
 
     spSemVal ret(new PatternVal( {lhs.begin(), rhs.end()} ));
 

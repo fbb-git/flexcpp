@@ -1,5 +1,7 @@
 #include "dfa.ih"
 
+#include <iostream>
+
 void DFA::build(string const &ruleSet, Rules const &rules, 
                 States const &states)    
 {
@@ -10,8 +12,15 @@ void DFA::build(string const &ruleSet, Rules const &rules,
     for_each(active.begin(), active.end(),          // compute the startSet  
         FnWrap::unary(fillStartSet, rules, stateSet[0]));
 
-    stateSet[0] = states.eClosure(stateSet[0]);     // compute the e-closure
+    bool twoEdges = false;
+    bool inheriting = false;
+
+    stateSet[0] = states.eClosure(stateSet[0], twoEdges,
+                                    inheriting);    // compute the e-closure
                                                     // of the start-set
+    if (inheriting)
+        cout << "INHERITING ACCEPT STATE\n";
+
 
     while (d_row.size() != stateSet.size())         // as long as we haven't
     {                                               // checked all state sets

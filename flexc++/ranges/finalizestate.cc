@@ -26,3 +26,4 @@ void Ranges::finalizeState(State &state, Ranges &obj)
         break;
     }
 }
+

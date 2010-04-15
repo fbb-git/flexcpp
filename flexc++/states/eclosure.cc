@@ -2,10 +2,12 @@
 
 #include <iostream>
 
-set<size_t> States::eClosure(set<size_t> &current) const
+// Starting at a state, if it has two edges, and an e-transition reaches an
+// accept-state then that set becomes an inheriting accept set
+//
+set<size_t> States::eClosure(set<size_t> &current, bool &twoEdges,
+                                                    bool &inheriting) const
 {
-//cerr << "E-closure:\n";
-
     set<size_t> ret;
     ret.insert(0);      // initialize to state 0, which is never inspected
 
@@ -13,25 +15,24 @@ set<size_t> States::eClosure(set<size_t> &current) const
     {
         size_t next = *current.begin();     // pick a state number
         ret.insert(next);                   // add it to the `ret' set
-//cerr << "   inspect " << next << '\n';
 
         State const &nextState = d_state[next];
 
+        if (twoEdges && nextState.accept() != State::NONE)
+            inheriting = true;
+
         if (nextState.type() == State::EMPTY)   // e-transition?
         {
-//cerr << "   empty transition, add: " << nextState.data().next1() << " and " <<
-//                                        nextState.data().next2() << '\n';
+            current.insert(nextState.next1());   // if so, add the 
+            current.insert(nextState.next2());   //  next states
 
-            current.insert(nextState.data().next1());   // if so, add the 
-            current.insert(nextState.data().next2());   //  next states
+            if (nextState.next2() != 0)
+                twoEdges = true;
         }
                                             // remove states already in the 
                                             // `ret' set from current
         for (auto iter = ret.begin(), end = ret.end(); iter != end; ++iter)
-{
-//cerr << "erase: " << *iter << '\n';
             current.erase(*iter);
-}
     }
 
     ret.erase(0);       // erase state 0 again

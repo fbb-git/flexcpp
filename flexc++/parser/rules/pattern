@@ -111,7 +111,7 @@ pattern:
 |
     '(' incParen pattern ')' decParen
     {
-        $$ = $2;
+        $$ = $3;
     }    
 |
     pattern '{' start_interval_m  interval '}' regex_block_m

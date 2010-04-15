@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <climits>
+#include <sstream>
 
 #include <bobcat/fnwrap>
 #include <bobcat/table>

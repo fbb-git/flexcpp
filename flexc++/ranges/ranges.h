@@ -10,8 +10,11 @@
 class States;
 class State;
 class StateData;
+
 class Ranges
 {
+    friend std::ostream &operator<<(std::ostream &out, Ranges const &ranges);
+
     size_t *d_ranges;       // all (by default) 256 characters
     size_t d_size;
 
@@ -32,6 +35,7 @@ class Ranges
         Ranges &operator=(Ranges const &&tmp);
 
         void swap(Ranges &other);
+
         void determineSubsets();
         void finalizeStates();      // all chars, strings and sets are 
                                     // converted to character sets.

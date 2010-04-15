@@ -4,6 +4,9 @@
 #include <iomanip>
 #include <cctype>
 
+#include <iterator>
+#include <algorithm>
+
 ostream &operator<<(ostream &out, Ranges const &ranges)
 {
     out << "Nsubsets: " << ranges.size() << '\n';
