@@ -1,6 +1,7 @@
 #ifndef INCLUDED_DFA_
 #define INCLUDED_DFA_
 
+#include <iosfwd>
 #include <vector>
 #include <string>
 #include <set>
@@ -12,18 +13,23 @@ class States;
 
 class DFA
 {
+    friend std::ostream &operator<<(std::ostream & out, DFA const &dfa);
+
+    size_t d_nRanges;
+
     std::vector<DFARow> d_row;
     typedef std::set<size_t> StateSet;
 
     public:
-        DFA();
+        DFA(size_t nRanges);
 
         void build(std::string const &ruleSet, Rules const &rules, 
-                   States const &states, size_t nRanges);
+                   States const &states);
 
     private:
         static void fillStartSet(size_t idx, Rules const &rules, 
                                              StateSet &start);
 };
+
 
 #endif

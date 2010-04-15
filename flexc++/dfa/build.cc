@@ -1,7 +1,7 @@
 #include "dfa.ih"
 
 void DFA::build(string const &ruleSet, Rules const &rules, 
-                States const &states, size_t nRanges)    
+                States const &states)    
 {
     vector<size_t> const &active = rules(ruleSet);
 
@@ -17,7 +17,7 @@ void DFA::build(string const &ruleSet, Rules const &rules,
     {                                               // checked all state sets
             // add another row and determine transitions 
         d_row.push_back(DFARow(rules, states, stateSet, d_row.size(),
-                              nRanges));
+                              d_nRanges));
                                                     
         d_row.back().transitions();
     }

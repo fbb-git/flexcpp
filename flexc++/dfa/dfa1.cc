@@ -1,4 +1,6 @@
 #include "dfa.ih"
 
-DFA::DFA()
+DFA::DFA(size_t nRanges)
+:
+    d_nRanges(nRanges)
 {}

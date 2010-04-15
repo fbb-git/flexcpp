@@ -4,6 +4,7 @@
 #include <climits>
 
 #include <bobcat/fnwrap>
+#include <bobcat/table>
 
 #include "../states/states.h"
 #include "../rules/rules.h"

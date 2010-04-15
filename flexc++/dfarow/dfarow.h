@@ -1,15 +1,23 @@
 #ifndef INCLUDED_DFAROW_
 #define INCLUDED_DFAROW_
 
+#include <iosfwd>
 #include <set>
 #include <vector>
 #include <unordered_map>
+
+namespace FBB
+{
+    class Table;
+}
 
 class States;
 class Rules;
 
 class DFARow
 {
+    friend std::ostream &operator<<(std::ostream & out, DFARow const &row);
+
     typedef std::set<size_t> StateSet;
     typedef std::vector<StateSet> StateSetVector;
 
@@ -17,8 +25,9 @@ class DFARow
         // Accept state and type for which rule(s)?
     std::vector<std::pair<size_t, size_t>> d_acceptRules;   
 
-    std::unordered_map<size_t, size_t> d_map;   // Relate input symbols to
-                                                // the rows to transit to.
+    std::unordered_map<size_t, size_t> d_map;   // Relate input symbols (key) 
+                                                // to the row to transit to 
+                                                // (value)
 
     States const *d_states;                 // using ptrs so no op= needs
     StateSetVector *d_stateSets;            // to be implemented
@@ -42,6 +51,8 @@ class DFARow
 
             // visit all states of this row and determine their transitions
         void transitions(); 
+
+        void tabulate(FBB::Table &table) const;
 
     private:
             // determine the eClosure of a set of transitions for each of the
