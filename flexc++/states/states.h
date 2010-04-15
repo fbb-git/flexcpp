@@ -1,6 +1,7 @@
 #ifndef INCLUDED_STATES_
 #define INCLUDED_STATES_
 
+#include <iosfwd>
 #include <vector>
 #include <set>
 
@@ -30,6 +31,7 @@ class States
         std::vector<State>::iterator end();
 
         std::set<size_t> eClosure(std::set<size_t> &current) const;
+        size_t size() const;
 };
 
 inline State &States::operator[](size_t idx)
@@ -62,10 +64,19 @@ inline std::vector<State>::iterator States::end()
     return d_state.end();
 }
 
+inline size_t States::size() const
+{
+    return d_state.size();
+}
+
+
 inline void States::collect(size_t idx)
 {
     return d_free.push_back(idx);
 }
+
+std::ostream &operator<<(std::ostream &out, States const &states);
+
 
 #endif
 

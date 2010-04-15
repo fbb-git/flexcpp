@@ -1,6 +1,7 @@
 #ifndef INCLUDED_RULES_
 #define INCLUDED_RULES_
 
+#include <iosfwd>
 #include <vector>
 #include <string>
 #include <unordered_map>
@@ -12,6 +13,8 @@ class States;
 
 class Rules
 {
+    friend std::ostream &operator<<(std::ostream &out, Rules const &rules);
+
     typedef std::pair<size_t, size_t> Pair;
 
     States const &d_states;

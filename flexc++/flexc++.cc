@@ -74,7 +74,10 @@ try
     Ranges ranges(states);
         ranges.determineSubsets();
         ranges.finalizeStates();
-        ranges.display("Character ranges:");
+
+    cout << "RANGES:\n" << ranges << '\n' <<
+            "RULES:\n" << rules << '\n' <<
+            "STATES:\n" << states << '\n';
 
     DFA dfa;
         dfa.build("INITIAL", rules, states, ranges.size());

@@ -1,32 +1,60 @@
 #include "dfarow.ih"
 
-// visit all input character ranges
-// for each input character range visit all states of the current set
-// if a transition add the state to transit to to the next set and add (for
-// each input character the next set of states to the stateSets, unless it is
-// already there.
+// visit all ranges of input characters
+//
+// for each range value visit all states of the current set
+// 
+// if a transition exists, add the state to transit to to the next set 
+// 
+// having visited all states for the current input char, compute the e-closure
+// of the new set and determine its index in the stateSets.
+//
+// add the input character and the just determined index to the current row's
+// d_map. 
+
+#include <iostream>
+#include <algorithm>
+#include <iterator>
 
 void DFARow::transitions()
 {
-    StateSet &thisSet = (*d_stateSets)[d_thisIdx];
-
-    for (size_t nr = 0; nr++ != d_nRanges; )
+        // visit all ranges of input characters
+    for (size_t nr = 0; nr++ != d_nRanges; )    
     {
-        StateSet nextSet;
-                                        // determine all non-e transitions 
-                                        // from this set of states
+        StateSet &thisSet = (*d_stateSets)[d_thisIdx];
+
+        StateSet nextSet;               // start a new set
+
+            // visit all states of thisSet. Add the sets to transit to on the
+            // current input character `nr' to the next set
         for_each(thisSet.begin(), thisSet.end(), 
                                  FnWrap::unary(transit, *this, nr, nextSet));
 
         nextSet = d_states->eClosure(nextSet);
 
+        if (nextSet.empty())
+            continue;
+
         auto iter = find(d_stateSets->begin(), d_stateSets->end(), nextSet);
 
-                                        // if not yet in d_stateSets add it.
-        if (iter == d_stateSets->end())
+            // if not yet in d_stateSets add it.
+        size_t idx;
+        if (iter != d_stateSets->end()) 
+            idx = iter - d_stateSets->begin();
+        else
+        {
+            idx = d_stateSets->size();
             d_stateSets->push_back(nextSet);
-
-                                        // add the transition
-        d_map[nr] = iter - d_stateSets->begin();
+        }
+        d_map[nr] = idx;                // add the transition
     }
 }
+
+
+
+
+
+
+
+
+

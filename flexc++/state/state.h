@@ -45,6 +45,9 @@ class State
         static State factory(unsigned char ch, size_t next1);
 
         StateData &data();
+        size_t next1() const;
+        size_t next2() const;
+
         StateData const &data() const;
         size_t type() const;            // if < UNDETERMINED__ it's a char
         void setType(size_t type);      // change the char. type, keep ACCEPT
@@ -64,6 +67,16 @@ inline StateData &State::data()
 inline StateData const &State::data() const
 {
     return *d_data;
+}
+
+inline size_t State::next1() const
+{
+    return d_data->next1();
+}
+
+inline size_t State::next2() const
+{
+    return d_data->next2();
 }
 
 inline size_t State::type() const
@@ -88,6 +101,9 @@ inline void State::setType(size_t type)
 {
     d_type = type | (d_type & ACCEPT);
 }
+
+std::ostream &operator<<(std::ostream &out, State const &state);
+
 
 #endif
 

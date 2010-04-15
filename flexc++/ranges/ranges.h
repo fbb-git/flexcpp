@@ -40,13 +40,15 @@ class Ranges
                                     // collision with the special characters
                                     // like EMPTY and FINAL.
 
+        size_t rangeOf(char ch) const;
+        size_t rangeOfBOL() const;
+        size_t rangeOfEOF() const;
+
         void add(std::string const &str);
         void add(size_t ch);
 
         size_t size() const;
-
-        void display(char const *hdr) const;
-
+        
     private:
         static void incIf(char const &ch, size_t *next);
 
@@ -78,5 +80,22 @@ inline size_t Ranges::size() const
 {
     return d_subsets;
 }
+
+inline size_t Ranges::rangeOf(char ch) const
+{
+    return d_ranges[static_cast<unsigned char>(ch)];
+}
+
+inline size_t Ranges::rangeOfBOL() const
+{
+    return d_bol;
+}
+
+inline size_t Ranges::rangeOfEOF() const
+{
+    return d_eof;
+}
+
+std::ostream &operator<<(std::ostream &out, Ranges const &ranges);
 
 #endif

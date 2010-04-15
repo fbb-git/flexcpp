@@ -16,3 +16,5 @@ inline void DFA::fillStartSet(size_t idx, Rules const &rules, StateSet &start)
     start.insert(rules[idx].startState());
 }
 
+#include <iostream>
+#include <iterator>

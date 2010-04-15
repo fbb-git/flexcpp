@@ -25,6 +25,8 @@ inline size_t Rule::accept() const
     return d_accept;
 }
 
+std::ostream &operator<<(std::ostream &out, Rule const &rule);
+
 #endif
 
 
