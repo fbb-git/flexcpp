@@ -42,9 +42,10 @@ class StartConditions
         void reset();
         void useAll();
         void activate(SemVal const &name);
-        void setInitialSC();
+        void useInitialSC();
         Hash::const_iterator begin() const;
         Hash::const_iterator end() const;
+        std::vector<size_t> const &operator()(std::string const &name) const;
 
     private:
         static void addVector(Hash::value_type &mini, 
@@ -55,7 +56,7 @@ class StartConditions
 
 
     // set by the parser at the section change (%%)
-inline void StartConditions::setInitialSC() 
+inline void StartConditions::useInitialSC() 
 {
     d_initialSC = &d_hash.find("INITIAL")->second;
 }
@@ -70,6 +71,13 @@ inline void StartConditions::reset()
     d_active.clear();
     d_inclusive = false;
 }
+
+inline std::vector<size_t> const &StartConditions::operator()
+                                            (std::string const &name) const
+{
+    return d_hash.find(name)->second.d_rules;
+}
+
 
 // Allow for iterations over all elements of the vectors of all
 //  startconditions

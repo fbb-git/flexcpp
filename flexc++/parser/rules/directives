@@ -29,25 +29,25 @@ start_condition_type:
     INCL_START_CONDITION 
     start_condition_name_m
     {
-        d_startConditions.setType(StartConditions::INCLUSIVE);
+        d_rules.setType(StartConditions::INCLUSIVE);
     }
 |
     EXCL_START_CONDITION 
     start_condition_name_m
     {
-        d_startConditions.setType(StartConditions::EXCLUSIVE);
+        d_rules.setType(StartConditions::EXCLUSIVE);
     }
 ;
 
 start_condition_names:
     start_condition_names name
     {
-        d_startConditions.add(*$2);
+        d_rules.addStartCondition(*$2);
     }
 |
     name
     {
-        d_startConditions.add(*$1);
+        d_rules.addStartCondition(*$1);
     }
 ;
 

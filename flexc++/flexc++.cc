@@ -78,6 +78,8 @@ try
 
     ranges.display("Character ranges:");
 
+    DFA dfa;
+    dfa.build("INITIAL", rules, states, ranges.size());
 }
 catch (int x)
 {

@@ -1,8 +1,10 @@
 #include "dfa.ih"
 
-void DFA::build(vector<size_t> const &active, States const &states, 
-                Rules const &rules, size_t nRanges)    
+void DFA::build(string const &ruleSet, Rules const &rules, 
+                States const &states, size_t nRanges)    
 {
+    vector<size_t> const &active = rules(ruleSet);
+
     vector<StateSet> stateSet(1);
 
     for_each(active.begin(), active.end(),          // compute the startSet  

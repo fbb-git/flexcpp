@@ -28,12 +28,12 @@ rule_definition:
 startcondition_scope:
     startcondition '{' regex_m opt_rules '}'
     {
-        d_startConditions.reset();
+        d_rules.resetStartConditions();
     }
 |
     startcondition rule
     {
-        d_startConditions.reset();
+        d_rules.resetStartConditions();
     }
 ;
 
@@ -47,7 +47,7 @@ startcondition_spec:
 |
     '*'
     {
-        d_startConditions.useAll();
+        d_rules.useAll();
     }
 ;
 
@@ -60,7 +60,7 @@ startcondition_list:
 miniscanner:
     name
     {
-        d_startConditions.activate(*$1);
+        d_rules.activateStartCondition(*$1);
     }
 ;
 
@@ -68,16 +68,12 @@ miniscanner:
 rule:
     pattern_ws BLOCK
     {
-        d_startConditions.add(
-            d_rules.add(SemVal::downCast<PatternVal>(*$1).pair(), 
-                    d_accept, d_scanner.block())
-        );
+        d_rules.add(SemVal::downCast<PatternVal>(*$1).pair(), 
+                    d_accept, d_scanner.block());
     }
 |
     pattern_ws
     {
-        d_startConditions.add(
-            d_rules.add(SemVal::downCast<PatternVal>(*$1).pair(), d_accept)
-        );
+        d_rules.add(SemVal::downCast<PatternVal>(*$1).pair(), d_accept);
     }
 ;

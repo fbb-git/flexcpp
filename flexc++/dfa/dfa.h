@@ -2,11 +2,13 @@
 #define INCLUDED_DFA_
 
 #include <vector>
+#include <string>
 #include <set>
 
-class DFARow;
 class Rules;
 class States;
+
+#include "../dfarow/dfarow.h"
 
 class DFA
 {
@@ -16,12 +18,12 @@ class DFA
     public:
         DFA();
 
-        void build(std::vector<size_t> const &active, 
-                   States const &states, Rules const &rules, size_t nRanges);
+        void build(std::string const &ruleSet, Rules const &rules, 
+                   States const &states, size_t nRanges);
 
     private:
         static void fillStartSet(size_t idx, Rules const &rules, 
-                                                        StateSet &start);
+                                             StateSet &start);
 };
 
 #endif

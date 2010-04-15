@@ -10,8 +10,6 @@
 // $insert scanner.h
 #include "../scanner/scanner.h"
 
-#include "../startconditions/startconditions.h"
-
 namespace FBB
 {
     class Arg;
@@ -40,7 +38,6 @@ class Parser: public ParserBase
 
     Rules &d_rules;
     States &d_states;
-    StartConditions d_startConditions;
 
     static int s_ignoreToken;
     static std::string s_lastMsg;

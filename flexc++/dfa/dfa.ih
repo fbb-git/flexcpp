@@ -5,7 +5,6 @@
 #include <bobcat/fnwrap>
 
 #include "../rules/rules.h"
-#include "../dfarow/dfarow.h"
 #include "../states/states.h"
 
 

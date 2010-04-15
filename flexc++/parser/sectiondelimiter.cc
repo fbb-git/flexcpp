@@ -2,5 +2,5 @@
 
 void Parser::sectionDelimiter()
 {
-    d_startConditions.setInitialSC();
+    d_rules.useInitialSC();
 }
