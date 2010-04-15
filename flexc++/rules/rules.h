@@ -8,22 +8,31 @@
 #include "../startconditions/startconditions.h"
 #include "../rule/rule.h"
 
+class States;
+
 class Rules
 {
     typedef std::pair<size_t, size_t> Pair;
 
+    States const &d_states;
+
     std::vector<Rule> d_rules;
     std::unordered_map<size_t, size_t>  d_reverse;  // from FINAL state to
                                                     // Rule index
-
+    std::unordered_map<size_t, size_t>  d_reverseAccept;  
+                                                    // from accept state to
+                                                    // Rule index
     StartConditions d_startConditions;
 
     public:
-        Rules();
+        Rules(States const &states);
 
         void add(Pair const &pair, size_t accept,
                                      std::string const &action = "");
         Rule const &operator[](size_t idx) const;
+
+        size_t hasFinalState(size_t stateIdx) const;
+        size_t hasAcceptState(size_t stateIdx) const;
 
         void setType(StartConditions::Type type);
         void addStartCondition(SemVal const &name);
@@ -35,6 +44,15 @@ class Rules
         void useInitialSC();
 };
         
+inline size_t Rules::hasFinalState(size_t stateIdx) const
+{
+    return d_reverse.find(stateIdx)->second;
+}
+
+inline size_t Rules::hasAcceptState(size_t stateIdx) const
+{
+    return d_reverseAccept.find(stateIdx)->second;
+}
 
 inline Rule const &Rules::operator[](size_t idx) const
 {

@@ -1,10 +1,12 @@
 #include "dfarow.h"
 
 #include <algorithm>
+#include <climits>
 
 #include <bobcat/fnwrap>
 
 #include "../states/states.h"
+#include "../rules/rules.h"
 
 using namespace std;
 using namespace FBB;

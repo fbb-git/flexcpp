@@ -16,7 +16,7 @@ void DFA::build(string const &ruleSet, Rules const &rules,
     while (d_row.size() != stateSet.size())         // as long as we haven't
     {                                               // checked all state sets
             // add another row and determine transitions 
-        d_row.push_back(DFARow(states, stateSet, d_row.size() - 1,
+        d_row.push_back(DFARow(rules, states, stateSet, d_row.size() - 1,
                               nRanges));
                                                     
         d_row.back().transitions();

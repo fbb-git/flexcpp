@@ -1,6 +1,7 @@
 #include "rules.ih"
 
-Rules::Rules()
-//:
+Rules::Rules(States const &states)
+:
+    d_states(states)
 {
 }

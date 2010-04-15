@@ -66,20 +66,18 @@ try
     arg.versionHelp(usage, version, 1);
 
     States states;
-    Rules rules;
+    Rules rules(states);
 
     Parser parser(rules, states);
-
-    parser.parse();
+        parser.parse();
 
     Ranges ranges(states);
-    ranges.determineSubsets();
-    ranges.finalizeStates();
-
-    ranges.display("Character ranges:");
+        ranges.determineSubsets();
+        ranges.finalizeStates();
+        ranges.display("Character ranges:");
 
     DFA dfa;
-    dfa.build("INITIAL", rules, states, ranges.size());
+        dfa.build("INITIAL", rules, states, ranges.size());
 }
 catch (int x)
 {

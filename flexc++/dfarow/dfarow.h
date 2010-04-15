@@ -6,6 +6,7 @@
 #include <unordered_map>
 
 class States;
+class Rules;
 
 class DFARow
 {
@@ -13,19 +14,22 @@ class DFARow
     typedef std::vector<StateSet> StateSetVector;
 
     size_t d_finalRule;                     // Final state for which rule?
-    std::vector<size_t> d_acceptRules;      // Accept state for which rule(s)?
+        // Accept state and type for which rule(s)?
+    std::vector<std::pair<size_t, size_t>> d_acceptRules;   
 
     std::unordered_map<size_t, size_t> d_map;   // Relate input symbols to
                                                 // the rows to transit to.
 
     States const *d_states;                 // using ptrs so no op= needs
     StateSetVector *d_stateSets;            // to be implemented
+    Rules const *d_rules;
 
     size_t d_thisIdx;
     size_t d_nRanges;
 
     public:
         DFARow(
+            Rules const &rules,
                 // all States
             States const &states,            
                 // sets of state nrs defining the rows of the DFA

@@ -11,12 +11,24 @@ class Rule
 
     public:
         Rule(size_t start = 0, size_t accept = 0, std::string action = "");
-        size_t begin() const;
+        size_t startState() const;
+        size_t accept() const;
 };
 
-inline size_t Rule::begin() const
+inline size_t Rule::startState() const
 {
     return d_start;
 }
 
+inline size_t Rule::accept() const
+{
+    return d_accept;
+}
+
 #endif
+
+
+
+
+
+
