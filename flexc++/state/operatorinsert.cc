@@ -13,8 +13,7 @@ ostream &operator<<(ostream &out, State const &state)
 
     State::Accept at = state.accept();
 
-    out << (at == State::NONE ? ' ' : at == State::INHERITING ? 'I' : 'N') <<
-           ' ';
+    out << (at == State::NONE ? ' ' : 'A') << ' ';
 
     if (type < State::UNDETERMINED__)
         out << type;

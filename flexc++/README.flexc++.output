@@ -1,0 +1,89 @@
+Here is an example of elements of flexc++'s output:
+
+Character ranges appear as follows:
+
+RANGES:
+Nsubsets: 5
+ 1:   0      -  96('`')
+ 2:  97('a') -  97('a')
+ 3:  98('b') -  98('b')
+ 4:  99('c') - 255
+BOL: 5
+
+This means: The DFA will use at most 5 input columns. Each input category
+becomes a column in the DFA. BOL (and EOF) get their own input category, and
+in the above table all chars up to 'a' are mapped to input category 1, 'a' is
+mapped to 2, 'b' to 3, 'c' and beyond to 4. Input category 0 is not used.
+
+
+-----------------------------------------------------------
+RULES:
+0: 6 (3)
+1: 8 (7)
+
+This means: There are two rules. Rule 0 starts at State 6, and its accepting
+state is state 3. Rule 1 starts at 8 and its accepting state is state 7.
+
+Accepting states (between parentheses) are omitted if equal to the rule's
+final state.
+
+------------------------------------------------------------
+STATES:
+1:   E -> 2, 3
+2:   2 -> 1, 0
+3: A 2 -> 4, 0
+4:   F -> 0, 0
+5:   E -> 2, 0
+6:   5 -> 5, 0
+7: A E -> 10, 0
+8:   3 -> 7, 0
+9:   E -> 10, 11
+10:   3 -> 9, 0
+11:   F -> 0, 0
+
+This means: there are 11 states (state 0 is not used). 
+    The first column is the state number. 
+    The second column (mostly empty) holds an A (for ACCEPT state) if the rule
+        represents an accepting state in a lookahead pattern.
+    The third column holds an 
+            E if the state is an EMPTY edge, 
+            F if the state is a FINAL state, 
+            S if the state's transitions are on a set of input
+                ranges. The state's edge(s) are taken on any of the input
+                ranges that are then shown at the end of the line between [..]
+        or  a numeric value representing an input range upon which the state's
+               edge(s) are taken.
+    The fourth column is an arrow pointing to the state(s) to transit to
+    The fifth and sixth columns are states to transit to. State 0 means: no
+        transition. 
+    The seventh column is only used with S states and contains the character
+        ranges for which the state's transition is performed.
+
+------------------------------------------------------------
+DFA INITIAL:
+-----------------------
+   2  3  5  F  ACCEPT  
+   --------------------
+0     1  2             
+1     3        N,1     
+2  4                   
+3     3     1          
+4  5           I,0     
+5  5        0  I,0     
+-----------------------
+
+This means: the INITIAL DFA. Its first row shows the (used) character
+ranges. In the example transitions on characters in the ranges 1 and 4 aren't
+defined (and would probably result in copying the received character to cerr
+if encountered when the DFA is processed by lex).
+
+Following the character ranges a column F defines the rows that are FINAL
+rows for rules. E.g., row 3 is a FINAL row for rule 1. Finally, ACCEPT defines
+the rows that are accepting-rows. Rule numbers and type of accepting states
+are defined. E.g., row 1 is N,1, indicating that this row is an NON-inheriting
+ACCEPTing row for rule 1; row 4 is I,0, indicating that this row is an
+INHERITING ACCEPTing row for rule 0.
+
+The table's contents is a plain transition table. E.g., starting at row 0,
+when an input character in category 3 is received, transit to row 1.
+
