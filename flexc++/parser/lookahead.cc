@@ -23,7 +23,7 @@ spSemVal Parser::lookahead(SemVal &left, SemVal &right)
     PatternVal &lval = SemVal::downCast<PatternVal>(left);
 
     d_accept = lval.end();
-    d_states[d_accept].setAccept();
+    d_states[d_accept].setAccept(State::NON_INHERITING);
 
     spSemVal ret = PatternVal::concatenate(d_states, left, right);
 

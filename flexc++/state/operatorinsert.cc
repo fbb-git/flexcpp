@@ -11,7 +11,7 @@ ostream &operator<<(ostream &out, State const &state)
     if (type == State::UNDETERMINED__)
         return(out);
 
-    State::AcceptType at = state.accept();
+    State::Accept at = state.accept();
 
     out << (at == State::NONE ? ' ' : at == State::INHERITING ? 'I' : 'N') <<
            ' ';

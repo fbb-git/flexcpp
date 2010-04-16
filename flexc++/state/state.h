@@ -10,23 +10,16 @@ class State
 {
     typedef char Alphabet;
 
-    size_t d_type;
     std::shared_ptr<StateData> d_data;
 
-    public:
-        enum AcceptType
-        {
-            NONE,
-            NON_INHERITING,
-            INHERITING
-        };
+    size_t d_type;      // below UNDETERMINED__: a simple character or 
+                        // character range value
 
-        enum Type       // values in the Alphabet range are simple character
+    public:
+        enum Type       // values in the Alphabet range are simple characters
         {
             UNDETERMINED__ =  1 << (8 * sizeof(Alphabet)),
-            ACCEPT         =  UNDETERMINED__ << 1,  // use as flag
-
-            EMPTY          =  ACCEPT << 1,      // use as values
+            EMPTY,                              
             FINAL,
             CHARSET,                            // string contents of [ ... ]
 
@@ -34,7 +27,17 @@ class State
             EOF__                               // EOF become special chars
         };                                      // see README
         
+        enum Accept
+        {
+            NONE,
+            NON_INHERITING,
+            INHERITING
+        };
 
+    private:
+        Accept d_accept;
+
+    public:
         State();
         explicit State(size_t type);
         State(size_t type, StateData *data);  // State will own the data
@@ -50,9 +53,9 @@ class State
 
         StateData const &data() const;
         size_t type() const;            // if < UNDETERMINED__ it's a char
-        void setType(size_t type);      // change the char. type, keep ACCEPT
-        void setAccept();               // flag a State as an ACCEPT state
-        AcceptType accept() const;      // return accept type
+        void setType(size_t type);      // change the char. type
+        void setAccept(Accept type);    // Set a State's Accept type
+        Accept accept() const;          // return Accept type
 
             // true is returned if the state's string contains rangeChar.
             // Only defined for d_type == CHARSET
@@ -81,25 +84,22 @@ inline size_t State::next2() const
 
 inline size_t State::type() const
 {
-    return d_type & ~ACCEPT;
-}
-
-inline State::AcceptType State::accept() const
-{
-    return d_type & ACCEPT ?
-                d_data->next2() ? INHERITING : NON_INHERITING
-            :
-                NONE;
-}
-
-inline void State::setAccept()
-{
-    d_type |= ACCEPT;
+    return d_type;
 }
 
 inline void State::setType(size_t type)
 {
-    d_type = type | (d_type & ACCEPT);
+    d_type = type;
+}
+
+inline State::Accept State::accept() const
+{
+    return d_accept;
+}
+
+inline void State::setAccept(Accept type)
+{
+    d_accept = type;
 }
 
 std::ostream &operator<<(std::ostream &out, State const &state);
