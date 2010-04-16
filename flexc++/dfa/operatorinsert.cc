@@ -16,7 +16,7 @@ ostream &operator<<(ostream &out, DFA const &dfa)
     table << Align(nCols - 1, std::left);
 
 
-    table << " ";                                   // char-ranges display
+    table << "   ";                                // char-ranges display
     for (size_t idx = 0, end = dfa.d_ranges.size(); idx++ != end; )
     {
         if (dfa.d_ranges.used(idx))
