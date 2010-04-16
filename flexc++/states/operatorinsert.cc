@@ -7,6 +7,9 @@
 ostream &operator<<(ostream &out, States const &states)
 {
     for (size_t idx = 0, end = states.size(); idx != end; ++idx)
-        out << idx << ": " << states[idx] << '\n';
+    {
+        if (states[idx].type() != State::UNDETERMINED__)
+            out << idx << ": " << states[idx] << '\n';
+    }
     return out;
 }

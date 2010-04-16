@@ -24,8 +24,6 @@ ostream &operator<<(ostream & out, DFA const &dfa)
         table << idx;
         dfa.d_row[idx].tabulate(table);
     }
-
-        
     out << table << '\n';
 
     return out;

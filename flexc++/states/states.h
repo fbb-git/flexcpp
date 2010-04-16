@@ -70,12 +70,6 @@ inline size_t States::size() const
     return d_state.size();
 }
 
-
-inline void States::collect(size_t idx)
-{
-    return d_free.push_back(idx);
-}
-
 std::ostream &operator<<(std::ostream &out, States const &states);
 
 
