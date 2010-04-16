@@ -13,6 +13,7 @@ namespace FBB
 
 class States;
 class Rules;
+class Ranges;
 
 class DFARow
 {
@@ -33,6 +34,7 @@ class DFARow
     States const *d_states;                 // using ptrs so no op= needs
     StateSetVector *d_stateSets;            // to be implemented
     Rules const *d_rules;
+    Ranges *d_ranges;
 
     size_t d_thisIdx;
     size_t d_nRanges;
@@ -46,8 +48,8 @@ class DFARow
             StateSetVector &stateSets, 
                 // index in the DFA (and in stateSets) of this row
             size_t thisIdx,
-                // number of character ranges
-            size_t nRanges
+                // info about used character ranges
+            Ranges &ranges
         );
 
             // visit all states of this row and determine their transitions

@@ -1,6 +1,6 @@
 #include "dfa.ih"
 
-DFA::DFA(size_t nRanges)
+DFA::DFA(Ranges &ranges)
 :
-    d_nRanges(nRanges)
+    d_ranges(ranges)
 {}

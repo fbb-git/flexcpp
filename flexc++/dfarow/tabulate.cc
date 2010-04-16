@@ -2,8 +2,11 @@
 
 void DFARow::tabulate(Table &table) const
 {
-    for (size_t idx = 0; idx++ != d_nRanges; )
+    for (size_t idx = 0, end = d_ranges->size(); idx++ != end; )
     {
+        if (not d_ranges->used(idx))
+            continue;
+
         auto iter = d_map.find(idx);
         if (iter == d_map.end())
             table << ' ';

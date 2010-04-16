@@ -15,13 +15,13 @@ class DFA
 {
     friend std::ostream &operator<<(std::ostream & out, DFA const &dfa);
 
-    size_t d_nRanges;
+    Ranges &d_ranges;
 
     std::vector<DFARow> d_row;
     typedef std::set<size_t> StateSet;
 
     public:
-        DFA(size_t nRanges);
+        DFA(Ranges &ranges);
 
         void build(std::string const &ruleSet, Rules const &rules, 
                    States const &states);

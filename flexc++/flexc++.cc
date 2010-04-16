@@ -79,7 +79,7 @@ try
             "RULES:\n" << rules << '\n' <<
             "STATES:\n" << states << '\n';
 
-    DFA dfa(ranges.size());
+    DFA dfa(ranges);
         dfa.build("INITIAL", rules, states);
 
     cout << "DFA INITIAL:\n" << dfa << '\n';

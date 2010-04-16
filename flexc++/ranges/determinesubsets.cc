@@ -17,4 +17,7 @@ void Ranges::determineSubsets()
             current = ++count;
         }
     }
+
+    d_used = new bool[d_subsets];
+    clearUsed();
 }

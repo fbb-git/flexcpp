@@ -22,7 +22,7 @@ class Ranges
     size_t d_bol;           // nrs for EOF__ and BOL
     size_t d_eof;
     States &d_states;
-
+    bool *d_used;           // ranges used in the DFA's
     
     public:
         Ranges(States &states, size_t size = 256);  // default:   
@@ -52,6 +52,10 @@ class Ranges
         void add(size_t ch);
 
         size_t size() const;
+        void clearUsed();
+        bool used(size_t rangeNr) const;
+        void setUsed(size_t rangeNr);
+        size_t nUsed() const;
         
     private:
         static void incIf(char const &ch, size_t *next);
@@ -98,6 +102,16 @@ inline size_t Ranges::rangeOfBOL() const
 inline size_t Ranges::rangeOfEOF() const
 {
     return d_eof;
+}
+
+inline bool Ranges::used(size_t rangeNr) const
+{
+    return d_used[rangeNr - 1];
+}
+
+inline void Ranges::setUsed(size_t rangeNr)
+{
+    d_used[rangeNr - 1] = true;
 }
 
 std::ostream &operator<<(std::ostream &out, Ranges const &ranges);
