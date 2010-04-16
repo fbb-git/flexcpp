@@ -2,8 +2,8 @@
 #define INCLUDED_DFAROW_
 
 #include <iosfwd>
-#include <set>
 #include <vector>
+#include <set>
 #include <unordered_map>
 
 namespace FBB
@@ -17,6 +17,8 @@ class Ranges;
 
 class DFARow
 {
+    typedef std::pair<size_t, size_t> Pair;
+
     friend std::ostream &operator<<(std::ostream & out, DFARow const &row);
 
     typedef std::set<size_t> StateSet;
@@ -24,8 +26,8 @@ class DFARow
 
     size_t d_finalRule;                     // Final state for which rule?
 
-        // Accept state and type for which rule(s)?
-    std::set<std::pair<size_t, size_t>> d_acceptRules;   
+        // map rule indices to accept states
+    std::unordered_map<size_t, size_t> d_acceptRules;   
 
     std::unordered_map<size_t, size_t> d_map;   // Relate input symbols (key) 
                                                 // to the row to transit to 
@@ -36,7 +38,7 @@ class DFARow
     Rules const *d_rules;
     Ranges *d_ranges;
 
-    size_t d_thisIdx;
+    size_t d_thisIdx;                       // row index in the DFA
     size_t d_nRanges;
 
     public:
@@ -56,6 +58,7 @@ class DFARow
         void transitions(); 
 
         void tabulate(FBB::Table &table) const;
+        void setInheriting();
 
     private:
             // determine the eClosure of a set of transitions for each of the
@@ -68,7 +71,9 @@ class DFARow
                                              size_t rangeChar,
                                              StateSet &nextSet);
         void setFinal(size_t stateIdx);
-        void setAccept(size_t type, size_t stateIdx);
+        void setAccept(size_t stateIdx);
+
+        static Pair toInheriting(Pair const &inPair);
 };
         
 #endif

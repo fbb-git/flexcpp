@@ -6,6 +6,7 @@
 
 #include <bobcat/fnwrap>
 #include <bobcat/tablesupport>
+#include <bobcat/align>
 
 #include "../rules/rules.h"
 #include "../states/states.h"

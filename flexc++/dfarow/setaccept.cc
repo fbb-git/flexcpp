@@ -1,12 +1,9 @@
 #include "dfarow.ih"
 
-void DFARow::setAccept(size_t acceptType, size_t stateIdx)
+void DFARow::setAccept(size_t stateIdx)
 {
-    if (acceptType == State::NONE)
-        return;
+    size_t rule = d_rules->hasAcceptState(stateIdx);
 
-    d_acceptRules.insert(
-        pair<size_t, size_t>(d_rules->hasAcceptState(stateIdx), acceptType)
-    );
-        
+    if (d_acceptRules.find(rule) == d_acceptRules.end())
+        d_acceptRules[rule] = State::NON_INHERITING;
 }

@@ -20,9 +20,6 @@ void DFA::build(string const &ruleSet, Rules const &rules,
     stateSet[0] = states.eClosure(stateSet[0], twoEdges,
                                     inheriting);    // compute the e-closure
                                                     // of the start-set
-    if (inheriting)
-        cout << "INHERITING ACCEPT STATE\n";
-
 
     while (d_row.size() != stateSet.size())         // as long as we haven't
     {                                               // checked all state sets
@@ -32,6 +29,9 @@ void DFA::build(string const &ruleSet, Rules const &rules,
                                                     
         d_row.back().transitions();
     }
+
+    if (inheriting)
+        d_row[0].setInheriting();
 }
 
 

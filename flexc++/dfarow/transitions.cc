@@ -30,12 +30,13 @@ void DFARow::transitions()
         for_each(thisSet.begin(), thisSet.end(), 
                                  FnWrap::unary(transit, *this, nr, nextSet));
 
-    bool twoEdges = false;
-    bool inheriting = false;
+        bool twoEdges = false;
+        bool inheriting = false;
         nextSet = d_states->eClosure(nextSet, twoEdges, inheriting);
 
-    if (inheriting)
-        cout << "INHERITING ACCEPT STATE\n";
+        if (inheriting)
+            setInheriting();
+            // cout << "INHERITING ACCEPT STATE\n";
 
         if (nextSet.empty())
             continue;

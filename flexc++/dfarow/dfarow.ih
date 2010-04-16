@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <climits>
 #include <sstream>
+#include <iterator>
 
 #include <bobcat/fnwrap>
 #include <bobcat/table>
@@ -13,4 +14,10 @@
 
 using namespace std;
 using namespace FBB;
+
+inline DFARow::Pair DFARow::toInheriting(Pair const &inPair)
+{
+    Pair ret(inPair.first, State::INHERITING);
+    return ret;
+}
 
