@@ -1,7 +1,5 @@
 #include "patternval.ih"
 
-#include <iostream>
-
 spSemVal PatternVal::plus(States &states, SemVal &semVal)
 {
     States::Pair pair = states.next2();      // create new Start/Final states

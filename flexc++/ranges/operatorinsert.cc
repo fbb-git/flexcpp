@@ -1,11 +1,8 @@
 #include "ranges.ih"
 
-#include <iostream>
+#include <ostream>
 #include <iomanip>
 #include <cctype>
-
-#include <iterator>
-#include <algorithm>
 
 ostream &operator<<(ostream &out, Ranges const &ranges)
 {

@@ -12,10 +12,6 @@
 // add the input character and the just determined index to the current row's
 // d_map. 
 
-#include <iostream>
-#include <algorithm>
-#include <iterator>
-
 void DFARow::transitions()
 {
         // visit all ranges of input characters

@@ -27,7 +27,6 @@
 // s[3] != 255 and next[s[3]] == next[s[3] +1]
 //
 // So: pretest on s[0], rangetest from s[1] to s[3], posttest on s[3]
-    #include <iostream>
 
 bool Ranges::collision(std::string const &str, size_t const *next)
 {
@@ -35,12 +34,12 @@ bool Ranges::collision(std::string const &str, size_t const *next)
 
     if
     (
-                // pre-test
-            (pre != 0 && next[pre - 1] == next[pre])
+            // pre-test
+        (pre != 0 && next[pre - 1] == next[pre])
         ||
-                // range-test
-            (find_if(str.begin() + 1, str.end(), 
-                FnWrap::unary(chCollision, pre, next)) != str.end())
+            // range-test
+        find_if(str.begin() + 1, str.end(), 
+                FnWrap::unary(chCollision, pre, next)) != str.end()
     )
         return true;
 

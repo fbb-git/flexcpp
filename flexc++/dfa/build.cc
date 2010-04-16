@@ -1,7 +1,5 @@
 #include "dfa.ih"
 
-#include <iostream>
-
 void DFA::build(string const &ruleSet, Rules const &rules, 
                 States const &states)    
 {

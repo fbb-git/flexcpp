@@ -6,8 +6,6 @@
 //          B1 -> E1 -> E2, where B2 is assigned to E1
 // B2 is returned to the State's free store.
 
-#include <iostream>
-
 spSemVal PatternVal::concatenate(States &states, SemVal &left, SemVal &right)
 {
     PatternVal &lhs = downCast<PatternVal>(left);
