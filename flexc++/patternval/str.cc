@@ -18,6 +18,7 @@ spSemVal PatternVal::str(States &states, string const &rawStr)
     }
 
     size_t *indices = states.next(length + 1);
+    pair = States::Pair(*indices, indices[length]);
 
     for (size_t idx = 0; idx != length; ++idx)
         states[indices[idx]] = State::factory(str[idx], indices[idx + 1]);
