@@ -1,5 +1,7 @@
 #include "ranges.ih"
 
+#include <iostream>
+
 void Ranges::subsetCount()
 {
     d_subsets = 1;

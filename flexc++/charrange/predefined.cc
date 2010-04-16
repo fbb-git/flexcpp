@@ -2,10 +2,19 @@
 
 set<char> const &CharRange::predefined(std::string const &setName)
 {
+    size_t const beyond = UCHAR_MAX + 1;
+
     auto &chSet = s_hash[setName];
 
     if (chSet.empty())
     {
+        if (setName == ".")
+        {
+            copy(AllChars(0), AllChars(beyond), inserter(chSet, chSet.end()));
+            chSet.erase('\n');
+            return chSet;
+        }
+
         string fillName = setName;
         string negated = fillName;
 
@@ -17,7 +26,7 @@ set<char> const &CharRange::predefined(std::string const &setName)
         auto &fillSet = s_hash[fillName];
         auto fillFun = s_funHash[fillName];
 
-        for (size_t idx = 0; idx < UCHAR_MAX; ++idx)
+        for (size_t idx = 0; idx != beyond; ++idx)
             if (fillFun(idx))
                 fillSet.insert(idx);
 

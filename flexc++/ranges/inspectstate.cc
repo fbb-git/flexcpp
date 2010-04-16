@@ -8,4 +8,7 @@ void Ranges::inspectState(State const &state, Ranges &ranges)
         ranges.add(type);
     else if (type == State::CHARSET)
         ranges.add(SemVal::downCast<StateString>(state.data()).str());
+
+
 }
+

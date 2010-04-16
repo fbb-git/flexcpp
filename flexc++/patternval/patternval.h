@@ -19,17 +19,18 @@ class PatternVal: public SemVal
         size_t end() const;
         States::Pair const &pair() const;
 
-        static spSemVal eof(States &states);
-        static spSemVal str(States &states, std::string const &str);
+        static spSemVal bol(States &states, SemVal &pattern);
         static spSemVal charSet(States &states, SemVal const &charClass);
+        static spSemVal concatenate(States &states, SemVal &lhs, SemVal &rhs);
+        static spSemVal dot(States &states);
+        static spSemVal eof(States &states);
+        static spSemVal interval(States &states, SemVal &pat, size_t lower, 
+                                                                size_t upper);
+        static spSemVal opOr(States &states, SemVal &lhs, SemVal &rhs);
         static spSemVal plain(States &states, size_t ch);
         static spSemVal plain(States &states, std::string const &ch);
-        static spSemVal concatenate(States &states, SemVal &lhs, SemVal &rhs);
-        static spSemVal bol(States &states, SemVal &pattern);
-        static spSemVal opOr(States &states, SemVal &lhs, SemVal &rhs);
         static spSemVal quantifier(States &states, SemVal &pat, size_t type);
-        static spSemVal interval(States &states, SemVal &pat, size_t lower,
-                                                              size_t upper);
+        static spSemVal str(States &states, std::string const &str);
 
     private:
         static spSemVal star(States &states, SemVal &pattern);

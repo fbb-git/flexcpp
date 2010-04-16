@@ -66,8 +66,8 @@ class Ranges
         static void countRanges(size_t &count, std::vector<size_t> &ranges);
 
 
-        void updateRanges(std::string const &str, size_t const *next);
-        void reduce(std::vector<size_t> &lowest);
+        void update(std::string const &str, size_t const *next);
+        void subsetCount();
         static void reassign(size_t &count, std::vector<size_t> &ranges);
 
         static void inspectState(State const &state, Ranges &ranges);

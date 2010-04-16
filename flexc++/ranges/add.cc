@@ -10,7 +10,9 @@ void Ranges::add(string const &str)
         // increment next counts for chars in str
     for_each(str.begin(), str.end(), FnWrap::unary(incIf, next));
 
-    updateRanges(str, next);
+    update(str, next);
 
     delete [] next;
 }
+
+

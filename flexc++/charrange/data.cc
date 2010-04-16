@@ -14,6 +14,7 @@ std::unordered_map<std::string, std::set<char>> CharRange::s_hash =
     { "[:space:]" , set<char>() },
     { "[:upper:]" , set<char>() },
     { "[:xdigit:]", set<char>() },
+    { ".",          set<char>() },
 
     { "[:^alnum:]" , set<char>() },
     { "[:^alpha:]" , set<char>() },

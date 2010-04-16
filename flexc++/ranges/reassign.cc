@@ -1,11 +1,17 @@
 #include "ranges.ih"
 
-void Ranges::reassign(size_t &count, vector<size_t> &ranges)
-{
-    auto iter = find(ranges.begin(), ranges.end(), count);
+// And individual element in the current d_ranges array is replaced by 
+// its index in the rangeNr vector
 
-    if (iter == ranges.end())
-        ranges.push_back(count);
-    
-    count = iter - ranges.begin();
+void Ranges::reassign(size_t &count, vector<size_t> &rangeNrs)
+{
+    auto iter = find(rangeNrs.begin(), rangeNrs.end(), count);
+
+    if (iter != rangeNrs.end())
+        count = iter - rangeNrs.begin();
+    else
+    {
+        count = rangeNrs.size();
+        rangeNrs.push_back(count);
+    }
 }

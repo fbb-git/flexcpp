@@ -86,7 +86,7 @@ pattern:
 |
     '.'
     {
-        $$ = PatternVal::plain(d_states, d_scanner.match()[0]);
+        $$ = PatternVal::dot(d_states);
     }
 |
     pattern pattern         %prec CHARACTER
