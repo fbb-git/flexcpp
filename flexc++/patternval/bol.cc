@@ -2,9 +2,13 @@
 
 spSemVal PatternVal::bol(States &states, SemVal &pattern)
 {
-    spSemVal bolVal = plain(states, State::BOL);
+    States::Pair pair = states.next2();
+
+    states[pair.first] = State::factory(State::BOL, pair.second, 0);
     
-    spSemVal ret = concatenate(states, *plain(states, State::BOL), pattern);
+    PatternVal bolPattern(pair);
+
+    spSemVal ret = concatenate(states, bolPattern, pattern);
     return ret;
 }
 
