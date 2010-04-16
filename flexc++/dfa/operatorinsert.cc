@@ -2,7 +2,7 @@
 
 #include <bobcat/table>
 
-ostream &operator<<(ostream & out, DFA const &dfa)
+ostream &operator<<(ostream &out, DFA const &dfa)
 {
     size_t nCols = dfa.d_ranges.nUsed() + 3;
 
@@ -25,10 +25,8 @@ ostream &operator<<(ostream & out, DFA const &dfa)
     table << 'F' << "ACCEPT";
                                                 // display rows of the table
     for (size_t idx = 0, end = dfa.d_row.size(); idx != end; ++idx)
-    {
-        table << idx;
-        dfa.d_row[idx].tabulate(table);
-    }
+        table << idx << dfa.d_row[idx];
+
     out << table << '\n';
 
     return out;

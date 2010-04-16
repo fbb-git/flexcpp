@@ -19,8 +19,6 @@ class DFARow
 {
     typedef std::pair<size_t, size_t> Pair;
 
-    friend std::ostream &operator<<(std::ostream & out, DFARow const &row);
-
     typedef std::set<size_t> StateSet;
     typedef std::vector<StateSet> StateSetVector;
 
@@ -75,6 +73,8 @@ class DFARow
 
         static Pair toInheriting(Pair const &inPair);
 };
+
+FBB::Table &operator<<(FBB::Table& out, DFARow const &row);
         
 #endif
 
