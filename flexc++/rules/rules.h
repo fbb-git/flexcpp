@@ -45,7 +45,22 @@ class Rules
         std::vector<size_t> const &operator()   // vector of rule nrs
                                     (std::string const &startCondition) const;
         void useInitialSC();
+
+        typedef StartConditions::const_iterator const_iterator;
+        typedef StartConditions::NameVector NameVector;
+        const_iterator begin() const;
+        const_iterator end() const;
 };
+
+inline Rules::const_iterator Rules::begin() const
+{
+    return d_startConditions.begin();
+}
+        
+inline Rules::const_iterator Rules::end() const
+{
+    return d_startConditions.end();
+}
         
 inline size_t Rules::hasFinalState(size_t stateIdx) const
 {

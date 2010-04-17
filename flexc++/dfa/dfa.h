@@ -15,15 +15,16 @@ class DFA
 {
     friend std::ostream &operator<<(std::ostream & out, DFA const &dfa);
 
-    Ranges &d_ranges;
+    Ranges *d_ranges;
 
     std::vector<DFARow> d_row;
     typedef std::set<size_t> StateSet;
 
     public:
+        DFA();
         DFA(Ranges &ranges);
 
-        void build(std::string const &ruleSet, Rules const &rules, 
+        void build(std::vector<size_t> const &active, Rules const &rules, 
                    States const &states);
 
     private:
@@ -31,5 +32,9 @@ class DFA
                                              StateSet &start);
 };
 
+inline DFA::DFA()
+:
+    d_ranges(0)    
+{}
 
 #endif

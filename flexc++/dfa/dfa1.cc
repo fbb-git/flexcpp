@@ -2,5 +2,5 @@
 
 DFA::DFA(Ranges &ranges)
 :
-    d_ranges(ranges)
+    d_ranges(&ranges)
 {}

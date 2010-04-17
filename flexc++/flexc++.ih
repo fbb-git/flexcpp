@@ -12,7 +12,7 @@
 #include "rules/rules.h"
 #include "parser/parser.h"
 #include "ranges/ranges.h"
-#include "dfa/dfa.h"
+#include "dfas/dfas.h"
 
 // #include "debug/debug.h"
 // #include "statecounter/statecounter.h"

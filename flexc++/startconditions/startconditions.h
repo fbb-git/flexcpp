@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <vector>
 #include <string>
+#include <iterator>
 
 class SemVal;
 
@@ -15,7 +16,6 @@ class StartConditions
             EXCLUSIVE,
             INCLUSIVE
         };
-
     private:
         struct StartCondition
         {
@@ -35,6 +35,28 @@ class StartConditions
         StartCondition *d_initialSC;
 
     public:
+        struct NameVector
+        {
+            std::string const &first;
+            std::vector<size_t> const &second;
+            NameVector(std::string const &str, 
+                            std::vector<size_t> const &vect);
+        };
+
+        class const_iterator: 
+                    public std::iterator<std::input_iterator_tag, NameVector>
+        {
+            friend class StartConditions;
+
+            Hash::const_iterator d_iter;
+            public:
+                bool operator!=(const_iterator const &rhs);
+                const_iterator &operator++();
+                NameVector operator*() const;
+            private:
+                const_iterator(Hash::const_iterator iter);
+        };
+
         StartConditions();
         void add(SemVal const &name);   // add a name to the active 
         void add(size_t);
@@ -43,8 +65,8 @@ class StartConditions
         void useAll();
         void activate(SemVal const &name);
         void useInitialSC();
-        Hash::const_iterator begin() const;
-        Hash::const_iterator end() const;
+        const_iterator begin() const;
+        const_iterator end() const;
         std::vector<size_t> const &operator()(std::string const &name) const;
 
     private:
@@ -78,19 +100,41 @@ inline std::vector<size_t> const &StartConditions::operator()
     return d_hash.find(name)->second.d_rules;
 }
 
+inline StartConditions::const_iterator::const_iterator(
+                                                Hash::const_iterator iter)
+:
+    d_iter(iter)
+{}
 
-// Allow for iterations over all elements of the vectors of all
-//  startconditions
-//  
-// inline std::vector<size_t>::const_iterator begin() const
-// {
-//     return d_hash.begin();
-// }
-// 
-// inline StartCondition::Hash::const_iterator end() const
-// {
-//     return d_hash.end();
-// }
+inline  bool StartConditions::const_iterator::operator!=(
+                                                const_iterator const &rhs)
+{
+    return d_iter != rhs.d_iter;
+}
+
+inline StartConditions::const_iterator 
+        &StartConditions::const_iterator::operator++()
+{
+    ++d_iter;
+    return *this;
+}
+            
+inline StartConditions::const_iterator StartConditions::begin() const
+{
+    return const_iterator(d_hash.begin());
+}
+
+inline StartConditions::const_iterator StartConditions::end() const
+{
+    return const_iterator(d_hash.end());
+}
+
+inline StartConditions::NameVector::NameVector(std::string const &str, 
+                            std::vector<size_t> const &vect)
+:
+    first(str),
+    second(vect)
+{}
 
 #endif
 
