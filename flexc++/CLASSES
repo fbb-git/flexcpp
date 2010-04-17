@@ -1,21 +1,29 @@
-scanner
-parser
-options
-block
-fstreaminfo
-semval
-state
-statedata
-statestring
-patternval
-states
-decimal
-textval
-rules
-rule
-startconditions
-charclass
-charrange
-ranges
-dfa
-dfarow
+#   See README.class-setup for a description of the dependency graph used here
+#   `touch classname/ALL' to recompile all class sources and sources of
+#   depending classes
+
+semval          
+textval         semval
+statedata       semval
+statestring     statedata
+state           statestring
+states          state
+charrange       
+charclass       charrange   semval
+rule            
+rules           rule        states
+patternval      charclass   states
+decimal         semval
+startconditions textval
+fstreaminfo     
+block           
+scanner         textval     fstreaminfo block
+ranges          textval     states
+dfarow          ranges      rules
+dfa             dfarow
+options         
+parser          rules  patternval  decimal startcondition scanner options
+
+
+
+

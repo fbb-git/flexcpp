@@ -19,23 +19,97 @@ string                  // contain options for
 int
     g_nClasses;         // number of classes/subdirectories
 list
-    g_classes;          // list of classes/directories
+    g_classes,          // list of classes/directories
+    g_classLines,       // list of all lines in CLASSES
+    g_depHaystack;      // list names of classes to inspect
 
+/*
+    if a class has an ALL file, then that file is removed and all dependent
+    classes are determined:
+
+    dependent(string class)
+        all files in class are touched
+        from the current line in g_dependencies: if it contains class
+        then dependent(headelement) is called from that the current line
+*/
+
+int find(string needle, list haystack)
+{
+    int idx;
+    for (idx = sizeof(haystack); idx--; )
+    {
+        if (needle == haystack[idx])
+            break;
+    }
+    return idx;
+}
+
+void dependent(int idx)
+{
+    list dependencies;
+    int depIdx;
+    string target;
+
+    target = g_classes[idx];
+    g_depHaystack += (list)target;
+
+    printf("RECOMPILE: ", target, "\n");
+  
+    echo(OFF);
+    system("touch " + target + "/" + g_sources);
+    echo(ON);
+
+    for (depIdx = idx + 1; depIdx != g_nClasses; ++depIdx)
+    {
+        dependencies = strtok(g_classLines[depIdx], " \t\n");
+        if 
+        (
+            find(target, dependencies) != -1 
+            && 
+            find(dependencies[0], g_depHaystack) == -1
+        )
+            dependent(depIdx);
+    }
+}            
+
+void checkALL()
+{
+    int idx;
+    string all;
+
+    for (idx = 0; idx != g_nClasses; ++idx)
+    {
+        all = g_classes[idx] + "/ALL";
+
+        if (exists(all))
+        {
+            echo(OFF);
+            exec("rm", all);
+            system("touch flexc++.cc");
+            echo(ON);
+            dependent(idx);
+        }
+    }
+}
+            
 void setClasses()
 {
     list candidate;
     list class;
 
-    while (sizeof(class = fgets("CLASSES", (int)element(1, class))))
+    while (sizeof(class = fgets("CLASSES", (int)class[1])))
     {
-        candidate = strtok(element(0, class), " \t\n");
+        candidate = strtok(class[0], " \t\n");
 
         // if the line contains info not starting with #, add the class
-        if (sizeof(candidate) && element(0, element(0, candidate)) != "#")
-            g_classes += (list)element(0, strtok(element(0, class), " \t\n"));
+        if (sizeof(candidate) && candidate[0][0] != "#")
+        {
+            g_classLines += (list)class[0];
+            g_classes += (list)element(0, strtok(class[0], " \t\n"));
+        }
     }
-
     g_nClasses = sizeof(g_classes);
+    checkALL();
 }
 
 void static_lib(string ofiles, string library)

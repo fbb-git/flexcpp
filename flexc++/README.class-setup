@@ -1,22 +1,25 @@
+
                                 SemVal
-                                    |
-                +-------------------+
-                |                   |
-            StateData               |
-                |                   |
-            StateString             |
-                |                   |
-              State                 |
-                |                   |
-              States                |           FStreamInfo  Block   
-                |                   |               |         |
-  +-------------+   +--------+----+-+------------+  +---+-----+
-  |             |   |        |    |              |      |
-  |             +---+        |    |            TextVal  |
-  |             |            |    |              |      |
-  +----------------------------------------------+      |
-  |             |            |    |              |      |
-  |   Rule      | CharRange  |    |          +---+      |
+                                  |
+                +-----------------+
+                |                 |
+            StateData             |
+                |                 |
+            StateString           |
+                |                 |
+              State               |
+                |                 |
+              States              |             FStreamInfo  Block   
+                |                 |                 |         |
+  +-------------+                 +--------------+  +---+-----+
+  |             |                 |              |      |
+  |             |                 |            TextVal  |
+  |             |                 |              |      |
+  |    +-----------------------------------------+      |
+  |    |        |                 |              |      |
+  +----+        |                 |              |      |
+  |             |                 |              |      |
+  |   Rule      | CharRange  +----+          +---+      |
   |    |        |     |      |    |          |   |      |
   |    |   +----+     +------+    |          |   |      |
   |    |   |    |         |       |          |   +------+
@@ -38,9 +41,33 @@ DFARow                            |
   |                               |                
  DFA                              |                
   |                               |                
-  +-------------------------------+                
-                                  |                
-                               flexc++
+  +-------------+-----------------+                
+                |                 
+              flexc++
+
+The file CLASSES defines the directory containing the sources of the
+abovementioned classes. Also, it contains the class dependencies. If a class
+depends on a class listed higher up in the class organization then its
+immediately superior class is mentioned immediately following its class
+name. E.g., for DFARow the CLASSES entry looks like this:
+
+dfarow  ranges rules
+
+The icmake build script, when compiling a new version of the program looks for
+a file ALL in the class-directories. If found, all the class's sources and all
+sources of all classes depending on that class as well as flexc++.cc itself
+are recompiled. This allows developers to modify the internal organization of
+a class (or the implementation of a member function that's defined inline) and
+recompile all sources that may be affected by the modified class. Multiple ALL
+files may be touched before calling `build program'. E.g., following
+
+touch options/ALL dfarow/ALL 
+
+all sources of DFARow, DFA, Options and Parser, as well as flexc++.cc will be
+recompiled. 
+
+
+
 
     CharClass: The characters of a character-class
     
