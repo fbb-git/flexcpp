@@ -27,6 +27,10 @@ class DFA
         void build(std::vector<size_t> const &active, Rules const &rules, 
                    States const &states);
 
+        std::vector<DFARow>::const_iterator begin() const;
+        std::vector<DFARow>::const_iterator end() const;
+        size_t size() const;
+
     private:
         static void fillStartSet(size_t idx, Rules const &rules, 
                                              StateSet &start);

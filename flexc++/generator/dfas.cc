@@ -11,23 +11,21 @@ Generator::dfas(DFAs const &dfas)
     "    // which this row is a FINAL state. The row's final two values are\n"
     "    // begin and end indices in s_accept, holding information about a\n"
     "    // row's accept state. -1 indicates `not an accept state'\n"
-            "    ScannerBase::s_dfa[] =\n" 
-            "    {";
+    "    //
+    "    ScannerBase::s_dfa[][" << d_ranges.size() + 2 << "] =\n" 
+    "    {";
 
     vector<pair<char, size_t>> accept;
     vector<string> startStates;
-    vector<size_t>  dfaOffsets(1, 0);
+    vector<size_t>  dfaIndices(1, 0);
 
-    dfa(dfas.find("INITIAL"), d_out, accept, startStates, dfaOffsets);
+    outDFA(dfas.find("INITIAL"), d_out, accept, startStates, dfaIndices);
 
     for_each(dfas.begin(), dfas.end(), 
-            FnWrap::unary(dfa, d_out, accept, startStates, dfaOffsets));
+            FnWrap::unary(dfa, d_out, accept, startStates, dfaIndices));
 
     d_out << "   };\n";
 
-        
-
-    
-
-    
+    acceptStates(out, accept);
+    dfaEntryPoints(out, dfaIndices
 }
