@@ -71,6 +71,9 @@ try
     Parser parser(rules, states);
         parser.parse();
 
+    if (Msg::errors())
+        return 1;
+
     Ranges ranges(states);
         ranges.determineSubsets();
         ranges.finalizeStates();
@@ -84,10 +87,11 @@ try
 
     cout << dfas << '\n';
 
-//    DFA dfa(ranges);
-//        dfa.build("INITIAL", rules, states);
-//
-//    cout << "DFA INITIAL:\n" << dfa << '\n';
+    ofstream out;
+    Msg::open(out, "TABLES.h");
+
+    Generator generator(out);
+        generator.charTable(ranges);
 
 }
 catch (int x)

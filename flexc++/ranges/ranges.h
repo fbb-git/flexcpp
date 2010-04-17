@@ -51,11 +51,13 @@ class Ranges
         void add(std::string const &str);
         void add(size_t ch);
 
-        size_t size() const;
         void clearUsed();
         bool used(size_t rangeNr) const;
         void setUsed(size_t rangeNr);
         size_t nUsed() const;
+
+        size_t size() const;
+        size_t const *ranges() const;
         
     private:
         static void incIf(char const &ch, size_t *next);
@@ -87,6 +89,11 @@ inline void Ranges::swap(Ranges &other)
 inline size_t Ranges::size() const
 {
     return d_subsets;
+}
+
+inline size_t const *Ranges::ranges() const
+{
+    return d_ranges;
 }
 
 inline size_t Ranges::rangeOf(char ch) const

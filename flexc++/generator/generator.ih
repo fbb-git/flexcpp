@@ -1,0 +1,9 @@
+#include "generator.h"
+
+#include <ostream>
+#include <iomanip>
+
+#include "../ranges/ranges.h"
+
+using namespace std;
+
