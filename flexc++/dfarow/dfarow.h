@@ -6,6 +6,8 @@
 #include <set>
 #include <unordered_map>
 
+#include "../ranges/ranges.h"
+
 namespace FBB
 {
     class Table;
@@ -13,7 +15,6 @@ namespace FBB
 
 class States;
 class Rules;
-class Ranges;
 
 class DFARow
 {
@@ -24,7 +25,7 @@ class DFARow
 
     size_t d_finalRule;                     // Final state for which rule?
 
-        // map rule indices to accept states
+        // map rule indices to accept types
     std::unordered_map<size_t, size_t> d_acceptRules;   
 
     std::unordered_map<size_t, size_t> d_map;   // Relate input symbols (key) 
@@ -58,6 +59,11 @@ class DFARow
         void tabulate(FBB::Table &table) const;
         void setInheriting();
 
+        size_t final() const;
+        std::unordered_map<size_t, size_t> const &map() const;
+        size_t size() const;
+        std::unordered_map<size_t, size_t> const &acceptMap() const;
+
     private:
             // determine the eClosure of a set of transitions for each of the
             // char-ranges of the input alphabet, including the special 
@@ -73,6 +79,26 @@ class DFARow
 
         static Pair toInheriting(Pair const &inPair);
 };
+
+inline std::unordered_map<size_t, size_t> const &DFARow::map() const
+{
+    return d_map;
+}
+
+inline std::unordered_map<size_t, size_t> const &DFARow::acceptMap() const
+{
+    return d_acceptRules;
+}
+
+inline size_t DFARow::final() const
+{
+    return d_finalRule;
+}
+
+inline size_t DFARow::size() const
+{
+    return d_ranges->size();
+}
 
 FBB::Table &operator<<(FBB::Table& out, DFARow const &row);
         

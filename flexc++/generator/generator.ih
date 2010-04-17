@@ -1,9 +1,15 @@
 #include "generator.h"
 
+#include <bobcat/fnwrap>
+
 #include <ostream>
 #include <iomanip>
+#include <algorithm>
+#include <iterator>
 
 #include "../ranges/ranges.h"
+#include "../state/state.h"
 
 using namespace std;
+using namespace FBB;
 

@@ -29,6 +29,7 @@ class DFA
 
         std::vector<DFARow>::const_iterator begin() const;
         std::vector<DFARow>::const_iterator end() const;
+
         size_t size() const;
 
     private:
@@ -41,4 +42,21 @@ inline DFA::DFA()
     d_ranges(0)    
 {}
 
+inline std::vector<DFARow>::const_iterator DFA::begin() const
+{
+    return d_row.begin();
+}
+
+inline std::vector<DFARow>::const_iterator DFA::end() const
+{
+    return d_row.end();
+}
+
+inline size_t DFA::size() const
+{
+    return d_row.size();
+}
+
+
 #endif
+

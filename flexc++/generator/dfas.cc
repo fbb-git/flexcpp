@@ -1,8 +1,9 @@
 #include "generator.ih"
 
-Generator::dfas(DFAs const &dfas)
+void Generator::dfas(DFAs const &dfas)
 {
     d_out <<
+    "\n"
     "    // s_dfa contain the rows of *all* DFAs ordered by start state.\n"
     "    // The enum class StartState is defined below. INITIAL is always 0\n"
     "    // Each row contains the row to transit to if the column's\n"
@@ -11,21 +12,26 @@ Generator::dfas(DFAs const &dfas)
     "    // which this row is a FINAL state. The row's final two values are\n"
     "    // begin and end indices in s_accept, holding information about a\n"
     "    // row's accept state. -1 indicates `not an accept state'\n"
-    "    //
-    "    ScannerBase::s_dfa[][" << d_ranges.size() + 2 << "] =\n" 
-    "    {";
+    "    //\n"
+    "    size_t ScannerBase::s_dfa[][" << d_ranges.size() + 3 << "] =\n" 
+    "    {\n";
 
-    vector<pair<char, size_t>> accept;
+    PVector accept;
     vector<string> startStates;
     vector<size_t>  dfaIndices(1, 0);
 
-    outDFA(dfas.find("INITIAL"), d_out, accept, startStates, dfaIndices);
+    auto iter = dfas.find("INITIAL");
+    if (iter != dfas.end())
+        dfa(*iter, d_out, accept, startStates, dfaIndices);
 
     for_each(dfas.begin(), dfas.end(), 
             FnWrap::unary(dfa, d_out, accept, startStates, dfaIndices));
 
     d_out << "   };\n";
 
-    acceptStates(out, accept);
-    dfaEntryPoints(out, dfaIndices
+    acceptStates(accept);
+    dfaEntryPoints(dfaIndices);
 }
+
+
+

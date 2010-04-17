@@ -90,9 +90,9 @@ try
     ofstream out;
     Msg::open(out, "TABLES.h");
 
-    Generator generator(out);
-        generator.charTable(ranges);
-
+    Generator generator(out, ranges);
+        generator.charTable();
+        generator.dfas(dfas);
 }
 catch (int x)
 {

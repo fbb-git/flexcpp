@@ -24,4 +24,4 @@ dfa             dfarow
 dfas            dfa
 options         
 parser          rules  patternval  decimal startcondition scanner options
-generator       ranges
+generator       dfas
