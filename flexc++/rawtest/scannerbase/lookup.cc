@@ -2,13 +2,16 @@
 
 bool ScannerBase::lookup(size_t range)
 {
-    size_t nextState = d_dfa[d_state][range];   // determine the next state
+    d_nextState = d_dfa[d_state][range];// determine the next state
 
-    if (nextState != 0)                 // got a transition
-    {
-        d_state = nextState;
-        return true;
-    }
+    if 
+    (
+        d_nextState != 0                // got a transition
+        ||
+        finalState()                    // or a final state
+    )
+        return true;                    // then lookup continues.
+
 
     if (range == s_rangeOfEOF)          // at EOF switch files if possible
         throw -1;                       // for now we'll end the scanner

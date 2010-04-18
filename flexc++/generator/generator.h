@@ -18,6 +18,7 @@ class Generator
     std::ofstream d_out;
     Ranges const &d_ranges;
     std::vector<std::string> d_startStates;
+    size_t d_acceptSize;
 
     public:
         Generator(Ranges const &ranges);
