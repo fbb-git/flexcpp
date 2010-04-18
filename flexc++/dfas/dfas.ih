@@ -1,0 +1,15 @@
+#include "dfas.h"
+
+#include <algorithm>
+#include <bobcat/fnwrap>
+#include <ostream>
+
+#include "../dfa/dfa.h"
+
+using namespace std;
+using namespace FBB;
+
+inline bool DFAs::findKey(Pair const &pair, std::string const &key)
+{
+    return pair.first == key;
+}
