@@ -2,7 +2,8 @@
 
 string Generator::outEntryPoint(string const &startState, size_t offset)
 {
-    string ret = '{' + startState + ',' + X2a(offset).str() + "},";
+    string ret = "        { Begin::" + startState + ", "
+                            "s_dfa + " + X2a(offset).str() + " },";
     return ret;
 }
 

@@ -6,7 +6,7 @@ void Generator::declarations()
     Msg::open(d_out, "DECLARE");
 
     d_out << 
-            "    typedef struct AcceptInfo\n"
+            "    struct AcceptInfo\n"
             "    {\n"
             "        char   type;\n"
             "        size_t rule;\n"
@@ -21,11 +21,21 @@ void Generator::declarations()
     d_out << 
             "    };\n"
             "\n"
+            "    struct HashBegin\n"
+            "    {\n"
+            "        size_t operator()(Begin begin) const\n"
+            "        {\n"
+            "            return static_cast<size_t>(begin);\n"
+            "        }\n"
+            "    };\n"
+            "\n"
             "    static size_t  const s_ranges[];\n"
             "    static size_t  const s_rangeOfBOL;\n"
             "    static size_t  const s_rangeOfEOF;\n"
-            "    static size_t  const s_dfa[][" << dfaCols() << "];\n"
+            "    static int     const s_dfa[][" << dfaCols() << "];\n"
             "    static AcceptInfo const s_accept[];\n"
-            "    static std:::unordered_map<Begin, size_t (*)[" << 
-                       dfaCols() << "]> const s_dfaHash;\n";
+            "    static std::unordered_map<Begin, int const (*)[" << 
+                       dfaCols() << "], HashBegin>\n"
+            "           const s_dfaHash;\n";
 }
+

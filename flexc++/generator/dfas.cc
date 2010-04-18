@@ -13,7 +13,7 @@ void Generator::dfas(DFAs const &dfas)
     "    // begin and end indices in s_accept, holding information about a\n"
     "    // row's accept state. -1 indicates `not an accept state'\n"
     "    //\n"
-    "    size_t const ScannerBase::s_dfa[][" << dfaCols() << "] =\n" 
+    "    int const ScannerBase::s_dfa[][" << dfaCols() << "] =\n" 
     "    {\n";
 
     PVector accept;
