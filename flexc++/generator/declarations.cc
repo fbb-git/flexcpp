@@ -3,7 +3,7 @@
 void Generator::declarations()
 {
     d_out.close();
-    Msg::open(d_out, "DECLARE.h");
+    Msg::open(d_out, "DECLARE");
 
     d_out << 
             "    typedef struct AcceptInfo\n"

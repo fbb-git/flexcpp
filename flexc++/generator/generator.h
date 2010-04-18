@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <set>
 
 #include "../dfas/dfas.h"
 
@@ -22,6 +23,7 @@ class Generator
         Generator(Ranges const &ranges);
         void charTable();
         void dfas(DFAs const &dfas);
+        void actions(DFAs const &dfas);
         void declarations();
 
     private:
@@ -42,6 +44,10 @@ class Generator
         static std::string outEntryPoint(std::string const &startState,
                                          size_t offset);
         static void outStartState(std::string const &name, std::ostream &out);
+        static void dfaActions(DFAs::Pair const &dfaPair, std::ostream &out,
+                                                std::set<size_t> &done);
+        static void outAction(DFARow const &row, std::ostream &out,
+                                                 std::set<size_t> &done);
 };
         
 #endif

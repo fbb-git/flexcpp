@@ -13,6 +13,7 @@ class Rule
         Rule(size_t start = 0, size_t accept = 0, std::string action = "");
         size_t startState() const;
         size_t accept() const;
+        std::string const &action() const;
 };
 
 inline size_t Rule::startState() const
@@ -23,6 +24,11 @@ inline size_t Rule::startState() const
 inline size_t Rule::accept() const
 {
     return d_accept;
+}
+
+inline std::string const &Rule::action() const
+{
+    return d_action;
 }
 
 std::ostream &operator<<(std::ostream &out, Rule const &rule);

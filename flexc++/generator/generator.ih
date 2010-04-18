@@ -7,6 +7,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <iterator>
+#include <climits>
 
 #include "../ranges/ranges.h"
 #include "../state/state.h"

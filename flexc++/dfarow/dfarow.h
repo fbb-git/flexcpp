@@ -63,6 +63,7 @@ class DFARow
         std::unordered_map<size_t, size_t> const &map() const;
         size_t size() const;
         std::unordered_map<size_t, size_t> const &acceptMap() const;
+        std::string const &action() const;  // only for FINAL rows
 
     private:
             // determine the eClosure of a set of transitions for each of the
@@ -98,6 +99,11 @@ inline size_t DFARow::final() const
 inline size_t DFARow::size() const
 {
     return d_ranges->size();
+}
+
+inline std::string const &DFARow::action() const
+{
+    return (*d_rules)[d_finalRule].action();
 }
 
 FBB::Table &operator<<(FBB::Table& out, DFARow const &row);

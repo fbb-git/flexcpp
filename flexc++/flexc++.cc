@@ -91,6 +91,7 @@ try
         generator.charTable();
         generator.dfas(dfas);
         generator.declarations();
+        generator.actions(dfas);
 }
 catch (int x)
 {
