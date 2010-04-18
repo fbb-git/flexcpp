@@ -1,6 +1,6 @@
 #include "generator.ih"
 
-void Generator::outPair(Pair const &pair, ostream &out, size_t &count)
+void Generator::outAccept(Pair const &pair, ostream &out, size_t &count)
 {
     out << "{'" << 
             (pair.second == State::INHERITING ? 'I' : 'N') << "'," << 

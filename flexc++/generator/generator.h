@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <string>
-#include <iosfwd>
+#include <fstream>
 
 #include "../dfas/dfas.h"
 
@@ -14,15 +14,19 @@ class Generator
     typedef std::pair<size_t, size_t> Pair;
     typedef std::vector<Pair> PVector;
 
-    std::ostream &d_out;
+    std::ofstream d_out;
     Ranges const &d_ranges;
+    std::vector<std::string> d_startStates;
 
     public:
-        Generator(std::ostream &out, Ranges const &ranges);
-        void charTable() const;
+        Generator(Ranges const &ranges);
+        void charTable();
         void dfas(DFAs const &dfas);
+        void declarations();
 
     private:
+        size_t dfaCols() const;
+
         void acceptStates(PVector const &accept);
         void dfaEntryPoints(std::vector<size_t> const &entryPoints);
 
@@ -33,8 +37,11 @@ class Generator
         static void dfaRow(DFARow const &row, std::ostream &out, 
                         PVector &accept);    
         static size_t addAccept(DFARow const &row, PVector &accept);
-        static void outPair(Pair const &pair, std::ostream &out, 
+        static void outAccept(Pair const &pair, std::ostream &out, 
                                                             size_t &count);
+        static std::string outEntryPoint(std::string const &startState,
+                                         size_t offset);
+        static void outStartState(std::string const &name, std::ostream &out);
 };
         
 #endif

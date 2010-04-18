@@ -13,22 +13,21 @@ void Generator::dfas(DFAs const &dfas)
     "    // begin and end indices in s_accept, holding information about a\n"
     "    // row's accept state. -1 indicates `not an accept state'\n"
     "    //\n"
-    "    size_t ScannerBase::s_dfa[][" << d_ranges.size() + 3 << "] =\n" 
+    "    size_t const ScannerBase::s_dfa[][" << dfaCols() << "] =\n" 
     "    {\n";
 
     PVector accept;
-    vector<string> startStates;
-    vector<size_t>  dfaIndices(1, 0);
+    vector<size_t> dfaIndices(1, 0);
 
     auto iter = dfas.find("INITIAL");
     if (iter != dfas.end())
-        dfa(*iter, d_out, accept, startStates, dfaIndices);
-
+        dfa(*iter, d_out, accept, d_startStates, dfaIndices);
+ 
     for_each(dfas.begin(), dfas.end(), 
-            FnWrap::unary(dfa, d_out, accept, startStates, dfaIndices));
-
+            FnWrap::unary(dfa, d_out, accept, d_startStates, dfaIndices));
+ 
     d_out << "   };\n";
-
+ 
     acceptStates(accept);
     dfaEntryPoints(dfaIndices);
 }

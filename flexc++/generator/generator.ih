@@ -1,8 +1,9 @@
 #include "generator.h"
 
 #include <bobcat/fnwrap>
+#include <bobcat/x2a>
+#include <bobcat/msg>
 
-#include <ostream>
 #include <iomanip>
 #include <algorithm>
 #include <iterator>
@@ -13,3 +14,12 @@
 using namespace std;
 using namespace FBB;
 
+inline size_t Generator::dfaCols() const
+{
+    return d_ranges.size() + 3;
+}
+
+inline void Generator::outStartState(string const &name, ostream &out)
+{
+    out << "        " << name << ",\n";
+}

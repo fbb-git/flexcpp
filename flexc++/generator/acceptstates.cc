@@ -3,12 +3,13 @@
 void Generator::acceptStates(PVector const &accept) 
 {
     d_out << "\n"
-            "    std::pair<char, size_t> s_accept[] =\n"
-            "       {";
+            "    ScannerBase::AcceptInfo const ScannerBase::s_accept[] =\n"
+            "    {\n"
+            "        ";
 
     size_t count = 0;
-    for_each(accept.begin(), accept.end(), FnWrap::unary(outPair, 
+    for_each(accept.begin(), accept.end(), FnWrap::unary(outAccept, 
                                                          d_out, count));
    
-    d_out << (count % 8 == 0 ? "        " : "") << "};\n";
+    d_out << (count % 8 == 0 ? "" : "\n") << "    };\n";
 }

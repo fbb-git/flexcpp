@@ -87,12 +87,10 @@ try
 
     cout << dfas << '\n';
 
-    ofstream out;
-    Msg::open(out, "TABLES.h");
-
-    Generator generator(out, ranges);
+    Generator generator(ranges);
         generator.charTable();
         generator.dfas(dfas);
+        generator.declarations();
 }
 catch (int x)
 {

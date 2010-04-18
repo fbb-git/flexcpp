@@ -1,8 +1,8 @@
 #include "generator.ih"
 
-Generator::Generator(ostream &out, Ranges const &ranges)
+Generator::Generator(Ranges const &ranges)
 :
-    d_out(out),
     d_ranges(ranges)
 {
+    Msg::open(d_out, "TABLES.h");
 }
