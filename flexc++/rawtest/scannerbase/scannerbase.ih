@@ -1,0 +1,4 @@
+#include "scannerbase.h"
+
+using namespace std;
+
