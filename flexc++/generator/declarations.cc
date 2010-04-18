@@ -29,6 +29,10 @@ void Generator::declarations()
             "        }\n"
             "    };\n"
             "\n"
+            "    int const (*d_dfa)[" << dfaCols() << "];\n"
+            "\n"
+            "    static bool    const s_interactive = " <<
+                    boolalpha << Options::instance().interactive() << ";\n"
             "    static size_t  const s_ranges[];\n"
             "    static size_t  const s_rangeOfBOL;\n"
             "    static size_t  const s_rangeOfEOF;\n"

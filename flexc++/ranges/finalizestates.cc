@@ -11,6 +11,7 @@
 
 void Ranges::finalizeStates()
 {
+    d_eof = ++d_subsets;                    // always use the <<EOF>> range
     for_each(d_states.begin(), d_states.end(), 
                                 FnWrap::unary(finalizeState, *this));
 }

@@ -11,6 +11,7 @@
 
 #include "../ranges/ranges.h"
 #include "../state/state.h"
+#include "../options/options.h"
 
 using namespace std;
 using namespace FBB;

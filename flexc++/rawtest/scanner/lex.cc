@@ -2,6 +2,16 @@
 
 
 int Scanner::lex()
+try
 {
-    return -1;
+    while (true)
+    {
+        if (!lookup(next()))
+            continue;
+    }
 }
+catch (int ret)
+{
+    return ret;
+}
+

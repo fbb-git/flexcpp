@@ -15,8 +15,6 @@ void Ranges::finalizeState(State &state, Ranges &obj)
         break;
 
         case State::EOF__:
-            if (obj.d_eof == 0)
-                obj.d_eof = ++obj.d_subsets;
             state.setType(obj.d_eof);
         break;
 

@@ -51,6 +51,8 @@ class Options
 
         void setAccessorVariables();
 
+        bool interactive() const;
+
     private:
         Options();
 
@@ -87,6 +89,11 @@ inline void Options::setLexSourcePath(std::string const &name)
 inline void Options::setInteractive()
 {   
     d_interactive = true;
+}
+
+inline bool Options::interactive() const
+{   
+    return d_interactive;
 }
 
 
