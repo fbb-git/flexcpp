@@ -11,5 +11,6 @@ void Generator::outAction(DFARow const &row, ostream &out, set<size_t> &done)
     out << "    case " << final << ":\n"
            "    {\n" <<
            "        " << row.action() << "\n"
-           "    }\n";
+           "    }\n"
+           "    break;\n";
 }

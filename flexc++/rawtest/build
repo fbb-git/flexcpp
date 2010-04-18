@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ ../tmp/bin/STATICS -nt main.cc ]
+then
+    touch main.cc
+    icmbuild clean
+fi
+
+icmbuild

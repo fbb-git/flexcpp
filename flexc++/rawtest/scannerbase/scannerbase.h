@@ -26,17 +26,13 @@ class ScannerBase
         void updateAcceptCounts();
         void reset();
         bool confirmExecute() const;
+        void nextState();
 
     private:
         void cleanup();
 
 };
         
-inline bool ScannerBase::finalState() const
-{
-    return d_dfa[d_state][s_finalIdx] != -1;
-}
-
 inline size_t ScannerBase::ruleAction() const
 {
     return d_dfa[d_state][s_finalIdx];

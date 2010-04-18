@@ -2,7 +2,11 @@
 
 bool ScannerBase::lookup(size_t range)
 {
-    d_nextState = d_dfa[d_state][range];// determine the next state
+    // Char-ranges are numbers, to convert to indices subtract 1
+
+    cerr << "State: " << d_state << ": lookup(" << range;
+    d_nextState = d_dfa[d_state][range - 1];// determine the next state
+    cerr << ") yields next state " << d_nextState << '\n';
 
     if 
     (
@@ -14,13 +18,16 @@ bool ScannerBase::lookup(size_t range)
 
 
     if (range == s_rangeOfEOF)          // at EOF switch files if possible
+    {
+        cerr << "Got EOF, all done\n";
         throw -1;                       // for now we'll end the scanner
+    }
 
     if (range == s_rangeOfBOL)          // at BOL, nothing happens: false
         return false;                   // get the next char.
 
         // now we're in trouble: an unaccounted-for range...
-    cerr << d_char;                     // ECHO it to cerr
+    cerr << "NOT HANDLED: '" << d_char << "'\n";   // ECHO it to cerr
     cleanup();
     return false;                       // get the next char
 }

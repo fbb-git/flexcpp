@@ -8,6 +8,8 @@ try
 
     while (true)
     {
+        nextState();
+
         if (!lookup(next()))        // no transition or unaccounted for BOL
             continue;               // proceed...
 
@@ -15,6 +17,7 @@ try
         
         if (confirmExecute())
         {
+            reset();
             bool cycle = false;
             int ret = execute(&cycle);
             if (cycle)
