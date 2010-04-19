@@ -36,7 +36,9 @@ class Ranges
 
         void swap(Ranges &other);
 
-        void determineSubsets();
+        void determineSubsets();    // determine the ranges for chars in
+                                    // d_ranges. 
+
         void finalizeStates();      // all chars, strings and sets are 
                                     // converted to character sets.
                                     // there can be at most 256 character sets
@@ -79,6 +81,7 @@ class Ranges
         static void addRangeNr(char ch, size_t const *ranges, 
                                       std::set<size_t> &rangeSet);
         static void charsetToRanges(StateData &data, size_t *ranges);
+        static void outChar(std::ostream &out, size_t idx);
 };
 
 inline void Ranges::swap(Ranges &other)

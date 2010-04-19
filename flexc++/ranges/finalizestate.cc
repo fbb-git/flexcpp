@@ -1,5 +1,7 @@
 #include "ranges.ih"
 
+// When BOL is encountered, increment the subsetcount.
+
 void Ranges::finalizeState(State &state, Ranges &obj)
 {
     switch (size_t type = state.type())
@@ -10,7 +12,7 @@ void Ranges::finalizeState(State &state, Ranges &obj)
 
         case State::BOL:
             if (obj.d_bol == 0)
-                obj.d_bol = ++obj.d_subsets;
+                obj.d_bol = obj.d_subsets++;
             state.setType(obj.d_bol);
         break;
 

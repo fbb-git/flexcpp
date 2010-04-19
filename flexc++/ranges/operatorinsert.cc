@@ -1,45 +1,34 @@
 #include "ranges.ih"
 
-#include <ostream>
-#include <iomanip>
-#include <cctype>
-
-ostream &operator<<(ostream &out, Ranges const &ranges)
+ostream &operator<<(ostream &out, Ranges const &rangesObj)
 {
-    out << "Nsubsets: " << ranges.size() << '\n';
+    out << "Nsubsets: " << rangesObj.d_subsets << '\n';
 
-    for (size_t idx = 0, last = UINT_MAX, count = 0; idx < 256; ++idx)
+    size_t *ranges = rangesObj.d_ranges;
+    size_t *begin = ranges;
+    size_t *end = ranges + rangesObj.d_size;
+    size_t range = 0;
+
+    while (begin != end)
     {
-        if (ranges.rangeOf(idx) != last)
-        {
-            last = ranges.rangeOf(idx);
+        size_t *last = find_if(begin, end, 
+                                   bind2nd(not_equal_to<size_t>(), *begin));
 
-            if (idx != 0)
-            {
-                out << " - ";
-    
-                out << setw(3) << idx - 1;
-                if (isprint(idx - 1))
-                    out << "('" << static_cast<char>(idx - 1) << "')";
-                else
-                    out << "     ";
-                out << '\n';
-            }
+        out << setw(2) << range++ << ": ";
+        Ranges::outChar(out, begin - ranges);
 
-            out << setw(2) << ++count << ": " << setw(3) << idx;
-            if (isprint(idx))
-                out << "('" << static_cast<char>(idx) << "')";
-            else
-                out << "     ";
-        }
+        out << " - ";
+        Ranges::outChar(out, last - ranges - 1);
+
+        out << '\n';
+        
+        begin = last;
     }
 
-    out << " - 255\n";
-
-    if (size_t bol = ranges.rangeOfBOL())
+    if (size_t bol = rangesObj.rangeOfBOL())
         out << "BOL: " << bol << '\n';
 
-    if (size_t eof = ranges.rangeOfEOF())
+    if (size_t eof = rangesObj.rangeOfEOF())
         out << "EOF: " << eof << '\n';
 
     return out;

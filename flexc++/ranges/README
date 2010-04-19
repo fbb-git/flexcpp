@@ -18,8 +18,8 @@ Algoritme:
 de set te verhogen: stap 1: next = ranges
                     stap 2: ++next[a], ++next[b] ... ++next[m].
 
-    zodra geldt voor de aansluitende ranges: next[l-1] == next[l] of next[r+1]
-== next[r] bepaal dan ranges += next. Anders: ranges = next.
+    zodra geldt voor de aansluitende ranges: next[l-1] == next[l] of 
+    next[r+1] == next[r] bepaal dan ranges += next. Anders: ranges = next.
 
 Resultaat:
 ==========
@@ -76,8 +76,8 @@ van 1 x.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
 
 > > Een set [ade] in een RE reduceert in het laatste voorbeeld dus tot sets a en
-> > [ef] en vereist slechts dat de bijbehorende NFA 2 x wordt afgelopen in plaats
-> > van 1 x.
+> > [ef] en vereist slechts dat de bijbehorende NFA 2 x wordt afgelopen in 
+> > plaats van 1 x.
 > Hoe bedoel je dit precies? Waarom moet de NFA tweemaal worden afgelopen?
 
     Schrijffout. Hier moest staan: 
@@ -110,8 +110,8 @@ waar zitten die ll en \~n dan? Maar als de collating sequence is:
 dan niet: dan heb je gewoon altijd een opeenvolgende serie bij x-y (met
 coll(x) <= coll(y) 
 
-> 2) Hoe generaliseert dit ranges idee naar de operators {+} en {-} die werken op
-> hele characterclasses? Bijv [ac-dg-z]{-}[f-m]. Gaat het altijd goed als
+> 2) Hoe generaliseert dit ranges idee naar de operators {+} en {-} die werken 
+> op hele characterclasses? Bijv [ac-dg-z]{-}[f-m]. Gaat het altijd goed als
 > je gewoon checkt op alle begin en eindpunten van alle ranges
 
     In de grammatica is dat geen probleem. De uiteindelijke set wordt
@@ -124,10 +124,10 @@ een actuele characterclass gebouwd die dan aan ranges wordt gevoerd. Dus
 
 Volgens mij wel :-) 
 
-Ik denk dat doordat (als `chars' de vector is met 1-waarden op de plaatsen van de
-characters die door `chars' worden gerepresenteerd en `ranges' je oude
-tellingen bevat) bij een willekeurige collisie gaat gelden (beschouw x en
-x+1, voor x en x-1 geldt uiteraard een analoge redenering):
+Ik denk dat doordat (als `chars' de vector is met 1-waarden op de plaatsen van
+de characters die door `chars' worden gerepresenteerd en `ranges' je oude
+tellingen bevat) bij een willekeurige collisie gaat gelden (beschouw x en x+1,
+voor x en x-1 geldt uiteraard een analoge redenering):
 
 (chars+ranges)[x] == (chars+ranges)[x+1]. 
 
@@ -187,7 +187,7 @@ niet te testen. Bv stel er worden gebruikt a-d, cd en a:
 Het alfabet bestaat dan uit {a}, {b}, {cd}: 3 sets en e,f komen niet voor en
 kunnen worden genegeerd bij de DFA constructie.
 
+------------------------------------------------------------------
+19/4
 
-
-
-
+Returned Ranges are indices, d_ranges returns the number of different ranges. 

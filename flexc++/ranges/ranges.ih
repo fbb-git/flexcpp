@@ -4,6 +4,10 @@
 #include <algorithm>
 #include <functional>
 #include <iterator>
+#include <ostream>
+#include <iomanip>
+#include <cctype>
+
 
 #include <bobcat/fnwrap>
 
@@ -25,4 +29,3 @@ inline void Ranges::addRangeNr(char ch, size_t const *ranges,
 {
     rangeSet.insert(ranges[static_cast<unsigned char>(ch)]);
 }
-
