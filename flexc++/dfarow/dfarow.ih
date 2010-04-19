@@ -9,7 +9,6 @@
 #include <bobcat/table>
 
 #include "../states/states.h"
-#include "../rules/rules.h"
 
 using namespace std;
 using namespace FBB;

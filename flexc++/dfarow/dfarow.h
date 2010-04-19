@@ -7,6 +7,7 @@
 #include <unordered_map>
 
 #include "../ranges/ranges.h"
+#include "../rules/rules.h"
 
 namespace FBB
 {
@@ -14,7 +15,6 @@ namespace FBB
 }
 
 class States;
-class Rules;
 
 class DFARow
 {

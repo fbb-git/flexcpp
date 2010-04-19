@@ -53,7 +53,7 @@
 #define LINKER_OPTIONS      "-s"
 
     // define any additional libraries BINARY may need:
-#define ADD_LIBRARIES       ""
+#define ADD_LIBRARIES       "bobcat"
 
     // define any additional paths (other than the standard paths) the
     // additional libraries are located in:

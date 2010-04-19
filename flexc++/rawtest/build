@@ -1,8 +1,14 @@
 #!/bin/bash
 
+if [ "$1" == "clean" ] 
+then 
+    icmbuild clean 
+    exit 0
+fi
+
 if [ ../tmp/bin/STATICS -nt main.cc ]
 then
-    touch main.cc
+    touch main.cc    
     icmbuild clean
 fi
 
