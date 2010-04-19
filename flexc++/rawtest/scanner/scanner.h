@@ -9,7 +9,7 @@ class Scanner: public ScannerBase
         Scanner();
         int lex();
     private:
-        int execute(bool *cycle);
+        int execute(bool *done);
 };
 
 #endif

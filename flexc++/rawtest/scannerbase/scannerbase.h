@@ -11,8 +11,9 @@ class ScannerBase
     std::deque<char> d_deque;
     bool d_bol;
     char d_char;                 // most recently received character,
-    size_t d_state;
-    size_t d_nextState;
+    int d_state;
+    int d_nextState;
+    size_t d_range;
 
 #include "../../tmp/bin/DECLARE"
 
@@ -20,17 +21,13 @@ class ScannerBase
         ScannerBase();
     protected:
         size_t next();
-        bool lookup(size_t range);
+        void lookup(size_t range);
         bool finalState() const;
         size_t ruleAction() const;
         void updateAcceptCounts();
         void reset();
-        bool confirmExecute() const;
+        bool callExecute() const;
         void nextState();
-
-    private:
-        void cleanup();
-
 };
         
 inline size_t ScannerBase::ruleAction() const

@@ -1,29 +1,29 @@
 #include "scanner.ih"
 
+#include <iostream>
 
 int Scanner::lex()
 try
 {
-    reset();
+    reset();        // reset the dfa to state 0, clear match and acceptcounts
 
     while (true)
     {
-        nextState();
-
-        if (!lookup(next()))        // no transition or unaccounted for BOL
-            continue;               // proceed...
+        lookup(next());     // next: return BOL or get char.
+                            // return EOF or set BOL, or return the char-range
+                            // lookup: determine next state
 
         updateAcceptCounts();
         
-        if (confirmExecute())
+        if (callExecute())  
         {
-            reset();
-            bool cycle = false;
-            int ret = execute(&cycle);
-            if (cycle)
-                continue;
-            return ret;
+            bool done = true;
+            int ret = execute(&done);
+            if (done)
+                return ret;
         }
+
+        nextState();
     }
 }
 catch (int ret)

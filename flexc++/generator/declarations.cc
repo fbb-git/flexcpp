@@ -38,8 +38,10 @@ void Generator::declarations()
         "    static size_t  const s_acceptIdx = " << dfaCols() - 2 << ";\n"
         "    static size_t  const s_acceptSize = " << d_acceptSize << ";\n"
         "    static size_t  const s_ranges[];\n"
-        "    static size_t  const s_rangeOfBOL;\n"
-        "    static size_t  const s_rangeOfEOF;\n"
+        "    static size_t  const s_rangeOfBOL = " << 
+                                        (d_ranges.rangeOfEOF() + 1) << ";\n"
+        "    static size_t  const s_rangeOfEOF = " << d_ranges.rangeOfEOF() 
+                                                                    << ";\n"
         "    static int     const s_dfa[][" << dfaCols() << "];\n"
         "    static AcceptInfo const s_accept[];\n"
         "    static std::unordered_map<Begin, int const (*)[" << 

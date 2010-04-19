@@ -1,11 +1,11 @@
 #include "scanner.ih"
 
-int Scanner::execute(bool *cycle)
+int Scanner::execute(bool *done)
 {
     switch (ruleAction())
     {
 #include "../../tmp/bin/ACTIONS"
     }
-    *cycle = true;
+    *done = false;
     return -1;                  // irrelevant return due to true cycle
 }                               // in lookup

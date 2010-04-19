@@ -20,11 +20,7 @@ void Generator::charTable()
     }
     
     d_out << "\n"
-         "    };\n"
-         "    size_t const ScannerBase::s_rangeOfBOL = " << 
-                                            d_ranges.rangeOfBOL() << ";\n"
-         "    size_t const ScannerBase::s_rangeOfEOF = " << 
-                                            d_ranges.rangeOfEOF() << ";\n";
+         "    };\n";
 }
 
 

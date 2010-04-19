@@ -7,7 +7,7 @@ size_t ScannerBase::next()
     if (d_bol)                  // d_bol is set if the previously returned
     {                           // character was '\n' and s_rangeOfBOL != 0
         d_bol = false;
-        return s_rangeOfBOL;
+        return d_range = s_rangeOfBOL;
     }
 
     if (d_deque.empty())        // get the next input char, from the deque
@@ -19,17 +19,25 @@ size_t ScannerBase::next()
     }
 
     if (ret == EOF)             // got EOF
-        return s_rangeOfEOF;
+        return d_range = s_rangeOfEOF;
 
     if (ret == '\n' && s_rangeOfBOL != 0)   // on '\n' and BOL is used: set
         d_bol = true;                       // BOL as the next range to return
 
     d_char = ret;               // got something else: keep its value
 
-    ret = s_ranges[ret];        // and return its range nr.
+    d_range = s_ranges[ret];    // and return its range nr.
 
-    msg(1) << "Got '" << d_char << "', range = " << ret << endl;
+    msg(1) << "\nGot ";
+    if (isprint(d_char))
+        msg(1) << '\'' << d_char << '\'';
+    else
+        msg(1) << setw(3) << 
+                static_cast<size_t>(static_cast<unsigned char>(d_char));
 
-    return ret;
+    msg(1) << ", range = " << d_range << '\n';
+
+    return d_range;
 }
+
 
