@@ -1,5 +1,9 @@
 <quote>{
-    '                       end();
+    '                       {
+                                if (d_block)
+                                    d_block += d_match;
+                                end();
+                            }
 
     \\.                     |
     .                       more(); 

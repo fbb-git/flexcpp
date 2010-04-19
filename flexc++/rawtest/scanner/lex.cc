@@ -22,7 +22,6 @@ try
             if (done)
                 return ret;
         }
-
         nextState();
     }
 }

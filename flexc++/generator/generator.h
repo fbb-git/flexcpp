@@ -18,10 +18,10 @@ class Generator
     std::ofstream d_out;
     Ranges const &d_ranges;
     std::vector<std::string> d_startStates;
-    size_t d_acceptSize;
+    size_t d_nRules;
 
     public:
-        Generator(Ranges const &ranges);
+        Generator(size_t nRules, Ranges const &ranges);
         void charTable();
         void dfas(DFAs const &dfas);
         void actions(DFAs const &dfas);

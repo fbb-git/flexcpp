@@ -50,8 +50,15 @@ class Rules
         typedef StartConditions::NameVector NameVector;
         const_iterator begin() const;
         const_iterator end() const;
+
+        size_t size() const;
 };
 
+inline size_t Rules::size() const
+{
+    return d_rules.size();
+}
+        
 inline Rules::const_iterator Rules::begin() const
 {
     return d_startConditions.begin();

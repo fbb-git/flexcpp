@@ -22,6 +22,11 @@
                     d_block(' ');
                 }
 
+\"              {
+                    more();
+                    begin(str);
+                }
+
 "'"             {
                     more();
                     begin(quote);

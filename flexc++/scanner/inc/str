@@ -3,7 +3,7 @@
 \"          {
                 if (!d_block)
                     return end(Parser::STRING);
-                more();
+                d_block += d_match;
                 end();
             }
             

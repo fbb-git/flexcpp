@@ -117,6 +117,11 @@ NAME                    [A-Za-z_][-A-Za-z0-9_]*
                     d_block(' ');
                 }
 
+\"              {
+                    more();
+                    begin(str);
+                }
+
 "'"             {
                     more();
                     begin(quote);
@@ -165,7 +170,11 @@ NAME            d_block += d_match;
 
 
 <quote>{
-    '                       end();
+    '                       {
+                                if (d_block)
+                                    d_block += d_match;
+                                end();
+                            }
 
     \\.                     |
     .                       more(); 
@@ -179,7 +188,7 @@ NAME            d_block += d_match;
 \"          {
                 if (!d_block)
                     return end(Parser::STRING);
-                more();
+                d_block += d_match;
                 end();
             }
             

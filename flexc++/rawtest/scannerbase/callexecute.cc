@@ -11,18 +11,24 @@ bool ScannerBase::callExecute()
             d_nextState == -1   // or there is no known transition
         );
 
-    if (ret)
+    if (!ret)
+        msg(2) << "Not calling execute\n";
+    else
     {
-        string const &tail = d_match.substr(d_length);
+        if (d_lookaheadLength)
+        {
+            d_length = d_match.length();
 
-        copy(tail.rbegin(), tail.rend(), 
-                    front_inserter(d_deque));
-        d_match.resize(d_length);
+            d_deque.push_front(d_char);
 
+            size_t beginTail = d_length + d_lookaheadLength;
+            string const &tail = d_match.substr(beginTail);
+
+            copy(tail.rbegin(), tail.rend(), front_inserter(d_deque));
+            d_match.resize(beginTail);
+        }
         msg(1) << "Calling execute with match = '" << d_match << "'\n";
     }
-    else
-        msg(2) << "Not calling execute\n";
 
     return ret;
 }

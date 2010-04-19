@@ -29,8 +29,6 @@ void Generator::dfas(DFAs const &dfas)
     d_out << "   };\n";
  
     acceptStates(accept);
-    d_acceptSize = accept.size();
-
     dfaEntryPoints(dfaIndices);
 }
 

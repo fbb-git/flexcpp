@@ -14,8 +14,7 @@ void ScannerBase::updateAcceptCounts()
 
         if (*count == 0)        // Rule 0, for inheriting an non-inheriting
             ++*count;           //  accept states
-
-        if (begin->type == 'I' && d_state == d_nextState)
+        else if (begin->type == 'I' && d_state == d_nextState)
             ++*count;
     }
 }

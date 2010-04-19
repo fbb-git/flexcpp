@@ -87,7 +87,7 @@ try
 
     cout << dfas << '\n';
 
-    Generator generator(ranges);
+    Generator generator(rules.size(), ranges);
         generator.charTable();
         generator.dfas(dfas);
         generator.declarations();

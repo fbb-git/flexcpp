@@ -1,9 +1,9 @@
 #include "generator.ih"
 
-Generator::Generator(Ranges const &ranges)
+Generator::Generator(size_t nRules, Ranges const &ranges)
 :
     d_ranges(ranges),
-    d_acceptSize(0)
+    d_nRules(nRules)
 {
     Msg::open(d_out, "STATICS");
 }

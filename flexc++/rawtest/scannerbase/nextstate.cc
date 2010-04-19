@@ -11,7 +11,6 @@ void ScannerBase::nextState()
         return;
     }
 
-
         // No transition on `range' from d_state
 
     if (d_range == s_rangeOfEOF)      // at EOF switch files if possible
@@ -28,11 +27,17 @@ void ScannerBase::nextState()
         return;                         // get the next char.
     }
 
+    if (d_lookaheadLength)
+    {
+        reset();
+        return;
+    }
+
     // At this point we've seen a character, but no transition from it.
 
     if (finalState())                   // no continuation at FINAL state
     {
-        msg(3) << "No transition at FINAL: pushing back " << d_char << '\n';
+        msg(3) << "No FINAL transition: pushing back " << d_char << '\n';
         d_deque.push_front(d_char);     // re-read the last-read char
     }
     else    // now we're in trouble: an unaccounted-for range...
