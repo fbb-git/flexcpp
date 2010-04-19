@@ -2,8 +2,6 @@
 
 void ScannerBase::nextState()
 {
-cerr << "nextState: range = " << d_range << endl;
-
     if (d_nextState != -1)              // got a transition
     {
         if (d_range < s_rangeOfEOF)

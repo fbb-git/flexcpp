@@ -8,6 +8,8 @@
 class ScannerBase
 {
     std::string d_match;
+    size_t d_length;
+
     std::deque<char> d_deque;
     bool d_bol;
     char d_char;                 // most recently received character,
@@ -22,11 +24,11 @@ class ScannerBase
     protected:
         size_t next();
         void lookup(size_t range);
-        bool finalState() const;
+        bool finalState();
         size_t ruleAction() const;
         void updateAcceptCounts();
         void reset();
-        bool callExecute() const;
+        bool callExecute();
         void nextState();
 };
         

@@ -1,6 +1,6 @@
 #include "scannerbase.ih"
 
-bool ScannerBase::callExecute() const
+bool ScannerBase::callExecute()
 {
     bool ret = 
         finalState()            // at a FINAL state
@@ -12,9 +12,17 @@ bool ScannerBase::callExecute() const
         );
 
     if (ret)
-        msg(4) << "Calling execute\n";
+    {
+        string const &tail = d_match.substr(d_length);
+
+        copy(tail.rbegin(), tail.rend(), 
+                    front_inserter(d_deque));
+        d_match.resize(d_length);
+
+        msg(1) << "Calling execute with match = '" << d_match << "'\n";
+    }
     else
-        msg(4) << "Not calling execute\n";
+        msg(2) << "Not calling execute\n";
 
     return ret;
 }
