@@ -17,7 +17,7 @@ bool ScannerBase::callExecute()
     {
         if (d_lookaheadLength)
         {
-            d_length = d_match.length();
+            d_length = 0;
 
             d_deque.push_front(d_char);
 

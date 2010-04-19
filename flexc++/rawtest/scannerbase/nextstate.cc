@@ -27,6 +27,8 @@ void ScannerBase::nextState()
         return;                         // get the next char.
     }
 
+    d_match.clear();
+
     if (d_lookaheadLength)
     {
         reset();

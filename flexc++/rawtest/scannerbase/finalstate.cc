@@ -10,7 +10,8 @@ bool ScannerBase::finalState()
     else
     {
         d_lookaheadLength = d_accept[ruleIdx];
-        msg(1) << "FINAL state of rule " << ruleIdx << ". Matched: " << 
+        msg(1) << "FINAL state " << d_state << 
+                " for rule " << ruleIdx << ". Matched: " << 
                   d_match << ", accept count = " << d_lookaheadLength << '\n';
     }        
 
