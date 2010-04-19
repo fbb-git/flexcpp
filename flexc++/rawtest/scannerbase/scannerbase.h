@@ -3,14 +3,14 @@
 
 #include <string>
 #include <unordered_map>
-#include <queue>
+#include <deque>
 
 class ScannerBase
 {
     std::string d_match;
-    std::queue<char> d_queue;
+    std::deque<char> d_deque;
     bool d_bol;
-    char d_char;        // most recently received character,
+    char d_char;                 // most recently received character,
     size_t d_state;
     size_t d_nextState;
 

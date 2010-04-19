@@ -10,12 +10,12 @@ size_t ScannerBase::next()
         return s_rangeOfBOL;
     }
 
-    if (d_queue.empty())        // get the next input char, from the queue
+    if (d_deque.empty())        // get the next input char, from the deque
         ret = cin.get();        // or from the input
     else
     {
-        ret = d_queue.front();
-        d_queue.pop();
+        ret = d_deque.front();
+        d_deque.pop_front();
     }
 
     if (ret == EOF)             // got EOF
@@ -27,7 +27,9 @@ size_t ScannerBase::next()
     d_char = ret;               // got something else: keep its value
 
     ret = s_ranges[ret];        // and return its range nr.
-    cerr << "Got '" << d_char << "', range = " << ret << endl;
+
+    msg(1) << "Got '" << d_char << "', range = " << ret << endl;
+
     return ret;
 }
 

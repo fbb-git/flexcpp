@@ -4,3 +4,4 @@
 
 using namespace std;
 
+ostream &msg(size_t level);

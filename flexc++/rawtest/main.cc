@@ -20,7 +20,7 @@ try
     if (argc > 1)
     {
         g_lo = A2x(argv[1]);
-        g_hi = ~0;
+        g_hi = g_lo;
     }
     if (argc > 2)
         g_hi = A2x(argv[2]);
