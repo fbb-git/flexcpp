@@ -7,12 +7,14 @@
 
 void ScannerBase::lookup()
 {
-    size_t range = next();
-    // Char-ranges are numbers, to convert to indices subtract 1
+    next();
 
-    msg(1) << "DFA[" << d_state << "][" << range << "] = ";
+    msg(1) << "DFA[" << d_state << "][" << d_range << "] = ";
 
-    d_nextState = d_dfa[d_state][range];    // determine the next state
+    d_nextState = d_dfa[d_state][d_range];    // determine the next state
+
+    if (d_state == d_rejectFrom && d_nextState == d_rejectTo)
+        d_nextState = -1;
 
     msg(1) << "nextState = " << d_nextState << "\n";
 }

@@ -19,8 +19,9 @@ class ScannerBase
     size_t d_LAlength;
     bool d_more;
 
-    bool d_rejected;                // used by reject
-    int d_lastRule;                 // set to the rule last matched
+    int d_fromState;
+    int d_rejectFrom;
+    int d_rejectTo;
 
     public:
         ScannerBase();

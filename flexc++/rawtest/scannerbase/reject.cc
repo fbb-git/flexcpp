@@ -2,9 +2,12 @@
 
 void ScannerBase::reject()
 {
-    d_rejected = true;
-    d_deque.push_front(d_char);         // eventually reread the character,
+    d_rejectFrom = d_fromState;
+    d_rejectTo =   d_state;
+
+cerr << "REJECT: from state " << d_rejectFrom << " to state " << 
+d_rejectTo << endl;
+
     retain(0);
     d_bol = false;
-    next();
 }
