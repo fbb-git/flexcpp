@@ -27,30 +27,28 @@ class ScannerBase
         void more();
         void less(size_t nChars);       // very strange name. Implemented as
         void retain(size_t nChars);     // a synonym of 'retain'
-        
         int  input();
         void unput(char ch);
 
-        size_t next();
-        void lookup(size_t range);
-        int  ruleIndex() const;
+            // used by Scanner::lex/execute
+            //
+        void lookup();
         void updateAcceptCounts();
-        void reset();
         bool callExecute();
+        void reset();
+        int  ruleIndex() const;
         void nextState();
 
-
     private:
-        void saveLookahead();
-
-        bool atEndOfRule();             // handles lookahead info
+        bool atBOL() const;
         bool atEOR() const;             // merely returns yes/no
-
+        bool atEndOfRule();             // handles lookahead info
         bool interactiveReturn() const;
         bool noTransition() const;
-        bool transition() const;
         bool plainChar() const;
-        bool atBOL() const;
+        bool transition() const;
+        size_t next();
+        void saveLookahead();
 };
 
 inline bool ScannerBase::atBOL() const

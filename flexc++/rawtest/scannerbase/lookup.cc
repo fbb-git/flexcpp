@@ -5,8 +5,9 @@
 //     2. The current state: either a final state or a non-final state
 //     3. the character ranges: BOL, EOF or character-range
 
-void ScannerBase::lookup(size_t range)
+void ScannerBase::lookup()
 {
+    size_t range = next();
     // Char-ranges are numbers, to convert to indices subtract 1
 
     msg(1) << "DFA[" << d_state << "][" << range << "] = ";

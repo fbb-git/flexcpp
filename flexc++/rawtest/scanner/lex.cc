@@ -7,7 +7,7 @@ try
 {
     while (true)
     {
-        lookup(next());     // next: return BOL or get char.
+        lookup();           // next: return BOL or get char.
                             // return EOF or set BOL, or return the char-range
                             // lookup: determine next state
 
