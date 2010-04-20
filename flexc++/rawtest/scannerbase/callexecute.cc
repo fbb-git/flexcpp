@@ -2,8 +2,6 @@
 
 bool ScannerBase::callExecute()
 {
-    d_length = d_match.length();
-
     bool call = atEndOfRule() && (interactiveReturn() || noTransition());
 
     if (!call)

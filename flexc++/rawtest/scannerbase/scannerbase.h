@@ -10,14 +10,13 @@ class ScannerBase
 #include "../../tmp/bin/DECLARE"
     std::deque<char> d_deque;
     std::string d_match;
-    size_t d_length;
 
     bool d_bol;
     char d_char;                 // most recently received character,
     int d_state;
     int d_nextState;
     size_t d_range;
-    size_t d_lookaheadLength;
+    size_t d_LAlength;
     bool d_more;
 
     public:

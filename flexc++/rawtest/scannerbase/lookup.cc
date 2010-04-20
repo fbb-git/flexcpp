@@ -9,11 +9,11 @@ void ScannerBase::lookup(size_t range)
 {
     // Char-ranges are numbers, to convert to indices subtract 1
 
-    msg(2) << "DFA[" << d_state << "][" << range << "] = ";
+    msg(1) << "DFA[" << d_state << "][" << range << "] = ";
 
     d_nextState = d_dfa[d_state][range];    // determine the next state
 
-    msg(2) << "nextState = " << d_nextState << "\n";
+    msg(1) << "nextState = " << d_nextState << "\n";
 }
             
 

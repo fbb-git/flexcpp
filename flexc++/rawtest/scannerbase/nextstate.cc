@@ -29,8 +29,10 @@ void ScannerBase::nextState()
     {
         cerr << "NOT HANDLED: '" << d_char << "'\n";   // ECHO it to cerr
         reset();
+        return;
     }
-    else if (atBOL())
+
+    if (atBOL())
         return;
         
     // else EOF

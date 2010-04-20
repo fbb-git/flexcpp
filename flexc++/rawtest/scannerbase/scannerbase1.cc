@@ -3,13 +3,12 @@
 ScannerBase::ScannerBase()
 :
     d_dfa(s_dfa),           // declared in DECLARE; initialize to INITIAL
-        // d_length             // by reset()
     d_bol(s_rangeOfBOL),
         // d_char
         // d_state              // by reset()
         // d_nextState
         // d_range
-        // d_lookaheadLength    // by reset()
+        // d_LAlength           // by reset()
     d_more(false)
 {
     reset();
