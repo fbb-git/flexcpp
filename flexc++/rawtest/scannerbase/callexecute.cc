@@ -2,7 +2,9 @@
 
 bool ScannerBase::callExecute()
 {
-    bool call = atEndOfRule() && (interactiveReturn() || noTransition());
+        // rejectReturn must be first to clear d_rejected if set.
+    bool call = atEndOfRule() && 
+                    (rejectReturn() || interactiveReturn() || noTransition());
 
     if (!call)
         msg(2) << "Not calling execute\n";

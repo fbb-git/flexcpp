@@ -19,6 +19,9 @@ class ScannerBase
     size_t d_LAlength;
     bool d_more;
 
+    bool d_reject;                  // used by reject
+    int d_lastRule;                 // set to the rule last matched
+
     public:
         ScannerBase();
         std::string const &match() const;
@@ -29,6 +32,7 @@ class ScannerBase
         void retain(size_t nChars);     // a synonym of 'retain'
         int  input();
         void unput(char ch);
+        void reject();
 
             // used by Scanner::lex/execute
             //
@@ -46,6 +50,7 @@ class ScannerBase
         bool interactiveReturn() const;
         bool noTransition() const;
         bool plainChar() const;
+        bool rejectReturn() const;
         bool transition() const;
         size_t next();
         void saveLookahead();

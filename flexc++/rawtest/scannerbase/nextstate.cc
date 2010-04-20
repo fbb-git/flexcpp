@@ -12,6 +12,7 @@ void ScannerBase::nextState()
         if (plainChar())
             d_match += d_char;
 
+        d_lastRule = ruleIndex();   
         d_state = d_nextState;
         return;
     }
