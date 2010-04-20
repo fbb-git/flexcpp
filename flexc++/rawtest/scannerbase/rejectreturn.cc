@@ -1,6 +1,6 @@
 #include "scannerbase.ih"
 
-bool ScannerBase::rejectReturn() const
+bool ScannerBase::rejectReturn()
 {
     if (d_rejected && ruleIndex() == d_lastRule)
     {

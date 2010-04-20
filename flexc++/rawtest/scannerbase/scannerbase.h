@@ -19,7 +19,7 @@ class ScannerBase
     size_t d_LAlength;
     bool d_more;
 
-    bool d_reject;                  // used by reject
+    bool d_rejected;                // used by reject
     int d_lastRule;                 // set to the rule last matched
 
     public:
@@ -50,7 +50,7 @@ class ScannerBase
         bool interactiveReturn() const;
         bool noTransition() const;
         bool plainChar() const;
-        bool rejectReturn() const;
+        bool rejectReturn();
         bool transition() const;
         size_t next();
         void saveLookahead();

@@ -10,6 +10,7 @@ ScannerBase::ScannerBase()
         // d_range
         // d_LAlength           // by reset()
     d_more(false),
+    d_rejected(false),
     d_lastRule(-1)
 {
     reset();

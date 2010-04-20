@@ -7,6 +7,7 @@ size_t ScannerBase::next()
     if (d_bol)                  // d_bol is set if the previously returned
     {                           // character was '\n' and s_rangeOfBOL != 0
         d_bol = false;
+        msg(1) << "next: BOL\n";
         return d_range = s_rangeOfBOL;
     }
 
@@ -19,7 +20,10 @@ size_t ScannerBase::next()
     }
 
     if (ret == EOF)             // got EOF
+    {
+        msg(1) << "next: EOF\n";
         return d_range = s_rangeOfEOF;
+    }
 
     if (ret == '\n' && s_rangeOfBOL != 0)   // on '\n' and BOL is used: set
         d_bol = true;                       // BOL as the next range to return
