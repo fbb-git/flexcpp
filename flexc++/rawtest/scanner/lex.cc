@@ -5,8 +5,6 @@
 int Scanner::lex()
 try
 {
-    reset();        // reset the dfa to state 0, clear match and acceptcounts
-
     while (true)
     {
         lookup(next());     // next: return BOL or get char.
@@ -15,13 +13,17 @@ try
 
         updateAcceptCounts();
         
-        if (callExecute())  
+        if (callExecute())    
         {
             bool done = true;
             int ret = execute(&done);
+            reset();        // reset the dfa, clear match and acceptcounts
             if (done)
                 return ret;
+            continue;       // restart if there's no action or if the action
+                            // doesn't return
         }
+
         nextState();
     }
 }

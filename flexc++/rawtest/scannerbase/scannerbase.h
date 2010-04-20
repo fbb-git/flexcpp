@@ -28,13 +28,54 @@ class ScannerBase
     protected:
         size_t next();
         void lookup(size_t range);
-        bool finalState();
-        size_t ruleAction() const;
+        int  ruleIndex() const;
         void updateAcceptCounts();
         void reset();
         bool callExecute();
         void nextState();
+
+    private:
+        void saveLookahead();
+
+        bool atEndOfRule();             // handles lookahead info
+        bool atEOR() const;             // merely returns yes/no
+
+        bool interactiveReturn() const;
+        bool noTransition() const;
+        bool transition() const;
+        bool plainChar() const;
+        bool atBOL() const;
 };
+
+inline bool ScannerBase::atBOL() const
+{
+    return d_range == s_rangeOfBOL;
+}
+
+inline bool ScannerBase::plainChar() const
+{
+    return d_range < s_rangeOfEOF;
+}
+
+inline bool ScannerBase::atEOR() const
+{
+    return ruleIndex() != -1;
+}
+
+inline bool ScannerBase::interactiveReturn() const
+{
+    return s_interactive && d_char == '\n';
+}
+
+inline bool ScannerBase::transition() const
+{
+    return d_nextState != -1;
+}
+
+inline bool ScannerBase::noTransition() const
+{
+    return not transition();
+}
 
 inline void ScannerBase::more()
 {
@@ -46,7 +87,7 @@ inline std::string const &ScannerBase::match() const
     return d_match;
 }
         
-inline size_t ScannerBase::ruleAction() const
+inline int ScannerBase::ruleIndex() const
 {
     return d_dfa[d_state][s_finalIdx];
 }

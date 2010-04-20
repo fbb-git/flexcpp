@@ -2,7 +2,7 @@
 
 int Scanner::execute(bool *done)
 {
-    switch (ruleAction())
+    switch (ruleIndex())
     {
 #include "../../tmp/bin/ACTIONS"
     }
