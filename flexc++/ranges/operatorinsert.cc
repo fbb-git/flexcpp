@@ -17,8 +17,11 @@ ostream &operator<<(ostream &out, Ranges const &rangesObj)
         out << setw(2) << range++ << ": ";
         Ranges::outChar(out, begin - ranges);
 
-        out << " - ";
-        Ranges::outChar(out, last - ranges - 1);
+        if (begin  != last - 1)
+        {
+            out << " - ";
+            Ranges::outChar(out, last - ranges - 1);
+        }
 
         out << '\n';
         
