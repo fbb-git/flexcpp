@@ -2,5 +2,8 @@
 
 bool Block::close()
 {
-    return --d_level == 0;
+    if (--d_level != 0)
+        *this += '}';
+
+    return d_level;
 }

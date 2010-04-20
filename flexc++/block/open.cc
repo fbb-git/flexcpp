@@ -3,7 +3,7 @@
 void Block::open(size_t lineno, string const &source)
 {
     if (d_level)            // existing block ?
-        *this += "{";       // add open curly bracket to the block's code
+        *this += '{';       // add open curly bracket to the block's code
     else
     {                       // assign line if no braces were open yet
         clear();

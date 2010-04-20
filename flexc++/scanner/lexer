@@ -104,6 +104,7 @@ NAME                    [A-Za-z_][-A-Za-z0-9_]*
                             less(leng() - 1);
                             return end(Parser::BLOCK);
                         }
+                        d_block += "\n        ";
                     }
 
 "{"             d_block.open(lineno(), filename()); 

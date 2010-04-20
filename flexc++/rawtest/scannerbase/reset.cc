@@ -3,9 +3,11 @@
 void ScannerBase::reset()
 {
     d_state = 0;
-    d_LAlength = 0;
 
-    d_match.clear();
+    if (d_more)
+        d_more = false;
+    else
+        d_match.clear();
 
     msg(1) << "\nResetting...\n";
 
