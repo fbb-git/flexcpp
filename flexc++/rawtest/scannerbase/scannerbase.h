@@ -22,9 +22,14 @@ class ScannerBase
     public:
         ScannerBase();
         std::string const &match() const;
-        void more();
 
     protected:
+        void more();
+        void less(size_t nChars);       // very strange name. Implemented as
+        void retain(size_t nChars);     // a synonym of 'retain'
+
+        void unput(char ch);
+
         size_t next();
         void lookup(size_t range);
         int  ruleIndex() const;
@@ -32,6 +37,7 @@ class ScannerBase
         void reset();
         bool callExecute();
         void nextState();
+
 
     private:
         void saveLookahead();
@@ -49,6 +55,16 @@ class ScannerBase
 inline bool ScannerBase::atBOL() const
 {
     return d_range == s_rangeOfBOL;
+}
+
+inline void ScannerBase::unput(char ch)
+{
+    d_deque.push_front(ch);
+}
+
+inline void ScannerBase::less(size_t nChars)
+{
+    retain(nChars);
 }
 
 inline bool ScannerBase::plainChar() const
