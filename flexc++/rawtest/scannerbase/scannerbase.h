@@ -27,7 +27,8 @@ class ScannerBase
         void more();
         void less(size_t nChars);       // very strange name. Implemented as
         void retain(size_t nChars);     // a synonym of 'retain'
-
+        
+        int  input();
         void unput(char ch);
 
         size_t next();
