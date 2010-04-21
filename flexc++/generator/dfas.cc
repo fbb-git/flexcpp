@@ -17,18 +17,22 @@ void Generator::dfas(DFAs const &dfas)
     "    {\n";
 
     PVector accept;
+    vector<size_t> final;
+
     vector<size_t> dfaIndices(1, 0);
 
     auto iter = dfas.find("INITIAL");
     if (iter != dfas.end())
-        dfa(*iter, d_out, accept, d_startStates, dfaIndices);
+        dfa(*iter, d_out, accept, final, d_startStates, dfaIndices);
  
     for_each(dfas.begin(), dfas.end(), 
-            FnWrap::unary(dfa, d_out, accept, d_startStates, dfaIndices));
+            FnWrap::unary(dfa, d_out, accept, final, d_startStates, 
+                                                            dfaIndices));
  
     d_out << "   };\n";
  
     acceptStates(accept);
+    finalRules(final);
     dfaEntryPoints(dfaIndices);
 }
 

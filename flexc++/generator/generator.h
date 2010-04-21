@@ -31,17 +31,22 @@ class Generator
         size_t dfaCols() const;
 
         void acceptStates(PVector const &accept);
-        void dfaEntryPoints(std::vector<size_t> const &entryPoints);
-
-        static void dfa(DFAs::Pair const &dfaPair, std::ostream &out, 
-                        PVector &accept,
-                        std::vector<std::string> &startStates,
-                        std::vector<size_t> &dfaOffsets);
-        static void dfaRow(DFARow const &row, std::ostream &out, 
-                        PVector &accept);    
         static size_t addAccept(DFARow const &row, PVector &accept);
         static void outAccept(Pair const &pair, std::ostream &out, 
                                                             size_t &count);
+
+        void finalRules(std::vector<size_t> const &final);
+        static size_t addFinal(DFARow const &row, std::vector<size_t> &final);
+        static void outFinal(size_t rule, std::ostream &out, size_t &count);
+
+        void dfaEntryPoints(std::vector<size_t> const &entryPoints);
+
+        static void dfa(DFAs::Pair const &dfaPair, std::ostream &out, 
+                        PVector &accept, std::vector<size_t> &final,
+                        std::vector<std::string> &startStates,
+                        std::vector<size_t> &dfaOffsets);
+        static void dfaRow(DFARow const &row, std::ostream &out, 
+                        PVector &accept, std::vector<size_t> &final);    
         static std::string outEntryPoint(std::string const &startState,
                                          size_t offset);
         static void outStartState(std::string const &name, std::ostream &out);
@@ -52,3 +57,7 @@ class Generator
 };
         
 #endif
+
+
+
+

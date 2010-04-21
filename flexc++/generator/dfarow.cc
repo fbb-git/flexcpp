@@ -1,7 +1,7 @@
 #include "generator.ih"
 
 void Generator::dfaRow(DFARow const &row, ostream &out, 
-                        PVector &accept, PVector &final)
+                        PVector &accept, vector<size_t> &final)
 {
     out << "        {";
 
@@ -21,7 +21,7 @@ void Generator::dfaRow(DFARow const &row, ostream &out,
     size_t beginFinal =  final.size();
     size_t beginAccept =  accept.size();
 
-    out << setw(2) << beginfinal << ',' << 
+    out << setw(2) << beginFinal << ',' << 
             setw(2) << addFinal(row, final) << ", " <<
             setw(2) << beginAccept << ',' << 
             setw(2) << addAccept(row, accept) << "},\n";

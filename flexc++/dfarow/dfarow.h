@@ -102,11 +102,6 @@ inline size_t DFARow::size() const
     return d_ranges->size();
 }
 
-inline std::string const &DFARow::action(size_t idx) const
-{
-    return (*d_rules)[d_finalRule[idx]].action();
-}
-
 FBB::Table &operator<<(FBB::Table& out, DFARow const &row);
         
 #endif

@@ -11,5 +11,5 @@ void Generator::acceptStates(PVector const &accept)
     for_each(accept.begin(), accept.end(), FnWrap::unary(outAccept, 
                                                          d_out, count));
    
-    d_out << (count % 15 == 0 ? "" : "\n") << "    };\n";
+    d_out << (count % 20 == 0 ? "" : "\n") << "    };\n";
 }

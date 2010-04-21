@@ -34,7 +34,7 @@ void Generator::declarations()
         "\n"
         "    static bool    const s_interactive = " <<
                 boolalpha << Options::instance().interactive() << ";\n"
-        "    static size_t  const s_finalIdx = " << dfaCols() - 3 << ";\n"
+        "    static size_t  const s_finalIdx = " << dfaCols() - 4 << ";\n"
         "    static size_t  const s_acceptIdx = " << dfaCols() - 2 << ";\n"
         "    static size_t  const s_acceptSize = " << d_nRules << ";\n"
         "    static size_t  const s_ranges[];\n"
@@ -44,6 +44,7 @@ void Generator::declarations()
                                                                     << ";\n"
         "    static int     const s_dfa[][" << dfaCols() << "];\n"
         "    static size_t const s_accept[];\n"
+        "    static size_t const s_final[];\n"
         "    static std::vector<size_t> const s_startStates[" << 
                                             d_startStates.size() << "];\n"
         "    static std::unordered_map<Begin, int const (*)[" << 
