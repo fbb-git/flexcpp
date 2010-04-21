@@ -23,7 +23,8 @@ class DFARow
     typedef std::set<size_t> StateSet;
     typedef std::vector<StateSet> StateSetVector;
 
-    size_t d_finalRule;                     // Final state for which rule?
+    std::vector<size_t> d_finalRule;            // Final state for which 
+                                                // rule(s)?
 
         // map rule indices to accept types
     std::unordered_map<size_t, size_t> d_acceptRules;   
@@ -59,11 +60,11 @@ class DFARow
         void tabulate(FBB::Table &table) const;
         void setInheriting();
 
-        size_t final() const;
+        std::vector<size_t> const &final() const;
         std::unordered_map<size_t, size_t> const &map() const;
         size_t size() const;
         std::unordered_map<size_t, size_t> const &acceptMap() const;
-        std::string const &action() const;  // only for FINAL rows
+        std::string const &action(size_t idx) const;  // only for FINAL rows
 
     private:
             // determine the eClosure of a set of transitions for each of the
@@ -91,7 +92,7 @@ inline std::unordered_map<size_t, size_t> const &DFARow::acceptMap() const
     return d_acceptRules;
 }
 
-inline size_t DFARow::final() const
+inline std::vector<size_t> const &DFARow::final() const
 {
     return d_finalRule;
 }
@@ -101,9 +102,9 @@ inline size_t DFARow::size() const
     return d_ranges->size();
 }
 
-inline std::string const &DFARow::action() const
+inline std::string const &DFARow::action(size_t idx) const
 {
-    return (*d_rules)[d_finalRule].action();
+    return (*d_rules)[d_finalRule[idx]].action();
 }
 
 FBB::Table &operator<<(FBB::Table& out, DFARow const &row);

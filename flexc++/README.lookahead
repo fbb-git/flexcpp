@@ -343,6 +343,32 @@ a+/aap:     1 -a- 2(1) - 3 -a- 4 -a- 5 -p- 6
               -a- 2 -b-                  
 
 20/04
+=====
 
 The initialization of the count is not from 0 to 1 but from 0 to the length
 of the match so-far.
+
+21/04
+=====
+
+Revision:
+
+Each rule has a Accept struct (at each new start initialized to -1 values) 
+associated with it;
+
+    struct Accept
+    {
+        int length;
+        int acceptLength;
+    };
+
+Updates are performed only if transiting to states 0 until d_state (called
+`back-transitions' below
+
+When reaching a rule having an accept state and the struct's length field
+equals -1 then length and acceptLength are set to the current match length.
+
+At back-transitions the length is updated by adding the difference between the
+match length and the accept length and then setting the accept length equal to
+the match length.
+

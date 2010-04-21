@@ -9,15 +9,9 @@ void ScannerBase::updateAcceptCounts()
                 begin != end;
                     ++begin
     )
-    {
-        size_t *count = d_accept + begin->rule;
+        updateCount(*begin);
 
-        if (*count == 0)        // Rule 0, for inheriting and non-inheriting
-            *count = d_match.length();      //  accept states
-        else if (begin->type == 'I' && d_state == d_nextState)
-            ++*count;
-
-        msg(1) << "Update  accept count for rule " << begin->rule << ": " <<
-                *count << '\n';
-    }
+//    }
 }
+
+

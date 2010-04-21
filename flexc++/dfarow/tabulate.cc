@@ -15,8 +15,14 @@ void DFARow::tabulate(Table &table) const
             table << iter->second;
     }
 
-    if (d_finalRule != UINT_MAX)        // show if its a final rule
-        table << d_finalRule;
+    if (d_finalRule.size())
+    {
+        ostringstream out;
+        copy(d_finalRule.begin(), d_finalRule.end(), 
+                ostream_iterator<size_t>(out, ", "));
+
+        table << out.str();
+    }
     else
         table << ' ';
 
@@ -27,8 +33,7 @@ void DFARow::tabulate(Table &table) const
             iter != end;
                 ++iter
    )
-        os << (iter->second == State::INHERITING ? 'I' : 'N') << ',' <<
-               iter->first << "; ";
+        os << iter->first << "; ";
 
     table << os.str().substr(0, os.str().length() - 2);
 }

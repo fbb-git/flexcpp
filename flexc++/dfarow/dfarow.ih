@@ -4,6 +4,7 @@
 #include <climits>
 #include <sstream>
 #include <iterator>
+#include <sstream>
 
 #include <bobcat/fnwrap>
 #include <bobcat/table>

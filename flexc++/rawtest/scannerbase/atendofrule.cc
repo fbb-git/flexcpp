@@ -7,7 +7,7 @@ bool ScannerBase::atEndOfRule()
     if (rule == -1)                                 // not @EOR if -1
         return false;
 
-    d_LAlength = d_accept[rule];             // pick up the LA length
+    d_LAlength = d_accept[rule].length;             // pick up the LA length
 
     msg(1) << "At EOR " << rule << ", LA prefix = " << d_LAlength << '\n';
 

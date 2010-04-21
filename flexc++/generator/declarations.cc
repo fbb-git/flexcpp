@@ -6,10 +6,10 @@ void Generator::declarations()
     Msg::open(d_out, "DECLARE");
 
     d_out << 
-            "    struct AcceptInfo\n"
+            "    struct Accept\n"
             "    {\n"
-            "        char   type;\n"
-            "        size_t rule;\n"
+            "        int length;\n"
+            "        int acceptLength;\n"
             "    };\n"
             "\n"
             "    enum class Begin\n"
@@ -30,7 +30,7 @@ void Generator::declarations()
         "    };\n"
         "\n"
         "    int const (*d_dfa)[" << dfaCols() << "];\n"
-        "    size_t d_accept[" << d_nRules << "];\n"
+        "    Accept d_accept[" << d_nRules << "];\n"
         "\n"
         "    static bool    const s_interactive = " <<
                 boolalpha << Options::instance().interactive() << ";\n"
@@ -43,7 +43,9 @@ void Generator::declarations()
         "    static size_t  const s_rangeOfEOF = " << d_ranges.rangeOfEOF() 
                                                                     << ";\n"
         "    static int     const s_dfa[][" << dfaCols() << "];\n"
-        "    static AcceptInfo const s_accept[];\n"
+        "    static size_t const s_accept[];\n"
+        "    static std::vector<size_t> const s_startStates[" << 
+                                            d_startStates.size() << "];\n"
         "    static std::unordered_map<Begin, int const (*)[" << 
                    dfaCols() << "], HashBegin>\n"
         "           const s_dfaHash;\n";

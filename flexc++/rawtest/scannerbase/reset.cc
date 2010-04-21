@@ -12,5 +12,5 @@ void ScannerBase::reset()
     msg(1) << "\nResetting...\n";
 
     for (size_t idx = s_acceptSize; idx--; )
-        d_accept[idx] = 0;
+        d_accept[idx] = {-1, -1};
 }

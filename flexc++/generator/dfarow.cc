@@ -1,6 +1,7 @@
 #include "generator.ih"
 
-void Generator::dfaRow(DFARow const &row, ostream &out, PVector &accept)
+void Generator::dfaRow(DFARow const &row, ostream &out, 
+                        PVector &accept, PVector &final)
 {
     out << "        {";
 
@@ -12,15 +13,16 @@ void Generator::dfaRow(DFARow const &row, ostream &out, PVector &accept)
         else
             out << setw(2) << iter->second << ',';
 
-        if (++idx % 15 == 0)
+        if (++idx % 20 == 0)
             out << "\n"
                    "         ";                   
     }
 
-    size_t begin = accept.size();
+    size_t beginFinal =  final.size();
+    size_t beginAccept =  accept.size();
 
-    out << setw(2) << static_cast<int>(row.final()) << ',' << 
-            setw(2) << begin << ',' << 
+    out << setw(2) << beginfinal << ',' << 
+            setw(2) << addFinal(row, final) << ", " <<
+            setw(2) << beginAccept << ',' << 
             setw(2) << addAccept(row, accept) << "},\n";
 }
-

@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include <deque>
+#include <vector>
 
 class ScannerBase
 {
@@ -55,6 +56,8 @@ class ScannerBase
         bool transition() const;
         size_t next();
         void saveLookahead();
+
+        void updateCount(size_t rule);
 };
 
 inline bool ScannerBase::atBOL() const

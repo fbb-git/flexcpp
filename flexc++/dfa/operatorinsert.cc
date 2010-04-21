@@ -22,7 +22,7 @@ ostream &operator<<(ostream &out, DFA const &dfa)
         if (dfa.d_ranges->used(idx))
             table << idx;
     }
-    table << 'F' << "ACCEPT";
+    table << 'F' << 'A';
                                                 // display rows of the table
     for (size_t idx = 0, end = dfa.d_row.size(); idx != end; ++idx)
         table << idx << dfa.d_row[idx];

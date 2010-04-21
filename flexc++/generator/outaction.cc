@@ -2,15 +2,20 @@
 
 void Generator::outAction(DFARow const &row, ostream &out, set<size_t> &done)
 {
-    size_t final = row.final();
+    for
+    (
+        auto iter = row.final().begin(), end = row.final().end();
+        iter != end; ++iter
+    )
+    {
+        if (done.find(*iter) != done.end())
+            return;
 
-    if (done.find(final) != done.end())
-        return;
-
-    done.insert(final);
-    out << "    case " << final << ":\n"
+        done.insert(*iter);
+        out << "    case " << *iter << ":\n"
            "    {\n" <<
-           "        " << row.action() << "\n"
+           "        " << row.action(*iter) << "\n"
            "    }\n"
            "    break;\n";
+    }
 }
