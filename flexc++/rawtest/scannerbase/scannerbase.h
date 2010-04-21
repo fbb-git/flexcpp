@@ -110,11 +110,6 @@ inline std::string const &ScannerBase::match() const
     return d_match;
 }
         
-inline int ScannerBase::ruleIndex() const
-{
-    return d_dfa[d_state][s_finalIdx];
-}
-
 #endif
 
 
