@@ -7,9 +7,7 @@
 
 void ScannerBase::saveLookahead()
 {
-    d_deque.push_front(d_char);         // eventually reread the character,
-                                        // ending the LA text.
-    retain(d_LAlength);
+    retain(d_LAsize);
 
     d_bol = false;                      // prevent BOL from being returned
     next();                             // get the next character to

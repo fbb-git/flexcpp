@@ -17,7 +17,7 @@ class ScannerBase
     int d_state;
     int d_nextState;
     size_t d_range;
-    int d_LAlength;
+    int d_LAsize;
     bool d_more;
 
     int d_fromState;

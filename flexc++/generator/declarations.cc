@@ -8,8 +8,8 @@ void Generator::declarations()
     d_out << 
             "    struct Accept\n"
             "    {\n"
-            "        int length;\n"
-            "        int acceptLength;\n"
+            "        int LAsize;\n"
+            "        int lastMatchSize;\n"
             "    };\n"
             "\n"
             "    enum class Begin\n"

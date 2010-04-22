@@ -2,8 +2,6 @@
 
 int ScannerBase::selectRule() const
 {
-cerr << "selectRule, d_state = " << d_state << "\n";
-
     size_t begin = d_dfa[d_state][s_finalIdx];
     size_t end = d_dfa[d_state][s_finalIdx + 1];
 
@@ -26,13 +24,13 @@ cerr << "selectRule, d_state = " << d_state << "\n";
         Accept const &inspect = d_accept[rule];
 
         msg(2) << "     selectRule: inspect rule " << rule << 
-                  ", length: " << inspect.length << '\n';
+                  ", length: " << inspect.LAsize << '\n';
 
         int length =                            // if the current rule has no
-            inspect.length == -1 ?              // LA operator, then use the 
+            inspect.LAsize == -1 ?              // LA operator, then use the 
                 matchLength                     // match length
             :
-                inspect.length;
+                inspect.LAsize;
 
         if 
         (

@@ -2,8 +2,6 @@
 
 bool ScannerBase::callExecute()
 {
-cerr << "callExecute\n";
-
     updateAcceptCounts();
         
     atEndOfRule();
@@ -18,7 +16,8 @@ cerr << "callExecute\n";
             d_deque.push_front(d_char); // reread the non-continuing char.
                                         // after a reset.
         msg(1) << "Calling execute for rule " << d_ruleIndex << 
-                    ". Matched: '" << d_match << "'\n";
+                    ". LAsize = " << d_accept[d_ruleIndex].LAsize << 
+                    ", Matched: '" << d_match << "'\n";
     }
 
     return call;

@@ -2,25 +2,36 @@
 
 void ScannerBase::updateCount(size_t rule)
 {
-    msg(2) << " Updating accept count for rule " << rule << '\n';
-
     Accept &accept = d_accept[rule];
+    size_t curLen =  d_match.length();
 
-    if (d_nextState < 0 || d_state < d_nextState)   // only back- or current 
-        return;                                     // transitions result in
-                                                    // updates
-
-    if (accept.length == -1)                        // not yet initialized
+    if (accept.LAsize == -1)                        // not yet initialized
     {
-        accept = {d_match.length(), d_match.length()};
+        if (curLen == 0)
+        {
+            msg(2) << " Not yet initializing due to zero matchlen\n";
+            return;
+        }
+            
+        accept = {0, curLen};
+        msg(1) << " LA rule " << rule << 
+                    " accept 0, curlen: " << curLen << " (init)\n";
         return;
     }
 
-    size_t curLen =  d_match.length();
-    accept.length += curLen - accept.acceptLength;
-    accept.acceptLength = curLen;
+//    if (d_nextState < 0 || d_state < d_nextState)   // only step backs
+//    {                                               // result in
+//        accept.acceptLength = curLen;               // updates
+//        msg(2) << " Updating acceptlen at step forward to " << curLen << '\n';
+//        return;
+//    }
 
-    msg(2) << "Update  accept length for rule " << rule << ": " <<
-               accept.length << '\n';
+    accept.LAsize += curLen - accept.lastMatchSize;
 
+    msg(1) << " LA rule " << rule << 
+                " accept " << accept.LAsize << ", curlen: " << curLen << 
+                " last len: " << accept.lastMatchSize << "\n\n";
+
+    accept.lastMatchSize = curLen;
 }
+
