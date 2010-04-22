@@ -19,9 +19,9 @@ void DFARow::tabulate(Table &table) const
     {
         ostringstream out;
         copy(d_finalRule.begin(), d_finalRule.end(), 
-                ostream_iterator<size_t>(out, ", "));
-
-        table << out.str();
+                ostream_iterator<size_t>(out, ","));
+        string const &str = out.str();
+        table << str.substr(0, str.length() - 1) ;
     }
     else
         table << ' ';

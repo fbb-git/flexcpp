@@ -10,8 +10,6 @@ void ScannerBase::updateAcceptCounts()
                     ++begin
     )
         updateCount(*begin);
-
-//    }
 }
 
 

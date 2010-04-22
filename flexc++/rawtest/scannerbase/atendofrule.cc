@@ -1,25 +1,24 @@
 #include "scannerbase.ih"
 
-bool ScannerBase::atEndOfRule()
+void ScannerBase::atEndOfRule()
 {
-    int rule = ruleIndex();                         // what rule?
+cerr << "atEndOfRule\n";
+    d_ruleIndex = selectRule();
 
-    if (rule == -1)                                 // not @EOR if -1
-        return false;
+    if (d_ruleIndex == -1)                          // not @EOR if -1
+        return;
 
-    d_LAlength = d_accept[rule].length;             // pick up the LA length
+    d_LAlength = d_accept[d_ruleIndex].length;    // pick up the LA length
 
-    msg(1) << "At EOR " << rule << ", LA prefix = " << d_LAlength << '\n';
+    msg(2) << "     LA length = " << d_LAlength << '\n';
 
         // Since we're calling execute() next, make sure that the LA info is
         // saved. Later on (nextState) we determine what to do next.
         // 
-    if (d_LAlength != 0)
+    if (d_LAlength != -1)
         saveLookahead();
     
-    msg(1) << "FINAL state " << d_state << 
-            " for rule " << rule << ". Matched: " << d_match << '\n';
-
-    return true;
+    msg(2) << "FINAL state " << d_state << " for rule " << 
+                                                    d_ruleIndex  << '\n';
 }
 

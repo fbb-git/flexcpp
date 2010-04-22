@@ -2,6 +2,8 @@
 
 void ScannerBase::updateCount(size_t rule)
 {
+    msg(2) << " Updating accept count for rule " << rule << '\n';
+
     Accept &accept = d_accept[rule];
 
     if (d_nextState < 0 || d_state < d_nextState)   // only back- or current 
@@ -18,7 +20,7 @@ void ScannerBase::updateCount(size_t rule)
     accept.length += curLen - accept.acceptLength;
     accept.acceptLength = curLen;
 
-    msg(1) << "Update  accept length for rule " << rule << ": " <<
+    msg(2) << "Update  accept length for rule " << rule << ": " <<
                accept.length << '\n';
 
 }

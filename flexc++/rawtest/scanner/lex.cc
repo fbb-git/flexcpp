@@ -11,8 +11,6 @@ try
                             // return EOF or set BOL, or return the char-range
                             // lookup: determine next state
 
-        updateAcceptCounts();
-        
         if (callExecute())    
         {
             bool done = true;

@@ -353,7 +353,7 @@ of the match so-far.
 
 Revision:
 
-Each rule has a Accept struct (at each new start initialized to -1 values) 
+Each rule has an Accept struct (at each new start initialized to -1 values) 
 associated with it;
 
     struct Accept
@@ -362,13 +362,18 @@ associated with it;
         int acceptLength;
     };
 
-Updates are performed only if transiting to states 0 until d_state (called
-`back-transitions' below
+Using the update procedure described below, the 'length' field will contain
+the length of the match up to the look-forward operator, while 'acceptLength'
+is set to the length of the match buffer at an Accept state.
 
-When reaching a rule having an accept state and the struct's length field
-equals -1 then length and acceptLength are set to the current match length.
+DFA transtions may step forward (to a higher state number) or step backward
+(to the same or a previous state number.  Updates are only performed at the
+first-reached accept state and with backward steps.
 
-At back-transitions the length is updated by adding the difference between the
-match length and the accept length and then setting the accept length equal to
-the match length.
+Two types of updates are used:
+    1. when the struct's length field equals -1 then length and acceptLength
+are set to the length of the contents of the current match buffer (d_match).
+    2. otherwise the difference between the match length and the
+acceptLength's value is added to the length field whereafter the current match
+buffer length is assigned to acceptLength.
 

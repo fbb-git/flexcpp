@@ -8,12 +8,15 @@ ostream &operator<<(ostream &out, DFA const &dfa)
 
     DSupport support;
     support << 0;
-    for (size_t idx = 0; idx != nCols; ++idx)       // set separator widths
+    for (size_t idx = 0; idx != nCols - 3; ++idx)   // set separator widths
         support << 2;
+    support << 3 << 3 << 2;                         // F column stands out
+                                                    // more clearly
+
     support << TableSupport::HLine(1, 1, nCols + 1);// partial 2nd line 
 
     Table table(support, nCols, Table::ROWWISE);
-    table << Align(nCols - 1, std::left);
+    table << Align(nCols - 2, std::left);
 
 
     table << "   ";                                // char-ranges display

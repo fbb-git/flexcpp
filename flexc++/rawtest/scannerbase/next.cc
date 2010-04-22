@@ -7,7 +7,7 @@ size_t ScannerBase::next()
     if (d_bol)                  // d_bol is set if the previously returned
     {                           // character was '\n' and s_rangeOfBOL != 0
         d_bol = false;
-        msg(1) << "next: BOL\n";
+        msg(2) << "next: BOL\n";
         return d_range = s_rangeOfBOL;
     }
 
@@ -21,7 +21,7 @@ size_t ScannerBase::next()
 
     if (ret == EOF)             // got EOF
     {
-        msg(1) << "next: EOF\n";
+        msg(2) << "next: EOF\n";
         return d_range = s_rangeOfEOF;
     }
 
@@ -32,14 +32,14 @@ size_t ScannerBase::next()
 
     d_range = s_ranges[ret];    // and return its range nr.
 
-    msg(1) << "\nGot ";
+    msg(2) << "\nGot ";
     if (isprint(d_char))
-        msg(1) << '\'' << d_char << '\'';
+        msg(2) << '\'' << d_char << '\'';
     else
-        msg(1) << setw(3) << 
+        msg(2) << setw(3) << 
                 static_cast<size_t>(static_cast<unsigned char>(d_char));
 
-    msg(1) << ", range = " << d_range << '\n';
+    msg(2) << ", range = " << d_range << '\n';
 
     return d_range;
 }

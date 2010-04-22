@@ -16,7 +16,16 @@ void ScannerBase::lookup()
     if (d_state == d_rejectFrom && d_nextState == d_rejectTo)
         d_nextState = -1;
 
-    msg(1) << "nextState = " << d_nextState << "\n";
+    msg(1) << "nextState = " << d_nextState << " (char = ";
+    if (d_range == s_rangeOfBOL)
+        msg(1) << "BOL)\n";
+    else if (d_range == s_rangeOfEOF)
+        msg(1) << "EOF)\n";
+    else if (isprint(d_char))
+        msg(1) << '\'' << d_char << "')\n";
+    else
+        msg(1) << static_cast<size_t>(static_cast<unsigned char>(d_char)) <<
+                    ")\n";
 }
             
 

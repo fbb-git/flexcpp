@@ -17,12 +17,13 @@ class ScannerBase
     int d_state;
     int d_nextState;
     size_t d_range;
-    size_t d_LAlength;
+    int d_LAlength;
     bool d_more;
 
     int d_fromState;
     int d_rejectFrom;
     int d_rejectTo;
+    int d_ruleIndex;
 
     public:
         ScannerBase();
@@ -46,9 +47,11 @@ class ScannerBase
         void nextState();
 
     private:
+        void atEndOfRule();
+        int selectRule() const;
+
         bool atBOL() const;
-        bool atEOR() const;             // merely returns yes/no
-        bool atEndOfRule();             // handles lookahead info
+        bool ruleAvailable() const;
         bool interactiveReturn() const;
         bool noTransition() const;
         bool plainChar() const;
@@ -59,6 +62,11 @@ class ScannerBase
 
         void updateCount(size_t rule);
 };
+
+inline int ScannerBase::ruleIndex() const
+{
+    return d_ruleIndex;
+}
 
 inline bool ScannerBase::atBOL() const
 {
@@ -80,9 +88,9 @@ inline bool ScannerBase::plainChar() const
     return d_range < s_rangeOfEOF;
 }
 
-inline bool ScannerBase::atEOR() const
+inline bool ScannerBase::ruleAvailable() const
 {
-    return ruleIndex() != -1;
+    return d_ruleIndex != -1;
 }
 
 inline bool ScannerBase::interactiveReturn() const
