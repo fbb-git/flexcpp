@@ -14,9 +14,10 @@ try
         if (transition())
         {
             charToMatchBuffer();
-            // updateLookahead();
 
-            if (not interactiveReturn())
+            updateAcceptCounts();
+
+            if (not interactiveRuleMatched())
                 nextState();
             else
             {
@@ -29,25 +30,23 @@ try
         }
         else
         {
-            if (atBOL())
-                continue;
-
-            if (atEOF())
-            {
-                if (not streamPopped())
-                    throw -1;
-                continue;
-            }
-
             reRead();
 
-            if (endOfRule())
+            if (ruleMatched())
             {
                 bool done = true;
                 int ret = execute(&done);
                 reset();        // reset the dfa, clear match and acceptcounts
                 if (done)
                     return ret;
+            }
+            else if (atBOL())
+                continue;
+            else if (atEOF())
+            {
+                if (not streamPopped())
+                    throw -1;
+                continue;
             }
             else
             {

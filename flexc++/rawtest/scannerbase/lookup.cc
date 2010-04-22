@@ -15,15 +15,17 @@ void ScannerBase::lookup()
 
     msg(1) << "nextState = " << d_nextState << " (char = ";
     if (d_range == s_rangeOfBOL)
-        msg(1) << "BOL)\n";
+        msg(1) << "BOL)";
     else if (d_range == s_rangeOfEOF)
-        msg(1) << "EOF)\n";
+        msg(1) << "EOF)";
     else if (isprint(d_char))
-        msg(1) << '\'' << d_char << "')\n";
+        msg(1) << '\'' << d_char << "')";
     else
         msg(1) << 
             static_cast<size_t>(static_cast<unsigned char>(d_char)) <<
-            ")\n";
+            ")";
+
+    msg(1) << ". Match = '" << d_match << "'\n";
 }
             
 

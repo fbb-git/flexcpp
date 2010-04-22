@@ -40,33 +40,24 @@ class ScannerBase
         void nextState();
         int  ruleIndex() const;
         void reset();
-//        void updateAcceptCounts();
+        void updateAcceptCounts();
         bool callExecute();
         void charToMatchBuffer();
-        bool interactiveReturn() const;
+        bool interactiveRuleMatched();
         bool atBOL() const;
         bool atEOF() const;
         bool streamPopped();
         void reRead();
-        bool endOfRule();
+        bool ruleMatched();
         void notHandledChar() const;
 
     private:
+        bool interactiveAndEOLN() const;
         int selectRule() const;
         bool plainChar() const;
-
-//        bool ruleAvailable() const;
-//        bool noTransition() const;
-//        bool rejectReturn();
-//        void saveLookahead();
-//
-//        void updateCount(size_t rule);
+        void updateCount(size_t rule);
+        void saveLookahead();
 };
-
-inline void ScannerBase::reRead()
-{
-    return d_deque.push_front(d_char);
-}
 
 inline int ScannerBase::ruleIndex() const
 {
@@ -103,7 +94,7 @@ inline void ScannerBase::less(size_t nChars)
 //     return d_ruleIndex != -1;
 // }
 
-inline bool ScannerBase::interactiveReturn() const
+inline bool ScannerBase::interactiveAndEOLN() const
 {
     return s_interactive && d_char == '\n';
 }
@@ -132,6 +123,15 @@ inline std::string const &ScannerBase::match() const
 {
     return d_match;
 }
+
+inline bool ScannerBase::interactiveRuleMatched()
+{
+    return interactiveAndEOLN() ?
+                ruleMatched()
+            :
+                false;
+}
+
         
 #endif
 
