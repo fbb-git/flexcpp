@@ -19,49 +19,54 @@ class ScannerBase
     size_t d_range;
     int d_LAsize;
     bool d_more;
-
-    int d_fromState;
-    int d_rejectFrom;
-    int d_rejectTo;
     int d_ruleIndex;
 
     public:
         ScannerBase();
         std::string const &match() const;
 
-    protected:
         void more();
         void less(size_t nChars);       // very strange name. Implemented as
         void retain(size_t nChars);     // a synonym of 'retain'
         int  input();
         void unput(char ch);
-        void reject();
 
+    protected:
             // used by Scanner::lex/execute
             //
         void lookup();
-        void updateAcceptCounts();
-        bool callExecute();
-        void reset();
-        int  ruleIndex() const;
+        size_t next();
+        bool transition() const;
         void nextState();
+        int  ruleIndex() const;
+        void reset();
+//        void updateAcceptCounts();
+        bool callExecute();
+        void charToMatchBuffer();
+        bool interactiveReturn() const;
+        bool atBOL() const;
+        bool atEOF() const;
+        bool streamPopped();
+        void reRead();
+        bool endOfRule();
+        void notHandledChar() const;
 
     private:
-        void atEndOfRule();
         int selectRule() const;
-
-        bool atBOL() const;
-        bool ruleAvailable() const;
-        bool interactiveReturn() const;
-        bool noTransition() const;
         bool plainChar() const;
-        bool rejectReturn();
-        bool transition() const;
-        size_t next();
-        void saveLookahead();
 
-        void updateCount(size_t rule);
+//        bool ruleAvailable() const;
+//        bool noTransition() const;
+//        bool rejectReturn();
+//        void saveLookahead();
+//
+//        void updateCount(size_t rule);
 };
+
+inline void ScannerBase::reRead()
+{
+    return d_deque.push_front(d_char);
+}
 
 inline int ScannerBase::ruleIndex() const
 {
@@ -71,6 +76,16 @@ inline int ScannerBase::ruleIndex() const
 inline bool ScannerBase::atBOL() const
 {
     return d_range == s_rangeOfBOL;
+}
+
+inline bool ScannerBase::streamPopped()
+{
+    return false;
+}
+
+inline bool ScannerBase::atEOF() const
+{
+    return d_range == s_rangeOfEOF;
 }
 
 inline void ScannerBase::unput(char ch)
@@ -83,15 +98,10 @@ inline void ScannerBase::less(size_t nChars)
     retain(nChars);
 }
 
-inline bool ScannerBase::plainChar() const
-{
-    return d_range < s_rangeOfEOF;
-}
-
-inline bool ScannerBase::ruleAvailable() const
-{
-    return d_ruleIndex != -1;
-}
+// inline bool ScannerBase::ruleAvailable() const
+// {
+//     return d_ruleIndex != -1;
+// }
 
 inline bool ScannerBase::interactiveReturn() const
 {
@@ -103,9 +113,14 @@ inline bool ScannerBase::transition() const
     return d_nextState != -1;
 }
 
-inline bool ScannerBase::noTransition() const
+// inline bool ScannerBase::noTransition() const
+// {
+//     return not transition();
+// }
+
+inline void ScannerBase::nextState() 
 {
-    return not transition();
+    d_state = d_nextState;
 }
 
 inline void ScannerBase::more()

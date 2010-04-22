@@ -13,9 +13,6 @@ void ScannerBase::lookup()
 
     d_nextState = d_dfa[d_state][d_range];    // determine the next state
 
-    if (d_state == d_rejectFrom && d_nextState == d_rejectTo)
-        d_nextState = -1;
-
     msg(1) << "nextState = " << d_nextState << " (char = ";
     if (d_range == s_rangeOfBOL)
         msg(1) << "BOL)\n";

@@ -32,7 +32,7 @@ size_t ScannerBase::next()
 
     d_range = s_ranges[ret];    // and return its range nr.
 
-    msg(2) << "\nGot ";
+    msg(2) << "\nNext: ";
     if (isprint(d_char))
         msg(2) << '\'' << d_char << '\'';
     else

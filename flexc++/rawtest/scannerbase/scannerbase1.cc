@@ -9,8 +9,7 @@ ScannerBase::ScannerBase()
         // d_nextState
         // d_range
         // d_LAsize       // by reset()
-    d_more(false),
-    d_rejectFrom(-2)
+    d_more(false)
 {
     reset();
 }

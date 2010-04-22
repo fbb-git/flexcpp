@@ -8,3 +8,9 @@
 using namespace std;
 
 ostream &msg(size_t level);
+
+inline bool ScannerBase::plainChar() const
+{
+    return d_range < s_rangeOfEOF;
+}
+

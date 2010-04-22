@@ -11,18 +11,51 @@ try
                             // return EOF or set BOL, or return the char-range
                             // lookup: determine next state
 
-        if (callExecute())    
+        if (transition())
         {
-            bool done = true;
-            int ret = execute(&done);
-            reset();        // reset the dfa, clear match and acceptcounts
-            if (done)
-                return ret;
-            continue;       // restart if there's no action or if the action
-                            // doesn't return
-        }
+            charToMatchBuffer();
+            // updateLookahead();
 
-        nextState();
+            if (not interactiveReturn())
+                nextState();
+            else
+            {
+                bool done = true;
+                int ret = execute(&done);
+                reset();        // reset the dfa, clear match and acceptcounts
+                if (done)
+                    return ret;
+            }
+        }
+        else
+        {
+            if (atBOL())
+                continue;
+
+            if (atEOF())
+            {
+                if (not streamPopped())
+                    throw -1;
+                continue;
+            }
+
+            reRead();
+
+            if (endOfRule())
+            {
+                bool done = true;
+                int ret = execute(&done);
+                reset();        // reset the dfa, clear match and acceptcounts
+                if (done)
+                    return ret;
+            }
+            else
+            {
+                input();
+                notHandledChar();
+                reset();
+            }
+        }
     }
 }
 catch (int ret)

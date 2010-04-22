@@ -5,12 +5,12 @@
 // the queue's front, followed by (in reverse order) the LA characters.
 // then reduce the match-size and d_length by the LA length.
 
-void ScannerBase::saveLookahead()
-{
-    retain(d_LAsize);
-
-    d_bol = false;                      // prevent BOL from being returned
-cerr << "next() called from saveLA\n";
-    next();                             // get the next character to be
-                                        // handled by callExecute. 
-}
+// void ScannerBase::saveLookahead()
+// {
+//     retain(d_LAsize);
+// 
+//     d_bol = false;                      // prevent BOL from being returned
+// cerr << "next() called from saveLA\n";
+//     next();                             // get the next character to be
+//                                         // handled by callExecute. 
+// }
