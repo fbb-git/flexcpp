@@ -9,9 +9,6 @@ void ScannerBase::nextState()
         // 
     if (transition())
     {
-        if (plainChar())
-            d_match += d_char;
-
         d_fromState = d_state;
         d_state = d_nextState;
         return;
@@ -28,6 +25,8 @@ void ScannerBase::nextState()
 
     if (plainChar())
     {
+        input();                            // remove unknown char from
+                                            // the queue, pushed by callExec.
         cerr << "NOT HANDLED: '" << d_char << "'\n";   // ECHO it to cerr
         reset();
         return;

@@ -10,6 +10,7 @@ void ScannerBase::saveLookahead()
     retain(d_LAsize);
 
     d_bol = false;                      // prevent BOL from being returned
-    next();                             // get the next character to
-                                        // handle by callExecute. 
+cerr << "next() called from saveLA\n";
+    next();                             // get the next character to be
+                                        // handled by callExecute. 
 }

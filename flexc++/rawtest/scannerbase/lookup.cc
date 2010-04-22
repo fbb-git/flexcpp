@@ -24,8 +24,9 @@ void ScannerBase::lookup()
     else if (isprint(d_char))
         msg(1) << '\'' << d_char << "')\n";
     else
-        msg(1) << static_cast<size_t>(static_cast<unsigned char>(d_char)) <<
-                    ")\n";
+        msg(1) << 
+            static_cast<size_t>(static_cast<unsigned char>(d_char)) <<
+            ")\n";
 }
             
 
