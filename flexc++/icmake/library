@@ -55,10 +55,6 @@ void dependent(int idx)
 
     printf("RECOMPILE: ", target, "\n");
   
-    echo(OFF);
-    system("touch " + target + "/" + g_sources);
-    echo(ON);
-
     for (depIdx = idx + 1; depIdx != g_nClasses; ++depIdx)
     {
         dependencies = strtok(g_classLines[depIdx], " \t\n");
@@ -79,13 +75,12 @@ void checkALL()
 
     for (idx = 0; idx != g_nClasses; ++idx)
     {
-        all = g_classes[idx] + "/ALL";
+        all = g_classes[idx] + "/a";
 
         if (exists(all))
         {
             echo(OFF);
             exec("rm", all);
-            system("touch flexc++.cc");
             echo(ON);
             dependent(idx);
         }
@@ -205,18 +200,18 @@ void initialize()
                         L I N K . I M
 */
 
-list inspect(int prefix, list srcList, string library)
+list inspect(int all, int prefix, list srcList, string library)
 {
     int idx;
     string ofile;
     string oprefix;
     string file;
-
+    
     oprefix = "./o/" + (string)prefix;
 
     for (idx = sizeof(srcList); idx--; )
     {
-        file  = element(idx, srcList);
+        file  = srcList[idx];
         ofile   = oprefix + change_ext(file, "o");    // make o-filename
 
         // A file s must be recompiled if it's newer than its object
@@ -226,8 +221,11 @@ list inspect(int prefix, list srcList, string library)
         // b doesn't exist s must be compiled if s newer o and s newer l.
         // So, it doesn't have to be compiled if s older o or s older l.
                                             // redo if file has changed
-        if (file older ofile || file older library)
+        if (file older ofile || (all == -1 && file older library))
             srcList -= (list)file;
+
+        // compile all files unless already compiled
+
     }
     return srcList;
 }
@@ -251,7 +249,7 @@ void c_compile(int prefix, string srcDir, list cfiles)
 
     for (idx = sizeof(cfiles); idx--; )
     {
-        file = element(idx, cfiles);
+        file = cfiles[idx];
 
         run(compiler + change_ext(file, "o") + " " +
                 COPT + " " + srcDir + "/" + file);
@@ -263,12 +261,15 @@ void std_cpp(int prefix, string srcDir, string library)
     list files;
 
     chdir(srcDir);
-                                                      // make list of all files
-    files = inspect(prefix, makelist(g_sources), library);
+
+                                                    // make list of all files
+    files = inspect(find(srcDir, g_depHaystack), prefix, makelist(g_sources), 
+                                                        library);
     chdir(g_cwd);
 
     if (sizeof(files))
-        c_compile(prefix, srcDir, files);             // compile files
+        c_compile(prefix, srcDir, files);           // compile files
+    g_depHaystack -= (list)srcDir;                  // then rm from haystack
 }
 
 void cpp_make(string mainfile, string library, int lib_only)
@@ -276,11 +277,17 @@ void cpp_make(string mainfile, string library, int lib_only)
     int idx;
     string class;
     string fullLibname;
+    int compileMain;
+
+    compileMain = sizeof(g_depHaystack);
 
     fullLibname = "lib" + library + ".a";
 
     for (idx = g_nClasses; idx--; )
-        std_cpp(idx, element(idx, g_classes), "../" + fullLibname);
+        std_cpp(idx, g_classes[idx], "../" + fullLibname);
+
+    if (compileMain)
+        c_compile(g_nClasses, ".", (list)mainfile);
 
     if (!lib_only)                          // compile all files in current dir
         std_cpp(g_nClasses, ".", fullLibname);
@@ -290,11 +297,9 @@ void cpp_make(string mainfile, string library, int lib_only)
 
 void setlibs()
 {
-        int
-            n,
-            index;
-        list
-            cut;
+        int n;
+        int index;
+        list cut;
 
         cut = strtok(LIBS, " ");        // cut op libraries
         n = sizeof(cut);
@@ -318,7 +323,7 @@ void library(int lib_only)
 
     cpp_make
     (
-        "flexc++.cc",      // program source
+        "flexc++.cc",
         "flexc++",         // static program library base name
         lib_only            // don't compile maindir for lib construction
     );
@@ -326,3 +331,5 @@ void library(int lib_only)
     if (lib_only)
         exit(0);
 }
+
+
