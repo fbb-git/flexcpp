@@ -26,13 +26,7 @@ void DFARow::transitions()
         for_each(thisSet.begin(), thisSet.end(), 
                                  FnWrap::unary(transit, *this, nr, nextSet));
 
-        bool twoEdges = false;
-        bool inheriting = false;
-        nextSet = d_states->eClosure(nextSet, twoEdges, inheriting);
-
-        if (inheriting)
-            setInheriting();
-            // cout << "INHERITING ACCEPT STATE\n";
+        nextSet = d_states->eClosure(nextSet);
 
         if (nextSet.empty())
             continue;
@@ -52,6 +46,7 @@ void DFARow::transitions()
         }
         d_map[nr] = idx;                // add the transition
     }
+    setAcceptType();
 }
 
 

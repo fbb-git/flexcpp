@@ -35,7 +35,7 @@ class Rules
         Rule const &operator[](size_t idx) const;
 
         size_t hasFinalState(size_t stateIdx) const;
-        size_t hasAcceptState(size_t stateIdx) const;
+        int hasAcceptState(size_t stateIdx) const;      // -1 if not
 
         void setType(StartConditions::Type type);
         void addStartCondition(SemVal const &name);
@@ -72,11 +72,6 @@ inline Rules::const_iterator Rules::end() const
 inline size_t Rules::hasFinalState(size_t stateIdx) const
 {
     return d_reverse.find(stateIdx)->second;
-}
-
-inline size_t Rules::hasAcceptState(size_t stateIdx) const
-{
-    return d_reverseAccept.find(stateIdx)->second;
 }
 
 inline Rule const &Rules::operator[](size_t idx) const

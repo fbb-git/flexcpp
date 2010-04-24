@@ -25,7 +25,7 @@ class DFA
         DFA(Ranges &ranges);
 
         void build(std::vector<size_t> const &active, Rules const &rules, 
-                   States const &states);
+                   States &states);
 
         std::vector<DFARow>::const_iterator begin() const;
         std::vector<DFARow>::const_iterator end() const;

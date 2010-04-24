@@ -23,11 +23,11 @@ class DFAs
         DFAInfo d_dfa;
     
         Rules &d_rules;
-        States const &d_states;
+        States &d_states;
         Ranges &d_ranges;
         
     public:
-        DFAs(Rules &rules, States const &states, Ranges &ranges);
+        DFAs(Rules &rules, States &states, Ranges &ranges);
 
         void build();
         DFAInfo::const_iterator begin() const;

@@ -1,7 +1,7 @@
 #include "dfa.ih"
 
 void DFA::build(vector<size_t> const &active, Rules const &rules, 
-                States const &states)    
+                States &states)    
 {
     d_ranges->clearUsed();
 
@@ -10,11 +10,7 @@ void DFA::build(vector<size_t> const &active, Rules const &rules,
     for_each(active.begin(), active.end(),          // compute the startSet  
         FnWrap::unary(fillStartSet, rules, stateSet[0]));
 
-    bool twoEdges = false;
-    bool inheriting = false;
-
-    stateSet[0] = states.eClosure(stateSet[0], twoEdges,
-                                    inheriting);    // compute the e-closure
+    stateSet[0] = states.eClosure(stateSet[0]);     // compute the e-closure
                                                     // of the start-set
 
     while (d_row.size() != stateSet.size())         // as long as we haven't
@@ -26,8 +22,7 @@ void DFA::build(vector<size_t> const &active, Rules const &rules,
         d_row.back().transitions();
     }
 
-    if (inheriting)
-        d_row[0].setInheriting();
+    d_row[0].setAcceptType();
 }
 
 

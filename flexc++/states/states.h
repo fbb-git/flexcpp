@@ -30,8 +30,7 @@ class States
         std::vector<State>::iterator begin();
         std::vector<State>::iterator end();
 
-        std::set<size_t> eClosure(std::set<size_t> &current, 
-                                    bool &twoEdges, bool &inheriting) const;
+        std::set<size_t> eClosure(std::set<size_t> &current) const;
         size_t size() const;
 };
 

@@ -8,15 +8,17 @@
 
 #include <bobcat/fnwrap>
 #include <bobcat/table>
+#include <bobcat/x2a>
 
 #include "../states/states.h"
+
+#include <iostream>                 // TEMPO
 
 using namespace std;
 using namespace FBB;
 
-inline DFARow::Pair DFARow::toInheriting(Pair const &inPair)
+inline State &DFARow::acceptState()
 {
-    Pair ret(inPair.first, State::INHERITING);
-    return ret;
+    return (*d_states)[(*d_rules)[d_rule].accept()];
 }
 

@@ -30,8 +30,9 @@ class State
         enum Accept
         {
             NONE,
-            NON_INHERITING,
-            INHERITING
+            FIXED_HEADSIZE,     // NON_INHERITING,
+            PRE_VARIABLE,
+            VARIABLE_HEADSIZE   // INHERITING
         };
 
     private:
@@ -55,6 +56,7 @@ class State
         size_t type() const;            // if < UNDETERMINED__ it's a char
         void setType(size_t type);      // change the char. type
         void setAccept(Accept type);    // Set a State's Accept type
+        void nextAccept();              // Set a State's next Accept type
         Accept accept() const;          // return Accept type
 
             // true is returned if the state's string contains rangeChar.

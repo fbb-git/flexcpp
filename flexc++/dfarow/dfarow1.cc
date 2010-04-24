@@ -1,9 +1,10 @@
 #include "dfarow.ih"
 
 DFARow::DFARow(Rules const &rules, 
-               States const &states, StateSetVector &stateSets, 
+               States &states, StateSetVector &stateSets, 
                size_t thisIdx, Ranges &ranges)
 :
+    d_rule(-1),
     d_states(&states),
     d_stateSets(&stateSets),
     d_rules(&rules),

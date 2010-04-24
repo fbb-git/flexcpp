@@ -1,6 +1,6 @@
 #include "dfas.ih"
 
-DFAs::DFAs(Rules &rules, States const &states, Ranges &ranges)
+DFAs::DFAs(Rules &rules, States &states, Ranges &ranges)
 :
     d_rules(rules),
     d_states(states),

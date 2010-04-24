@@ -26,14 +26,18 @@ class DFARow
     std::vector<size_t> d_finalRule;            // Final state for which 
                                                 // rule(s)?
 
-        // map rule indices to accept types
-    std::unordered_map<size_t, size_t> d_acceptRules;   
+//        // map rule indices to accept types
+//    std::unordered_map<size_t, size_t> d_acceptRules;   
+
+    int d_rule;                                 // rule for which this row
+                                                // represents an Accept state
+                                                // (or -1)
 
     std::unordered_map<size_t, size_t> d_map;   // Relate input symbols (key) 
                                                 // to the row to transit to 
                                                 // (value)
 
-    States const *d_states;                 // using ptrs so no op= needs
+    States *d_states;                       // using ptrs so no op= needs
     StateSetVector *d_stateSets;            // to be implemented
     Rules const *d_rules;
     Ranges *d_ranges;
@@ -45,7 +49,7 @@ class DFARow
         DFARow(
             Rules const &rules,
                 // all States
-            States const &states,            
+            States &states,            
                 // sets of state nrs defining the rows of the DFA
             StateSetVector &stateSets, 
                 // index in the DFA (and in stateSets) of this row
@@ -58,15 +62,20 @@ class DFARow
         void transitions(); 
 
         void tabulate(FBB::Table &table) const;
-        void setInheriting();
+//        void setInheriting();
 
         std::vector<size_t> const &final() const;
         std::unordered_map<size_t, size_t> const &map() const;
         size_t size() const;
         std::unordered_map<size_t, size_t> const &acceptMap() const;
         std::string const &action(size_t idx) const;  // only for FINAL rows
+        void setAcceptType();
 
     private:
+        std::string acceptType() const;
+        State &acceptState();
+        void setAcceptRule(size_t stateIdx);
+
             // determine the eClosure of a set of transitions for each of the
             // char-ranges of the input alphabet, including the special 
             // characters like FINAL, BOL, etc.
@@ -77,9 +86,8 @@ class DFARow
                                              size_t rangeChar,
                                              StateSet &nextSet);
         void setFinal(size_t stateIdx);
-        void setAccept(size_t stateIdx);
 
-        static Pair toInheriting(Pair const &inPair);
+//        static Pair toInheriting(Pair const &inPair);
 };
 
 inline std::unordered_map<size_t, size_t> const &DFARow::map() const
@@ -87,10 +95,10 @@ inline std::unordered_map<size_t, size_t> const &DFARow::map() const
     return d_map;
 }
 
-inline std::unordered_map<size_t, size_t> const &DFARow::acceptMap() const
-{
-    return d_acceptRules;
-}
+// inline std::unordered_map<size_t, size_t> const &DFARow::acceptMap() const
+// {
+//     return d_acceptRules;
+// }
 
 inline std::vector<size_t> const &DFARow::final() const
 {
