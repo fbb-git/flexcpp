@@ -10,14 +10,10 @@
 #include <bobcat/table>
 #include <bobcat/x2a>
 
-#include "../states/states.h"
-
-#include <iostream>                 // TEMPO
-
 using namespace std;
 using namespace FBB;
 
-inline State &DFARow::acceptState()
+inline State &DFARow::acceptState() const
 {
     return (*d_states)[(*d_rules)[d_rule].accept()];
 }

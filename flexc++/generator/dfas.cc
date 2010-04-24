@@ -31,7 +31,6 @@ void Generator::dfas(DFAs const &dfas)
  
     d_out << "   };\n";
  
-    acceptStates(accept);
     finalRules(final);
     dfaEntryPoints(dfaIndices);
 }

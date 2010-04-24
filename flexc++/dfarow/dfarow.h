@@ -8,6 +8,8 @@
 
 #include "../ranges/ranges.h"
 #include "../rules/rules.h"
+#include "../states/states.h"
+
 
 namespace FBB
 {
@@ -25,9 +27,6 @@ class DFARow
 
     std::vector<size_t> d_finalRule;            // Final state for which 
                                                 // rule(s)?
-
-//        // map rule indices to accept types
-//    std::unordered_map<size_t, size_t> d_acceptRules;   
 
     int d_rule;                                 // rule for which this row
                                                 // represents an Accept state
@@ -62,7 +61,9 @@ class DFARow
         void transitions(); 
 
         void tabulate(FBB::Table &table) const;
-//        void setInheriting();
+
+        int acceptRule() const;         // -1 if none.
+        size_t ruleAcceptType() const;  // 0 (None), 1 (FIXED) or 2 (VARIABLE)
 
         std::vector<size_t> const &final() const;
         std::unordered_map<size_t, size_t> const &map() const;
@@ -73,7 +74,7 @@ class DFARow
 
     private:
         std::string acceptType() const;
-        State &acceptState();
+        State &acceptState() const;
         void setAcceptRule(size_t stateIdx);
 
             // determine the eClosure of a set of transitions for each of the
@@ -86,8 +87,6 @@ class DFARow
                                              size_t rangeChar,
                                              StateSet &nextSet);
         void setFinal(size_t stateIdx);
-
-//        static Pair toInheriting(Pair const &inPair);
 };
 
 inline std::unordered_map<size_t, size_t> const &DFARow::map() const
@@ -95,10 +94,10 @@ inline std::unordered_map<size_t, size_t> const &DFARow::map() const
     return d_map;
 }
 
-// inline std::unordered_map<size_t, size_t> const &DFARow::acceptMap() const
-// {
-//     return d_acceptRules;
-// }
+inline int DFARow::acceptRule() const
+{
+    return d_rule;
+}
 
 inline std::vector<size_t> const &DFARow::final() const
 {

@@ -27,16 +27,5 @@ void DFARow::tabulate(Table &table) const
         table << ' ';
 
     table << acceptType();
-
-//    ostringstream os;
-//    for 
-//    (                                   // show the accept states of rules
-//        auto iter = d_acceptRules.begin(), end = d_acceptRules.end(); 
-//            iter != end;
-//                ++iter
-//   )
-//        os << iter->first << '-' << 
-//                (iter->second == State::INHERITING ? '2' : '1') << ' ';
-//    table << os.str().substr(0, os.str().length() - 1);
 }
 

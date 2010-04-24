@@ -30,11 +30,6 @@ class Generator
     private:
         size_t dfaCols() const;
 
-        void acceptStates(PVector const &accept);
-        static size_t addAccept(DFARow const &row, PVector &accept);
-        static void outAccept(Pair const &pair, std::ostream &out, 
-                                                            size_t &count);
-
         void finalRules(std::vector<size_t> const &final);
         static size_t addFinal(DFARow const &row, std::vector<size_t> &final);
         static void outFinal(size_t rule, std::ostream &out, size_t &count);
