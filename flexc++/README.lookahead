@@ -377,3 +377,255 @@ are set to the length of the contents of the current match buffer (d_match).
 acceptLength's value is added to the length field whereafter the current match
 buffer length is assigned to acceptLength.
 
+============================================================================
+
+New approach, 24/4/2010.
+
+Below  these range nrs are used:     
+
+        a = 1, p = 3, q = 4     (no `b' is used)
+        a = 1, b = 2, p = 4, q = 5 
+
+In a pattern HEAD/TAIL |HEAD| is the length of the head, |TAIL| is the length
+of the tail. Only one of these is required to compute the actual match length
+and the length of the lookahead string to be pushed back.
+
+Types of LA patterns
+====================
+
+First: what patterns can be distinguished? When discussing cases * is used to
+indicate the generic repetition (it can be *, ?, +, {x,})
+
+Pattern: a*/b       Here |TAIL| has a fixed length. No need to search when 
+                    actual input is matched.
+
+Pattern: a/b*       Here |HEAD| has a fixed length. No need to search
+    
+Pattern: a*/b*      Here the transition from a to b marks |HEAD|. This isn't
+                    known in advance, so a means must be developed to pick up
+                    that point. In fact it's easy, as the / is recognized as
+                    the A (accept) state in the DFA. Example:
+
+                    Pattern: a+/b+
+                    DFA:
+                    -------------------
+                         1  2   F   A  
+                         --------------
+                      0  1             
+                      1  1  2       0  
+                      2     2   0      
+                    -------------------
+
+Pattern: p*a/a*q*   This is `problem type 1'. The TAIL has variable size, and
+                    repeats the last part of the HEAD. Neither HEAD nor TAIL
+                    has a fixed size, so no pre-computation is possible. But
+                    as the HEAD's end is well marked (by A) its size becomes
+                    readily available when the DFA is run (examples follow)
+
+Pattern: p*a*/aq*   This is `problem type 2'. The HEAD has variable size and
+                    the tail repeats the last part of the HEAD. Here the
+                    problem is that you don't know that you're in the TAIL
+                    untill you're in the TAIL.... Before that we were in the
+                    HEAD, and so remembering |HEAD| at A allows us to set
+                    |HEAD| at any point in the TAIL (examples follow)
+
+Problem type 1:
+===============
+
+Pattern: pa/a?q
+
+----------------------
+     1  3  4   F   A  
+     -----------------
+  0     1             
+  1  2                
+  2  3     4       0  
+  3        4          
+  4            0      
+----------------------
+
+Pattern: pa/a+q
+
+----------------------
+     1  3  4   F   A  
+     -----------------
+  0     1             
+  1  2                
+  2  3             0  
+  3  3     4          
+  4            0      
+----------------------
+
+Pattern: pa/a*q
+
+----------------------
+     1  3  4   F   A  
+     -----------------
+  0     1             
+  1  2                
+  2  3     4       0  
+  3  3     4          
+  4            0      
+----------------------
+
+
+For these patterns: at A(ccept) lines: the match length == |HEAD|
+
+Example: consider pattern p+(ab)/(ab)+q*
+DFA:
+-------------------------
+     1  2  4  5   F   A  
+     --------------------
+  0        1             
+  1  2     1             
+  2     3                
+  3  4                0  
+  4     5                
+  5  4        6   0      
+  6           6   0      
+-------------------------
+
+Input:
+    p p a b a b a b q q    
+                                        A
+                0 -p- 1 -p- 1 -a- 2 -b- 3 -a- 4 -b- 5 -a- 4 -b- 5 -q- 6 -q- 6
+|match|         0     1     2     3     4     5     6     7     8     9     10
+set |HEAD| -1                           4
+
+Conclusion: |HEAD| is 4, |TAIL| is 6.
+
+
+
+
+Problem Type 2.
+===============
+
+Pattern type: pa?/aq
+====================
+
+Pattern: pa?/aq
+
+----------------------
+     1  3  4   F   A  
+     -----------------
+  0     1             
+  1  2             0  
+  2  3     4       0  
+  3        4          
+  4            0      
+----------------------
+
+Pattern: p(ab)?/abq
+
+-------------------------
+     1  2  4  5   F   A  
+     --------------------
+  0        1             
+  1  2                0  
+  2     3                
+  3  4        5       0  
+  4     6                
+  5               0      
+  6           5          
+-------------------------
+
+
+Pattern type: pa+/aq
+====================
+
+Pattern: pa+/aq
+----------------------
+     1  3  4   F   A  
+     -----------------
+  0     1             
+  1  2                
+  2  3             0  
+  3  3     4       0  
+  4            0      
+----------------------
+
+Pattern: p(ab)+/(ab)q
+
+-------------------------
+     1  2  4  5   F   A  
+     --------------------
+  0        1             
+  1  2                   
+  2     3                
+  3  4                0  
+  4     5                
+  5  4        6       0  
+  6               0      
+-------------------------
+
+
+
+Pattern type: pa*/aq
+====================
+
+Pattern: pa*/aq
+
+----------------------
+     1  3  4   F   A  
+     -----------------
+  0     1             
+  1  2             0  
+  2  2     3       0  
+  3            0      
+----------------------
+
+Pattern: p(ab)*/abq
+
+-------------------------
+     1  2  4  5   F   A  
+     --------------------
+  0        1             
+  1  2                0  
+  2     3                
+  3  2        4       0  
+  4               0      
+-------------------------
+
+
+For these patterns: At A: save matchsize, set |HEAD| at the next A state
+
+
+Consider p(ab)+/abq and input:
+    p a b a b a b q
+
+                          A           A           A           A
+                    0 -p- 1 -a- 2 -b- 3 -a- 2 -b- 3 -a- 2 -b- 3 -q- 5
+|match|             0     1     2     3     4     5     6     7     8
+saved |match| -1          1           3           5           7
+set |HEAD|    -1         -1           1           3           5
+
+Conclusion: |HEAD| is 5, |TAIL| is 3.
+
+Now input:    p a b q
+                          A           A  
+                    0 -p- 1 -a- 2 -b- 3 -q- 5
+|match|             0     1     2     3     4
+saved |match| -1          1           3   
+set |HEAD|    -1         -1           1   
+
+Conclusion: |HEAD| is 1, |TAIL| is 3.
+
+
+
+Implementing LA length recogition
+=================================
+
+What to do?
+
+    - Flexc++'s parser keeps track of patters as being of types 1 or 2. That's
+      easily done. Problem types 1 have 1 accept state for its rules, problem
+      types 2 have 2 (And patterns without LA have 0 accept states)
+
+    - When an accept state is reached the procedure appropriate for the
+      problem type is used: |HEAD| is set (once) for problem types 1, |HEAD|
+      is set to the last saved |HEAD|, and save-headlength is set to |HEAD|
+      for problem types 2.
+
+    - For each rule the lex function is provided with info about the rule's 
+      type, and |HEAD| is updated accordingly for rules of problem types 1 and
+      2. Rules without LA pattern simply use the unmodified matched text.
