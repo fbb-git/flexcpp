@@ -63,7 +63,8 @@ class DFARow
         void tabulate(FBB::Table &table) const;
 
         int acceptRule() const;         // -1 if none.
-        size_t ruleAcceptType() const;  // 0 (None), 1 (FIXED) or 2 (VARIABLE)
+        char ruleAcceptType() const;    // ' ' (None), 'F' (FIXED) or 
+                                        // 'V' (VARIABLE)
 
         std::vector<size_t> const &final() const;
         std::unordered_map<size_t, size_t> const &map() const;

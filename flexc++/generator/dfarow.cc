@@ -22,6 +22,7 @@ void Generator::dfaRow(DFARow const &row, ostream &out,
 
     out << setw(2) << beginFinal << ',' << 
             setw(2) << addFinal(row, final) << ", " <<
-            setw(2) << row.acceptRule() << ',' << 
-            setw(2) << row.ruleAcceptType() << "},\n";
+            setw(2) << row.acceptRule() << ", '" << 
+            row.ruleAcceptType() << "'},\n";
 }
+

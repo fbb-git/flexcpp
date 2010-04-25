@@ -17,7 +17,7 @@ class ScannerBase
     int d_state;
     int d_nextState;
     size_t d_range;
-    int d_LAsize;
+//    int d_LAsize;
     bool d_more;
     int d_ruleIndex;
 
@@ -40,7 +40,6 @@ class ScannerBase
         void nextState();
         int  ruleIndex() const;
         void reset();
-        void updateAcceptCounts();
         bool callExecute();
         void charToMatchBuffer();
         bool interactiveRuleMatched();
@@ -51,12 +50,19 @@ class ScannerBase
         bool ruleMatched();
         void notHandledChar() const;
 
+        void handleAcceptState();       // on values 2 and 3, change to enum!
+
     private:
         bool interactiveAndEOLN() const;
         int selectRule() const;
         bool plainChar() const;
-        void updateCount(size_t rule);
         void saveLookahead();
+
+        void updateHeadSize();
+        void setHeadSizeOnce();
+        Accept &acceptRecord();         // for the current state
+        int acceptStateType() const;
+        int acceptRule() const;         // rule # at current state
 };
 
 inline int ScannerBase::ruleIndex() const

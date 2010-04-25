@@ -11,11 +11,13 @@ try
                             // return EOF or set BOL, or return the char-range
                             // lookup: determine next state
 
+        handleAcceptState();
+
         if (transition())
         {
             charToMatchBuffer();
 
-            updateAcceptCounts();
+            // updateAcceptCounts();
 
             if (not interactiveRuleMatched())
                 nextState();

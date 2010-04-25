@@ -8,7 +8,7 @@ void Generator::declarations()
     d_out << 
             "    struct Accept\n"
             "    {\n"
-            "        int LAsize;\n"
+            "        int headSize;\n"
             "        int lastMatchSize;\n"
             "    };\n"
             "\n"
@@ -36,6 +36,7 @@ void Generator::declarations()
                 boolalpha << Options::instance().interactive() << ";\n"
         "    static size_t  const s_finalIdx = " << dfaCols() - 4 << ";\n"
         "    static size_t  const s_acceptIdx = " << dfaCols() - 2 << ";\n"
+        "    static size_t  const s_acceptSize = " << d_nRules << ";\n"
         "    static size_t  const s_ranges[];\n"
         "    static size_t  const s_rangeOfBOL = " << 
                                         (d_ranges.rangeOfEOF() + 1) << ";\n"

@@ -8,9 +8,9 @@ int ScannerBase::selectRule() const
     if (begin == end)                       // ret -1 if not a FINAL state
         return -1;
 
-    pair<size_t, int> ret = {~0, -1};       // store rule/length
+    msg(2) << "     selectRule: init to rule -1, length: -1\n";
 
-    msg(2) << "     selectRule: init rule -1, length: -1\n";
+    pair<size_t, int> ret = {~0, -1};       // store rule/length
 
     for                                     // visit the Accept structs of 
     (                                       // all rules matched at this point
@@ -24,13 +24,13 @@ int ScannerBase::selectRule() const
         Accept const &inspect = d_accept[rule];
 
         msg(2) << "     selectRule: inspect rule " << rule << 
-                  ", length: " << inspect.LAsize << '\n';
+                  ", length: " << inspect.headSize << '\n';
 
         int length =                            // if the current rule has no
-            inspect.LAsize == -1 ?              // LA operator, then use the 
+            inspect.headSize == -1 ?            // LA operator, then use the 
                 matchLength                     // match length
             :
-                inspect.LAsize;
+                inspect.headSize;
 
         if 
         (
@@ -48,7 +48,7 @@ int ScannerBase::selectRule() const
                   ", length: " << ret.second << '\n';
     }
 
-    msg(2) << "     selectRule matched rule " << ret.first << ", length " << 
+    msg(1) << "     selectRule matched rule " << ret.first << ", length " << 
                                  ret.second << '\n';
     return ret.first;
 }

@@ -27,6 +27,4 @@ void ScannerBase::lookup()
 
     msg(1) << ". Match = '" << d_match << "'\n";
 }
-            
-
         

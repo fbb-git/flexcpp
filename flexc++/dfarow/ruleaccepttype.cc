@@ -1,10 +1,20 @@
 #include "dfarow.ih"
 
-size_t DFARow::ruleAcceptType() const
+namespace{
+    char xlat[] = 
+    {
+        ' ',
+        '!',
+        'F',
+        'V'
+    };
+}
+
+char DFARow::ruleAcceptType() const
 {
     return d_rule == -1 ?
-                0
+                ' '
             :
-                static_cast<size_t>(acceptState().accept());
+                xlat[acceptState().accept()];
 }
 
