@@ -1,5 +1,6 @@
 #include "dfa.ih"
 
+
 void DFA::build(vector<size_t> const &active, Rules const &rules, 
                 States &states)    
 {

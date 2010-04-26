@@ -1,5 +1,7 @@
 #include "dfa.h"
 
+#include <iostream>     // TEMPO
+
 #include <ostream>
 #include <algorithm>
 #include <iomanip>

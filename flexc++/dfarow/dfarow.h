@@ -23,7 +23,8 @@ class DFARow
     typedef std::pair<size_t, size_t> Pair;
 
     typedef std::set<size_t> StateSet;
-    typedef std::vector<StateSet> StateSetVector;
+    typedef std::vector<StateSet> StateSetVector;   // a set of states per
+                                                    // input symbol
 
     std::vector<size_t> d_finalRule;            // Final state for which 
                                                 // rule(s)?
