@@ -21,6 +21,13 @@ void DFA::build(vector<size_t> const &active, Rules const &rules,
                               *d_ranges));
                                                     
         d_row.back().transitions();
+
+cout << "Row " << d_row.size()-1 << ": ";
+for (auto iter = stateSet[d_row.size()-1].begin(), end = 
+stateSet[d_row.size()-1].end(); iter != end; ++iter)
+cout << *iter << ',';
+cout << '\n';
+
     }
 
     d_row[0].setAcceptType();

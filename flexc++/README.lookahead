@@ -629,3 +629,351 @@ What to do?
     - For each rule the lex function is provided with info about the rule's 
       type, and |HEAD| is updated accordingly for rules of problem types 1 and
       2. Rules without LA pattern simply use the unmodified matched text.
+
+Conjecture: 
+
+    Some DFA's have identical A-lines. In those cases the HEAD length is
+computed as d_match.size().
+
+Consider the following patterns and their DFA's:
+
+    a+/a+                       (ab)+/(ab)+              
+        ------------------          ---------------------
+             1   F     A                 1  2   F     A  
+             -------------               ----------------
+          0  1                        0  1               
+          1  2       0-V              1     2            
+          2  2   0   0-V              2  3          0-V  
+        ------------------            3     4            
+                                      4  3      0   0-V  
+                                    ---------------------
+
+
+    a+/a*                       (ab)+/(ab)*              
+        ------------------          ---------------------
+             1   F     A                 1  2   F     A  
+             -------------               ----------------
+          0  1                        0  1               
+          1  2   0   0-V              1     2            
+          2  2   0   0-V              2  3      0   0-V  
+        ------------------            3     4            
+                                      4  3      0   0-V  
+                                    ---------------------
+
+
+    a*/a+                       (ab)*/(ab)+              
+        ------------------          ---------------------
+             1   F     A                 1  2   F     A  
+             -------------               ----------------
+          0  1       0-V              0  1          0-V  
+          1  1   0   0-V              1     2            
+        ------------------            2  1      0   0-V  
+                                    ---------------------
+
+    
+    a*/a*                       (ab)*/(ab)*              
+        ------------------          ---------------------
+             1   F     A                 1  2   F     A  
+             -------------               ----------------
+          0  1   0   0-V              0  1      0   0-V  
+          1  1   0   0-V              1     2            
+        ------------------            2  1      0   0-V  
+                                    ---------------------
+
+And the somewhat more complex:
+
+    y+(ab)*/(ab)*c*
+        ---------------------------
+             1  2  3  5   F     A  
+             ----------------------
+          0           1            
+          1  2     3  1   0   0-V  
+          2     4                  
+          3        3      0        
+          4  2     3      0   0-V  
+        ---------------------------
+
+and
+
+    y+(ab)*/(ab)*c*d
+
+        ------------------------------
+             1  2  3  4  6   F     A  
+             -------------------------
+          0              1            
+          1  2     3  4  1       0-V  
+          2     5                     
+          3        3  4               
+          4                  0        
+          5  2     3  4          0-V  
+        ------------------------------
+
+New Approach
+============
+
+Richard and Jean-Paul pinpointed several weaknesses in the above algorithm,
+related to patterns having variable lenghts HEAD and TAILS and to patterns
+using the alternative- (or-) operator.
+
+Here is another attempt to crack the LA problem:
+
+Consider patterns having fixed-length TAILs. It's either possible to determine
+the tail's length compile time or to compute the tail's length as the
+`shortest path' from the A state to the F state. Even though this hasn't been
+implemented at this point, fixed-length tail patterns should remain out of the
+discussion. Similarly, patterns with fixed length HEADs offer no problems and
+are left out of the discusion.
+
+This leaves us with variable length tails and heads. In this approach the
+focus is on |TAIL|, not anymore on |HEAD|.
+
+
+Richard made a valuable remark: the tail is always the shortest match. What's
+the shortest match? The distance from A to F. So let's concentrate on this and
+see what happens.
+
+Consider 
+        a*/aaaa+
+
+which represents one of Richard's counter examples to the earlier
+procedure. Below, the input characters are left out of the diagrams, since
+they're not relevant. The DFA for this pattern is:
+
+        ------------------
+             1   F     A  
+             -------------
+          0  1       0-V  
+          1  2       0-V  
+          2  3       0-V  
+          3  4       0-V  
+          4  4   0   0-V  
+        ------------------
+
+Consider the `shortest path' from A to F: 
+
+        0   1   2   3   4
+
+Its length is 4, and so after matching aaaaaaaaaaaaaaaaaa the final 4
+characters are to be re-read and the rest is matched.            
+
+Now consider 
+
+        a*/aaaa*
+
+which is a slight modification. DFA is:
+
+        ------------------
+             1   F     A  
+             -------------
+          0  1       0-V  
+          1  2       0-V  
+          2  3       0-V  
+          3  4   0   0-V  
+          4  4   0   0-V  
+        ------------------
+        
+Shortest path:  
+
+        0   1   2   3
+
+Thus, |TAIL| == 3.
+
+Another example for which the previous algorithm failed was. 
+
+        p(ab)*/ababq
+
+This pattern is trivial, though, as its tail has a fixed length. Nevertheless,
+here's its DFA:
+
+        ---------------------------
+             1  2  4  5   F     A  
+             ----------------------
+          0        1               
+          1  2                0-V  
+          2     3                  
+          3  4                0-V  
+          4     5                  
+          5  4        6       0-V  
+          6               0        
+        ---------------------------
+
+    Its diagram is:
+
+                    +---+
+                    V   |
+    0   1   2   3   4   5   6
+        A       A       A   F
+
+    The shortest path starts (as always) at A, so it is
+
+        1   2   3   4   5   6, and |TAIL| == 5.
+
+Let's turn this pattern into a variable length TAIL:
+
+        p(ab)*/ab(ab)+q
+
+It has the same DFA (!) as the fixed pattern, so |TAIL| == 5.
+OK, so let's do 
+
+        p(ab)*/ab(ab)*q
+
+This one has DFA:
+
+        ---------------------------
+             1  2  4  5   F     A  
+             ----------------------
+          0        1               
+          1  2                0-V  
+          2     3                  
+          3  4        5       0-V  
+          4     6                  
+          5               0        
+          6  4        5       0-V  
+        ---------------------------
+
+The diagram is:     +---+
+                    V   |
+                    4---6 A
+                  /      \ 
+    0   1   2   3----------5
+        A       A           F
+
+    Shortest path:  1   2   3   5, with |TAIL| == 3, as it should be
+
+      
+Let's do:
+    
+    ab*/b*c
+
+DFA is:
+        ------------------------
+             1  2  3   F     A  
+             -------------------
+          0  1                  
+          1     2  3   0   0-V  
+          2     2  3   0   0-V  
+          3        3   0        
+        ------------------------
+
+    Diagram:
+                   +--+
+                   V  |
+              +--- 2--+
+              |    |A
+        0   1 +    |       
+            A |    V
+              +--- 3
+                   F
+
+    Shortest path:  1   3, so |TAIL| == 1.
+
+
+Now these:
+
+    b*/b*                   b*/b+
+------------------          ------------------
+     1   F     A                 1   F     A  
+     -------------               -------------
+  0  1   0   0-V              0  1       0-V  
+  1  1   0   0-V              1  1   0   0-V  
+------------------          ------------------
+                                              
+Diagrams:
+        ---+                    ---+
+        V  |                    V  |
+    0---1--+                0---1--+
+    FA  FA                  A   FA  
+
+DFAs are identical, but there is a difference: at b*/b* state 0 is also F.
+
+If our initial state is FA, we start counting (as usual) at 0, but we're
+immediately in the final state, so 0 steps for the tail and |TAIL| == 0
+This handles b*/b*.
+
+For b*/b+ we apply the normal shortest path procedure: From 0 (A) to 1 (F) is
+1 step, so for b*/b+ |TAIL| == 1.
+
+
+Now alternatives:
+
+Consider a|ab/ba|a
+DFA:
+    ---------------------
+         1  2   F     A  
+         ----------------
+      0  1               
+      1  2  3       0-V  
+      2         0        
+      3  4  5       0-V  
+      4         0        
+      5  6               
+      6         0        
+    ---------------------
+
+Since we have alternatives, we have alternative paths. Consider the complete
+transition diagram (with chars showing the required inputs for the
+transitions): 
+
+       a       a
+    0-----1-+----- 2F
+          A |            a
+            +----- 3 -+----- 4F
+               b   A  |    
+                      +----- 5 ----- 6F
+                         b       a
+
+So at 1 the shortest path to 2 is 1 step; if that's not reached, then at
+3 the shortest path is reset, becoming 1 if aba is matched at 4 and 2 if abba
+is matched at 6.
+
+The branches here are not resulting from repetitions but from alternatives. So
+the accept states must be handled accordingly: 1 is A only for 2, 3 is A for 4
+or 6.
+
+Now combine repetitions with alternatives:
+
+                a*|(ab)*/(ab)*ba+|a+
+
+DFA:
+
+    -----------------------
+          1   2   F     A  
+         ------------------
+      0   1   2       0-V  
+      1   3   4   0   0-V  
+      2   5                
+      3   3   6   0   0-V  
+      4   7   2       0-V  
+      5   5       0        
+      6   8   2            
+      7   9  10   0        
+      8   5  11   0        
+      9   9       0        
+     10  12   2       0-V  
+     11  13   2            
+     12  14  10   0        
+     13      11            
+     14  14       0        
+    -----------------------
+
+Drawing the diagram we get:
+
+               +----+
+               V    |                                          +------------+
+ 0 +-a- 1 +-a- 3 -a-+                              F           V            |
+ A |    A |    A -b- 6 -------+-a----------------- 8 ----+--b- 11 -a- 13 -b-+
+   |    F |    F              +-b------------------+     |        -b->2
+   |      |                                        |     |
+   |      |                +----+                  |     |
+   |      |                V    |                  |     |
+   |      +-b- 4 +a- 7 +a- 9 -a-+                  |     |
+   |           A |   F |   F                       |     |
+   |             |     |   +------------+          |     |
+   |             |     |   |            |  +----+  |     |
+   |             |     |   V      F  +b-+  V    |  |     |
+   |             |     +b- 10 +a- 12 +a-- 14 -a-+  |     |
+   |             +b--+     A  +b-+         F       |     |
+   |                 |           |                 |     |      +----+
+   |                 |           |                 |     |      V    |
+   +-b--- -----------+-----------+-----------------+- 2 -+---a- 5 -a-+
+                                                                F
