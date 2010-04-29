@@ -54,7 +54,7 @@ void dependent(int idx)
     g_depHaystack += (list)target;
 
     printf("RECOMPILE: ", target, "\n");
-  
+
     for (depIdx = idx + 1; depIdx != g_nClasses; ++depIdx)
     {
         dependencies = strtok(g_classLines[depIdx], " \t\n");
@@ -78,12 +78,7 @@ void checkALL()
         all = g_classes[idx] + "/a";
 
         if (exists(all))
-        {
-            echo(OFF);
-            exec("rm", all);
-            echo(ON);
             dependent(idx);
-        }
     }
 }
             
@@ -269,6 +264,7 @@ void std_cpp(int prefix, string srcDir, string library)
 
     if (sizeof(files))
         c_compile(prefix, srcDir, files);           // compile files
+
     g_depHaystack -= (list)srcDir;                  // then rm from haystack
 }
 
@@ -293,6 +289,10 @@ void cpp_make(string mainfile, string library, int lib_only)
         std_cpp(g_nClasses, ".", fullLibname);
 
     static_library(fullLibname);            // make the library
+
+    echo(OFF);
+    system("rm -f */a");
+    echo(ON);
 }
 
 void setlibs()
