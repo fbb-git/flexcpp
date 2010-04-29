@@ -13,8 +13,13 @@
 using namespace std;
 using namespace FBB;
 
-inline State &DFARow::acceptState() const
+inline State &DFARow::acceptState(size_t rule) const
 {
-    return (*d_states)[(*d_rules)[d_rule].accept()];
+    return (*d_states)[(*d_rules)[rule].accept()];
+}
+
+inline void DFARow::nextAcceptType(size_t rule, DFARow &row)
+{
+    row.acceptState(rule).nextAccept();
 }
 

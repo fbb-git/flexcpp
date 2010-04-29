@@ -18,11 +18,13 @@ void Generator::dfaRow(DFARow const &row, ostream &out,
                    "         ";                   
     }
 
-    size_t beginFinal =  final.size();
+//    size_t beginFinal =  final.size();
 
-    out << setw(2) << beginFinal << ',' << 
-            setw(2) << addFinal(row, final) << ", " <<
-            setw(2) << row.acceptRule() << ", '" << 
-            row.ruleAcceptType() << "'},\n";
+    out << "TO COMPLETE: Generator::dfaRow\n";
+
+//    out << setw(2) << beginFinal << ',' << 
+//            setw(2) << addFinal(row, final) << ", " <<
+//            setw(2) << row.acceptRule() << ", '" << 
+//            row.ruleAcceptType() << "'},\n";
 }
 

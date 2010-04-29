@@ -26,6 +26,6 @@ void DFARow::tabulate(Table &table) const
     else
         table << ' ';
 
-    table << acceptType();
+    table << accepts();
 }
 

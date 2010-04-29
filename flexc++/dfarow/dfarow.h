@@ -29,9 +29,8 @@ class DFARow
     std::vector<size_t> d_finalRule;            // Final state for which 
                                                 // rule(s)?
 
-    int d_rule;                                 // rule for which this row
+    std::set<size_t> d_acceptRule;              // rule(s) for which this row
                                                 // represents an Accept state
-                                                // (or -1)
 
     std::unordered_map<size_t, size_t> d_map;   // Relate input symbols (key) 
                                                 // to the row to transit to 
@@ -63,8 +62,9 @@ class DFARow
 
         void tabulate(FBB::Table &table) const;
 
-        int acceptRule() const;         // -1 if none.
-        char ruleAcceptType() const;    // ' ' (None), 'F' (FIXED) or 
+        std::string accepts() const; 
+        char ruleAcceptType(size_t rule) const;    
+                                        // ' ' (None), 'F' (FIXED) or 
                                         // 'V' (VARIABLE)
 
         std::vector<size_t> const &final() const;
@@ -75,8 +75,10 @@ class DFARow
         void setAcceptType();
 
     private:
-        std::string acceptType() const;
-        State &acceptState() const;
+        std::string accepts();
+
+        std::string acceptType(size_t rule) const;
+        State &acceptState(size_t rule) const;
         void setAcceptRule(size_t stateIdx);
 
             // determine the eClosure of a set of transitions for each of the
@@ -89,16 +91,16 @@ class DFARow
                                              size_t rangeChar,
                                              StateSet &nextSet);
         void setFinal(size_t stateIdx);
+        static void nextAcceptType(size_t rule, DFARow &row);
+        static void outAccept(size_t rule, std::ostream &out, 
+                                                    DFARow const &obj);
+
+
 };
 
 inline std::unordered_map<size_t, size_t> const &DFARow::map() const
 {
     return d_map;
-}
-
-inline int DFARow::acceptRule() const
-{
-    return d_rule;
 }
 
 inline std::vector<size_t> const &DFARow::final() const

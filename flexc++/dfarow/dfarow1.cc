@@ -4,7 +4,6 @@ DFARow::DFARow(Rules const &rules,
                States &states, StateSetVector &stateSets, 
                size_t thisIdx, Ranges &ranges)
 :
-    d_rule(-1),
     d_states(&states),
     d_stateSets(&stateSets),
     d_rules(&rules),

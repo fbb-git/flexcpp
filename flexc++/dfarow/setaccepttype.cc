@@ -2,6 +2,6 @@
 
 void DFARow::setAcceptType()
 {
-    if (d_rule != -1)
-        acceptState().nextAccept();
+    for_each(d_acceptRule.begin(), d_acceptRule.end(),
+        FnWrap::unary(nextAcceptType, *this));
 }

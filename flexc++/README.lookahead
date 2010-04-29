@@ -977,3 +977,388 @@ Drawing the diagram we get:
    |                 |           |                 |     |      V    |
    +-b--- -----------+-----------+-----------------+- 2 -+---a- 5 -a-+
                                                                 F
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+All this doesn't work smoothly, unfortunately...
+So we do a completely different approach.
+
+The problem with all these LA situations is always that we don't know where to
+end the HEAD and to begin the TAIL. 
+
+So let's tackle the problem from there. In all cases where there is a clearly
+recognizable begin of the tail we're sure that the tail starts. Example:
+
+    (b*|(ab)*)/x(b*|(ab*))
+
+Results in 
+------------------------
+     1  2  4   F     A  
+     -------------------
+  0  1  2  3       0-V  
+  1     4               
+  2     2  3       0-V  
+  3  5  6      0        
+  4  1     3       0-V  
+  5     7      0        
+  6     6      0        
+  7     7      0        
+------------------------
+
+We can forget about the A states, and concentrate on input cat. 4, which is
+'x'. Once we see 'x' we move to a second section of the DFA, from where
+there's no way back to the first section. Of course there isn't a route back
+since we've reached the tail. 
+
+Until we're at range 4 ('x') we remain in the head and therefore by noting the
+point where we matched 'x' we known where the tail starts. 
+
+Works fine, also with previously problematic patterns like b*/b* ('x' is input
+cat. 3 here):
+
+---------------------
+     1  3   F     A  
+     ----------------
+  0  1  2       0-V  
+  1  1  2       0-V  
+  2  3      0        
+  3  3      0        
+---------------------
+
+Passing this one a series of b's they will all be matched by the DFA's first
+part and the tail is (as it should) as short as possible. 
+
+Hm... unfortunately this doesn't work either since we don't know where the
+tail starts when it requires one character. a*/xa works fine with a real x,
+but if x is a pseudo character we don't know where it is. 
+
+But on the other hand: we *do* know where the tail starts. So we know the
+tail's length? Again we don't: a*/xa* produces
+---------------------
+     1  3   F     A  
+     ----------------
+  0  1  2       0-V  
+  1  1  2       0-V  
+  2  3      0        
+  3  3      0        
+---------------------
+and there's no way to determine either the head or the tail's length from the
+DFA or from actually running the DFA if x isn't a real but a pseudo character
+like EOF or BOL.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+
+So, once again: what to do? LA patterns are only a problem if the head's last
+term continues in the tail's first term(s). As we saw from the previous
+section if there's a separating character then the DFA allows us to recognize
+the tail's begin (or head's end). Also, patterns not having an variable length
+never cause a problem. fixed-length/variable-length or
+variable-length/fixed-length allow us to precompute |HEAD| or |TAIL|,
+respectively, and we're done for those patterns.
+
+So the problem patterns are: variable-length/variable-length, with the head's
+last term repeating as the tail's first. Examples:
+
+    ab*/b+                          ab+/b*
+---------------------           ---------------------
+     1  2   F     A                  1  2   F     A  
+     ----------------                ----------------
+  0  1                            0  1               
+  1     2       0-V               1     2            
+  2     2   0   0-V               2     3   0   0-V  
+---------------------             3     3   0   0-V  
+                                ---------------------
+
+However, as Richard suggested, we can rewrite such patterns knowing that the
+head is always as long as possible. So if the head's end is repeated in the
+tail's begin (including situations like b*/bbb+ where the head's final term b
+is repeated 3 times) we can apply rewriting rules:
+
+    a*/a*       -> a*               (no tail anymore)
+    a*/a+       -> a                (no tail anymore)
+    a*/a?       -> a                (no tail anymore)
+    a*/a{x,*}   -> a*/a{x}          |TAIL| = |a{x}|
+
+    a+/a*       -> a+               (no tail anymore)
+    a+/a+       -> a+/a             |TAIL| = 1
+    a+/a?       -> a+               (no tail anymore)
+    a+/a{x,*}   -> a+/a{x}          |TAIL| = |a{x}|
+
+    a?/a*       -> a?/a*            |TAIL| = max(0, |match| - 1)
+    a?/a+       -> a?/a+            |TAIL| = |match| - 1
+    a?/a?       -> a?/a?            |TAIL| = max(0, |match| - 1)
+    a?/a{x,*}   -> a*/a{x}          |TAIL| = |a{x}|
+
+    a{x,*}/a*       -> a{x,*}       (no tail anymore)
+    a{x,*}/a+       -> a{x,*}/a     |TAIL| = 1
+    a{x,*}/a?       -> a{x,*}       (no tail anymore)
+    a{x,*}/a{x,*}   -> a{x,*}/a{x}  |TAIL| = |a{x}|
+
+When alternatives are used, (the | operator) the same considerations
+apply. However, a pattern may be partially overlapping, as in:
+
+        a+|b+/a+|b+
+
+Here the matching patterns are:
+
+    1   a+/a+
+    2   a+/b+
+    3   b+/a+
+    4   b+/b+
+
+and I think it's hard to rewrite some of the patterns (a+/a+ -> a+/a) and not
+others (b+/a+). Here is the DFA:
+---------------------
+     1  2   F     A  
+     ----------------
+  0  1  2            
+  1  3  4       0-V  
+  2  5  6       0-V  
+  3  3  4   0   0-V  
+  4     4   0        
+  5  5      0        
+  6  5  6   0   0-V  
+---------------------
+
+Could we break up such patterns in parts, copying the action rules? So instead
+of a+b+/a+|b+ we would define:
+
+    b+/(a+|b)
+    a+/(b+|a)
+
+with eventual DFA:
+---------------------
+     1  2   F     A  
+     ----------------
+  0  1  2            
+  1  3  4       1-V  
+  2  5  6       0-V  
+  3  3  4   1   1-V  
+  4     4   1        
+  5  5      0        
+  6  5  6   0   0-V  
+---------------------
+
+Receiving a series of a (range 1) chars, we would do:
+
+    0   1   3   3   3   3 
+
+and for 3 we would have registered |TAIL| = 1
+
+Receiving a series of a chars, then a series of b chars would yield:
+
+    0   1   3   3   4   4   4   4
+        A   FA  FA  F   F   F   F
+
+The |TAIL| is computed from the last A, so  3   4   4   4   4
+                                            FA  F   F   F   F
+                                            0   1   2   3   4
+
+We would ALWAYS compute |TAIL| from the last A, but some rules would have
+their own A-length set by the compiler, considering that, e.g., a+/a has
+|TAIL| 1.
+
+Couldn't we do that for the combined DFA?
+---------------------
+     1  2   F     A  
+     ----------------
+  0  1  2            
+  1  3  4       0-V  
+  2  5  6       0-V  
+  3  3  4   0   0-V  
+  4     4   0        
+  5  5      0        
+  6  5  6   0   0-V  
+---------------------
+
+A series of a (range 1) chars yields:
+
+    0   1   3   3   3   3
+        A   AF  AF  AF  AF
+
+It's the same sequence as earlier, and so yes, we could have assigned |TAIL| 1
+to state 3. What about a chars followed by b chars? Here it is:
+
+    0   1   3   3   4   4   4
+        A   AF  AF  F   F   F
+
+And again, when leaving 3 the |TAIL| length is reset and counting starts:
+
+    0   1   3   3   4   4   4
+        A   AF  AF  F   F   F
+                0   1   2   3
+
+It's not implemented yet, but that's probably a minor detail. 
+Reactions?
+
+=======================================================================
+
+Yet another approach....
+
+Computational rules: 
+
+    As usual:   xA: state x is an Accepting state
+                A: Accept count, xF: final state, y: another state
+
+    At the initial xA: A = 0
+        
+    Beyond/from A: x -> y, and y > x: ++A
+                   x -> y, and y < x: --A
+
+    at xFA: when input stops: use A as accept count
+            when input continues: use the last-used A count
+
+    |-operators: split into separate rules, call the same action blocks for
+    these rules
+
+Richard's last `killing pattern':
+
+    a*b*/a* has DFA
+         1  2   F      A  
+         -----------------      
+      0  1  2   0   0-V,        input:  
+      1  1  2   0   0-V,            0 a 1 a 1 a 1
+      2  3  2   0   0-V,            AF  AF  AF  AF  : AF: A = 0, stays 0.
+      3  3      0
+                                    0 a 1 b 2 a 3 a 3
+                                    AF  AF  AF  F   F
+                                A:  0   0   0   1   2       |TAIL| = 2
+
+Now consider ab*/b+ and ab+/b*
+
+    ab*/b+                          ab+/b*
+---------------------           ---------------------
+     1  2   F     A                  1  2   F     A  
+     ----------------                ----------------
+  0  1                            0  1               
+  1     2       0-V               1     2            
+  2     2   0   0-V               2     3   0   0-V  
+---------------------             3     3   0   0-V  
+                                ---------------------
+
+Input: a b b b b
+
+With ab*/b+
+
+    0   a   1   b   2   b   2   b   2   b   2
+            A       AF      AF      AF      AF
+A:          0       1       1       1       1       |TAIL| = 1
+
+With  ab+/b*
+   
+    0   a   1   b   2   b   3   b   3   b   3
+                    AF      AF      AF      AF
+A:                  0       0       0       0       |TAIL| = 0
+
+Let's enlarge the tail:
+
+ab*/bbbb+ DFA:
+----------------------
+     1  2   F      A  
+     -----------------
+  0  1                
+  1     2       0-V,  
+  2     3       0-V,  
+  3     4       0-V,  
+  4     5       0-V,  
+  5     5   0   0-V,  
+----------------------
+                        --------------------------------------------------
+    Input a b b b b b:  0   a   1   b   2   b   3   b   4   b   5   b   5
+                                A       A       A       A       AF      AF
+                                0       1       2       3       4       4
+                        --------------------------------------------------
+
+Let's do some elements of the rewriting table, and see what happens with input
+aaa
+
+    a*/a*
+-------------------         input: aaa
+     1   F      A  
+     --------------         0   a   1   a   1   a   1
+  0  1   0   0-V,           AF      AF      AF      AF      -> tail = 0
+  1  1   0   0-V,  
+-------------------
+
+    a*/a+
+-------------------
+     1   F      A  
+     --------------         0   a   1   a   1   a   1   a   1
+  0  1       0-V,           A       AF      AF      AF      AF
+  1  1   0   0-V,           0       1       1       1       1   -> tail = 1
+-------------------
+
+    a*/a? - same DFA as a*/a* -> tail = 0
+
+    a+/a*
+-------------------     From row 1 identical to a*/a*'s DFA, so tail = 0
+     1   F      A  
+     --------------
+  0  1             
+  1  2   0   0-V,  
+  2  2   0   0-V,  
+-------------------
+
+Now do some alternatives:
+
+a|ab/ba|a
+
+This results in:
+a/ba
+a/a
+ab/ba
+ab/a
+
+DFA:
+----------------------------
+     1  2   F            A  
+     -----------------------
+  0  1                      
+  1  2  3         0-F,1-F,  
+  2         1               
+  3  4  5         2-F,3-F,  
+  4         0,3             
+  5  6                      
+  6         2               
+----------------------------
+
+the interesting input is of course aba since it matches alternative 0 and
+3. See what happens:
+
+    0       1       2       3       |match|
+    --------------------------
+    0   a   1   b   3   a   4
+            0A      2A      0F    
+            1A      3A      3F
+------------------------------
+0A          0       1       2
+3A                  0       1
+
+Note that there are various rules playing a role here, but at 4 only rules 0
+and 3 count. 0's A is 2, with HEAD size 1, 3's A is 1, with HEAD size
+2. Consequently, rule 3 is (correctly) accepted as it has the longer head
+length.
+
+
+Another one of Richard's famous patterns:
+
+a*/(ab)* having DFA:
+
+----------------------
+     1  2   F      A  
+     -----------------
+  0  1      0   0-V,  
+  1  1  2   0   0-V,  
+  2  3      0         
+  3     2             
+----------------------
+
+Some inputs: aaa, aaab, abab
+
+    0   a   1   a   1   a   1
+    AF      AF      AF      AF      |TAIL| = 0
+
+    0   a   1   a   1   a   1   b   2
+    AF      AF      AF      AF      F
+    0       0       0       1       2       ...

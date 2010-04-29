@@ -265,7 +265,7 @@ void std_cpp(int prefix, string srcDir, string library)
     if (sizeof(files))
         c_compile(prefix, srcDir, files);           // compile files
 
-    g_depHaystack -= (list)srcDir;                  // then rm from haystack
+//    g_depHaystack -= (list)srcDir;                  // then rm from haystack
 }
 
 void cpp_make(string mainfile, string library, int lib_only)
