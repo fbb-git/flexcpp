@@ -116,7 +116,7 @@ pattern:
 |
     pattern '{' start_interval_m  interval '}' regex_block_m
     {
-        $$ = interval(*$1, *$3);
+        $$ = interval(*$1, *$4);
     }
 |
     pattern '/' pattern         // handles $ through scanner intelligence
