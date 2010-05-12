@@ -11,9 +11,12 @@ ostream &operator<<(ostream &out, State const &state)
     if (type == State::UNDETERMINED__)
         return(out);
 
-    State::Accept at = state.accept();
+    int at = state.accept();
 
-    out << (at == State::NONE ? ' ' : 'A') << ' ';
+    if (at == -1)
+        out << ' ' << ' ';
+    else
+        out << at << ' ';
 
     if (type < State::UNDETERMINED__)
         out << type;

@@ -6,8 +6,9 @@ void DFARow::transit(size_t stateIdx, DFARow &thisRow,
 {
     State const &state = (*(thisRow.d_states))[stateIdx];
 
-    if (state.accept() != State::NONE)
-        thisRow.setAcceptRule(stateIdx);
+cerr << "transit.cc\n";
+//    if (state.accept() != State::NONE)
+//        thisRow.setAcceptRule(stateIdx);
 
     switch (size_t type = state.type())
     {

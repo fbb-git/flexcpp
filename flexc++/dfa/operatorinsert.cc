@@ -1,12 +1,10 @@
 #include "dfa.ih"
 
-#include <bobcat/table>
-
 ostream &operator<<(ostream &out, DFA const &dfa)
 {
     size_t nCols = dfa.d_ranges->nUsed() + 3;
 
-    DSupport support;
+    TableLines support;
     support << 0;
     for (size_t idx = 0; idx != nCols - 3; ++idx)   // set separator widths
         support << 2;

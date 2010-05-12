@@ -1,6 +1,8 @@
 #ifndef INCLUDED_STATES_
 #define INCLUDED_STATES_
 
+#include <algorithm>
+
 #include <iosfwd>
 #include <vector>
 #include <set>
@@ -11,6 +13,8 @@ class States
 {
     std::vector<State> d_state;
     std::vector<size_t> d_free;
+
+    std::vector<size_t> d_ruleStates;       // used for accept propagation
 
     public:
         typedef std::pair<size_t, size_t> Pair;
@@ -32,7 +36,20 @@ class States
 
         std::set<size_t> eClosure(std::set<size_t> &current) const;
         size_t size() const;
+
+        void propagateAccept(int state, int count);
+
+    private:
+
+        bool contains(int state) const;
 };
+
+inline bool States::contains(int state) const
+{
+    return std::find(d_ruleStates.begin(), d_ruleStates.end(), state) 
+           != 
+           d_ruleStates.end();
+}
 
 inline State &States::operator[](size_t idx)
 {

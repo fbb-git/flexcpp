@@ -1,6 +1,10 @@
 #include "rules.h"
 
+#include <algorithm>
+
+#include <bobcat/fnwrap>
+
 #include "../states/states.h"
 
 using namespace std;
-
+using namespace FBB;

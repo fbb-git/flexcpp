@@ -3,5 +3,5 @@
 State::State()
 :
     d_type(UNDETERMINED__),
-    d_accept(NONE)
+    d_accept(-1)
 {}

@@ -17,7 +17,7 @@ class Rules
 
     typedef std::pair<size_t, size_t> Pair;
 
-    States const &d_states;
+    States &d_states;
 
     std::vector<Rule> d_rules;
     std::unordered_map<size_t, size_t>  d_reverse;  // from FINAL state to
@@ -28,7 +28,7 @@ class Rules
     StartConditions d_startConditions;
 
     public:
-        Rules(States const &states);
+        Rules(States &states);
 
         void add(Pair const &pair, size_t accept,
                                      std::string const &action = "");
@@ -52,6 +52,12 @@ class Rules
         const_iterator end() const;
 
         size_t size() const;
+
+        void propagateAccept();
+
+    private:
+        static void propagate(Rule const &rule, States &states);
+
 };
 
 inline size_t Rules::size() const

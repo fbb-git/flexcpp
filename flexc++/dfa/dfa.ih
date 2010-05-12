@@ -7,8 +7,9 @@
 #include <iomanip>
 
 #include <bobcat/fnwrap>
-#include <bobcat/tablesupport>
+#include <bobcat/tablelines>
 #include <bobcat/align>
+#include <bobcat/table>
 
 #include "../rules/rules.h"
 #include "../states/states.h"
@@ -21,11 +22,4 @@ inline void DFA::fillStartSet(size_t idx, Rules const &rules, StateSet &start)
 {
     start.insert(rules[idx].startState());
 }
-
-class DSupport: public TableSupport
-{
-    private:
-        virtual void hline(size_t row) const;
-        static void outLine(Element const &element, ostream &out);
-};
 
