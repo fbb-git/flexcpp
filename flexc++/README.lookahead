@@ -1,3 +1,169 @@
+Notation & Terminology:
+=======================
+
+Ax:     accept count
+++Ax:   accept count, incremented each time this state is reached again
+Fx:     Accept count at a final state
+
+pre-A state:  any NFA state before the A0 state
+post-A state: any NFA state from/beyond the A0 state
+
+Each post-A state receives an associated Ax value. Example:
+
+                        +-----+
+                        |     |
+                     a  v  a  |
+        a/a+:     1-----2-----3     Notation: 1--a--2--a--3[2] so complex
+                        A0    A1              ascii art can be prevented
+                                              [2]3 is used to indicate that 
+                                                coming from the left a jump
+                                                back to 3 is ok, but not 
+                                                coming from the right (see
+                                                example at rule 2 below)
+
+Rules:
+======
+
+    1. From the A0 state, start counting transitions until F is reached.
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Example:
+                a*/aaa  has NFA:    1[2]--a--2[1]--a--3--a--4--a--5
+                                              A0      A1    A2    A3
+                        and DFA:
+                                    ------------------------------
+                                            a
+                                    ------------------------------
+                                    12      123         A0
+                                    123     1234        A1  1step
+                                    1234    12345       A2  2steps
+                                    12345   12345    F->A3  3steps
+                                    ------------------------------
+        At F: A = 3 (always).
+
+
+    2. For transitions from F-A to F-A, having pre-A NFA states, keep A
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        Example:
+         (a|ab)*/(a|ba)* has NFA:    ------a------       ------a------
+                                 1[3]             [1]3[5]              5[3]
+                                     --a-- 2 --b--       --b-- 4 --a--
+                                                    A0         A1      A0,1,2
+                            DFA:
+                                    ---------------------
+                                             a       b
+                                    ---------------------
+                                     135    1235       4    F,A0
+                                    1235    1235    1345    F,A0  
+                                    1345    1235       4    F,A0
+                                       4      35            ++A1 (see Rule 3)
+                                      35      35       4
+                                    ---------------------
+
+    3. Once a DFA state consisting of post-A states is reached, its A count
+       is set to the highest A count of its constituent NFA states (and stop
+       following DFA transtitions). Once this state is reached, continuously
+       increment the A count at each new transition
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        Example: see example 2: the DFA state consisting of NFA state 4 has A
+                 count ++A1
+
+Some more examples:
+-------------------
+                                    ------a------
+    a+/(a|ab)+  NFA:    1 --a-- [1]2             4[2]
+                                    --a-- 3 --b--
+                                 A0       A1     A1,A2
+
+                            DFA:
+                                    ---------------------
+                                             a       b
+                                    ---------------------
+                                       1      12
+                                      12    1234               A0
+                                    1234    1234      24    F->A1
+                                      24     234            A1,A2? -> ++A2
+                                     234     234      24
+                                    ---------------------
+
+
+        
+    a*b*/a*     NFA:    1[2] --a-- [1]2[3] --b-- [2]3[4] --a-- 4[3]
+                                                    A0          A1
+                            DFA:
+                                    ---------------------
+                                             a       b
+                                    ---------------------
+                                    1234    1234     234    A0,F
+                                     234      34     234    A0,F
+                                      34      34            ++A1,F
+                                    ---------------------
+
+
+    a*/a*       NFA:    1[2] --a-- [1]2[3] --a-- 3[2]                
+                                      A0          A1
+                            DFA:
+                                    -------------
+                                             a   
+                                    -------------
+                                    123     123     A0,F
+                                    -------------
+
+
+    (a|ab)+/a(a|ba)+ has NFA:   ------a------            ------a------
+                               1             3[1] --a-- 4             6[4]
+                                --a-- 2 --b--            --b-- 5 --a--
+                                              A0        A1     A2     A2,3
+                            DFA:
+                                    ---------------------
+                                             a       b
+                                    ---------------------
+                                       1     123
+                                     123    1234     13        A0
+                                    1234   12346    135        A1
+                                   12346   12346    135     F->A2
+                                      13    1234            
+                                     135   12346
+                                    ---------------------
+
+
+    (a|ab)+/(a|ba)+ has NFA:    ------a------    ------a------
+                               1             [1]3             5[3]
+                                --a-- 2 --b--    --b-- 4 --a--
+                                              A0       A1     A1,2
+                            DFA:
+                                    ---------------------
+                                             a       b
+                                    ---------------------
+                                       1     123
+                                     123    1235    134         A0
+                                    1235    1235    134      F->A1
+                                     134    1235      4
+                                       4      35              ++A1
+                                      35      35      4
+                                    ---------------------
+
+Algorithm:
+    1. While creating the NFA, count transitions from A0 (as shown in the NFA
+       diagrams above  (multiple possibilities: assign the highest count to an
+       NFA state).
+    2. When creating the DFA, at the A0 states follow the transitions.
+        - for DFA states containing pre-A NFA states use the incremented A
+          count of the originating DFA state;
+          If an F state is reached, transiting from F to F: 
+              keep the A-count of the originating DFA state.
+        - if a DFA state is reached merely consisting of post-A NFA states:
+              set this state's A count to `incrementing' and initialize to the 
+              highest A count of the constituing NFA states.
+
+
+==============================================================================
+
+
+OLD:
+====
+
 Notation and DFA-rules
 ----------------------
 
