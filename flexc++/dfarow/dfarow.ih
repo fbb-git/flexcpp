@@ -18,8 +18,10 @@ inline State &DFARow::acceptState(size_t rule) const
     return (*d_states)[(*d_rules)[rule].accept()];
 }
 
+#include <iostream>     // TEMPO
 inline void DFARow::nextAcceptType(size_t rule, DFARow &row)
 {
-    row.acceptState(rule).nextAccept();
+    cerr << "dfarow.ih: nextAcceptType\n";
+    //row.acceptState(rule).nextAccept();
 }
 
