@@ -1,29 +1,65 @@
 #ifndef INCLUDED_RULE_
 #define INCLUDED_RULE_
 
+#include <vector>
 #include <string>
+
+class States;
 
 class Rule
 {
+    typedef std::pair<size_t, size_t> Pair;     // first/final state nrs.
+
     size_t d_start;             // index in States
-    size_t d_accept;            // index in States of ACCEPT state (or 0)
+    size_t d_final;             // index in States
     std::string d_action;       // action block
 
+                                    // for rules using LA operators:
+    std::vector<size_t> d_preAstates;  // all pre-A states
+    std::vector<size_t> d_postAstates; // all post-A states
+
     public:
-        Rule(size_t start = 0, size_t accept = 0, std::string action = "");
+        Rule() = default;               // for vector operations by Rules
+        Rule(States const &states,
+             Pair fstfin, size_t accept, std::string action);
         size_t startState() const;
+        size_t finalState() const;
         size_t accept() const;
         std::string const &action() const;
+
+        bool hasPreAstates() const;
+        bool hasPostAstates() const;
+        int maxAccept() const;
+
+    private:
+        void setStates(std::vector<size_t> &prePostA, 
+                        States const &states, size_t begin, size_t end);
+
 };
+
+inline bool Rule::hasPreAstates() const
+{
+    return d_preAstates.size();
+}
+
+inline bool Rule::hasPostAstates() const
+{
+    return d_postAstates.size();
+}
 
 inline size_t Rule::startState() const
 {
     return d_start;
 }
 
+inline size_t Rule::finalState() const
+{
+    return d_final;
+}
+
 inline size_t Rule::accept() const
 {
-    return d_accept;
+    return d_postAstates[0];
 }
 
 inline std::string const &Rule::action() const

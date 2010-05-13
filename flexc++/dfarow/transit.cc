@@ -6,13 +6,10 @@ void DFARow::transit(size_t stateIdx, DFARow &thisRow,
 {
     State const &state = (*(thisRow.d_states))[stateIdx];
 
-    if (state.accept() != -1)
-        thisRow.setAcceptRule(stateIdx);
-
     switch (size_t type = state.type())
     {
         case State::FINAL:
-            thisRow.setFinal(stateIdx);
+            thisRow.setFinal(state.rule());
         break;
 
         case State::CHARSET:

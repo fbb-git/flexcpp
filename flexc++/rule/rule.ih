@@ -1,4 +1,6 @@
 #include "rule.h"
 
+#include "../states/states.h"
+
 using namespace std;
 

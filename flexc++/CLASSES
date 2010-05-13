@@ -10,8 +10,8 @@ state           statestring
 states          state
 charrange       
 charclass       charrange   semval
-rule            
-rules           rule        states
+rule            states            
+rules           rule
 patternval      charclass   states
 decimal         semval
 startconditions textval
@@ -19,7 +19,8 @@ fstreaminfo
 block           
 scanner         textval     fstreaminfo block
 ranges          textval     states
-dfarow          ranges      rules
+larule  
+dfarow          ranges      rules       larule
 dfa             dfarow
 dfas            dfa
 options         

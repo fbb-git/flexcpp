@@ -16,6 +16,7 @@ class State
                         // character range value
 
     int d_accept;       // -1: pre-accept state
+    int d_rule;         // -1: not an LA rule, rule index irrelevant
 
     public:
         enum Type       // values in the Alphabet range are simple characters
@@ -43,11 +44,17 @@ class State
         size_t next2() const;
 
         StateData const &data() const;
-        size_t type() const;            // if < UNDETERMINED__ it's a char
+
         void setType(size_t type);      // change the char. type
+        size_t type() const;            // if < UNDETERMINED__ it's a char
+
+        void setRule(size_t idx);       // set the state's rule index
+        int rule() const;
+
         void setAccept(int value);      // Set a State's Accept type
-//        void nextAccept();      
         int accept() const;             // return Accept value
+
+//        void nextAccept();      
 
             // true is returned if the state's string contains rangeChar.
             // Only defined for d_type == CHARSET
@@ -82,6 +89,16 @@ inline size_t State::type() const
 inline void State::setType(size_t type)
 {
     d_type = type;
+}
+
+inline void State::setRule(size_t index)
+{
+    d_rule = index;
+}
+
+inline int State::rule() const
+{
+    return d_rule;
 }
 
 inline int State::accept() const

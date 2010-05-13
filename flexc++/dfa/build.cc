@@ -9,8 +9,9 @@ void DFA::build(vector<size_t> const &active, Rules const &rules,
 
         // start with the initial states of all rules that are active in this 
         // miniscanner (rule nrs provided by the active-vector) compute
-        // At this point: note for which rules
-    for_each(active.begin(), active.end(),
+        // At this point: note which rules are LA rules and put these in the
+        // rule-startset
+    for_each(active.begin(), active.end(),              
         FnWrap::unary(fillStartSet, rules, stateSet[0]));
 
     stateSet[0] = states.eClosure(stateSet[0]);     // compute the e-closure
@@ -24,15 +25,19 @@ void DFA::build(vector<size_t> const &active, Rules const &rules,
                                                     
         d_row.back().transitions();
 
-cout << "Row " << d_row.size()-1 << ": ";
-for (auto iter = stateSet[d_row.size()-1].begin(), end = 
-stateSet[d_row.size()-1].end(); iter != end; ++iter)
-cout << *iter << ',';
-cout << '\n';
+// TEMPO: Display the states defining this row
+    cout << "Row " << d_row.size()-1 << ": ";
+    for (auto iter = stateSet[d_row.size()-1].begin(), end = 
+    stateSet[d_row.size()-1].end(); iter != end; ++iter)
+    cout << *iter << ',';
+    cout << '\n';
 
     }
 
-    d_row[0].setAcceptType();       // walk the DFA states and set
+    processLArules();           // compute accept counts for LA rules
+
+//X    d_row[0].setAcceptType();       // walk the DFA states and set
 }                                   // the appropriate A-count
+
 
 

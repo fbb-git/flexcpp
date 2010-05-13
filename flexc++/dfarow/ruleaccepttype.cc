@@ -12,6 +12,7 @@ namespace{
 
 char DFARow::ruleAcceptType(size_t rule) const
 {
-    return xlat[acceptState(rule).accept()];
+//X    return xlat[acceptState(rule).accept()];
+    return ' ';
 }
 

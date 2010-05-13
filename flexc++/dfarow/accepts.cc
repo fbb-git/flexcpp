@@ -4,8 +4,8 @@ string DFARow::accepts() const
 {
     ostringstream out;
 
-    for_each(d_acceptRule.begin(), d_acceptRule.end(),
-        FnWrap::unary(outAccept, out, *this));
+//X    for_each(d_acceptRule.begin(), d_acceptRule.end(),
+//X        FnWrap::unary(outAccept, out, *this));
 
     return out.str();
 }

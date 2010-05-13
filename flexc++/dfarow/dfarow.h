@@ -9,6 +9,7 @@
 #include "../ranges/ranges.h"
 #include "../rules/rules.h"
 #include "../states/states.h"
+#include "../larule/larule.h"
 
 
 namespace FBB
@@ -26,11 +27,14 @@ class DFARow
     typedef std::vector<StateSet> StateSetVector;   // a set of states per
                                                     // input symbol
 
+    std::vector<LARule> d_LARule;               // info about LA-using rules
+
     std::vector<size_t> d_finalRule;            // Final state for which 
                                                 // rule(s)?
 
-    std::set<size_t> d_acceptRule;              // rule(s) for which this row
-                                                // represents an Accept state
+//X
+//X    std::set<size_t> d_acceptRule;              // rule(s) for which this row
+//X                                                // represents an Accept state
 
     std::unordered_map<size_t, size_t> d_map;   // Relate input symbols (key) 
                                                 // to the row to transit to 
@@ -63,23 +67,32 @@ class DFARow
         void tabulate(FBB::Table &table) const;
 
         std::string accepts() const; 
-        char ruleAcceptType(size_t rule) const;    
-                                        // ' ' (None), 'F' (FIXED) or 
-                                        // 'V' (VARIABLE)
 
+//WIP:
+        char ruleAcceptType(size_t rule) const;
+   
         std::vector<size_t> const &final() const;
+
         std::unordered_map<size_t, size_t> const &map() const;
         size_t size() const;
-        std::unordered_map<size_t, size_t> const &acceptMap() const;
+
+//        std::unordered_map<size_t, size_t> const &acceptMap() const;
+
         std::string const &action(size_t idx) const;  // only for FINAL rows
-        void setAcceptType();
+//X        void setAcceptType();
+
+        std::vector<LARule> &laRules();
+             
+        bool hasPostAstates(size_t ruleIdx) const;
+        bool hasPreAstates(size_t ruleIdx) const;
+        int maxAccept(size_t ruleIdx) const;
 
     private:
         std::string accepts();
 
-        std::string acceptType(size_t rule) const;
-        State &acceptState(size_t rule) const;
-        void setAcceptRule(size_t stateIdx);
+//X        std::string acceptType(size_t rule) const;
+//X        int acceptState(size_t rule) const;     //
+//X        void setAcceptRule(size_t stateIdx);
 
             // determine the eClosure of a set of transitions for each of the
             // char-ranges of the input alphabet, including the special 
@@ -90,17 +103,41 @@ class DFARow
         static void transit(size_t stateIdx, DFARow &thisRow, 
                                              size_t rangeChar,
                                              StateSet &nextSet);
-        void setFinal(size_t stateIdx);
+        void setFinal(size_t ruleIdx);
         static void nextAcceptType(size_t rule, DFARow &row);
+
+//WIP:
         static void outAccept(size_t rule, std::ostream &out, 
                                                     DFARow const &obj);
 
 
+        static void insertLARule(size_t idx, DFARow &thisRow);
 };
+
+inline int DFARow::maxAccept(size_t ruleIdx) const
+{
+    return (*d_rules)[ruleIdx].maxAccept();
+}
+
+inline bool DFARow::hasPostAstates(size_t ruleIdx) const
+{
+    return (*d_rules)[ruleIdx].hasPostAstates();
+}
+
+inline bool DFARow::hasPreAstates(size_t ruleIdx) const
+{
+    return (*d_rules)[ruleIdx].hasPreAstates();
+}
+
 
 inline std::unordered_map<size_t, size_t> const &DFARow::map() const
 {
     return d_map;
+}
+
+inline std::vector<LARule> &DFARow::laRules()
+{
+    return d_LARule;
 }
 
 inline std::vector<size_t> const &DFARow::final() const

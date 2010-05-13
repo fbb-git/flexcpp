@@ -74,20 +74,19 @@ try
     if (Msg::errors())
         return 1;
 
-    rules.propagateAccept();
+//X    rules.propagateAccept();
 
     Ranges ranges(states);
         ranges.determineSubsets();
         ranges.finalizeStates();
 
-    cout << "RANGES:\n" << ranges << '\n' <<
-            "RULES:\n" << rules << '\n' <<
-            "STATES:\n" << states << '\n';
-
     DFAs dfas(rules, states, ranges);
     dfas.build();
 
-    cout << dfas << '\n';
+    cout << "RANGES:\n" << ranges << '\n' <<
+            "RULES:\n" << rules << '\n' <<
+            "STATES:\n" << states << '\n' <<
+            dfas << '\n';
 
     Generator generator(rules.size(), ranges);
         generator.charTable();

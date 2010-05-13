@@ -1,17 +1,13 @@
 #include "dfarow.ih"
 
-#include <iostream>
-
-void DFARow::setFinal(size_t stateIdx)
+void DFARow::setFinal(size_t ruleIdx)
 {
-    size_t rule = d_rules->hasFinalState(stateIdx);
-
     auto end = d_finalRule.end();
     if 
     (
-        rule != UINT_MAX 
+        ruleIdx != UINT_MAX 
         && 
-        find(d_finalRule.begin(), end, rule) == end
+        find(d_finalRule.begin(), end, ruleIdx) == end
     )
-        d_finalRule.push_back(rule);
+        d_finalRule.push_back(ruleIdx);
 }

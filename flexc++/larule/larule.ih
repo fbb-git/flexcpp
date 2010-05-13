@@ -1,0 +1,4 @@
+#include "larule.h"
+
+using namespace std;
+

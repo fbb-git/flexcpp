@@ -9,4 +9,7 @@ DFARow::DFARow(Rules const &rules,
     d_rules(&rules),
     d_ranges(&ranges),
     d_thisIdx(thisIdx)
-{}
+{
+    for_each(stateSets[thisIdx].begin(), stateSets[thisIdx].end(),
+             FnWrap::unary(insertLARule, *this));
+}

@@ -10,18 +10,19 @@
 #include <bobcat/table>
 #include <bobcat/x2a>
 
+#include <iostream>     // TEMPO
+
 using namespace std;
 using namespace FBB;
 
-inline State &DFARow::acceptState(size_t rule) const
-{
-    return (*d_states)[(*d_rules)[rule].accept()];
-}
+//Xinline State &DFARow::acceptState(size_t rule) const
+//X{
+//X    return (*d_states)[(*d_rules)[rule].accept()];
+//X}
 
-#include <iostream>     // TEMPO
-inline void DFARow::nextAcceptType(size_t rule, DFARow &row)
-{
-    cerr << "dfarow.ih: nextAcceptType\n";
-    //row.acceptState(rule).nextAccept();
-}
+//Xinline void DFARow::nextAcceptType(size_t rule, DFARow &row)
+//X{
+//X    cerr << "dfarow.ih: nextAcceptType\n";
+//X    //row.acceptState(rule).nextAccept();
+//X}
 

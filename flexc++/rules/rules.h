@@ -15,16 +15,19 @@ class Rules
 {
     friend std::ostream &operator<<(std::ostream &out, Rules const &rules);
 
-    typedef std::pair<size_t, size_t> Pair;
+    typedef std::pair<size_t, size_t> Pair; // 1st: start-, 2nd: final-state
 
     States &d_states;
 
     std::vector<Rule> d_rules;
-    std::unordered_map<size_t, size_t>  d_reverse;  // from FINAL state to
-                                                    // Rule index
-    std::unordered_map<size_t, size_t>  d_reverseAccept;  
-                                                    // from accept state to
-                                                    // Rule index
+    std::vector<size_t> d_LArules;      // what rules use the LA operators?
+
+    std::unordered_map<size_t, size_t>  d_finalToRule;  // from FINAL state to
+                                                        // Rule index
+
+//X    std::unordered_map<size_t, size_t>  d_reverseAccept;  
+//X                                                    // from accept state to
+//X                                                    // Rule index
     StartConditions d_startConditions;
 
     public:
@@ -35,7 +38,10 @@ class Rules
         Rule const &operator[](size_t idx) const;
 
         size_t hasFinalState(size_t stateIdx) const;
-        int hasAcceptState(size_t stateIdx) const;      // -1 if not
+//X        int    ruleIndex(size_t startState) const;          // -1 if not a
+                                                            // startstate
+
+//X        int hasAcceptState(size_t stateIdx) const;      // -1 if not
 
         void setType(StartConditions::Type type);
         void addStartCondition(SemVal const &name);
@@ -53,12 +59,19 @@ class Rules
 
         size_t size() const;
 
-        void propagateAccept();
+//X        void propagateAccept();
 
     private:
-        static void propagate(Rule const &rule, States &states);
+//X        static void propagate(Rule const &rule, States &states);
+        void setRuleIndices(size_t state, size_t index);
 
 };
+
+//Xint Rules::ruleIndex(size_t startState) const
+//X{
+//X    auto iter = d_startToRule.find(startState);
+//X    return iter == d_startToRule.end() ? -1 : iter->second;
+//X}
 
 inline size_t Rules::size() const
 {
@@ -77,7 +90,7 @@ inline Rules::const_iterator Rules::end() const
         
 inline size_t Rules::hasFinalState(size_t stateIdx) const
 {
-    return d_reverse.find(stateIdx)->second;
+    return d_finalToRule.find(stateIdx)->second;
 }
 
 inline Rule const &Rules::operator[](size_t idx) const

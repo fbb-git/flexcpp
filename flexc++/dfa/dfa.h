@@ -33,6 +33,24 @@ class DFA
         size_t size() const;
 
     private:
+        void processLArules();
+
+        static void processLArule(LARule const &laRule, 
+                                  std::vector<DFARow> &rows); 
+
+        static void processRule(size_t rule, std::vector<DFARow> &rows,
+                                size_t rowIdx, bool parentFinal, 
+                                int acceptCount);
+
+        static void processRow(LARule &laRule, size_t rule, 
+                               std::vector<DFARow> &rows, size_t rowIdx, 
+                                bool parentFinal, int acceptCount);
+
+        static void inspect(std::pair<size_t, size_t> const &transit, 
+                            size_t oldRow, 
+                            size_t rule, std::vector<DFARow> &rows,
+                            bool parentFinal, int acceptCount);
+ 
         static void fillStartSet(size_t idx, Rules const &rules, 
                                              StateSet &start);
 };
