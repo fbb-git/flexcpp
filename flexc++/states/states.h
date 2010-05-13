@@ -14,7 +14,7 @@ class States
     std::vector<State> d_state;
     std::vector<size_t> d_free;
 
-    std::vector<size_t> d_ruleStates;       // used for accept propagation
+    std::vector<bool> d_ruleStates;       // used for accept propagation
 
     public:
         typedef std::pair<size_t, size_t> Pair;
@@ -38,17 +38,21 @@ class States
         size_t size() const;
 
         void propagateAccept(int state, int count);
+        void iniRuleStates();
 
     private:
 
         bool contains(int state) const;
 };
 
+inline void States::iniRuleStates()
+{
+    d_ruleStates = std::vector<bool>(d_state.size());
+}
+
 inline bool States::contains(int state) const
 {
-    return std::find(d_ruleStates.begin(), d_ruleStates.end(), state) 
-           != 
-           d_ruleStates.end();
+    return d_ruleStates[state];
 }
 
 inline State &States::operator[](size_t idx)

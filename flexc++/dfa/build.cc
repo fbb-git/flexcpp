@@ -1,6 +1,5 @@
 #include "dfa.ih"
 
-
 void DFA::build(vector<size_t> const &active, Rules const &rules, 
                 States &states)    
 {
@@ -8,7 +7,10 @@ void DFA::build(vector<size_t> const &active, Rules const &rules,
 
     vector<StateSet> stateSet(1);
 
-    for_each(active.begin(), active.end(),          // compute the startSet  
+        // start with the initial states of all rules that are active in this 
+        // miniscanner (rule nrs provided by the active-vector) compute
+        // At this point: note for which rules
+    for_each(active.begin(), active.end(),
         FnWrap::unary(fillStartSet, rules, stateSet[0]));
 
     stateSet[0] = states.eClosure(stateSet[0]);     // compute the e-closure
@@ -30,7 +32,7 @@ cout << '\n';
 
     }
 
-    d_row[0].setAcceptType();
-}
+    d_row[0].setAcceptType();       // walk the DFA states and set
+}                                   // the appropriate A-count
 
 

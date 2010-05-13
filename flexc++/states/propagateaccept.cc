@@ -7,12 +7,10 @@ void States::propagateAccept(int state, int count)
     if (state == 0 || contains(state))
         return;
     
-    d_ruleStates.push_back(state);
-
-    cerr << "States: propagate " << state << ", " << count << endl;
-
+    d_ruleStates[state] = true;
 
     State &curState = d_state[state];
+
                                         // always store the max. accept 
                                         // count: received or current value
     curState.setAccept(count = max(curState.accept(), count));
@@ -22,10 +20,13 @@ void States::propagateAccept(int state, int count)
     int next = curState.next1();
     if (!contains(next));
         propagateAccept(next, count);
+
     next = curState.next2();
     if (!contains(next))
         propagateAccept(next, count);
 
-    d_ruleStates.pop_back();
+    d_ruleStates[state] = false;
 }
+
+
 
