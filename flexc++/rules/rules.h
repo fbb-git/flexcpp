@@ -53,6 +53,7 @@ class Rules
 
     private:
         void setRuleIndices(size_t state, size_t index);
+        void propagateLAsteps(size_t stateIdx, int steps);
 };
 
 inline size_t Rules::size() const

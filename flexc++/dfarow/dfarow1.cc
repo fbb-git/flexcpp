@@ -2,14 +2,14 @@
 
 DFARow::DFARow(Rules const &rules, 
                States &states, StateSetVector &stateSets, 
-               size_t thisIdx, Ranges &ranges)
+               size_t thisRowIdx, Ranges &ranges)
 :
     d_states(&states),
     d_stateSets(&stateSets),
     d_rules(&rules),
     d_ranges(&ranges),
-    d_thisIdx(thisIdx)
+    d_thisIdx(thisRowIdx)
 {
-    for_each(stateSets[thisIdx].begin(), stateSets[thisIdx].end(),
+    for_each(stateSets[thisRowIdx].begin(), stateSets[thisRowIdx].end(),
              FnWrap::unary(insertLARule, *this));
 }

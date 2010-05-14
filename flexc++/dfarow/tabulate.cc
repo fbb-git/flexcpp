@@ -15,15 +15,29 @@ void DFARow::tabulate(Table &table) const
             table << iter->second;
     }
 
-//X    if (d_finalRule.size())
-//X    {
-//X        ostringstream out;
-//X        copy(d_finalRule.begin(), d_finalRule.end(), 
-//X                ostream_iterator<size_t>(out, ","));
-//X        string const &str = out.str();
-//X        table << str.substr(0, str.length() - 1) ;
-//X    }
-//X    else
+    ostringstream out;
+    for 
+    (
+        auto iter = d_LARule.begin(), end = d_LARule.end(); 
+            iter != end;
+                ++iter
+    )
+    {
+        if (iter->final() >= 0)
+            out << iter->rule() << ':' << iter->final() << ',';
+    }
+    out << ' ';
+    
+    if (d_finalRule.size())
+    {
+        copy(d_finalRule.begin(), d_finalRule.end(), 
+                ostream_iterator<size_t>(out, ","));
+    }
+
+    string const &str = out.str();
+    if (str.length() > 0)
+        table << str.substr(0, str.length() - 1) ;
+    else
         table << ' ';
 
     table << accepts();

@@ -77,8 +77,8 @@ class DFARow
         std::string const &action(size_t idx) const;  // only for FINAL rows
         std::vector<LARule> &laRules();
              
-        bool hasPostAstates(size_t ruleIdx) const;
-        bool hasPreAstates(size_t ruleIdx) const;
+        bool hasPostAstates(size_t ruleIdx, size_t rowIdx) const;
+        bool hasPreAstates(size_t ruleIdx, size_t rowIdx) const;
         int maxAccept(size_t ruleIdx) const;
 
     private:

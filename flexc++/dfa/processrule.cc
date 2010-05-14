@@ -1,15 +1,16 @@
 #include "dfa.ih"
 
+// called from processLArule
 
-void DFA::processRule(size_t rule, DFA &dfa,
+void DFA::processRule(size_t ruleIdx, DFA &dfa,
                                   size_t rowIdx, bool parentFinal, 
-                                  int acceptCount)
+                                  int tailSteps)
 {
     DFARow &row = dfa.d_row[rowIdx];
 
     auto end = row.laRules().end();
-    auto iter = find(row.laRules().begin(), end, rule);
+    auto iter = find(row.laRules().begin(), end, ruleIdx);
 
     if (iter != end)
-        processRow(*iter, rule, dfa, rowIdx, parentFinal, acceptCount);
+        processRow(*iter, ruleIdx, dfa, rowIdx, parentFinal, tailSteps);
 }

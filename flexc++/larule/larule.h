@@ -1,10 +1,12 @@
 #ifndef INCLUDED_LARULE_
 #define INCLUDED_LARULE_
 
-#include <cstddef>
+#include <ostream>
 
 class LARule
 {
+    friend std::ostream &operator<<(std::ostream &out, LARule const &la);
+
     size_t d_rule;  // which LA rule?
     int d_accept;   // accept count at this point (-1: pre-A state)
     int d_final;    // -1: undetermined Final state accept count
@@ -70,6 +72,12 @@ inline void LARule::setFinal(int final)
 inline bool LARule::operator==(size_t ruleIdx) const
 {
     return d_rule == ruleIdx;
+}
+
+inline std::ostream &operator<<(std::ostream &out, LARule const &la)
+{
+    return out << "Rule: " << la.d_rule << ", accept: " << la.d_accept << 
+                  ", final: " <<  la.d_final << ", inc: " << la.d_inc;
 }
 
 #endif

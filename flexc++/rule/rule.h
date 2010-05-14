@@ -8,6 +8,9 @@ class States;
 
 class Rule
 {
+    friend std::ostream &operator<<(std::ostream &out, Rule const &rule);
+
+
     typedef std::pair<size_t, size_t> Pair;     // first/final state nrs.
 
     size_t d_start;             // index in States
@@ -83,8 +86,6 @@ inline std::string const &Rule::action() const
 {
     return d_action;
 }
-
-std::ostream &operator<<(std::ostream &out, Rule const &rule);
 
 #endif
 

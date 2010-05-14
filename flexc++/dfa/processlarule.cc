@@ -1,5 +1,7 @@
 #include "dfa.ih"
 
+// called from processLArules
+
 void DFA::processLArule(LARule const &laRule, DFA &dfa)
 {
     int ruleIdx = laRule.rule();
@@ -8,8 +10,11 @@ void DFA::processLArule(LARule const &laRule, DFA &dfa)
 
     if (rule.LAdone())
         return;
-                           // rowIdx, parentFinal, acceptCount          
-    processRule(ruleIdx, dfa, 0,       true,        0);
+
+    dfa.propagateLAsteps(rule.postAstates(), rule.accept(), 0);
+
+                           // rowIdx, parentFinal, tailSteps          
+    processRule(ruleIdx, dfa, 0,       false,        -1);
     rule.setLAdone();
 }
 
