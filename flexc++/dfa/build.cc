@@ -1,7 +1,6 @@
 #include "dfa.ih"
 
-void DFA::build(vector<size_t> const &active, Rules const &rules, 
-                States &states)    
+void DFA::build(vector<size_t> const &active)    
 {
     d_ranges->clearUsed();
 
@@ -12,15 +11,15 @@ void DFA::build(vector<size_t> const &active, Rules const &rules,
         // At this point: note which rules are LA rules and put these in the
         // rule-startset
     for_each(active.begin(), active.end(),              
-        FnWrap::unary(fillStartSet, rules, stateSet[0]));
+        FnWrap::unary(fillStartSet, *d_rules, stateSet[0]));
 
-    stateSet[0] = states.eClosure(stateSet[0]);     // compute the e-closure
+    stateSet[0] = d_states->eClosure(stateSet[0]);  // compute the e-closure
                                                     // of the start-set
 
     while (d_row.size() != stateSet.size())         // as long as we haven't
     {                                               // checked all state sets
             // add another row and determine transitions 
-        d_row.push_back(DFARow(rules, states, stateSet, d_row.size(),
+        d_row.push_back(DFARow(*d_rules, *d_states, stateSet, d_row.size(),
                               *d_ranges));
                                                     
         d_row.back().transitions();
@@ -35,9 +34,7 @@ void DFA::build(vector<size_t> const &active, Rules const &rules,
     }
 
     processLArules();           // compute accept counts for LA rules
-
-//X    d_row[0].setAcceptType();       // walk the DFA states and set
-}                                   // the appropriate A-count
+}
 
 
 

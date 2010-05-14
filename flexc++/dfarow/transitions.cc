@@ -46,7 +46,6 @@ void DFARow::transitions()
         }
         d_map[nr] = idx;                // add the transition
     }
-//X    setAcceptType();
 }
 
 

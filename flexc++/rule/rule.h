@@ -13,6 +13,9 @@ class Rule
     size_t d_start;             // index in States
     size_t d_final;             // index in States
     std::string d_action;       // action block
+    bool d_LAdone;              // set to true when LA propagation has been 
+                                // completed (not relevant for rules not
+                                // using the LA operator
 
                                     // for rules using LA operators:
     std::vector<size_t> d_preAstates;  // all pre-A states
@@ -27,24 +30,38 @@ class Rule
         size_t accept() const;
         std::string const &action() const;
 
-        bool hasPreAstates() const;
-        bool hasPostAstates() const;
-        int maxAccept() const;
+        std::vector<size_t> const &preAstates() const;
+        std::vector<size_t> const &postAstates() const;
+        int maxAccept(States const &states) const;
+
+        void setLAdone();
+        bool LAdone() const;
 
     private:
         void setStates(std::vector<size_t> &prePostA, 
                         States const &states, size_t begin, size_t end);
-
+        static bool cmpAccept(size_t left, size_t right, 
+                                                        States const &states);
 };
 
-inline bool Rule::hasPreAstates() const
+inline void Rule::setLAdone() 
 {
-    return d_preAstates.size();
+    d_LAdone = true;
 }
 
-inline bool Rule::hasPostAstates() const
+inline bool Rule::LAdone() const
 {
-    return d_postAstates.size();
+    return d_LAdone;
+}
+
+inline std::vector<size_t> const &Rule::preAstates() const
+{
+    return d_preAstates;
+}
+
+inline std::vector<size_t> const &Rule::postAstates() const
+{
+    return d_postAstates;
 }
 
 inline size_t Rule::startState() const

@@ -10,19 +10,10 @@
 #include <bobcat/table>
 #include <bobcat/x2a>
 
-#include <iostream>     // TEMPO
-
 using namespace std;
 using namespace FBB;
 
-//Xinline State &DFARow::acceptState(size_t rule) const
-//X{
-//X    return (*d_states)[(*d_rules)[rule].accept()];
-//X}
-
-//Xinline void DFARow::nextAcceptType(size_t rule, DFARow &row)
-//X{
-//X    cerr << "dfarow.ih: nextAcceptType\n";
-//X    //row.acceptState(rule).nextAccept();
-//X}
-
+inline bool DFARow::stateOfRule(size_t state, vector<size_t> const &haystack)
+{
+    return find(haystack.begin(), haystack.end(), state) != haystack.end();
+}

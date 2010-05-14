@@ -1,6 +1,14 @@
 #include "rule.h"
 
+#include <bobcat/fnwrap>
+
 #include "../states/states.h"
 
 using namespace std;
+using namespace FBB;
+
+inline bool Rule::cmpAccept(size_t left, size_t right, States const &states)
+{
+    return states[left].accept() < states[right].accept();
+}
 

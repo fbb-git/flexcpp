@@ -25,24 +25,16 @@ class Rules
     std::unordered_map<size_t, size_t>  d_finalToRule;  // from FINAL state to
                                                         // Rule index
 
-//X    std::unordered_map<size_t, size_t>  d_reverseAccept;  
-//X                                                    // from accept state to
-//X                                                    // Rule index
     StartConditions d_startConditions;
 
     public:
         Rules(States &states);
-
         void add(Pair const &pair, size_t accept,
                                      std::string const &action = "");
         Rule const &operator[](size_t idx) const;
+        Rule &operator[](size_t idx);
 
         size_t hasFinalState(size_t stateIdx) const;
-//X        int    ruleIndex(size_t startState) const;          // -1 if not a
-                                                            // startstate
-
-//X        int hasAcceptState(size_t stateIdx) const;      // -1 if not
-
         void setType(StartConditions::Type type);
         void addStartCondition(SemVal const &name);
         void resetStartConditions();
@@ -59,19 +51,9 @@ class Rules
 
         size_t size() const;
 
-//X        void propagateAccept();
-
     private:
-//X        static void propagate(Rule const &rule, States &states);
         void setRuleIndices(size_t state, size_t index);
-
 };
-
-//Xint Rules::ruleIndex(size_t startState) const
-//X{
-//X    auto iter = d_startToRule.find(startState);
-//X    return iter == d_startToRule.end() ? -1 : iter->second;
-//X}
 
 inline size_t Rules::size() const
 {
@@ -94,6 +76,11 @@ inline size_t Rules::hasFinalState(size_t stateIdx) const
 }
 
 inline Rule const &Rules::operator[](size_t idx) const
+{
+    return d_rules[idx];
+}
+
+inline Rule &Rules::operator[](size_t idx)
 {
     return d_rules[idx];
 }

@@ -1,6 +1,15 @@
 #include "dfa.ih"
 
-void DFA::processLArule(LARule const &laRule, std::vector<DFARow> &rows)
+void DFA::processLArule(LARule const &laRule, DFA &dfa)
 {
-    processRule(laRule.rule(), rows, 0, true, 0);
+    int ruleIdx = laRule.rule();
+
+    Rule &rule = (*dfa.d_rules)[ruleIdx];
+
+    if (rule.LAdone())
+        return;
+                           // rowIdx, parentFinal, acceptCount          
+    processRule(ruleIdx, dfa, 0,       true,        0);
+    rule.setLAdone();
 }
+

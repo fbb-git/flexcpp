@@ -4,7 +4,8 @@ Rule::Rule(States const &states, Pair fstfin, size_t accept, string action)
 :
     d_start(fstfin.first),                  // 1st state of this rule
     d_final(fstfin.second),                 // final state of this rule
-    d_action(action)
+    d_action(action),
+    d_LAdone(false)
 {
     if (accept != 0)                        // this rule uses the LA operator, 
     {                                       // so it has an accept state

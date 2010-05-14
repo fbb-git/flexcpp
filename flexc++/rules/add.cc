@@ -12,8 +12,5 @@ void Rules::add(Pair const &pair, size_t accept, string const &action)
         setRuleIndices(pair.first, ruleIdx);
         d_LArules.push_back(ruleIdx);   // Rule ruleIdx uses the LA operator
     }
-
-//X        d_reverseAccept[accept] = ruleIdx;
-
     d_startConditions.add(ruleIdx);
 }    

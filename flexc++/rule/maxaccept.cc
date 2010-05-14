@@ -1,6 +1,7 @@
 #include "rule.ih"
 
-int Rule::maxAccept() const
+int Rule::maxAccept(States const &states) const
 {
-    return *max(d_postAstates.begin(), d_postAstates.end());
+    return *max_element(d_postAstates.begin(), d_postAstates.end(),
+                        FnWrap::binary(cmpAccept, states));
 }

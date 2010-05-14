@@ -11,7 +11,6 @@
 #include "../states/states.h"
 #include "../larule/larule.h"
 
-
 namespace FBB
 {
     class Table;
@@ -32,16 +31,15 @@ class DFARow
     std::vector<size_t> d_finalRule;            // Final state for which 
                                                 // rule(s)?
 
-//X
-//X    std::set<size_t> d_acceptRule;              // rule(s) for which this row
-//X                                                // represents an Accept state
-
     std::unordered_map<size_t, size_t> d_map;   // Relate input symbols (key) 
                                                 // to the row to transit to 
                                                 // (value)
 
     States *d_states;                       // using ptrs so no op= needs
-    StateSetVector *d_stateSets;            // to be implemented
+                                            // to be implemented
+    StateSetVector *d_stateSets;            // For each DFArow it contains the
+                                            // indices of the States used for
+                                            // that DFArow.
     Rules const *d_rules;
     Ranges *d_ranges;
 
@@ -76,11 +74,7 @@ class DFARow
         std::unordered_map<size_t, size_t> const &map() const;
         size_t size() const;
 
-//        std::unordered_map<size_t, size_t> const &acceptMap() const;
-
         std::string const &action(size_t idx) const;  // only for FINAL rows
-//X        void setAcceptType();
-
         std::vector<LARule> &laRules();
              
         bool hasPostAstates(size_t ruleIdx) const;
@@ -89,10 +83,6 @@ class DFARow
 
     private:
         std::string accepts();
-
-//X        std::string acceptType(size_t rule) const;
-//X        int acceptState(size_t rule) const;     //
-//X        void setAcceptRule(size_t stateIdx);
 
             // determine the eClosure of a set of transitions for each of the
             // char-ranges of the input alphabet, including the special 
@@ -112,23 +102,15 @@ class DFARow
 
 
         static void insertLARule(size_t idx, DFARow &thisRow);
+
+        static bool stateOfRule(size_t state, 
+                                std::vector<size_t> const &haystack);
 };
 
 inline int DFARow::maxAccept(size_t ruleIdx) const
 {
-    return (*d_rules)[ruleIdx].maxAccept();
+    return (*d_rules)[ruleIdx].maxAccept(*d_states);
 }
-
-inline bool DFARow::hasPostAstates(size_t ruleIdx) const
-{
-    return (*d_rules)[ruleIdx].hasPostAstates();
-}
-
-inline bool DFARow::hasPreAstates(size_t ruleIdx) const
-{
-    return (*d_rules)[ruleIdx].hasPreAstates();
-}
-
 
 inline std::unordered_map<size_t, size_t> const &DFARow::map() const
 {
