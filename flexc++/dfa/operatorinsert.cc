@@ -31,8 +31,8 @@ ostream &operator<<(ostream &out, DFA const &dfa)
             idx != end; 
                 ++idx)
     {
-        if (dfa.d_unique[idx] < next)
-            continue;
+//        if (dfa.d_unique[idx] < next)
+//            continue;
         table << next << dfa.d_row[idx];
         ++next;
     }

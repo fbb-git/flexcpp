@@ -40,7 +40,44 @@ void DFA::build(vector<size_t> const &active)
 
     }
 
+//    cerr << "UNIQUE: ";
+//    copy(d_unique.begin(), d_unique.end(), 
+//            ostream_iterator<size_t>(cerr, ","));
+//    cerr << endl;
+
     keepUniqueRows();
+
+    cerr << "DFA ROWS: " << d_row.size() << endl;
+
+    size_t to = 0;
+    for (size_t from = 0, end = d_row.size(); from != end; ++from)
+    {
+        if (d_unique[from] == from)
+        {
+            ++to;
+            continue;
+        }
+        if (d_unique[from] < to)
+            continue;
+        cerr << "Move row " << from << " to row " << to << endl;
+
+        d_row[to] = d_row[from];
+        stateSet[to] = stateSet[from];
+
+        ++to;
+    }
+
+    d_row.resize(to);
+
+    cerr << "NEW # OF ROWS: " << to << ", states per row:\n";
+    for (size_t idx = 0; idx != to; ++idx)        
+    {
+        cout << "Row " << idx << ": ";
+        for (auto iter = stateSet[idx].begin(), end = 
+        stateSet[idx].end(); iter != end; ++iter)
+        cout << *iter << ',';
+        cout << '\n';
+    }
 
     processLArules();           // compute accept counts for LA rules
 }

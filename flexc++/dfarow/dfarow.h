@@ -48,6 +48,8 @@ class DFARow
     size_t d_nRanges;
 
     public:
+        DFARow() = default;
+
         DFARow(
             Rules const &rules,
                 // all States

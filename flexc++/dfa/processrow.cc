@@ -26,7 +26,7 @@ void DFA::processRow(LARule &laRule, size_t ruleIdx, DFA &dfa,
             // if the row only has post-A states and inc hasn't yet been set
             // then do so now. The accept count is set to the max. accept 
             // count of the post-A states belonging to this rule.
-        if (not laRule.inc() && not thisRow.hasPreAstates(ruleIdx, rowIdx))
+        if (not thisRow.hasPreAstates(ruleIdx, rowIdx))
         {
             laRule.setAccept(thisRow.maxAccept(ruleIdx));
             laRule.setInc();
