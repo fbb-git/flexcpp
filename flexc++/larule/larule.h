@@ -1,7 +1,7 @@
 #ifndef INCLUDED_LARULE_
 #define INCLUDED_LARULE_
 
-#include <ostream>
+#include <iosfwd>
 
 class LARule
 {
@@ -74,10 +74,6 @@ inline bool LARule::operator==(size_t ruleIdx) const
     return d_rule == ruleIdx;
 }
 
-inline std::ostream &operator<<(std::ostream &out, LARule const &la)
-{
-    return out << "Rule: " << la.d_rule << ", accept: " << la.d_accept << 
-                  ", final: " <<  la.d_final << ", inc: " << la.d_inc;
-}
+std::ostream &operator<<(std::ostream &out, LARule const &la);
 
 #endif

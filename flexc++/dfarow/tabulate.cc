@@ -23,8 +23,12 @@ void DFARow::tabulate(Table &table) const
                 ++iter
     )
     {
-        if (iter->final() >= 0)
-            out << iter->rule() << ':' << iter->final() << ',';
+        if (iter->accept() >= 0)
+        {
+            out << iter->rule() << ':' << iter->accept();
+            if (iter->final() >= 0)
+                out << ',' << iter->final() << ';';
+        }
     }
     out << ' ';
     

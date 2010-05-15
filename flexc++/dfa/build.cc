@@ -16,14 +16,21 @@ void DFA::build(vector<size_t> const &active)
     stateSet[0] = d_states->eClosure(stateSet[0]);  // compute the e-closure
                                                     // of the start-set
 
+    size_t nextRow = 0;
     while (d_row.size() != stateSet.size())         // as long as we haven't
     {                                               // checked all state sets
             // add another row and determine transitions 
         d_row.push_back(DFARow(*d_rules, *d_states, stateSet, d_row.size(),
                               *d_ranges));
-                                                    
-        d_row.back().transitions();
+        DFARow &last = d_row.back();
+        last.transitions();
 
+        size_t useRow = available(last);
+        if (useRow == d_unique.size())         // unique row
+            d_unique.push_back(nextRow++);
+        else 
+            d_unique.push_back(d_unique[useRow]);
+        
 // TEMPO: Display the states defining this row
     cout << "Row " << d_row.size()-1 << ": ";
     for (auto iter = stateSet[d_row.size()-1].begin(), end = 
@@ -32,6 +39,8 @@ void DFA::build(vector<size_t> const &active)
     cout << '\n';
 
     }
+
+    keepUniqueRows();
 
     processLArules();           // compute accept counts for LA rules
 }

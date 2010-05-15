@@ -1,4 +1,7 @@
 #include "larule.h"
 
+#include <ostream>
+#include <iomanip>
+
 using namespace std;
 

@@ -25,9 +25,17 @@ ostream &operator<<(ostream &out, DFA const &dfa)
     }
     table << 'F' << 'A';
                                                 // display rows of the table
-    for (size_t idx = 0, end = dfa.d_row.size(); idx != end; ++idx)
-        table << idx << dfa.d_row[idx];
-
+    for 
+    (
+        size_t idx = 0, end = dfa.d_row.size(), next = 0;
+            idx != end; 
+                ++idx)
+    {
+        if (dfa.d_unique[idx] < next)
+            continue;
+        table << next << dfa.d_row[idx];
+        ++next;
+    }
     out << table << '\n';
 
     return out;

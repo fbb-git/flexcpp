@@ -15,6 +15,11 @@ using namespace FBB;
 
 #include <iostream>     // TEMPO
 
+inline void DFARow::translate(MapValue &transition, vector<size_t> const &xlat)
+{
+    transition.second = xlat[transition.second];    
+}
+
 inline bool DFARow::stateOfRule(size_t state, vector<size_t> const &haystack)
 {
     return find(haystack.begin(), haystack.end(), state) != haystack.end();

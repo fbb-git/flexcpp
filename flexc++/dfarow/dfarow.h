@@ -31,6 +31,7 @@ class DFARow
     std::vector<size_t> d_finalRule;            // Final state for which 
                                                 // rule(s)?
 
+    typedef std::unordered_map<size_t, size_t>::value_type MapValue;
     std::unordered_map<size_t, size_t> d_map;   // Relate input symbols (key) 
                                                 // to the row to transit to 
                                                 // (value)
@@ -81,6 +82,10 @@ class DFARow
         bool hasPreAstates(size_t ruleIdx, size_t rowIdx) const;
         int maxAccept(size_t ruleIdx) const;
 
+        bool operator==(DFARow const &rhs) const;
+
+        void uniqueMap(std::vector<size_t> const &xlat);
+
     private:
         std::string accepts();
 
@@ -95,6 +100,9 @@ class DFARow
                                              StateSet &nextSet);
         void setFinal(size_t ruleIdx);
         static void nextAcceptType(size_t rule, DFARow &row);
+
+        static void translate(MapValue &transition, 
+                                            std::vector<size_t> const &xlat);
 
 //WIP:
         static void outAccept(size_t rule, std::ostream &out, 

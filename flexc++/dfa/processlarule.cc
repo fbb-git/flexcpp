@@ -11,7 +11,8 @@ void DFA::processLArule(LARule const &laRule, DFA &dfa)
     if (rule.LAdone())
         return;
 
-    dfa.propagateLAsteps(rule.postAstates(), rule.accept(), 0);
+    vector<bool> visited(dfa.d_states->size());
+    dfa.propagateLAsteps(visited, rule.accept(), 0);
 
                            // rowIdx, parentFinal, tailSteps          
     processRule(ruleIdx, dfa, 0,       false,        -1);

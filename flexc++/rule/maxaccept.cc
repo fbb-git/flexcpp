@@ -2,6 +2,8 @@
 
 int Rule::maxAccept(States const &states) const
 {
-    return *max_element(d_postAstates.begin(), d_postAstates.end(),
-                        FnWrap::binary(cmpAccept, states));
+    size_t maxState = *max_element(d_postAstates.begin(), d_postAstates.end(),
+                                   FnWrap::binary(cmpAccept, states));
+
+    return states[maxState].accept();
 }
