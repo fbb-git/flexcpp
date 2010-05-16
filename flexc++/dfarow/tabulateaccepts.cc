@@ -10,7 +10,7 @@ void DFARow::tabulateAccepts(Table &table) const
                 ++iter
     )
     {
-        if (iter->accept() >= 0)
+        if (iter->inc())
             out << iter->rule() << ':' << 
                    (iter->inc() ? "++" : "") << iter->accept();
     }
