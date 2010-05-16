@@ -40,6 +40,8 @@ void DFA::processRow(LARule &laRule, size_t ruleIdx, DFA &dfa,
             laRule.setAccept(dfa.maxAccept(rowIdx));
             laRule.setInc();
    cerr << "  row " << rowIdx << ": pure post-A LARule: " << laRule << '\n';
+            if (final != LARule::NOT_FINAL)
+                laRule.setFinal(laRule.accept());
             return;
         }
 
