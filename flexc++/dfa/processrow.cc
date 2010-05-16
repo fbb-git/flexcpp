@@ -30,14 +30,15 @@ void DFA::processRow(LARule &laRule, size_t ruleIdx, DFA &dfa,
         {
             laRule.setAccept(thisRow.maxAccept(ruleIdx));
             laRule.setInc();
-   cerr << "  row " << rowIdx << ": pure post-A LARule: " << laRule << '\n';
+//   cerr << "  row " << rowIdx << ": pure post-A LARule: " << laRule << '\n';
             return;
         }
 
         laRule.setAccept(tailSteps);
         ++tailSteps;
 
-    cerr << "  row " << rowIdx << ": mixed pre/post-A LARule " << laRule << '\n';
+//    cerr << "  row " << rowIdx << 
+//            ": mixed pre/post-A LARule " << laRule << '\n';
     }
 
         // finally do the transitions: transit to other rows of the DFA and

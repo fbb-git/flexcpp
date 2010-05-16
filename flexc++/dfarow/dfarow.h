@@ -89,7 +89,9 @@ class DFARow
         void uniqueMap(std::vector<size_t> const &xlat);
 
     private:
-        std::string accepts();
+        void tabulateTransitions(FBB::Table &table) const;
+        void tabulateFinals(FBB::Table &table) const;
+        void tabulateAccepts(FBB::Table &table) const;
 
             // determine the eClosure of a set of transitions for each of the
             // char-ranges of the input alphabet, including the special 
@@ -105,14 +107,9 @@ class DFARow
 
         static void translate(MapValue &transition, 
                                             std::vector<size_t> const &xlat);
-
-//WIP:
         static void outAccept(size_t rule, std::ostream &out, 
                                                     DFARow const &obj);
-
-
         static void insertLARule(size_t idx, DFARow &thisRow);
-
         static bool stateOfRule(size_t state, 
                                 std::vector<size_t> const &haystack);
 };

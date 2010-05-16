@@ -23,7 +23,5 @@ inline void DFARow::translate(MapValue &transition, vector<size_t> const &xlat)
 inline bool DFARow::stateOfRule(size_t state, vector<size_t> const &haystack)
 {
     return find(haystack.begin(), haystack.end(), state) != haystack.end();
-//    cerr << "   looking for " << state << " in pre/post A states: " << 
-//            ret << "\n";
-//    return ret;
 }
+

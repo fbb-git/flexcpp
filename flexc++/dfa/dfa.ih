@@ -23,11 +23,6 @@ inline void DFA::translate(DFARow &row, vector<size_t> const &unique)
     row.uniqueMap(unique);
 }
 
-inline void DFA::keepUniqueRows()
-{
-    for_each(d_row.begin(), d_row.end(), FnWrap::unary(translate, d_unique));
-}
-
 inline size_t DFA::available(DFARow const &nextRow)
 {
     return find(d_row.begin(), d_row.end(), nextRow) - d_row.begin();
