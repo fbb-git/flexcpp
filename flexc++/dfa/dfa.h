@@ -55,17 +55,15 @@ class DFA
         void propagateLAsteps(std::vector<bool> &visited,
                            size_t stateIdx, int steps);
 
-        static void processRule(size_t rule, DFA &dfa,
-                                size_t rowIdx, bool parentFinal, 
-                                int tailSteps);
+        static void processRule(size_t rule, DFA &dfa, size_t rowIdx, 
+                                int parentFinal, int tailSteps);
 
         static void processRow(LARule &laRule, size_t rule, DFA &dfa, 
-                               size_t rowIdx, bool parentFinal, 
-                               int tailSteps);
+                               size_t rowIdx, int parentFinal, int tailSteps);
 
         static void inspect(std::pair<size_t, size_t> const &transit, 
                             size_t oldRow, size_t rule, DFA &dfa,
-                            bool parentFinal, int tailSteps);
+                            int parentFinal, int tailSteps);
  
         static void fillStartSet(size_t idx, Rules const &rules, 
                                              StateSet &start);

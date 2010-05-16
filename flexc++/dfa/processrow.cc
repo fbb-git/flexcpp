@@ -3,7 +3,7 @@
 // called from processRule
 
 void DFA::processRow(LARule &laRule, size_t ruleIdx, DFA &dfa,
-                     size_t rowIdx, bool parentFinal, int tailSteps)
+                     size_t rowIdx, int parentFinal, int tailSteps)
 {
     if (laRule.rule() != ruleIdx)      // stop if laRule is not for this rule
         return;
@@ -18,10 +18,19 @@ void DFA::processRow(LARule &laRule, size_t ruleIdx, DFA &dfa,
         if (tailSteps == -1)
             tailSteps = 0;
 
-        if (final == LARule::FINAL_NOT_SET)
-            laRule.setFinal(tailSteps - parentFinal);
-        else if (final > tailSteps)
-            laRule.setFinal(tailSteps);
+        if (final != LARule::NOT_FINAL)     // current state is Final state
+        {
+            cerr << "IN Row " << rowIdx << " has final: " << final << endl;
+
+            if (final == LARule::FINAL_NOT_SET)
+                    // keep the parent's final (if set) or use tailsteps
+                final = parentFinal >= 0 ? parentFinal : tailSteps;
+            else 
+                final = min(final, tailSteps);
+
+            cerr << "OUT Row " << rowIdx << " has final: " << final << endl;
+            laRule.setFinal(final);
+        }
 
             // if the row only has post-A states and inc hasn't yet been set
             // then do so now. The accept count is set to the max. accept 
@@ -44,6 +53,6 @@ void DFA::processRow(LARule &laRule, size_t ruleIdx, DFA &dfa,
         // finally do the transitions: transit to other rows of the DFA and
         // do the same, recursively.
     for_each(thisRow.map().begin(), thisRow.map().end(),
-            FnWrap::unary(inspect, rowIdx, ruleIdx, dfa, 
-                          laRule.final() != LARule::NOT_FINAL, tailSteps));
+            FnWrap::unary(inspect, rowIdx, ruleIdx, dfa, final, tailSteps));
 }
+
