@@ -82,7 +82,6 @@ class DFARow
              
         bool hasPostAstates(size_t ruleIdx, size_t rowIdx) const;
         bool hasPreAstates(size_t ruleIdx, size_t rowIdx) const;
-        int maxAccept(size_t ruleIdx) const;
 
         bool operator==(DFARow const &rhs) const;
 
@@ -113,11 +112,6 @@ class DFARow
         static bool stateOfRule(size_t state, 
                                 std::vector<size_t> const &haystack);
 };
-
-inline int DFARow::maxAccept(size_t ruleIdx) const
-{
-    return (*d_rules)[ruleIdx].maxAccept(*d_states);
-}
 
 inline std::unordered_map<size_t, size_t> const &DFARow::map() const
 {

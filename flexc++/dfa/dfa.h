@@ -20,7 +20,9 @@ class DFA
     States *d_states;
 
     std::vector<DFARow> d_row;
+
     typedef std::set<size_t> StateSet;
+    std::vector<StateSet> d_stateSet;    
 
     public:
         DFA() = default;        // only used for vector-resizing operations
@@ -35,13 +37,15 @@ class DFA
         size_t size() const;
 
     private:
+        int maxAccept(size_t rowIdx) const;
+        static bool cmpAccept(size_t left, size_t right, 
+                                                        States const &states);
+
         static void translate(DFARow &row, std::vector<size_t> const &unique);
-            // eventually remove the StateSet parameters from the 
-            // functions below:
-        void keepUniqueRows(std::vector<StateSet> &stateSet);
+
+        void keepUniqueRows();
         void inspectRows(std::vector<size_t> &unique);
-        void shrinkDFA(std::vector<size_t> &unique, 
-                                           std::vector<StateSet> &stateSet);
+        void shrinkDFA(std::vector<size_t> &unique);
 
         size_t available(DFARow const &nextRow);
         void processLArules();

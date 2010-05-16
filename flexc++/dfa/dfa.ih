@@ -18,6 +18,14 @@
 using namespace std;
 using namespace FBB;
 
+inline bool DFA::cmpAccept(size_t left, size_t right, States const &states)
+{
+    cerr << "St " << left << " = " << states[left].accept() << ", "
+            "St " << right << " = " << states[right].accept() << "\n";
+    return states[left].accept() < states[right].accept();
+}
+
+
 inline void DFA::translate(DFARow &row, vector<size_t> const &unique)
 {
     row.uniqueMap(unique);

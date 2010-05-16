@@ -1,6 +1,6 @@
 #include "dfa.ih"
 
-void DFA::shrinkDFA(vector<size_t> &unique, vector<StateSet> &stateSet)
+void DFA::shrinkDFA(vector<size_t> &unique)
 {
     cerr << "DFA ROWS: " << d_row.size() << endl;
 
@@ -17,7 +17,7 @@ void DFA::shrinkDFA(vector<size_t> &unique, vector<StateSet> &stateSet)
         cerr << "Move row " << from << " to row " << to << endl;
 
         d_row[to] = d_row[from];
-        stateSet[to] = stateSet[from];
+        d_stateSet[to] = d_stateSet[from];
 
         ++to;
     }
@@ -29,9 +29,11 @@ void DFA::shrinkDFA(vector<size_t> &unique, vector<StateSet> &stateSet)
     for (size_t idx = 0; idx != to; ++idx)        
     {
         cout << "Row " << idx << ": ";
-        for (auto iter = stateSet[idx].begin(), end = 
-        stateSet[idx].end(); iter != end; ++iter)
+        for (auto iter = d_stateSet[idx].begin(), end = 
+        d_stateSet[idx].end(); iter != end; ++iter)
         cout << *iter << ',';
         cout << '\n';
     }
 }
+
+

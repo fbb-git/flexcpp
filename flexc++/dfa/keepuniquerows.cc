@@ -1,6 +1,6 @@
 #include "dfa.ih"
 
-void DFA::keepUniqueRows(vector<StateSet> &stateSet)
+void DFA::keepUniqueRows()
 {
     std::vector<size_t> unique;
 
@@ -16,6 +16,6 @@ void DFA::keepUniqueRows(vector<StateSet> &stateSet)
 
     for_each(d_row.begin(), d_row.end(), 
                                     FnWrap::unary(translate, unique));
-    shrinkDFA(unique, stateSet);
+    shrinkDFA(unique);
 }
 

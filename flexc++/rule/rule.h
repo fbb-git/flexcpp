@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <set>
 
 class States;
 
@@ -35,7 +36,8 @@ class Rule
 
         std::vector<size_t> const &preAstates() const;
         std::vector<size_t> const &postAstates() const;
-        int maxAccept(States const &states) const;
+        int maxAccept(std::set<size_t> const &stateSet, 
+                      States const &states) const;
 
         void setLAdone();
         bool LAdone() const;

@@ -24,4 +24,3 @@ inline bool DFARow::stateOfRule(size_t state, vector<size_t> const &haystack)
 {
     return find(haystack.begin(), haystack.end(), state) != haystack.end();
 }
-

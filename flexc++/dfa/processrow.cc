@@ -28,9 +28,9 @@ void DFA::processRow(LARule &laRule, size_t ruleIdx, DFA &dfa,
             // count of the post-A states belonging to this rule.
         if (not thisRow.hasPreAstates(ruleIdx, rowIdx))
         {
-            laRule.setAccept(thisRow.maxAccept(ruleIdx));
+            laRule.setAccept(dfa.maxAccept(rowIdx));
             laRule.setInc();
-//   cerr << "  row " << rowIdx << ": pure post-A LARule: " << laRule << '\n';
+   cerr << "  row " << rowIdx << ": pure post-A LARule: " << laRule << '\n';
             return;
         }
 
