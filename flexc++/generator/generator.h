@@ -42,6 +42,8 @@ class Generator
                         std::vector<size_t> &dfaOffsets);
         static void dfaRow(DFARow const &row, std::ostream &out, 
                         PVector &accept, std::vector<size_t> &final);    
+        static void dfaTransitions(DFARow const &row, std::ostream &out);
+
         static std::string outEntryPoint(std::string const &startState,
                                          size_t offset);
         static void outStartState(std::string const &name, std::ostream &out);
