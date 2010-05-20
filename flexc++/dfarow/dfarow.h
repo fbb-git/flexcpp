@@ -9,7 +9,7 @@
 #include "../ranges/ranges.h"
 #include "../rules/rules.h"
 #include "../states/states.h"
-#include "../larule/larule.h"
+#include "../finacinfo/finacinfo.h"
 
 namespace FBB
 {
@@ -26,7 +26,7 @@ class DFARow
     typedef std::vector<StateSet> StateSetVector;   // a set of states per
                                                     // input symbol
 
-    std::vector<LARule> d_LARule;               // info about LA-using rules
+    std::vector<FinAcInfo> d_FinAcInfo;               // info about LA-using rules
 
     std::vector<size_t> d_finalRule;            // Final state for which 
                                                 // rule(s)?
@@ -78,7 +78,7 @@ class DFARow
         size_t size() const;
 
         std::string const &action(size_t idx) const;  // only for FINAL rows
-        std::vector<LARule> &laRules();
+        std::vector<FinAcInfo> &finAcInfos();
              
         bool hasPostAstates(size_t ruleIdx, size_t rowIdx) const;
         bool hasPreAstates(size_t ruleIdx, size_t rowIdx) const;
@@ -108,7 +108,7 @@ class DFARow
                                             std::vector<size_t> const &xlat);
         static void outAccept(size_t rule, std::ostream &out, 
                                                     DFARow const &obj);
-        static void insertLARule(size_t idx, DFARow &thisRow);
+        static void insertFinAcInfo(size_t idx, DFARow &thisRow);
         static bool stateOfRule(size_t state, 
                                 std::vector<size_t> const &haystack);
 };
@@ -118,9 +118,9 @@ inline std::unordered_map<size_t, size_t> const &DFARow::map() const
     return d_map;
 }
 
-inline std::vector<LARule> &DFARow::laRules()
+inline std::vector<FinAcInfo> &DFARow::finAcInfos()
 {
-    return d_LARule;
+    return d_FinAcInfo;
 }
 
 inline std::vector<size_t> const &DFARow::final() const

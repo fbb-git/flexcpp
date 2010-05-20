@@ -34,7 +34,7 @@ cerr << "KEEP U ROWS\n";
     keepUniqueRows();
 
 cerr << "PROCESS LA RULES\n";
-    processLArules();           // compute accept counts for LA rules
+    processFinAc();           // compute accept counts for LA rules
 }
 
 

@@ -1,10 +1,10 @@
 #include "dfa.ih"
 
-// called from processLArules
+// called from processFinAc
 
-void DFA::processLArule(LARule const &laRule, DFA &dfa)
+void DFA::processFinAcInfo(FinAcInfo const &finAcInfo, DFA &dfa)
 {
-    int ruleIdx = laRule.rule();
+    int ruleIdx = finAcInfo.rule();
 
     Rule &rule = (*dfa.d_rules)[ruleIdx];
 
@@ -15,7 +15,7 @@ void DFA::processLArule(LARule const &laRule, DFA &dfa)
     dfa.propagateLAsteps(visited, rule.accept(), 0);
 
                            // rowIdx, parentFinal,          tailSteps          
-    processRule(ruleIdx, dfa, 0,      LARule::NOT_FINAL,    -1);
+    processRule(ruleIdx, dfa, 0,      FinAcInfo::NOT_FINAL,    -1);
     rule.setLAdone();
 }
 

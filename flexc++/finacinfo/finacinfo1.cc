@@ -1,6 +1,6 @@
-#include "larule.ih"
+#include "finacinfo.ih"
 
-LARule::LARule(size_t ruleIdx)
+FinAcInfo::FinAcInfo(size_t ruleIdx)
 :
     d_rule(ruleIdx),
     d_accept(-1),

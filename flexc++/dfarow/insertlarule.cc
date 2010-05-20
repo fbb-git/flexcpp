@@ -2,7 +2,7 @@
 
 // called from the DFARow constructor
 
-void DFARow::insertLARule(size_t stateIdx, DFARow &thisRow)
+void DFARow::insertFinAcInfo(size_t stateIdx, DFARow &thisRow)
 {
     State const &state = (*thisRow.d_states)[stateIdx];
 
@@ -14,15 +14,15 @@ void DFARow::insertLARule(size_t stateIdx, DFARow &thisRow)
                                 // get the rule information at thisRule
     Rule const &thisRule = (*thisRow.d_rules)[rule];
 
-    auto LAiter = find(thisRow.d_LARule.begin(), thisRow.d_LARule.end(), rule);
+    auto LAiter = find(thisRow.d_FinAcInfo.begin(), thisRow.d_FinAcInfo.end(), rule);
 
-    if (LAiter == thisRow.d_LARule.end())     // rule not yet entered
+    if (LAiter == thisRow.d_FinAcInfo.end())     // rule not yet entered
     {
-        thisRow.d_LARule.push_back(LARule(rule));
-        LAiter = thisRow.d_LARule.begin() + thisRow.d_LARule.size() - 1;
+        thisRow.d_FinAcInfo.push_back(FinAcInfo(rule));
+        LAiter = thisRow.d_FinAcInfo.begin() + thisRow.d_FinAcInfo.size() - 1;
     }
 
-    // LAiter now points at the LARule record for the current DFA row
+    // LAiter now points at the FinAcInfo record for the current DFA row
 
     size_t acceptState = thisRule.accept();
     if (acceptState == stateIdx)

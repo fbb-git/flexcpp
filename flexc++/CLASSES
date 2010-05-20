@@ -19,8 +19,8 @@ fstreaminfo
 block           
 scanner         textval     fstreaminfo block
 ranges          textval     states
-larule  
-dfarow          ranges      rules       larule
+finacinfo  
+dfarow          ranges      rules       finacinfo
 dfa             dfarow
 dfas            dfa
 options         

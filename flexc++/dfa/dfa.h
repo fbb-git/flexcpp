@@ -48,9 +48,9 @@ class DFA
         void shrinkDFA(std::vector<size_t> &unique);
 
         size_t available(DFARow const &nextRow);
-        void processLArules();
+        void processFinAc();
 
-        static void processLArule(LARule const &laRule, DFA &dfa);
+        static void processFinAcInfo(FinAcInfo const &finAcInfo, DFA &dfa);
 
         void propagateLAsteps(std::vector<bool> &visited,
                            size_t stateIdx, int steps);
@@ -58,7 +58,7 @@ class DFA
         static void processRule(size_t rule, DFA &dfa, size_t rowIdx, 
                                 int parentFinal, int tailSteps);
 
-        static void processRow(LARule &laRule, size_t rule, DFA &dfa, 
+        static void processRow(FinAcInfo &finAcInfo, size_t rule, DFA &dfa, 
                                size_t rowIdx, int parentFinal, int tailSteps);
 
         static void inspect(std::pair<size_t, size_t> const &transit, 

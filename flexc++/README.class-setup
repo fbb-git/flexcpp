@@ -33,9 +33,9 @@ Ranges           Rules  PatternVal         Decimal   Scanner
   |             |     |     |                 |         |   
   +-------------+     +-----+------------+----+----- ---+   
   |                                      |                     
-  |  LARule                  Options     |                     
-  |    |                        |        |                     
-  +----+                     +--+--+     |                     
+  | FinAcInfo                Options     |                     
+  |     |                       |        |                     
+  +-----+                    +--+--+     |                     
   |                          |     |     |                     
 DFARow                       |     +-----+                  
   |                          |           |                         

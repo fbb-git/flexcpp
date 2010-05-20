@@ -1,11 +1,11 @@
-#ifndef INCLUDED_LARULE_
-#define INCLUDED_LARULE_
+#ifndef INCLUDED_FINACINFO_
+#define INCLUDED_FINACINFO_
 
 #include <iosfwd>
 
-class LARule
+class FinAcInfo
 {
-    friend std::ostream &operator<<(std::ostream &out, LARule const &la);
+    friend std::ostream &operator<<(std::ostream &out, FinAcInfo const &la);
 
     size_t d_rule;  // which LA rule?
     int d_accept;   // accept count at this point (-1: pre-A state)
@@ -21,7 +21,7 @@ class LARule
             FINAL_NOT_SET,
         };
 
-        LARule(size_t ruleIdx);
+        FinAcInfo(size_t ruleIdx);
         bool operator==(size_t rule) const;
 
         void setAccept(int accept);
@@ -34,46 +34,46 @@ class LARule
         size_t rule() const;
 };
         
-inline bool LARule::inc() const
+inline bool FinAcInfo::inc() const
 {
     return d_inc;
 }
 
-inline size_t LARule::rule() const
+inline size_t FinAcInfo::rule() const
 {
     return d_rule;
 }
 
-inline int LARule::final() const
+inline int FinAcInfo::final() const
 {
     return d_final;
 }
 
-inline int LARule::accept() const
+inline int FinAcInfo::accept() const
 {
     return d_accept;
 }
 
-inline void LARule::setAccept(int accept)
+inline void FinAcInfo::setAccept(int accept)
 {
     d_accept = accept;
 }
 
-inline void LARule::setInc()
+inline void FinAcInfo::setInc()
 {
     d_inc = true;
 }
 
-inline void LARule::setFinal(int final)
+inline void FinAcInfo::setFinal(int final)
 {
     d_final = final;
 }
 
-inline bool LARule::operator==(size_t ruleIdx) const
+inline bool FinAcInfo::operator==(size_t ruleIdx) const
 {
     return d_rule == ruleIdx;
 }
 
-std::ostream &operator<<(std::ostream &out, LARule const &la);
+std::ostream &operator<<(std::ostream &out, FinAcInfo const &la);
 
 #endif

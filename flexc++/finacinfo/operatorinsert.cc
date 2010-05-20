@@ -1,6 +1,6 @@
-#include "larule.ih"
+#include "finacinfo.ih"
 
-ostream &operator<<(ostream &out, LARule const &la)
+ostream &operator<<(ostream &out, FinAcInfo const &la)
 {
     if (la.d_accept >= 0)
     {

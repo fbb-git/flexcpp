@@ -1,0 +1,5 @@
+#include "finacinfo.ih"
+
+FinAcInfo::
+{
+}
