@@ -16,22 +16,19 @@ void Generator::dfas(DFAs const &dfas)
     "    int const ScannerBase::s_dfa[][" << dfaCols() << "] =\n" 
     "    {\n";
 
-    PVector accept;
-    vector<size_t> final;
-
+    vector<FinAcInfo> finAcs;
     vector<size_t> dfaIndices(1, 0);
 
     auto iter = dfas.find("INITIAL");
     if (iter != dfas.end())
-        dfa(*iter, d_out, accept, final, d_startStates, dfaIndices);
+        dfa(*iter, d_out, finAcs, d_startStates, dfaIndices);
  
     for_each(dfas.begin(), dfas.end(), 
-            FnWrap::unary(dfa, d_out, accept, final, d_startStates, 
-                                                            dfaIndices));
+            FnWrap::unary(dfa, d_out, finAcs, d_startStates, dfaIndices));
  
     d_out << "   };\n";
  
-    finalRules(final);
+    outFinAcs(finAcs);
     dfaEntryPoints(dfaIndices);
 }
 

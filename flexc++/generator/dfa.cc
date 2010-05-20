@@ -1,7 +1,7 @@
 #include "generator.ih"
 
 void Generator::dfa(DFAs::Pair const &dfaPair, ostream &out, 
-                    PVector &accept, vector<size_t> &final, 
+                    vector<FinAcInfo> &finAcs, 
                     vector<string> &startStates,
                     vector<size_t> &dfaOffsets)
 {
@@ -17,7 +17,7 @@ void Generator::dfa(DFAs::Pair const &dfaPair, ostream &out,
     dfaOffsets.push_back(*(dfaOffsets.rbegin()) + dfaPair.second.size());
 
     for_each(dfaPair.second.begin(), dfaPair.second.end(), 
-                FnWrap::unary(dfaRow, out, accept, final));
+                FnWrap::unary(dfaRow, out, finAcs));
 }
 
 

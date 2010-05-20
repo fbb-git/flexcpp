@@ -81,7 +81,7 @@ inline size_t Rule::finalState() const
 
 inline size_t Rule::accept() const
 {
-    return d_postAstates[0];
+    return d_postAstates.size() ? d_postAstates[0] : 0;
 }
 
 inline std::string const &Rule::action() const

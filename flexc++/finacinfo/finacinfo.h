@@ -15,14 +15,18 @@ class FinAcInfo
     bool d_inc;     // incrementing A-state
 
     public:
+        enum Accept
+        {
+            PRE_A_STATE = -1,
+        };
+
         enum Final
         {
-            PLAIN_FINAL = -3,
-            NOT_FINAL,
+            NOT_FINAL = -2,
             FINAL_NOT_SET,
         };
 
-        FinAcInfo(size_t ruleIdx);
+        explicit FinAcInfo(size_t ruleIdx, Final final = NOT_FINAL);
         bool operator==(size_t rule) const;
 
         void setAccept(int accept);

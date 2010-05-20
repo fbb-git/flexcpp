@@ -1,12 +1,13 @@
 #include "generator.ih"
 
 void Generator::dfaFinAcs(DFARow const &row, ostream &out, 
-                          vector<size_t> &finAcs)
+                          vector<FinAcInfo> &finAcs)
 {
+    out << setw(2) << finAcs.size() << ',';
 
-//    out << setw(2) << beginFinal << ',' << 
-//            setw(2) << addFinal(row, final) << ", " <<
-//            setw(2) << row.acceptRule() << ", '" << 
-//            row.ruleAcceptType() << "'},\n";
+    for_each(row.finAcInfos().begin(), row.finAcInfos().end(), 
+        FnWrap::unary(inspectFinAc, finAcs));
+
+    out << setw(2) << finAcs.size();
 }
 

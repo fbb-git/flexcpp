@@ -30,21 +30,24 @@ class Generator
     private:
         size_t dfaCols() const;
 
-        void finalRules(std::vector<size_t> const &final);
+        void outFinAcs(std::vector<FinAcInfo> const &finAcs);
+        static void outFinAc(FinAcInfo const &finac, std::ostream &out);
         static size_t addFinal(DFARow const &row, std::vector<size_t> &final);
         static void outFinal(size_t rule, std::ostream &out, size_t &count);
 
         void dfaEntryPoints(std::vector<size_t> const &entryPoints);
 
         static void dfa(DFAs::Pair const &dfaPair, std::ostream &out, 
-                        PVector &accept, std::vector<size_t> &final,
+                        std::vector<FinAcInfo> &finAcs,
                         std::vector<std::string> &startStates,
                         std::vector<size_t> &dfaOffsets);
         static void dfaRow(DFARow const &row, std::ostream &out, 
-                        PVector &accept, std::vector<size_t> &final);    
+                        std::vector<FinAcInfo> &finAcs);    
         static void dfaTransitions(DFARow const &row, std::ostream &out);
         static void dfaFinAcs(DFARow const &row, std::ostream &out,
-                              std::vector<size_t> &finAcs);
+                              std::vector<FinAcInfo> &finAcs);
+        static void inspectFinAc(FinAcInfo const &finac, 
+                          std::vector<FinAcInfo> &finAcs);
 
         static std::string outEntryPoint(std::string const &startState,
                                          size_t offset);

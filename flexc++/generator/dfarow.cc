@@ -1,13 +1,13 @@
 #include "generator.ih"
 
 void Generator::dfaRow(DFARow const &row, ostream &out, 
-                        PVector &accept, vector<size_t> &final)
+                        vector<FinAcInfo> &finAcs)
 {
     out << "        {";
 
     dfaTransitions(row, out);
-    dfaFinAcs(row, out, final);
+    dfaFinAcs(row, out, finAcs);
 
-    out << "'},\n";
+    out << "},\n";
 }
 

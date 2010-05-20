@@ -74,8 +74,6 @@ try
     if (Msg::errors())
         return 1;
 
-//X    rules.propagateAccept();
-
     Ranges ranges(states);
         ranges.determineSubsets();
         ranges.finalizeStates();

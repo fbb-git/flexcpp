@@ -32,7 +32,7 @@ void DFA::build(vector<size_t> const &active)
 
     keepUniqueRows();
     processFinAc();           // compute accept counts for LA rules
-//X    mergeFinalSet();
+    mergeFinalSet();
 }
 
 

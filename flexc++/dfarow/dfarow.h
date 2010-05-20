@@ -67,8 +67,6 @@ class DFARow
 
         void tabulate(FBB::Table &table) const;
 
-//SF? char ruleAcceptType(size_t rule) const;
-   
         std::set<size_t> const &final() const;
 
         std::unordered_map<size_t, size_t> const &map() const;
@@ -76,6 +74,7 @@ class DFARow
 
         std::string const &action(size_t idx) const;  // only for FINAL rows
         std::vector<FinAcInfo> &finAcInfos();
+        std::vector<FinAcInfo> const &finAcInfos() const;
              
         bool hasPostAstates(size_t ruleIdx, size_t rowIdx) const;
         bool hasPreAstates(size_t ruleIdx, size_t rowIdx) const;
@@ -85,9 +84,6 @@ class DFARow
         void uniqueMap(std::vector<size_t> const &xlat);
 
         static void mergeFinalSet(DFARow &dfaRow);
-        static void mergeFinal(size_t rule, 
-                               std::vector<FinAcInfo> &finAcInfo);
-
     private:
         void tabulateTransitions(FBB::Table &table) const;
         void tabulateFinals(FBB::Table &table) const;
@@ -107,11 +103,15 @@ class DFARow
 
         static void translate(MapValue &transition, 
                                             std::vector<size_t> const &xlat);
-        static void outAccept(size_t rule, std::ostream &out, 
-                                                    DFARow const &obj);
         static void insertFinAcInfo(size_t idx, DFARow &thisRow);
         static bool stateOfRule(size_t state, 
                                 std::vector<size_t> const &haystack);
+        static void mergeFinal(size_t rule, 
+                               std::vector<FinAcInfo> &finAcInfo);
+
+        static bool sameTransits(
+            std::unordered_map<size_t, size_t> const &lhs,
+            std::unordered_map<size_t, size_t> const &rhs);
 };
 
 inline std::unordered_map<size_t, size_t> const &DFARow::map() const
@@ -120,6 +120,11 @@ inline std::unordered_map<size_t, size_t> const &DFARow::map() const
 }
 
 inline std::vector<FinAcInfo> &DFARow::finAcInfos()
+{
+    return d_finAcInfo;
+}
+
+inline std::vector<FinAcInfo> const &DFARow::finAcInfos() const
 {
     return d_finAcInfo;
 }

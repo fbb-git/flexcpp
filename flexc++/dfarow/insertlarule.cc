@@ -14,7 +14,8 @@ void DFARow::insertFinAcInfo(size_t stateIdx, DFARow &thisRow)
                                 // get the rule information at thisRule
     Rule const &thisRule = (*thisRow.d_rules)[rule];
 
-    auto LAiter = find(thisRow.d_finAcInfo.begin(), thisRow.d_finAcInfo.end(), rule);
+    auto LAiter = find(thisRow.d_finAcInfo.begin(), 
+                       thisRow.d_finAcInfo.end(), rule);
 
     if (LAiter == thisRow.d_finAcInfo.end())     // rule not yet entered
     {
