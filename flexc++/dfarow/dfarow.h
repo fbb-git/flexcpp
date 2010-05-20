@@ -67,10 +67,7 @@ class DFARow
 
         void tabulate(FBB::Table &table) const;
 
-        std::string accepts() const; 
-
-//WIP:
-        char ruleAcceptType(size_t rule) const;
+//SF? char ruleAcceptType(size_t rule) const;
    
         std::set<size_t> const &final() const;
 
@@ -86,6 +83,10 @@ class DFARow
         bool operator==(DFARow const &rhs) const;
 
         void uniqueMap(std::vector<size_t> const &xlat);
+
+        static void mergeFinalSet(DFARow &dfaRow);
+        static void mergeFinal(size_t rule, 
+                               std::vector<FinAcInfo> &finAcInfo);
 
     private:
         void tabulateTransitions(FBB::Table &table) const;

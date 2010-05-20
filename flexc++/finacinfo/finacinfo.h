@@ -17,7 +17,8 @@ class FinAcInfo
     public:
         enum Final
         {
-            NOT_FINAL = -2,
+            PLAIN_FINAL = -3,
+            NOT_FINAL,
             FINAL_NOT_SET,
         };
 

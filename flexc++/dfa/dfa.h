@@ -37,6 +37,8 @@ class DFA
         size_t size() const;
 
     private:
+        void mergeFinalSet();
+
         int maxAccept(size_t rowIdx) const;
         static bool cmpAccept(size_t left, size_t right, 
                                                         States const &states);
@@ -84,6 +86,10 @@ inline size_t DFA::size() const
     return d_row.size();
 }
 
+inline void DFA::mergeFinalSet()
+{
+    for_each(d_row.begin(), d_row.end(), DFARow::mergeFinalSet);
+}
 
 #endif
 

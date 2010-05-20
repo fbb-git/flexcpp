@@ -5,7 +5,7 @@
 void DFA::processRow(FinAcInfo &finAcInfo, size_t ruleIdx, DFA &dfa,
                      size_t rowIdx, int parentFinal, int tailSteps)
 {
-    if (finAcInfo.rule() != ruleIdx)      // stop if finAcInfo is not for this rule
+    if (finAcInfo.rule() != ruleIdx)  // stop if finAcInfo is not for this rule
         return;
 
     DFARow &thisRow = dfa.d_row[rowIdx];
@@ -39,7 +39,7 @@ void DFA::processRow(FinAcInfo &finAcInfo, size_t ruleIdx, DFA &dfa,
         {
             finAcInfo.setAccept(dfa.maxAccept(rowIdx));
             finAcInfo.setInc();
-   cerr << "  row " << rowIdx << ": pure post-A FinAcInfo: " << finAcInfo << '\n';
+cerr << "  row " << rowIdx << ": pure post-A FinAcInfo: " << finAcInfo << '\n';
             if (final != FinAcInfo::NOT_FINAL)
                 finAcInfo.setFinal(finAcInfo.accept());
             return;
@@ -47,7 +47,6 @@ void DFA::processRow(FinAcInfo &finAcInfo, size_t ruleIdx, DFA &dfa,
 
         finAcInfo.setAccept(tailSteps);
         ++tailSteps;
-
 //    cerr << "  row " << rowIdx << 
 //            ": mixed pre/post-A FinAcInfo " << finAcInfo << '\n';
     }
