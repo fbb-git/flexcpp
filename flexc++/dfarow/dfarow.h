@@ -26,7 +26,7 @@ class DFARow
     typedef std::vector<StateSet> StateSetVector;   // a set of states per
                                                     // input symbol
 
-    std::vector<FinAcInfo> d_FinAcInfo;               // info about LA-using rules
+    std::vector<FinAcInfo> d_finAcInfo;             // info about LA-using rules
 
     std::set<size_t> d_finalRule;               // Final state for which 
                                                 // rule(s)?
@@ -120,7 +120,7 @@ inline std::unordered_map<size_t, size_t> const &DFARow::map() const
 
 inline std::vector<FinAcInfo> &DFARow::finAcInfos()
 {
-    return d_FinAcInfo;
+    return d_finAcInfo;
 }
 
 inline std::set<size_t> const &DFARow::final() const

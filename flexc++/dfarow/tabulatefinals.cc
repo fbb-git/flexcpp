@@ -8,7 +8,7 @@ void DFARow::tabulateFinals(Table &table) const
 
     for 
     (
-        auto iter = d_FinAcInfo.begin(), end = d_FinAcInfo.end(); 
+        auto iter = d_finAcInfo.begin(), end = d_finAcInfo.end(); 
             iter != end;
                 ++iter
     )
