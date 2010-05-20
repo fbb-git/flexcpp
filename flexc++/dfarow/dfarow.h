@@ -28,7 +28,7 @@ class DFARow
 
     std::vector<FinAcInfo> d_FinAcInfo;               // info about LA-using rules
 
-    std::vector<size_t> d_finalRule;            // Final state for which 
+    std::set<size_t> d_finalRule;               // Final state for which 
                                                 // rule(s)?
 
     typedef std::unordered_map<size_t, size_t>::value_type MapValue;
@@ -72,7 +72,7 @@ class DFARow
 //WIP:
         char ruleAcceptType(size_t rule) const;
    
-        std::vector<size_t> const &final() const;
+        std::set<size_t> const &final() const;
 
         std::unordered_map<size_t, size_t> const &map() const;
         size_t size() const;
@@ -123,7 +123,7 @@ inline std::vector<FinAcInfo> &DFARow::finAcInfos()
     return d_FinAcInfo;
 }
 
-inline std::vector<size_t> const &DFARow::final() const
+inline std::set<size_t> const &DFARow::final() const
 {
     return d_finalRule;
 }

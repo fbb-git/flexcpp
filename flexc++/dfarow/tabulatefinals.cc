@@ -4,8 +4,7 @@ void DFARow::tabulateFinals(Table &table) const
 {
     ostringstream out;
  
-    std::vector<size_t> finalStates = d_finalRule;
-    std::vector<size_t>::iterator endFinal = finalStates.end();
+    std::set<size_t> finalStates = d_finalRule;
 
     for 
     (
@@ -17,13 +16,12 @@ void DFARow::tabulateFinals(Table &table) const
         if (iter->final() >= 0)
         {
             out << iter->rule() << ':' << iter->final() << ' ';
-            endFinal = 
-                remove(finalStates.begin(), endFinal, iter->rule());
+            finalStates.erase(iter->rule());
         }
     }
     out << ' ';
     
-    std::copy(finalStates.begin(), endFinal, 
+    std::copy(finalStates.begin(), finalStates.end(), //endFinal, 
                     std::ostream_iterator<size_t>(out, ","));
 
     std::string const &str = out.str();
