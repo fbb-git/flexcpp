@@ -139,6 +139,11 @@ inline size_t DFARow::size() const
     return d_ranges->size();
 }
 
+inline void DFARow::setFinal(size_t ruleIdx)
+{
+    d_finalRule.insert(ruleIdx);
+}
+
 FBB::Table &operator<<(FBB::Table& out, DFARow const &row);
         
 #endif
