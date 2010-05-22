@@ -1,6 +1,6 @@
 #include "rules.ih"
 
-void Rules::setRuleIndices(size_t state, size_t index)
+void Rules::setRuleIndices(size_t state, size_t ruleIndex)
 {
     if 
     (
@@ -12,8 +12,8 @@ void Rules::setRuleIndices(size_t state, size_t index)
 
     State &thisState = d_states[state];
 
-    thisState.setRule(index);
+    thisState.setRule(ruleIndex);
 
-    setRuleIndices(thisState.next1(), index);
-    setRuleIndices(thisState.next2(), index);
+    setRuleIndices(thisState.next1(), ruleIndex);
+    setRuleIndices(thisState.next2(), ruleIndex);
 }

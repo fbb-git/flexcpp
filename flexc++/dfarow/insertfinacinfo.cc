@@ -14,24 +14,24 @@ void DFARow::insertFinAcInfo(size_t stateIdx, DFARow &thisRow)
                                 // get the rule information at thisRule
     Rule const &thisRule = (*thisRow.d_rules)[rule];
 
-    auto LAiter = find(thisRow.d_finAcInfo.begin(), 
+    auto finAcIter = find(thisRow.d_finAcInfo.begin(), 
                        thisRow.d_finAcInfo.end(), rule);
 
-    if (LAiter == thisRow.d_finAcInfo.end())     // rule not yet entered
+    if (finAcIter == thisRow.d_finAcInfo.end())     // rule not yet entered
     {
         thisRow.d_finAcInfo.push_back(FinAcInfo(rule));
-        LAiter = thisRow.d_finAcInfo.begin() + thisRow.d_finAcInfo.size() - 1;
+        finAcIter = thisRow.d_finAcInfo.begin() + thisRow.d_finAcInfo.size() - 1;
     }
 
-    // LAiter now points at the FinAcInfo record for the current DFA row
+    // finAcIter now points at the FinAcInfo record for the current DFA row
 
     size_t acceptState = thisRule.accept();
     if (acceptState == stateIdx)
-        LAiter->setAccept(0);
+        finAcIter->setAccept(0);
 
     size_t finalState = thisRule.finalState();
     if (finalState == stateIdx)
-        LAiter->setFinal(-1);
+        finAcIter->setFinal(-1);
 }
 
 

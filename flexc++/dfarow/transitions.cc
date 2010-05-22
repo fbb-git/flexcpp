@@ -1,15 +1,11 @@
 #include "dfarow.ih"
 
-// visit all ranges of input characters
-//
-// for each range value visit all states of the current set
-// 
-// if a transition exists, add the state to transit to to the next set 
-// 
-// having visited all states for the current input char, compute the e-closure
+// Visit all ranges of input characters
+// For each range value visit all states of the current set
+// If a transition exists, add the state to transit to to the next set 
+// Having visited all states for the current input char, compute the e-closure
 // of the new set and determine its index in the stateSets.
-//
-// add the input character and the just determined index to the current row's
+// Add the input character and the just determined index to the current row's
 // d_map. 
 
 void DFARow::transitions()
@@ -47,7 +43,6 @@ void DFARow::transitions()
         d_map[nr] = idx;                // add the transition
     }
 }
-
 
 
 
