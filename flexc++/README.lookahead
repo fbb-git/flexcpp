@@ -158,6 +158,47 @@ Algorithm:
               highest A count of the constituing NFA states.
 
 
+Technical description
+=====================
+
+Parsing:
+========
+
+    When the parser has detected a rule it calls Rules::add. A Rule object is
+added to d_rules, storing begin and and state indices, accept state index (if
+available) and action block. Rules::add also stores the association between
+the rule's final state and rule index in its d_finalToRule
+unordered_map. 
+
+    The rule to which states belong must be available for rules using the LA
+operator (see below). Therefore, for those rules Rules::setRuleIndices is
+called to assing the State's d_rule field. This d_rule field is not available
+for rules not using the LA operator. 
+
+    Rule's constructor:
+
+    If a rule uses the LA operator it visits all its states until reaching the
+A-state, storing the states in its d_preAstates vector. Then the same
+procedure is followed for the states from the A-state until the final state,
+storing these states in its d_postAstates vector.
+
+In dfa/build.cc all active rules are visited to determine the set of states
+defining its 1st row. From here the e-closure is determined and all
+transitions to new sets of states. For these new sets the e-closures are
+also computed, resulting in the eventual DFA as well as a vector containing
+the set of states that defined each of the DFA's rows.
+
+    When inspecting transitions each of the states of a set is inspected
+calling DFARow::transit. For final states their associated rule indices are
+looked up using Rules::ruleFromFinalState.
+
+    Having determined the transitions DFA::build proceeds to remove
+implied/identical rows calling DFA::keepUniqueRows
+
+    [to be continued]
+
+
+
 ==============================================================================
 
 
