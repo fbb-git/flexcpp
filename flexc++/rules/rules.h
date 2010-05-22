@@ -20,8 +20,6 @@ class Rules
     States &d_states;
 
     std::vector<Rule> d_rules;
-    std::vector<size_t> d_LArules;      // what rules use the LA operators?
-
     std::unordered_map<size_t, size_t>  d_finalToRule;  // from FINAL state to
                                                         // Rule index
 
