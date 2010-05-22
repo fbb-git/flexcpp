@@ -9,8 +9,7 @@ void DFARow::transit(size_t stateIdx, DFARow &thisRow,
     switch (size_t type = state.type())
     {
         case State::FINAL:
-            thisRow.setFinal(thisRow.d_rules->hasFinalState(stateIdx));
-//            thisRow.setFinal(state.rule());
+            thisRow.setFinal(thisRow.d_rules->ruleFromFinalState(stateIdx));
         break;
 
         case State::CHARSET:

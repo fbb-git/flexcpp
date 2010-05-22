@@ -32,7 +32,7 @@ class Rules
         Rule const &operator[](size_t idx) const;
         Rule &operator[](size_t idx);
 
-        size_t hasFinalState(size_t stateIdx) const;
+        size_t ruleFromFinalState(size_t stateIdx) const;
         void setType(StartConditions::Type type);
         void addStartCondition(SemVal const &name);
         void resetStartConditions();
@@ -69,7 +69,7 @@ inline Rules::const_iterator Rules::end() const
     return d_startConditions.end();
 }
         
-inline size_t Rules::hasFinalState(size_t stateIdx) const
+inline size_t Rules::ruleFromFinalState(size_t stateIdx) const
 {
     return d_finalToRule.find(stateIdx)->second;
 }
