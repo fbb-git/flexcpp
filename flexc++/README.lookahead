@@ -193,7 +193,50 @@ calling DFARow::transit. For final states their associated rule indices are
 looked up using Rules::ruleFromFinalState.
 
     Having determined the transitions DFA::build proceeds to remove
-implied/identical rows calling DFA::keepUniqueRows
+implied/identical rows calling DFA::keepUniqueRows. KeepUniqueRows visits each
+of the rows of the DFA, and tests whether an existing row has the same
+transitions and final state information as the current row. `Same transitions'
+means that the transitions of the current (under inspection) row must be
+present in an earlier row; Same final state information means that the current
+row is a final state for the same rule(s) as the earlier row. In such
+situations the current row can be merged with the earlier row, effectively
+keeping the earlier row. The (later) row can be removed as transitions from it
+are identical to those from the earlier row. This happens, e.g., because the
+NFA construction algorithm introduces more empty edges than strictly
+necessary, sometimes resulting in additional rows in the DFAs. This happens,
+e.g. with a pattern like (a|ab)+/(a|ba)+, producing DFA 
+    -------------------------
+         a  b   F         A  
+        ---------------------
+      0  1                   
+      1  2  3                
+      2  2  3   0:1          
+      3  4  5                
+      4  2  3   0:2          
+      5  6            0:++1  
+      6  7  5   0            
+      7  7  5   0            
+    -------------------------
+
+Rows 6 and 7 are identical, as are rows 2 and 4. For row 4 the (erroneous, if
+|TAIL| should be as short as possible) |TAIL| = 2 is shown, resulting from aba
+being interpreted as HEAD: 'a' and TAIL: ba. But when |TAIL| should be
+minimized aba should be interpreted as HEAD: ab and TAIL a, which should 
+result in transitions 0 -> 1 -> 3 -> 2, with |TAIL| = 1. This happens when row
+4 is merged to row 2. Having merged the rows, former transitions to the now
+removed rows must of course be updated to the merging row. So row 3 must 
+transit to 2 when receiving input symbol a. The member shrinkDFA handles the
+shrinkage of the DFA. In this example the final DFA becomes:
+    -------------------------
+         a  b   F         A  
+        ---------------------
+      0  1                   
+      1  2  3                
+      2  2  3   0:1          
+      3  2  4                
+      4  5            0:++1  
+      5  5  4   0            
+    -------------------------
 
     [to be continued]
 
