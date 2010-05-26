@@ -26,7 +26,7 @@ class DFARow
     typedef std::vector<StateSet> StateSetVector;   // a set of states per
                                                     // input symbol
 
-    std::vector<FinAcInfo> d_finAcInfo;             // info about LA-using rules
+    std::vector<FinAcInfo> d_finAcInfo;         // info about LA-using rules
 
     std::set<size_t> d_finalRule;               // Final state for which 
                                                 // rule(s)?

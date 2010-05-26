@@ -41,3 +41,8 @@ inline void DFA::fillStartSet(size_t idx, Rules const &rules, StateSet &start)
     start.insert(rules[idx].startState());
 }
 
+inline void DFA::mergeFinalSet()
+{
+    for_each(d_row.begin(), d_row.end(), DFARow::mergeFinalSet);
+}
+

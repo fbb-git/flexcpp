@@ -86,10 +86,5 @@ inline size_t DFA::size() const
     return d_row.size();
 }
 
-inline void DFA::mergeFinalSet()
-{
-    for_each(d_row.begin(), d_row.end(), DFARow::mergeFinalSet);
-}
-
 #endif
 

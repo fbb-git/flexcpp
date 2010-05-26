@@ -238,6 +238,51 @@ shrinkage of the DFA. In this example the final DFA becomes:
       5  5  4   0            
     -------------------------
 
+Now that the DFA has been constructed it's time to compute the A (and F) 
+columns. This is done by DFA::processFinAc, called from DFA::build.
+
+processFinAc:
+
+Information about the rules using the LA operator is stored in the
+DFARow::d_finAcInfo vector. Each rule using the LA operator is represented in
+this vector by a FinAcInfo object. A FinAcInfo object makes available:
+
+    size_t d_rule;  // which LA rule?
+    int d_accept;   // accept count at this point or FinAcInfo::PRE_A_STATE
+    int d_final;    // FinAcInfo::NOT_FINAL: not a Finalstate
+                    // FinAcInfo::FINAL_NOT_SET: undetermined Final state 
+                    // accept count
+                    // >= 0:  Final state accept count
+    bool d_inc;     // incrementing A-state
+
+DFA::processFinAc visits all the FinAcInfo objects of the current row and
+processes each of them by calling DFA::processFinAcInfo.
+
+Each rule is only processed once by processsFinAcInfo. So if the same rule is
+used in, e.g., different miniscanners or in different DFA states, then the
+first occurrence results in its handling. Since a rule, rather than a DFA row,
+defines how its HEAD and TAIL are computed there is no need to re-process a
+rule once it has been processed. 
+
+Processing consists of the following steps:
+
+    First the accept counts are determined for the NFA states of the
+rule. These counts are only determined once per state to prevent continuous
+repetition for repetitive patterns like 'a+'. The first state to receive an
+accept count is the rule's accept state (for a rule like ab/cd, resulting in
+NFA         
+            a       b       c       d
+        1 ----- 2 ----- 3 ----- 4 ----- 5
+
+this would be state 3). Due to restrictions in the way the LA operator may be
+used there's never a repetitive pattern from a post-A state back to a pre-A
+state, so accept counts can be determined starting at the NFA's accepting
+state. 
+
+before 
+
+DFARow objects 
+
     [to be continued]
 
 
