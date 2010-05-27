@@ -2,11 +2,17 @@
 
 // called from processRule
 
+// #include <stdexcept>     not needed, see the next comment 
+
 void DFA::processRow(FinAcInfo &finAcInfo, size_t ruleIdx, DFA &dfa,
-                     size_t rowIdx, int parentFinal, int tailSteps)
+                     size_t rowIdx, int parentFinal, int tailSize)
 {
-    if (finAcInfo.rule() != ruleIdx)  // stop if finAcInfo is not for this rule
-        return;
+// This cannot happen, see the test for ruleIdx in processRule:
+//
+//    if (finAcInfo.rule() != ruleIdx)  // stop if finAcInfo is not for this
+//                                      //rule
+//        throw logic_error("DFA::processRow: rule mismatch");
+
 
     DFARow &thisRow = dfa.d_row[rowIdx];
     int final = finAcInfo.final();
@@ -15,8 +21,8 @@ void DFA::processRow(FinAcInfo &finAcInfo, size_t ruleIdx, DFA &dfa,
         // DFA row for the current rule.
     if (thisRow.hasPostAstates(ruleIdx, rowIdx))
     {
-        if (tailSteps == -1)
-            tailSteps = 0;
+        if (tailSize == -1)
+            tailSize = 0;
 
         if (final != FinAcInfo::NOT_FINAL)     // current state is Final state
         {
@@ -24,9 +30,9 @@ void DFA::processRow(FinAcInfo &finAcInfo, size_t ruleIdx, DFA &dfa,
 
             if (final == FinAcInfo::FINAL_NOT_SET)
                     // keep the parent's final (if set) or use tailsteps
-                final = parentFinal >= 0 ? parentFinal : tailSteps;
+                final = parentFinal >= 0 ? parentFinal : tailSize;
             else 
-                final = min(final, tailSteps);
+                final = min(final, tailSize);
 
             cerr << "OUT Row " << rowIdx << " has final: " << final << endl;
             finAcInfo.setFinal(final);
@@ -45,8 +51,8 @@ cerr << "  row " << rowIdx << ": pure post-A FinAcInfo: " << finAcInfo << '\n';
             return;
         }
 
-        finAcInfo.setAccept(tailSteps);
-        ++tailSteps;
+        finAcInfo.setAccept(tailSize);
+        ++tailSize;
 //    cerr << "  row " << rowIdx << 
 //            ": mixed pre/post-A FinAcInfo " << finAcInfo << '\n';
     }
@@ -54,6 +60,6 @@ cerr << "  row " << rowIdx << ": pure post-A FinAcInfo: " << finAcInfo << '\n';
         // finally do the transitions: transit to other rows of the DFA and
         // do the same, recursively.
     for_each(thisRow.map().begin(), thisRow.map().end(),
-            FnWrap::unary(inspect, rowIdx, ruleIdx, dfa, final, tailSteps));
+            FnWrap::unary(inspect, rowIdx, ruleIdx, dfa, final, tailSize));
 }
 
