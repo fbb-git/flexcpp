@@ -266,25 +266,99 @@ rule once it has been processed.
 
 Processing consists of the following steps:
 
-    First the accept counts are determined for the NFA states of the
-rule. These counts are only determined once per state to prevent continuous
-repetition for repetitive patterns like 'a+'. The first state to receive an
-accept count is the rule's accept state (for a rule like ab/cd, resulting in
-NFA         
+First the accept counts are determined for the NFA states of the rule. These
+counts are only determined once per state to prevent continuous repetition for
+repetitive patterns like 'a+'. The first state to receive an accept count is
+the rule's accept state (for a rule like ab/cd, resulting in NFA
+
             a       b       c       d
         1 ----- 2 ----- 3 ----- 4 ----- 5
 
 this would be state 3). Due to restrictions in the way the LA operator may be
 used there's never a repetitive pattern from a post-A state back to a pre-A
 state, so accept counts can be determined starting at the NFA's accepting
-state. 
+state. Accept counts are determined as the number of steps required to reach a
+certain DFA row starting from the row holding the NFA's accepting state. For
+this the function DFA::propagateLAsteps is called. This function receives the
+rule's accepting state number and the (initial) accept count of
+0. DFA::propagateLAsteps is a doubly recursive function. It's task is to set
+the accept count of the state whose index was passed to the function to its
+step-count value. Then, in preparation of the recursive calls the step count
+is incremented unless the current state is an empty edge. As each state has
+two links (which may not be used) the recursive calls follow these links,
+receiving the possibly incremented stepcount. When there are multiple routes
+to a given state then the accept count is set to the largest step count value.
 
-before 
+Once the LA steps have been determined DFA::processRule is called to determine
+the accept counts of LA-rules, starting at row 0 of the DFA. DFA::processRule
+receives a DFA row index (initially 0), an indication whether its 'parent' row
+(i.e., the DFA row offering a transition to the current row was a Final state
+for the current rule (initially: not final) and the number of accept steps so
+far (initially -1). DFA::processRule is an idirectly recursive function. At
+the DFA row currently under inspection it tries to locate the rule index in
+the DFA row's FinAcInfo objects. If found then that rule is an LA rule that is
+active in the current DFA rule. 
 
-DFARow objects 
+If the rule is found it calls DFA::processRow to determine that row's accept
+and final counts for that particular rule, passing it the rule's FinAcInfo,
+rule index, DFA row index, parent final status and current tail size. 
 
-    [to be continued]
+DFA::processRow implements the core actions of the tail-size computation
+algorithm. It consists of two parts. In part I the rule's FinAcInfo of the
+current row is updated, in part II the rows to which the current row may
+transit to are inspected. 
 
+Part I is only executed if there's at least one post-A state present in the
+set of NFA states represented by the current DFA row. If this holds true then
+the following code is executed: at the row for which this happens for the
+first time tailSize is set to 0. Then, if the current row can be a final state
+for the rule that's currently under inspection its |TAIL| is determined. If
+the |TAIL| was determined during an earlier phase of the algorithm, then
+--following the principle that |TAIL| should always be as small as possible--
+|TAIL| is determined as the minimum of its current value and the current value
+of tailSize. If |TAIL| hasn't been determined yet then it is set to
+parentFinal, unless parentFinal is still -1, in which case it is set to
+tailSize. Thus, two consecutive final DFA states have identical |TAIL| values,
+as per the algorithm described in the top section.
+
+DFA rows may represent mere pre-A NFA states, mere post-A NFA states or a
+mixture of both. Once a DFA row is reached merely representing post-A NFA
+states |TAIL| must be incremented at each transition as there are no backlinks
+to DFA rows representing pre-A NFA states. Therefore, if a row does not
+represent pre-A states the accept count of the current FinAcInfo is set to
+incrementing, with an initial value equal to the maximum accept count
+that is possible when reaching this row for the first time. As a case in
+point, consider regex and NFA:
+
+                                    ------a------
+    a+/(a|ab)+  NFA:    1 --a-- [1]2             4[2]
+                                    --a-- 3 --b--
+                                 A0       A1     A1,A2
+
+Here, once state set {2,4} has been reached we have mere post-A states and the
+initial accept count of the DFA row representing {2,4} is set to 2,
+incrementing. Furthermore, if this is also a final state |TAIL| must be equal
+to the eventual accept count.
+
+    [see also the comment in dfa/processrow.cc near line 50]
+
+Since accept counts are incremented from here, there's no need to inspect
+further transitions so in this case processRow returns, not executing its 2nd
+part. 
+
+If processing continues the current row represents a mixed-A-state set. In
+this case the row's accept size is set to the current tail size, tail size is
+incremented and the 2nd part starts.
+
+DFA::processRow's second part visits all transitions of the current row,
+passing them in sequence, together with the current row and rule indices, the
+current Final state |TAIL| value (which may be -1 if the current DFA state
+isn't a final state for the current rule) and the current (posibly
+incremented) tail size to the function DFA::inspect. DFA::inspect (indirect
+recursively) calls processRule if the transition is to a later (higher row
+index) row in the DFA than the row from where DFA::inspect was called. Back
+transitions can be skipped as their statuses were determined before, 
+representing earlier positions in the NFA. 
 
 
 ==============================================================================
