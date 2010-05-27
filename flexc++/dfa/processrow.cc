@@ -46,6 +46,13 @@ void DFA::processRow(FinAcInfo &finAcInfo, size_t ruleIdx, DFA &dfa,
             finAcInfo.setAccept(dfa.maxAccept(rowIdx));
             finAcInfo.setInc();
 cerr << "  row " << rowIdx << ": pure post-A FinAcInfo: " << finAcInfo << '\n';
+
+    // this is not a FIXED final value. Is it necessary to set final's value?
+    // couldn't the code generation detect that this is a final state and an
+    // incrementing Accept state and thus determine that |TAIL| will be the
+    // current accept count if this is the final DFA state for this rule?
+    // In that case final != NOT_FINAL is enough information for the code
+    // generator to decide what to do
             if (final != FinAcInfo::NOT_FINAL)
                 finAcInfo.setFinal(finAcInfo.accept());
             return;
@@ -62,4 +69,3 @@ cerr << "  row " << rowIdx << ": pure post-A FinAcInfo: " << finAcInfo << '\n';
     for_each(thisRow.map().begin(), thisRow.map().end(),
             FnWrap::unary(inspect, rowIdx, ruleIdx, dfa, final, tailSize));
 }
-
