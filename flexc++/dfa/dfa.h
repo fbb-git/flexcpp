@@ -58,14 +58,14 @@ class DFA
                            size_t stateIdx, int steps);
 
         static void processRule(size_t rule, DFA &dfa, size_t rowIdx, 
-                                int parentFinal, int tailSteps);
+                                int parentFinal, int tailSize);
 
         static void processRow(FinAcInfo &finAcInfo, size_t rule, DFA &dfa, 
-                               size_t rowIdx, int parentFinal, int tailSteps);
+                               size_t rowIdx, int parentFinal, int tailSize);
 
         static void inspect(std::pair<size_t, size_t> const &transit, 
                             size_t oldRow, size_t rule, DFA &dfa,
-                            int parentFinal, int tailSteps);
+                            int parentFinal, int tailSize);
  
         static void fillStartSet(size_t idx, Rules const &rules, 
                                              StateSet &start);

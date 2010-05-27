@@ -3,7 +3,7 @@
 // called from processFinAcInfo
 
 void DFA::processRule(size_t ruleIdx, DFA &dfa, size_t rowIdx, 
-                      int parentFinal, int tailSteps)
+                      int parentFinal, int tailSize)
 {
     DFARow &row = dfa.d_row[rowIdx];
 
@@ -11,5 +11,5 @@ void DFA::processRule(size_t ruleIdx, DFA &dfa, size_t rowIdx,
     auto iter = find(row.finAcInfos().begin(), end, ruleIdx);
 
     if (iter != end)
-        processRow(*iter, ruleIdx, dfa, rowIdx, parentFinal, tailSteps);
+        processRow(*iter, ruleIdx, dfa, rowIdx, parentFinal, tailSize);
 }

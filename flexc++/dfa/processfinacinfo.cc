@@ -14,7 +14,7 @@ void DFA::processFinAcInfo(FinAcInfo const &finAcInfo, DFA &dfa)
     vector<bool> visited(dfa.d_states->size());
     dfa.propagateLAsteps(visited, rule.accept(), 0);
 
-                           // rowIdx, parentFinal,          tailSteps          
+                           // rowIdx, parentFinal,          tailSize          
     processRule(ruleIdx, dfa, 0,      FinAcInfo::NOT_FINAL,    -1);
     rule.setLAdone();
 }
