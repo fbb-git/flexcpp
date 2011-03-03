@@ -53,8 +53,13 @@ cerr << "  row " << rowIdx << ": pure post-A FinAcInfo: " << finAcInfo << '\n';
     // current accept count if this is the final DFA state for this rule?
     // In that case final != NOT_FINAL is enough information for the code
     // generator to decide what to do
-            if (final != FinAcInfo::NOT_FINAL)
-                finAcInfo.setFinal(finAcInfo.accept());
+    //
+    // At this point we're always in an A++ state, so the |TAIL| length is
+    // variable anyway. So it looks as though we merely need to know that this
+    // is a possible Final state, in which case the current A value is the
+    // Final's |TAIL|
+//            if (final != FinAcInfo::NOT_FINAL)
+//                finAcInfo.setFinal(finAcInfo.accept());
             return;
         }
 

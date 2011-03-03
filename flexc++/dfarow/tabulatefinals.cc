@@ -10,8 +10,8 @@ void DFARow::tabulateFinals(Table &table) const
             iter != end;
                 ++iter
     )
-    {
-        if (iter->final() >= 0)
+    {                           // fixed final length or other final length
+        if (iter->final() >= 0) // (possibly incrementing after A++)        
             out << iter->rule() << ':' << iter->final() << ',';
         else if (iter->final() == FinAcInfo::FINAL_NOT_SET)
             out << iter->rule() << ',';
