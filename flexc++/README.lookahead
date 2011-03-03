@@ -172,7 +172,7 @@ unordered_map.
 
     The rule to which states belong must be available for rules using the LA
 operator (see below). Therefore, for those rules Rules::setRuleIndices is
-called to assing the State's d_rule field. This d_rule field is not available
+called to assign the State's d_rule field. This d_rule field is not available
 for rules not using the LA operator. 
 
     Rule's constructor:
@@ -281,7 +281,7 @@ state. Accept counts are determined as the number of steps required to reach a
 certain DFA row starting from the row holding the NFA's accepting state. For
 this the function DFA::propagateLAsteps is called. This function receives the
 rule's accepting state number and the (initial) accept count of
-0. DFA::propagateLAsteps is a doubly recursive function. It's task is to set
+0. DFA::propagateLAsteps is a doubly recursive function. Its task is to set
 the accept count of the state whose index was passed to the function to its
 step-count value. Then, in preparation of the recursive calls the step count
 is incremented unless the current state is an empty edge. As each state has
