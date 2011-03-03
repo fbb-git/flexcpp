@@ -5,7 +5,7 @@ void Generator::charTable()
     d_out <<
             "   // s_ranges: use (unsigned) characters as index to obtain\n"
             "   //           that character's range-number.\n"
-            "   //           Ranges of BOL and EOF are in variables below.\n"
+            "   //           Ranges of BOL and EOF are in constants below.\n"
             "   //           Range values 0 indicate `not used'\n"
             "    size_t const ScannerBase::s_ranges[] =\n" 
             "    {";
@@ -20,7 +20,11 @@ void Generator::charTable()
     }
     
     d_out << "\n"
-         "    };\n";
+        "    };\n" 
+        "\n"
+        "    size_t const rangeOfBOL = " << d_ranges.rangeOfBOL() << ";\n"
+        "    size_t const rangeOfEOF = " << d_ranges.rangeOfEOF() << ";\n"
+        "\n";
 }
 
 

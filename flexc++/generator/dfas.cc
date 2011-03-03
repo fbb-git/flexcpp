@@ -5,7 +5,7 @@ void Generator::dfas(DFAs const &dfas)
     d_out <<
     "\n"
     "    // s_dfa contain the rows of *all* DFAs ordered by start state.\n"
-    "    // The enum class StartState is defined below. INITIAL is always 0\n"
+    "    // The enum class Begin is defined below. INITIAL is always 0\n"
     "    // Each row contains the row to transit to if the column's\n"
     "    // character range was sensed. Row numbers are relative to the\n"
     "    // used DFA. Following this a value != -1 indicates the rule for\n"
