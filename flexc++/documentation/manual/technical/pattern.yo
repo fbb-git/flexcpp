@@ -1,0 +1,54 @@
+tt(parser/rules/pattern): Patterns define the regular expressions that can be
+matched. All patterns start at tt(pattern_ws) and consist of:
+        verb(
+    pattern_ws:
+        pattern opt_ws mode_block
+    ;
+        )
+    Following the recognition of a pattern, the scanner is reset to its
+tt(block) mode, allowing it to recognize a bf(C++) action block. Blocks are
+defined link(here)(BLOCKS).
+
+The following patterns are defined (more extensive descriptions follow):
+    itemization(
+    itt(EOF_PATTERN)  - recognized by the lexer, matching tt(<<EOF>>). 
+    itt(STRING) - recognized by the lexer, matching a literal string.
+    itt(SECTION_DELIMITER) - recognized by the lexer. The tt(%%) sequence in
+        fact ends the rule section 
+
+        TO BE INVESTIGATED.
+
+    itt(character_class): a self-defined or predefined character class like
+        tt([a-c]) or tt([[alpha]]).
+    itt(plain_characters): any plain character, like tt(a) in tt(ape).
+    itt(ESCAPE_SEQUENCE): characters defined by escape sequences, like
+        tt(\x2a). To the parser they are plain characters. 
+    itt('.'): the any-character-but-newline matching pattern.
+    itt(pattern pattern): two patterns immediately following each other. These
+two patterns have the precedence of tt(CHARACTER), and are combined 
+left-associatively.
+    itt('^' pattern): the begin-of-line pattern.
+    itt(pattern '|' pattern)  Two alternative continuations.
+    itt(pattern quantifier): quantifiers are tt(*, +) and tt(?).
+    itt('(' incParen pattern ')' decParen) a pattern nested in parentheses
+    itt(pattern '{' start_interval_m  interval '}' regex_block_m) a repetition
+        using curly braces (an interval repetition)
+    itt(pattern '/' pattern) a lookahead pattern ($ is handled by the scanner)
+    )
+
+All patterns are handled by tt(PatternVal) functions. E.g., a tt(STRING) is
+handled by tt(PatternVal::str), a character class by tt(PatternVal::charSet),
+etc. See link(here)(PATTERNVAL) for information about the tt(PatternVal)
+class. 
+
+
+
+
+
+
+
+
+
+
+
+

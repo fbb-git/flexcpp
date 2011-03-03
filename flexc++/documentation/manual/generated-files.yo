@@ -1,0 +1,63 @@
+lchapter(generated-files)(Generated files)
+
+Flc() generates 4 files:
+
+enumeration(
+    it() tt(lex.cc)
+    it() tt(scanner.h)
+    it() tt(scanner.ih)
+    it() tt(scannerbase.h)
+)
+
+tt(lex.cc) and tt(scannerbase.h) are overwritten every time flc() is called,
+while tt(scanner.h) and tt(scanner.ih) are written either when they do not
+exist, or when flc() is explicitly told to overwrite one of these files.
+
+The above filenames are the defaults, and can be changed by the following
+options:
+
+enumeration(
+    it() tt(%option lexsource="lex.cc")
+    it() tt(%option classheader="scanner.h")
+    it() tt(%option implementationheader="scanner.ih")
+    it() tt(%option baseclassheader="scannerbase.h")
+)
+
+The manual refers to these files by their default filenames.
+
+The contents for these files are taken from skeleton files. It is possible to
+install any of these skeletons in a separate location and tell flc() to use
+this alternative location. This allows one to make changes to the default
+sources. This is usually not needed for most users.
+
+The first file, tt(lex.cc) contains lookup tables, the code to walk through
+the lookup tables and the actions specified in the lexer file. Since the
+lookup tables and actions (possibly) change every time flc() is called,
+tt(lex.cc) is overwritten on each invocation.
+
+The file tt(scannerbase.h) contains the base classes for the final tt(Scanner)
+class and the tt(enum) of start conditions. The tt(Scanner) class is
+derived from tt(ScannerBase), which is derived from tt(ScannerTemplate).
+tt(ScannerBase) specifies the exact tt(StreamInfoType) to instantiate
+tt(ScannerTemplate) with (see also the lref(multiple streams
+chapter)(multiplestreams)). Since this tt(StreamInfoType) and the start
+conditions can change, tt(scannerbase.h) is overwritten every time flc() is
+invoked.
+
+The other two files tt(scanner.h) and tt(scanner.ih) are usually not touched
+by flc() (unless explicitly specified). tt(scanner.h) contains the final
+tt(Scanner) class, which the user is encouraged to modify. Additional members
+can be added here.
+
+One can adjust the behaviour of tt(lex()) and tt(executeAction()) (this last
+function is a private function which is called whenever an action is to be
+executed). This allows the user to execute some extra code before or after the
+default behaviour of tt(lex()) and tt(executeAction()).
+
+Also, extra constructors, or extra functionality to the default constructors
+can be added in tt(scanner.h).
+
+Finally, tt(scanner.ih) contains some declarations which are used by the
+implementations of the tt(Scanner) members. One can place tt(using) statements
+here as well as includes which are only required by member implementations.
+

@@ -1,0 +1,81 @@
+NOUSERMACRO(lex setDebug main)
+includefile(preamble)
+
+affiliation(url(Rijksuniversiteit Groningen)(http://www.rug.nl/))
+report(Flexc++ (Version _CurVers_) User Guide)
+        (Richard Berendsen+and() Frank B. Brokken+land() Jean-Paul van Oosten)
+       (_CurYrs_)
+
+sect(Technical documentation (PIPETHROUGH(date -R)()))
+
+    subsect(flexc++)
+    includefile(technical/flexcpp)
+
+    lsubsect(NOTATION)(Notation, Terminology)
+    includefile(technical/notations)
+    
+    lsubsect(PARSER)(The parser)
+    includefile(technical/parser)
+    
+    lsubsect(BLOCKS)(Code (action)  blocks)
+    includefile(technical/blocks)
+    
+    lsubsect(STATE)(The class State)
+    includefile(technical/state)
+    
+    lsubsect(STATES)(States)
+    includefile(technical/states)
+    
+    lsubsect(RULES)(Rules and the class Rule)
+    includefile(technical/rules)
+    
+    lsubsect(PATTERNS)(Patterns)
+    includefile(technical/pattern)
+
+    lsubsect(PATTERNVAL)(The class PatternVal)
+    includefile(technical/patternval)    
+    
+    lsubsect(RANGES)(Ranges)
+    includefile(technical/ranges)
+    
+    subsect(The class DFAs)
+    includefile(technical/dfas)
+    
+    lsubsect(DFA)(The DFA)
+    includefile(technical/dfa)
+    
+    lsubsect(DFAROW)(The rows of the DFA: DFAROW)
+    includefile(technical/dfarow)
+
+    lsubsect(LOOKAHEAD)(Patterns containing the lookahead operator)
+    includefile(technical/lookahead)
+
+    subsect(Generating Code)
+    includefile(technical/gencode)
+
+        subsubsect(The range-table)
+        includefile(technical/rangetable)
+
+        subsubsect(The DFAs)
+        includefile(technical/gendfas)
+
+        subsubsect(The Final-Accept info array)
+        includefile(technical/finac)
+
+    subsect(Run-time operations)
+    includefile(technical/runtime)
+
+
+COMMENT(
+includefile(introduction.yo)
+includefile(simpleexamples.yo)
+includefile(differences.yo)
+includefile(fileformat.yo)
+includefile(patterns.yo)
+includefile(actions.yo)
+includefile(startconditions.yo)
+includefile(generated-files.yo)
+includefile(multiplestreams.yo)
+COMMENT(cinc(developernotes.yo))
+
+END)

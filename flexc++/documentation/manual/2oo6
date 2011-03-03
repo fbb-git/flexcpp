@@ -1,0 +1,6 @@
+#!/bin/bash
+
+yodl2html --live-data=ok flexc++ || exit 1
+
+scp *.html oosix:/var/www/icce.rug/gitman/
+scp images/*.jpg oosix:/var/www/icce.rug/gitman/images/

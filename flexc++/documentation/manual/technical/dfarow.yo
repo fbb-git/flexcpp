@@ -1,0 +1,33 @@
+Rows of DFA matrices relate (ranges of) input characters to rows (states) to
+transit to (see figure ref(DFAROWFIG)). 
+
+    figure(images/dfarow)(The data of the class DFARow)(DFAROWFIG)
+
+The tt(DFARow)'s row specification itself is defined by a set of states
+accessible as tt(d_stateSets[d_thisIdx]). The values of this set define the
+(e-closure of the) states of this row.
+
+Each of these states may have a transition to another state when observing a
+character from one of the input ranges. These states to transit to in turn
+define a set of states. 
+
+If this set of states to transit to is not yet present in the tt(DFA) then a
+new row is added to the DFA. Adding rows is the task of tt(DFA::build),
+defining and adding new sets of tt(State)s is the responsibility of
+tt(DFARow::transition).
+
+The tt(DFARow)'s tt(unordered_map d_map) defines the relationship between an
+input character range (the map's key) and the row to transit to when a
+character from that input range has been observed. 
+
+The elements of the set tt(d_finalRule) contain the indices of the
+tt(Rules) for which this tt(DFARow) represents a final state. When the next 
+input symbol has no transition from this tt(DFARow) and this set is not empty
+then that rule is matched 
+
+quote(TODO: why is this a set? Can there be multiple rules in this set?)
+
+Additional data members of a tt(DFARow) are important for handling patterns
+in which the lookahead (LA) operator (tt(/)) has been used. This process is
+link(described here)(LOOKAHEAD) (section ref(LOOKAHEAD).
+

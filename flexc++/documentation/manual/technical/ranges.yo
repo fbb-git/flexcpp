@@ -1,0 +1,32 @@
+When processing characters in regular expressions subranges are defined. An
+expression like `tt(am)' defines the ranges ascii-0 to (but not including)
+tt('a'); tt('a'); tt('b') through tt('l'); tt('m'); and tt('n') through
+ascii-255. 
+
+Likewise, sets may define ranges, like tt([[:digits:]]), defining all
+ascii characters preceding the digits; all decimal digits; and all ascii
+characters following the digits. 
+
+Rather than having a NFA/DFA having entries for each of these characters the
+NFA/DFA's column-dimension (see section ref(DFA)) can be reduced, often
+considerably, by letting each column refer to a em(set) of characters, rather
+than individual characters. 
+
+The tt(Ranges) object takes care of defining and manipulating the actual 
+subsets. Its data organization is given in figure ref(RANGESFIG).
+
+    figure(images/ranges)(The class Ranges data members)(RANGESFIG)
+
+Initially tt(d_ranges) is filled with all zeroes. Once a range of characters
+or a single character is defined in a pattern, it is added to the tt(Ranges)
+object (functions tt(add) accepting single characters or strings). The
+occurrence counts of the added characters are incremented if necessary. De
+functions tt(update), tt(collision), and tt(countRanges) handle the updating.
+
+Details of the algorithm are not covered here, until the need for this arises.
+For the time being consult the sources for details. 
+
+In the user interface the important members are tt(rangeOf, rangeOfBOL) and
+tt(rangeofEOF), returning the column indices in DFAs to which input characters
+belong. 
+

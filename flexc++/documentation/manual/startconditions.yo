@@ -1,0 +1,103 @@
+lchapter(startconditions)(Startconditions (Miniscanners))
+
+Flc() enables a programmer to describe tokens with a set of regular expressions.
+When we wrote flc(), we described the tokens that could occur in a lexer file.
+But a lexer file has different languages in it: regular expressions, and code.
+If one were to describe the tokens in a programming language such as C, a 
+c-string would be one of them. But a c-string also has some structure of itself,
+certain characters may have to be escaped in it. A double quote does not always
+end the c-string, for example.
+
+For these cases flc(), like flex and lex, offers startconditions. A startcondition
+can be declared in the definition section of the lexer file:
+
+verb(
+%x  cstring
+%%
+...
+)
+
+This declares an exclusive startcondition. There are also inclusive startconditions,
+but they are less useful.
+
+A startcondition may then be opened in the rulessection of the lexer file:
+
+verb(
+...
+%%
+
+<cstring>{
+    \"            begin(INITIAL);
+    \/\"          more();
+    .             more();
+    \n            cerr << "bad c-string\n";
+}
+
+\"                begin(cstring);
+)
+
+This tells flc() that the first four rules belong to the startcondition tt(cstring).
+They describe patterns that may occur in a c-string. It is as if these four rules are
+a scanner of their own. That is why exclusive startconditions are often called
+miniscanners.
+
+The base class of the scanner class, called ScannerBase by default, defines a member
+function tt(begin()). You can call that in an action to make flc() start the indicated
+miniscanner. The miniscanner names are enum values defined in ScannerBase, also. If you
+wish to use names for miniscanners that could conflict with other defined names in C++,
+you can prefix them with tt(ScannerBase::) in the action.
+
+When flc() starts running, it is in the tt(ScannerBase::INITIAL) scanner, the
+main, default scanner. Upon encountering a double quote (the last lexer rule),
+it starts the exclusive startcondition cstring. Now, only the rules that are
+declared as belonging to the cstring miniscanner are active. If flc() now
+encounters an unescaped quote, it starts the tt(INITIAL) miniscanner again.
+
+The tt(more()) call makes flc() add the next match to the current match, so by the time
+the string is terminated, the contents of the string will be stored in d_match.
+
+Inclusive startconditions work exactly the same, with only one difference: rules that
+are active in tt(INITIAL) are also active in an inclusive startcondition. You can declare
+an inclusive startcondition with
+
+verb(
+%s incl_start_condition
+%%
+...
+)
+.
+
+sect(Notation details)
+
+It is also possible to write the pattern right after the start condition tag in the rules section:
+
+verb(
+%%
+<cstring>\"     begin(INITIAL);
+<cstring>\/\"   more();
+...
+)
+
+A rule can be added to multiple startconditions:
+
+verb(
+%%
+<cstring, character>{
+    \\n         return ESCAPED_CHARACTER;
+}
+)
+
+Or:
+
+verb(
+%%
+<cstring>{
+    <character>\\n      return ESCAPED_CHARACTER;
+}
+)
+
+which has the same effect. The last example shows that startconditions may be nested.
+Note that the actions above return something we have not yet seen before. We shouldn't.
+It assumes that in the Scanner class, or somewhere else, an tt(enum) was defined that
+has a value ESCAPED_CHARACTER. In this way, flc() can be used with a parser such as
+bisonc++.

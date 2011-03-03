@@ -1,0 +1,81 @@
+COMMENT(includefile(../../release.yo))
+
+htmlbodyopt(text)(#27408B)
+htmlbodyopt(bgcolor)(#FFFAF0)
+whenhtml(mailto(Frank B. Brokken: f.b.brokken@rug.nl))
+
+DEFINEMACRO(rcell)(1)(\
+    htmlcommand(<td align="right">)ARG1+htmlcommand(</td>)\
+)
+DEFINEMACRO(ccell)(1)(\
+    htmlcommand(<td align="center">)ARG1+htmlcommand(</td>)\
+)
+DEFINEMACRO(lsoption)(3)(\
+    bf(--ARG1)=tt(ARG3) (bf(-ARG2))\
+)
+DEFINEMACRO(laoption)(2)(\
+    bf(--ARG1)=tt(ARG2)\
+)
+DEFINEMACRO(loption)(1)(\
+    bf(--ARG1)\
+)
+DEFINEMACRO(soption)(1)(\
+    bf(-ARG1)\
+)
+
+DEFINEMACRO(itt)(1)(\
+    it()tt(ARG1)\
+)
+
+DEFINEMACRO(flc)(0)(bf(flexc++))
+DEFINEMACRO(Flc)(0)(bf(Flexc++))
+DEFINEMACRO(prog)(0)(tt(flexc++))
+DEFINEMACRO(Cpp)(0)(bf(C++))
+DEFINEMACRO(prot)(0)(tt((prot)))
+
+COMMENT(
+DELETEMACRO(tt)
+DEFINEMACRO(tt)(1)(em(ARG1))
+)
+
+COMMENT(
+use the and macro between names and the land macro between the first to last
+name and the last name. In latex both commands will output \and commands, while
+in HTML the and macro will expand to a comma and land to "and".
+)
+DEFINEMACRO(and)(0)(\
+    whenhtml(, )\
+    whenlatex( latexcommand(\and))\
+)
+DEFINEMACRO(land)(0)(\
+    whenhtml( and )\
+    whenlatex( latexcommand(\and))\
+)
+
+latexoptions(a4paper)
+latexpackage(colorlinks=true,urlcolor=cyan)(hyperref)
+latexpackage()(times) COMMENT(use a more `thick' font, but results in a number of overfull hboxes when using texttt)
+latexpackage()(moreverb)
+
+whenlatex(\
+    DELETEMACRO(url)\
+    DEFINEMACRO(url)(2)(\
+        latexcommand(\href{ARG2}{ARG1})\
+    )\
+    DELETEMACRO(verbinclude)\
+    DEFINEMACRO(verbinclude)(1)(\
+        COMMENT(Does not use verbatimtabinput because the latex might be
+                compiled in a different location)\
+        PUSHCHARTABLE()\
+        latexcommand(\begin{verbatimtab}[4])\
+        XXnl()\
+        NOEXPANDINCLUDE(ARG1)\
+        latexcommand(\end{verbatimtab})\
+        XXnl()\
+        POPCHARTABLE()\
+    )\
+    DELETEMACRO(lref)\
+    DEFINEMACRO(lref)(2)(\
+        latexcommand(\hyperref[ARG2]{ARG1})\
+    )\
+)

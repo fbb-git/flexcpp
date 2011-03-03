@@ -1,0 +1,2 @@
+Starting point of the analysis is the parser. The parser needs access to
+tt(States) and tt(Rules). The parser is described link(here)(PARSER).

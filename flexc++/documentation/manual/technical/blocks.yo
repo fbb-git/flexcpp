@@ -1,0 +1,5 @@
+The block of bf(C++) code is simply parsed from the first tt({) until the
+final matching tt(}), acknowledging comment, strings and character constants.
+Blocks are recognized by the scanner. Once a block has been recognized the
+scanner returns a tt(BLOCK) terminal symbol, and the text of the block is
+retrieved using tt(d_scanner.block()).

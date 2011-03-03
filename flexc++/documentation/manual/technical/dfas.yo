@@ -1,0 +1,24 @@
+The regular expression patterns define non-finite state automata (NFA) which
+must be converted to deterministic finite state automata (DFA). Each
+mini scanner has its own DFA and the class DFAs builds the various DFAs for
+each of the mini scanners. The DFA construction needs access to the rules,
+states and character ranges, which are on to the tt(DFAs)
+object) (cf. figure ref(DFASFIG))
+
+    figure(images/dfas)(The DFAs class organization)(DFASFIG)
+
+The tt(DFAs) object real work is performed by its tt(build) member. The
+tt(build) member visits all the elements of tt(Rules), passing each element to
+tt(buildDFA). Each of the elements of tt(Rules) defines all the rules of a
+mini-scanner. 
+
+The function tt(buildDFA) performs two tasks:
+    itemization(
+    it() It adds another element to its tt(d_dfa) vector, containing the name
+of the mini scanner (obtained from the tt(Rules)'s tt(NameVector)) and an
+initialized tt(DFA) object (see section ref(DFA))
+    it() Next it calls tt(build) for the initialized tt(DFA), passing it the
+vector of indices of the start states for that mini scanner. tt(Build) will
+construct the mini scanner's DFA, see section ref(DFA).
+    )
+

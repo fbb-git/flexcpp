@@ -1,0 +1,71 @@
+lchapter(actions)(Actions)
+
+As described in Section ref(rulessection), the second section of the flc()
+input file contains series of rules: pairs of patterns and actions.
+
+Specifications of patterns end at the first unescaped white space character;
+the action then starts at the first non-white space character. It usually
+contains Cpp() code, with two exceptions: the empty and the bar (tt(|))
+action (see below). If the Cpp() code starts with a brace (tt({)), the action
+can span multiple lines until the matching closing brace (tt(})) is
+encountered. Flc() will correctly handle braces in strings and comments.
+
+Actions can also be empty (i.e. only white space characters were encountered
+until the end of the line). Empty actions discard the matched pattern. We
+discourage the use of empty actions however, and advise to place a simple
+comment stating that the input is ignored.
+
+The bar action is an action containing only a single vertical bar (tt(|)).
+This tells flc() to use the action of the next rule. This can be repeated
+so the following rules all use the same action:
+
+verb(
+a   |
+b   |
+c   std::cout << "Matched " << match() << "\n";
+)
+
+Actions can return an tt(int) value, usually used for returning tokens to a
+parser. This return value is then returned from tt(Scanner::lex()). The next
+call to tt(lex()) then starts off where the previous call left off.
+
+The following functions can be called from actions (or methods called from
+those actions):
+
+description(
+    dit(tt(ECHO())) Copies the current match to the scanner's output (default
+        tt(cin)).
+    dit(tt(begin(startCondition))) Places the scanner in the specified
+        start condition.
+    dit(tt(more())) Tells the scanner not to discard the current match. This
+        means that the next match will be appended to the current match. See
+        for example the following lexer file:
+
+            verb(
+%%
+super-      ECHO(); more();
+flex        ECHO();
+)
+        When presented with the input `tt(super-flex)', the scanner will
+        output `tt(super-super-flex)'.
+
+    dit(tt(less(n))) Returns all but the first tt(n) characters back to the
+        input buffer, which will then be used for further matches. Take the
+        following example:
+
+        verb(
+%%
+fubar       ECHO(); less(2);
+bar         std::cout << " Matched bar\n";
+)
+
+        When presented with the input `tt(fubar)', it will output `tt(fubar
+        Matched bar)'.
+
+        The parameter tt(n) is optional. When left out, it is interpreted as
+        tt(0) which means the entire token is put back on the input stream.
+
+        Unless you have taken means to change the matching process (by
+        changing to a different start condition for example), this results in
+        an eternal loop.
+)

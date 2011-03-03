@@ -1,0 +1,75 @@
+subsubsect(Notations)
+
+    itemization(
+    itt(Ax): accept count, indicating that em(x) state transitions have been
+        performed since the initial accepting state (tt(A0)).
+    itt(++Ax): incrementing accept count. The accept count of this state is
+        incremented each time this state is reached again
+    itt(Fx): A final state with an associated accept count.
+    it() em(pre-A-state): any NFA state in a pattern preceding its tt(A0)
+        state. 
+    it() em(post-A-state): any NFA state in a pattern at or beyond its tt(A0)
+        state.
+    it() em(LA operator): the em(lookahead) operator (tt('/')).
+    itt(x[y]): at state tt(x) an empty transition to state tt(y) is allowed.
+        See figure ref(NFA1FIG).
+    )
+
+subsubsect(Example patterns with an LA operator)
+
+    When an tt(F) state of a pattern with an LA operator is reached and there
+        is no continuation at that point then the pattern until the A0 state
+        is considered matched and is returned.
+
+    itemization(
+    it() The pattern tt(a/a+):
+
+            figure(images/NFA1)(The pattern a/a+)(NFA1FIG)
+
+        The accept count of this state is A0, and state 2 is its Final state
+    
+    it() The pattern tt(a*/aaa): Start counting from  the tt(A0) state until
+        the F-state has been reached. 
+
+            figure(images/NFA2)(The pattern a*/aaa)(NFA2FIG)
+    
+    The resulting DFA becomes:
+        center(
+   
+    table(5)(llrc)(
+    rowline()
+    row(cell()         cell(Input Ch)                                )
+    row(cell(StateSet) ccell(a)         cell(Fin/Acc)cell() cell(#steps)  )
+    rowline()
+    row(
+            cell(12)        cell(123)   rcell(A0)                    )
+    row(
+            cell(123)       cell(1234)  rcell(A1)    cell() ccell(1)    )
+    row(
+            cell(1234)      cell(12345) rcell(A2)    cell() ccell(2)   )
+    row(
+            cell(12345)     cell(12345) rcell(F, A3) cell() ccell(3)   )
+    rowline()
+    ))
+    
+    )
+                
+lsubsubsect(FINACALGO)(The FinAc computing algorithm)
+
+enumeration(
+eit() While creating the NFA, count transitions from A0 (as shown in the NFA
+       diagrams above (when there are multiple routes: assign the highest
+        count to an NFA state)).  
+eit() After creating the DFA, start to follow transitions from the A0 rows.
+    itemization(
+    it() for DFA rows containing pre-A NFA states use the incremented A
+        count of the DFA row from which a transition to the current row was 
+        made;
+    it() If a Final (F) state is reached, while transiting from a row that's
+        also a Final state to the current row the  the A-count of the
+        originating DFA row is kept.
+    it() If a DFA row is reached merely consisting of post-A NFA states:
+        set this state's Accept count to `incrementing' and initialize it
+        to the highest Accept count of the NFA states defining this DFA row.
+    )
+)

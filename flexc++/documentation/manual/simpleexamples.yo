@@ -1,0 +1,46 @@
+lchapter(simpleexamples)(Some simple examples)
+
+lsect(lexermain)(A simple lexer file and main function)
+
+The following lexer file detects identifiers:
+
+verbinclude(examples/simplelexer)
+
+The tt(main()) function below defines a local Scanner object,
+and calls tt(lex()) as long as it does not return 0.
+tt(lex()) will return 0 if the end of the input stream
+is reached. (By default tt(std::cin) will be used).
+
+verbinclude(examples/mainforsimplelexer.cc)
+
+Each identifier on the input stream is replaced by
+itself and some surrounding text. By default, flc() echoes
+all characters it cannot match to tt(cout). If you do not want
+this, simply use the following pattern:
+
+verbinclude(examples/simpleignoringlexer)
+
+The second pattern will cause flc() to ignore all characters
+on the input stream. The first pattern will still match all
+identifiers, even those that consist of only one letter.
+But everything else is ignored. The second pattern has no
+associated action, and that is precisely what happens in lex:
+nothing. The stream is simply scanned for more characters.
+
+It is also possible to let the generated lexer do all the work.
+The simple lexer below will print out all identifiers itself.
+
+verbinclude(examples/simpleoutputtinglexer)
+
+Note how a compound statement may be used instead of a one line
+statement at the end of the line. The opening bracket must appear
+on the same line as the pattern, however. Also note that inside
+an action, we can use members of Scanner. tt(match()) contains
+the token that was last matched.
+And below is a main() function that is used with the generated scanner.
+
+verbinclude(examples/mainforoutputtinglexer.cc)
+
+Note how simple the main function is. tt(Scanner::lex()) does not
+return until the entire input stream has been processed, because none of
+the patterns has an associated action with a return statement.

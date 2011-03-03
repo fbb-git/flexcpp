@@ -1,0 +1,43 @@
+lchapter(fileformat)(Format of the input file)
+The flc() input file consists of two (not three!) sections, separated by a line containing `tt(%%)'.
+
+verb(definitions
+%%
+rules)
+
+lsect(definitionsection)(Definition section)
+All flc() options are specified either on the command line or in the
+definition section. For more information on options, see ref(options)
+
+Furthermore, the definition section contains declarations of simple name
+definitions to simplify scanner specification. A name definition looks like:
+
+verb(name	pattern)
+
+where tt(name) is is a word beginning with a letter or an underscore (`_')
+followed by zero or more letters, digits, `_', or `-' (dash). tt(pattern)
+is a pattern, see lref(Patterns)(patterns).
+
+Finally, in the definition section we can declare lref(start
+conditions)(startconditions).  Miniscanners are a kind of startcondition, and
+they are very useful for scanning small `sublanguages' in the language you
+want to scan. An example is scanning a C-string in a C-program.
+
+lsect(rulessection)(Rules section)
+The rules section of the flc() input contains a series of rules of the form:
+
+verb(pattern    action)
+
+tt(action) is here an end-of-line comment, a single-line C-statement, or a
+compound statement that may span several lines. tt(action) may also be empty.
+
+An action consisting solely of a vertical bar (`|') means ``same as the action
+for the next rule''.
+
+lsect(comments)(Comments)
+Flc() allows one to place comments anywhere in the document, indented or not.
+Both multiline comments (tt(/* ... */)) and end of line comments (tt(// ...))
+are supported.
+
+When a multiline comment is encountered outside an action, flc() discards the
+comment, while all comments in actions will be copied verbatim to the source.

@@ -1,0 +1,53 @@
+The function tt(Generator::dfas), defined in tt(generator/dfas) defines
+defines in tt(d_out) the static data member tt(int const
+ScannerBase::s_dfa[][dfaCols()]), where tt(dfaCols) returns the number of
+columns of the DFA matrices.
+
+em(All) DFAs are accessed through this single tt(s_dfa) matrix. Each
+individual DFA starts at a specific row of tt(s_dfa). The first DFA to be
+written is associated with the tt(INITIAL) scanner: tt(INITIAL) is always
+defined and contains all rules not explicitly associated with a mini scanner.
+
+The matrix tt(s_dfa) contains the rows of em(all) DFAs ordered by start state.
+
+The tt(enum class BEGIN) defines the symbolic names of the start states
+Its constant tt(INITIAL) always receives value 0.
+
+Each row contains the row to transit to if the column's character range was
+sensed. Row numbers are relative to the used DFA. There are as many 
+elements in the rows of the tt(s_dfa) table as there are character ranges
+em(plus) three. These final three element represent, respectively:
+    itemization(
+    it() The rule for which this row represents a final state. In this case
+there is no continuation for the next character and the indicated rule has
+been matched. If this row does em(not) represent a final state this value
+equals -1.
+    it() Begin and end indices in the array tt(s_accept), holding information
+about a row's accept state. This is used with rules using the lookahead
+operator. The first index holds the first relevant tt(s_accept) row, the
+second index holds the first row that is not relevant anymore. If tt(begin ==
+end) then this row does not represent an accepting state.
+    )
+
+The em(base locations) for the various mini scanners are defined in the static
+array tt(s_dfaBase). Its initial value matches the tt(INITIAL) scanner, and
+points to the first tt(s_dfa) row. Additional values are defined if mini
+scanners were used and point at the initial rows in tt(s_dfa) for these mini
+scanners. Here is an example of a tt(enum class Begin) and matching
+tt(s_dfaBase): 
+        verb(
+    enum class Begin
+    {
+        INITIAL,
+        str,
+    };
+        
+    std::vector<int const (*)[9]> const ScannerBase::s_dfaBase =
+    {
+        { s_dfa + 0 },
+        { s_dfa + 6 },
+    };
+        )
+    The tt(INITIAL) scanner's dfa rows start at the top, the tt(str) mini
+scanner starts at row index 6 of tt(s_dfa).
+    

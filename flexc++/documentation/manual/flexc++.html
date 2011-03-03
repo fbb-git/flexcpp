@@ -1,0 +1,1196 @@
+<html><head>
+<title>Flexc++ (Version _CurVers_) User Guide</title>
+<link rev="made" href="mailto:Frank B. Brokken: f.b.brokken@rug.nl">
+</head>
+<body text="#27408B" bgcolor="#FFFAF0">
+<hr>
+<h1>Flexc++ (Version _CurVers_) User Guide</h1>
+<h2>Richard Berendsen,  Frank B. Brokken and  Jean-Paul van Oosten</h2>
+
+<h2><a href="http://www.rug.nl/">Rijksuniversiteit Groningen</a></h2><h2>_CurYrs_</h2>
+
+<h1>Table of Contents</h1>
+<dl>
+<dl>
+<dt><h3><a href="#l1">0.1: Technical documentation (Thu, 03 Mar 2011 15:18:40 +0100 )</a></h3></dt>
+<dl>
+<dt><a href="#l2">0.1.1: flexc++</a></dt>
+<dt><a href="#l3">0.1.2: Notation, Terminology</a></dt>
+<dl>
+<dt><a href="#l4">0.1.2.1: Notations</a></dt>
+<dt><a href="#l5">0.1.2.2: Example patterns with an LA operator</a></dt>
+<dt><a href="#l6">0.1.2.3: The FinAc computing algorithm</a></dt>
+</dl>
+<dt><a href="#l7">0.1.3: The parser</a></dt>
+<dt><a href="#l8">0.1.4: Code (action)  blocks</a></dt>
+<dt><a href="#l9">0.1.5: The class State</a></dt>
+<dt><a href="#l10">0.1.6: States</a></dt>
+<dt><a href="#l11">0.1.7: Rules and the class Rule</a></dt>
+<dt><a href="#l12">0.1.8: Patterns</a></dt>
+<dt><a href="#l13">0.1.9: The class PatternVal</a></dt>
+<dt><a href="#l14">0.1.10: Ranges</a></dt>
+<dt><a href="#l15">0.1.11: The class DFAs</a></dt>
+<dt><a href="#l16">0.1.12: The DFA</a></dt>
+<dt><a href="#l17">0.1.13: The rows of the DFA: DFAROW</a></dt>
+<dt><a href="#l18">0.1.14: Patterns containing the lookahead operator</a></dt>
+<dl>
+<dt><a href="#l19">0.1.14.1: processFinAc</a></dt>
+<dt><a href="#l20">0.1.14.2: DFA::propagateLAsteps</a></dt>
+<dt><a href="#l21">0.1.14.3: DFA::processRule</a></dt>
+<dt><a href="#l22">0.1.14.4: DFA::processRow</a></dt>
+<dt><a href="#l23">0.1.14.5: DFA::inspect</a></dt>
+</dl>
+<dt><a href="#l24">0.1.15: Generating Code</a></dt>
+<dl>
+<dt><a href="#l25">0.1.15.1: The range-table</a></dt>
+<dt><a href="#l26">0.1.15.2: The DFAs</a></dt>
+<dt><a href="#l27">0.1.15.3: The Final-Accept info array</a></dt>
+</dl>
+<dt><a href="#l28">0.1.16: Run-time operations</a></dt>
+</dl>
+
+<p><hr><p>
+<p>
+<a name="l1"></a>
+<h2>0.1: Technical documentation (Thu, 03 Mar 2011 15:18:40 +0100
+)</h2>
+<p>
+<a name="l2"></a>
+<h3>0.1.1: flexc++</h3>
+    Starting point of the analysis is the parser. The parser needs access to
+<code>States</code> and <code>Rules</code>. The parser is described <a href="flexc++.html#PARSER">here</a>.
+<p>
+<a name="NOTATION"></a><a name="l3"></a>
+<h3>0.1.2: Notation, Terminology</h3>
+    <a name="l4"></a>
+<h4>0.1.2.1: Notations</h4>
+<p>
+<ul>
+    <li><code>Ax</code>: accept count, indicating that <em>x</em> state transitions have been
+        performed since the initial accepting state (<code>A0</code>).
+    <li><code>++Ax</code>: incrementing accept count. The accept count of this state is
+        incremented each time this state is reached again
+    <li><code>Fx</code>: A final state with an associated accept count.
+    <li> <em>pre-A-state</em>: any NFA state in a pattern preceding its <code>A0</code>
+        state. 
+    <li> <em>post-A-state</em>: any NFA state in a pattern at or beyond its <code>A0</code>
+        state.
+    <li> <em>LA operator</em>: the <em>lookahead</em> operator (<code>'/'</code>).
+    <li><code>x[y]</code>: at state <code>x</code> an empty transition to state <code>y</code> is allowed.
+        See figure <a href="flexc++.html#NFA1FIG">1</a>.
+    </ul>
+<p>
+<a name="l5"></a>
+<h4>0.1.2.2: Example patterns with an LA operator</h4>
+<p>
+When an <code>F</code> state of a pattern with an LA operator is reached and there
+        is no continuation at that point then the pattern until the A0 state
+        is considered matched and is returned.
+<p>
+<ul>
+    <li> The pattern <code>a/a+</code>:
+<p>
+<a name="NFA1FIG"></a><p><center><img src="images/NFA1.jpg" align="bottom" alt="Figure 1 is shown here."/><br>
+Figure 1: The pattern a/a+
+</center><p><br>
+
+<p>
+The accept count of this state is A0, and state 2 is its Final state
+<p>
+<li> The pattern <code>a*/aaa</code>: Start counting from  the <code>A0</code> state until
+        the F-state has been reached. 
+<p>
+<a name="NFA2FIG"></a><p><center><img src="images/NFA2.jpg" align="bottom" alt="Figure 2 is shown here."/><br>
+Figure 2: The pattern a*/aaa
+</center><p><br>
+
+<p>
+The resulting DFA becomes:
+        <center>
+<p>
+<table>
+
+    <td colspan=5><hr></td>
+
+    
+<tr>
+<td> </td>         <td> Input Ch</td>                                 
+</tr>
+
+    
+<tr>
+<td> StateSet</td> <td align="center">a</td>         <td> Fin/Acc</td><td> </td> <td> #steps</td>   
+</tr>
+
+    <td colspan=5><hr></td>
+
+    
+<tr>
+
+            <td> 12</td>        <td> 123</td>   <td align="right">A0</td>                     
+</tr>
+
+    
+<tr>
+
+            <td> 123</td>       <td> 1234</td>  <td align="right">A1</td>    <td> </td> <td align="center">1</td>     
+</tr>
+
+    
+<tr>
+
+            <td> 1234</td>      <td> 12345</td> <td align="right">A2</td>    <td> </td> <td align="center">2</td>    
+</tr>
+
+    
+<tr>
+
+            <td> 12345</td>     <td> 12345</td> <td align="right">F, A3</td> <td> </td> <td align="center">3</td>    
+</tr>
+
+    <td colspan=5><hr></td>
+
+    
+</table></center>
+<p>
+</ul>
+<p>
+<a name="FINACALGO"></a><a name="l6"></a>
+<h4>0.1.2.3: The FinAc computing algorithm</h4>
+<p>
+<ol>
+<li> While creating the NFA, count transitions from A0 (as shown in the NFA
+       diagrams above (when there are multiple routes: assign the highest
+        count to an NFA state)).  
+<li> After creating the DFA, start to follow transitions from the A0 rows.
+    <ul>
+    <li> for DFA rows containing pre-A NFA states use the incremented A
+        count of the DFA row from which a transition to the current row was 
+        made;
+    <li> If a Final (F) state is reached, while transiting from a row that's
+        also a Final state to the current row the  the A-count of the
+        originating DFA row is kept.
+    <li> If a DFA row is reached merely consisting of post-A NFA states:
+        set this state's Accept count to `incrementing' and initialize it
+        to the highest Accept count of the NFA states defining this DFA row.
+    </ul>
+</ol>
+<p>
+<a name="PARSER"></a><a name="l7"></a>
+<h3>0.1.3: The parser</h3>
+    The parser is called by <code>flexc++</code> as follows:
+        <pre>
+
+    Parser parser(rules, states);
+    parser.parse();
+        
+</pre>
+
+The constructor performs no other tasks than initializing itself.
+<code>Rules</code> and <code>states</code> are still empty at this point.
+<p>
+The <code>parse</code> function was generated by bisonc++. It's better understood from
+the grammar description.
+<p>
+<code>parser/grammar</code>: The grammar's start rule is
+        <pre>
+
+    input:
+        opt_directives          // directives. C(++) code now in a class
+        section_delimiter mode_pattern
+        opt_rules
+    ;
+        
+</pre>
+
+<p>
+<code>parser/rules/rulesection</code>: The directives are not covered here yet. A rule
+is defined as:
+        <pre>
+
+    rule_line:                      
+        rule_definition '\n' mode_pattern
+    ;
+        
+</pre>
+
+<p>
+<code>parser/rules/modeswitches:</code> A <code>mode_pattern</code> is a marker non-terminal
+resetting the scanner to its pattern mode, allowing it to recognize the next
+pattern (i.e., a regular expression that can be matched)
+<p>
+A <code>rule_definition</code> consists of a regular expression that can be matched (a
+pattern). E.g., <code>a+b*</code>. It is a <code>pattern_ws</code>, i.e., a pattern followed by
+white space, optionally followed by a block of <strong>C++</strong> code, eventually ending
+in a newline. Here are its rules:
+<p>
+<pre>
+
+    rule:
+        pattern_ws BLOCK
+        {
+            d_rules.add(SemVal::downCast&lt;PatternVal&gt;(*$1).pair(), 
+                        d_accept, d_scanner.block());
+        }
+    |
+        pattern_ws
+        {
+            d_rules.add(SemVal::downCast&lt;PatternVal&gt;(*$1).pair(), d_accept);
+        }
+    ;
+        
+</pre>
+
+<p>
+Blocks are defined <a href="flexc++.html#BLOCKS">here</a>; the <code>Rules</code> class is described
+<a href="flexc++.html#RULES">here</a>; patterns are described <a href="flexc++.html#PATTERNS">here</a>.
+<p>
+<a name="BLOCKS"></a><a name="l8"></a>
+<h3>0.1.4: Code (action)  blocks</h3>
+    The block of <strong>C++</strong> code is simply parsed from the first <code>{</code> until the
+final matching <code>}</code>, acknowledging comment, strings and character constants.
+Blocks are recognized by the scanner. Once a block has been recognized the
+scanner returns a <code>BLOCK</code> terminal symbol, and the text of the block is
+retrieved using <code>d_scanner.block()</code>.
+<p>
+<a name="STATE"></a><a name="l9"></a>
+<h3>0.1.5: The class State</h3>
+    Objects of the class <code>State</code> contain one single element of a
+<a href="flexc++.html#PATTERNS">pattern</a>. A <code>State</code> contains/offers:
+    <ul>
+    <li><code>d_type</code>: the type represented by the State (EMPTY, FINAL, CHARSET,
+        BOL), the internally used <code>UNDETERMINED__</code> and <code>EOF__</code> types, or
+        the ascii-value of a single character.
+    <li><code>d_accept</code>: a flag, which is -1 unless the state represents an
+        accepting state. Patterns using a lookahead operator have a state in
+        which the <em>accept</em> flag is set at the location of the lookahead (LA)
+        operator. In fact the LA operator never literally enters the pattern's
+        state. In the sequence of <code>State</code>s its presence can be inferred from
+        the existence of a <code>State</code> which has the <em>accept</em> flag set.
+<p>
+Values unequal -1 indicate that this is an accepting state. If the
+        state is a final state then <code>d_accept</code> defines the length of the the
+        tail when a lookahead operator is used.
+<p>
+<li> An index into the <a href="flexc++.html#RULES">Rules</a> object to the <a href="flexc++.html#RULE">rule</a>
+        object defining the pattern (-1 if the rule does not use the LA
+        operator, indicating that its index is irrelevant);
+    <li> A shared pointer to <code>StateData</code>. The class <code>StateData</code> is derived
+        from <a href="??">SemVal</a>, and contains two indices: the <code>State</code>
+        indices of the states following the current <code>State</code>. The second
+        index (<code>d_next2</code>) may be 0, indicating that there is no second
+        continuation state. A second continuation state occurs when the
+        <em>alternate</em> operator (<code>'|'</code>) is used in a pattern.
+    </ul>
+<p>
+Starting from a pattern's initial state all its subsequent states can
+therefore be reached by visiting  the indices stored in
+<code>StateData</code>. 
+<p>
+<a name="STATEFIG"></a><p><center><img src="images/state.jpg" align="bottom" alt="Figure 3 is shown here."/><br>
+Figure 3: The State class
+</center><p><br>
+
+<p>
+<a name="STATES"></a><a name="l10"></a>
+<h3>0.1.6: States</h3>
+    The <code>States</code> class (cf. figure <a href="flexc++.html#STATESFIG">4</a>) holds all the states defining
+all patterns. When a new pattern is requested the member <code>next</code> or <code>next2</code>
+can be invoked to retrieve the next or next two free states. Since
+concatenating pattern produces free states (cf. the description of the
+<a href="flexc++.html#CONCAT">pattern concatenation</a>) a vector of free state indices is
+maintained by the <code>States</code> class.
+<p>
+<a name="STATESFIG"></a><p><center><img src="images/states.jpg" align="bottom" alt="Figure 4 is shown here."/><br>
+Figure 4: The class States
+</center><p><br>
+
+<p>
+<a name="STATESNEXTTWO"></a>
+The member <code>next2</code> returns a pair of free state indices, the second state
+index refers to a <code>State</code> that has been initialized to the end-of-pattern
+state: it's state value is <code>State::FINAL</code> and its two successor (next)
+fields are set to 0, indicating that there is no continuation from this state.
+<p>
+Patterns consisting of multiple states (like the pattern <code>ab</code>, consisting of
+the state holding <code>a</code> and the state holding <code>b</code>) are stored in a
+linked-list like structure, defined in the <code>States</code>'s <code>d_state</code>
+vector. Its representation is as follows (cf. figure <a href="flexc++.html#STATECATFIG">5</a>:
+<p>
+<ul>
+    <li> The <code>next1()</code> member of the state containing the <code>a</code> pattern
+returns the index of the state containing the <code>b</code> pattern.
+    <li> The <code>next1()</code> member of the state containing the <code>b</code> pattern
+returns the index of the final state
+    <li> The final state's <code>next1</code> and <code>next2</code> members return 0
+    <li> Except for the pattern using the <code>|</code>-operator (<code>pattern |
+pattern</code>) all <code>next2</code> members return 0. The implementation of the
+<code>|</code>-operator is described <a href="flexc++.html#PATTERNVALOR">here</a>.
+    </ul>
+<p>
+<a name="STATECATFIG"></a><p><center><img src="images/statecat.jpg" align="bottom" alt="Figure 5 is shown here."/><br>
+Figure 5: Catenating States
+</center><p><br>
+
+<p>
+<a name="RULES"></a><a name="l11"></a>
+<h3>0.1.7: Rules and the class Rule</h3>
+    All rules are accessible from the <code>Rules</code> object. It contains a reference to
+the <em>states</em> (see <a href="flexc++.html#STATES">here</a>), and a vector <code>d_rules</code> containing
+the information of each of the rules, and a hash table linking a final state
+index back to its rule number (see figure <a href="flexc++.html#RULESFIG">6</a>)
+<p>
+<a name="RULESFIG"></a><p><center><img src="images/rules.jpg" align="bottom" alt="Figure 6 is shown here."/><br>
+Figure 6: The Rules class
+</center><p><br>
+
+<p>
+When the parser has detected a rule it calls <code>Rules::add</code>. A <code>Rule</code> object
+is added to <code>d_rules</code>, storing begin and end state indices, accept state
+index (if available) and action block. <code>Rules::add</code> also stores the
+association between the rule's final state and rule index in its 
+<code>unordered_map d_finalToRule</code>.
+<p>
+States of rules using the LA operator need access to the rule to which they
+belong. For those rules <code>Rules::setRuleIndices</code> is called to assign the
+<a href="flexc++.html#STATE">State's</a> <code>d_rule</code> field. This <code>d_rule</code> field is only available
+for rules using the LA operator.
+<p>
+<a name="RULE"></a>
+The <code>Rule</code> object themselves have an organization shown in figure
+<a href="flexc++.html#RULEFIG">7</a>. Its data members <code>d_start</code> and <code>d_final</code> are indices into
+the <a href="flexc++.html#STATES">States</a> object, accessing the rule's start and final states,
+respectively. A <code>Rule</code> stores any actions that must be executed when the
+rule has been matched in its <code>std::string d_action</code> (empty if there are no
+actions), see also section <a href="flexc++.html#BLOCKS">0.1.4</a>.
+<p>
+If a rule uses the lookahead (LA) operator (<code>'/'</code>) then all states before
+the LA operator can be accessed from the indices stored in the
+<code>d_preAstates</code> vector of <code>size_t</code> elements, and all states from the LA
+operator and beyond are available from the <code>d_postAstates</code> vector. 
+<p>
+The constructor of those rules visits all its states until reaching the
+A-state, storing the state indices in its <code>d_preAstates</code> vector. Then the
+same procedure is followed for the states from the A-state until the final
+state, storing these states in its d_postAstates vector.
+<p>
+<a name="RULEFIG"></a><p><center><img src="images/rule.jpg" align="bottom" alt="Figure 7 is shown here."/><br>
+Figure 7: The Rule class data members
+</center><p><br>
+
+<p>
+With those rules the data member <code>d_LAdone</code> indicates that its 
+ <a href="flexc++.html#PROPAGATELA">LA propagation</a> (see section <a href="flexc++.html#DFAROW">0.1.13</a>) has been
+completed. These latter three members are not used with rules not using the LA
+operator.
+<p>
+<a name="PATTERNS"></a><a name="l12"></a>
+<h3>0.1.8: Patterns</h3>
+    <code>parser/rules/pattern</code>: Patterns define the regular expressions that can be
+matched. All patterns start at <code>pattern_ws</code> and consist of:
+        <pre>
+
+    pattern_ws:
+        pattern opt_ws mode_block
+    ;
+        
+</pre>
+
+    Following the recognition of a pattern, the scanner is reset to its
+<code>block</code> mode, allowing it to recognize a <strong>C++</strong> action block. Blocks are
+defined <a href="flexc++.html#BLOCKS">here</a>.
+<p>
+The following patterns are defined (more extensive descriptions follow):
+    <ul>
+    <li><code>EOF_PATTERN</code>  - recognized by the lexer, matching <code>&lt;&lt;EOF&gt;&gt;</code>. 
+    <li><code>STRING</code> - recognized by the lexer, matching a literal string.
+    <li><code>SECTION_DELIMITER</code> - recognized by the lexer. The <code>%%</code> sequence in
+        fact ends the rule section 
+<p>
+TO BE INVESTIGATED.
+<p>
+<li><code>character_class</code>: a self-defined or predefined character class like
+        <code>[a-c]</code> or <code>[[alpha]]</code>.
+    <li><code>plain_characters</code>: any plain character, like <code>a</code> in <code>ape</code>.
+    <li><code>ESCAPE_SEQUENCE</code>: characters defined by escape sequences, like
+        <code>\x2a</code>. To the parser they are plain characters. 
+    <li><code>'.'</code>: the any-character-but-newline matching pattern.
+    <li><code>pattern pattern</code>: two patterns immediately following each other. These
+two patterns have the precedence of <code>CHARACTER</code>, and are combined 
+left-associatively.
+    <li><code>'^' pattern</code>: the begin-of-line pattern.
+    <li><code>pattern '|' pattern</code>  Two alternative continuations.
+    <li><code>pattern quantifier</code>: quantifiers are <code>*, +</code> and <code>?</code>.
+    <li><code>'(' incParen pattern ')' decParen</code> a pattern nested in parentheses
+    <li><code>pattern '{' start_interval_m  interval '}' regex_block_m</code> a repetition
+        using curly braces (an interval repetition)
+    <li><code>pattern '/' pattern</code> a lookahead pattern ($ is handled by the scanner)
+    </ul>
+<p>
+All patterns are handled by <code>PatternVal</code> functions. E.g., a <code>STRING</code> is
+handled by <code>PatternVal::str</code>, a character class by <code>PatternVal::charSet</code>,
+etc. See <a href="flexc++.html#PATTERNVAL">here</a> for information about the <code>PatternVal</code>
+class. 
+<p>
+<a name="PATTERNVAL"></a><a name="l13"></a>
+<h3>0.1.9: The class PatternVal</h3>
+    A <code>PatternVal</code> is derived from <code>SemVal</code>. It mainly consists of static
+factory functions returning shared pointers to <code>SemVal</code> objects
+(<code>spSemVal</code>). 
+<p>
+<code>PatternVal</code> objects contain (and offer, through the members <code>begin</code> and
+<code>end</code>) index values in the <code>States::d_states</code> of <code>State</code> objects. The
+value returned by <code>PatternVal::begin()</code> is the index of the first <code>State</code>
+defining the pattern, the value returned by <code>PattenVal::end()</code> is the index
+of the last (so: <code>State::FINAL</code>) <code>State</code> of the pattern (cf. figure
+<a href="flexc++.html#PATTERNVALFIG">8</a>).
+<p>
+<a name="PATTERNVALFIG"></a><p><center><img src="images/patternval.jpg" align="bottom" alt="Figure 8 is shown here."/><br>
+Figure 8: PatternVal objects
+</center><p><br>
+
+<p>
+<code>parser/rules/pattern</code>: the following descriptions of the working of some
+basic patterns illustrate how the vector of <code>State</code> objects in <code>States</code> is
+filled. Based on this description other pattern's implementations should be
+evident.
+<p>
+A basic pattern is the plain character. The plain character pattern is
+processed as follows:
+    <ul>
+    <li> First the indices of two free <code>State</code> vector locations are
+requested (see <a href="flexc++.html#STATESNEXTTWO">the <code>next2</code> description</a> in the
+<a href="flexc++.html#STATES"><code>States</code> clas</a>). 
+    <li> The <code>State</code> at the first state index is then
+set to a state containing the plain character, linking to the next free state
+which has been initialized to the <code>FINAL</code> state by <code>States::next2</code>. 
+    <li> Then the
+<code>PatternVal</code> is embedded in a <code>SemVal</code> (see the <a href="??"><code>SemVal</code>
+class</a> description).
+    <li> The <code>SemVal</code> is then returned in a
+<code>std::shared_ptr</code> (cf. figure <a href="flexc++.html#PATTERNVALPLAIN">9</a>).
+    </ul>
+<p>
+<a name="PATTERNVALPLAIN"></a><p><center><img src="images/patternvalplain.jpg" align="bottom" alt="Figure 9 is shown here."/><br>
+Figure 9: A plain character pattern
+</center><p><br>
+
+<p>
+A second pattern of interes is the <code>BOL</code> (begin of line) pattern as it
+combines an operator (<code>^</code>) and a separately recognized pattern. The parser
+has seen <code>'^' pattern</code> and the <code>pattern</code>'s begin and end states. The
+general approach that is followed in these cases is as follows:
+    <ul>
+    <li> A <code>PatternVal</code> is constructed for the <code>^</code> operator. This is done
+by requesting a <code>State::BOL</code> from <code>State::factory</code>, returning a pair of
+state indices matching the begin-of-line state.
+    <li> The <code>pattern</code> following the <code>^</code> is available through the
+<code>SemVal</code>, passed to the <code>PatternVal::bol</code> function. This pattern too has 
+begin and end state indices.
+    <li> The two sets of states are now concatenated (see the description of
+the <a href="flexc++.html#CONCAT">concatenation process</a> below), the BOL states preceding the
+available <code>pattern</code> states, and the concatenated states are returned as one
+single series of states, having one begin state and one final state (see
+figure <a href="flexc++.html#PATTERNVALBOL">10</a>).
+    </ul>
+<p>
+<a name="PATTERNVALBOL"></a><p><center><img src="images/patternvalbol.jpg" align="bottom" alt="Figure 10 is shown here."/><br>
+Figure 10: The pattern <code>'^' pattern</code>
+</center><p><br>
+
+<p>
+<a name="PATTERNVALOR"></a><a name="CONCAT"></a>Concatenation of two patterns always produces a free <code>State</code> that can be
+returned by, e.g., <code>State::nex2</code>. The states, defining a pattern, 
+therefore, do not have to be consecutively stored in the <code>States</code>'s vector
+of <code>State</code> objects (see figure <a href="flexc++.html#CONCATFIG">11</a>).
+<p>
+<ul>
+    <li> Concatenation starts with two <code>SemVal</code> objects.
+    <li> The <code>SemVal</code> objects are downcast to,
+resp. a <code>lhs PatternVal</code> and a <code>rhs PatternVal</code>.
+    <li> With lookahead patterns, the <code>lhs</code> pattern may be an <em>accepting
+state</em>. I.e., once the full pattern has been recognized only the lhs is
+actually matched. E.g., after recognizing <code>a/b</code> <code>a</code> is returned as
+matched, as <code>a</code> is the accepting pattern. When concatenating the lhs's end
+state disappears and is replaced by the rhs's begin state. Therefore:
+    <li> The rhs's begin state's accepting flag is set to the lhs's end
+state's accepting flag.
+    <li> The <code>lhs.end()</code> state is assigned the value of the <code>rhs.begin()</code>
+state
+    <li> The <code>rhs.begin()</code> state is marked as free
+    <li> A new <code>PatternVal</code> is returned as <code>SemVal *</code> having its
+<code>begin</code> index set to <code>lhs.begin()</code> and its <code>end</code> idex set to
+<code>rhs.end()</code>. 
+    </ul>
+<p>
+<a name="CONCATFIG"></a><p><center><img src="images/concatfig.jpg" align="bottom" alt="Figure 11 is shown here."/><br>
+Figure 11: Concatenating Patterns
+</center><p><br>
+
+<p>
+<a name="RANGES"></a><a name="l14"></a>
+<h3>0.1.10: Ranges</h3>
+    When processing characters in regular expressions subranges are defined. An
+expression like `<code>am</code>' defines the ranges ascii-0 to (but not including)
+<code>'a'</code>; <code>'a'</code>; <code>'b'</code> through <code>'l'</code>; <code>'m'</code>; and <code>'n'</code> through
+ascii-255. 
+<p>
+Likewise, sets may define ranges, like <code>[[:digits:]]</code>, defining all
+ascii characters preceding the digits; all decimal digits; and all ascii
+characters following the digits. 
+<p>
+Rather than having a NFA/DFA having entries for each of these characters the
+NFA/DFA's column-dimension (see section <a href="flexc++.html#DFA">0.1.12</a>) can be reduced, often
+considerably, by letting each column refer to a <em>set</em> of characters, rather
+than individual characters. 
+<p>
+The <code>Ranges</code> object takes care of defining and manipulating the actual 
+subsets. Its data organization is given in figure <a href="flexc++.html#RANGESFIG">12</a>.
+<p>
+<a name="RANGESFIG"></a><p><center><img src="images/ranges.jpg" align="bottom" alt="Figure 12 is shown here."/><br>
+Figure 12: The class Ranges data members
+</center><p><br>
+
+<p>
+Initially <code>d_ranges</code> is filled with all zeroes. Once a range of characters
+or a single character is defined in a pattern, it is added to the <code>Ranges</code>
+object (functions <code>add</code> accepting single characters or strings). The
+occurrence counts of the added characters are incremented if necessary. De
+functions <code>update</code>, <code>collision</code>, and <code>countRanges</code> handle the updating.
+<p>
+Details of the algorithm are not covered here, until the need for this arises.
+For the time being consult the sources for details. 
+<p>
+In the user interface the important members are <code>rangeOf, rangeOfBOL</code> and
+<code>rangeofEOF</code>, returning the column indices in DFAs to which input characters
+belong. 
+<p>
+<a name="l15"></a>
+<h3>0.1.11: The class DFAs</h3>
+    The regular expression patterns define non-finite state automata (NFA) which
+must be converted to deterministic finite state automata (DFA). Each
+mini scanner has its own DFA and the class DFAs builds the various DFAs for
+each of the mini scanners. The DFA construction needs access to the rules,
+states and character ranges, which are on to the <code>DFAs</code>
+object) (cf. figure <a href="flexc++.html#DFASFIG">13</a>)
+<p>
+<a name="DFASFIG"></a><p><center><img src="images/dfas.jpg" align="bottom" alt="Figure 13 is shown here."/><br>
+Figure 13: The DFAs class organization
+</center><p><br>
+
+<p>
+The <code>DFAs</code> object real work is performed by its <code>build</code> member. The
+<code>build</code> member visits all the elements of <code>Rules</code>, passing each element to
+<code>buildDFA</code>. Each of the elements of <code>Rules</code> defines all the rules of a
+mini-scanner. 
+<p>
+The function <code>buildDFA</code> performs two tasks:
+    <ul>
+    <li> It adds another element to its <code>d_dfa</code> vector, containing the name
+of the mini scanner (obtained from the <code>Rules</code>'s <code>NameVector</code>) and an
+initialized <code>DFA</code> object (see section <a href="flexc++.html#DFA">0.1.12</a>)
+    <li> Next it calls <code>build</code> for the initialized <code>DFA</code>, passing it the
+vector of indices of the start states for that mini scanner. <code>Build</code> will
+construct the mini scanner's DFA, see section <a href="flexc++.html#DFA">0.1.12</a>.
+    </ul>
+<p>
+<a name="DFA"></a><a name="l16"></a>
+<h3>0.1.12: The DFA</h3>
+    The conversion from NFA to DFA is the
+job of the class <code>DFA</code> object (cf. figure <a href="flexc++.html#DFAFIG">14</a>)
+<p>
+<a name="DFAFIG"></a><p><center><img src="images/dfa.jpg" align="bottom" alt="Figure 14 is shown here."/><br>
+Figure 14: The DFA class data members
+</center><p><br>
+
+<p>
+The DFA needs uses the externally available rules, states and character ranges
+and builds a matrix, called <code>d_row</code>. 
+<p>
+Each row of <code>d_row</code> defines a state in the DFA. The Rule numbers of the
+Rules defining a mini scanner received as <code>build</code>'s <code>vector&lt;size_t&gt;</code>
+parameter. 
+<p>
+Initially the start states of these rules are stored in the DFA's
+<code>d_stateSet[0]</code><sup>th</sup> element (cf. figure <a href="flexc++.html#DFAFIG1">15</a>).
+<p>
+<a name="DFAFIG1"></a><p><center><img src="images/dfa1.jpg" align="bottom" alt="Figure 15 is shown here."/><br>
+Figure 15: Creating the start states for row 0
+</center><p><br>
+
+<p>
+Next, the e-closure of this initial set of states is computed. The e-closure
+algorithm is described in ASU's dragon book (1986, figure 3.26), essentially
+adding all states that can be reached from each element in the current set of
+states on an empty transition. This computation is performed by
+<code>States::eClosure</code>.
+<p>
+At this point there is an element in <code>DFA::d_stateSet</code>, but not yet an
+element in <code>DFA::d_row</code>. By adding a <code>DFARow</code> (see section <a href="flexc++.html#DFAROW">0.1.13</a>) to
+<code>d_row</code> we associate a <code>DFARow</code> with a initial set of states. 
+<p>
+Then, transitions from this row are probed for each of the character ranges
+(in <code>Ranges</code>, see <a href="flexc++.html#RANGES">0.1.10</a>) by <code>DFARow::transitions</code>. See section
+<a href="flexc++.html#DFAROW">0.1.13</a> for a description of this function. What it boils down to:
+<code>transitions</code> may add new elements to <code>d_stateSet</code>, causing the iteration
+to continue until eventually there are as many <code>d_row</code> elements as there are
+<code>d_transitions</code> elements.
+<p>
+Having determined the transitions <code>build</code> proceeds to remove
+implied/identical rows calling <code>keepUniqueRows</code>. This function visits each
+of the rows of the DFA, testing whether an existing row has the same
+transitions and final state information as the current row. `Same transitions'
+means that the transitions of the current (under inspection) row are present
+in an earlier row; `same final state information' means that the current row
+is a final state for the same rule(s) as an earlier row. In such situations
+the current row can be merged with the earlier row, keeping the earlier
+row. The (later) row can then be removed as transitions from it are identical
+to those from the earlier row. This may happen, as the NFA construction
+algorithm may define more empty edges than strictly necessary, sometimes
+resulting in additional rows in the DFAs. As an example, consider
+the pattern <code>(a|ab)+/(a|ba)+</code>, producing the DFA
+    <center>
+    <table>
+
+    <td colspan=5><hr></td>
+
+    
+<tr>
+<td> </td><td colspan=2 align=center>Input Chars</td> 
+</tr>
+
+    
+<tr>
+<td> StateSet</td> <td align="center">a</td> <td align="center">b</td> <td align="center">Final</td> <td align="center">Accept</td> 
+</tr>
+
+    <td colspan=5><hr></td>
+
+<p>
+
+<tr>
+<td> 0</td><td align="center">1</td> 
+</tr>
+
+    
+<tr>
+<td> 1</td><td align="center">2</td><td align="center">3</td> 
+</tr>
+
+    
+<tr>
+<td> 2</td><td align="center">2</td><td align="center">3</td>   <td> 0:1</td> 
+</tr>
+
+    
+<tr>
+<td> 3</td><td align="center">4</td><td align="center">5</td> 
+</tr>
+
+    
+<tr>
+<td> 4</td><td align="center">2</td><td align="center">3</td>   <td> 0:2</td> 
+</tr>
+
+    
+<tr>
+<td> 5</td><td align="center">6</td><td> </td>     <td> </td><td> 0:++1</td> 
+</tr>
+
+    
+<tr>
+<td> 6</td><td align="center">7</td><td align="center">5</td>   <td> 0</td> 
+</tr>
+
+    
+<tr>
+<td> 7</td><td align="center">7</td><td align="center">5</td>   <td> 0</td> 
+</tr>
+
+    <td colspan=5><hr></td>
+
+    
+</table></center>
+    Rows 6 and 7 are identical, as are rows 2 and 4. For row 4 the (erroneous,
+if |TAIL| should be as short as possible) |TAIL| = 2 is shown, resulting from
+<code>aba</code> being interpreted as HEAD: <code>a</code> and TAIL: <code>ba</code>. 
+<p>
+But when |TAIL| should be minimized <code>aba</code> should be interpreted as HEAD:
+<code>ab</code> and TAIL <code>a</code>, resulting in transitions 0 -&gt; 1 -&gt; 3 -&gt; 2, with |TAIL|
+= 1. This happens when row 4 is merged to row 2. Having merged the rows,
+former transitions to the now removed rows must of course be updated to the
+merging row. So row 3 must transit to 2 when receiving input symbol <code>a</code>. The
+member <code>shrinkDFA</code> handles the shrinkage of the DFA. In this example the
+final DFA becomes:
+    <center>
+    <table>
+
+    <td colspan=5><hr></td>
+
+    
+<tr>
+<td> </td><td colspan=2 align=center>Input Chars</td> 
+</tr>
+
+    
+<tr>
+<td> StateSet</td> <td align="center">a</td> <td align="center">b</td> <td align="center">Final</td> <td align="center">Accept</td> 
+</tr>
+
+    <td colspan=5><hr></td>
+
+<p>
+
+<tr>
+<td> 0</td><td align="center">1</td> 
+</tr>
+
+    
+<tr>
+<td> 1</td><td align="center">2</td><td align="center">3</td> 
+</tr>
+
+    
+<tr>
+<td> 2</td><td align="center">2</td><td align="center">3</td> <td> 0:1</td> 
+</tr>
+
+    
+<tr>
+<td> 3</td><td align="center">2</td><td align="center">4</td> 
+</tr>
+
+    
+<tr>
+<td> 4</td><td align="center">5</td><td> </td>   <td> </td><td> 0:++1</td> 
+</tr>
+
+    
+<tr>
+<td> 5</td><td align="center">5</td><td align="center">4</td> <td> 0</td> 
+</tr>
+
+    <td colspan=5><hr></td>
+
+    
+</table></center>
+<p>
+Once the final DFA has been constructed the Final and Accept columns can be
+computed. This is performed by <code>processFinAc</code>. The function <code>processFinAc</code>
+operates on a row of the DFA matrix. See section <a href="flexc++.html#DFAROW">0.1.13</a> for its
+description. 
+<p>
+<a name="DFAROW"></a><a name="l17"></a>
+<h3>0.1.13: The rows of the DFA: DFAROW</h3>
+    Rows of DFA matrices relate (ranges of) input characters to rows (states) to
+transit to (see figure <a href="flexc++.html#DFAROWFIG">16</a>). 
+<p>
+<a name="DFAROWFIG"></a><p><center><img src="images/dfarow.jpg" align="bottom" alt="Figure 16 is shown here."/><br>
+Figure 16: The data of the class DFARow
+</center><p><br>
+
+<p>
+The <code>DFARow</code>'s row specification itself is defined by a set of states
+accessible as <code>d_stateSets[d_thisIdx]</code>. The values of this set define the
+(e-closure of the) states of this row.
+<p>
+Each of these states may have a transition to another state when observing a
+character from one of the input ranges. These states to transit to in turn
+define a set of states. 
+<p>
+If this set of states to transit to is not yet present in the <code>DFA</code> then a
+new row is added to the DFA. Adding rows is the task of <code>DFA::build</code>,
+defining and adding new sets of <code>State</code>s is the responsibility of
+<code>DFARow::transition</code>.
+<p>
+The <code>DFARow</code>'s <code>unordered_map d_map</code> defines the relationship between an
+input character range (the map's key) and the row to transit to when a
+character from that input range has been observed. 
+<p>
+The elements of the set <code>d_finalRule</code> contain the indices of the
+<code>Rules</code> for which this <code>DFARow</code> represents a final state. When the next 
+input symbol has no transition from this <code>DFARow</code> and this set is not empty
+then that rule is matched 
+<p>
+<blockquote>TODO: why is this a set? Can there be multiple rules in this set?</blockquote>
+<p>
+Additional data members of a <code>DFARow</code> are important for handling patterns
+in which the lookahead (LA) operator (<code>/</code>) has been used. This process is
+<a href="flexc++.html#LOOKAHEAD">described here</a> (section <a href="flexc++.html#LOOKAHEAD">0.1.14</a>.
+<p>
+<a name="LOOKAHEAD"></a><a name="l18"></a>
+<h3>0.1.14: Patterns containing the lookahead operator</h3>
+    The vector <code>DFARow::d_finAcInfo</code> contains <code>FinAcInfo</code> objects. Their data
+members are shown in figure <a href="flexc++.html#DFAROWFIG">16</a>. They are:
+    <ul>
+    <li><code>d_rule</code>: the index of the rule using the LA operator;
+    <li><code>d_accept</code>: the <em>accept count</em> at this point (the accept count is the
+        number of transitions after observing the LA operator, it is
+        <code>FinAcInfo::PRE_A_STATE</code> for pre-accept <code>DFARow</code>s);
+    <li><code>d_final</code>: the final state accept count. It equals
+        <code>FinAcInfo::FINAL_NOT_SET</code> if undetermined; <code>FinAcInfo::NOT_FINAL</code>
+        if this is not a Final state; when <code>d_final &gt;= 0</code> it represents the
+        Final state accept count;
+    <li><code>d_inc</code>: a <code>bool</code> which is <code>true</code> if this is an <em>incrementing
+        Accept state</em>: |TAIL| is incremented each time this state is reached
+        (as with patterns like `<code>ab/a+</code>', where |TAIL| is incremented while
+        processing the <code>a</code> symbols matching the <code>a+</code> pattern). See also
+        the <a name="description below"></a>(INCREMENTINGACCEPT).
+    </ul>
+<p>
+<blockquote>TO DO: Why is there a vector of <code>FinAcInfo</code> elements in a <code>DFARow</code>?</blockquote>
+<p>
+<a name="l19"></a>
+<h4>0.1.14.1: processFinAc</h4>
+<p>
+The <code>FinAcInfo</code> elements are updated by <code>DFA::processFinAc</code>. It visits all
+<code>FinAcInfo</code> objects of the <code>DFARow</code> and calls <code>DFA::processFinAcInfo</code>
+for each of them.
+<p>
+Each rule is only processed once by <code>processsFinAcInfo</code>. So if the same rule
+is used in, e.g., different mini scanners or in different DFA states, then the
+first occurrence results in it being processed. Since a rule, rather than a
+DFA row, defines how its HEAD and TAIL are computed there is no need to
+re-process a rule once it has been processed.
+<p>
+<code>processFinAc</code> determines the accept counts for the NFA
+    states of a rule. These counts are determined once per state to prevent
+    continuous repetition for repetitive patterns like '<code>a+</code>'. The first
+    state to receive an accept count is the rule's accept state (for a rule
+    like <code>ab/cd</code>, this results in NFA <pre>
+ 1--a--2--b--3--c--4--d--5 A 
+</pre>
+
+    having the accept state at state 3).
+<p>
+Because of restrictions in the way the LA operator may be used there's
+    never a repetitive pattern from a post-A state back to a pre-A state, so
+    accept counts can be determined starting at the NFA's accepting state.
+<p>
+<em>Accept counts</em> are determined as the number of transitions to reach a
+    certain DFA row starting from the row holding the NFA's accepting state.
+    It is the task of the doubly recursive function <code>DFA::propagateLAsteps</code>
+    to determine the accept counts of the DFA state whose row-index was passed
+    to it. 
+<p>
+<a name="PROPAGATELA"></a><a name="l20"></a>
+<h4>0.1.14.2: DFA::propagateLAsteps</h4>
+<p>
+<code>DFA::propagateLAsteps</code> operates as follows:
+        <ul>
+        <li> It receives the rule's accepting state number and an (initial)
+            accept count of 0. 
+        <li> Then, in preparation of the recursive calls the step count is
+            incremented if the current state is not an empty edge. 
+        <li> As each state has two links (which may not both be used) the
+            recursive calls follow these links, receiving the possibly 
+            incremented stepcount. 
+        <li> When there are multiple routes to a given state then the accept
+            count is set to the largest step count value.
+        </ul>
+<p>
+<a name="l21"></a>
+<h4>0.1.14.3: DFA::processRule</h4> 
+<p>
+Once the LA steps have been determined <code>DFA::processRule</code> is called to
+    determine the accept counts of LA-rules, starting at row 0 of the DFA.
+<p>
+<ul> 
+        <li><code>DFA::processRule</code> is an indirectly recursive function receiving a
+            rule index; a DFA row index (initially 0); an indication whether
+            its 'parent' row (i.e., the DFA row offering a transition to the
+            current row was a Final state for the current rule (initially: not
+            final)); and the number of accept steps so far (initially -1).
+        <li> At the DFA row currently under inspection it tries to locate the
+            provided rule index in the DFA row's FinAcInfo objects. 
+        <li> If found then that rule is an LA rule that is active in the
+            current DFA row. It then calls <code>DFA::processRow</code> to determine
+            that row's accept and final count for that particular rule,
+            passing it the rule's <code>FinAcInfo</code>; rule index; DFA row index;
+            parent final status and current tail size.
+        </ul>
+<p>
+<a name="l22"></a>
+<h4>0.1.14.4: DFA::processRow</h4>
+<p>
+<code>DFA::processRow</code> is called from <code>DFA::processRule</code> and implements the
+    core actions of the tail-size computation algorithm. It consists of two
+    parts. In part I the rule's <code>FinAcInfo</code> of the current row is updated,
+    in part II the rows to which the current row may transit to are inspected.
+<p>
+<ul>
+   <li> Part I is only executed if there's at least one post-A state present 
+    in the set of NFA states represented by the current DFA row. If this holds
+    true then the following steps are performed: 
+       <ul>
+       <li> At the row for which this happens for the first time tailSize is
+        set to 0. 
+       <li> Then, if the current row can be a final state for the rule that's
+        currently under inspection its |TAIL| is determined. 
+       <li> If the |TAIL| was determined during an earlier phase of the
+        algorithm, then --following the principle that |TAIL| should always be
+        as small as possible-- |TAIL| is determined as the minimum of its
+        current value and the current value of tailSize. 
+       <li> If |TAIL| hasn't been determined yet then it is set to
+        <code>parentFinal</code>, unless <code>parentFinal</code> is -1, in which case it is set
+        to <code>tailSize</code>. Thus, two consecutive final DFA states have identical
+        |TAIL| values, as described in section <a href="flexc++.html#FINACALGO">0.1.2.3</a>.
+       </ul>
+<p>
+<li> <a name="INCREMENTINGACCEPT"></a> DFA rows may represent mere pre-A NFA
+    states, mere post-A NFA states or a mixture of both. Once a DFA row is
+    reached merely representing post-A NFA states |TAIL| must be incremented
+    at each transition as there are no backlinks to DFA rows representing
+    pre-A NFA states. If the set of <code>State</code>s defining a DFA row does not
+    contain pre-A states the accept count of the current <code>FinAcInfo</code> is set
+    to incrementing, with an initial value equal to the maximum possible
+    accept count when reaching this row for the first time. As a case in
+    point, consider the regex and NFA shown in figure <a href="flexc++.html#INCACCEPTFIG">17</a>.
+<p>
+<a name="INCACCEPTFIG"></a><p><center><img src="images/incaccept.jpg" align="bottom" alt="Figure 17 is shown here."/><br>
+Figure 17: Incrementing Accept counts
+</center><p><br>
+
+<p>
+Here, once the set of states <code>{2,4}</code> has been reached we have mere
+    post-A states and the initial accept count of the DFA row representing the
+    set <code>{2,4}</code> is set to <code>2,incrementing</code>. Furthermore, if this is also a
+    final state |TAIL| must be equal to the eventual accept count.
+<p>
+Since accept counts are incremented from here, there's no need to inspect
+    further transitions from here. In this case processRow returns, not
+    executing its 2nd part.
+<p>
+Consider (see also <code>dfa/processrow.cc</code>, near line 50):
+<p>
+<blockquote>
+    An incrementing accept state is not a fixed final value. Is it necessary
+    to set final's value?  Couldn't the code generator detect that this is a
+    final state <em>and</em> an incrementing Accept state and thus determine that
+    |TAIL| will be the current accept count if this is the final DFA state for
+    this rule?  In that case <code>final != NOT_FINAL</code> would be enough
+    information for the code generator to decide what to do.</blockquote>
+<p>
+<li> Part II: If processing continues the current row represents a
+    mixed-A-state set. In this case the row's accept size is set to the
+    current tail size, tail size is incremented and the 2nd part starts.
+<p>
+<code>DFA::processRow</code>'s second part visits all transitions of the current
+    row, passing them in sequence to the function <code>DFA::inspect</code>, together
+    with the current row and rule indices; the current Final state's |TAIL|
+    value (which may be -1 if the current DFA state isn't a final state for
+    the current rule); and the current (posibly incremented) tail
+    size. 
+    </ul>
+<p>
+<a name="l23"></a>
+<h4>0.1.14.5: DFA::inspect</h4>
+<p>
+<code>DFA::inspect</code> (indirect recursively) calls <code>processRule</code> if the
+    transition is to a later (higher row index) row in the DFA than the row
+    from where <code>DFA::inspect</code> was called. Back transitions can be skipped as
+    their statuses were determined before, representing earlier positions in
+    the NFA.
+<p>
+<a name="l24"></a>
+<h3>0.1.15: Generating Code</h3>
+    The code generated by <code>flexc++</code> must read input, match the input with some
+regular expressin and return the associated token. A catch-all escape is
+provided by the implicitly provided rule echoing all non-matched input to the
+standard output stream.
+<p>
+The class <code>Generator</code> handles code generation for the class <code>Scanner</code> (or
+whatever other name is defined). The <code>Generator</code>'s constructor currently
+defines a fixed output file name (<code>STATICS</code>) to which all static data are
+written. This output stream is accessed throught the <code>Generator::d_out</code> data
+member. This setup must eventually be modified.
+<p>
+The generated code consists of four parts:
+    <ul>
+    <li> The character-table (actually: range-table). See section
+        ??. 
+<p>
+<li> The DFAs are generated by <code>Generator::dfas</code>. 
+<p>
+For each of the DFAs the function <code>Generator::dfa</code> is called. Next the
+information about the Final and Accept counts is written by
+<code>Generator::outFinAcs</code> and finally the DFA entry points are generated by
+<code>Generator::dfaEntryPoints</code>. 
+<p>
+<ul>
+        <li> The function <code>Generator::dfa</code> receives as its first argument a
+<code>DFAs::Pair</code> (see figure <a href="flexc++.html#DFASFIG">13</a>), containing the name of the mini
+scanner associated with the DFA and the DFA itself. The member function first
+checks whether the DFA has already been processed. This only happens for
+<code>INITIAL</code>, and the current test is rather blunt by the function <code>dfa</code>
+calling <code>std::find</code>.
+<p>
+If this DFA has not yet entered the <code>s_dfa[]</code> array then
+        <ul>
+        <li> The name of the current mini scanner is stored in <code>startStates</code>
+(to allow checking for repetitive handling);
+        <li> The row number of the first row of the current DFA in <code>s_dfa</code>
+is saved in the vector <code>dfaOffsets</code>;
+        <li> <code>Generator::dfaRow</code> is called for each row of the DFA (see
+figure <a href="flexc++.html#DFAROWFIG">16</a>). This latter function writes the vector of DFA rows to
+transit to (i.e., rows relative to the current DFA's start row, so not the
+actual rows in <code>s_dfa</code>) for each of the character ranges (calling
+<code>Generator::dfaTransitions</code>), followed by the row's <code>FinAcInfo</code> data: a
+value != -1 indicates the rule for which this row is a FINAL state.
+<p>
+The row's final two values are begin and end indices in s_accept, holding
+information about a row's accept state. -1 indicates `not an accept state'
+        </ul>
+        <li> The function <code>Generator::outFinAcs</code>
+            <blockquote>TO DO</blockquote>
+        <li> The function <code>Generator::dfaEntryPoints</code>
+            <blockquote>TO DO</blockquote>
+        </ul>
+    <li> The function <code>Generator::declarations</code>
+            <blockquote>TO DO</blockquote>
+    <li> The function <code>Generator::actions</code>
+            <blockquote>TO DO</blockquote>
+    </ul>
+<p>
+<a name="l25"></a>
+<h4>0.1.15.1: The range-table</h4>
+            The character-table translates input characters to ranges.  Each input
+character (by default the 256 extended ascii-characters) is associated with a
+character <em>range</em>. Character <em>range</em> indices are then used as column
+indices of the DFA tables (see sections <a href="flexc++.html#RANGES">0.1.10</a> and <a href="flexc++.html#DFA">0.1.12</a>).
+<p>
+The function <code>Generator::charTable</code> defines in <code>d_out</code> the static
+data member <code>size_t const ScannerBase::s_ranges[]</code>. This array has 256
+elements, so each character (cast to type <code>unsigned char</code>) can be used as
+an index into this array, returning its range-number.
+<p>
+In addition to real input characters, the scanner may return two pseudo
+range values: <code>rangeOfBOL</code> is the range matching the special `character'
+<code>BOL</code>, returned when a begin-of-line is sensed, and <code>rangeOfEOF</code> which is
+returned when EOF was sensed (e.g., when the <code>&lt;&lt;EOF&gt;&gt;</code> rule was used).
+These BOL and EOF tokens must be returned by <code>nextChar</code> when BOL or EOF was
+sensed, and the DFA's recognizes their ranges. The ranges <code>rangeEOF</code> and
+<code>rangeBOL</code> are declared in the scanner class's data members section.
+<p>
+If DFA's don't recognize BOL or EOF characters then the default action is
+performed: BOL is ignored and EOF results in switching back to the previous
+stream or in returning token 0 (and ending the scanning-process).
+<p>
+The code generator adds code handing BOL and EOF to scanners using these
+pseudo characters. The code is left out of the generated scanner if these
+pseudo characters are not used.
+<p>
+Range tables are generated by <code>generator/chartable.cc</code>.
+<p>
+<a name="l26"></a>
+<h4>0.1.15.2: The DFAs</h4>
+        The function <code>Generator::dfas</code>, defined in <code>generator/dfas</code> defines
+defines in <code>d_out</code> the static data member <code>int const
+ScannerBase::s_dfa[][dfaCols()]</code>, where <code>dfaCols</code> returns the number of
+columns of the DFA matrices.
+<p>
+<em>All</em> DFAs are accessed through this single <code>s_dfa</code> matrix. Each
+individual DFA starts at a specific row of <code>s_dfa</code>. The first DFA to be
+written is associated with the <code>INITIAL</code> scanner: <code>INITIAL</code> is always
+defined and contains all rules not explicitly associated with a mini scanner.
+<p>
+The matrix <code>s_dfa</code> contains the rows of <em>all</em> DFAs ordered by start state.
+<p>
+The <code>enum class BEGIN</code> defines the symbolic names of the start states
+Its constant <code>INITIAL</code> always receives value 0.
+<p>
+Each row contains the row to transit to if the column's character range was
+sensed. Row numbers are relative to the used DFA. There are as many 
+elements in the rows of the <code>s_dfa</code> table as there are character ranges
+<em>plus</em> three. These final three element represent, respectively:
+    <ul>
+    <li> The rule for which this row represents a final state. In this case
+there is no continuation for the next character and the indicated rule has
+been matched. If this row does <em>not</em> represent a final state this value
+equals -1.
+    <li> Begin and end indices in the array <code>s_accept</code>, holding information
+about a row's accept state. This is used with rules using the lookahead
+operator. The first index holds the first relevant <code>s_accept</code> row, the
+second index holds the first row that is not relevant anymore. If <code>begin ==
+end</code> then this row does not represent an accepting state.
+    </ul>
+<p>
+The <em>base locations</em> for the various mini scanners are defined in the static
+array <code>s_dfaBase</code>. Its initial value matches the <code>INITIAL</code> scanner, and
+points to the first <code>s_dfa</code> row. Additional values are defined if mini
+scanners were used and point at the initial rows in <code>s_dfa</code> for these mini
+scanners. Here is an example of a <code>enum class Begin</code> and matching
+<code>s_dfaBase</code>: 
+        <pre>
+
+    enum class Begin
+    {
+        INITIAL,
+        str,
+    };
+        
+    std::vector&lt;int const (*)[9]&gt; const ScannerBase::s_dfaBase =
+    {
+        { s_dfa + 0 },
+        { s_dfa + 6 },
+    };
+        
+</pre>
+
+    The <code>INITIAL</code> scanner's dfa rows start at the top, the <code>str</code> mini
+scanner starts at row index 6 of <code>s_dfa</code>.
+<p>
+<a name="l27"></a>
+<h4>0.1.15.3: The Final-Accept info array</h4>
+        To do next.
+<p>
+<a name="l28"></a>
+<h3>0.1.16: Run-time operations</h3>
+    The <code>lex</code> function works as follows:
+<p>
+<ul>
+<li> All its variables have been initialized at construction time.
+<li> In a loop (until EOF) characters are retrieved until a rule is matched
+    (see below)
+<li> Once a rule has been matched its matching code block is executed.
+</ul>
+<p>
+Processing characters:
+<p>
+The next character from the input is obtained in <code>d_char</code>. At the beginning
+of the character processing loop <code>d_char</code> must have received a value.
+At EOF ....
+        <blockquote>TODO</blockquote>
+    Otherwise, <code>d_range</code> is determined as <code>s_ranges[d_char]</code>.
+<p>
+The variable <code>d_dfaBase</code> points at the dfa currently used. The variable
+<code>d_dfaIdx</code> holds the index of the current row in the current dfa. 
+<p>
+The expression 
+        <pre>
+
+    nextIdx = (d_dfa + d_dfaIdx)[d_range];
+        
+</pre>
+ 
+    provides the next <code>d_dfaIdx</code> value. If unequal -1 do:
+        <pre>
+
+    d_dfaIdx = nextIdx;
+    d_char = nextChar();
+        
+</pre>
+
+    If equal -1 then there is no continuation for the current rule. 
+<p>
+If in that case the FINAL index's value is unequal -1 then <code>d_rule</code> is
+set to the FINAL index's value: that particular rule has been matched, and its
+code block (if any) is executed.
+<p>
+If the FINAL index's value equals -1 then there is no rule matching the
+input matched so far. In that case, conforming to flex's behavior, all chars
+but the first are pushed-back and the the first character is echoed to cerr.
+<p>
+
+</body>
+</html>

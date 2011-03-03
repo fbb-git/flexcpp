@@ -1,0 +1,89 @@
+A tt(PatternVal) is derived from tt(SemVal). It mainly consists of static
+factory functions returning shared pointers to tt(SemVal) objects
+(tt(spSemVal)). 
+
+tt(PatternVal) objects contain (and offer, through the members tt(begin) and
+tt(end)) index values in the tt(States::d_states) of tt(State) objects. The
+value returned by tt(PatternVal::begin()) is the index of the first tt(State)
+defining the pattern, the value returned by tt(PattenVal::end()) is the index
+of the last (so: tt(State::FINAL)) tt(State) of the pattern (cf. figure
+ref(PATTERNVALFIG)).
+
+    figure(images/patternval)(PatternVal objects)(PATTERNVALFIG)
+
+tt(parser/rules/pattern): the following descriptions of the working of some
+basic patterns illustrate how the vector of tt(State) objects in tt(States) is
+filled. Based on this description other pattern's implementations should be
+evident.
+
+A basic pattern is the plain character. The plain character pattern is
+processed as follows:
+    itemization(
+    it() First the indices of two free tt(State) vector locations are
+requested (see link(the tt(next2) description)(STATESNEXTTWO) in the
+link(tt(States) clas)(STATES)). 
+    it() The tt(State) at the first state index is then
+set to a state containing the plain character, linking to the next free state
+which has been initialized to the tt(FINAL) state by tt(States::next2). 
+    it() Then the
+tt(PatternVal) is embedded in a tt(SemVal) (see the link(tt(SemVal)
+class)(SEMVAL) description).
+    it() The tt(SemVal) is then returned in a
+tt(std::shared_ptr) (cf. figure ref(PATTERNVALPLAIN)).
+    )
+
+    figure(images/patternvalplain)(A plain character pattern)(PATTERNVALPLAIN)
+
+A second pattern of interes is the tt(BOL) (begin of line) pattern as it
+combines an operator (tt(^)) and a separately recognized pattern. The parser
+has seen tt('^' pattern) and the tt(pattern)'s begin and end states. The
+general approach that is followed in these cases is as follows:
+    itemization(
+    it() A tt(PatternVal) is constructed for the tt(^) operator. This is done
+by requesting a tt(State::BOL) from tt(State::factory), returning a pair of
+state indices matching the begin-of-line state.
+    it() The tt(pattern) following the tt(^) is available through the
+tt(SemVal), passed to the tt(PatternVal::bol) function. This pattern too has 
+begin and end state indices.
+    it() The two sets of states are now concatenated (see the description of
+the link(concatenation process)(CONCAT) below), the BOL states preceding the
+available tt(pattern) states, and the concatenated states are returned as one
+single series of states, having one begin state and one final state (see
+figure ref(PATTERNVALBOL)).
+    )
+
+    figure(images/patternvalbol)(The pattern tt('^' pattern))(PATTERNVALBOL)
+
+    
+label(PATTERNVALOR)
+
+
+label(CONCAT)
+
+Concatenation of two patterns always produces a free tt(State) that can be
+returned by, e.g., tt(State::nex2). The states, defining a pattern, 
+therefore, do not have to be consecutively stored in the tt(States)'s vector
+of tt(State) objects (see figure ref(CONCATFIG)).
+
+    itemization(
+    it() Concatenation starts with two tt(SemVal) objects.
+    it() The tt(SemVal) objects are downcast to,
+resp. a tt(lhs PatternVal) and a tt(rhs PatternVal).
+    it() With lookahead patterns, the tt(lhs) pattern may be an em(accepting
+state). I.e., once the full pattern has been recognized only the lhs is
+actually matched. E.g., after recognizing tt(a/b) tt(a) is returned as
+matched, as tt(a) is the accepting pattern. When concatenating the lhs's end
+state disappears and is replaced by the rhs's begin state. Therefore:
+    it() The rhs's begin state's accepting flag is set to the lhs's end
+state's accepting flag.
+    it() The tt(lhs.end()) state is assigned the value of the tt(rhs.begin())
+state
+    it() The tt(rhs.begin()) state is marked as free
+    it() A new tt(PatternVal) is returned as tt(SemVal *) having its
+tt(begin) index set to tt(lhs.begin()) and its tt(end) idex set to
+tt(rhs.end()). 
+    )
+
+    figure(images/concatfig)(Concatenating Patterns)(CONCATFIG)
+
+

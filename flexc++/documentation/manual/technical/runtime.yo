@@ -1,0 +1,42 @@
+The tt(lex) function works as follows:
+
+itemization(
+it() All its variables have been initialized at construction time.
+it() In a loop (until EOF) characters are retrieved until a rule is matched
+    (see below)
+it() Once a rule has been matched its matching code block is executed.
+)
+
+Processing characters:
+
+The next character from the input is obtained in tt(d_char). At the beginning
+of the character processing loop tt(d_char) must have received a value.
+At EOF ....
+        quote(TODO)
+    Otherwise, tt(d_range) is determined as tt(s_ranges[d_char]).
+
+The variable tt(d_dfaBase) points at the dfa currently used. The variable
+tt(d_dfaIdx) holds the index of the current row in the current dfa. 
+
+The expression 
+        verb(
+    nextIdx = (d_dfa + d_dfaIdx)[d_range];
+        ) 
+    provides the next tt(d_dfaIdx) value. If unequal -1 do:
+        verb(
+    d_dfaIdx = nextIdx;
+    d_char = nextChar();
+        )
+    If equal -1 then there is no continuation for the current rule. 
+
+    If in that case the FINAL index's value is unequal -1 then tt(d_rule) is
+set to the FINAL index's value: that particular rule has been matched, and its
+code block (if any) is executed.
+
+    If the FINAL index's value equals -1 then there is no rule matching the
+input matched so far. In that case, conforming to flex's behavior, all chars
+but the first are pushed-back and the the first character is echoed to cerr.
+
+        
+    
+

@@ -1,0 +1,45 @@
+All rules are accessible from the tt(Rules) object. It contains a reference to
+the em(states) (see link(here)(STATES)), and a vector tt(d_rules) containing
+the information of each of the rules, and a hash table linking a final state
+index back to its rule number (see figure ref(RULESFIG))
+
+            figure(images/rules)(The Rules class)(RULESFIG)
+
+
+When the parser has detected a rule it calls tt(Rules::add). A tt(Rule) object
+is added to tt(d_rules), storing begin and end state indices, accept state
+index (if available) and action block. tt(Rules::add) also stores the
+association between the rule's final state and rule index in its 
+tt(unordered_map d_finalToRule).
+
+States of rules using the LA operator need access to the rule to which they
+belong. For those rules tt(Rules::setRuleIndices) is called to assign the
+link(State's)(STATE) tt(d_rule) field. This tt(d_rule) field is only available
+for rules using the LA operator.
+
+label(RULE)
+The tt(Rule) object themselves have an organization shown in figure
+ref(RULEFIG). Its data members tt(d_start) and tt(d_final) are indices into
+the link(States)(STATES) object, accessing the rule's start and final states,
+respectively. A tt(Rule) stores any actions that must be executed when the
+rule has been matched in its tt(std::string d_action) (empty if there are no
+actions), see also section ref(BLOCKS).
+
+If a rule uses the lookahead (LA) operator (tt('/')) then all states before
+the LA operator can be accessed from the indices stored in the
+tt(d_preAstates) vector of tt(size_t) elements, and all states from the LA
+operator and beyond are available from the tt(d_postAstates) vector. 
+
+The constructor of those rules visits all its states until reaching the
+A-state, storing the state indices in its tt(d_preAstates) vector. Then the
+same procedure is followed for the states from the A-state until the final
+state, storing these states in its d_postAstates vector.
+
+            figure(images/rule)(The Rule class data members)(RULEFIG)
+
+With those rules the data member tt(d_LAdone) indicates that its 
+ link(LA propagation)(PROPAGATELA) (see section ref(DFAROW)) has been
+completed. These latter three members are not used with rules not using the LA
+operator.
+
+
