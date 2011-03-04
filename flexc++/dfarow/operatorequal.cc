@@ -2,10 +2,7 @@
 
 bool DFARow::operator==(DFARow const &rhs) const
 {
-    return 
-        d_finalRule == rhs.d_finalRule 
-        &&
-        sameTransits(d_map, rhs.d_map);
+    return d_finalRule == rhs.d_finalRule && sameTransits(d_map, rhs.d_map);
 
 //        &&
 //        d_map.size() == rhs.d_map.size()

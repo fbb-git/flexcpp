@@ -4,9 +4,11 @@
 
 void DFA::inspectRows(vector<size_t> &unique)
 {
-    // visit all d_row rows, for each row see if it's already available
-    // if not then use the row by storing its new index, otherwise
-    // store the index of an earlier row.
+    // visit all d_row rows, for each row see if that row has already been
+    // defined. In that case an earlier row equals the current row. 
+    // If the row hasn't been defined before, store its index, otherwise
+    // store the index of the earlier row.
+    // Equal rows means: same transition vector
 
     for
     (
@@ -16,11 +18,12 @@ void DFA::inspectRows(vector<size_t> &unique)
     )
     {
         size_t useRow = available(d_row[rowIdx]);
+
         unique.push_back(
-            useRow == unique.size() ?     // unique row
+            useRow == rowIdx ?       // unique row
                 nextRow++                   // then store it as the next row
             :
-                unique[useRow]            // or use the existing row
+                unique[useRow]              // or use the existing row's idx
         );
     }
 }

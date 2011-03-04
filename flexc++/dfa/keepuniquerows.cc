@@ -9,13 +9,14 @@ void DFA::keepUniqueRows()
     if (unique.back() == unique.size() - 1)
         return;
 
-    cerr << "UNIQUE: ";
+    cout << "UNIQUE: ";
     copy(unique.begin(), unique.end(), 
-            ostream_iterator<size_t>(cerr, ","));
-    cerr << endl;
+            ostream_iterator<size_t>(cout, ","));
+    cout << endl;
 
     for_each(d_row.begin(), d_row.end(), 
                                     FnWrap::unary(translate, unique));
+
     shrinkDFA(unique);
 }
 

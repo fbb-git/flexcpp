@@ -6,6 +6,9 @@ void Generator::dfaRow(DFARow const &row, ostream &out,
     out << "        {";
 
     dfaTransitions(row, out);
+
+    out << " /**/ ";
+
     dfaFinAcs(row, out, finAcs);
 
     out << "},\n";

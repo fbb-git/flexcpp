@@ -14,20 +14,11 @@ The tt(enum class BEGIN) defines the symbolic names of the start states
 Its constant tt(INITIAL) always receives value 0.
 
 Each row contains the row to transit to if the column's character range was
-sensed. Row numbers are relative to the used DFA. There are as many 
-elements in the rows of the tt(s_dfa) table as there are character ranges
-em(plus) three. These final three element represent, respectively:
-    itemization(
-    it() The rule for which this row represents a final state. In this case
-there is no continuation for the next character and the indicated rule has
-been matched. If this row does em(not) represent a final state this value
-equals -1.
-    it() Begin and end indices in the array tt(s_accept), holding information
-about a row's accept state. This is used with rules using the lookahead
-operator. The first index holds the first relevant tt(s_accept) row, the
-second index holds the first row that is not relevant anymore. If tt(begin ==
-end) then this row does not represent an accepting state.
-    )
+sensed. Row numbers are relative to the used DFA. There are as many elements
+in the rows of the tt(s_dfa) table as there are character ranges em(plus)
+two. These final elements represent the begin and end indices in the array
+tt(s_accept), holding information about a row's accept state (see the next
+section).
 
 The em(base locations) for the various mini scanners are defined in the static
 array tt(s_dfaBase). Its initial value matches the tt(INITIAL) scanner, and
