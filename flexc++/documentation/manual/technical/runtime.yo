@@ -29,14 +29,42 @@ The expression
         )
     If equal -1 then there is no continuation for the current rule. 
 
-    If in that case the FINAL index's value is unequal -1 then tt(d_rule) is
-set to the FINAL index's value: that particular rule has been matched, and its
-code block (if any) is executed.
-
-    If the FINAL index's value equals -1 then there is no rule matching the
-input matched so far. In that case, conforming to flex's behavior, all chars
-but the first are pushed-back and the the first character is echoed to cerr.
+In em(all) case where the last two elements of the current  tt(s_dfa) row
+are unequal special actions must be performed. Using the last but one's value
+as tt(d_finAcIdx) do as follows:
+    itemization(
+    it() If there is a continuation for the current character range (so
+tt((d_dfaBase + d_dfaIdx)[d_charRange]) is unequal -1) then inspect the
+tt(s_finAcInfo + d_finAcIdx)'s A and I values.
+    itemization(
+    it() If I equals 1 store A's value and increment it at each next
+        transition until a rule has been matched. This determines the LA
+        tail-length;
+    )
+    it() Otherwise (no continuation):
+        itemization(
+        it() If I equals 1 then the A count incremented so far is the LA's
+            tail length.
+        it() If I equals 0 and A is non-negative then A's value is the LA's
+            tail length
+        it() If F is positive then it is the accept count of the current rule
+            quote(TODO: 
+                maybe this and the previous option are mutually exclusive and
+                only one of them occurs in practice.
+            )
+            If F equals -1 then accept the matched text as is.nl()
+            If it equals -2 we're not at a final state. If there's no
+            continuation, push back all but the first character, echo the 1st
+            char and continue scanning with the INITAL scanner at state 0.
+        )
+    )
+If a final state has been reached then possibly push back the LA tail and
+execute the actions of the rule that was matched. Using the currently active
+miniscanner, start matching the next rule.
 
         
     
+
+
+
 

@@ -59,12 +59,14 @@ sect(Technical documentation (PIPETHROUGH(date -R)()))
         subsubsect(The DFAs)
         includefile(technical/gendfas)
 
-        subsubsect(The Final-Accept info array)
+        lsubsubsect(SFINACINFO)(The Final-Accept info array)
         includefile(technical/finac)
 
     subsect(Run-time operations)
     includefile(technical/runtime)
 
+    subsect(Code generation)
+    includefile(technical/codegeneration)
 
 COMMENT(
 includefile(introduction.yo)
