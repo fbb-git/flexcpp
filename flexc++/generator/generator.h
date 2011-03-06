@@ -41,7 +41,8 @@ class Generator
                         std::vector<FinAcInfo> &finAcs,
                         std::vector<std::string> &startStates,
                         std::vector<size_t> &dfaOffsets);
-        static void dfaRow(DFARow const &row, std::ostream &out, 
+        static void dfaRow(DFARow const &row, size_t &index, 
+                        std::ostream &out, 
                         std::vector<FinAcInfo> &finAcs);    
         static void dfaTransitions(DFARow const &row, std::ostream &out);
         static void dfaFinAcs(DFARow const &row, std::ostream &out,
