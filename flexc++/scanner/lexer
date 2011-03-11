@@ -154,16 +154,16 @@ NAME            d_block += d_match;
     
     =                       return '=';
     
-    classname               return Parser::CLASSNAME;
-    lexfunctionname         return Parser::LEXFUNCTIONNAME;
-    baseclassheader         return Parser::BASECLASSHEADER;
-    classheader             return Parser::CLASSHEADER;
-    implementationheader    return Parser::IMPLEMENTATIONHEADER;
-    lexsource               return Parser::LEXSOURCE;
+    class-name               return Parser::CLASSNAME;
+    lex-function-name         return Parser::LEXFUNCTIONNAME;
+    baseclass-header         return Parser::BASECLASSHEADER;
+    class-header             return Parser::CLASSHEADER;
+    implementation-header    return Parser::IMPLEMENTATIONHEADER;
+    lex-source               return Parser::LEXSOURCE;
     namespace               return Parser::NAMESPACE;
-    skeletondirectory       return Parser::SKELETON_DIRECTORY;
-    streaminfoclassname     return Parser::STREAM_INFO_CLASSNAME;
-    streaminfoinclude       return Parser::STREAM_INFO_INCLUDE;
+    skeleton-directory       return Parser::SKELETON_DIRECTORY;
+    streaminfo-class-name     return Parser::STREAM_INFO_CLASSNAME;
+    streaminfo-include       return Parser::STREAM_INFO_INCLUDE;
     interactive             return Parser::INTERACTIVE;
     
     .|\n                    return end(d_match[0]);

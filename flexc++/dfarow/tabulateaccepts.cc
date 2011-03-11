@@ -11,8 +11,12 @@ void DFARow::tabulateAccepts(Table &table) const
     )
     {
         if (iter->inc())
-            out << iter->rule() << ':' << 
-                   (iter->inc() ? "++" : "") << iter->accept();
+            out << iter->rule() << ":++" << iter->accept() << ',';
     }
-    table << out.str();
+
+    std::string const &str = out.str();
+    if (str.length() > 0)
+        table << str.substr(0, str.length() - 1) ;
+    else
+        table << ' ';
 }

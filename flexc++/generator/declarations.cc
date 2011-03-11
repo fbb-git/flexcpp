@@ -3,7 +3,7 @@
 void Generator::declarations()
 {
     d_out.close();
-    Msg::open(d_out, "DECLARE");
+    Errno::open(d_out, "DECLARE");
 
     d_out << 
             "    struct Accept\n"
@@ -30,13 +30,13 @@ void Generator::declarations()
         "    };\n"
         "\n"
         "    int const (*d_dfa)[" << dfaCols() << "];\n"
-        "    Accept d_accept[" << d_nRules << "];\n"
+        "    Accept d_accept[" << d_rules.size() << "];\n"
         "\n"
         "    static bool    const s_interactive = " <<
                 boolalpha << Options::instance().interactive() << ";\n"
         "    static size_t  const s_finalIdx = " << dfaCols() - 4 << ";\n"
         "    static size_t  const s_acceptIdx = " << dfaCols() - 2 << ";\n"
-        "    static size_t  const s_acceptSize = " << d_nRules << ";\n"
+        "    static size_t  const s_acceptSize = " << d_rules.size() << ";\n"
         "    static size_t  const s_ranges[];\n"
         "    static size_t  const s_rangeOfBOL = " << 
                                         (d_ranges.rangeOfEOF() + 1) << ";\n"

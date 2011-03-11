@@ -5,14 +5,15 @@ second index holds the index of the row that is not relevant anymore. If
 tt(begin == end) then this row does not represent an accepting or final state.
 
 
-The columns of this matrix, labeled tt(R, FA) and tt(I), indicate:
+The columns of this matrix, labeled tt(R, F, A) and tt(I), indicate:
 itemization(
 itt(R): the rule number that was matched if there is no continuation for the
     next input-range value. If this rule is matched its action block is
     executed next.
 
-itt(F): the final state indicaction or accept count 
-    If it equals -2 is not a Final state, nor an accepting state.; 
+itt(F): the final state indicator:
+
+    If it equals -2 the state is not a Final state;
 
     It if equals -1  then the matched text is
     accepted as-is (the rule did not use a lookahead operator);
@@ -38,19 +39,29 @@ itt(I) This is a bool which is true if this is an em(incrementing
 
 
 Here is an example of rules, transition matrix and tt(s_finAcInfo) array:
-
-Rules:
+There are three rules, two using the LA operator:
         verb(
     abd+/def+
     abd+/d
     abd+
         )
 
-Transition matrix:
+The matching transition matrix shows that states 3 through 6 have FinAc
+vectors associated with them (discussed below):
         verb(
     {-1, 1,-1,-1,-1,-1,-1,-1,-1,   0, 0},  // 0
     {-1,-1, 2,-1,-1,-1,-1,-1,-1,   0, 0},  // 1
     {-1,-1,-1,-1, 3,-1,-1,-1,-1,   0, 0},  // 2
+    {-1,-1,-1,-1, 4,-1,-1,-1,-1,   0, 1},  // 3
+    {-1,-1,-1,-1, 4, 5,-1,-1,-1,   1, 3},  // 4
+    {-1,-1,-1,-1,-1,-1, 6,-1,-1,   3, 4},  // 5
+    {-1,-1,-1,-1,-1,-1, 6,-1,-1,   4, 5},  // 6
+
+
+
+    {-1, 1,-1,-1,-1,-1,-1,-1,-1,   0, 0},  // 0 a
+    {-1,-1, 2,-1,-1,-1,-1,-1,-1,   0, 0},  // 1 b
+    {-1,-1,-1,-1, 3,-1,-1,-1,-1,   0, 0},  // 2 d
     {-1,-1,-1,-1, 4,-1,-1,-1,-1,   0, 1},  // 3 abd+: match 2, full length
                                              { 2,-1,-1, 0},
 
@@ -70,7 +81,7 @@ Transition matrix:
                                             { 0,-1,-1, 0},
         )
 
-Finac matrix:
+The FinAc matrix is:
         verb(
      { 2,-1,-1, 0},
      { 1, 1, 1, 0},
@@ -78,7 +89,22 @@ Finac matrix:
      { 0,-2, 2, 1},
      { 0,-1,-1, 0},
         )
+itemization(
+it() Its first row indicates what may happen in state 3: if there's no
+    continuation in this state (i.e., after recognizing a, b, d then rule 2 is 
+    matched, recognizing tt(abd)
 
+it() Its second and third rows indicate what may happen in state 4. This
+    state is reached after matching tt(abdd). While more d's are matched we
+    stay in state 4. If an tt(e) character is read, transit to state
+    5. Otherwise, there is a choice between matching rules 1 or 2. Since the
+    lexer uses greedy matching it will match rule 2, and matching rule 1,
+    having a tail of 1     character is ignore.
+
+it() State 5's FinAc vector is tt({ 0,-2, 2, 1}). Here we've recognized 
+    tt(abd+deIt indicates that this is
+    not a final state, and that the current accept count equals 2, and that
+    this is an incrementing accept state.
 
 
     All rows are final states for rule 0. The first row has an accept count of

@@ -6,7 +6,7 @@ void setRemovals()
 {
     // always:
         remove1 = 
-            "build-stamp configure-stamp "
+            "build-stamp configure-stamp options/SKEL "
             "flexc++ o */o release.yo libflexc++.a scanner/yylex.cc "
             "parser/parse.cc parser/parserbase.h parser/grammar.output";
 
@@ -26,13 +26,10 @@ void clean(int dist)
     run("rm -rf " + remove1);
 
     if (dist)
-    {
         run("rm -rf " + remove2);
-    }
 
-    chdir("../documentation");
+    chdir("documentation");
     run("rm -rf " + remove3);
-
 
     exit(0);
 }

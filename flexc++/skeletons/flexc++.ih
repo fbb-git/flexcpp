@@ -1,0 +1,14 @@
+#include "$classHeader"
+
+#include <iostream>
+#include <utility>
+#include <map>
+#include <set>
+#include <vector>
+#include <stdexcept>
+#include <algorithm>
+#include <cstdio>
+
+$insert namespace-use
+
+//using namespace std;

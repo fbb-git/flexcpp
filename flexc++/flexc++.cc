@@ -7,42 +7,41 @@ namespace
         // to be considered/implemented:
 
         // options to set filenames
-        {"baseclassheader",         'b'},
-        {"classheader",             'c'},
-        {"implementationheader",    'i'},
-        {"lexsource",               'l'},
+
+        // options to set filenames
+        {"baseclass-header",         'b'},
+        {"class-header",             'c'},
+        {"implementation-header",    'i'},
+        {"lex-source",               'l'},
 
         // skeleton options
-        {"skeletondirectory",       'S'},
-        {"baseclassskeleton",       'B'},
-        {"classskeleton",           'C'},
-        {"implementationskeleton",  'I'},
-        {"lexskeleton",             'L'},
+        {"skeleton-directory",       'S'},
+        {"baseclass-skeleton",       'B'},
+        {"class-skeleton",           'C'},
+        {"implementation-skeleton",  'I'},
+        {"lex-skeleton",             'L'},
+
 
         // options to force overwriting
-        Arg::LongOption("forceimplementationheader"),
-        Arg::LongOption("forceclassheader"),
+        Arg::LongOption("force-implementation-header"),
+        Arg::LongOption("force-class-header"),
+        Arg::LongOption("no-baseclass-header"),
+        Arg::LongOption("no-lex-member"),
 
         {"namespace",               'n'},
 
-        Arg::LongOption("classname"),       // TODO: to be implemented
-        Arg::LongOption("lexfunctionname"), // TODO: to be implemented
+        Arg::LongOption("class-name", Arg::Required),
+        Arg::LongOption("lex-function-name", Arg::Required),
 
-        Arg::LongOption("nolexmember"),   // TODO: to be implemented
+        Arg::LongOption("no-lex-member"),
 
-        Arg::LongOption("lines", 'l'),      // TODO: to be implemented
+    // Arg::LongOption("lines", 'l'),      // TODO: to be implemented
 
-        Arg::LongOption("showfilenames"),  // TODO: to be implemented
+        Arg::LongOption("show-filenames"),
                 // writes the names of the files to the standard output
 
-        {"nolines",                 Arg::None},
+    //    {"nolines",                 Arg::None},
         {"tokens", 't'},
-
-        // output options
-        {"interactive",             Arg::None},
-        {"dot",                     Arg::None},
-        {"nfa",                     Arg::None},
-        {"dfa",                     Arg::None},
 
         {"verbose",                 'V'},
         {"debug",                   'd'},
@@ -86,7 +85,10 @@ try
             "STATES:\n" << states << '\n' <<
             dfas << '\n';
 
-    Generator generator(rules.size(), ranges);
+    Generator generator(rules, ranges);
+
+    generator.baseclassHeader();
+
         generator.charTable();
         generator.dfas(dfas);
         generator.declarations();

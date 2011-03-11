@@ -42,11 +42,13 @@ class Parser: public ParserBase
     static int s_ignoreToken;
     static std::string s_lastMsg;
 
+
     public:
         Parser(Rules &rules, States &states);
         int parse();
-        
+
     private:
+
         std::ostream &lineMsg(int deltaLineNo) const;
         void modePattern();
         void sectionDelimiter();
@@ -67,5 +69,6 @@ class Parser: public ParserBase
         int lookup(bool recovery);
         void nextToken();
 };
+
 
 #endif

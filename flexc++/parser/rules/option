@@ -47,12 +47,12 @@ option:
 |
     stream_info_classname_m '=' STRING
     {
-        d_options.setStreamInfoClassName(d_scanner.match());
+        // d_options.setStreamInfoClassName(d_scanner.match());
     }
 |
     stream_info_include_m '=' STRING
     {
-        d_options.setStreamInfoInclude(d_scanner.match());
+        // d_options.setStreamInfoInclude(d_scanner.match());
     }
 |
     INTERACTIVE

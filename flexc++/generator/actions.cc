@@ -3,7 +3,7 @@
 void Generator::actions(DFAs const &dfas)
 {
     d_out.close();
-    Msg::open(d_out, "ACTIONS");
+    Errno::open(d_out, "ACTIONS");
 
     set<size_t> done;
     done.insert(UINT_MAX);                  // Filler for non-FINAL rows

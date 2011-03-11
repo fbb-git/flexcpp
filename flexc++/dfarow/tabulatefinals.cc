@@ -2,7 +2,7 @@
 
 void DFARow::tabulateFinals(Table &table) const
 {
-    ostringstream out;
+    auto firstRule = d_finAcInfo.end();
 
     for 
     (
@@ -10,18 +10,38 @@ void DFARow::tabulateFinals(Table &table) const
             iter != end;
                 ++iter
     )
-    {                           // fixed final length or other final length
-        if (iter->final() >= 0) // (possibly incrementing after A++)        
-            out << iter->rule() << ':' << iter->final() << ',';
-        else if (iter->final() == FinAcInfo::FINAL_NOT_SET)
-            out << iter->rule() << ',';
+    {
+        if 
+        (
+            iter->final() >= 0 
+            ||
+            iter->inc()
+            || 
+            iter->final() == FinAcInfo::FINAL_NOT_SET
+        )
+            firstRule = iter;
     }
 
-    std::string const &str = out.str();
-    if (str.length() > 0)
-        table << str.substr(0, str.length() - 1) ;
-    else
+
+    if (firstRule == d_finAcInfo.end())
         table << ' ';
+    else
+    {
+        ostringstream out;
+        if 
+        (
+            firstRule->final() == 0 
+            ||
+            firstRule->inc()
+            || 
+            firstRule->final() == FinAcInfo::FINAL_NOT_SET
+        )
+            out << firstRule->rule();
+        else if (firstRule->final() > 0) 
+            out << firstRule->rule() << ':' << firstRule->final();
+
+        table << out.str();
+    }
 }
 
 

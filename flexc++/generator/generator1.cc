@@ -1,9 +1,12 @@
 #include "generator.ih"
 
-Generator::Generator(size_t nRules, Ranges const &ranges)
+Generator::Generator(Rules const &rules, Ranges const &ranges)
 :
     d_ranges(ranges),
-    d_nRules(nRules)
+    d_options(Options::instance()),
+    d_arg(Arg::instance()),
+    d_rules(rules)
 {
-    Msg::open(d_out, "STATICS");
+    Errno::open(d_out, "STATICS");
+    d_options.setAccessorVariables();
 }

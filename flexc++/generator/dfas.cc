@@ -26,7 +26,7 @@ void Generator::dfas(DFAs const &dfas)
     for_each(dfas.begin(), dfas.end(), 
             FnWrap::unary(dfa, d_out, finAcs, d_startStates, dfaIndices));
  
-    d_out << "   };\n";
+    d_out << "    };\n";
  
     outFinAcs(finAcs);
     dfaEntryPoints(dfaIndices);
