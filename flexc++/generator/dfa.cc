@@ -12,7 +12,7 @@ void Generator::dfa(DFAs::Pair const &dfaPair, ostream &out,
     )
         return;
 
-    out << "        // " << dfaPair.first << '\n';
+    out << "    // " << dfaPair.first << '\n';
     startStates.push_back(dfaPair.first);
     dfaOffsets.push_back(*(dfaOffsets.rbegin()) + dfaPair.second.size());
 

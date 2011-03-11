@@ -3,7 +3,7 @@
 void Generator::outFinAc(FinAcInfo const &finac, ostream &out)
 {
     out << 
-        "         {" << setw(2) << finac.rule() << ',';
+        "     {" << setw(2) << finac.rule() << ',';
 
     switch (int final = finac.final())
     {

@@ -38,7 +38,7 @@ class Scanner: public ScannerBase
         void newDefinition();
         void reset(StartCondition start);
         void undelimit();
-        std::ostream &lineMsg(int deltaLineNo = 0) const;
+//        std::ostream &lineMsg(int deltaLineNo = 0) const;
         std::string const &block() const;
 
     private:

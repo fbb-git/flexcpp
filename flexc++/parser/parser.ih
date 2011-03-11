@@ -4,7 +4,7 @@
 #include "parser.h"
 
 #include <bobcat/arg>
-#include <bobcat/msg>
+#include <bobcat/mstream>
 
 #include "../options/options.h"
 #include "../state/state.h"
@@ -16,9 +16,4 @@
 
 using namespace std;
 using namespace FBB;
-
-inline std::ostream &Parser::lineMsg(int deltaLineno = 0) const
-{
-    return d_scanner.lineMsg(deltaLineno);
-}
 

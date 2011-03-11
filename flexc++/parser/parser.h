@@ -49,7 +49,7 @@ class Parser: public ParserBase
 
     private:
 
-        std::ostream &lineMsg(int deltaLineNo) const;
+//        std::ostream &lineMsg(int deltaLineNo) const;
         void modePattern();
         void sectionDelimiter();
 

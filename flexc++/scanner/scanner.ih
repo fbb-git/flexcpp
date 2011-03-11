@@ -3,7 +3,7 @@
 #include "scanner.h"
 
 #include <bobcat/string>
-#include <bobcat/msg>
+#include <bobcat/mstream>
 
 #include "../parser/parserbase.h"
 #include "../textval/textval.h"

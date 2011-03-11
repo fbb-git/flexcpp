@@ -85,14 +85,15 @@ try
             "STATES:\n" << states << '\n' <<
             dfas << '\n';
 
-    Generator generator(rules, ranges);
+    Generator generator(rules, ranges, dfas);
 
-    generator.baseclassHeader();
+        generator.lexSource();
+        generator.baseclassHeader();
+        generator.classHeader();
+        generator.implementationHeader();
 
-        generator.charTable();
-        generator.dfas(dfas);
-        generator.declarations();
-        generator.actions(dfas);
+//        generator.declarations();
+//        generator.actions(dfas);
 }
 catch (int x)
 {

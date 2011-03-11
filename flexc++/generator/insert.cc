@@ -3,13 +3,18 @@
 void Generator::insert(ostream &out) const
 {
     istringstream istr(d_line);
-    istr >> d_key >> d_indent;
+    size_t indent;
 
-    if (!istr)
+    istr >> d_key >> indent;
+
+    if (istr)
+        Indent::setWidth(indent);
+    else
     {
-        d_indent = 0;
+        Indent::clear();
         istr.clear();
     }
+
     istr >> d_key;     // extract the insertion target
 
     getline(istr, d_line);      // and store the remainder of the line
@@ -19,11 +24,9 @@ void Generator::insert(ostream &out) const
     if (iter != s_insert.end())
         (this->*iter->second)(out);
     else
-        cerr << "Ignoring unsupported `$insert " << d_key << 
-                " ...' in skeleton file\n";
+        wmsg << "Ignoring unsupported `$insert " << d_key << 
+                " ...' in skeleton file" << endl;
 }
-
-
 
 
 

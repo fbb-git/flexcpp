@@ -3,7 +3,7 @@
 void Generator::dfaRow(DFARow const &row, size_t &index, ostream &out, 
                         vector<FinAcInfo> &finAcs)
 {
-    out << "        {";
+    out << "    {";
 
     dfaTransitions(row, out);
 

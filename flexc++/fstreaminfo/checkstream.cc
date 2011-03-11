@@ -3,5 +3,5 @@
 void FStreamInfo::checkStream() const
 {
     if (!*d_in)
-        lineMsg() << "cannot read `" << d_name << '\'' << fatal;
+        fmsg << "cannot read `" << d_name << '\'' << endl;
 }

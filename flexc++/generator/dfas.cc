@@ -1,35 +1,34 @@
 #include "generator.ih"
 
-void Generator::dfas(DFAs const &dfas)
+void Generator::dfas(ostream &out) const
 {
-    d_out <<
+    string const &className = d_options.className();
+
+    out <<
     "\n"
-    "    // s_dfa contain the rows of *all* DFAs ordered by start state.\n"
-    "    // The enum class Begin is defined below. INITIAL is always 0\n"
-    "    // Each row contains the row to transit to if the column's\n"
-    "    // character range was sensed. Row numbers are relative to the\n"
-    "    // used DFA. Following this a value != -1 indicates the rule for\n"
-    "    // which this row is a FINAL state. The row's final two values are\n"
-    "    // begin and end indices in s_accept, holding information about a\n"
-    "    // row's accept state. -1 indicates `not an accept state'\n"
-    "    //\n"
-    "    int const ScannerBase::s_dfa[][" << dfaCols() << "] =\n" 
-    "    {\n";
+    "// s_dfa contains the rows of *all* DFAs ordered by start state.\n"
+    "// The enum class StartCondition is defined in the baseclass "
+                                                                "header\n"
+    "// INITIAL is always 0.\n"
+    "// Each entry defines the row to transit to if the column's\n"
+    "// character range was sensed. Row numbers are relative to the\n"
+    "// used DFA and d_dfaBase is set to the first row of the subset to "
+                                                                "use.\n"
+    "// The row's final two values are begin and end indices in\n"
+    "// s_accept[], defining the state's final and LA details\n"
 
-    vector<FinAcInfo> finAcs;
-    vector<size_t> dfaIndices(1, 0);
+    "//\n"
+    "int const " << className << "Base::s_dfa[][" << dfaCols() << "] =\n" 
+    "{\n";
 
-    auto iter = dfas.find("INITIAL");
-    if (iter != dfas.end())
-        dfa(*iter, d_out, finAcs, d_startStates, dfaIndices);
+    auto iter = d_dfas.find("INITIAL");
+    if (iter != d_dfas.end())
+        dfa(*iter, out, d_finacs, d_startStates, d_dfaIndices);
  
-    for_each(dfas.begin(), dfas.end(), 
-            FnWrap::unary(dfa, d_out, finAcs, d_startStates, dfaIndices));
+    for_each(d_dfas.begin(), d_dfas.end(), 
+            FnWrap::unary(dfa, out, d_finacs, d_startStates, d_dfaIndices));
  
-    d_out << "    };\n";
- 
-    outFinAcs(finAcs);
-    dfaEntryPoints(dfaIndices);
+    out << "};";
 }
 
 

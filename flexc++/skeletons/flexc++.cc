@@ -1,23 +1,23 @@
-#include "$implementationHeader"
-
-namespace { // anonymous
-
-
-} // anonymous
-
+$insert class.ih
 
 $insert namespace-open
 
 $insert ranges
 
+$insert DFAs
 
-size_t $classNameBase::Input::nextChar()
+$insert finAcs
+
+$insert DFAbases
+
+
+size_t \@Base::Input::nextChar()
 {
     size_t nextChar;
 
     if (d_queue.empty())                    // queue empty: next char fm
     {
-        nextChar = d_in.get();
+        nextChar = d_in->get();
         if (nextChar > 0xff)
             nextChar = AT_EOF;
     }
@@ -30,7 +30,7 @@ size_t $classNameBase::Input::nextChar()
     return nextChar;
 }
 
-size_t $classNameBase::Input::nextRange()
+size_t \@Base::Input::get()
 {
     if (d_returnBOL)                        // check for BOL
     {
@@ -53,19 +53,46 @@ size_t $classNameBase::Input::nextRange()
     }
 }
 
-$className::Transition::Result $className::Transition::operator[](size_t range)
+\@Base::\@Base()
+:
+    d_out(&std::cout),
+    d_input(std::cin),
+    d_state(0),
+    d_dfaBase(s_dfa)
+{}
+
+
+\@Base::\@Base(std::istream &iStream)
+:
+    d_out(&std::cout),
+    d_input(iStream),
+    d_state(0),
+    d_dfaBase(s_dfa)
+{}
+
+
+\@Base::Input::Input(std::istream &iStream)
+:
+    d_in(&iStream),
+    d_returnBOL(true),
+    d_lastRead(~0U)
+{}
+
+void \@Base::echoFirst()
+{}
+
+int \@Base::matched()
 {
-    size_t nextState = d_dfa[d_state][range];
+    return 1;
 }
 
-
-int $className::lex__()
+int \@::lex__()
 {
     while (true)
     {
-        size_t range = d_input.nextRange();
+        size_t range = d_input.get();
         
-        switch (d_transition[range])
+        switch (transition(range))
         {
             case UNDEFINED:
                 echoFirst();

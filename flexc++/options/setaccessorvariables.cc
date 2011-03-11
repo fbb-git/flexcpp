@@ -16,12 +16,7 @@ void Options::setAccessorVariables()
 //        d_streamInfoClassName = s_defaultStreamInfoClassName;
 
     // Skeletons
-    string skeletondir;
-
-    if (arg.option(&skeletondir, 'S'))
-        d_skeletonDirectory = skeletondir;
-
-    if (d_skeletonDirectory.empty())
+    if (d_skeletonDirectory.empty() && !arg.option(&d_skeletonDirectory, 'S'))
         d_skeletonDirectory = s_defaultSkeletonDirectory;
 
     if (!arg.option(&d_baseClassSkeleton, 'B'))

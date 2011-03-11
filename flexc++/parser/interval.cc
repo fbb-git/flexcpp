@@ -6,8 +6,8 @@ spSemVal Parser::interval(SemVal &semval, SemVal &range)
     size_t upper = SemVal::downCast<Decimal>(range).upper();
 
     if (lower > upper)
-        lineMsg() << " in {" << lower << ", " << upper << 
-                    "}:  first value may not exceed second value" << err;
+        emsg << " in {" << lower << ", " << upper << 
+                    "}:  first value may not exceed second value" << endl;
 
     spSemVal ret = PatternVal::interval(d_states, semval, lower, upper);
 

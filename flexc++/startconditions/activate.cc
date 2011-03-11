@@ -13,7 +13,7 @@ void StartConditions::activate(SemVal const &nameVal)
 
     if (iter == d_hash.end())       // done if the name isn't a startcondition
     {
-        lineMsg() << "cannot find start condition `" << name << '\'' << err;
+        emsg << "cannot find start condition `" << name << '\'' << endl;
         return;
     }
         // rules are also added to INITIAL if a start condition is INCLUSIVE
@@ -23,8 +23,7 @@ void StartConditions::activate(SemVal const &nameVal)
 
     if (iterSC != d_active.end())   // done if this name was already specified
     {
-        lineMsg() << "start condition `" << name << "' multiply specified" <<
-                                                            warning;
+        wmsg << "start condition `" << name << "' multiply specified" << endl;
         return;
     }
 

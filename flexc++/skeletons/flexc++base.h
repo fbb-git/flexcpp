@@ -1,9 +1,10 @@
 #ifndef \@BASE_H_INCLUDED
 #define \@BASE_H_INCLUDED
 
-#include <iostream>
-#include <fstream>
+#include <iosfwd>
 #include <queue>
+#include <string>
+#include <vector>
 
 $insert namespace-open
 
@@ -13,6 +14,7 @@ class \@Base
 {
         // encapsulate all Input operations. The member get returns the next
         // input range number
+
     class Input
     {
         enum 
@@ -24,44 +26,54 @@ class \@Base
         std::istream *d_in;                 //  ptr for easy streamswitching
         bool d_returnBOL;                   // initially true
         std::string d_readBuffer;
-        size_t d_lastChar;                  // last read character
+        size_t d_lastRead;                  // last read character
 
         public:
+            Input(std::istream &iStream);
             size_t get();                   // the next range
-
+            
         private:
             size_t nextChar();             // obtain the next character
     };
 
-    class Transition
-    {
-        public:
-            enum Result
-            {
-                EXHAUSTED,              // all input exhausted
-                CONTINUE,               // transition succeeded, go on
-                MATCH,                  // matched a rule
-                UNDEFINED               // no continuation from here
-            };
+    size_t          d_state;
+    std::ostream   *d_out;              // ptr for easy stream switching
+$insert 4 declarations
+    static size_t  const s_ranges[];
+    static int     const s_finAc[][4];
 
-            Result operator[](size_t range);
-    };
+    protected:
+        enum Result
+        {
+            EXHAUSTED,              // all input exhausted
+            CONTINUE,               // transition succeeded, go on
+            MATCH,                  // matched a rule
+            UNDEFINED               // no continuation from here
+        };
 
-    std::ostream *d_out;                // ptr for easy stream switching
-    Input d_input;
-    Transition d_transition;
+        Input           d_input;
+    
 
     public:
         enum StartCondition {
-$insert startCondNames
+$insert 12 startCondNames
         };
 
     private:
         StartCondition d_currentStartCondition;
 
-
+    protected:
+        \@Base();
+        \@Base(std::istream &iStream);
+        Result transition(size_t range);
+        void echoFirst();
+        int matched();
 };
 
 $insert namespace-close
 
 #endif //  \@BASE_H_INCLUDED
+
+
+
+

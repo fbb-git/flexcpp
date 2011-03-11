@@ -2,14 +2,16 @@
 
 #include <bobcat/fnwrap>
 #include <bobcat/x2a>
-#include <bobcat/msg>
+#include <bobcat/mstream>
 #include <bobcat/datetime>
 #include <bobcat/arg>
+#include <bobcat/stat>
+#include <bobcat/indent>
 
-#include <iomanip>
 #include <algorithm>
 #include <iterator>
 #include <climits>
+#include <iomanip>
 
 #include "../ranges/ranges.h"
 #include "../state/state.h"

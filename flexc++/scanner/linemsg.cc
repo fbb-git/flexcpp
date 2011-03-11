@@ -1,7 +1,7 @@
-#include "scanner.ih"
-
-std::ostream &Scanner::lineMsg(int deltaLineNo) const
-{
-    Msg::setLine(lineno() + deltaLineNo);
-    return FBB::lineMsg() << "(" << streamInfo().name() << ") ";
-}
+//#include "scanner.ih"
+//
+//std::ostream &Scanner::lineMsg(int deltaLineNo) const
+//{
+//    emsg.setLineNr(lineno() + deltaLineNo);
+//    return emsg << "(" << streamInfo().name() << ") ";
+//}

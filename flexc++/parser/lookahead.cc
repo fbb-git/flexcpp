@@ -6,15 +6,14 @@ spSemVal Parser::lookahead(SemVal &left, SemVal &right)
 
     if (d_accept != 0)
     {
-        lineMsg() << "multiple trailing contexts ('/', '$') not supported" <<
-                                                                        err;
+        emsg << "multiple trailing contexts ('/', '$') not supported" << endl;
         ERROR();
     }
 
     if (d_parentheses)
     {
-        lineMsg() << 
-            "parenthesized trailing contexts ('/', '$') not supported" << err;
+        emsg << "parenthesized trailing contexts ('/', '$') not supported" << 
+                                                                        endl;
         ERROR();
     }
 

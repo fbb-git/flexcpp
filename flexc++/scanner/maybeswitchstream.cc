@@ -9,9 +9,13 @@ void Scanner::maybeSwitchStream()
     
     else if (text.find_first_of(" \t") != string::npos) // blanks need "s
     {
-        lineMsg() << '`' << d_match << "' considered comment" << warning;
+        wmsg << '`' << d_match << "' considered comment" << endl;
         return;
     }
+
+    string tag = text + ", line";
+    emsg.setLineTag(tag);
+    wmsg.setLineTag(tag);
 
     pushStreamInfo(new StreamInfoType(text));
 }

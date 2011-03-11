@@ -36,11 +36,6 @@ inline FStreamInfo::FStreamInfo()
     d_lineNumbering(RESET)
 {}
 
-inline void FStreamInfo::resume(FStreamInfo const &streamInfo, size_t lineno)
-{
-    --s_inclusionDepth;
-}
-        
 #endif
 
 

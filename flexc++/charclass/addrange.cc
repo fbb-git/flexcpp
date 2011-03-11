@@ -3,8 +3,8 @@
 void CharClass::addRange(char from, char to)
 {
     if (from > to)
-        lineMsg() << '`' << from << "' beyond `" << to << 
-                    "' in character set" << err;
+        emsg << '`' << from << "' beyond `" << to << "' in character set" << 
+                                                                        endl;
     else
     {
         for (; from <= to; ++from)

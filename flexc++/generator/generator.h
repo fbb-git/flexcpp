@@ -25,22 +25,20 @@ class Generator
     typedef Map::value_type                             MapValue;
     typedef Map::const_iterator                         MapConstIter;
 
-
     typedef std::pair<size_t, size_t> Pair;
     typedef std::vector<Pair> PVector;
-
-    std::ofstream d_out;
-    Ranges const &d_ranges;
-    std::vector<std::string> d_startStates;
-
-    mutable std::string d_key;          // extracted at $insert statements
-    mutable size_t d_indent;
-
-    mutable std::string d_line;
 
     Options &d_options;
     FBB::Arg &d_arg;
     Rules const &d_rules;
+    Ranges const &d_ranges;
+    DFAs const &d_dfas;
+
+    mutable std::vector<std::string> d_startStates;
+    mutable std::string d_key;          // extracted at $insert statements
+    mutable std::string d_line;
+    mutable std::vector<FinAcInfo> d_finacs;    // determined at dfas()
+    mutable std::vector<size_t> d_dfaIndices;   // determined at dfas()
 
     static Map s_insert;
     static char const *s_baseFlag;          // text to change to the class 
@@ -52,12 +50,13 @@ class Generator
                                                 // functions.
 
     public:
-        Generator(Rules const &rules, Ranges const &ranges);
+        Generator(Rules const &rules, Ranges const &ranges, DFAs const &dfas);
 
         void baseclassHeader() const;
+        void classHeader() const;
+        void implementationHeader() const;
+        void lexSource() const;
 
-        void charTable();
-        void dfas(DFAs const &dfas);
         void actions(DFAs const &dfas);
         void declarations();
 
@@ -66,18 +65,26 @@ class Generator
         void filter(std::istream &in, std::ostream &out) const;
         void key(std::ostream &out) const;
 
+        void namespaceUse(std::ostream &out) const;
         void namespaceClose(std::ostream &out) const;
         void namespaceOpen(std::ostream &out) const;
         void startCondNames(std::ostream &out) const;
+        void baseClassH(std::ostream &out) const;
+        void classH(std::ostream &out) const;
+        void classIH(std::ostream &out) const;
+        void lexFunctionDecl(std::ostream &out) const;
+        void inlineLexFunction(std::ostream &out) const;
+        void ranges(std::ostream &out) const;
+        void dfas(std::ostream &out) const;
+        void finAcs(std::ostream &out) const;
+        void DFAbases(std::ostream &out) const;
+        void declarations(std::ostream &out) const;
 
         size_t dfaCols() const;
 
-        void outFinAcs(std::vector<FinAcInfo> const &finAcs);
         static void outFinAc(FinAcInfo const &finac, std::ostream &out);
         static size_t addFinal(DFARow const &row, std::vector<size_t> &final);
         static void outFinal(size_t rule, std::ostream &out, size_t &count);
-
-        void dfaEntryPoints(std::vector<size_t> const &entryPoints);
 
         static void dfa(DFAs::Pair const &dfaPair, std::ostream &out, 
                         std::vector<FinAcInfo> &finAcs,
@@ -89,11 +96,12 @@ class Generator
         static void dfaTransitions(DFARow const &row, std::ostream &out);
         static void dfaFinAcs(DFARow const &row, std::ostream &out,
                               std::vector<FinAcInfo> &finAcs);
-        static void inspectFinAc(FinAcInfo const &finac, 
-                          std::vector<FinAcInfo> &finAcs);
 
-        static std::string outEntryPoint(std::string const &startState,
-                                         size_t offset);
+        static void inspectFinAc(FinAcInfo const &finac,
+                                 std::vector<FinAcInfo> &finAcs);
+
+        static std::string outDFAbase(std::string const &startState,
+                                      size_t offset);
         static void outStartState(std::string const &name, std::ostream &out);
         static void dfaActions(DFAs::Pair const &dfaPair, std::ostream &out,
                                                 std::set<size_t> &done);

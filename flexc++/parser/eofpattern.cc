@@ -6,13 +6,13 @@ spSemVal Parser::eofPattern()
 
     if (d_patternTokenCount != 1)
     {
-        lineMsg() << "<<EOF>> can only be used at a pattern's begin" << err;
+        emsg << "<<EOF>> can only be used at a pattern's begin" << endl;
         ERROR();
     }
 
     if (d_parentheses)
     {
-        lineMsg() << "<<EOF>> cannot be used within parentheses" << err;
+        emsg << "<<EOF>> cannot be used within parentheses" << endl;
         ERROR();
     }
 

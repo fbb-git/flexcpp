@@ -4,7 +4,7 @@
 #include <iterator>
 
 #include <bobcat/string>
-#include "bobcat/msg"
+#include "bobcat/mstream"
 
 #include "../charrange/charrange.h"
 

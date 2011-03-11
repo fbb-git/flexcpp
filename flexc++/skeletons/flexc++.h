@@ -1,45 +1,36 @@
-#ifndef SCANNER_H_INCLUDED_
-#define SCANNER_H_INCLUDED_
+#ifndef \@_H_INCLUDED_
+#define \@_H_INCLUDED_
 
-#include <iosfwd>
-#include "$baseClassHeader"
+$insert baseclass.h
 
 $insert namespace-open
 
-class $className: public $classNameBase
+class \@: public \@Base
 {
     public:
-        $className();
-        $className($streamInfoClassName *streamInfo);
+        \@() = default;
+        \@(std::istream &iStream);
 
-        int $lexFunctionName();
+$insert 8 lexFunctionDecl
 
     private:
         int executeAction(int ruleNr);
-		int lex__();
-		int executeAction__(int ruleNr);
+        int lex__();
+        int executeAction__(int ruleNr);
 };
 
-inline $className::$className()
+inline \@::\@(std::istream &iStream)
 :
-    $classNameBase()
+    \@Base(iStream)
 {}
 
-inline $className::$className($streamInfoClassName *streamInfo)
-:
-    $classNameBase(streamInfo)
-{}
+$insert inlineLexFunction
 
-inline int $className::$lexFunctionName()
+inline int \@::executeAction(int ruleNr)
 {
-	return lex__();
-}
-
-inline int $className::executeAction(int ruleNr)
-{
-	return executeAction__(ruleNr);
+    return executeAction__(ruleNr);
 }
 
 $insert namespace-close
 
-#endif // SCANNER_H_INCLUDED_
+#endif // \@_H_INCLUDED_
