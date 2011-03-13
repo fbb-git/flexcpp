@@ -86,8 +86,16 @@ int \@Base::matched()
     return 1;
 }
 
+\@Base::Range \@Base::transition(size_t range)
+{
+    int nextState = d_dfaBase[d_state][range];
+    if (nextState == -1 && range == s_rangeOfBOL
+}
+
 int \@::lex__()
 {
+    d_state = 0;
+    
     while (true)
     {
         size_t range = d_input.get();

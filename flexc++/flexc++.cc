@@ -93,7 +93,7 @@ try
         generator.implementationHeader();
 
 //        generator.declarations();
-//        generator.actions(dfas);
+        generator.actions(dfas);
 }
 catch (int x)
 {

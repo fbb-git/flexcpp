@@ -42,11 +42,12 @@ void Generator::declarations(ostream &out) const
                                         (d_ranges.rangeOfEOF() + 1) << ";\n"
         "    static size_t  const s_rangeOfEOF = " << d_ranges.rangeOfEOF() <<
                                                                         ";\n"
+        "    static size_t  const s_finacIdx = " << dfaCols() - 2 << ";\n"
+        "    static size_t  const s_nRules = " << d_rules.size() << ";\n"
         ;
 
 
 //        "    static size_t  const s_finalIdx = " << dfaCols() - 4 << ";\n"
-//        "    static size_t  const s_acceptIdx = " << dfaCols() - 2 << ";\n"
 //        "    static size_t  const s_acceptSize = " << d_rules.size() << ";\n"
 //        "    static std::vector<size_t> const s_startStates[" << 
 //                                            d_startStates.size() << "];\n"
@@ -54,4 +55,5 @@ void Generator::declarations(ostream &out) const
 //                   dfaCols() << "], HashBegin>\n"
 //        "           const s_dfaHash;\n";
 }
+
 
