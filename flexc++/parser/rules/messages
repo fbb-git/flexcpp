@@ -54,19 +54,21 @@ namespace_m:
     }
 ;
 
-stream_info_classname_m:
-    STREAM_INFO_CLASSNAME
-    {
-        d_msg = "name of the StreamInfo class";
-    }
-;
-
-stream_info_include_m:
-    STREAM_INFO_INCLUDE
-    {
-        d_msg = "the StreamInfo class header file name";
-    }
-;
+    /*
+        stream_info_classname_m:
+            STREAM_INFO_CLASSNAME
+            {
+                d_msg = "name of the StreamInfo class";
+            }
+        ;
+        
+        stream_info_include_m:
+            STREAM_INFO_INCLUDE
+            {
+                d_msg = "the StreamInfo class header file name";
+            }
+        ;
+    */
 
 start_condition_name_m:
     {
@@ -116,6 +118,18 @@ regex_m:
 regex_block_m:
     {
         d_msg = "pattern or action block";
+    }
+;
+
+debugnamelist_m:
+    {
+        d_msg = "debug identifiers";
+    }
+;
+
+debugsteps_m:
+    {
+        d_msg = "debug step range";
     }
 ;
 

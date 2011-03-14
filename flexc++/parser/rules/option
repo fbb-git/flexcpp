@@ -45,20 +45,77 @@ option:
         d_options.setNameSpace(d_scanner.match());
     }
 |
-    stream_info_classname_m '=' STRING
-    {
-        // d_options.setStreamInfoClassName(d_scanner.match());
-    }
-|
-    stream_info_include_m '=' STRING
-    {
-        // d_options.setStreamInfoInclude(d_scanner.match());
-    }
-|
     INTERACTIVE
     {
         d_options.setInteractive();
     }
 |
+    DEBUG opt_debugnamelist
+|
+    DEBUG_STEPS opt_steprange
+|
     error    
+    /*
+        |
+            stream_info_classname_m '=' STRING
+            {
+                // d_options.setStreamInfoClassName(d_scanner.match());
+            }
+        |
+            stream_info_include_m '=' STRING
+            {
+                // d_options.setStreamInfoInclude(d_scanner.match());
+            }
+    */
+;
+
+opt_debugnamelist:
+    debugnamelist_m '=' debugnamelist
+|
+    {
+        d_options.setDebug();
+    }
+;
+
+debugnamelist:
+    debugnamelist opt_comma debugname
+|
+    debugname
+;
+
+opt_comma:
+    ','
+|
+    // empty
+;
+
+debugname:
+    NAME
+    {
+        d_options.setDebug(d_scanner.match());
+    }
+;
+
+opt_steprange:
+    debugsteps_m '=' firststep opt_laststep
+|
+    {
+        d_options.setStepRange();
+    }
+;
+
+firststep:
+    DECIMAL
+    {
+        d_options.setStepRange(d_scanner.match());
+    }
+;
+
+opt_laststep:
+    // empty
+|
+    DECIMAL
+    {
+        d_options.setLastStep(d_scanner.match());
+    }
 ;

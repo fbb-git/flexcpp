@@ -1,58 +1,86 @@
 #ifndef \@BASE_H_INCLUDED
 #define \@BASE_H_INCLUDED
 
-#include <iosfwd>
-#include <queue>
+#include <iostream>
+#include <deque>
 #include <string>
 #include <vector>
 
+$insert debugIncludes
+
 $insert namespace-open
 
-// ScannerBase
 
 class \@Base
 {
-        // encapsulate all Input operations. The member get returns the next
-        // input range number
+                // idx: rule, value: tail length (NO_INCREMENTS if no tail)
+    typedef std::vector<int> VectorInt;
+    enum 
+    { 
+        NO_INCREMENTS = -2,
+        NO_FINAL_STATE = -2,
+    };
+
+    enum        // Finac Indices, see s_finAc[]
+    {
+        R = 0,
+        F,
+        T,
+        I
+    };
+
+        // class Input encapsulates all input operations. 
+        // The member get returns the next input character
+    enum InputSpecials
+    {
+        AT_BOL = -2,
+        AT_EOF = -1
+    };
 
     class Input
     {
-        enum 
-        {
-            AT_EOF = ~0U
-        };
-        
-        std::queue<unsigned char> d_queue;  // pending input chars
+        std::deque<unsigned char> d_deque;  // pending input chars
         std::istream *d_in;                 //  ptr for easy streamswitching
         bool d_returnBOL;                   // initially true
-        std::string d_readBuffer;
-        size_t d_lastRead;                  // last read character
 
         public:
             Input(std::istream &iStream);
             size_t get();                   // the next range
-            
+            void push_front(size_t ch);     // push back 'ch' (if <= 0x100)
+                                            // push back string from idx 'fm'
+            void push_front(std::string const &str, size_t fm = 1);
         private:
-            size_t nextChar();             // obtain the next character
+            size_t next();                  // obtain the next character
     };
 
     size_t          d_state;
-    std::ostream   *d_out;              // ptr for easy stream switching
+    int             d_nextState;
+    std::ostream   *d_out;
+    Input           d_input;
+    VectorInt       d_LAtail;
+    int             d_finalInfo[2];         // 1st value: rule, 2nd value:
+                                            //                  matchlength
+
+    std::string     d_matched;              // matched characters
+    bool            d_return;               // return after a rule's action 
+    bool            d_startsAtBOL;          // the matched text starts at BOL
+    bool            d_more;                 // set to true by more()
+    size_t          d_less;                 // # chars to rescan and to 
+                                            // remove fm d_matched
 $insert 4 declarations
     static size_t  const s_ranges[];
     static int     const s_finAc[][4];
 
     protected:
-        enum Result
+        enum class ActionType__
         {
-            EXHAUSTED,              // all input exhausted
             CONTINUE,               // transition succeeded, go on
+            ECHO_FIRST,             // no continuation from here
+            EOF_REACHED,            // all input exhausted
+            IGNORE_BOL,             // ignore a BOL range
             MATCH,                  // matched a rule
-            UNDEFINED               // no continuation from here
         };
 
-        Input           d_input;
-    
 
     public:
         enum StartCondition {
@@ -62,13 +90,96 @@ $insert 12 startCondNames
     private:
         StartCondition d_currentStartCondition;
 
+    public:
+        std::string const &match() const;
+
     protected:
-        \@Base();
-        \@Base(std::istream &iStream);
-        Result transition(size_t range);
-        void echoFirst();
-        int matched();
+        \@Base(std::istream &in, std::ostream &out);
+
+            // members required by the standard interface
+$insert debugDecl
+        void    ECHO() const;
+        void    more();
+        void    less(size_t nChars = 0);
+
+            // members used by the implementations: ending in __, so reserved
+            // names
+        ActionType__    actionType__(size_t range); // next action
+        bool            return__();                 // 'return' from codeblock
+        int             matched__(size_t ch);       // handles a matched rule
+        size_t          getRange__(size_t ch);      // convert char to range
+        size_t          get__();                    // next character
+        size_t          state__() const;            // current state 
+        void            continue__(size_t ch);      // handles a transition
+        void            echoFirst__(size_t ch);     // handles unknown input
+        void            ignoreBOL__();              // only if BOL's used
+        void            inspectFinac__();           // set final/LA tails
+        void            noReturn__();               // d_return to false
+        void            reset__();                  // prepare for new cycle
+
+    private:
+        void incLAtails();
+
+            // convenience functions, encapsulating expressions
+        size_t tailLength(size_t ruleIdx) const;
+        static bool incrementalTail(int const *finacInfo);
+        static bool atFinalState(int finacInfo_F);
 };
+
+inline bool \@Base::atFinalState(int stateType)
+{
+    return stateType != NO_FINAL_STATE;
+}
+
+inline size_t \@Base::tailLength(size_t ruleIdx) const
+{
+    return d_LAtail[ruleIdx] == NO_INCREMENTS ? 0 : d_LAtail[ruleIdx];
+}
+
+inline bool \@Base::incrementalTail(int const *finacInfo)
+{
+    return finacInfo[T] != -1 && finacInfo[I];
+}
+
+inline std::string const &\@Base::match() const
+{
+    return d_matched;
+}
+
+inline void \@Base::ECHO() const
+{
+    *d_out << d_matched << '\n';
+}
+
+inline void \@Base::more()
+{
+    d_more = true;
+}
+
+inline void \@Base::less(size_t nChars)
+{
+    d_less = nChars;
+}
+
+inline size_t \@Base::state__() const
+{
+    return d_state;
+}
+
+inline size_t \@Base::get__()
+{
+    return d_input.get();
+}
+
+inline bool \@Base::return__()
+{
+    return d_return;
+}
+
+inline void \@Base::noReturn__()
+{
+    d_return = false;
+}
 
 $insert namespace-close
 

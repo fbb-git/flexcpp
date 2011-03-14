@@ -33,6 +33,10 @@ class Generator
     Rules const &d_rules;
     Ranges const &d_ranges;
     DFAs const &d_dfas;
+    std::string d_baseclassScope;
+    bool d_useBOL;                      // BOL has a defined range
+    bool d_debug;
+    size_t d_debugStepSkip;
 
     mutable std::vector<std::string> d_startStates;
     mutable std::string d_key;          // extracted at $insert statements
@@ -61,28 +65,40 @@ class Generator
         void declarations();
 
     private:
-        void insert(std::ostream &out) const;
-        void filter(std::istream &in, std::ostream &out) const;
-        void key(std::ostream &out) const;
-
-        void namespaceUse(std::ostream &out) const;
-        void namespaceClose(std::ostream &out) const;
-        void namespaceOpen(std::ostream &out) const;
-        void startCondNames(std::ostream &out) const;
+        void DFAbases(std::ostream &out) const;
         void baseClassH(std::ostream &out) const;
         void classH(std::ostream &out) const;
         void classIH(std::ostream &out) const;
-        void lexFunctionDecl(std::ostream &out) const;
-        void inlineLexFunction(std::ostream &out) const;
-        void ranges(std::ostream &out) const;
-        void dfas(std::ostream &out) const;
-        void finAcs(std::ostream &out) const;
-        void DFAbases(std::ostream &out) const;
+        void debug(std::ostream &out) const;
+        void debugDecl(std::ostream &out) const;
+        void debugFunctions(std::ostream &out) const;
+        void debugIncludes(std::ostream &out) const;
+        void debugInit(std::ostream &out) const;
+        void debugStep(std::ostream &out) const;
         void declarations(std::ostream &out) const;
+        void dfas(std::ostream &out) const;
+        void filter(std::istream &in, std::ostream &out) const;
+        void finAcs(std::ostream &out) const;
+        void ifStartsAtBOLelse(std::ostream &out) const;
+        void ignoreBOLaction(std::ostream &out) const;
+        void ignoreBOLcall(std::ostream &out) const;
+        void ignoreBOLimpl(std::ostream &out) const;
+        void inlineLexFunction(std::ostream &out) const;
+        void inputMembers(std::ostream &out) const;
+        void insert(std::ostream &out) const;
+        void key(std::ostream &out) const;
+        void lexFunctionDecl(std::ostream &out) const;
+        void namespaceClose(std::ostream &out) const;
+        void namespaceOpen(std::ostream &out) const;
+        void namespaceUse(std::ostream &out) const;
+        void ranges(std::ostream &out) const;
+        void rangeAtBOL(std::ostream &out) const;
+        void startCondNames(std::ostream &out) const;
 
         size_t dfaCols() const;
 
-        static void outFinAc(FinAcInfo const &finac, std::ostream &out);
+        static void outFinAc(FinAcInfo const &finac, std::ostream &out,
+                                                                size_t &idx);
         static size_t addFinal(DFARow const &row, std::vector<size_t> &final);
         static void outFinal(size_t rule, std::ostream &out, size_t &count);
 

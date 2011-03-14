@@ -3,17 +3,13 @@
 #include <iostream>
 #include <bobcat/arg>
 #include <bobcat/string>
+#include <bobcat/mstream>
 
 #include "SKEL"
 
 using namespace std;
 using namespace FBB;
 
-
-inline Options::Options()
-:
-    d_interactive(false)
-{}
 
 #define FLEXCPPBASE_H  "/flexc++base.h"
 #define FLEXCPP_H      "/flexc++.h"

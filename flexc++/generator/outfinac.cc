@@ -1,6 +1,6 @@
 #include "generator.ih"
 
-void Generator::outFinAc(FinAcInfo const &finac, ostream &out)
+void Generator::outFinAc(FinAcInfo const &finac, ostream &out, size_t &idx)
 {
     out << 
         "     {" << setw(2) << finac.rule() << ',';
@@ -24,7 +24,7 @@ void Generator::outFinAc(FinAcInfo const &finac, ostream &out)
         break;
     }
     
-    out << "},\n";
+    out << "},  // " << idx++ << '\n';
 
 }
 

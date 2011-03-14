@@ -12,9 +12,6 @@ void Options::setAccessorVariables()
 
     arg.option(&d_nameSpace, 'n');  // -n overrules %namespace spec in lexer
 
-//    if (d_streamInfoClassName.empty())
-//        d_streamInfoClassName = s_defaultStreamInfoClassName;
-
     // Skeletons
     if (d_skeletonDirectory.empty() && !arg.option(&d_skeletonDirectory, 'S'))
         d_skeletonDirectory = s_defaultSkeletonDirectory;
@@ -48,4 +45,34 @@ void Options::setAccessorVariables()
 
     if (arg.option(0, "interactive")) // does not overwrite %option when no
         d_interactive = true;         // --interactive is supplied
+
+    d_debugAll |= arg.option('d');         // debug facility requested
+
+    string range;
+    if (arg.option(&range, 's'))
+    {
+        if (range.empty())
+        {
+            d_beginStep = 0;
+            d_endStep = ~0U;
+        }
+        else
+        {
+            size_t value;
+            istringstream in(range);
+            if (in >> value)
+            {
+                d_beginStep = value;
+                in.ignore(1);
+                if (in >> value)
+                    d_endStep = value + 1;
+            }
+            else
+                wmsg << "Option -s" << range << " ignored." << endl;
+        }
+    }
 }
+
+//    if (d_streamInfoClassName.empty())
+//        d_streamInfoClassName = s_defaultStreamInfoClassName;
+

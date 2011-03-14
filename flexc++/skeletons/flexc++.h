@@ -9,7 +9,7 @@ class \@: public \@Base
 {
     public:
         \@() = default;
-        \@(std::istream &iStream);
+        explicit \@(std::istream &iStream, std::ostream &out = std::cout);
 
 $insert 8 lexFunctionDecl
 
@@ -17,11 +17,17 @@ $insert 8 lexFunctionDecl
         int executeAction(int ruleNr);
         int lex__();
         int executeAction__(int ruleNr);
+
+        void preCode();     // re-implement this function for code that must 
+                            // be exec'ed before the patternmatching starts
 };
 
-inline \@::\@(std::istream &iStream)
+inline void Scanner::preCode()  // optionally replace by your own code
+{}
+
+inline \@::\@(std::istream &iStream, std::ostream &oStream)
 :
-    \@Base(iStream)
+    \@Base(iStream, oStream)
 {}
 
 $insert inlineLexFunction

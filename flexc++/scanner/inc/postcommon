@@ -3,3 +3,4 @@
 <INITIAL,option,pattern,vbar>"/*"       begin(comment);
 
 <INITIAL,charclass,pattern>.            return Parser::CHARACTER;
+

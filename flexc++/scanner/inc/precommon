@@ -23,3 +23,5 @@
     ^"//include"[[:blank:]].*   maybeSwitchStream();
 }
 
+<option,pattern>{DECIMAL}               return Parser::DECIMAL;
+

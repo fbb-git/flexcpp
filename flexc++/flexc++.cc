@@ -4,55 +4,43 @@ namespace
 {
     Arg::LongOption longOptions[] =
     {
-        // to be considered/implemented:
-
         // options to set filenames
 
         // options to set filenames
-        {"baseclass-header",         'b'},
-        {"class-header",             'c'},
-        {"implementation-header",    'i'},
-        {"lex-source",               'l'},
+        {"baseclass-header",            'b'},
+        {"class-header",                'c'},
+        {"implementation-header",       'i'},
+        {"lex-source",                  'l'},
+                                        
+        // skeleton options             
+        {"skeleton-directory",          'S'},
+        {"baseclass-skeleton",          'B'},
+        {"class-skeleton",              'C'},
+        {"implementation-skeleton",     'I'},
+        {"lex-skeleton",                'L'},
 
-        // skeleton options
-        {"skeleton-directory",       'S'},
-        {"baseclass-skeleton",       'B'},
-        {"class-skeleton",           'C'},
-        {"implementation-skeleton",  'I'},
-        {"lex-skeleton",             'L'},
+
+        // options forcing overwriting
+        {"force-implementation-header", Arg::None},
+        {"force-class-header",          Arg::None},
+        {"no-baseclass-header",         Arg::None},
+        {"no-lex-member",               Arg::None},
 
 
-        // options to force overwriting
-        Arg::LongOption("force-implementation-header"),
-        Arg::LongOption("force-class-header"),
-        Arg::LongOption("no-baseclass-header"),
-        Arg::LongOption("no-lex-member"),
-
-        {"namespace",               'n'},
-
-        Arg::LongOption("class-name", Arg::Required),
-        Arg::LongOption("lex-function-name", Arg::Required),
-
-        Arg::LongOption("no-lex-member"),
-
-    // Arg::LongOption("lines", 'l'),      // TODO: to be implemented
-
-        Arg::LongOption("show-filenames"),
-                // writes the names of the files to the standard output
-
-    //    {"nolines",                 Arg::None},
-        {"tokens", 't'},
-
-        {"verbose",                 'V'},
-        {"debug",                   'd'},
-
-        // Miscellaneous options
-        {"help",                    'h'},
-        {"usage",                   'h'},
-        {"version",                 'v'},
+        {"class-name",                  Arg::Required},
+        {"lex-function-name",           Arg::Required},
+     // {"show-filenames"               Arg::None},
+     // {"nolines",                     Arg::None},
+     // {"lines", 'l'},                 
+        {"debug",                       'd'},
+        {"debug-step-skip",             's'},
+        {"help",                        'h'},
+        {"namespace",                   'n'},
+        {"usage",                       'h'},
+        {"verbose",                     'V'},
+        {"version",                     'v'},
     };
 
-    //Arg::LongOption const *const 
     auto longEnd = longOptions +
                                 sizeof(longOptions) / sizeof(Arg::LongOption);
 }
@@ -60,7 +48,7 @@ namespace
 int main(int argc, char **argv)
 try
 {
-    Arg &arg = Arg::initialize("df:hI:B:C:L:S:b:c:i:l:n:s:tVv",
+    Arg &arg = Arg::initialize("b:c:dhi:l:n:s::B:C:I:L:S:Vv",
                     longOptions, longEnd, argc, argv);
     arg.versionHelp(usage, version, 1);
 

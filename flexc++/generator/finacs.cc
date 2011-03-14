@@ -19,7 +19,8 @@ void Generator::finAcs(ostream &out) const
     "{\n"
     "//     R  F  T  I\n";
 
-    for_each(d_finacs.begin(), d_finacs.end(), FnWrap::unary(outFinAc, out));
-   
+    size_t idx = 0;
+    for_each(d_finacs.begin(), d_finacs.end(), 
+                                        FnWrap::unary(outFinAc, out, idx));
     out << "};";
 }

@@ -2,6 +2,8 @@
 #define INCLUDED_OPTIONS_
 
 #include <string>
+#include <set>
+#include <bobcat/a2x>
 
 class Options
 {
@@ -24,6 +26,12 @@ class Options
     std::string d_classSkeleton;
     std::string d_lexSkeleton;
     std::string d_implementationSkeleton;
+
+    // debug data
+    size_t d_beginStep;
+    size_t d_endStep;
+    bool d_debugAll;
+    std::set<std::string> d_debugNames;
 
             // strings containing default file and other names
     static char s_defaultLexFunctionName[];
@@ -53,6 +61,12 @@ class Options
         // void setStreamInfoInclude(string const &name);
         //void setStreamInfoClassName(string const &name);
 
+        void setDebug();
+        void setDebug(std::string const &name);
+        void setStepRange();
+        void setStepRange(std::string const &name);
+        void setLastStep(std::string const &name);
+        
         std::string const &baseclassSkeleton() const;
         std::string const &classSkeleton() const;
         std::string const &implementationSkeleton() const;
@@ -70,6 +84,10 @@ class Options
         std::string const &className() const;
         std::string const &lexFunctionName() const;
         std::string const &nameSpace() const;
+
+        bool debug() const;
+        size_t beginStep() const;
+        size_t endStep() const;
 
         void setAccessorVariables();
 
@@ -162,11 +180,50 @@ inline void Options::setInteractive()
     d_interactive = true;
 }
 
+inline void Options::setDebug()
+{
+    d_debugAll = true;
+}
+
+inline void Options::setDebug(std::string const &name)
+{
+    d_debugNames.insert(name);
+}
+
+inline void Options::setStepRange()
+{
+    d_beginStep = 0;
+}
+
+inline void Options::setStepRange(std::string const &name)
+{
+    d_beginStep = FBB::A2x(name);
+}
+
+inline void Options::setLastStep(std::string const &name)
+{
+    d_endStep = 1 + FBB::A2x(name).to<size_t>();
+}
+
 inline bool Options::interactive() const
 {   
     return d_interactive;
 }
 
+inline bool Options::debug() const
+{
+    return d_debugAll || d_debugNames.size();
+}
+
+inline size_t Options::beginStep() const
+{
+    return d_beginStep;
+}
+
+inline size_t Options::endStep() const
+{
+    return d_endStep;
+}
 
 #endif
 
