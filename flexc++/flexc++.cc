@@ -19,21 +19,23 @@ namespace
         {"implementation-skeleton",     'I'},
         {"lex-skeleton",                'L'},
 
-
         // options forcing overwriting
-        {"force-implementation-header", Arg::None},
         {"force-class-header",          Arg::None},
+        {"force-implementation-header", Arg::None},
         {"no-baseclass-header",         Arg::None},
-        {"no-lex-member",               Arg::None},
+        {"no-lex-source",               Arg::None},
 
 
         {"class-name",                  Arg::Required},
         {"lex-function-name",           Arg::Required},
+
      // {"show-filenames"               Arg::None},
      // {"nolines",                     Arg::None},
      // {"lines", 'l'},                 
+
         {"debug",                       'd'},
-        {"debug-step-skip",             's'},
+        {"debug-steps",             's'},
+
         {"help",                        'h'},
         {"namespace",                   'n'},
         {"usage",                       'h'},
@@ -79,9 +81,6 @@ try
         generator.baseclassHeader();
         generator.classHeader();
         generator.implementationHeader();
-
-//        generator.declarations();
-        generator.actions(dfas);
 }
 catch (int x)
 {

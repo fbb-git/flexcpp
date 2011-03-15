@@ -8,28 +8,29 @@ void Generator::debugStep(ostream &out) const
     key(out);
 
     out << 
-    indent << "if (d_beginStep__ <= d_step__ && d_step__ < d_endStep__)\n" <<
-    indent << "{\n" <<
-    indent << "    std::cout << \"\\nState: \" << state__() << \", "
-                                                            "char = \";\n" <<
-    indent << "    switch (ch)\n" <<
-    indent << "    {\n" <<
-    indent << "        case -2:\n" <<
-    indent << "            std::cout << \"BOL\";\n" <<
-    indent << "        break;\n" <<
-    indent << "        case -1:\n" <<
-    indent << "            std::cout << \"EOF\";\n" <<
-    indent << "        break;\n" <<
-    indent << "        default:\n" <<
-    indent << "            if (isprint(ch))\n" <<
-    indent << "                std::cout << '\\'' << static_cast<char>(ch) "
-                                                            "<< '\\'';\n" <<
-    indent << "            else\n" <<
-    indent << "                std::cout << ch;\n" <<
-    indent << "        break;\n" <<
-    indent << "    }\n" <<
-    indent << "    std::cout  << \", range = \" << range << \", matched: " 
-                                              "'\" << match() << \"' \";\n" <<
-    indent << "}\n" <<
-    indent << "++d_step++;\n"; 
+    "        if (d_beginStep__ <= d_step__ && d_step__ < d_endStep__)\n"
+    "        {\n"
+    "            std::cout << \"\\nStep: \" << d_step__ << \", state: \" << "
+                                            "state__() << \", char = \";\n"
+    "            switch (ch)\n"
+    "            {\n"
+    "                case -2:\n"
+    "                    std::cout << \"BOL\";\n"
+    "                break;\n"
+    "                case -1:\n"
+    "                    std::cout << \"EOF\";\n"
+    "                break;\n"
+    "                default:\n"
+    "                    if (isprint(ch))\n"
+    "                        std::cout << '\\'' << static_cast<char>(ch) "
+                                                            "<< '\\'';\n"
+    "                    else\n"
+    "                        std::cout << ch;\n"
+    "                break;\n"
+    "            }\n"
+    "            std::cout  << \", range = \" << range << \", matched: " 
+                                              "'\" << match() << \"' \";\n"
+    "            std::cin.get();\n"
+    "        }\n"
+    "        ++d_step__;\n"; 
 }

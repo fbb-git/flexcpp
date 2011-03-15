@@ -61,11 +61,11 @@ class Generator
         void implementationHeader() const;
         void lexSource() const;
 
-        void actions(DFAs const &dfas);
         void declarations();
 
     private:
         void DFAbases(std::ostream &out) const;
+        void actions(std::ostream &out) const;
         void baseClassH(std::ostream &out) const;
         void classH(std::ostream &out) const;
         void classIH(std::ostream &out) const;

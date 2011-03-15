@@ -12,10 +12,15 @@ void Generator::outAction(DFARow const &row, ostream &out, set<size_t> &done)
             return;
 
         done.insert(*iter);
-        out << "    case " << *iter << ":\n"
-           "    {\n" <<
-           "        " << row.action(*iter) << "\n"
-           "    }\n"
-           "    break;\n";
+        string const &actionCode = row.action(*iter);
+        if (actionCode.length())
+        {
+            out << 
+                "        case " << *iter << ":\n"
+                "        {\n" <<
+                "            " << actionCode << "\n"
+                "        }\n"
+                "        break;\n";
+        }
     }
 }

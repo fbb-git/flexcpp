@@ -114,6 +114,20 @@ $insert 8 rangeAtBOL
     }
 }
 
+void \@Base::incLAtails()
+{
+    for
+    (
+        auto iter = d_LAtail.begin(), end = d_LAtail.end(); 
+            iter != end; 
+                ++iter
+    )
+    {
+        if (*iter != NO_INCREMENTS)
+            ++*iter;
+    }
+}
+
   // At this point d_nextState contains the next state and continuation is
   // possible. The just read char. is appended to d_match, and any LA tail
   // counts are incremented.
@@ -148,7 +162,7 @@ void \@Base::echoFirst__(size_t ch)
 {
 $insert 4 debug "ECHO_FIRST"
 
-$insert ifStartsAtBOLelse
+$insert 4 ifStartsAtBOLelse
     if (d_matched.empty())          // no match possible: echo ch itself
         std::cerr << ch;
     else                            // echo the 1st matched char, push_front
@@ -223,6 +237,18 @@ void \@Base::reset__()
     d_LAtail = VectorInt(s_nRules, NO_INCREMENTS);
 }
 
+int \@::executeAction__(int ruleIdx)
+{
+$insert 4 debug  "Executing actions of rule " << ruleIdx
+    switch (ruleIdx)
+    {
+$insert 8 actions
+    }
+$insert 4 debug "Rule " << ruleIdx << " did not do 'return'"
+    noReturn__();
+    return 0;
+}
+
 int \@::lex__()
 {
     reset__();
@@ -255,7 +281,6 @@ $insert 4 debug  "EOF_REACHED"
 
             case ActionType__::IGNORE_BOL:
 $insert 16 ignoreBOLcall
-                ignoreBOL__();
             continue;
 
             case ActionType__::MATCH:

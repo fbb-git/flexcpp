@@ -7,7 +7,7 @@ void Generator::rangeAtBOL(ostream &out) const
         key(out);
 
         out << 
-            indent << "case AT_BOL:\n" <<
-            indent << "return s_rangeOfBOL;\n";
+            "        case AT_BOL:\n" 
+            "        return s_rangeOfBOL;\n";
     }
 }
