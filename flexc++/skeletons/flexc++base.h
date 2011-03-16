@@ -87,9 +87,6 @@ $insert 4 declarations
 $insert 12 startCondNames
         };
 
-    private:
-        StartCondition d_currentStartCondition;
-
     public:
         std::string const &match() const;
         void set_debug(bool onOff);
@@ -99,10 +96,11 @@ $insert 12 startCondNames
 
 $insert debugDecl
 
-            // members required by the standard interface
-        void    ECHO() const;
+            // members equal or similar to functions defined by flex
+        void    echo() const;
         void    more();
         void    less(size_t nChars = 0);
+        void    begin(StartCondition startCondition);
 
             // members used by the implementations: ending in __, so reserved
             // names
@@ -149,7 +147,7 @@ inline std::string const &\@Base::match() const
     return d_matched;
 }
 
-inline void \@Base::ECHO() const
+inline void \@Base::echo() const
 {
     *d_out << d_matched << '\n';
 }
@@ -162,6 +160,11 @@ inline void \@Base::more()
 inline void \@Base::less(size_t nChars)
 {
     d_less = nChars;
+}
+
+inline void \@Base::begin(StartCondition startCondition)
+{
+    d_dfaBase = s_dfaBase[startCondition];
 }
 
 inline size_t \@Base::state__() const

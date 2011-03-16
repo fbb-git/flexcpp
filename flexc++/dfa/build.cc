@@ -1,6 +1,6 @@
 #include "dfa.ih"
 
-void DFA::build(vector<size_t> const &active)    
+void DFA::build(std::string const &name, vector<size_t> const &active)    
 {
     d_ranges->clearUsed();
 
@@ -14,13 +14,10 @@ void DFA::build(vector<size_t> const &active)
         // compute the e-closure of the start-set
     d_stateSet[0] = d_states->eClosure(d_stateSet[0]);  
 
+    if (d_verbose)
+        cout << "States defining the initial rows of the `" << name << 
+                                                                "' DFA:\n";
 
-    bool verbose = Arg::instance().option('V');
-
-    if (verbose)
-        cout << "States defining the initial rows of the DFA:\n";
-
-    
     while (d_row.size() != d_stateSet.size())       // as long as we haven't
     {                                               // checked all state sets
             // add another row and determine transitions 
@@ -28,19 +25,18 @@ void DFA::build(vector<size_t> const &active)
                               *d_ranges));
         d_row.back().transitions();
         
-        if (verbose)
+        if (d_verbose)
         {
             cout << "Row " << d_row.size()-1 << ": ";
-
-            for (auto iter = d_stateSet[d_row.size()-1].begin(), end = 
-            d_stateSet[d_row.size()-1].end(); iter != end; ++iter)
-            cout << *iter << ',';
-
+            copy (d_stateSet[d_row.size()-1].begin(), 
+                  d_stateSet[d_row.size()-1].end(),
+                  ostream_iterator<decltype(*d_stateSet[0].begin())>(
+                                                                cout, ","));
             cout << '\n';
         }
     }
 
-    if (verbose)
+    if (d_verbose)
         cout << '\n';
 
     keepUniqueRows();

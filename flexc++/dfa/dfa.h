@@ -24,12 +24,15 @@ class DFA
     typedef std::set<size_t> StateSet;
     std::vector<StateSet> d_stateSet;    
 
+    bool d_verbose;
+
     public:
         DFA() = default;        // only used for vector-resizing operations
 
         DFA(Ranges &ranges, Rules &d_rules, States &states);
 
-        void build(std::vector<size_t> const &active);
+        void build(std::string const &name, 
+                   std::vector<size_t> const &active);
 
         std::vector<DFARow>::const_iterator begin() const;
         std::vector<DFARow>::const_iterator end() const;

@@ -9,10 +9,13 @@ void DFA::keepUniqueRows()
     if (unique.back() == unique.size() - 1)
         return;
 
-    cout << "UNIQUE: ";
-    copy(unique.begin(), unique.end(), 
-            ostream_iterator<size_t>(cout, ","));
-    cout << endl;
+    if (d_verbose)
+    {
+        cout << "UNIQUE: ";
+        copy(unique.begin(), unique.end(), 
+                                    ostream_iterator<size_t>(cout, ","));
+        cout << '\n';
+    }
 
     for_each(d_row.begin(), d_row.end(), 
                                     FnWrap::unary(translate, unique));
