@@ -2,7 +2,7 @@
 
 void Generator::debugStep(ostream &out) const
 {
-    if (!d_debug)
+    if (!d_debugStep)
         return;
 
     key(out);

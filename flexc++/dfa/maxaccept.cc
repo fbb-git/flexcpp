@@ -6,8 +6,8 @@ int DFA::maxAccept(size_t rowIdx) const
                                    d_stateSet[rowIdx].end(),
                           FnWrap::binary(cmpAccept, *d_states));
 
-    cerr << "returning St " << maxState << " = " << 
-        (*d_states)[maxState].accept() << endl;
+//    cerr << "returning St " << maxState << " = " << 
+//        (*d_states)[maxState].accept() << endl;
 
     return (*d_states)[maxState].accept();
 }

@@ -14,6 +14,13 @@ void DFA::build(vector<size_t> const &active)
         // compute the e-closure of the start-set
     d_stateSet[0] = d_states->eClosure(d_stateSet[0]);  
 
+
+    bool verbose = Arg::instance().option('V');
+
+    if (verbose)
+        cout << "States defining the initial rows of the DFA:\n";
+
+    
     while (d_row.size() != d_stateSet.size())       // as long as we haven't
     {                                               // checked all state sets
             // add another row and determine transitions 
@@ -21,14 +28,20 @@ void DFA::build(vector<size_t> const &active)
                               *d_ranges));
         d_row.back().transitions();
         
-// TEMPO: Display the states defining this row
-    cout << "Row " << d_row.size()-1 << ": ";
-    for (auto iter = d_stateSet[d_row.size()-1].begin(), end = 
-    d_stateSet[d_row.size()-1].end(); iter != end; ++iter)
-    cout << *iter << ',';
-    cout << '\n';
+        if (verbose)
+        {
+            cout << "Row " << d_row.size()-1 << ": ";
 
+            for (auto iter = d_stateSet[d_row.size()-1].begin(), end = 
+            d_stateSet[d_row.size()-1].end(); iter != end; ++iter)
+            cout << *iter << ',';
+
+            cout << '\n';
+        }
     }
+
+    if (verbose)
+        cout << '\n';
 
     keepUniqueRows();
     processFinAc();           // compute accept counts for LA rules

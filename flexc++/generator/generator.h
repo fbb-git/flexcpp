@@ -34,13 +34,16 @@ class Generator
     Ranges const &d_ranges;
     DFAs const &d_dfas;
     std::string d_baseclassScope;
-    bool d_useBOL;                      // BOL has a defined range
+    bool d_useBOL;
     bool d_debug;
+    bool d_debugStep;
     size_t d_debugStepSkip;
 
     mutable std::vector<std::string> d_startStates;
     mutable std::string d_key;          // extracted at $insert statements
     mutable std::string d_line;
+    mutable std::string d_field;
+
     mutable std::vector<FinAcInfo> d_finacs;    // determined at dfas()
     mutable std::vector<size_t> d_dfaIndices;   // determined at dfas()
 
@@ -79,10 +82,10 @@ class Generator
         void dfas(std::ostream &out) const;
         void filter(std::istream &in, std::ostream &out) const;
         void finAcs(std::ostream &out) const;
-        void ifStartsAtBOLelse(std::ostream &out) const;
+//        void ifStartsAtBOLelse(std::ostream &out) const;      REMOVE SOURCE
         void ignoreBOLaction(std::ostream &out) const;
-        void ignoreBOLcall(std::ostream &out) const;
-        void ignoreBOLimpl(std::ostream &out) const;
+//        void ignoreBOLcall(std::ostream &out) const;          REMOVE SOURCE
+//        void ignoreBOLimpl(std::ostream &out) const;          REMOVE SOURCE
         void inlineLexFunction(std::ostream &out) const;
         void inputMembers(std::ostream &out) const;
         void insert(std::ostream &out) const;
@@ -94,6 +97,10 @@ class Generator
         void ranges(std::ostream &out) const;
         void rangeAtBOL(std::ostream &out) const;
         void startCondNames(std::ostream &out) const;
+        void resetStartsAtBOL(std::ostream &out) const;
+        void pushFront(std::ostream &out) const;
+        void pushFrontCall(std::ostream &out) const;
+        void checkBOL(std::ostream &out) const;
 
         size_t dfaCols() const;
 

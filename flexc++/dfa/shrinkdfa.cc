@@ -2,7 +2,7 @@
 
 void DFA::shrinkDFA(vector<size_t> &unique)
 {
-    cerr << "DFA ROWS: " << d_row.size() << endl;
+    // cerr << "DFA ROWS: " << d_row.size() << endl;
 
     size_t to = 0;
     for (size_t from = 0, end = d_row.size(); from != end; ++from)
@@ -14,7 +14,7 @@ void DFA::shrinkDFA(vector<size_t> &unique)
         }
         if (unique[from] < to)
             continue;
-        cerr << "Move row " << from << " to row " << to << endl;
+        // cerr << "Move row " << from << " to row " << to << endl;
 
         d_row[to] = d_row[from];
         d_stateSet[to] = d_stateSet[from];
@@ -25,7 +25,7 @@ void DFA::shrinkDFA(vector<size_t> &unique)
     d_row.resize(to);
 
 
-    cerr << "NEW # OF ROWS: " << to << ", states per row:\n";
+//    cerr << "NEW # OF ROWS: " << to << ", states per row:\n";
     for (size_t idx = 0; idx != to; ++idx)        
     {
         cout << "Row " << idx << ": ";
@@ -35,5 +35,4 @@ void DFA::shrinkDFA(vector<size_t> &unique)
         cout << '\n';
     }
 }
-
 

@@ -88,6 +88,8 @@ class Options
         bool debug() const;
         size_t beginStep() const;
         size_t endStep() const;
+        bool has(std::string const &field) const;
+        bool hasNames() const;
 
         void setAccessorVariables();
 
@@ -212,7 +214,17 @@ inline bool Options::interactive() const
 
 inline bool Options::debug() const
 {
-    return d_debugAll || d_debugNames.size();
+    return d_debugAll;
+}
+
+inline bool Options::has(std::string const &field) const
+{
+    return d_debugNames.find(field) != d_debugNames.end();
+}
+
+inline bool Options::hasNames() const
+{
+    return d_debugNames.size();
 }
 
 inline size_t Options::beginStep() const

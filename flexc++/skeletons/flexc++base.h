@@ -63,7 +63,6 @@ class \@Base
 
     std::string     d_matched;              // matched characters
     bool            d_return;               // return after a rule's action 
-    bool            d_startsAtBOL;          // the matched text starts at BOL
     bool            d_more;                 // set to true by more()
     size_t          d_less;                 // # chars to rescan and to 
                                             // remove fm d_matched
@@ -79,6 +78,7 @@ $insert 4 declarations
             EOF_REACHED,            // all input exhausted
             IGNORE_BOL,             // ignore a BOL range
             MATCH,                  // matched a rule
+            PUSH_FRONT,             // return all chars to the input
         };
 
 
@@ -92,12 +92,14 @@ $insert 12 startCondNames
 
     public:
         std::string const &match() const;
+        void set_debug(bool onOff);
 
     protected:
         \@Base(std::istream &in, std::ostream &out);
 
-            // members required by the standard interface
 $insert debugDecl
+
+            // members required by the standard interface
         void    ECHO() const;
         void    more();
         void    less(size_t nChars = 0);
@@ -115,6 +117,7 @@ $insert debugDecl
         void            ignoreBOL__();              // only if BOL's used
         void            inspectFinac__();           // set final/LA tails
         void            noReturn__();               // d_return to false
+        void            pushFront__(size_t ch);     // return chars to Input
         void            reset__();                  // prepare for new cycle
 
     private:

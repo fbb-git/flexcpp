@@ -1,4 +1,4 @@
-$insert class.h
+$insert class_h
 
 #include <istream>
 

@@ -2,12 +2,12 @@
 
 void Generator::debug(ostream &out) const
 {
-    if (!d_debug)
+    if (!d_debug && !d_options.has(d_field))
         return;
 
     key(out);
 
-    out << indent << "if (d_debug__)\n" <<
+    out << indent << "if (s_debug__)\n" <<
            indent << "    " << flush;
 
     if (*d_line.rbegin() != '+')

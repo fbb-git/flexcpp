@@ -3,6 +3,8 @@
 void Generator::inputMembers(ostream &out) const
 {
     key(out);
+    bool hasInput = d_debug || d_options.has("input");
+
     out <<  
         "ScannerBase::Input::Input(std::istream &iStream)\n"
         ":\n"
@@ -10,7 +12,7 @@ void Generator::inputMembers(ostream &out) const
 
     if (d_useBOL)
         out <<  ",\n"
-                "    d_returnBOL(s_rangeOfBOL != s_finacIdx)\n";
+                "    d_returnBOL(true)\n";
 
     out <<
         "{}\n"
@@ -19,12 +21,22 @@ void Generator::inputMembers(ostream &out) const
         "{\n";
 
     if (d_useBOL)
+    {
         out <<
             "    if (d_returnBOL)                    // check for BOL\n"
-            "    {\n"
+            "    {\n";
+
+        if (hasInput)
+            out <<
+            "        if (s_debug__)\n"
+            "            s_out__ << \"Input::get() returns AT_BOL, returnBOL"
+                                            " now false\\n\" << dflush__;\n";
+        out <<
             "        d_returnBOL = false;\n"
             "        return AT_BOL;\n"
             "    }\n";
+    }
+
 
     out <<
         "\n"
@@ -33,12 +45,26 @@ void Generator::inputMembers(ostream &out) const
         "        case '\\n':\n";
 
     if (d_useBOL)
-        out << "            d_returnBOL = s_rangeOfBOL != s_finacIdx;\n";
+    {
+        out << "            d_returnBOL = true;\n";
+        if (hasInput)
+            out <<
+            "        if (s_debug__)\n"
+            "            s_out__ << \"Input::get() returnBOL now true\\n\"" 
+                                                        " << dflush__;\n";
+    }
 
     out << 
         "        // FALLING THROUGH\n"
         "\n"
-        "        default:\n"
+        "        default:\n";
+
+    if (hasInput)
+        out <<
+        "            if (s_debug__)\n"
+        "                s_out__ << \"Input::get() returns \" << ch << " 
+                                            "'\\n' << dflush__;\n";
+    out <<
         "        return ch;\n"
         "    }\n"
         "}\n";

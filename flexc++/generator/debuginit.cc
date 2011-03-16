@@ -2,11 +2,13 @@
 
 void Generator::debugInit(ostream &out) const
 {
+    if (!d_debug && !d_options.hasNames())
+        return;
+
     key(out);
-    if (d_debug)
-        out << 
-        "    d_debug__(" << boolalpha << d_options.debug() << "),\n" <<
-        "    d_beginStep__(" << d_options.beginStep() << "U),\n"
-        "    d_endStep__(" << d_options.endStep() << "U),\n"
-        "    d_step__(0),\n";
+
+    out << 
+    "    d_beginStep__(" << d_options.beginStep() << "U),\n"
+    "    d_endStep__(" << d_options.endStep() << "U),\n"
+    "    d_step__(0),\n";
 }   

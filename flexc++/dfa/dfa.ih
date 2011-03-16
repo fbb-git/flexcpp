@@ -1,6 +1,6 @@
 #include "dfa.h"
 
-#include <iostream>     // TEMPO
+//  #include <iostream>     // TEMPO
 
 #include <ostream>
 #include <algorithm>
@@ -10,6 +10,7 @@
 #include <bobcat/tablelines>
 #include <bobcat/align>
 #include <bobcat/table>
+#include <bobcat/arg>
 
 #include "../rules/rules.h"
 #include "../states/states.h"
@@ -20,8 +21,8 @@ using namespace FBB;
 
 inline bool DFA::cmpAccept(size_t left, size_t right, States const &states)
 {
-    cerr << "St " << left << " = " << states[left].accept() << ", "
-            "St " << right << " = " << states[right].accept() << "\n";
+//    cerr << "St " << left << " = " << states[left].accept() << ", "
+//            "St " << right << " = " << states[right].accept() << "\n";
     return states[left].accept() < states[right].accept();
 }
 

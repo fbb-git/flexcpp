@@ -1,5 +1,5 @@
 #include <istream>
-$insert class.ih
+$insert class_ih
 
 $insert namespace-open
 
@@ -32,7 +32,11 @@ size_t \@Base::Input::next()
 void \@Base::Input::push_front(size_t ch)
 {
     if (ch < 0x100)
+    {
+$insert 8 debug.input "Input::push_front(" << ch << "), d_returnBOL = false"
+        d_returnBOL = false;
         d_deque.push_front(ch);
+    }
 }
 
 void \@Base::Input::push_front(std::string const &str, size_t fm)
@@ -54,6 +58,8 @@ $insert debugFunctions
 
 \@Base::ActionType__ \@Base::actionType__(size_t range)
 {
+$insert 4 checkBOL
+
     d_nextState = d_dfaBase[d_state][range];
 
     if (d_nextState != -1)                  // transition is possible
@@ -62,7 +68,7 @@ $insert debugFunctions
     if (atFinalState(d_finalInfo[0]))       // FINAL state reached
         return ActionType__::MATCH;
 
-$insert ignoreBOLaction
+$insert 4 ignoreBOLaction
 
     if (range == s_rangeOfEOF)
         return ActionType__::EOF_REACHED;
@@ -80,7 +86,7 @@ $insert ignoreBOLaction
   // and the scanner is reset for another run
 int \@Base::matched__(size_t ch)
 {
-$insert 4 debug "MATCH"
+$insert 4 debug.action "MATCH"
 
     d_input.push_front(ch);
 
@@ -96,7 +102,9 @@ $insert 4 debug "MATCH"
         
     d_input.push_front(d_matched, length);  // push front the tail
     d_matched.resize(length);               // return what's left
-    
+
+$insert 4 debug.action "match buffer contains `" << d_matched << "'"
+        
     return ruleIdx;
 }
 
@@ -133,17 +141,14 @@ void \@Base::incLAtails()
   // counts are incremented.
 void \@Base::continue__(size_t ch)
 {
-$insert 4 debug "CONTINUE, NEW STATE: " << d_nextState
+$insert 4 debug.action "CONTINUE, NEW STATE: " << d_nextState
 
     d_state = d_nextState;
 
     switch (ch)
     {
         case AT_EOF:
-        break;
-
         case AT_BOL:
-            d_startsAtBOL = true;
         break;
 
         default:
@@ -160,9 +165,8 @@ $insert 4 debug "CONTINUE, NEW STATE: " << d_nextState
    // rules and that char is then echoed
 void \@Base::echoFirst__(size_t ch)
 {
-$insert 4 debug "ECHO_FIRST"
+$insert 4 debug.action "ECHO_FIRST"
 
-$insert 4 ifStartsAtBOLelse
     if (d_matched.empty())          // no match possible: echo ch itself
         std::cerr << ch;
     else                            // echo the 1st matched char, push_front
@@ -173,14 +177,13 @@ $insert 4 ifStartsAtBOLelse
     }
 }
 
-$insert ignoreBOLimpl
+$insert pushFront
 
     // Inspect all s_finAc elements
     // 
     // If the current state is a final state then store the rule and the 
     // current buffer length in d_finalInfo.
     // Otherwise, if an incremental tail then store the initial tail length
-    //      (before the transition actually takes place, so the value - 1)
     //
     // Later, when transiting:
     //      Increment all incremental tail's d_LAtail's values;
@@ -215,9 +218,9 @@ void \@Base::inspectFinac__()
             //      at d_LAtail
         else if (incrementalTail(finacInfo))
         {
-            d_LAtail[ finacInfo[R] ] = finacInfo[T] - 1;
-$insert 12 debug "Setting LAtail [" << finacInfo[R] << "] to " +
-$insert 12 debug finacInfo[T] - 1 << ", incrementing"
+            d_LAtail[ finacInfo[R] ] = finacInfo[T];
+$insert 12 debug.finac "Setting LAtail [" << finacInfo[R] << "] to " +
+$insert 12 debug.finac finacInfo[T] << ", incrementing"
         }
     }   
 }
@@ -231,20 +234,20 @@ void \@Base::reset__()
         d_matched.clear();
     d_more = false;
     d_less = 0;
+$insert 4 resetStartsAtBOL
 
     d_finalInfo = {NO_FINAL_STATE, };
-
     d_LAtail = VectorInt(s_nRules, NO_INCREMENTS);
 }
 
 int \@::executeAction__(int ruleIdx)
 {
-$insert 4 debug  "Executing actions of rule " << ruleIdx
+$insert 4 debug.action  "Executing actions of rule " << ruleIdx
     switch (ruleIdx)
     {
 $insert 8 actions
     }
-$insert 4 debug "Rule " << ruleIdx << " did not do 'return'"
+$insert 4 debug.action "Rule " << ruleIdx << " did not do 'return'"
     noReturn__();
     return 0;
 }
@@ -267,7 +270,7 @@ $insert 8 debugStep
         {
             case ActionType__::CONTINUE:
                 continue__(ch);
-            continue;
+            break;
 
             case ActionType__::ECHO_FIRST:
                 echoFirst__(ch);
@@ -276,12 +279,12 @@ $insert 8 debugStep
             break;
 
             case ActionType__::EOF_REACHED:
-$insert 4 debug  "EOF_REACHED"
+$insert 16 debug.action  "EOF_REACHED"
             return 0;
 
             case ActionType__::IGNORE_BOL:
-$insert 16 ignoreBOLcall
-            continue;
+//$insert 16 debug.action "IGNORE_BOL";
+            break;
 
             case ActionType__::MATCH:
             {
@@ -292,8 +295,12 @@ $insert 16 ignoreBOLcall
                 preCode();
                 continue;
             }
-        }
-    }
+
+            case ActionType__::PUSH_FRONT:
+$insert 16 pushFrontCall
+            break;
+        } // switch
+    } // while
 }
 
 $insert namespace-close

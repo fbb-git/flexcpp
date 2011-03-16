@@ -26,7 +26,7 @@ void DFA::processRow(FinAcInfo &finAcInfo, size_t ruleIdx, DFA &dfa,
 
         if (final != FinAcInfo::NOT_FINAL)     // current state is Final state
         {
-            cerr << "IN Row " << rowIdx << " has final: " << final << endl;
+//            cerr << "IN Row " << rowIdx << " has final: " << final << endl;
 
             if (final == FinAcInfo::FINAL_NOT_SET)
                     // keep the parent's final (if set) or use tailsteps
@@ -34,7 +34,7 @@ void DFA::processRow(FinAcInfo &finAcInfo, size_t ruleIdx, DFA &dfa,
             else 
                 final = min(final, tailSize);
 
-            cerr << "OUT Row " << rowIdx << " has final: " << final << endl;
+//            cerr << "OUT Row " << rowIdx << " has final: " << final << endl;
             finAcInfo.setFinal(final);
         }
 
@@ -45,7 +45,8 @@ void DFA::processRow(FinAcInfo &finAcInfo, size_t ruleIdx, DFA &dfa,
         {
             finAcInfo.setAccept(dfa.maxAccept(rowIdx));
             finAcInfo.setInc();
-cerr << "  row " << rowIdx << ": pure post-A FinAcInfo: " << finAcInfo << '\n';
+// cerr << "  row " << rowIdx << ": pure post-A FinAcInfo: " << finAcInfo <<
+// '\n'; 
 
     // this is not a FIXED final value. Is it necessary to set final's value?
     // couldn't the code generation detect that this is a final state and an
