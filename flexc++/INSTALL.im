@@ -40,11 +40,6 @@ string COMPILER;
     // used with the gprof profiler. When specified, no stripping is performed
     // at ./build program strip (see INSTALL)
 
-    // COX causes --std=c++0x to be included in the compiler options
-    // This is necessary to use the new C++0x standard features
-    // If that's NOT what you want, uncomment #define COX
-#define COX
-
 void setLocations()
 {
     BASE  = "/usr/local";

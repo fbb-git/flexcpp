@@ -1,7 +1,7 @@
 #ifndef \@_H_INCLUDED_
 #define \@_H_INCLUDED_
 
-$insert baseclass.h
+$insert baseclass_h
 
 $insert namespace-open
 

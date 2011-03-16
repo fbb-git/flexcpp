@@ -5,7 +5,7 @@ Generator::Map Generator::s_insert =
     {"DFAbases",            &Generator::DFAbases},
     {"DFAs",                &Generator::dfas},
     {"actions",             &Generator::actions},
-    {"baseclass.h",         &Generator::baseClassH},
+    {"baseclass_h",         &Generator::baseClassH},
     {"class_h",             &Generator::classH},
     {"class_ih",            &Generator::classIH},
     {"debug",               &Generator::debug},

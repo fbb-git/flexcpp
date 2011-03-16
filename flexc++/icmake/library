@@ -1,8 +1,4 @@
-#ifdef COX
-#define COPT               "--std=c++0x -Wall -O3"
-#else
-#define COPT               "-Wall -O3"
-#endif
+#define COPT               "--std=c++0x -Wall -O2"
 
 #define ECHO_REQUEST       1
 
