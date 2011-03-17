@@ -37,7 +37,8 @@ class Generator
     bool d_useBOL;
     bool d_debug;
     bool d_debugStep;
-    size_t d_debugStepSkip;
+
+size_t CAN_BE_REMOVED;
 
     mutable std::vector<std::string> d_startStates;
     mutable std::string d_key;          // extracted at $insert statements

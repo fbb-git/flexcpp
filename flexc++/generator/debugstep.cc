@@ -10,8 +10,7 @@ void Generator::debugStep(ostream &out) const
     out << 
     "        if (d_beginStep__ <= d_step__ && d_step__ < d_endStep__)\n"
     "        {\n"
-    "            std::cout << \"\\nStep: \" << d_step__ << \", state: \" << "
-                                            "state__() << \", char = \";\n"
+    "            std::cout << \"\\nStep: \" << d_step__ << \", char = \";\n"
     "            switch (ch)\n"
     "            {\n"
     "                case -2:\n"
@@ -28,8 +27,8 @@ void Generator::debugStep(ostream &out) const
     "                        std::cout << ch;\n"
     "                break;\n"
     "            }\n"
-    "            std::cout  << \", range = \" << range << \", matched: " 
-                                              "'\" << match() << \"' \";\n"
+    "            std::cout << \", matched: '\" << match() << \"', state: \"\n"
+    "                    << state__() << \", range = \" << range << '\\n';\n"
     "            std::cin.get();\n"
     "        }\n"
     "        ++d_step__;\n"; 

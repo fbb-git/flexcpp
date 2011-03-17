@@ -2,7 +2,7 @@
 
 void Generator::debugInit(ostream &out) const
 {
-    if (!d_debug && !d_options.hasNames())
+    if (!d_debugStep)
         return;
 
     key(out);
