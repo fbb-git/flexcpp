@@ -66,6 +66,9 @@ class \@Base
     bool            d_more;                 // set to true by more()
     size_t          d_less;                 // # chars to rescan and to 
                                             // remove fm d_matched
+    size_t          d_lineno;               // number of lines read so far
+                                            // initially 1, incremented at
+                                            // each \n. 
 $insert 4 declarations
     static size_t  const s_ranges[];
     static int     const s_finAc[][4];
@@ -88,8 +91,13 @@ $insert 12 startCondNames
         };
 
     public:
-        std::string const &match() const;
-        void set_debug(bool onOff);
+        bool                debug()     const;
+        size_t              length()    const;
+        size_t              lineno()    const;
+        std::string const  &match()     const;
+        std::string const  &text()      const;
+
+        void                set_debug(bool onOff);
 
     protected:
         \@Base(std::istream &in, std::ostream &out);
@@ -117,6 +125,7 @@ $insert debugDecl
         void            noReturn__();               // d_return to false
         void            pushFront__(size_t ch);     // return chars to Input
         void            reset__();                  // prepare for new cycle
+        void            updateLineno__();           // update d_lineno
 
     private:
         void incLAtails();
@@ -147,9 +156,24 @@ inline std::string const &\@Base::match() const
     return d_matched;
 }
 
+inline std::string const &\@Base::text() const
+{
+    return d_matched;
+}
+
 inline void \@Base::echo() const
 {
-    *d_out << d_matched << '\n';
+    *d_out << d_matched;
+}
+
+inline size_t \@Base::length() const
+{
+    return d_matched.size();
+}
+
+inline size_t \@Base::lineno() const
+{
+    return d_lineno;
 }
 
 inline void \@Base::more()

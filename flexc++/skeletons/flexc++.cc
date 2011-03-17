@@ -51,10 +51,22 @@ void \@Base::Input::push_front(std::string const &str, size_t fm)
     d_out(&out),
     d_input(in),
 $insert debugInit
-    d_dfaBase(s_dfa)
+    d_dfaBase(s_dfa),
+    d_lineno(1)
 {}
 
 $insert debugFunctions
+
+void \@Base::updateLineno__()
+{
+    for 
+    (
+        size_t pos = 0; 
+            (pos = d_matched.find('\n', pos)) != std::string::npos; 
+                ++pos
+    )
+        ++d_lineno;
+}
 
 \@Base::ActionType__ \@Base::actionType__(size_t range)
 {
@@ -104,7 +116,8 @@ $insert 4 debug.action "MATCH"
     d_matched.resize(length);               // return what's left
 
 $insert 4 debug.action "match buffer contains `" << d_matched << "'"
-        
+
+    updateLineno__();        
     return ruleIdx;
 }
 
@@ -173,8 +186,9 @@ $insert 4 debug.action "ECHO_FIRST"
     {                               // the rest
         d_input.push_front(ch);
         d_input.push_front(d_matched, 1);
-        std::cerr << d_matched[0];
+        std::cerr << (ch = d_matched[0]);
     }
+    d_lineno += ch == '\n';
 }
 
 $insert pushFront
@@ -280,6 +294,7 @@ $insert 8 debugStep
 
             case ActionType__::EOF_REACHED:
 $insert 16 debug.action  "EOF_REACHED"
+                updateLineno__();
             return 0;
 
             case ActionType__::IGNORE_BOL:

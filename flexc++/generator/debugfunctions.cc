@@ -8,7 +8,12 @@ void Generator::debugFunctions(std::ostream &out) const
     {
         out << 
             "void " << d_baseclassScope << "set_debug(bool onOff)\n"
-            "{}\n";
+            "{}\n"
+            "\n"
+            "bool " << d_baseclassScope << "debug() const\n"
+            "{\n"
+            "    return false;\n"
+            "}\n";
         
         return;
     }
@@ -23,6 +28,11 @@ void Generator::debugFunctions(std::ostream &out) const
     "    if (not (s_debug__ = onOff))\n"
     "        d_beginStep__ = d_endStep__;\n"
     "}\n" 
+    "\n"
+    "bool " << d_baseclassScope << "debug() const\n"
+    "{\n"
+    "    return s_debug__;\n"
+    "}\n"
     "\n"
     "std::ostream &" << d_baseclassScope << "dflush__(std::ostream &out)\n"
     "{\n"
