@@ -260,6 +260,9 @@ void \@Base::inspectFinac__()
             // the rule, the current buffer length, and the LA tail value
             // in d_finalInfo.
         if (atFinalState(finac))
+        {
+$insert 12 debug.finac "Setting fixed LAtail [" << finac[R] << "] to " +
+$insert 12 debug.finac finac[F]
             d_finalInfo = 
                 {
                     finac,              // store the finac info's location
@@ -268,7 +271,9 @@ void \@Base::inspectFinac__()
 
             // Otherwise, if incremental tail store the initial tail length
             //      at d_LAtail
-        else if (incrementalTail(finac))
+        }
+
+        if (incrementalTail(finac))
         {
 $insert 12 debug.finac "Setting LAtail [" << finac[R] << "] to " +
 $insert 12 debug.finac finac[T] << ", incrementing"

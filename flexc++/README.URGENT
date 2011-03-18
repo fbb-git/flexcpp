@@ -1,0 +1,6 @@
+18/3/2011, 14:30
+
+The run-time handling of LA patterns needs fine-tuning. The construction of
+DFAs for LA patterns seems fine, so far.
+
+No time to do the fine-tuning right now. I'll do that later this weekend
