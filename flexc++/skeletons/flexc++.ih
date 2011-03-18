@@ -1,5 +1,3 @@
 $insert class_h
 
-#include <istream>
-
 $insert namespace-use

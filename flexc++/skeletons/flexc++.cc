@@ -3,32 +3,32 @@ $insert class_ih
 
 $insert namespace-open
 
-// s_ranges: use (unsigned) characters as index to obtain
-//           that character's range-number.
-//           Ranges for BOL and EOF are in constants in the
-//           class header file
+    // s_ranges: use (unsigned) characters as index to obtain
+    //           that character's range-number.
+    //           Ranges for BOL and EOF are in constants in the
+    //           class header file
 $insert ranges
 
-// s_dfa contains the rows of *all* DFAs ordered by start state.
-// The enum class StartCondition is defined in the baseclass header
-// INITIAL is always 0.
-// Each entry defines the row to transit to if the column's
-// character range was sensed. Row numbers are relative to the
-// used DFA and d_dfaBase is set to the first row of the subset to use.
-// The row's final two values are begin and end indices in
-// s_accept[], defining the state's final and LA details
+    // s_dfa contains the rows of *all* DFAs ordered by start state.
+    // The enum class StartCondition is defined in the baseclass header
+    // INITIAL is always 0.
+    // Each entry defines the row to transit to if the column's
+    // character range was sensed. Row numbers are relative to the
+    // used DFA and d_dfaBase is set to the first row of the subset to use.
+    // The row's final two values are begin and end indices in
+    // s_accept[], defining the state's final and LA details
 $insert DFAs
 
-// The first value is the rule index
-// The second value is the final indicator:
-//  -2: not a final state (NO_FINAL_STATE), 
-//  -1: final state, matching all text
-//  >= 0: final state, the value is the LA tail length.
-// The third value indicates other LA uses:
-//  -1: Not a LA state tail length,
-//  >=0: LA tail on transit FROM this state.
-// The fourth value indicates an incrementing (1) tail:
-// the tail length is incremented at each subsequent transition
+    // The first value is the rule index
+    // The second value is the final indicator:
+    //  -2: not a final state (NO_FINAL_STATE), 
+    //  -1: final state, matching all text
+    //  >= 0: final state, the value is the LA tail length.
+    // The third value indicates other LA uses:
+    //  -1: Not a LA state tail length,
+    //  >=0: LA tail on transit FROM this state.
+    // The fourth value indicates an incrementing (1) tail:
+    // the tail length is incremented at each subsequent transition
 $insert finAcs
 
 $insert DFAbases
@@ -207,7 +207,7 @@ $insert 4 debug.action "CONTINUE, NEW STATE: " << d_nextState
     }
 }
 
-   // At this point there is no continuation possible. The last character is
+   // At this point there is no continuation. The last character is
    // pushed back into the input stream as well as all but the first char. in
    // the buffer. The first char. in the buffer is echoed to stderr. 
    // If there isn't any 1st char yet then the current char doesn't fit any
@@ -272,6 +272,7 @@ void \@Base::inspectFinac__()
         {
 $insert 12 debug.finac "Setting LAtail [" << finacInfo[R] << "] to " +
 $insert 12 debug.finac finacInfo[T] << ", incrementing"
+            d_LAtail[ finac[R] ] = finac[T];
         }
     }   
 }

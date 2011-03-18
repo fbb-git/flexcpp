@@ -18,7 +18,7 @@ void Generator::ranges(ostream &out) const
     }
     
     out << "\n"
-           "};";
+           "};\n";
 }
 
 

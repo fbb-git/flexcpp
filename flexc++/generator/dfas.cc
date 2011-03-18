@@ -15,7 +15,7 @@ void Generator::dfas(ostream &out) const
     for_each(d_dfas.begin(), d_dfas.end(), 
             FnWrap::unary(dfa, out, d_finacs, d_startStates, d_dfaIndices));
  
-    out << "};";
+    out << "};\n";
 }
 
 
