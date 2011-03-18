@@ -12,9 +12,9 @@ void Generator::inputMembers(ostream &out) const
 
     if (d_useBOL)
         out <<  ",\n"
-                "    d_returnBOL(true)\n";
+                "    d_returnBOL(true)";
 
-    out <<
+    out << "\n"        
         "{}\n"
         "\n"
         "size_t ScannerBase::Input::get()\n"
@@ -39,7 +39,6 @@ void Generator::inputMembers(ostream &out) const
 
 
     out <<
-        "\n"
         "    switch (size_t ch = next())         // get the next input char\n"
         "    {\n"
         "        case '\\n':\n";

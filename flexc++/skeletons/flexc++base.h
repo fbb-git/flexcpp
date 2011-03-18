@@ -26,7 +26,13 @@ class \@Base
         R = 0,
         F,
         T,
-        I
+        I,
+    };
+
+    struct FinalInfo
+    {
+        int const *finac;
+        size_t matchLen;
     };
 
         // class Input encapsulates all input operations. 
@@ -58,8 +64,7 @@ class \@Base
     std::ostream   *d_out;
     Input           d_input;
     VectorInt       d_LAtail;
-    int             d_finalInfo[2];         // 1st value: rule, 2nd value:
-                                            //                  matchlength
+    FinalInfo       d_finalInfo;    
 
     std::string     d_matched;              // matched characters
     bool            d_return;               // return after a rule's action 
@@ -131,24 +136,19 @@ $insert debugDecl
         void incLAtails();
 
             // convenience functions, encapsulating expressions
-        size_t tailLength(size_t ruleIdx) const;
-        static bool incrementalTail(int const *finacInfo);
-        static bool atFinalState(int finacInfo_F);
+        size_t tailLength(int const *finac) const;
+        static bool incrementalTail(int const *finac);
+        static bool atFinalState(int const *finac);
 };
 
-inline bool \@Base::atFinalState(int stateType)
+inline bool \@Base::atFinalState(int const *finac)
 {
-    return stateType != NO_FINAL_STATE;
+    return finac && finac[F] != NO_FINAL_STATE;
 }
 
-inline size_t \@Base::tailLength(size_t ruleIdx) const
+inline bool \@Base::incrementalTail(int const *finac)
 {
-    return d_LAtail[ruleIdx] == NO_INCREMENTS ? 0 : d_LAtail[ruleIdx];
-}
-
-inline bool \@Base::incrementalTail(int const *finacInfo)
-{
-    return finacInfo[T] != -1 && finacInfo[I];
+    return finac[T] != -1 && finac[I];
 }
 
 inline std::string const &\@Base::match() const

@@ -3,10 +3,32 @@ $insert class_ih
 
 $insert namespace-open
 
+// s_ranges: use (unsigned) characters as index to obtain
+//           that character's range-number.
+//           Ranges for BOL and EOF are in constants in the
+//           class header file
 $insert ranges
 
+// s_dfa contains the rows of *all* DFAs ordered by start state.
+// The enum class StartCondition is defined in the baseclass header
+// INITIAL is always 0.
+// Each entry defines the row to transit to if the column's
+// character range was sensed. Row numbers are relative to the
+// used DFA and d_dfaBase is set to the first row of the subset to use.
+// The row's final two values are begin and end indices in
+// s_accept[], defining the state's final and LA details
 $insert DFAs
 
+// The first value is the rule index
+// The second value is the final indicator:
+//  -2: not a final state (NO_FINAL_STATE), 
+//  -1: final state, matching all text
+//  >= 0: final state, the value is the LA tail length.
+// The third value indicates other LA uses:
+//  -1: Not a LA state tail length,
+//  >=0: LA tail on transit FROM this state.
+// The fourth value indicates an incrementing (1) tail:
+// the tail length is incremented at each subsequent transition
 $insert finAcs
 
 $insert DFAbases
@@ -77,7 +99,7 @@ $insert 4 checkBOL
     if (d_nextState != -1)                  // transition is possible
         return ActionType__::CONTINUE;
 
-    if (atFinalState(d_finalInfo[0]))       // FINAL state reached
+    if (atFinalState(d_finalInfo.finac))    // FINAL state reached
         return ActionType__::MATCH;
 
 $insert 4 ignoreBOLaction
@@ -86,6 +108,19 @@ $insert 4 ignoreBOLaction
         return ActionType__::EOF_REACHED;
     
     return ActionType__::ECHO_FIRST;        // no match, echo the 1st char
+}
+
+inline size_t \@Base::tailLength(int const *finac) const
+{
+    size_t ruleIdx = finac[R];
+    if (d_LAtail[ruleIdx] == NO_INCREMENTS)
+    {
+        int fixedLAtail = finac[F];
+$insert 8 debug.finac "Fixed tail = " << fixedLAtail
+        return fixedLAtail  < 0 ? 0 :  fixedLAtail;
+    }
+$insert 4 debug.finac "Variable LA tail = " << d_LAtail[ruleIdx]
+    return d_LAtail[ruleIdx];
 }
 
   // At this point a rule has been matched.  The next character is not part of
@@ -102,14 +137,15 @@ $insert 4 debug.action "MATCH"
 
     d_input.push_front(ch);
 
-    int ruleIdx = d_finalInfo[0];
-    
-    size_t length = d_finalInfo[1];     // length of the matched text
+    size_t length = d_finalInfo.matchLen;   // length of the matched text
 
-                                        // maybe reduce by LA's length
-    if (size_t tail = tailLength(ruleIdx))
+    int const *finac = d_finalInfo.finac;   // final info for this state
+    int ruleIdx = finac[R];
+    
+                                            // maybe reduce by LA's length
+    if (size_t tail = tailLength(finac))
         length -=  tail;
-                                        // maybe further reduction by d_less
+                                            // maybe further reduction
     length -=  d_less < length ? d_less : length;
         
     d_input.push_front(d_matched, length);  // push front the tail
@@ -193,10 +229,11 @@ $insert 4 debug.action "ECHO_FIRST"
 
 $insert pushFront
 
-    // Inspect all s_finAc elements
+    // Inspect all s_finAc elements associated with the current state
     // 
-    // If the current state is a final state then store the rule and the 
-    // current buffer length in d_finalInfo.
+    // If the current state is a final state then store the address of the 
+    // s_finAc element and the current buffer length in d_finalInfo.
+    //
     // Otherwise, if an incremental tail then store the initial tail length
     //
     // Later, when transiting:
@@ -217,22 +254,22 @@ void \@Base::inspectFinac__()
                 ++begin
     )
     {
-        int const *finacInfo = s_finAc[begin];
+        int const *finac = s_finAc[begin];
 
             // If the current state is a rule's final state then store 
-            // the rule and the current buffer length in d_finalInfo.
-        if (atFinalState(finacInfo[F]))
+            // the rule, the current buffer length, and the LA tail value
+            // in d_finalInfo.
+        if (atFinalState(finac))
             d_finalInfo = 
                 {
-                    finacInfo[R],       // store the rule number
+                    finac,              // store the finac info's location
                     d_matched.size()    // and the match length
                 };
 
             // Otherwise, if incremental tail store the initial tail length
             //      at d_LAtail
-        else if (incrementalTail(finacInfo))
+        else if (incrementalTail(finac))
         {
-            d_LAtail[ finacInfo[R] ] = finacInfo[T];
 $insert 12 debug.finac "Setting LAtail [" << finacInfo[R] << "] to " +
 $insert 12 debug.finac finacInfo[T] << ", incrementing"
         }
@@ -250,7 +287,7 @@ void \@Base::reset__()
     d_less = 0;
 $insert 4 resetStartsAtBOL
 
-    d_finalInfo = {NO_FINAL_STATE, };
+    d_finalInfo = {0, };
     d_LAtail = VectorInt(s_nRules, NO_INCREMENTS);
 }
 

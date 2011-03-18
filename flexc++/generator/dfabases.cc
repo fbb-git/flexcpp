@@ -13,5 +13,5 @@ void Generator::DFAbases(ostream &out) const
                 d_dfaIndices.begin(), 
                 ostream_iterator<string>(out, "\n"), outDFAbase);
    
-    out << "};";
+    out << "};\n";
 }
