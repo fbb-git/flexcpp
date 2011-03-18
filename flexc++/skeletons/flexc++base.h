@@ -17,8 +17,9 @@ class \@Base
     typedef std::vector<int> VectorInt;
     enum 
     { 
-        NO_INCREMENTS = -2,
+        NO_LA_TAIL = -2,
         NO_FINAL_STATE = -2,
+        USE_LA_TAIL = -1,
     };
 
     enum        // Finac Indices, see s_finAc[]
@@ -69,8 +70,6 @@ class \@Base
     std::string     d_matched;              // matched characters
     bool            d_return;               // return after a rule's action 
     bool            d_more;                 // set to true by more()
-    size_t          d_less;                 // # chars to rescan and to 
-                                            // remove fm d_matched
     size_t          d_lineno;               // number of lines read so far
                                             // initially 1, incremented at
                                             // each \n. 
@@ -134,21 +133,14 @@ $insert debugDecl
 
     private:
         void incLAtails();
-
-            // convenience functions, encapsulating expressions
-        size_t tailLength(int const *finac) const;
-        static bool incrementalTail(int const *finac);
+        void determineMatchedSize(int const *finac);
+        size_t lookAheadTail(int const *finac) const;
         static bool atFinalState(int const *finac);
 };
 
 inline bool \@Base::atFinalState(int const *finac)
 {
     return finac && finac[F] != NO_FINAL_STATE;
-}
-
-inline bool \@Base::incrementalTail(int const *finac)
-{
-    return finac[T] != -1 && finac[I];
 }
 
 inline std::string const &\@Base::match() const
@@ -179,11 +171,6 @@ inline size_t \@Base::lineno() const
 inline void \@Base::more()
 {
     d_more = true;
-}
-
-inline void \@Base::less(size_t nChars)
-{
-    d_less = nChars;
 }
 
 inline void \@Base::begin(StartCondition startCondition)

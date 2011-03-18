@@ -110,51 +110,68 @@ $insert 4 ignoreBOLaction
     return ActionType__::ECHO_FIRST;        // no match, echo the 1st char
 }
 
-inline size_t \@Base::tailLength(int const *finac) const
+inline void \@Base::less(size_t nChars)
 {
-    size_t ruleIdx = finac[R];
-    if (d_LAtail[ruleIdx] == NO_INCREMENTS)
+    if (nChars <= d_matched.size())
     {
-        int fixedLAtail = finac[F];
-$insert 8 debug.finac "Fixed tail = " << fixedLAtail
-        return fixedLAtail  < 0 ? 0 :  fixedLAtail;
+        size_t end = d_matched.size() - nChars;
+        d_input.push_front(d_matched, end);
+        d_matched.resize(end);
     }
-$insert 4 debug.finac "Variable LA tail = " << d_LAtail[ruleIdx]
-    return d_LAtail[ruleIdx];
 }
 
-  // At this point a rule has been matched.  The next character is not part of
-  // the matched rule and can be sent back to the input.  The index of the
-  // matched rule is determined and the length of the matched text is reduced
-  // by LA-tail (if available) and by d_less. The reduced chars are sent back
-  // to the input.  The rule index is returned, which is then used in lex__ by
-  // executeAction__ to execute the matching action block.
-  // In lex__ the action block may return, otherwise return__ returns false 
-  // and the scanner is reset for another run
-int \@Base::matched__(size_t ch)
+  // If the current state's [F] value is:
+  //    USE_LA_TAIL then d_LAtail[R] defines the LA tail.
+  // Otherwise the current state's [F] value determines the LA tail. It may
+  //    be 0, in which case d_matched is used as-is.
+inline size_t \@Base::lookAheadTail(int const *finac) const
 {
-$insert 4 debug.action "MATCH"
+    size_t ruleIdx = finac[R];
 
-    d_input.push_front(ch);
+    if (finac[F] == USE_LA_TAIL)
+    {
+$insert 8 debug.finac "Using (incremented) LA tail " << d_LAtail[ruleIdx]
+        return d_LAtail[ruleIdx];
+    }
 
+$insert 4 debug.finac "Fixed tail = " << finac[F]
+    return finac[F];
+}
+
+  // The size of d_matched is determined:
+  //
+  // The current state is a known final state (as determined by 
+  // inspectFinac__(), just prior to calling matched__). 
+  //
+  // The contents of d_matched are reduced by the matched rule's LA size,
+  // and the LA tail is returned to the input.
+void \@Base::determineMatchedSize(int const *finac)
+{
     size_t length = d_finalInfo.matchLen;   // length of the matched text
-
-    int const *finac = d_finalInfo.finac;   // final info for this state
-    int ruleIdx = finac[R];
-    
-                                            // maybe reduce by LA's length
-    if (size_t tail = tailLength(finac))
+                                            
+    if (size_t tail = lookAheadTail(finac)) // maybe reduce by LA's length
         length -=  tail;
-                                            // maybe further reduction
-    length -=  d_less < length ? d_less : length;
         
     d_input.push_front(d_matched, length);  // push front the tail
     d_matched.resize(length);               // return what's left
+}
 
+  // At this point a rule has been matched.  The next character is not part of
+  // the matched rule and is sent back to the input.  
+  // The final match length is determined, line numbers are updated 
+  // and the index of the matched rule is returned.
+int \@Base::matched__(size_t ch)
+{
+$insert 4 debug.action "MATCH"
+    d_input.push_front(ch);
+
+    int const *finac = d_finalInfo.finac;   // final info for this state
+    
+    determineMatchedSize(finac);
+    updateLineno__();        
 $insert 4 debug.action "match buffer contains `" << d_matched << "'"
 
-    updateLineno__();        
-    return ruleIdx;
+    return finac[R];
 }
 
 size_t \@Base::getRange__(size_t ch)
@@ -180,18 +197,21 @@ void \@Base::incLAtails()
                 ++iter
     )
     {
-        if (*iter != NO_INCREMENTS)
+        if (*iter != NO_LA_TAIL)
+        {
             ++*iter;
+$insert 12 debug.finac "LA tail for rule " << (iter - d_LAtail.begin()) +
+$insert 12 debug.finac " now: " << *iter
+        }
     }
 }
 
   // At this point d_nextState contains the next state and continuation is
-  // possible. The just read char. is appended to d_match, and any LA tail
+  // possible. The just read char. is appended to d_match, and LA tail 
   // counts are incremented.
 void \@Base::continue__(size_t ch)
 {
 $insert 4 debug.action "CONTINUE, NEW STATE: " << d_nextState
-
     d_state = d_nextState;
 
     switch (ch)
@@ -215,7 +235,6 @@ $insert 4 debug.action "CONTINUE, NEW STATE: " << d_nextState
 void \@Base::echoFirst__(size_t ch)
 {
 $insert 4 debug.action "ECHO_FIRST"
-
     if (d_matched.empty())          // no match possible: echo ch itself
         std::cerr << ch;
     else                            // echo the 1st matched char, push_front
@@ -231,19 +250,12 @@ $insert pushFront
 
     // Inspect all s_finAc elements associated with the current state
     // 
-    // If the current state is a final state then store the address of the 
-    // s_finAc element and the current buffer length in d_finalInfo.
+    // If the current state is a final state for a rule ([F] != NO_FINAL_STATE
+    // then store the address of the current s_finAc element and the current 
+    // buffer length in d_finalInfo.
     //
-    // Otherwise, if an incremental tail then store the initial tail length
-    //
-    // Later, when transiting:
-    //      Increment all incremental tail's d_LAtail's values;
-    //      At a MATCHED action: 
-    //          if the rule is an incrementail tail rule, use that tail
-    //          or accept the buffer's d_finalInfo[1] length
-    //      At an EOF_REACHED or ECHO_FIRST action:
-    //          if d_finalInfo specifies a rule, do matched__() for that rule, 
-    //          otherwise do ECHO_FIRST
+    // If the current state defines an incremental tail ([I] == 1) then 
+    // store the [T] value at d_LAtail[R]
 void \@Base::inspectFinac__()
 {
     for 
@@ -257,8 +269,7 @@ void \@Base::inspectFinac__()
         int const *finac = s_finAc[begin];
 
             // If the current state is a rule's final state then store 
-            // the rule, the current buffer length, and the LA tail value
-            // in d_finalInfo.
+            // the finac info and the current buffer length in d_finalInfo.
         if (atFinalState(finac))
         {
 $insert 12 debug.finac "Setting fixed LAtail [" << finac[R] << "] to " +
@@ -268,16 +279,16 @@ $insert 12 debug.finac finac[F]
                     finac,              // store the finac info's location
                     d_matched.size()    // and the match length
                 };
-
-            // Otherwise, if incremental tail store the initial tail length
-            //      at d_LAtail
         }
 
-        if (incrementalTail(finac))
+        if (finac[I])                   // incremental tail
         {
-$insert 12 debug.finac "Setting LAtail [" << finac[R] << "] to " +
-$insert 12 debug.finac finac[T] << ", incrementing"
-            d_LAtail[ finac[R] ] = finac[T];
+            if (d_LAtail[ finac[R] ] == NO_LA_TAIL) // set unless already set
+            {
+$insert 16 debug.finac "Setting LAtail [" << finac[R] << "] to " +
+$insert 16 debug.finac finac[T] << ", incrementing"
+                d_LAtail[ finac[R] ] = finac[T];
+            }
         }
     }   
 }
@@ -290,11 +301,10 @@ void \@Base::reset__()
     if (!d_more)
         d_matched.clear();
     d_more = false;
-    d_less = 0;
 $insert 4 resetStartsAtBOL
 
     d_finalInfo = {0, };
-    d_LAtail = VectorInt(s_nRules, NO_INCREMENTS);
+    d_LAtail = VectorInt(s_nRules, NO_LA_TAIL);
 }
 
 int \@::executeAction__(int ruleIdx)
