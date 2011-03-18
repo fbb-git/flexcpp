@@ -270,8 +270,8 @@ void \@Base::inspectFinac__()
             //      at d_LAtail
         else if (incrementalTail(finac))
         {
-$insert 12 debug.finac "Setting LAtail [" << finacInfo[R] << "] to " +
-$insert 12 debug.finac finacInfo[T] << ", incrementing"
+$insert 12 debug.finac "Setting LAtail [" << finac[R] << "] to " +
+$insert 12 debug.finac finac[T] << ", incrementing"
             d_LAtail[ finac[R] ] = finac[T];
         }
     }   
