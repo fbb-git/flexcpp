@@ -59,7 +59,7 @@
 //                      
 %nonassoc   '^' '/'
 %left       '|'
-%left       CHARACTER
+%left       CHARACTER '.'
 %right      '*' '+' '?' '{' '('
 
 //  highest precedence

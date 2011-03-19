@@ -1,5 +1,12 @@
 #!/bin/bash
 
+if [ "$1" == "-d" ]
+then
+    shift
+else
+    nodebug=1
+fi
+
 showinfo()
 {
     echo
@@ -44,10 +51,17 @@ runprogram()
 {
     echo 
     echo "Performing regression tests using input file \`$1':"
-    ./a.out $1 nodebug
+    ./a.out $1 $nodebug
 }
 
-for file in p[[:digit:]]*
+if [ $# == 0 ]
+then
+    list=`p[[:digit:]]*`
+else
+    list="$*"
+fi
+
+for file in $list
 do
     showinfo $file
     echo "Run $file [yN]? "

@@ -1,0 +1,16 @@
+// Mini scanners grabbing strings, C-comment, and doing more()
+
+%x str
+%x com
+
+%%
+
+"/*"            more(); begin(com);
+<com>.|\n       more();
+<com>"*/"       d_p = "/* ... */";  begin(INITIAL); return 1;
+
+"\""            more(); begin(str);
+<str>"\""       d_p = "\" ... \""; more(); begin(INITIAL); return 2;
+<str>.|"\\".    more();
+
+.
