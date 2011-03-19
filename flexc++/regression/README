@@ -1,0 +1,34 @@
+To add a new regression test:
+
+Define a file p<x> (<x>: digit(s)), 
+    * giving a short explanation as C++ eoln comment as its first line(s),
+    * followed by %%
+    * followed by patterns.
+
+Following a pattern simple actions may be written on the same line. Always use
+    d_p="<the pattern>"
+where <the pattern> is the pattern that's on this line. This allows the
+scanner to show the pattern that was matched. 
+
+When an action should return, return a small positive number.
+
+The regression test script (run) adds skipping blanks and a pattern matching
+all characters, returning -1. So if -1 is returned you know your p<x> file
+didn't account for that character.
+
+
+Also define an i<x> file, containing test-input. You should probably make sure
+that your patterns match your test input
+
+===================================================
+
+The run script may be called with an explicit file argument or not, in which
+case all p<x> patterns are run in sequence.
+
+A first argument -d may be provided causing debug output to be shown. Debug
+output is displayed interactively. After the program has read a char it shows
+char, current matched() text, current state and char. range and waits for the
+Enter key before continuing.
+
+
+
