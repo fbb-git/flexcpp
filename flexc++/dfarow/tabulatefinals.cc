@@ -1,27 +1,23 @@
 #include "dfarow.ih"
 
+
 void DFARow::tabulateFinals(Table &table) const
 {
     auto firstRule = d_finAcInfo.end();
 
-    for 
+    for         // find the first final rule
     (
         auto iter = d_finAcInfo.begin(), end = d_finAcInfo.end(); 
             iter != end;
                 ++iter
     )
     {
-        if 
-        (
-            iter->final() >= 0 
-            ||
-            iter->inc()
-            || 
-            iter->final() == FinAcInfo::FINAL_NOT_SET
-        )
+        if (iter->final() >= FinAcInfo::FINAL)
+        {
             firstRule = iter;
+            break;
+        }
     }
-
 
     if (firstRule == d_finAcInfo.end())
         table << ' ';
@@ -34,7 +30,7 @@ void DFARow::tabulateFinals(Table &table) const
             ||
             firstRule->inc()
             || 
-            firstRule->final() == FinAcInfo::FINAL_NOT_SET
+            firstRule->final() == FinAcInfo::FINAL
         )
             out << firstRule->rule();
         else if (firstRule->final() > 0) 

@@ -1,0 +1,68 @@
+#!/bin/bash
+
+showinfo()
+{
+    echo
+    echo "-------------------------------------------------------------------"
+    echo "----------- Regression tests for patterns in \`$1' ----------------"
+    grep "^//" $1 | sed 's,^//[[:space:]]*,,'
+    echo
+    grep -v "^//" $1 > patterns
+}
+
+runflex()
+{
+    FLEX=`flex patterns 2>&1 | uniq`
+    if [ "$FLEX" != "" ]
+    then
+        echo
+        echo "flex reports:"
+        echo "$FLEX"
+	echo "(press Enter to continue)"
+	read
+    fi
+}
+
+runflexcpp()
+{
+    cat preamble patterns > lexer
+
+    echo "[[:space:]]+"     >> lexer
+    echo ".     d_p = \".\"; return -1;" >> lexer
+
+    ../tmp/bin/flexc++ lexer
+}
+
+makeprogram()
+{
+    [ "main.cc" -nt "main.o" ]  && g++ --std=c++0x -Wall -c main.cc
+
+    g++ --std=c++0x -Wall lex.cc main.o
+}
+
+runprogram()
+{
+    echo 
+    echo "Performing regression tests using input file \`$1':"
+    ./a.out $1 nodebug
+}
+
+for file in p[[:digit:]]*
+do
+    showinfo $file
+    echo "Run $file [yN]? "
+    read YES
+    if [ "$YES" == y ]
+    then
+	data=`echo $file | sed 's/p/i/'`
+        runflex 
+        runflexcpp
+        makeprogram
+        runprogram $data
+    fi
+done
+
+rm -f a.out lex.cc lex.yy.c lexer main.o patterns scannerbase.h
+
+
+

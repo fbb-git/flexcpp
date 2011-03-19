@@ -14,15 +14,14 @@ class \@: public \@Base
 $insert 8 lexFunctionDecl
 
     private:
-        int executeAction(int ruleNr);
         int lex__();
         int executeAction__(int ruleNr);
 
-        void preCode();     // re-implement this function for code that must 
+        void preCode__();   // re-implement this function for code that must 
                             // be exec'ed before the patternmatching starts
 };
 
-inline void Scanner::preCode()  // optionally replace by your own code
+inline void Scanner::preCode__()    // optionally replace by your own code
 {}
 
 inline \@::\@(std::istream &iStream, std::ostream &oStream)
@@ -31,11 +30,6 @@ inline \@::\@(std::istream &iStream, std::ostream &oStream)
 {}
 
 $insert inlineLexFunction
-
-inline int \@::executeAction(int ruleNr)
-{
-    return executeAction__(ruleNr);
-}
 
 $insert namespace-close
 

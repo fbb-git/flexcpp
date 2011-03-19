@@ -1,0 +1,3 @@
+%option skeleton-directory = "../skeletons"
+%option debug
+%option debug-steps

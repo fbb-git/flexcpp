@@ -122,7 +122,8 @@ size_t CAN_BE_REMOVED;
                               std::vector<FinAcInfo> &finAcs);
 
         static void inspectFinAc(FinAcInfo const &finac,
-                                 std::vector<FinAcInfo> &finAcs);
+                                 std::vector<FinAcInfo> &finAcs,
+                                 int &finalRule);
 
         static std::string outDFAbase(std::string const &startState,
                                       size_t offset);

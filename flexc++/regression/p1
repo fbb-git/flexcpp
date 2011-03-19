@@ -1,0 +1,4 @@
+// The variable-head, fixed-tail LA pattern a+/aab
+%%
+a+/aab      d_p = "a+/aab"; return 1;
+aab         d_p = "aab"; return 2;

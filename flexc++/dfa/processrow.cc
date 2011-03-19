@@ -26,15 +26,16 @@ void DFA::processRow(FinAcInfo &finAcInfo, size_t ruleIdx, DFA &dfa,
 
         if (final != FinAcInfo::NOT_FINAL)     // current state is Final state
         {
-//            cerr << "IN Row " << rowIdx << " has final: " << final << endl;
+// cout << "IN Row " << rowIdx << " has final: " << final << endl;
 
-            if (final == FinAcInfo::FINAL_NOT_SET)
+            if (final == FinAcInfo::FINAL)
                     // keep the parent's final (if set) or use tailsteps
                 final = parentFinal >= 0 ? parentFinal : tailSize;
             else 
                 final = min(final, tailSize);
 
-//            cerr << "OUT Row " << rowIdx << " has final: " << final << endl;
+// cout << "OUT Row " << rowIdx << " has final: " << final << endl;
+
             finAcInfo.setFinal(final);
         }
 

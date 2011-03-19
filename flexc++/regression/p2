@@ -1,0 +1,6 @@
+// The variable-head, variable_tail LA pattern ab*/bc* 
+// causing problems for flex
+%%
+ab*/bc*     d_p = "ab*/bc*";    return 1;
+bc*         d_p = "bc*";        return 2;
+c+          d_p = "c+";         return 3;

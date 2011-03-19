@@ -73,6 +73,7 @@ class \@Base
     size_t          d_lineno;               // number of lines read so far
                                             // initially 1, incremented at
                                             // each \n. 
+$insert 4 debugDecl
 $insert 4 declarations
     static size_t  const s_ranges[];
     static int     const s_finAc[][4];
@@ -105,8 +106,6 @@ $insert 12 startCondNames
 
     protected:
         \@Base(std::istream &in, std::ostream &out);
-
-$insert debugDecl
 
             // members equal or similar to functions defined by flex
         void    echo() const;

@@ -23,7 +23,7 @@ class FinAcInfo
         enum Final
         {
             NOT_FINAL = -2,
-            FINAL_NOT_SET,
+            FINAL,
         };
 
         explicit FinAcInfo(size_t ruleIdx, Final final = NOT_FINAL);

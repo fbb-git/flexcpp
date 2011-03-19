@@ -72,9 +72,9 @@ void \@Base::Input::push_front(std::string const &str, size_t fm)
     d_state(0),
     d_out(&out),
     d_input(in),
+    d_lineno(1),
 $insert debugInit
-    d_dfaBase(s_dfa),
-    d_lineno(1)
+    d_dfaBase(s_dfa)
 {}
 
 $insert debugFunctions
@@ -322,7 +322,7 @@ $insert 4 debug.action "Rule " << ruleIdx << " did not do 'return'"
 int \@::lex__()
 {
     reset__();
-    preCode();
+    preCode__();
 
     while (true)
     {
@@ -342,7 +342,7 @@ $insert 8 debugStep
             case ActionType__::ECHO_FIRST:
                 echoFirst__(ch);
                 reset__();                      // fresh start 
-                preCode();
+                preCode__();
             break;
 
             case ActionType__::EOF_REACHED:
@@ -360,7 +360,7 @@ $insert 16 debug.action  "EOF_REACHED"
                 if (return__())
                     return ret;
                 reset__();
-                preCode();
+                preCode__();
                 continue;
             }
 

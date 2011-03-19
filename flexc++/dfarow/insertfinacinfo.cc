@@ -20,7 +20,8 @@ void DFARow::insertFinAcInfo(size_t stateIdx, DFARow &thisRow)
     if (finAcIter == thisRow.d_finAcInfo.end())     // rule not yet entered
     {
         thisRow.d_finAcInfo.push_back(FinAcInfo(rule));
-        finAcIter = thisRow.d_finAcInfo.begin() + thisRow.d_finAcInfo.size() - 1;
+        finAcIter = thisRow.d_finAcInfo.begin() + 
+                                            thisRow.d_finAcInfo.size() - 1;
     }
 
     // finAcIter now points at the FinAcInfo record for the current DFA row

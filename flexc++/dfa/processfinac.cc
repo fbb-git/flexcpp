@@ -12,8 +12,6 @@
 //
 // processRule calls processRow to do the actual work, calling inspect for
 // each transition.
-//
-// inspect calls
 
 void DFA::processFinAc()
 {

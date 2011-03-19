@@ -12,7 +12,7 @@ void Generator::outFinAc(FinAcInfo const &finac, ostream &out, size_t &idx)
                                        setw(2) << finac.inc();
         break;
 
-        case FinAcInfo::FINAL_NOT_SET:
+        case FinAcInfo::FINAL:
             out << " 0,-1, 0";
         break;
 
