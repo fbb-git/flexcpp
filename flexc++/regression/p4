@@ -1,0 +1,25 @@
+// Using file switching through an #include directive, <<EOF>>, ECHO and a miniscanner
+
+%x inc
+
+%%
+
+"#include"[ \t]+"\""        d_p = "\"#include\"[ \\t]+\"\\\"";  begin(inc);
+<inc>[^"]+"\""              d_p = "<inc>[^\"]+\"\\\"\""; begin(INITIAL);pushStream(); return 2;
+
+.                           more();
+\n                          return 1;
+
+<<EOF>>                     d_p = "<<EOF>>"; if (not popStream__()) return 0;
+
+
+
+
+
+
+
+
+
+
+
+

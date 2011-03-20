@@ -76,4 +76,4 @@ do
     fi
 done
 
-# rm -f a.out lex.cc lex.yy.c lexer main.o patterns scannerbase.h
+rm -f a.out lex.cc lex.yy.c lexer main.o patterns scannerbase.h

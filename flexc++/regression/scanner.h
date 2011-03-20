@@ -10,10 +10,7 @@
 class Scanner: public ScannerBase
 {
     std::istream &d_iStream;
-    std::ostream &d_oStream;
     std::string d_p;
-    size_t d_line;
-    long long d_offset;
 
     public:
         Scanner() = default;
@@ -22,8 +19,11 @@ class Scanner: public ScannerBase
         // $insert lexFunctionDecl
         int lex();
         std::string const &pattern() const;
+        void clearPattern();
 
     private:
+        void pushStream();
+
         int lex__();
         int executeAction__(int ruleNr);
 
@@ -31,33 +31,23 @@ class Scanner: public ScannerBase
                             // be exec'ed before the patternmatching starts
 };
 
-inline void Scanner::preCode__()    // optionally replace by your own code
+inline void Scanner::pushStream()
 {
-    if (lineno() != d_line)
-    {
-        d_line = lineno();
-
-        long long offset = d_iStream.tellg();
-        d_iStream.seekg(d_offset);
-
-        std::string line;
-        getline(d_iStream, line);
-        if (not line.empty())
-            d_oStream << "\n"
-                        "Input line " << d_line << ": " << line << '\n';
-
-        d_offset = d_iStream.tellg();
-        d_iStream.seekg(offset);
-    }
+    pushStream__(match().substr(0, leng()-1));
 }
+
+inline void Scanner::clearPattern()
+{
+    d_p.clear();
+}
+
+inline void Scanner::preCode__()    // optionally replace by your own code
+{}
 
 inline Scanner::Scanner(std::istream &iStream, std::ostream &oStream)
 :
     ScannerBase(iStream, oStream),
-    d_iStream(iStream),
-    d_oStream(oStream),
-    d_line(0),
-    d_offset(0)
+    d_iStream(iStream)
 {}
 
 // $insert inlineLexFunction
