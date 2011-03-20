@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <deque>
+#include <stack>
 #include <string>
 #include <vector>
 
@@ -56,9 +57,22 @@ class \@Base
             void push_front(size_t ch);     // push back 'ch' (if <= 0x100)
                                             // push back string from idx 'fm'
             void push_front(std::string const &str, size_t fm = 1);
+
+            void destroy();                 // delete dynamically allocated
+                                            // d_in
         private:
             size_t next();                  // obtain the next character
     };
+
+    struct StreamStruct
+    {
+        std::string curName;
+        Input pushedInput;
+        size_t pushedLineno;
+        bool newIstream;
+    };
+        
+    std::stack<StreamStruct>    d_streamStack;
 
     size_t          d_state;
     int             d_nextState;
@@ -77,6 +91,8 @@ $insert 4 debugDecl
 $insert 4 declarations
     static size_t  const s_ranges[];
     static int     const s_finAc[][4];
+                                            // TODO: make configurable
+    static size_t  const s_maxSizeofStreamStack = 10; 
 
     protected:
         enum class ActionType__
@@ -97,14 +113,19 @@ $insert 12 startCondNames
 
     public:
         bool                debug()     const;
-        size_t              length()    const;
+        size_t              leng()      const;
         size_t              lineno()    const;
         std::string const  &match()     const;
         std::string const  &text()      const;
 
-        void                set_debug(bool onOff);
+        void                setDebug(bool onOff);
+        void                switchStreams(std::istream &iStream);
+        void                switchStreams(std::istream &iStream,
+                                          std::ostream &oStream);
 
     protected:
+        std::ostream &out();
+
         \@Base(std::istream &in, std::ostream &out);
 
             // members equal or similar to functions defined by flex
@@ -130,12 +151,33 @@ $insert 12 startCondNames
         void            reset__();                  // prepare for new cycle
         void            updateLineno__();           // update d_lineno
 
+        void            pushStream__(std::string const &curName);
+        void            pushStream__(std::istream &curStream);
+        bool            popStream__();
+
     private:
+        void pushStream__(std::string const &name,
+                          std::istream *streamPtr, bool closeAtPop);
         void incLAtails();
         void determineMatchedSize(int const *finac);
         size_t lookAheadTail(int const *finac) const;
         static bool atFinalState(int const *finac);
 };
+
+inline void \@Base::Input::destroy()
+{
+    delete d_in;
+}
+
+inline std::ostream &\@Base::out()
+{
+    return *d_out;
+}
+
+inline void \@Base::switchStreams(std::istream &iStream)
+{
+    switchStreams(iStream, *d_out);
+}
 
 inline bool \@Base::atFinalState(int const *finac)
 {
@@ -157,7 +199,7 @@ inline void \@Base::echo() const
     *d_out << d_matched;
 }
 
-inline size_t \@Base::length() const
+inline size_t \@Base::leng() const
 {
     return d_matched.size();
 }

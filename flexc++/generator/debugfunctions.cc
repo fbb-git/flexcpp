@@ -7,7 +7,7 @@ void Generator::debugFunctions(std::ostream &out) const
     if (!d_debug && !d_options.hasNames())
     {
         out << 
-            "void " << d_baseclassScope << "set_debug(bool onOff)\n"
+            "void " << d_baseclassScope << "setDebug(bool onOff)\n"
             "{}\n"
             "\n"
             "bool " << d_baseclassScope << "debug() const\n"
@@ -23,7 +23,7 @@ void Generator::debugFunctions(std::ostream &out) const
     "bool    " << d_baseclassScope << "s_debug__ = true;\n"
     "std::ostringstream " << d_baseclassScope << "s_out__;\n"
     "\n" 
-    "void " << d_baseclassScope << "set_debug(bool onOff)\n"
+    "void " << d_baseclassScope << "setDebug(bool onOff)\n"
     "{\n"
     "    if (not (s_debug__ = onOff))\n"
     "        d_beginStep__ = d_endStep__;\n"

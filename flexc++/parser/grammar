@@ -38,13 +38,7 @@
 %token  BLOCK
 
 // pattern
-%token  DECIMAL 
-        CC_NEGATED
-        CC_START
-        EOF_PATTERN
-        ESCAPE_SEQUENCE      
-        STRING 
-        WS
+%token  WS
 
 // character classes
 %token  PREDEFINED_CLASS
@@ -59,7 +53,8 @@
 //                      
 %nonassoc   '^' '/'
 %left       '|'
-%left       CHARACTER '.'
+%left       CHARACTER '.' DECIMAL CC_NEGATED CC_START ESCAPE_SEQUENCE STRING 
+            EOF_PATTERN
 %right      '*' '+' '?' '{' '('
 
 //  highest precedence

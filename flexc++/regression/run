@@ -56,7 +56,7 @@ runprogram()
 
 if [ $# == 0 ]
 then
-    list=`p[[:digit:]]*`
+    list=`ls p[[:digit:]]*`
 else
     list="$*"
 fi
@@ -76,7 +76,4 @@ do
     fi
 done
 
-rm -f a.out lex.cc lex.yy.c lexer main.o patterns scannerbase.h
-
-
-
+# rm -f a.out lex.cc lex.yy.c lexer main.o patterns scannerbase.h

@@ -1,4 +1,6 @@
-#include <istream>
+#include <fstream>
+#include <stdexcept>
+
 $insert class_ih
 
 $insert namespace-open
@@ -78,6 +80,63 @@ $insert debugInit
 {}
 
 $insert debugFunctions
+
+void \@Base::switchStreams(std::istream &iStream, std::ostream &out)
+{
+    *d_out << std::flush;
+    d_out = &out;
+    d_input = Input(iStream);
+    d_lineno = 1;
+}
+
+void \@Base::pushStream__(std::string const &name,
+                          std::istream *streamPtr, bool closeAtPop)
+{
+    if (d_streamStack.size() == s_maxSizeofStreamStack)
+    {
+        if (closeAtPop)
+            delete streamPtr;
+        throw std::length_error("Max stream stack size exceeded");
+    }
+
+    d_streamStack.push(StreamStruct{name, d_input, d_lineno, closeAtPop});
+    d_input = Input(*streamPtr);
+    d_lineno = 1;
+}
+
+void \@Base::pushStream__(std::string const &name)
+{
+    std::istream *streamPtr = new std::ifstream(name);
+    if (!*streamPtr)
+    {
+        delete streamPtr;
+        throw std::runtime_error("Cannot read " + name);
+    }
+    pushStream__(name, streamPtr, true);
+}
+
+void \@Base::pushStream__(std::istream &iStream)
+{
+    pushStream__("<istream>", &iStream, false);
+}
+
+bool \@Base::popStream__()
+{
+    if (d_streamStack.empty())
+        return false;
+
+    StreamStruct &top = d_streamStack.top();
+
+    if (top.newIstream)
+        d_input.destroy();
+
+    d_input =   top.pushedInput;
+    d_lineno =  top.pushedLineno;
+
+    d_streamStack.pop();
+
+    return true;
+}
 
 void \@Base::updateLineno__()
 {

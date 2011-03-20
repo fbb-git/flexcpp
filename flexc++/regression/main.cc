@@ -7,7 +7,7 @@ try
 
     Scanner scanner(infile);
 
-    scanner.set_debug(argc <=  2);
+    scanner.setDebug(argc <=  2);
 
     while (int token = scanner.lex())
     {

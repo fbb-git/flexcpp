@@ -19,10 +19,13 @@ $insert 8 lexFunctionDecl
 
         void preCode__();   // re-implement this function for code that must 
                             // be exec'ed before the patternmatching starts
+
 };
 
-inline void Scanner::preCode__()    // optionally replace by your own code
-{}
+inline void Scanner::preCode__() 
+{
+    // optionally replace by your own code
+}
 
 inline \@::\@(std::istream &iStream, std::ostream &oStream)
 :

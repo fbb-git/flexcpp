@@ -2,5 +2,6 @@
 
 CharClass::CharClass(char ch)
 :
-    d_last(1, ch)
+    d_set(&ch, &ch + 1)
+//    d_last(1, ch)
 {}
