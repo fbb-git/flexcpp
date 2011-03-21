@@ -17,8 +17,11 @@ that your patterns match your test input
 
 ===================================================
 
-The run script may be called with an explicit file argument or not, in which
-case all p<x> patterns are run in sequence.
+The run script may be called with an explicit file argument or not (in which
+case all p<x> patterns are run in sequence).
+
+The script expects skeleton files in ../skeletons and calls the flexc++
+program as ../tmp/bin/flexc++
 
 A first argument -d may be provided causing debug output to be shown. Debug
 output is displayed interactively. After the program has read a char it shows
