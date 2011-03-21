@@ -35,7 +35,10 @@ class DFAs
         DFAInfo::const_iterator find(std::string const &key) const;
 
     private:
+//        static void buildDFA(Rules::NameVector const &nameVector, DFAs &dfas);
+
         static void buildDFA(Rules::NameVector const &nameVector, DFAs &dfas);
+
         static void showDFA(Pair const &dfaInfo, std::ostream &out); 
         static bool findKey(Pair const &pair, std::string const &key);
 };

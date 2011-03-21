@@ -42,7 +42,7 @@ makeprogram()
 {
     [ "main.cc" -nt "main.o" ]  && g++ --std=c++0x -Wall -c main.cc
 
-    g++ --std=c++0x -Wall lex.cc main.o
+    g++ --std=c++0x -Wall main.o lex.cc 
 }
 
 runprogram()
@@ -57,6 +57,9 @@ runprogram()
     echo "Press Enter to start the regression test"
     read
     ./a.out $1 $nodebug
+
+    echo "Press Enter to continue"
+    read
 }
 
 if [ $# == 0 ]
@@ -69,9 +72,9 @@ fi
 for file in $list
 do
     showinfo $file
-    echo "Run $file [yN]? "
+    echo "Run $file [Yn]? "
     read YES
-    if [ "$YES" == y ]
+    if [ "$YES" != n ]
     then
         data=`echo $file | sed 's/p/i/'`
         runflex 

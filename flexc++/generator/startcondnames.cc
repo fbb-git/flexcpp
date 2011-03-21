@@ -7,10 +7,10 @@ void Generator::startCondNames(ostream &out) const
 
     for (auto it = d_rules.begin(), end = d_rules.end(); it != end; ++it)
     {
-        string const &name = (*it).first;
+        string const &name = (*it).name();      // -> is not defined for 'it'
         if (name != "INITIAL")
             out << ",\n" << 
-                    indent << (*it).first;
+                    indent << (*it).name();
     }
 
     out << '\n';

@@ -1,7 +1,8 @@
 #include "startconditions.ih"
 
-StartConditions::NameVector StartConditions::const_iterator::operator*() const
+StartConditions::NameVector 
+                    const &StartConditions::const_iterator::operator*() const
 {
-    NameVector ret {(*d_iter).first, (*d_iter).second.d_rules};
-    return ret;
+    d_nameVector = {(*d_iter).first, (*d_iter).second.d_rules};
+    return d_nameVector;
 }

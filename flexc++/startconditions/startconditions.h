@@ -20,27 +20,39 @@ class StartConditions
         struct StartCondition
         {
             Type d_type;
-            std::vector<size_t> d_rules;
+            std::vector<size_t> d_rules;        // rules of this SC.
 
             StartCondition() = default;
             StartCondition(Type type);
         };
+                                                // Hash associates SC name
+                                                // and its rules
         typedef std::unordered_map<std::string, StartCondition> Hash;
         
         Type d_type;
-
         Hash d_hash;
+
         std::vector<StartCondition *> d_active;
         bool d_inclusive;
         StartCondition *d_initialSC;
 
     public:
-        struct NameVector
-        {
-            std::string const &first;
-            std::vector<size_t> const &second;
+
+        class const_iterator;
+        class NameVector                        // used and returned by
+        {                                       // const_iterator below
+            friend class const_iterator;
+
+            std::string const *d_name;
+            std::vector<size_t> const *d_rules;
+
+            NameVector();
             NameVector(std::string const &str, 
                             std::vector<size_t> const &vect);
+
+            public:
+                std::string const &name() const;
+                std::vector<size_t> const &rules() const;
         };
 
         class const_iterator: 
@@ -49,12 +61,18 @@ class StartConditions
             friend class StartConditions;
 
             Hash::const_iterator d_iter;
+            mutable NameVector d_nameVector;
+
             public:
                 bool operator!=(const_iterator const &rhs);
                 const_iterator &operator++();
-                NameVector operator*() const;
+                NameVector const &operator*() const;
+
             private:
-                const_iterator(Hash::const_iterator iter);
+                                        // initialize a const iterator with
+                                        // an iterator to the name and rules
+                                        // of a SC.
+                const_iterator(Hash::const_iterator const &iter);
         };
 
         StartConditions();
@@ -101,7 +119,7 @@ inline std::vector<size_t> const &StartConditions::operator()
 }
 
 inline StartConditions::const_iterator::const_iterator(
-                                                Hash::const_iterator iter)
+                                      Hash::const_iterator const &iter)
 :
     d_iter(iter)
 {}
@@ -129,12 +147,28 @@ inline StartConditions::const_iterator StartConditions::end() const
     return const_iterator(d_hash.end());
 }
 
+inline StartConditions::NameVector::NameVector()
+:
+    d_name(0),
+    d_rules(0)
+{}
+
 inline StartConditions::NameVector::NameVector(std::string const &str, 
                             std::vector<size_t> const &vect)
 :
-    first(str),
-    second(vect)
+    d_name(&str),
+    d_rules(&vect)
 {}
+
+inline std::string const &StartConditions::NameVector::name() const
+{
+    return *d_name;
+}
+
+inline std::vector<size_t> const &StartConditions::NameVector::rules() const
+{
+    return *d_rules;
+}
 
 #endif
 
