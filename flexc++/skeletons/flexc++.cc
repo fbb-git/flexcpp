@@ -55,7 +55,12 @@ size_t \@Base::Input::next()
 
 void \@Base::Input::push_front(size_t ch)
 {
-    if (ch < 0x100)
+    if (static_cast<int>(ch) == AT_BOL)
+    {
+$insert 8 debug.input "Input::push_front(AT_BOL), d_returnBOL = true"
+        d_returnBOL = true;
+    }
+    else if (ch < 0x100)
     {
 $insert 8 debug.input "Input::push_front(" << ch << "), d_returnBOL = false"
         d_returnBOL = false;

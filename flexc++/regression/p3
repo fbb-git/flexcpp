@@ -13,4 +13,6 @@
 <str>"\""       d_p = "\" ... \""; more(); begin(INITIAL); return 2;
 <str>.|"\\".    more();
 
-.
+[[:space:]]+
+.           
+

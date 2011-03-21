@@ -10,6 +10,8 @@
 .                           more();
 \n                          return 1;
 
+[[:space:]]+
+
 <<EOF>>                     d_p = "<<EOF>>"; if (not popStream__()) return 0;
 
 

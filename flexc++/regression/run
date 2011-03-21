@@ -9,6 +9,7 @@ fi
 
 showinfo()
 {
+    tput clear
     echo
     echo "-------------------------------------------------------------------"
     echo "----------- Regression tests for patterns in \`$1' ----------------"
@@ -25,19 +26,16 @@ runflex()
         echo
         echo "flex reports:"
         echo "$FLEX"
-	echo "(press Enter to continue)"
-	read
+        echo "(press Enter to continue)"
+        read
     fi
 }
 
 runflexcpp()
 {
     cat preamble patterns > lexer
-
-    echo "[[:space:]]+"     >> lexer
-    echo ".     d_p = \".\"; return -1;" >> lexer
-
-    ../tmp/bin/flexc++ lexer
+    echo "Running ../tmp/bin/flexc++ -V lexer > out"
+    ../tmp/bin/flexc++ -V lexer > out
 }
 
 makeprogram()
@@ -50,7 +48,14 @@ makeprogram()
 runprogram()
 {
     echo 
-    echo "Performing regression tests using input file \`$1':"
+    echo "Running the regression tests using input file \`$1':"
+    echo "(compiling)..."
+    echo
+
+    makeprogram
+
+    echo "Press Enter to start the regression test"
+    read
     ./a.out $1 $nodebug
 }
 
@@ -68,10 +73,9 @@ do
     read YES
     if [ "$YES" == y ]
     then
-	data=`echo $file | sed 's/p/i/'`
+        data=`echo $file | sed 's/p/i/'`
         runflex 
         runflexcpp
-        makeprogram
         runprogram $data
     fi
 done

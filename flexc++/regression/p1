@@ -2,3 +2,10 @@
 %%
 a+/aab      d_p = "a+/aab"; return 1;
 aab         d_p = "aab"; return 2;
+
+[[:space:]]+
+.           d_p = "."; return -1;
+
+
+
+
