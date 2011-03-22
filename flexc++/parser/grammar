@@ -29,10 +29,9 @@
         LEXFUNCTIONNAME
         LEXSOURCE
         NAMESPACE
+        NOLINES
         OPTION_DIRECTIVE
         SKELETON_DIRECTORY
-        // STREAM_INFO_CLASSNAME
-        // STREAM_INFO_INCLUDE
 
 // rulessection
 %token  BLOCK

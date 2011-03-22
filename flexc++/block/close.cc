@@ -3,7 +3,7 @@
 bool Block::close()
 {
     if (--d_level != 0)
-        *this += '}';
+        d_block += '}';
 
     return d_level;
 }

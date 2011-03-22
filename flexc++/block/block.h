@@ -5,14 +5,15 @@
 #include <vector>
 #include <string>
 
-class Block: private std::string
-
+class Block
 {
     size_t  d_line;
     std::string d_source;               // the source in which the block 
                                         // was found. The block's text itself
                                         // is in the Block's base class
     int     d_level;
+    mutable std::string d_block;
+    mutable bool d_lineAdded;
     
     public:
         Block();
@@ -31,45 +32,29 @@ class Block: private std::string
         bool operator()(std::string const &text); 
         bool operator()(int ch);        // returning true if active
 
-        size_t line() const;
         size_t level() const;
-        std::string const &source() const;  // the block's source file
-        std::string const &str() const;     // the block's contents
+        std::string const &str() const; // the block's contents
 };
 
 inline Block::Block()
 :
-    d_level(0)
+    d_level(0),
+    d_lineAdded(false)
 {}
 
 inline void Block::operator+=(std::string const &text)
 {
-    append(text);
+    d_block += text;
 }
 
 inline void Block::operator+=(int ch)
 {
-    append(std::string(1, ch));
+    d_block += static_cast<char>(ch);
 }
 
 inline Block::operator bool() const
 {
     return d_level;
-}
-
-inline size_t Block::line() const
-{
-    return d_line;
-}
-
-inline std::string const &Block::source() const
-{
-    return d_source;
-}
-
-inline std::string const &Block::str() const
-{
-    return *this;
 }
 
 inline size_t Block::level() const

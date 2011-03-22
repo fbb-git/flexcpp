@@ -20,6 +20,7 @@ class Options
     std::string d_streamInfoInclude;
 
     bool d_interactive;
+    bool d_lines;
 
     // skeletons
     std::string d_baseClassSkeleton;
@@ -57,9 +58,7 @@ class Options
         void setNameSpace(std::string const &name);
 
         void setInteractive();
-
-        // void setStreamInfoInclude(string const &name);
-        //void setStreamInfoClassName(string const &name);
+        void setLines(bool yesNo);
 
         void setDebug();
         void setDebug(std::string const &name);
@@ -94,6 +93,7 @@ class Options
         void setAccessorVariables();
 
         bool interactive() const;
+        bool lines() const;
 
     private:
         Options();
@@ -182,6 +182,11 @@ inline void Options::setInteractive()
     d_interactive = true;
 }
 
+inline void Options::setLines(bool yesNo)
+{   
+    d_lines = yesNo;
+}
+
 inline void Options::setDebug()
 {
     d_debugAll = true;
@@ -210,6 +215,11 @@ inline void Options::setLastStep(std::string const &name)
 inline bool Options::interactive() const
 {   
     return d_interactive;
+}
+
+inline bool Options::lines() const
+{   
+    return d_lines;
 }
 
 inline bool Options::debug() const

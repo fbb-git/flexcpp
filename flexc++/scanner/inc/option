@@ -18,6 +18,7 @@
     interactive             return Parser::INTERACTIVE;
     lex-function-name       return Parser::LEXFUNCTIONNAME;
     lex-source              return Parser::LEXSOURCE;
+    no-lines                return Parser::NOLINES;
     namespace               return Parser::NAMESPACE;
     skeleton-directory      return Parser::SKELETON_DIRECTORY;
     /*

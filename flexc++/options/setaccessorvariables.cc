@@ -48,6 +48,11 @@ void Options::setAccessorVariables()
 
     d_debugAll |= arg.option('d');         // debug facility requested
 
+    if (arg.option(0, "lines"))             // --lines overrules 
+        d_lines = true;                     // --no-lines
+    else if (arg.option(0, "no-lines"))
+        d_lines = false;
+
     string range;
     if (arg.option(&range, 's'))
     {
@@ -72,7 +77,3 @@ void Options::setAccessorVariables()
         }
     }
 }
-
-//    if (d_streamInfoClassName.empty())
-//        d_streamInfoClassName = s_defaultStreamInfoClassName;
-

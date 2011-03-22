@@ -1,10 +1,11 @@
 #include "block.h"
 
 #include <ostream>
+#include <sstream>
 
-#include <bobcat/x2a>
+#include "../options/options.h"
 
 using namespace std;
-using namespace FBB;
+
 
 

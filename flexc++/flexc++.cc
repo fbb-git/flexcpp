@@ -25,16 +25,15 @@ namespace
         {"no-baseclass-header",         Arg::None},
         {"no-lex-source",               Arg::None},
 
-
         {"class-name",                  Arg::Required},
         {"lex-function-name",           Arg::Required},
+        {"lines",                       Arg::None},
+        {"no-lines",                    Arg::None},
 
      // {"show-filenames"               Arg::None},
-     // {"nolines",                     Arg::None},
-     // {"lines", 'l'},                 
 
         {"debug",                       'd'},
-        {"debug-steps",             's'},
+        {"debug-steps",                 's'},
 
         {"help",                        'h'},
         {"namespace",                   'n'},
