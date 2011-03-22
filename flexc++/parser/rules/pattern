@@ -61,6 +61,11 @@ pattern:
                         d_scanner.match().substr(1, d_scanner.leng() - 2));
     }
 |
+    DECIMAL
+    {                                                   
+        $$ = PatternVal::str(d_states, d_scanner.match());
+    }
+|
     SECTION_DELIMITER
     {
         $$ = PatternVal::str(d_states, d_scanner.match());
