@@ -26,6 +26,10 @@ class Rules
     StartConditions d_startConditions;
 
     public:
+        typedef StartConditions::const_iterator const_iterator;
+        typedef StartConditions::NameVector NameVector;
+        typedef std::vector<Rule>::const_iterator rule_const_iterator;
+
         Rules(States &states);
         void add(Pair const &pair, size_t accept,
                                      std::string const &action = "");
@@ -42,10 +46,11 @@ class Rules
                                     (std::string const &startCondition) const;
         void useInitialSC();
 
-        typedef StartConditions::const_iterator const_iterator;
-        typedef StartConditions::NameVector NameVector;
         const_iterator begin() const;
         const_iterator end() const;
+
+        rule_const_iterator ruleBegin() const;
+        rule_const_iterator ruleEnd() const;
 
         size_t size() const;
 
@@ -67,6 +72,16 @@ inline Rules::const_iterator Rules::begin() const
 inline Rules::const_iterator Rules::end() const
 {
     return d_startConditions.end();
+}
+        
+inline Rules::rule_const_iterator Rules::ruleBegin() const
+{
+    return d_rules.begin();
+}
+        
+inline Rules::rule_const_iterator Rules::ruleEnd() const
+{
+    return d_rules.end();
 }
         
 inline size_t Rules::ruleFromFinalState(size_t stateIdx) const
