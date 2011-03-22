@@ -128,10 +128,8 @@ size_t CAN_BE_REMOVED;
         static std::string outDFAbase(std::string const &startState,
                                       size_t offset);
         static void outStartState(std::string const &name, std::ostream &out);
-        static void dfaActions(DFAs::Pair const &dfaPair, std::ostream &out,
-                                                std::set<size_t> &done);
-        static void outAction(DFARow const &row, std::ostream &out,
-                                                 std::set<size_t> &done);
+        static void ruleAction(Rule const &rule, 
+                                            std::ostream &out, size_t &idx);
 };
 
         
