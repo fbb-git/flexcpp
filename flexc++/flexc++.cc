@@ -38,6 +38,7 @@ namespace
 
         {"help",                        'h'},
         {"namespace",                   'n'},
+        {"print-tokens",                't'},
         {"usage",                       'h'},
         {"verbose",                     'V'},
         {"version",                     'v'},
@@ -50,7 +51,7 @@ namespace
 int main(int argc, char **argv)
 try
 {
-    Arg &arg = Arg::initialize("b:c:dhi:l:n:s::B:C:I:L:S:Vv",
+    Arg &arg = Arg::initialize("b:c:dhi:l:n:s::tB:C:I:L:S:Vv",
                     longOptions, longEnd, argc, argv);
     arg.versionHelp(usage, version, 1);
 
