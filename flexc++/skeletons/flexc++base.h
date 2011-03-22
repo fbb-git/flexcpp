@@ -49,11 +49,13 @@ class \@Base
     {
         std::deque<unsigned char> d_deque;  // pending input chars
         std::istream *d_in;                 //  ptr for easy streamswitching
+        size_t d_lineNr;                    // line count
         bool d_returnBOL;                   // initially true
 
         public:
             Input(std::istream &iStream);
             size_t get();                   // the next range
+            size_t lineNr() const;          
             void push_front(size_t ch);     // push back 'ch' (if <= 0x100)
                                             // push back string from idx 'fm'
             void push_front(std::string const &str, size_t fm = 1);
@@ -68,7 +70,6 @@ class \@Base
     {
         std::string curName;
         Input pushedInput;
-        size_t pushedLineno;
         bool newIstream;
     };
         
@@ -84,9 +85,7 @@ class \@Base
     std::string     d_matched;              // matched characters
     bool            d_return;               // return after a rule's action 
     bool            d_more;                 // set to true by more()
-    size_t          d_lineno;               // number of lines read so far
-                                            // initially 1, incremented at
-                                            // each \n. 
+
 $insert 4 debugDecl
 $insert 4 declarations
     static size_t  const s_ranges[];
@@ -113,10 +112,15 @@ $insert 12 startCondNames
 
     public:
         bool                debug()     const;
-        size_t              leng()      const;
-        size_t              lineno()    const;
         std::string const  &match()     const;
         std::string const  &text()      const;
+
+        size_t              length()    const;
+        size_t              lineNr()    const;
+
+        // deprecated, kept for backward compatibility
+        size_t              leng()      const;
+        size_t              lineno()    const;
 
         void                setDebug(bool onOff);
         void                switchStreams(std::istream &iStream);
@@ -149,7 +153,6 @@ $insert 12 startCondNames
         void            noReturn__();               // d_return to false
         void            pushFront__(size_t ch);     // return chars to Input
         void            reset__();                  // prepare for new cycle
-        void            updateLineno__();           // update d_lineno
 
         void            pushStream__(std::string const &curName);
         void            pushStream__(std::istream &curStream);
@@ -167,6 +170,11 @@ $insert 12 startCondNames
 inline void \@Base::Input::destroy()
 {
     delete d_in;
+}
+
+inline size_t \@Base::Input::lineNr() const
+{
+    return d_lineNr;
 }
 
 inline std::ostream &\@Base::out()
@@ -199,6 +207,16 @@ inline void \@Base::echo() const
     *d_out << d_matched;
 }
 
+inline size_t \@Base::length() const
+{
+    return d_matched.size();
+}
+
+inline size_t \@Base::lineNr() const
+{
+    return d_input.lineNr();
+}
+
 inline size_t \@Base::leng() const
 {
     return d_matched.size();
@@ -206,7 +224,7 @@ inline size_t \@Base::leng() const
 
 inline size_t \@Base::lineno() const
 {
-    return d_lineno;
+    return d_input.lineNr();
 }
 
 inline void \@Base::more()

@@ -40,9 +40,7 @@ runflexcpp()
 
 makeprogram()
 {
-    [ "main.cc" -nt "main.o" ]  && g++ --std=c++0x -Wall -c main.cc
-
-    g++ --std=c++0x -Wall main.o lex.cc 
+    g++ --std=c++0x -Wall main.cc lex.cc 
 }
 
 runprogram()

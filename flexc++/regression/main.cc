@@ -9,24 +9,16 @@ try
 
     scanner.setDebug(argc <=  2);
 
-    while (true)
+    while (int token = scanner.lex())
     {
-        cout << "Line: " << scanner.lineno() << ". ";
-
-        int token = scanner.lex();
-        if (token == 0)
-            break;
+        cout << "Line: " << scanner.lineNr() << " returns " << token << ". "
+                "matched `" << scanner.match() << "'.";
 
         if (scanner.pattern().size())
-            cout << "Pattern `" << scanner.pattern() << "': ";
+            cout << "\t\t(@ `" << scanner.pattern() << "')";
         
-        if (token == -1)
-            cout << "UNEXPECTED input `";
-        else
-            cout << "lex() returns " << token << ". "
-                "matched `";
+        cout << '\n';
 
-        cout << scanner.match() << "'.\n";
         scanner.clearPattern();
     }
     cout << '\n';

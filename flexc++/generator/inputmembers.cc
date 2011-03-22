@@ -8,7 +8,8 @@ void Generator::inputMembers(ostream &out) const
     out <<  
         "ScannerBase::Input::Input(std::istream &iStream)\n"
         ":\n"
-        "    d_in(&iStream)";
+        "    d_in(&iStream),\n"
+        "    d_lineNr(1)";
 
     if (d_useBOL)
         out <<  ",\n"
@@ -54,6 +55,7 @@ void Generator::inputMembers(ostream &out) const
     }
 
     out << 
+        "            ++d_lineNr;\n"
         "        // FALLING THROUGH\n"
         "\n"
         "        default:\n";

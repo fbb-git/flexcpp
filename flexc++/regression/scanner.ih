@@ -3,3 +3,4 @@
 // $insert class_h
 #include "scanner.h"
 
+using namespace std;

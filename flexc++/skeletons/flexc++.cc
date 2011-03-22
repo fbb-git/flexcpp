@@ -64,6 +64,8 @@ $insert 8 debug.input "Input::push_front(AT_BOL), d_returnBOL = true"
     {
 $insert 8 debug.input "Input::push_front(" << ch << "), d_returnBOL = false"
         d_returnBOL = false;
+        if (ch == '\n')
+            --d_lineNr;
         d_deque.push_front(ch);
     }
 }
@@ -71,7 +73,7 @@ $insert 8 debug.input "Input::push_front(" << ch << "), d_returnBOL = false"
 void \@Base::Input::push_front(std::string const &str, size_t fm)
 {
     for (size_t idx = str.size(); idx-- > fm; )
-        d_deque.push_front(str[idx]);
+        push_front(str[idx]);
 }
 
 \@Base::\@Base(std::istream &in, std::ostream &out)
@@ -79,7 +81,6 @@ void \@Base::Input::push_front(std::string const &str, size_t fm)
     d_state(0),
     d_out(&out),
     d_input(in),
-    d_lineno(1),
 $insert debugInit
     d_dfaBase(s_dfa)
 {}
@@ -91,7 +92,6 @@ void \@Base::switchStreams(std::istream &iStream, std::ostream &out)
     *d_out << std::flush;
     d_out = &out;
     d_input = Input(iStream);
-    d_lineno = 1;
 }
 
 void \@Base::pushStream__(std::string const &name,
@@ -104,9 +104,8 @@ void \@Base::pushStream__(std::string const &name,
         throw std::length_error("Max stream stack size exceeded");
     }
 
-    d_streamStack.push(StreamStruct{name, d_input, d_lineno, closeAtPop});
+    d_streamStack.push(StreamStruct{name, d_input, closeAtPop});
     d_input = Input(*streamPtr);
-    d_lineno = 1;
 }
 
 void \@Base::pushStream__(std::string const &name)
@@ -136,22 +135,10 @@ bool \@Base::popStream__()
         d_input.destroy();
 
     d_input =   top.pushedInput;
-    d_lineno =  top.pushedLineno;
 
     d_streamStack.pop();
 
     return true;
-}
-
-void \@Base::updateLineno__()
-{
-    for 
-    (
-        size_t pos = 0; 
-            (pos = d_matched.find('\n', pos)) != std::string::npos; 
-                ++pos
-    )
-        ++d_lineno;
 }
 
 \@Base::ActionType__ \@Base::actionType__(size_t range)
@@ -222,8 +209,8 @@ void \@Base::determineMatchedSize(int const *finac)
 
   // At this point a rule has been matched.  The next character is not part of
   // the matched rule and is sent back to the input.  
-  // The final match length is determined, line numbers are updated 
-  // and the index of the matched rule is returned.
+  // The final match length is determined, and the index of the matched rule 
+  // is returned.
 int \@Base::matched__(size_t ch)
 {
 $insert 4 debug.action "MATCH"
@@ -232,7 +219,6 @@ $insert 4 debug.action "MATCH"
     int const *finac = d_finalInfo.finac;   // final info for this state
     
     determineMatchedSize(finac);
-    updateLineno__();        
 $insert 4 debug.action "match buffer contains `" << d_matched << "'"
 
     return finac[R];
@@ -307,7 +293,6 @@ $insert 4 debug.action "ECHO_FIRST"
         d_input.push_front(d_matched, 1);
         std::cerr << (ch = d_matched[0]);
     }
-    d_lineno += ch == '\n';
 }
 
 $insert pushFront
@@ -411,7 +396,6 @@ $insert 8 debugStep
 
             case ActionType__::EOF_REACHED:
 $insert 16 debug.action  "EOF_REACHED"
-                updateLineno__();
             return 0;
 
             case ActionType__::IGNORE_BOL:
