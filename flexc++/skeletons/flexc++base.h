@@ -11,11 +11,11 @@ $insert debugIncludes
 
 $insert namespace-open
 
-
 class \@Base
 {
                 // idx: rule, value: tail length (NO_INCREMENTS if no tail)
     typedef std::vector<int> VectorInt;
+
     enum 
     { 
         NO_LA_TAIL = -2,
@@ -31,6 +31,33 @@ class \@Base
         I,
     };
 
+    enum 
+    {
+        AT_BOL = -2,
+        AT_EOF = -1
+    };
+
+protected:
+
+    enum class ActionType__
+    {
+        CONTINUE,               // transition succeeded, go on
+        ECHO_FIRST,             // no continuation from here
+        EOF_REACHED,            // all input exhausted
+        IGNORE_BOL,             // ignore a BOL range
+        MATCH,                  // matched a rule
+        PUSH_FRONT,             // return all chars to the input
+    };
+
+public:
+
+    enum StartCondition {
+$insert 8 startCondNames
+    };
+
+
+private:
+
     struct FinalInfo
     {
         int const *finac;
@@ -38,13 +65,7 @@ class \@Base
     };
 
         // class Input encapsulates all input operations. 
-        // The member get returns the next input character
-    enum InputSpecials
-    {
-        AT_BOL = -2,
-        AT_EOF = -1
-    };
-
+        // Its member get() returns the next input character
     class Input
     {
         std::deque<unsigned char> d_deque;  // pending input chars
@@ -68,13 +89,19 @@ class \@Base
 
     struct StreamStruct
     {
-        std::string curName;
+        std::string pushedName;
         Input pushedInput;
         bool newIstream;
     };
-        
+
+
     std::stack<StreamStruct>    d_streamStack;
 
+    std::string     d_filename;             // name of the currently processed
+    static size_t   s_istreamNr;            // file. With istreams it receives
+                                            // the name "<istream #>", where
+                                            // # is the sequence number of the 
+                                            // istream (starting at 1)
     size_t          d_state;
     int             d_nextState;
     std::ostream   *d_out;
@@ -93,78 +120,64 @@ $insert 4 declarations
                                             // TODO: make configurable
     static size_t  const s_maxSizeofStreamStack = 10; 
 
-    protected:
-        enum class ActionType__
-        {
-            CONTINUE,               // transition succeeded, go on
-            ECHO_FIRST,             // no continuation from here
-            EOF_REACHED,            // all input exhausted
-            IGNORE_BOL,             // ignore a BOL range
-            MATCH,                  // matched a rule
-            PUSH_FRONT,             // return all chars to the input
-        };
+public:
 
+    bool                debug()     const;
+    std::string const  &filename()  const;
+    std::string const  &match()     const;
+    std::string const  &text()      const;
 
-    public:
-        enum StartCondition {
-$insert 12 startCondNames
-        };
+    size_t              length()    const;
+    size_t              lineNr()    const;
 
-    public:
-        bool                debug()     const;
-        std::string const  &match()     const;
-        std::string const  &text()      const;
+    // deprecated, kept for backward compatibility
+    size_t              leng()      const;
+    size_t              lineno()    const;
 
-        size_t              length()    const;
-        size_t              lineNr()    const;
+    void                setDebug(bool onOff);
+    void                switchStreams(std::istream &iStream);
+    void                switchStreams(std::istream &iStream,
+                                      std::ostream &oStream);
+protected:
 
-        // deprecated, kept for backward compatibility
-        size_t              leng()      const;
-        size_t              lineno()    const;
+    std::ostream &out();
 
-        void                setDebug(bool onOff);
-        void                switchStreams(std::istream &iStream);
-        void                switchStreams(std::istream &iStream,
-                                          std::ostream &oStream);
+    \@Base(std::istream &in, std::ostream &out);
 
-    protected:
-        std::ostream &out();
+        // members equal or similar to functions defined by flex
+    void    echo() const;
+    void    more();
+    void    less(size_t nChars = 0);
+    void    begin(StartCondition startCondition);
 
-        \@Base(std::istream &in, std::ostream &out);
+        // members used by the implementations: ending in __, so reserved
+        // names
+    ActionType__    actionType__(size_t range); // next action
+    bool            return__();                 // 'return' from codeblock
+    int             matched__(size_t ch);       // handles a matched rule
+    size_t          getRange__(size_t ch);      // convert char to range
+    size_t          get__();                    // next character
+    size_t          state__() const;            // current state 
+    void            continue__(size_t ch);      // handles a transition
+    void            echoFirst__(size_t ch);     // handles unknown input
+    void            ignoreBOL__();              // only if BOL's used
+    void            inspectFinac__();           // set final/LA tails
+    void            noReturn__();               // d_return to false
+    void            pushFront__(size_t ch);     // return chars to Input
+    void            reset__();                  // prepare for new cycle
 
-            // members equal or similar to functions defined by flex
-        void    echo() const;
-        void    more();
-        void    less(size_t nChars = 0);
-        void    begin(StartCondition startCondition);
+    void            pushStream__(std::string const &curName);
+    void            pushStream__(std::istream &curStream);
+    bool            popStream__();
 
-            // members used by the implementations: ending in __, so reserved
-            // names
-        ActionType__    actionType__(size_t range); // next action
-        bool            return__();                 // 'return' from codeblock
-        int             matched__(size_t ch);       // handles a matched rule
-        size_t          getRange__(size_t ch);      // convert char to range
-        size_t          get__();                    // next character
-        size_t          state__() const;            // current state 
-        void            continue__(size_t ch);      // handles a transition
-        void            echoFirst__(size_t ch);     // handles unknown input
-        void            ignoreBOL__();              // only if BOL's used
-        void            inspectFinac__();           // set final/LA tails
-        void            noReturn__();               // d_return to false
-        void            pushFront__(size_t ch);     // return chars to Input
-        void            reset__();                  // prepare for new cycle
+private:
 
-        void            pushStream__(std::string const &curName);
-        void            pushStream__(std::istream &curStream);
-        bool            popStream__();
-
-    private:
-        void pushStream__(std::string const &name,
-                          std::istream *streamPtr, bool closeAtPop);
-        void incLAtails();
-        void determineMatchedSize(int const *finac);
-        size_t lookAheadTail(int const *finac) const;
-        static bool atFinalState(int const *finac);
+    void pushStream__(std::string const &name,
+                      std::istream *streamPtr, bool closeAtPop);
+    void incLAtails();
+    void determineMatchedSize(int const *finac);
+    size_t lookAheadTail(int const *finac) const;
+    static bool atFinalState(int const *finac);
 };
 
 inline void \@Base::Input::destroy()
@@ -195,6 +208,11 @@ inline bool \@Base::atFinalState(int const *finac)
 inline std::string const &\@Base::match() const
 {
     return d_matched;
+}
+
+inline std::string const &\@Base::filename() const
+{
+    return d_filename;
 }
 
 inline std::string const &\@Base::text() const

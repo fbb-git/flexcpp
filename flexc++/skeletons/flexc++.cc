@@ -1,4 +1,5 @@
 #include <fstream>
+#include <sstream>
 #include <stdexcept>
 
 $insert class_ih
@@ -34,6 +35,8 @@ $insert DFAs
 $insert finAcs
 
 $insert DFAbases
+
+size_t \@Base::s_istreamNr = 0;
 
 $insert inputMembers
 
@@ -104,7 +107,8 @@ void \@Base::pushStream__(std::string const &name,
         throw std::length_error("Max stream stack size exceeded");
     }
 
-    d_streamStack.push(StreamStruct{name, d_input, closeAtPop});
+    d_streamStack.push(StreamStruct{d_filename, d_input, closeAtPop});
+    d_filename = name;
     d_input = Input(*streamPtr);
 }
 
@@ -121,7 +125,10 @@ void \@Base::pushStream__(std::string const &name)
 
 void \@Base::pushStream__(std::istream &iStream)
 {
-    pushStream__("<istream>", &iStream, false);
+    std::ostringstream name;
+    name << "<istream " << ++s_istreamNr << ">";
+
+    pushStream__(name.str(), &iStream, false);
 }
 
 bool \@Base::popStream__()
@@ -135,7 +142,7 @@ bool \@Base::popStream__()
         d_input.destroy();
 
     d_input =   top.pushedInput;
-
+    d_filename = top.pushedName;
     d_streamStack.pop();
 
     return true;
