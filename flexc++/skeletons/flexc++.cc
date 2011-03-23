@@ -95,6 +95,7 @@ void \@Base::switchStreams(std::istream &iStream, std::ostream &out)
     *d_out << std::flush;
     d_out = &out;
     d_input = Input(iStream);
+    d_filename = istreamName__();
 }
 
 void \@Base::pushStream__(std::string const &name,
@@ -123,12 +124,18 @@ void \@Base::pushStream__(std::string const &name)
     pushStream__(name, streamPtr, true);
 }
 
-void \@Base::pushStream__(std::istream &iStream)
+std::string \@Base::istreamName__()
 {
+    std::string ret;
     std::ostringstream name;
     name << "<istream " << ++s_istreamNr << ">";
+    ret = name.str();
+    return ret;
+}
 
-    pushStream__(name.str(), &iStream, false);
+void \@Base::pushStream__(std::istream &iStream)
+{
+    pushStream__(istreamName__(), &iStream, false);
 }
 
 bool \@Base::popStream__()

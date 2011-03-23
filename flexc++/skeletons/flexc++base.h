@@ -170,6 +170,9 @@ protected:
     void            pushStream__(std::istream &curStream);
     bool            popStream__();
 
+    static std::string istreamName__();
+    void            setFilename__(std::string const &name);
+
 private:
 
     void pushStream__(std::string const &name,
@@ -193,6 +196,11 @@ inline size_t \@Base::Input::lineNr() const
 inline std::ostream &\@Base::out()
 {
     return *d_out;
+}
+
+inline void \@Base::setFilename__(std::string const &name)
+{
+    d_filename = name;
 }
 
 inline void \@Base::switchStreams(std::istream &iStream)

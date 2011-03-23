@@ -29,7 +29,8 @@ inline void Scanner::preCode__()
 
 inline \@::\@(std::istream &iStream, std::ostream &oStream)
 :
-    \@Base(iStream, oStream)
+    \@Base(iStream, oStream),
+    setFilename(istreamName__()),
 {}
 
 $insert inlineLexFunction
