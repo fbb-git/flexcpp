@@ -83,6 +83,7 @@ void \@Base::Input::push_front(std::string const &str, size_t fm)
 :
     d_startCondition(INITIAL),
     d_state(0),
+    d_out(&std::cout),
 $insert debugInit
     d_dfaBase(s_dfa)
 {}
