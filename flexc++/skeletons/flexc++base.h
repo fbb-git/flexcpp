@@ -74,6 +74,7 @@ private:
         bool d_returnBOL;                   // initially true
 
         public:
+            Input();
             Input(std::istream &iStream);
             size_t get();                   // the next range
             size_t lineNr() const;          
@@ -102,6 +103,7 @@ private:
                                             // the name "<istream #>", where
                                             // # is the sequence number of the 
                                             // istream (starting at 1)
+    StartCondition  d_startCondition;
     size_t          d_state;
     int             d_nextState;
     std::ostream   *d_out;
@@ -124,7 +126,7 @@ public:
 
     bool                debug()     const;
     std::string const  &filename()  const;
-    std::string const  &match()     const;
+    std::string const  &matched()   const;
     std::string const  &text()      const;
 
     size_t              length()    const;
@@ -140,18 +142,28 @@ public:
                                       std::ostream &oStream);
 protected:
 
-    std::ostream &out();
-
+    \@Base();
     \@Base(std::istream &in, std::ostream &out);
 
-        // members equal or similar to functions defined by flex
-    void    echo() const;
-    void    more();
-    void    less(size_t nChars = 0);
-    void    begin(StartCondition startCondition);
+    StartCondition  startCondition() const;   // current start condition
+    bool            popStream();
+    std::ostream   &out();
+    void            begin(StartCondition startCondition);
+    void            echo() const;
+    void            less(size_t nChars = 0);
+    void            more();
+    void            push(size_t ch);                // push char to Input
+    void            push(std::string const &txt);   // same: chars
+    void            pushStream(std::istream &curStream);
+    void            pushStream(std::string const &curName);
+    void            setFilename(std::string const &name);
+    void            setMatched(std::string const &text);
 
-        // members used by the implementations: ending in __, so reserved
-        // names
+    static std::string istreamName();
+        
+        // members used by lex__(): they end in __ and should not be used
+        // otherwise.
+
     ActionType__    actionType__(size_t range); // next action
     bool            return__();                 // 'return' from codeblock
     int             matched__(size_t ch);       // handles a matched rule
@@ -163,19 +175,12 @@ protected:
     void            ignoreBOL__();              // only if BOL's used
     void            inspectFinac__();           // set final/LA tails
     void            noReturn__();               // d_return to false
-    void            pushFront__(size_t ch);     // return chars to Input
+    void            pushFront__(size_t ch);     // return char to Input
     void            reset__();                  // prepare for new cycle
-
-    void            pushStream__(std::string const &curName);
-    void            pushStream__(std::istream &curStream);
-    bool            popStream__();
-
-    static std::string istreamName__();
-    void            setFilename__(std::string const &name);
 
 private:
 
-    void pushStream__(std::string const &name,
+    void pushStream(std::string const &name,
                       std::istream *streamPtr, bool closeAtPop);
     void incLAtails();
     void determineMatchedSize(int const *finac);
@@ -198,9 +203,24 @@ inline std::ostream &\@Base::out()
     return *d_out;
 }
 
-inline void \@Base::setFilename__(std::string const &name)
+inline void \@Base::push(size_t ch)
+{
+    d_input.push_front(ch);
+}
+
+inline void \@Base::push(std::string const &str)
+{
+    d_input.push_front(str, 0);
+}
+
+inline void \@Base::setFilename(std::string const &name)
 {
     d_filename = name;
+}
+
+inline void \@Base::setMatched(std::string const &text)
+{
+    d_matched = text;
 }
 
 inline void \@Base::switchStreams(std::istream &iStream)
@@ -213,9 +233,14 @@ inline bool \@Base::atFinalState(int const *finac)
     return finac && finac[F] != NO_FINAL_STATE;
 }
 
-inline std::string const &\@Base::match() const
+inline std::string const &\@Base::matched() const
 {
     return d_matched;
+}
+
+inline \@Base::StartCondition \@Base::startCondition() const
+{
+    return d_startCondition;
 }
 
 inline std::string const &\@Base::filename() const
@@ -260,7 +285,7 @@ inline void \@Base::more()
 
 inline void \@Base::begin(StartCondition startCondition)
 {
-    d_dfaBase = s_dfaBase[startCondition];
+    d_dfaBase = s_dfaBase[d_startCondition = startCondition];
 }
 
 inline size_t \@Base::state__() const

@@ -15,7 +15,7 @@
 
 <eoln>\n                    begin(INITIAL);
 
-<<EOF>>                     d_p = "<<EOF>>"; return popStream__() ? 7 : 0;
+<<EOF>>                     d_p = "<<EOF>>"; return popStream() ? 7 : 0;
 
 
 

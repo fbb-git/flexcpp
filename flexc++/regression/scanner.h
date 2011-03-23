@@ -33,7 +33,7 @@ class Scanner: public ScannerBase
 
 inline void Scanner::pushStream()
 {
-    pushStream__(match().substr(0, leng()-1));
+    ScannerBase::pushStream(matched().substr(0, leng()-1));
 }
 
 inline void Scanner::clearPattern()

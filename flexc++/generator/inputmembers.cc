@@ -6,7 +6,18 @@ void Generator::inputMembers(ostream &out) const
     bool hasInput = d_debug || d_options.has("input");
 
     out <<  
-        "ScannerBase::Input::Input(std::istream &iStream)\n"
+        d_baseclassScope << "Input::Input()\n"
+        ":\n"
+        "    d_in(0),\n"
+        "    d_lineNr(1)";
+
+    if (d_useBOL)
+        out <<  ",\n"
+                "    d_returnBOL(true)";
+    out << "\n"        
+        "{}\n"
+        "\n" <<
+        d_baseclassScope << "Input::Input(std::istream &iStream)\n"
         ":\n"
         "    d_in(&iStream),\n"
         "    d_lineNr(1)";
@@ -14,11 +25,10 @@ void Generator::inputMembers(ostream &out) const
     if (d_useBOL)
         out <<  ",\n"
                 "    d_returnBOL(true)";
-
     out << "\n"        
         "{}\n"
         "\n"
-        "size_t ScannerBase::Input::get()\n"
+        "size_t " << d_baseclassScope << "Input::get()\n"
         "{\n";
 
     if (d_useBOL)

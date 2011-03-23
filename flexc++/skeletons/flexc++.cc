@@ -79,8 +79,17 @@ void \@Base::Input::push_front(std::string const &str, size_t fm)
         push_front(str[idx]);
 }
 
+\@Base::\@Base()
+:
+    d_startCondition(INITIAL),
+    d_state(0),
+$insert debugInit
+    d_dfaBase(s_dfa)
+{}
+
 \@Base::\@Base(std::istream &in, std::ostream &out)
 :
+    d_startCondition(INITIAL),
     d_state(0),
     d_out(&out),
     d_input(in),
@@ -95,10 +104,10 @@ void \@Base::switchStreams(std::istream &iStream, std::ostream &out)
     *d_out << std::flush;
     d_out = &out;
     d_input = Input(iStream);
-    d_filename = istreamName__();
+    d_filename = istreamName();
 }
 
-void \@Base::pushStream__(std::string const &name,
+void \@Base::pushStream(std::string const &name,
                           std::istream *streamPtr, bool closeAtPop)
 {
     if (d_streamStack.size() == s_maxSizeofStreamStack)
@@ -113,7 +122,7 @@ void \@Base::pushStream__(std::string const &name,
     d_input = Input(*streamPtr);
 }
 
-void \@Base::pushStream__(std::string const &name)
+void \@Base::pushStream(std::string const &name)
 {
     std::istream *streamPtr = new std::ifstream(name);
     if (!*streamPtr)
@@ -121,10 +130,10 @@ void \@Base::pushStream__(std::string const &name)
         delete streamPtr;
         throw std::runtime_error("Cannot read " + name);
     }
-    pushStream__(name, streamPtr, true);
+    pushStream(name, streamPtr, true);
 }
 
-std::string \@Base::istreamName__()
+std::string \@Base::istreamName()
 {
     std::string ret;
     std::ostringstream name;
@@ -133,12 +142,12 @@ std::string \@Base::istreamName__()
     return ret;
 }
 
-void \@Base::pushStream__(std::istream &iStream)
+void \@Base::pushStream(std::istream &iStream)
 {
-    pushStream__(istreamName__(), &iStream, false);
+    pushStream(istreamName(), &iStream, false);
 }
 
-bool \@Base::popStream__()
+bool \@Base::popStream()
 {
     if (d_streamStack.empty())
         return false;
@@ -300,7 +309,7 @@ void \@Base::echoFirst__(size_t ch)
 {
 $insert 4 debug.action "ECHO_FIRST"
     if (d_matched.empty())          // no match possible: echo ch itself
-        std::cerr << ch;
+        std::cout << ch;
     else                            // echo the 1st matched char, push_front
     {                               // the rest
         d_input.push_front(ch);

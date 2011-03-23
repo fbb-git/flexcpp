@@ -12,7 +12,7 @@ try
     while (int token = scanner.lex())
     {
         cout << "Line: " << scanner.lineNr() << " returns " << token << ". "
-                "matched `" << scanner.match() << "'.";
+                "matched `" << scanner.matched() << "'.";
 
         if (scanner.pattern().size())
             cout << "\t\t(@ `" << scanner.pattern() << "')";

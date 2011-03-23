@@ -17,12 +17,12 @@ $insert 8 lexFunctionDecl
         int lex__();
         int executeAction__(int ruleNr);
 
-        void preCode__();   // re-implement this function for code that must 
+        void preCode();     // re-implement this function for code that must 
                             // be exec'ed before the patternmatching starts
 
 };
 
-inline void Scanner::preCode__() 
+inline void Scanner::preCode() 
 {
     // optionally replace by your own code
 }
@@ -38,3 +38,4 @@ $insert inlineLexFunction
 $insert namespace-close
 
 #endif // \@_H_INCLUDED_
+
