@@ -12,8 +12,7 @@ class Block
                                         // was found. The block's text itself
                                         // is in the Block's base class
     int     d_level;
-    mutable std::string d_block;
-    mutable bool d_lineAdded;
+    std::string d_block;
     
     public:
         Block();
@@ -34,12 +33,14 @@ class Block
 
         size_t level() const;
         std::string const &str() const; // the block's contents
+
+        std::string const &source() const;
+        size_t line() const;
 };
 
 inline Block::Block()
 :
-    d_level(0),
-    d_lineAdded(false)
+    d_level(0)
 {}
 
 inline void Block::operator+=(std::string const &text)
@@ -57,10 +58,26 @@ inline Block::operator bool() const
     return d_level;
 }
 
+inline size_t Block::line() const
+{
+    return d_line;
+}
+
+inline std::string const &Block::source() const
+{
+    return d_source;
+}
+
 inline size_t Block::level() const
 {
     return d_level;
 }
+
+inline std::string const &Block::str() const
+{
+    return d_block;
+}
+
 
 #endif
 

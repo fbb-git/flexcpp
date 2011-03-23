@@ -5,6 +5,8 @@
 #include <string>
 #include <set>
 
+#include "../block/block.h"
+
 class States;
 
 class Rule
@@ -16,7 +18,7 @@ class Rule
 
     size_t d_start;             // index in States
     size_t d_final;             // index in States
-    std::string d_action;       // action block
+    Block d_block;              // action block
     bool d_LAdone;              // set to true when LA propagation has been 
                                 // completed (not relevant for rules not
                                 // using the LA operator
@@ -28,11 +30,11 @@ class Rule
     public:
         Rule() = default;               // for vector operations by Rules
         Rule(States const &states,
-             Pair fstfin, size_t accept, std::string action);
+             Pair fstfin, size_t accept, Block const &block);
         size_t startState() const;
         size_t finalState() const;
         size_t accept() const;
-        std::string const &action() const;
+        Block const &block() const;
 
         std::vector<size_t> const &preAstates() const;
         std::vector<size_t> const &postAstates() const;
@@ -84,9 +86,9 @@ inline size_t Rule::accept() const
     return d_postAstates.size() ? d_postAstates[0] : 0;
 }
 
-inline std::string const &Rule::action() const
+inline Block const &Rule::block() const
 {
-    return d_action;
+    return d_block;
 }
 
 #endif

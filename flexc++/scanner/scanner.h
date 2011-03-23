@@ -38,7 +38,7 @@ class Scanner: public ScannerBase
         void newDefinition();
         void reset(StartCondition start);
         void undelimit();
-        std::string const &block() const;
+        Block const &block() const;
 
     private:
         void begin(StartCondition to);
@@ -65,9 +65,9 @@ inline void Scanner::newDefinition()
     d_patternName.clear();
 }
 
-inline std::string const &Scanner::block() const
+inline Block const &Scanner::block() const
 {
-    return d_block.str();
+    return d_block;
 }
 
 inline int Scanner::lex()

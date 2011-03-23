@@ -9,7 +9,7 @@ void Parser::print()
 
         if (d_token__ == BLOCK)
         {
-            string const &block = d_scanner.block();
+            string const &block = d_scanner.block().str();
             size_t len = block.length();
 
             if (len <= 40)

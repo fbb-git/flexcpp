@@ -31,8 +31,7 @@ class Rules
         typedef std::vector<Rule>::const_iterator rule_const_iterator;
 
         Rules(States &states);
-        void add(Pair const &pair, size_t accept,
-                                     std::string const &action = "");
+        void add(Pair const &pair, size_t accept, Block const &block);
         Rule const &operator[](size_t idx) const;
         Rule &operator[](size_t idx);
 

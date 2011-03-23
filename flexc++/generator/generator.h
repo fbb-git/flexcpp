@@ -35,10 +35,9 @@ class Generator
     DFAs const &d_dfas;
     std::string d_baseclassScope;
     bool d_useBOL;
+    bool d_lineDirectives;
     bool d_debug;
     bool d_debugStep;
-
-size_t CAN_BE_REMOVED;
 
     mutable std::vector<std::string> d_startStates;
     mutable std::string d_key;          // extracted at $insert statements
@@ -128,8 +127,8 @@ size_t CAN_BE_REMOVED;
         static std::string outDFAbase(std::string const &startState,
                                       size_t offset);
         static void outStartState(std::string const &name, std::ostream &out);
-        static void ruleAction(Rule const &rule, 
-                                            std::ostream &out, size_t &idx);
+        static void ruleAction(Rule const &rule, std::ostream &out, 
+                               size_t &idx, bool lineDirectives);
 };
 
         

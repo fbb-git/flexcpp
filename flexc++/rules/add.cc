@@ -1,8 +1,8 @@
 #include "rules.ih"
 
-void Rules::add(Pair const &pair, size_t accept, string const &action)
+void Rules::add(Pair const &pair, size_t accept, Block const &block)
 {
-    d_rules.push_back( {d_states, pair, accept, action} );
+    d_rules.push_back( {d_states, pair, accept, block} );
     size_t ruleIdx = d_rules.size() - 1;
 
     d_finalToRule[pair.second] = ruleIdx;
