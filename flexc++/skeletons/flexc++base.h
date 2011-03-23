@@ -160,7 +160,9 @@ protected:
 
     void            accept(size_t nChars = 0);      // former: less
     void            less(size_t nChars = 0);        // deprecated
-
+    void            redo(size_t nChars = 0);        // rescan the last nChar
+                                                    // characters, reducing
+                                                    // length() by nChars
     void            more();
     void            push(size_t ch);                // push char to Input
     void            push(std::string const &txt);   // same: chars

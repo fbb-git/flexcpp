@@ -100,6 +100,13 @@ $insert debugInit
 
 $insert debugFunctions
 
+void \@Base::redo(size_t nChars)
+{
+    size_t from = nChars >= length() ? 0 : length() - nChars;
+    d_input.push_front(d_matched, from);
+    d_matched.resize(from);
+}
+
 void \@Base::switchStreams(std::istream &iStream, std::ostream &out)
 {
     *d_out << std::flush;
