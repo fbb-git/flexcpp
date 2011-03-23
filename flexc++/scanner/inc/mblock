@@ -3,9 +3,6 @@
 [[:blank:]]+    d_block(' ');
 
 ([[:blank:]]*\n)+   {
-                        if (d_block.level() == 0)   // { block } has closed
-                            return end(Parser::BLOCK);
-
                         if (d_block.level() == 1)    // close a block
                         {
                             d_block.close();

@@ -185,13 +185,12 @@ $insert 4 ignoreBOLaction
     return ActionType__::ECHO_FIRST;        // no match, echo the 1st char
 }
 
-inline void \@Base::less(size_t nChars)
+inline void \@Base::accept(size_t nChars)   // old name: less, now deprecated
 {
-    if (nChars <= d_matched.size())
+    if (nChars < d_matched.size())
     {
-        size_t end = d_matched.size() - nChars;
-        d_input.push_front(d_matched, end);
-        d_matched.resize(end);
+        d_input.push_front(d_matched, nChars);
+        d_matched.resize(nChars);
     }
 }
 

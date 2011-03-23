@@ -150,7 +150,17 @@ protected:
     std::ostream   &out();
     void            begin(StartCondition startCondition);
     void            echo() const;
-    void            less(size_t nChars = 0);
+
+//    `less(n)' returns all but the first `n' characters of the current
+// token back to the input stream, where they will be rescanned when the
+// scanner looks for the next match.
+//  So, it matches n of the characters in the input buffer, and so it accepts
+//  n characters, rescanning the rest. I think 'less' is a highly confusing
+// name. Use 'accept' instead, and avoid using 'less'.
+
+    void            accept(size_t nChars = 0);      // former: less
+    void            less(size_t nChars = 0);        // deprecated
+
     void            more();
     void            push(size_t ch);                // push char to Input
     void            push(std::string const &txt);   // same: chars
@@ -281,6 +291,11 @@ inline size_t \@Base::lineno() const
 inline void \@Base::more()
 {
     d_more = true;
+}
+
+inline void \@Base::less(size_t nChars)
+{
+    accept(nChars);
 }
 
 inline void \@Base::begin(StartCondition startCondition)
