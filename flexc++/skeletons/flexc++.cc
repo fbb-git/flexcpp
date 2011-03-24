@@ -181,10 +181,10 @@ $insert 4 checkBOL
     if (d_nextState != -1)                  // transition is possible
         return ActionType__::CONTINUE;
 
+$insert 4 ignoreBOLaction
+
     if (atFinalState(d_finalInfo.finac))    // FINAL state reached
         return ActionType__::MATCH;
-
-$insert 4 ignoreBOLaction
 
     if (range == s_rangeOfEOF)
         return ActionType__::EOF_REACHED;

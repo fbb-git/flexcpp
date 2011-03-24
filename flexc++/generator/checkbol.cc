@@ -8,7 +8,7 @@ void Generator::checkBOL(ostream &out) const
         out << 
             "    if (range == s_rangeOfBOL)\n"
             "    {\n"
-            "        if (d_startsAtBOL)\n"
+            "        if (not d_matched.empty())\n"
             "            return ActionType__::IGNORE_BOL;\n"
             "        d_startsAtBOL = true;\n"
             "    }\n";
