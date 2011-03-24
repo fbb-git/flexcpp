@@ -115,7 +115,16 @@ private:
     bool            d_return;               // return after a rule's action 
     bool            d_more;                 // set to true by more()
 
+protected:
+    size_t d_beginStep__;
+    size_t d_endStep__;
+    size_t d_step__;
+
 $insert 4 debugDecl
+
+private:
+    bool           d_startsAtBOL;           // the matched text starts at BOL
+
 $insert 4 declarations
     static size_t  const s_ranges[];
     static int     const s_finAc[][4];

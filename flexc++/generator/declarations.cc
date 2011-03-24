@@ -2,10 +2,6 @@
 
 void Generator::declarations(ostream &out) const
 {
-    if (d_useBOL)
-        out << "    bool            d_startsAtBOL;          "
-                                "// the matched text starts at BOL\n";
-
     out <<
         "\n"
         "    int     const (*d_dfaBase)[" << dfaCols() << "];\n"
