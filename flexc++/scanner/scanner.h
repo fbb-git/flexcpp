@@ -39,6 +39,7 @@ class Scanner: public ScannerBase
         void reset(StartCondition start);
         void undelimit();
         Block const &block() const;
+        std::string const &matched() const;
 
     private:
         void begin(StartCondition to);
@@ -54,6 +55,11 @@ class Scanner: public ScannerBase
         int lex__();
         int executeAction__(int ruleNr);
 };
+
+inline std::string const &Scanner::matched() const
+{
+    return d_match;
+}
 
 inline std::string const &Scanner::filename() const
 {

@@ -28,6 +28,6 @@
 
     {NAME}                  return Parser::NAME;
 
-    .|\n                    return end(d_match[0]);
+    .|\n                    return end(matched()[0]);
 }
 

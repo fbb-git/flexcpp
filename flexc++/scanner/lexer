@@ -33,7 +33,7 @@ NAME                    [A-Za-z_][-A-Za-z0-9_]*
     
     "^"                 return d_beginOfPattern? '^' : Parser::CHARACTER;
 
-    [/.=*+?,{}<>()-]   return d_match[0];   // All single char tokens
+    [/.=*+?,{}<>()-]   return matched()[0];   // All single char tokens
 
     ^"//include"[[:blank:]].*   maybeSwitchStream();
 }
@@ -127,9 +127,9 @@ NAME                    [A-Za-z_][-A-Za-z0-9_]*
                     begin(quote);
                 }
 
-NAME            d_block += d_match;
+NAME            d_block += matched();
 
-.               d_block += d_match[0];
+.               d_block += matched()[0];
 
 }
 
@@ -172,14 +172,14 @@ NAME            d_block += d_match;
 
     {NAME}                  return Parser::NAME;
 
-    .|\n                    return end(d_match[0]);
+    .|\n                    return end(matched()[0]);
 }
 
 
 <quote>{
     '                       {
                                 if (d_block)
-                                    d_block += d_match;
+                                    d_block += matched();
                                 end();
                             }
 
@@ -195,7 +195,7 @@ NAME            d_block += d_match;
 \"          {
                 if (!d_block)
                     return end(Parser::STRING);
-                d_block += d_match;
+                d_block += matched();
                 end();
             }
             

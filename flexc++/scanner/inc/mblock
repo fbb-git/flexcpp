@@ -32,9 +32,9 @@
                     begin(quote);
                 }
 
-NAME            d_block += d_match;
+NAME            d_block += matched();
 
-.               d_block += d_match[0];
+.               d_block += matched()[0];
 
 }
 

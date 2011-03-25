@@ -1,7 +1,7 @@
 <quote>{
     '                       {
                                 if (d_block)
-                                    d_block += d_match;
+                                    d_block += matched();
                                 end();
                             }
 

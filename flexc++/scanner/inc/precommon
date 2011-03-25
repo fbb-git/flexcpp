@@ -18,7 +18,7 @@
     
     "^"                 return d_beginOfPattern? '^' : Parser::CHARACTER;
 
-    [/.=*+?,{}<>()-]   return d_match[0];   // All single char tokens
+    [/.=*+?,{}<>()-]   return matched()[0];   // All single char tokens
 
     ^"//include"[[:blank:]].*   maybeSwitchStream();
 }
