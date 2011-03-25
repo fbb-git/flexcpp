@@ -25,6 +25,9 @@ class Rules
 
     StartConditions d_startConditions;
 
+    std::string d_source;               // source and line of a rule definition
+    size_t      d_lineNr;
+
     public:
         typedef StartConditions::const_iterator const_iterator;
         typedef StartConditions::NameVector NameVector;
@@ -52,6 +55,7 @@ class Rules
         rule_const_iterator ruleEnd() const;
 
         size_t size() const;
+        void setContext(std::string const &source, size_t lineNr);
 
     private:
         void setRuleIndices(size_t state, size_t index);

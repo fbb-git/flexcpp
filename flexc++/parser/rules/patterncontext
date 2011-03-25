@@ -1,0 +1,5 @@
+patternContext:
+    {
+        d_rules.setContext(d_scanner.filename(), d_scanner.lineno());
+    }
+;

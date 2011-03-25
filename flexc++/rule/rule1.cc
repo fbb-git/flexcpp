@@ -1,12 +1,14 @@
 #include "rule.ih"
 
 Rule::Rule(States const &states, Pair fstfin, size_t accept, 
-                                                        Block const &block)
+           Block const &block, std::string const &source, size_t lineNr)
 :
     d_start(fstfin.first),                  // 1st state of this rule
     d_final(fstfin.second),                 // final state of this rule
     d_block(block),
-    d_LAdone(false)
+    d_LAdone(false),
+    d_source(source),
+    d_lineNr(lineNr)
 {
     if (accept != 0)                        // this rule uses the LA operator, 
     {                                       // so it has an accept state

@@ -22,15 +22,19 @@ class Rule
     bool d_LAdone;              // set to true when LA propagation has been 
                                 // completed (not relevant for rules not
                                 // using the LA operator
-
                                     // for rules using LA operators:
     std::vector<size_t> d_preAstates;  // all pre-A states
     std::vector<size_t> d_postAstates; // all post-A states
 
+    std::string d_source;       // context of the rule: source and lineNr
+    size_t      d_lineNr;
+
     public:
         Rule() = default;               // for vector operations by Rules
         Rule(States const &states,
-             Pair fstfin, size_t accept, Block const &block);
+             Pair fstfin, size_t accept, Block const &block,
+             std::string const &source, size_t lineNr);
+
         size_t startState() const;
         size_t finalState() const;
         size_t accept() const;

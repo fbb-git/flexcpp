@@ -77,8 +77,17 @@ section_delimiter:
 %include rules/modeswitches             
 
 %include rules/plaincharacters          
-%include rules/characterclass           // TO DO
-%include rules/pattern                  // TO COMPLETE
+%include rules/characterclass
+
+%include    rules/patterncontext
+%include    rules/optws
+%include    rules/quantifier
+%include    rules/decimal
+%include    rules/interval
+%include    rules/incparen
+%include    rules/decparen
+%include    rules/patternws
+%include rules/pattern
 
 %include rules/option                   
 %include rules/directives               
