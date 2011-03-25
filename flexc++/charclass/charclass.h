@@ -2,22 +2,22 @@
 #define INCLUDED_CHARCLASS_
 
 #include <string>
+#include <set>
 
 #include "../semval/semval.h"
 
 class CharClass: public SemVal
 {
-    std::string d_set;
+    mutable std::string d_chars;
 
     public:
-        std::string str() const;        // the chars in de charset
+        std::string const &str() const;        // the chars in de charset
 
-        static spSemVal add(char ch);
+        static spSemVal plain(char ch);
         static spSemVal escape(std::string const &match);
         static spSemVal predefined(std::string const &range);
                 
         static spSemVal &concatenate(spSemVal &lhs, SemVal const &rhs);
-        static spSemVal &addLeftoverChars(spSemVal &charClass);
         static spSemVal difference(SemVal const &lhs, SemVal const &rhs);
         static spSemVal &unite(spSemVal &lhs, SemVal const &rhs);
         static spSemVal negate(spSemVal const &charClass);
@@ -26,19 +26,18 @@ class CharClass: public SemVal
         CharClass();
         CharClass(char ch);
         CharClass(std::string const &str);
-//        CharClass(std::set<char> const &charSet);
+        CharClass(std::set<char> const &charSet);
 
-//        void addSet(std::set<char> const &rhs);       rm fm .ih
-//        void addSet(std::string const &str);
-        void addRange(char from, char to);
+        void addSet(std::set<char> const &charSet);
 
-                                                    // lhs.d_last has 1 char
-        void static concatenate1(CharClass &lhs, std::string const &rChars);
-                                                    // lhs.d_last has 2 chars
-        void static concatenate2(CharClass &lhs, std::string const &rChars);
-
+        std::set<char> set() const;                 // create a set (or F)
+        void addRange(std::set<char> &charSet, size_t idx) const;
+        void addIndices(std::set<char> &dest, size_t begin, size_t end) const;
+        void addChars(std::set<char> &dest, size_t begin, size_t end) const;
+        size_t findRange(size_t from) const;        // find a range fm 'from'
+        bool a_b_c(size_t idx) const;               // T if 'a-b-c' pattern,
+                                                    // idx at 1st '-'
 };
 
 #endif
-
 

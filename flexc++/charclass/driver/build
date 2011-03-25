@@ -1,0 +1,13 @@
+#!/bin/bash
+
+case $1 in
+    (b)
+        g++ --std=c++0x -o driver driver.cc \
+            -lflexc++ -lbobcat -L../../ -s
+    ;;
+    (*)
+    echo $0 b links to bobcat built by 'build libraries all'
+    rm -f driver
+    ;;
+esac
+

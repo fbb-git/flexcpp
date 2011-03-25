@@ -1,10 +1,7 @@
 #include "charclass.ih"
 
-string CharClass::str() const
+string const &CharClass::str() const
 {
-    string ret;
-
-    copy(d_set.begin(), d_set.end(), inserter(ret, ret.end()));
-
-    return ret;
+    std::set<char> const &tmp = set();
+    return d_chars = string(tmp.begin(), tmp.end());
 }

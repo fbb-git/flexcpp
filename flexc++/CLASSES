@@ -1,6 +1,6 @@
 #   See README.class-setup for a description of the dependency graph used here
 #   `touch classname/ALL' to recompile all class sources and sources of
-#   depending classes
+#   depending classes, using icmbuild
 
 semval          
 textval         semval
@@ -10,13 +10,13 @@ state           statestring
 states          state
 charrange       
 charclass       charrange   semval
-rule            states            
+block           
+rule            states      block
 rules           rule        startcondition
 patternval      charclass   states
 decimal         semval
 startconditions textval
 fstreaminfo     
-block           
 scanner         textval     fstreaminfo block
 ranges          textval     states
 finacinfo  

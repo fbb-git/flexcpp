@@ -1,15 +1,13 @@
 #include "charclass.ih"
 
-void CharClass::addRange(char from, char to)
+void CharClass::addRange(std::set<char> &dest, size_t idx) const
 {
-    if (from > to)
-        emsg << '`' << from << "' beyond `" << to << "' in character set" << 
-                                                                        endl;
-    else
-    {
-        for (; from <= to; ++from)
-            d_set.insert(from);
-    }
+    size_t from = static_cast<unsigned char>(d_chars[idx - 1]);
+    size_t to = static_cast<unsigned char>(d_chars[idx + 1]);
 
-    d_last.erase();
+    if (from <= to)
+        addChars(dest, from, to + 1);
+    else
+        emsg << "Illegal character range: `" << 
+                                d_chars.substr(idx - 1, 3) << '\'' << endl;
 }

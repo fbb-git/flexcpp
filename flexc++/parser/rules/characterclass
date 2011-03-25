@@ -15,7 +15,7 @@ character_class:
 cc_set:
     cc_start_m cc_contents cc_end_m
     {
-        $$ = CharClass::addLeftoverChars($2);
+        $$ = $2;
     }
 |
     cc_negated_m cc_contents cc_end_m
