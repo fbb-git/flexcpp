@@ -2,14 +2,14 @@
 
 spSemVal CharClass::difference(SemVal const &lhs, SemVal const &rhs)
 {
-    set<char> const &lset = downCast<CharClass>(lhs).d_set;
-    set<char> const &rset = downCast<CharClass>(rhs).d_set;
+    set<char> lset = downCast<CharClass>(lhs).set();
+    set<char> rset = downCast<CharClass>(rhs).set();
 
-    CharClass *data = new CharClass;
-    spSemVal ret(data);
-
+    set<char> dest;
     set_difference(lset.begin(), lset.end(), rset.begin(), rset.end(),
-                    inserter(data->d_set, (data->d_set).begin()));
+                    inserter(dest, dest.begin()));
+
+    spSemVal ret(new CharClass(dest));
 
     return ret;
 }

@@ -2,7 +2,7 @@
 
 spSemVal &CharClass::unite(spSemVal &lhs, SemVal const &rhs)
 {
-    downCast<CharClass>(*lhs).addSet(downCast<CharClass>(rhs).d_set);
+    downCast<CharClass>(*lhs).d_set += downCast<CharClass>(rhs).d_set;
 
     return lhs;
 }
