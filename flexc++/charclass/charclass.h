@@ -21,6 +21,7 @@ class CharClass: public SemVal
         static spSemVal difference(SemVal const &lhs, SemVal const &rhs);
         static spSemVal &unite(spSemVal &lhs, SemVal const &rhs);
         static spSemVal negate(spSemVal const &charClass);
+        static spSemVal negate(spSemVal &lhs, SemVal const &rhs);
 
     private:
         CharClass();

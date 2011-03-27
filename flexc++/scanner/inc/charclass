@@ -19,7 +19,7 @@
                                 if (d_initialClosingBracket)
                                 {
                                     d_initialClosingBracket = false;
-                                    return end(Parser::CHARACTER);
+                                    return Parser::CHARACTER;
                                 }
                                 return end(']');
                             }

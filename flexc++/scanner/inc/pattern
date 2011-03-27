@@ -6,19 +6,30 @@
                             return Parser::WS;
                         }
 
-    "[^"                return begin(charclass, Parser::CC_NEGATED);
-    "[^]"               {
-                            d_initialClosingBracket = true;
-                            less(2);        // redo the closing bracket
+    "[^"                |
+    "[^]"               |
+    "[^]["              {
+                            size_t pos = match().find(']');
+                            if (pos != string::npos)
+                            {
+                                d_initialClosingBracket =  true;
+                                less(2);
+                            }
                             return begin(charclass, Parser::CC_NEGATED);
-                        }   //_RBRACKET);
+                        }
 
-    "["                 return begin(charclass, Parser::CC_START);
-    "[]"                {
-                            d_initialClosingBracket = true;
-                            less(1);        // redo the closing bracket
+    "["                 |
+    "[]"                |   
+    "[]["               {
+                            size_t pos = match().find(']');
+                            if (pos != string::npos)
+                            {
+                                d_initialClosingBracket =  true;
+                                less(1);
+                            }
                             return begin(charclass, Parser::CC_START);
-                        }   // _RBRACKET);
+                        }
+
     
     "{+}"               return Parser::CC_PLUS;
     "{-}"               return Parser::CC_MINUS;

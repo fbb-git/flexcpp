@@ -84,6 +84,7 @@ void \@Base::Input::push_front(std::string const &str, size_t fm)
     d_startCondition(INITIAL),
     d_state(0),
     d_out(&std::cout),
+    d_sawEOF(false),
 $insert debugInit
     d_dfaBase(s_dfa)
 {}
@@ -93,6 +94,7 @@ $insert debugInit
     d_startCondition(INITIAL),
     d_state(0),
     d_out(&out),
+    d_sawEOF(false),
     d_input(in),
 $insert debugInit
     d_dfaBase(s_dfa)
@@ -113,6 +115,7 @@ void \@Base::switchStreams(std::istream &iStream, std::ostream &out)
     d_out = &out;
     d_input = Input(iStream);
     d_filename = istreamName();
+    d_sawEOF = false;
 }
 
 void \@Base::pushStream(std::string const &name,
@@ -128,6 +131,7 @@ void \@Base::pushStream(std::string const &name,
     d_streamStack.push(StreamStruct{d_filename, d_input, closeAtPop});
     d_filename = name;
     d_input = Input(*streamPtr);
+    d_sawEOF = false;
 }
 
 void \@Base::pushStream(std::string const &name)
@@ -168,6 +172,7 @@ bool \@Base::popStream()
     d_input =   top.pushedInput;
     d_filename = top.pushedName;
     d_streamStack.pop();
+    d_sawEOF = false;
 
     return true;
 }
@@ -183,8 +188,11 @@ $insert 4 checkBOL
 
 $insert 4 ignoreBOLaction
 
-    if (atFinalState(d_finalInfo.finac))    // FINAL state reached
+    if (!d_sawEOF && atFinalState(d_finalInfo.finac))   // FINAL state reached
+    {
+        d_sawEOF = range == s_rangeOfEOF;
         return ActionType__::MATCH;
+    }
 
     if (range == s_rangeOfEOF)
         return ActionType__::EOF_REACHED;
@@ -256,6 +264,9 @@ $insert 4 debug.action "match buffer contains `" << d_matched << "'"
 
 size_t \@Base::getRange__(size_t ch)
 {
+    if (static_cast<int>(ch) != AT_EOF)
+        d_sawEOF = false;
+
     switch (ch)
     {
         case AT_EOF:

@@ -15,10 +15,17 @@ int main(int argc, char **argv)
         getline(cin, str);
         if (str.empty())
             break;
+        cout << "Entered: `" << str << "'\n";
         spSemVal sp = str[0] == '[' ? CharClass::predefined(str) : 
                                             CharClass::escape(str);
         cout << '`' << dynamic_cast<CharClass &>(*sp).str() << "'\n";
     }
 }
+
+
+
+
+
+
 
 

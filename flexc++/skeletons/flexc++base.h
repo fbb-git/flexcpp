@@ -107,6 +107,7 @@ private:
     size_t          d_state;
     int             d_nextState;
     std::ostream   *d_out;
+    bool            d_sawEOF;               // saw EOF: ignore finac
     Input           d_input;
     VectorInt       d_LAtail;
     FinalInfo       d_finalInfo;    

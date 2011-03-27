@@ -13,17 +13,37 @@ character_class:
 ;
 
 cc_set:
-    cc_start_m cc_contents cc_end_m
+    cc_start cc_contents cc_end_m
     {
-        $$ = $2;
+        $$ = CharClass::concatenate($1, *$2);
     }
 |
-    cc_negated_m cc_contents cc_end_m
+    cc_negated cc_contents cc_end_m
     {
-        $$ = CharClass::negate($2);                  
+        $$ = CharClass::negate($1, *$2);
     }
 ;
 
+cc_start:
+    cc_start_m
+    {
+        string str;
+        if (d_scanner.leng() > 1)
+            str = d_scanner.match().substr(1);
+        $$ = CharClass::escape(str);
+    }
+;
+
+cc_negated:
+    cc_negated_m
+    {
+        string str;
+        if (d_scanner.leng() > 2)
+            str = d_scanner.match().substr(2);
+        $$ = CharClass::escape(str);
+    }
+;
+    
 cc_contents:
     cc_contents cc_element
     {
@@ -49,3 +69,4 @@ cc_element:
         $$ = CharClass::escape(d_scanner.match());
     }
 ;
+
