@@ -1,7 +1,17 @@
 #include "charclass.ih"
+#include <iostream>
 
-string const &CharClass::str() const
+string CharClass::str() const
 {
+//    cout << "STR RAW: ";
+//    display(d_chars);
+        
     std::set<char> const &tmp = set();
-    return d_chars = string(tmp.begin(), tmp.end());
+
+//    copy(tmp.begin(), tmp.end(), ostream_iterator<char>(cout));
+//    cout << '\n';
+
+
+    string ret(tmp.begin(), tmp.end());
+    return ret;
 }

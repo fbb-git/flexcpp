@@ -25,4 +25,7 @@ plain_cc_characters:
     simple_characters
 |
     '.'
+|
+    '/'
 ;
+

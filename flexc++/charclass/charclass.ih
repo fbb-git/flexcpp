@@ -1,10 +1,13 @@
 #include "charclass.h"
 
+#include <iostream>
+
 #include <algorithm>
 #include <iterator>
 
 #include <bobcat/string>
 #include "bobcat/mstream"
+#include <bobcat/fnwrap>
 
 #include "../charrange/charrange.h"
 
@@ -17,21 +20,32 @@ inline CharClass::CharClass()
         
 inline CharClass::CharClass(char ch)
 :
-    d_chars(1, ch)
+    d_chars(1, {ch, false})
 {}
 
 inline CharClass::CharClass(string const &str)
-:
-    d_chars(str)
-{}
+{
+    for_each(str.begin(), str.end(), FnWrap::unary(addPlain, d_chars));
+}
 
 inline CharClass::CharClass(std::set<char> const &charSet)
 {
-    addSet(charSet);
+    for_each(charSet.begin(), charSet.end(), 
+                                FnWrap::unary(addPredefined, d_chars));
 }
 
-inline void CharClass::addSet(std::set<char> const &charSet)
+inline void CharClass::addPlain(char ch, Vector &vect)
 {
-    d_chars.insert(d_chars.end(), charSet.begin(), charSet.end());
+    vect.push_back({ch, false});
 }
+
+inline void CharClass::addPredefined(char ch, Vector &vect)
+{
+    vect.push_back({ch, true});
+}
+
+
+ 
+
+
 

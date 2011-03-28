@@ -1,6 +1,7 @@
 #ifndef INCLUDED_CHARCLASS_
 #define INCLUDED_CHARCLASS_
 
+#include <vector>
 #include <string>
 #include <set>
 
@@ -8,10 +9,11 @@
 
 class CharClass: public SemVal
 {
-    mutable std::string d_chars;
+    typedef std::vector<std::pair<char, bool>> Vector;
+    Vector d_chars;
 
     public:
-        std::string const &str() const;        // the chars in de charset
+        std::string str() const;        // the chars in the set
 
         static spSemVal plain(char ch);
         static spSemVal escape(std::string const &match);
@@ -19,25 +21,31 @@ class CharClass: public SemVal
                 
         static spSemVal &concatenate(spSemVal &lhs, SemVal const &rhs);
         static spSemVal difference(SemVal const &lhs, SemVal const &rhs);
-        static spSemVal &unite(spSemVal &lhs, SemVal const &rhs);
+        static spSemVal unite(spSemVal &lhs, SemVal const &rhs);
         static spSemVal negate(spSemVal const &charClass);
         static spSemVal negate(spSemVal &lhs, SemVal const &rhs);
 
     private:
+static void display(Vector const &vect);
+
+
         CharClass();
         CharClass(char ch);
         CharClass(std::string const &str);
         CharClass(std::set<char> const &charSet);
 
-        void addSet(std::set<char> const &charSet);
+        static void addPlain(char ch, Vector &vect);
+        static void addPredefined(char ch, Vector &vect);
 
         std::set<char> set() const;                 // create a set (or F)
+
+
         void addRange(std::set<char> &charSet, size_t idx) const;
         void addIndices(std::set<char> &dest, size_t begin, size_t end) const;
         void addChars(std::set<char> &dest, size_t begin, size_t end) const;
         size_t findRange(size_t from) const;        // find a range fm 'from'
-        bool a_b_c(size_t idx) const;               // T if 'a-b-c' pattern,
-                                                    // idx at 1st '-'
+        bool validRange(size_t idx) const;          // T if valid range,
+                                                    // idx at '-'
 };
 
 #endif

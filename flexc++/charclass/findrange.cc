@@ -2,14 +2,27 @@
 
 size_t CharClass::findRange(size_t from) const
 {
-    ++from;                             // 'a-b...': start looking at next idx
+    auto iter = d_chars.begin() + from;
 
-    if (from < d_chars.size())          // search for 'a-b' patterns
-    {
-        from = d_chars.find('-', from); // look for a '-'
+    while (true)
+    {                                   // find a - not in a predef'd range
+        auto minus = find(iter, d_chars.end(), pair<char, bool>('-', false));
 
-        if (from < d_chars.size() - 1)  // got a '-' and a character beyond
-            return from;
+        if (minus == iter)              // - cannot be the very first char.
+        {
+            ++iter;
+            continue;
+        }
+
+        if (minus == d_chars.end())     // none found
+          return 0;
+
+//cout << "FINDRANGE: #chars = " << d_chars.size() << '\n';
+        return minus - d_chars.begin();
+
     }
-    return 0;                           // not found
 }
+
+
+
+

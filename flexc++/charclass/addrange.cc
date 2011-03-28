@@ -2,12 +2,15 @@
 
 void CharClass::addRange(std::set<char> &dest, size_t idx) const
 {
-    size_t from = static_cast<unsigned char>(d_chars[idx - 1]);
-    size_t to = static_cast<unsigned char>(d_chars[idx + 1]);
+    if (idx + 1 == d_chars.size())
+    {
+        dest.insert(d_chars[idx - 1].first);
+        dest.insert(d_chars[idx].first);
+        return;
+    }
+    
+    size_t from = static_cast<unsigned char>(d_chars[idx - 1].first);
+    size_t to = static_cast<unsigned char>(d_chars[idx + 1].first);
 
-    if (from <= to)
-        addChars(dest, from, to + 1);
-    else
-        emsg << "Illegal character range: `" << 
-                                d_chars.substr(idx - 1, 3) << '\'' << endl;
+    addChars(dest, from, to + 1);
 }

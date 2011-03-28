@@ -1,8 +1,15 @@
 #include "charclass.ih"
 
-spSemVal &CharClass::unite(spSemVal &lhs, SemVal const &rhs)
+spSemVal CharClass::unite(spSemVal &lhs, SemVal const &rhs)
 {
-    downCast<CharClass>(*lhs).d_chars += downCast<CharClass>(rhs).d_chars;
+    spSemVal ret;
+    std::set<char> lset = downCast<CharClass>(*lhs).set();
+    std::set<char> rset = downCast<CharClass>(rhs).set();
 
-    return lhs;
+    std::set<char> dest;
+    set_union(lset.begin(), lset.end(), rset.begin(), rset.end(),
+              inserter(dest, dest.begin()));
+
+    ret = spSemVal(new CharClass(dest));
+    return ret;
 }
