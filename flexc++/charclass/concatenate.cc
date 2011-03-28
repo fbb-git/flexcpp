@@ -6,5 +6,6 @@ spSemVal &CharClass::concatenate(spSemVal &left, SemVal const &right)
     CharClass const &rhs = downCast<CharClass>(right);
 
     lhs.d_chars += rhs.d_chars;
+
     return left;    
 }
