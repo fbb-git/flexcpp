@@ -46,7 +46,6 @@
 //  lowest precedence
 
 // precedence inside character classes:
-%left CC_PLUS CC_MINUS
 
 // operators in pattern: 
 //                      
@@ -54,6 +53,7 @@
 %left       '|'
 %left       CHARACTER '.' DECIMAL CC_NEGATED CC_START ESCAPE_SEQUENCE STRING 
             EOF_PATTERN
+%left CC_PLUS CC_MINUS
 %right      '*' '+' '?' '{' '('
 
 //  highest precedence
