@@ -200,7 +200,7 @@ $insert 4 ignoreBOLaction
     return ActionType__::ECHO_FIRST;        // no match, echo the 1st char
 }
 
-inline void \@Base::accept(size_t nChars)   // old name: less, now deprecated
+void \@Base::accept(size_t nChars)          // old name: less, now deprecated
 {
     if (nChars < d_matched.size())
     {
@@ -213,7 +213,7 @@ inline void \@Base::accept(size_t nChars)   // old name: less, now deprecated
   //    USE_LA_TAIL then d_LAtail[R] defines the LA tail.
   // Otherwise the current state's [F] value determines the LA tail. It may
   //    be 0, in which case d_matched is used as-is.
-inline size_t \@Base::lookAheadTail(int const *finac) const
+size_t \@Base::lookAheadTail(int const *finac) const
 {
     size_t ruleIdx = finac[R];
 
