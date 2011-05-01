@@ -1,0 +1,67 @@
+In this section we present the slightly more complex RE
+(tt((ab|ba)+/(ab+|b+a)+)), following the steps leading up to its DFA. The NFA
+representing the RE is provided in figure ref(FIG29):
+
+    figure(images/fig29)(The RE (ab|ba)+/(ab+|b+a)+)(FIG29)
+
+Like before, some edges have restricted use. From state 4 state
+1 can  immediately be reached, without further input; state 5 can be reached
+on a, state 6 can be reached on b. But edge 4l can only be used from state 6
+to return to state 6 on a tt(b) input character. Coming from state 5 edge 7u
+is immediately available, but 7u is not available coming from state
+6. Arriving at state 7 the lower edge (labeled 4r) can always be taken, but
+from its destination (state 4) only the right edges are possible (to either
+states 5 or 6.
+
+The corresponding state transition matrix is:
+
+center(
+    table(3)(lll)(
+    row(cells(3)(NFA transitions for tt((ab|ba)+/(ab+|b+a)+)))
+    rowline()
+    row(cell(State)cell(a)cell(b))
+    rowline()
+    row(cell(1) cell(2)         cell(3))
+    row(cell(2) cell()          cell(1,4))
+    row(cell(3) cell(1,4)       cell())
+    row(cell(4) cell(2,5)       cell(3,4l,6))
+    row(cell(4r)cell(5)         cell(4l,6))
+    row(cell(4l)cell()          cell(4l,6))
+    row(cell(5) cell()          cell(4r,5,7))
+    row(cell(6) cell(4r,7)      cell(4l,6))
+    row(cell(7) cell(5)         cell(4l,6))
+    row(cell(7u)cell()          cell(4r,5,7))
+    rowline()
+    )
+)
+
+Now the DFA can be constructed:
+
+center(
+    table(6)(llllll)(
+    row(cells(6)(DFA for (ab|ba)+/(ab+|b+a)+))
+    rowline()
+    row(cellsp(Row) cellsp(NFA states) cellsp(Acc) 
+        cellsp(a) cellsp(b) cell(Final))
+    rowline()
+    row(cell(0) cell(1)         cell( ) cell(1) cell(2)  cell())
+    row(cell(1) cell(2)         cell( ) cell()  cell(3) cell())
+    row(cell(2) cell(3)         cell( ) cell(3) cell()  cell())
+
+    row(cell(3) cell(1,4)       cell(0) cell(4) cell(5) cell())
+    row(cell(4) cell(2,5)       cell(1) cell( ) cell(6)  cell())
+    row(cell(5) cell(3,4l,6)    cell(1) cell(7) cell(8)  cell())
+
+    row(cell(6) cell(1,4,5,7)   cell(2) cell(4) cell(9)  cell(F))
+    row(cell(7) cell(1,4,7)     cell(2) cell(4) cell(5)  cell(F))
+    row(cell(8) cell(4l,6)      cell(+) cell(10) cell(8)  cell())
+
+    row(cell(9) cell(3,4r,5,6,7)cell(3) cell(6) cell(11)  cell(F))
+    row(cell(10) cell(4r,7)     cell(+) cell(12) cell(8)  cell(F))
+    row(cell(11) cell(4r,5,6,7) cell(+) cell(13) cell(11)  cell(F))
+
+    row(cell(12) cell(5)        cell(+) cell() cell(8)     cell())
+    row(cell(13) cell(4r,5,7)   cell(+) cell(12) cell(11)  cell(F))
+    rowline()
+    )
+)

@@ -1,0 +1,138 @@
+Consider the RE shown in figure ref(FIG30): tt((ab|a)+/(ba|a)+).
+
+    figure(images/fig30)(The RE (ab|a)+/(ba|a)+)(FIG30)
+
+Its state transition matrix looks like this:
+
+center(
+    table(3)(lll)(
+    row(cells(3)(NFA transitions for tt((ab|a)+/(ba|a)+)))
+    rowline()
+    row(cell(State)cell(a)cell(b))
+    rowline()
+    row(cell(1) cell(1,2,3)         cell())
+    row(cell(2) cell()          cell(1,3))
+    row(cell(3) cell(1,2,3,5)       cell(4))
+    row(cell(4) cell(3r,5)       cell())
+    row(cell(5) cell(3r,5)          cell(4))
+    rowline()
+    )
+)
+
+Now we're going to construct its DFA. We're doing this row by row. The first
+two rows are easy:
+
+center(
+    table(6)(llllll)(
+    row(cells(6)(DFA for (ab|a)+/(ba|a)+))
+    rowline()
+    row(cellsp(Row) cellsp(NFA states) cellsp(Acc) 
+        cellsp(a) cellsp(b) cell(Final))
+    rowline()
+    row(cell(0) cell(1)         cell( ) cell(1) cell()  cell())
+    row(cell(1) cell(1,2,3)     cell(0) cell(2) cell(3) cell())
+    rowline()
+    )
+)
+
+tt(DFA[2]) is constructed next: on tt(a) we reach one of the states 1, 2, 3 or
+5, and it can easily be verified that an tt(a) in that state keeps us in
+tt(DFA[2]). 
+
+What about tt(DFA[3])? A tt(b) in tt(DFA[1]) takes us to state 1, 3. or
+4. Since state 5 takes us to state 4 on a tt(b), the tt(b) transition of
+tt(DFA[3]) equals the tt(b) transition of tt(DFA[2]). 
+
+Adding tt(DFA[2]) and tt(DFA[3]) to our previous DFA results in:
+
+center(
+    table(6)(llllll)(
+    row(cells(6)(DFA for (ab|a)+/(ba|a)+))
+    rowline()
+    row(cellsp(Row) cellsp(NFA states) cellsp(Acc) 
+        cellsp(a) cellsp(b) cell(Final))
+    rowline()
+    row(cell(0) cell(1)         cell( )   cell(1) cell()  cell())
+    row(cell(1) cell(1,2,3)     cell(0)   cell(2) cell(3) cell())
+    row(cell(2) cell(1,2,3,5)   cell(1)   cell(2) cell(3) cell(F))
+    row(cell(3) cell(1,3,4)     cell(1/2) cell(2) cell(4) cell())
+    rowline()
+    )
+)
+
+Looking at the Acc entry of tt(DFA[3]) we see that our tail computation
+algorithm fails. A tt(b) character in tt(DFA[1]) takes us to tt(DFA[3]) with
+tt(|T| == 1), but an tt(a) character in tt(DFA[1]) followed by a tt(b)
+character takes us via tt(DFA[2]) to tt(DFA[3]) as well, implying tt(|T| ==
+3). Bad news!
+
+Before looking in detail at what's going on here let's first complete the
+DFA. We need two more rows:
+
+center(
+    table(6)(llllll)(
+    row(cells(6)(DFA for (ab|a)+/(ba|a)+))
+    rowline()
+    row(cellsp(Row) cellsp(NFA states) cellsp(Acc) 
+        cellsp(a) cellsp(b) cell(Final))
+    rowline()
+    row(cell(0) cell(1)         cell( )   cell(1) cell()  cell())
+    row(cell(1) cell(1,2,3)     cell(0)   cell(2) cell(3) cell())
+    row(cell(2) cell(1,2,3,5)   cell(1)   cell(2) cell(3) cell(F))
+    row(cell(3) cell(1,3,4)     cell(1/2) cell(2) cell(4) cell())
+    row(cell(4) cell(4)         cell(+)   cell(5) cell()  cell())
+    row(cell(5) cell(3r,5)      cell(+)   cell(5) cell(4) cell(F))
+    rowline()
+    )
+)
+
+Analyzing the problem it is soon clear that the problem is caused by the two
+rows having equal transitions. They cannot be merged (and merging wouldn't
+solve the problem either), because tt(DFA[1]) is not a final state while
+tt(DFA[2]) is.
+
+But we em(can) conclude something here. In tt(DFA[2]) when there is no
+continuation we are in a final state which can only be reached after
+recognizing a final tt(a). In that case, using the `shortest tail' guideline,
+tt(|T|) must clearly be equal to 1. This also holds true when multiple tt(a)
+characters are encountered. No matter how many tt(a) characters, once we're in
+tt(DFA[2]) we stay there and tt(|T|) correctly remains at 1. 
+
+An interesting event happens when reading tt(b) characters. Following a tt(a)
+characters and a tt(b) we reach tt(DFA[3]). As we've seen, an tt(a) there
+takes us back to tt(DFA[2]). But what about a tt(b)? In this case we can
+actually conclude that we em(must) have reached the tail. The only way to have
+two consecutive tt(b) characters is by reaching state 4, after which we can
+only stay in the tail. The transition from tt(DFA[3]) to tt(DFA[4]) on tt(b)
+illustrates this: tt(DFA[4]) is a tt(+) Acc state, as is tt(DFA[5]) and once
+we're in tt(DFA[4]) or tt(DFA[5]) there's no escape from the tail: they are
+only tt(+) Acc states. 
+
+So we em(know) that the em(first) time we reach state 4 tt(|T|) em(must) be
+1. All earlier patterns can be accomodated by the RE's head. Backtracking from
+tt(DFA[4]) it is clear that it can only be reached (for the first time) via a
+transition from tt(DFA[3]), which is our conflicting state. 
+
+But tt(DFA[3]) is conflicting em(only) because the algorithm itself has no
+knowledge about the `shortest tail' guidline, and so it considers tt(DFA[3])
+as representing states 1, 3, or 4. But it em(can't) be state 4, since
+tt(DFA[4]) represents state 4, and there's no transition from state 4 to state
+4. Consequently, although the DFA construction algorithm adds state 4 to
+tt(DFA[4]) this is em(semantically) impossible and thus it can be removed from
+the set of states represented by tt(DFA[4]). 
+
+Now tt(DFA[3]) consists of states 1 and 3, which corresponds to tt(|T| ==
+0). This removes the conflict.
+
+For now it is conjectured that conflicts caused by multiple Acc values for
+tt(DFA) rows can be solved by changing their Acc values to 0.
+
+This is no proof, of course. But here's another RE, having two conflicts which
+are solved by the above conjecture (which the reader may verify for
+him/herself):
+
+center(tt((abc|ab|a)+/(cba|ba|a)+))
+
+Several other, fairly complex REs can thus be handled by our algorithm, which
+is described in the next section.
+    

@@ -13,6 +13,9 @@ sect(Technical documentation (PIPETHROUGH(date -R)()))
 
     lsubsect(NOTATION)(Notation, Terminology)
     includefile(technical/notations)
+
+        lsubsubsect(FINACALGO)(The FinAc computing algorithm)
+        includefile(technical/finacalgo)
     
     lsubsect(PARSER)(The parser)
     includefile(technical/parser)
@@ -47,8 +50,24 @@ sect(Technical documentation (PIPETHROUGH(date -R)()))
     lsubsect(DFAROW)(The rows of the DFA: DFAROW)
     includefile(technical/dfarow)
 
-    lsubsect(LOOKAHEAD)(Patterns containing the lookahead operator)
-    includefile(technical/lookahead)
+    lsubsect(LOOKAHEAD)(Patterns containing the lookahead operator (LOP))
+
+        subsubsect(The LOP handling algorithm)
+        includefile(technical/lopalgo)
+
+        subsubsect(LOP handling: a more extensive example)
+        includefile(technical/abbaabba)
+
+        lsubsubsect(LOPPROBLEM)(LOP handling: a problem case)
+        includefile(technical/lopproblem)
+
+        subsubsect(The steps of the LOP handling algorithm)
+        includefile(technical/lopalgosteps)
+
+        subsubsect(Implementation)
+        includefile(technical/lookahead)
+
+    lsubsect(FINALSTATE)(Final states and ^xyz vs. xyz patterns)
 
     subsect(Generating Code)
     includefile(technical/gencode)

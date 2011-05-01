@@ -188,11 +188,13 @@ $insert 4 checkBOL
 
 $insert 4 ignoreBOLaction
 
+
     if (!d_sawEOF && atFinalState(d_finalInfo.finac))   // FINAL state reached
     {
         d_sawEOF = range == s_rangeOfEOF;
         return ActionType__::MATCH;
     }
+
 
     if (range == s_rangeOfEOF)
         return ActionType__::EOF_REACHED;

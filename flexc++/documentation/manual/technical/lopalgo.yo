@@ -1,0 +1,137 @@
+In this section we describe the algorithm that is used to analyze REs using
+the LOP. It would be nice if at some point we could prove its
+correctness. Some of its steps can be shown to be correct, but that doesn't
+hold true for other parts of the algorithm, which may or may not be correct.
+
+First we'll provide some examples showing how the RE can be analyzed,
+concentrating on various complexities encountered with LOPs. At the end a
+description of the algorithm is attempted. 
+
+Comment and suggestions for improvement are (more than) welcome!
+
+Consider the RE shown in figure ref(FIG18):
+
+    figure(images/fig18)(The RE (ab)+/(ab)+|a+)(FIG18)
+
+The labels em(3u) and em(3l) represent the upper and lower routes from state
+3. Coming from state 5 the only acceptable route is via em(a) to 4, coming
+from 6 an em(a) takes you back to state 6. This representation greatly
+simplifies the NFA, avoiding many empty transitions. When in state 3 paths
+continue back to state 1, or to states 4 and 6.
+
+Before constructing the DFA it's a good idea to concentrate on the transitions
+themselves, as this simplifies the DFA construction. The transitions from each
+NFA state are shown in the following table:
+
+center(
+    table(3)(lll)(
+    row(cells(3)(NFA transitions for tt((ab)+/(ab)+|a+)))
+    rowline()
+    row(cell(State)cell(a)cell(b))
+    rowline()
+    row(cell(1)cell(2)          cell())
+    row(cell(2)cell()           cell(1,3))
+    row(cell(3)cell(2,3l,4,6)   cell())
+    row(cell(3u)cell(4)         cell())
+    row(cell(3l)cell(3l,6)      cell())
+    row(cell(4)cell()           cell(3u,5))
+    row(cell(5)cell(4)          cell())
+    row(cell(6)cell(3l,6)       cell())
+    rowline()
+    )
+)
+
+From the above table the DFA can now easily be constructed. Starting at row 0,
+representing all states accessible from NFA state 1 determine the union of
+states reacheable from the current set on input characters tt(a) and
+tt(b). NFA states 3u and 3l are em(swallowed) by state 3 if these states are
+elements of a set also containing state 3. This holds true in general. Here is
+the initial DFA:
+
+center(
+    table(4)(llll)(
+    row(cells(4)(DFA construction (part I)))
+    rowline()
+    row(cell(Row)cell(NFA states)cell(a+htmlcommand(&nbsp;&nbsp;))cell(b))
+    rowline()
+    row(cell(0) cell(1)         cell(1)         cell() )
+    row(cell(1) cell(2)         cell()          cell(2) )
+    row(cell(2) cell(1,3)       cell(3)         cell() )
+    row(cell(3) cell(2,3l,4,6)  cell(4)         cell(5) )
+    row(cell(4) cell(3l,6)      cell(4)         cell() )
+    row(cell(5) cell(1,3,5)     cell(3)         cell() )
+    rowline()
+    )
+)
+
+While in states 1, 2 or 3 the LOP has not yet been passed and we remain in the
+em(head) (tt(H)) of the RE. A transition from state 3 to either states 4 or 6
+takes us into the RE's em(tail) (tt(T)). Following the DFA's transitions find
+the first row where state 3, the state corresponding to the LOP, is
+reached. This is DFA row 2 (tt(DFA[2])). This row receives a em(tail) length
+(tt(|T|)) of 0: no LA-tail has as yet been collected at this point. 
+
+Continuing from this row transitions may enter the LA-tail. So transitions
+from here into the tail states 4, 5 and 6 must increment the tail's
+size. While in the tail each transition increases tt(|T|). So, from tt(DFA[2])
+the transition on tt(a) to tt(DFA[3]) must increment tt(|T|) to 1. 
+
+From tt(DFA[3]) transitions are possible to tt(DFA[4]) (on tt(a)) and
+tt(DFA[5]) (on tt(b)). Concentrating on the latter: this is yet another
+possible step into the tail, so it is associated with tt(|T| == 2). However,
+it's also possible that we've retraced our steps here, and have in fact
+returned back to states 1 and 3. The continuation from tt(DFA[5]) on tt(a)
+implies that we've done so. 
+
+Why? This is because an additional rule applies to the em(tail) computation:
+its length must always be as short as possible. Having seen tt(ab) (taking us
+to tt(DFA[2])); then another tt(ab) (taking us to tt(DFA[5])); then
+em(another) tt(a) allows us to merge the second tt(ab) into the RE's head,
+considering the final (so far) tt(a) to be the first element of the tail
+again.  This is also shown by the transition count: moving from tt(DFA[5]) to
+tt(DFA[3]) takes us (correctly) back to tt(|T| == 1).
+
+When we're in tt(DFA[3]) an tt(a) rather than a tt(b) might be observed. This
+takes us to tt(DFA[4]). From here there's no going back to pre-3 states:
+tt(DFA[4]) consists of NFA states 3l and 6, and both are beyond state 3. We've
+reached the tt(a+) alternative of the RE's tail, and from now on em(any) tt(a)
+will increase tt(|T|). This allows us to formulate the general rule: em(once a
+DFA state is reached merely consisting of post-LOP states, there is no fixed
+tail-count, but every transition increases) tt(|T|). Using a tt(+) to indicate
+an incrementing DFA row we associate a tt(+) with tt(DFA[4]). 
+
+What happens if, e.g., in tt(DFA[4]) or tt(DFA[2]) a tt(b) is encountered?
+Then no further continuations are possible. What to do in those situations 
+depends on the set of NFA states defining the DFA rows. 
+
+tt(DFA[2])'s set of NFA states does not contain state 5 or 6, which are the
+RE's end states. In that case the RE hasn't been matched and the resulting 
+scanner must revert to some sort of recovery procedure (which is, by the way, 
+the em(echo first) procedure, which is not relevant for this
+section). tt(DFA[3], DFA[4]) and tt(DFA[5]), however, em(do) contain a final
+NFA state and are therefore considered em(Final) DFA states. When no more
+input characters can be matched and a final DFA state has been reached we flag
+em(success), and have matched the RE. tt(|T|) is as computed so far (either a
+fixed value or a variable (incrementing) value when we're in a tt(F) and tt(+)
+DFA state. 
+
+The following table shows the full tt(DFA), including em(accept counts)
+(tt(Acc)) and em(final state) (tt(Final)) indicators:
+
+center(
+    table(6)(llllll)(
+    row(cells(6)(DFA construction (part II)))
+    rowline()
+    row(cellsp(Row) cellsp(NFA states) cellsp(Acc) 
+        cellsp(a) cellsp(b) cell(Final))
+    rowline()
+    row(cell(0) cell(1)         cell( ) cell(1) cell()  cell())
+    row(cell(1) cell(2)         cell( ) cell()  cell(2) cell())
+    row(cell(2) cell(1,3)       cell(0) cell(3) cell()  cell())
+    row(cell(3) cell(2,3l,4,6)  cell(1) cell(4) cell(5) cell(F))
+    row(cell(4) cell(3l,6)      cell(+) cell(4) cell()  cell(F))
+    row(cell(5) cell(1,3,5)     cell(2) cell(3) cell()  cell(F))
+    rowline()
+    )
+)
+

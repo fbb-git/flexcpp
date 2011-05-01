@@ -92,7 +92,7 @@ The FinAc matrix is:
 itemization(
 it() Its first row indicates what may happen in state 3: if there's no
     continuation in this state (i.e., after recognizing a, b, d then rule 2 is 
-    matched, recognizing tt(abd)
+    matched, recognizing tt(abd)).
 
 it() Its second and third rows indicate what may happen in state 4. This
     state is reached after matching tt(abdd). While more d's are matched we
@@ -102,10 +102,10 @@ it() Its second and third rows indicate what may happen in state 4. This
     having a tail of 1     character is ignore.
 
 it() State 5's FinAc vector is tt({ 0,-2, 2, 1}). Here we've recognized 
-    tt(abd+deIt indicates that this is
+    tt(abd+de). It indicates that this is
     not a final state, and that the current accept count equals 2, and that
     this is an incrementing accept state.
-
+)
 
     All rows are final states for rule 0. The first row has an accept count of
 1 and is a final state if there's no continuation possible from the matching

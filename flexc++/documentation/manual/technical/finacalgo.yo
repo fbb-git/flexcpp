@@ -1,0 +1,17 @@
+enumeration(
+eit() While creating the NFA, count transitions from A0 (as shown in the NFA
+       diagrams above (when there are multiple routes: assign the highest
+        count to an NFA state)).  
+eit() After creating the DFA, start to follow transitions from the A0 rows.
+    itemization(
+    it() for DFA rows containing pre-A NFA states use the incremented A
+        count of the DFA row from which a transition to the current row was 
+        made;
+    it() If a Final (F) state is reached, while transiting from a row that's
+        also a Final state to the current row the  the A-count of the
+        originating DFA row is kept.
+    it() If a DFA row is reached merely consisting of post-A NFA states:
+        set this state's Accept count to `incrementing' and initialize it
+        to the highest Accept count of the NFA states defining this DFA row.
+    )
+)
