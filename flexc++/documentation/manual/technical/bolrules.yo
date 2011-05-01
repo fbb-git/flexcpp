@@ -1,0 +1,26 @@
+Patterns starting with tt(^) and not starting with tt(^) are different
+rules. A rules like tt(^a) and tt(a) can both be matched, depending on whether
+the tt(a) is found at begin of line (BOL) or not.
+
+Generally, when two DFA rows represent the final states of multiple REs (in
+the extreme case: rule 1 could be tt(a) and rule 2 could also be tt(a)) then
+the lexical scanner generator abandons rule 2 for that DFA row. 
+
+If one of the two rules start with a BOL-marker (tt(^)), however, then then
+DFA row can be used for both rules. This is the single exception to the rule
+that a DFA row can only be associated with a single RE's final state. 
+
+This affects the implementation of the DFA rows: it's only necessary to store
+two indices indicating the rules for which the DFA row represents a final
+state. 
+
+By default the indices are 0, indicating that the DFA row is not a final state
+for a RE. If only one index is unequal 0 (i.e., the first of the two indices)
+then the indicated rule is matched if the DFA row represents a final state. If
+both indices are unequal 0 then one of the indices (in the implementation: the
+second index) is the index of the RE starting at BOL. 
+
+When a regular expression has been matched at a DFA row having two rule
+indices then the runtime implementation checks it tt(d_atBOL) member to see if
+the matched RE started at BOL. If so, the BOL-RE is matched; otherwise the
+non-BOL rule is matched. See also section ref(RUNTIME).

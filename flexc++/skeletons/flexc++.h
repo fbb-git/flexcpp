@@ -22,7 +22,7 @@ $insert 8 lexFunctionDecl
 
 };
 
-inline void Scanner::preCode() 
+inline void \@::preCode() 
 {
     // optionally replace by your own code
 }

@@ -68,6 +68,7 @@ sect(Technical documentation (PIPETHROUGH(date -R)()))
         includefile(technical/lookahead)
 
     lsubsect(FINALSTATE)(Final states and ^xyz vs. xyz patterns)
+    includefile(technical/bolrules)
 
     subsect(Generating Code)
     includefile(technical/gencode)
@@ -81,7 +82,7 @@ sect(Technical documentation (PIPETHROUGH(date -R)()))
         lsubsubsect(SFINACINFO)(The Final-Accept info array)
         includefile(technical/finac)
 
-    subsect(Run-time operations)
+    lsubsect(RUNTIME)(Run-time operations)
     includefile(technical/runtime)
 
     subsect(Code generation)

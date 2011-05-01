@@ -20,12 +20,11 @@ The tt(DFARow)'s tt(unordered_map d_map) defines the relationship between an
 input character range (the map's key) and the row to transit to when a
 character from that input range has been observed. 
 
-The elements of the set tt(d_finalRule) contain the indices of the
-tt(Rules) for which this tt(DFARow) represents a final state. When the next 
-input symbol has no transition from this tt(DFARow) and this set is not empty
-then that rule is matched 
-
-quote(TODO: why is this a set? Can there be multiple rules in this set?)
+The elements of the pair tt(d_finalRule) contain the indices of the tt(Rules)
+for which this tt(DFARow) represents a final state. See section
+ref(FINALSTATE) for a description of the meaning of these indices. When the
+next input symbol has no transition from this tt(DFARow) and this set is not
+empty then that rule is matched
 
 Additional data members of a tt(DFARow) are important for handling patterns
 in which the lookahead (LA) operator (tt(/)) has been used. This process is

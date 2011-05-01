@@ -1,7 +1,9 @@
 The tt(lex) function works as follows:
 
 itemization(
-it() All its variables have been initialized at construction time.
+it() All its variables have been initialized at construction time. In
+    particular, initially the run-time variable tt(d_atBOL) is set to
+    tt(true). 
 it() In a loop (until EOF) characters are retrieved until a rule is matched
     (see below)
 it() Once a rule has been matched its matching code block is executed.
@@ -11,9 +13,10 @@ Processing characters:
 
 The next character from the input is obtained in tt(d_char). At the beginning
 of the character processing loop tt(d_char) must have received a value.
-At EOF ....
-        quote(TODO)
-    Otherwise, tt(d_range) is determined as tt(s_ranges[d_char]).
+At EOF the character is given the (pseudo) character value tt(AT_EOF). 
+
+Next, the associated range (tt(d_range)) is determined as
+tt(s_ranges[d_char]).
 
 The variable tt(d_dfaBase) points at the dfa currently used. The variable
 tt(d_dfaIdx) holds the index of the current row in the current dfa. 
@@ -28,6 +31,66 @@ The expression
     d_char = nextChar();
         )
     If equal -1 then there is no continuation for the current rule. 
+
+
+Depending on the current state and action several action types can be returned
+by the run-time function tt(actionType__):
+    itemization(
+    itt(CONTINUE): there exists a continuation from the current state/range
+            combination; 
+    itt(MATCH): a final state has been reached and there's no continuation
+            possible. In this case a rule has been matched
+    itt(ECHO1ST): no continuation is possible for the current range, and no
+            final state was reached, the input buffer contains one or more
+            characters.
+    itt(ECHOCHAR): no continuation is possible for the current range, no
+            final state was reached and the input buffer is still empty
+    itt(RETURN): input exhausted, tt(lex) returns 0.
+    )
+
+The following table shows how actions are determined by tt(actionType__). The
+function tt(actionType__) starts it tests at the first row of the table, and
+stops as soon as a condition hold true, returning the action type:
+    center(
+    table(3)(lll)(
+    row(cells(3)(Action determined by tt(actionType__)))
+    rowline()
+    row(cell()cells(2)(Input Character))
+    columnline(2)(2)
+    row(cellsp(Performed Test)cell(not AT_EOF)cell(AT_EOF))
+    rowline()
+    row(cell(transition OK)     cell(CONTINUE)    cell(CONTINUE))
+    row(cell(match found)       cell(MATCH)       cell(MATCH))
+    row(cell(buffer size)       cell(ECHO1ST)     cell(ECHO1ST))
+    row(cell(buffer empty)      cell(ECHOCHAR)    cell(RETURN))
+    rowline()
+    ))
+
+
+For each of the returned action types actions must be performed:
+
+itemization(
+    itt(CONTINUE:)   store the character in the buffer, set tt(d_atBOL) to
+        false, continue scanning
+    itt(MATCH:) push the just read char back to the input, copy the non-pseudo
+        character (i.e., other than AT_EOF) to the match-buffer, set
+        tt(d_atBOL) to tt(d_lastNL), execute the rule's actions, continue
+        scanning (but the action may end tt(lex)'s call).
+    itt(ECHO1ST:) echo the 1st char. of the buffer to stderr, set tt(d_atBOL)
+        to tt(true) if that character equals tt('\n'), otherwise to tt(false),
+        return all but the first character in the buffer back to the input,
+        continue scanning.
+    itt(ECHOCHAR:) echo the just read character to stderr, set tt(d_atBOL)
+        to tt(true) if that character equals tt('\n'), otherwise to tt(false),
+        continue scanning.
+    itt(RETURN:) the function tt(lex) returns with token value 0.
+)
+
+
+
+quote(TODO: Subsequent text of this section may require extensive
+editing/rewriting) 
+
 
 In em(all) case where the last two elements of the current  tt(s_dfa) row
 are unequal special actions must be performed. Using the last but one's value

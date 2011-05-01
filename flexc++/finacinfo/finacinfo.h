@@ -5,26 +5,28 @@
 
 class FinAcInfo
 {
+    enum Type       // the values are bit-flags
+    {   
+        INCREMENTING    = 1,
+        USES_LOP        = 2,
+        FINAL_STATE     = 4
+    };
+            
     friend std::ostream &operator<<(std::ostream &out, FinAcInfo const &la);
 
     size_t d_rule;  // which LA rule?
-    int d_accept;   // accept count at this point (-1: pre-A state)
-    int d_final;    // -1: undetermined Final state accept count
-                    // -2: not a Finalstate
-                    // >= 0:  Final state accept count
-    bool d_inc;     // incrementing A-state
-
+    Type d_info;  
     public:
-        enum Accept
-        {
-            PRE_A_STATE = -1,
-        };
-
-        enum Final
-        {
-            NOT_FINAL = -2,
-            FINAL,
-        };
+//        enum Accept
+//        {
+//            PRE_A_STATE = -1,
+//        };
+//
+//        enum Final
+//        {
+//            NOT_FINAL = -2,
+//            FINAL,
+//        };
 
         explicit FinAcInfo(size_t ruleIdx, Final final = NOT_FINAL);
         bool operator==(size_t rule) const;

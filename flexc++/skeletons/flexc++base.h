@@ -42,11 +42,12 @@ protected:
     enum class ActionType__
     {
         CONTINUE,               // transition succeeded, go on
-        ECHO_FIRST,             // no continuation from here
+        ECHO_CH,                // echo ch itself (d_buffer empty)
+        ECHO_FIRST,             // echo d_buffer[0], push back the rest
         EOF_REACHED,            // all input exhausted
         IGNORE_BOL,             // ignore a BOL range
         MATCH,                  // matched a rule
-        PUSH_FRONT,             // return all chars to the input
+        REREAD,                 // return all but the 1st char to the input
     };
 
 public:
@@ -78,9 +79,9 @@ private:
             Input(std::istream &iStream);
             size_t get();                   // the next range
             size_t lineNr() const;          
-            void push_front(size_t ch);     // push back 'ch' (if <= 0x100)
+            void reRead(size_t ch);     // push back 'ch' (if <= 0x100)
                                             // push back string from idx 'fm'
-            void push_front(std::string const &str, size_t fm = 1);
+            void reRead(std::string const &str, size_t fm = 1);
 
             void destroy();                 // delete dynamically allocated
                                             // d_in
@@ -112,6 +113,7 @@ private:
     VectorInt       d_LAtail;
     FinalInfo       d_finalInfo;    
 
+    std::vector<size_t> d_buffer;           // read buffer
     std::string     d_matched;              // matched characters
     bool            d_return;               // return after a rule's action 
     bool            d_more;                 // set to true by more()
@@ -227,12 +229,7 @@ inline std::ostream &\@Base::out()
 
 inline void \@Base::push(size_t ch)
 {
-    d_input.push_front(ch);
-}
-
-inline void \@Base::push(std::string const &str)
-{
-    d_input.push_front(str, 0);
+    d_input.reRead(ch);
 }
 
 inline void \@Base::setFilename(std::string const &name)
