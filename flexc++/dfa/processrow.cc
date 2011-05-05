@@ -15,7 +15,7 @@ void DFA::processRow(FinAcInfo &finAcInfo, size_t ruleIdx, DFA &dfa,
 
 
     DFARow &thisRow = dfa.d_row[rowIdx];
-    int final = finAcInfo.final();
+    bool final = finAcInfo.final();
 
         // got post A states for this rule: there are post-A states in this
         // DFA row for the current rule.
@@ -24,15 +24,17 @@ void DFA::processRow(FinAcInfo &finAcInfo, size_t ruleIdx, DFA &dfa,
         if (tailSize == -1)
             tailSize = 0;
 
-        if (final != FinAcInfo::NOT_FINAL)     // current state is Final state
+//        if (final != FinAcInfo::NOT_FINAL)     // current state is Final
+        if (final)
+
         {
 // cout << "IN Row " << rowIdx << " has final: " << final << endl;
 
-            if (final == FinAcInfo::FINAL)
+//            if (final == FinAcInfo::FINAL)
                     // keep the parent's final (if set) or use tailsteps
                 final = parentFinal >= 0 ? parentFinal : tailSize;
-            else 
-                final = min(final, tailSize);
+//            else 
+//                final = min(final, tailSize);
 
 // cout << "OUT Row " << rowIdx << " has final: " << final << endl;
 

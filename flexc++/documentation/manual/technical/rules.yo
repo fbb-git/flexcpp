@@ -25,6 +25,17 @@ respectively. A tt(Rule) stores any actions that must be executed when the
 rule has been matched in its tt(std::string d_action) (empty if there are no
 actions), see also section ref(BLOCKS).
 
+Rules starting with tt(^) can only be matched at em(begin-of-line)
+(BOL). The data member tt(d_bol) of such rules is set to tt(true).
+
+Rules that are matched in some DFA state are em(viable): such rules can be
+matched. The tt(d_viable) data member of such rules is set to tt(true). A
+rule's tt(d_viable) data member may be set to true at some point during a DFA
+construction, but during the DFA construction another (earlier) rule might
+be matched in the same DFA state. In those cases the viable state of the later
+rule is reset to tt(false). Once all DFAs have been constructed a simple visit
+of the tt(Rules) provides information about their viability.
+
 If a rule uses the lookahead (LA) operator (tt('/')) then all states before
 the LA operator can be accessed from the indices stored in the
 tt(d_preAstates) vector of tt(size_t) elements, and all states from the LA
@@ -41,5 +52,6 @@ With those rules the data member tt(d_LAdone) indicates that its
  link(LA propagation)(PROPAGATELA) (see section ref(DFAROW)) has been
 completed. These latter three members are not used with rules not using the LA
 operator.
+
 
 

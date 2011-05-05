@@ -3,7 +3,7 @@
 // called from processFinAcInfo
 
 void DFA::processRule(size_t ruleIdx, DFA &dfa, size_t rowIdx, 
-                      int parentFinal, int tailSize)
+                      bool parentFinal, int tailSize)
 {
     DFARow &row = dfa.d_row[rowIdx];
 

@@ -14,36 +14,29 @@ class FinAcInfo
             
     friend std::ostream &operator<<(std::ostream &out, FinAcInfo const &la);
 
-    size_t d_rule;  // which LA rule?
-    Type d_info;  
-    public:
-//        enum Accept
-//        {
-//            PRE_A_STATE = -1,
-//        };
-//
-//        enum Final
-//        {
-//            NOT_FINAL = -2,
-//            FINAL,
-//        };
+    size_t d_rule;      // which LA rule?
+    size_t d_info;      // see above: d_info holds `Type' values
+    size_t d_accept;    // accept count
 
-        explicit FinAcInfo(size_t ruleIdx, Final final = NOT_FINAL);
+    public:
+        explicit FinAcInfo(size_t ruleIdx, bool final = false);
         bool operator==(size_t rule) const;
 
         void setAccept(int accept);
         void setFinal(int final);
         void setInc();
-        bool inc() const;
-        int final() const;
-        int accept() const;
 
+        bool inc() const;
+        bool final() const;
+
+        size_t accept() const;
+        size_t info() const;
         size_t rule() const;
 };
         
 inline bool FinAcInfo::inc() const
 {
-    return d_inc;
+    return d_info & INCREMENTING;
 }
 
 inline size_t FinAcInfo::rule() const
@@ -51,14 +44,19 @@ inline size_t FinAcInfo::rule() const
     return d_rule;
 }
 
-inline int FinAcInfo::final() const
+inline bool FinAcInfo::final() const
 {
-    return d_final;
+    return d_info & FINAL_STATE;
 }
 
-inline int FinAcInfo::accept() const
+inline size_t FinAcInfo::accept() const
 {
     return d_accept;
+}
+
+inline size_t FinAcInfo::info() const
+{
+    return d_info;
 }
 
 inline void FinAcInfo::setAccept(int accept)
@@ -68,12 +66,12 @@ inline void FinAcInfo::setAccept(int accept)
 
 inline void FinAcInfo::setInc()
 {
-    d_inc = true;
+    d_info |= INCREMENTING;
 }
 
 inline void FinAcInfo::setFinal(int final)
 {
-    d_final = final;
+    d_info |= FINAL_STATE;
 }
 
 inline bool FinAcInfo::operator==(size_t ruleIdx) const

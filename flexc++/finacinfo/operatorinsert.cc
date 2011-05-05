@@ -5,12 +5,13 @@ ostream &operator<<(ostream &out, FinAcInfo const &la)
     if (la.d_accept >= 0)
     {
         out << "accept: " << la.d_accept;
-        if (la.d_final >= 0)
+        if (la.d_info & FinAcInfo::FINAL_STATE)
         {
-            out << ", final: " << la.d_final;
-            if (la.d_inc)
-                out << ", inc: " << boolalpha << la.d_inc << noboolalpha;
+            out << ", final";
+            if (la.d_info & FinAcInfo::INCREMENTING)
+                out << ", inc";
         }
+        out << ' ';
     }
     return out;
 

@@ -40,6 +40,7 @@ int find(string needle, list haystack)
     return idx;
 }
 
+/*
 void dependent(int idx)
 {
     list dependencies;
@@ -77,7 +78,53 @@ void checkALL()
             dependent(idx);
     }
 }
-            
+*/
+
+void childrenOf(int parentIdx)
+{
+    list parents;
+    int childIdx;
+    string parent;
+    string child;
+    string all;
+
+    parent = g_classes[parentIdx];      // starting class name (with ALL)
+
+    for (childIdx = g_nClasses; childIdx--; ) // visit all CLASS entries
+    {
+        child = g_classes[childIdx];
+        parents = strtok(g_classLines[childIdx], " \t\n");
+
+        if (find(parent, parents) != -1)      // found a depending class
+        {
+            all = child + "/ALL";
+
+            if (!exists(all))
+            {
+//                echo(OFF);
+                system("touch " + all);
+//                echo(USE_ECHO);
+
+                childrenOf(childIdx);
+            }
+        }
+    }
+}            
+
+void checkALL()
+{
+    int idx;
+    string all;
+
+    for (idx = 0; idx != g_nClasses; ++idx)
+    {
+        all = g_classes[idx] + "/ALL";
+
+        if (exists(all))                    // if the ALL file exists
+            childrenOf(idx);                // activate all its children
+    }
+}
+          
 void setClasses()
 {
     list candidate;

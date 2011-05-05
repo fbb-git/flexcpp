@@ -61,7 +61,7 @@ class DFA
                            size_t stateIdx, int steps);
 
         static void processRule(size_t rule, DFA &dfa, size_t rowIdx, 
-                                int parentFinal, int tailSize);
+                                bool parentFinal, int tailSize);
 
         static void processRow(FinAcInfo &finAcInfo, size_t rule, DFA &dfa, 
                                size_t rowIdx, int parentFinal, int tailSize);

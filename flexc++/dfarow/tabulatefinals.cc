@@ -12,7 +12,7 @@ void DFARow::tabulateFinals(Table &table) const
                 ++iter
     )
     {
-        if (iter->final() >= FinAcInfo::FINAL)
+        if (iter->final())
         {
             firstRule = iter;
             break;
@@ -30,7 +30,7 @@ void DFARow::tabulateFinals(Table &table) const
             ||
             firstRule->inc()
             || 
-            firstRule->final() == FinAcInfo::FINAL
+            firstRule->final()
         )
             out << firstRule->rule();
         else if (firstRule->final() > 0) 

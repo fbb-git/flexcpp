@@ -1,9 +1,8 @@
 #include "finacinfo.ih"
 
-FinAcInfo::FinAcInfo(size_t ruleIdx, Final final)
+FinAcInfo::FinAcInfo(size_t ruleIdx, bool final)
 :
     d_rule(ruleIdx),
-    d_accept(PRE_A_STATE),
-    d_final(final),
-    d_inc(false)
+    d_info(final ? FINAL_STATE : 0),
+    d_accept(0)
 {}

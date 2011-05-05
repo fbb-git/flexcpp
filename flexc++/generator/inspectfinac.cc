@@ -18,7 +18,7 @@ void Generator::inspectFinAc(FinAcInfo const &finac,
     (
         finalRule != -1
         ||
-        finac.final() == FinAcInfo::NOT_FINAL
+        !finac.final()
     )
         return;
     

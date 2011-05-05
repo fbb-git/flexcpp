@@ -21,7 +21,11 @@ class Rule
     Block d_block;              // action block
     bool d_LAdone;              // set to true when LA propagation has been 
                                 // completed (not relevant for rules not
-                                // using the LA operator
+                                // using the LA operator)
+    bool d_bol;                 // this rule is matched if starting at BOL
+    bool d_viable;              // this rule is viable, i.e., it can be
+                                // matched
+
                                     // for rules using LA operators:
     std::vector<size_t> d_preAstates;  // all pre-A states
     std::vector<size_t> d_postAstates; // all post-A states
@@ -46,8 +50,13 @@ class Rule
                       States const &states) const;
 
         void setLAdone();
-        bool LAdone() const;
+        void setViable(bool yes);
+        void setBol();
 
+        bool LAdone() const;
+        bool bol() const;
+        bool viable() const;
+        
     private:
         void setStates(std::vector<size_t> &prePostA, 
                         States const &states, size_t begin, size_t end);
@@ -60,9 +69,29 @@ inline void Rule::setLAdone()
     d_LAdone = true;
 }
 
+inline void Rule::setBol() 
+{
+    d_bol = true;
+}
+
+inline void Rule::setViable(bool yes) 
+{
+    d_viable = yes;
+}
+
 inline bool Rule::LAdone() const
 {
     return d_LAdone;
+}
+
+inline bool Rule::bol() const
+{
+    return d_bol;
+}
+
+inline bool Rule::viable() const
+{
+    return d_viable;
 }
 
 inline std::vector<size_t> const &Rule::preAstates() const
