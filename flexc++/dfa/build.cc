@@ -40,8 +40,10 @@ void DFA::build(std::string const &name, vector<size_t> const &active)
         cout << '\n';
 
     keepUniqueRows();
-    processFinAc();           // compute accept counts for LA rules
-    mergeFinalSet();
+
+    processFinAc();         // compute accept counts for LA rules
+//    mergeFinalSet();        // calls DFARow::mergeFinalSet for each row.
+
 }
 
 

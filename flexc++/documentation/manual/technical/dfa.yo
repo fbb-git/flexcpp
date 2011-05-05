@@ -1,5 +1,5 @@
-The conversion from NFA to DFA is the
-job of the class tt(DFA) object (cf. figure ref(DFAFIG))
+The conversion from NFA to DFA is the job of the class tt(DFA) object
+(cf. figure ref(DFAFIG))
 
     figure(images/dfa)(The DFA class data members)(DFAFIG)
 
@@ -93,5 +93,6 @@ Once the final DFA has been constructed the Final and Accept columns can be
 computed. This is performed by tt(processFinAc). The function tt(processFinAc)
 operates on a row of the DFA matrix. See section ref(DFAROW) for its
 description. 
+
 
 
