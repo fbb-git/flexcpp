@@ -6,44 +6,45 @@ The conversion from NFA to DFA is the job of the class tt(DFA) object
 The DFA needs uses the externally available rules, states and character ranges
 and builds a matrix, called tt(d_row). 
 
+Building the DFA from the NFA is the task of tt(DFA::build). 
+
 Each row of tt(d_row) defines a state in the DFA. The Rule numbers of the
 Rules defining a mini scanner received as tt(build)'s tt(vector<size_t>)
 parameter. 
 
-Initially the start states of these rules are stored in the DFA's
-tt(d_stateSet[0])sups(th) element (cf. figure ref(DFAFIG1)).
+tt(DFA::build) initially stores the start states of the rules of its mini
+scanner in its tt(d_stateSet[0])sups(th) element, which is a set (cf. figure
+ref(DFAFIG1)). This is done by tt(DFA::fillStartSet)
 
     figure(images/dfa1)(Creating the start states for row 0)(DFAFIG1)
 
 Next, the e-closure of this initial set of states is computed. The e-closure
-algorithm is described in ASU's dragon book (1986, figure 3.26), essentially
-adding all states that can be reached from each element in the current set of
-states on an empty transition. This computation is performed by
+algorithm is described in ASU's dragon book (1986, figure 3.26). It
+essentially adds all states that can be reached from each element in the
+current set of states on an empty transition. The e-closure is computed by
 tt(States::eClosure).
 
 At this point there is an element in tt(DFA::d_stateSet), but not yet an
 element in tt(DFA::d_row). By adding a tt(DFARow) (see section ref(DFAROW)) to
-tt(d_row) we associate a tt(DFARow) with a initial set of states. 
+tt(d_row) we associate a tt(DFARow) with an initial set of states. 
 
-Then, transitions from this row are probed for each of the character ranges
-(in tt(Ranges), see ref(RANGES)) by tt(DFARow::transitions). See section
-ref(DFAROW) for a description of this function. What it boils down to:
-tt(transitions) may add new elements to tt(d_stateSet), causing the iteration
-to continue until eventually there are as many tt(d_row) elements as there are
-tt(d_transitions) elements.
+Once the new DFA has been added to tt(d_row) its transitions are probed by
+tt(DFARow::transitions) (see section ref(DFAROW)).
+
+bf(DFA::keepUniqueRows)
 
     Having determined the transitions tt(build) proceeds to remove
-implied/identical rows calling tt(keepUniqueRows). This function visits each
-of the rows of the DFA, testing whether an existing row has the same
-transitions and final state information as the current row. `Same transitions'
-means that the transitions of the current (under inspection) row are present
-in an earlier row; `same final state information' means that the current row
-is a final state for the same rule(s) as an earlier row. In such situations
-the current row can be merged with the earlier row, keeping the earlier
-row. The (later) row can then be removed as transitions from it are identical
-to those from the earlier row. This may happen, as the NFA construction
-algorithm may define more empty edges than strictly necessary, sometimes
-resulting in additional rows in the DFAs. As an example, consider
+implied/identical rows, calling tt(DFA::keepUniqueRows). This latter function
+visits each of the rows of the DFA, testing whether an existing row has the
+same transitions and final state information as the current row. `Same
+transitions' means that the transitions of the current (under inspection) row
+are present in an earlier row; `same final state information' means that the
+current row is a final state for the same rule(s) as an earlier row. In such
+situations the current row can be merged with the earlier row, keeping the
+earlier row. The (later) row can then be removed as transitions from it are
+identical to those from the earlier row. This may happen, as the NFA
+construction algorithm may define more empty edges than strictly necessary,
+sometimes resulting in additional rows in the DFAs. As an example, consider
 the pattern tt((a|ab)+/(a|ba)+), producing the DFA
     center(
     table(5)(llrc)(
@@ -89,10 +90,34 @@ final DFA becomes:
     rowline()
     ))
 
-Once the final DFA has been constructed the Final and Accept columns can be
-computed. This is performed by tt(processFinAc). The function tt(processFinAc)
-operates on a row of the DFA matrix. See section ref(DFAROW) for its
-description. 
+bf(processFinAc)
+
+Once the final DFA has been constructed the Final and Accept information can
+be computed. This is performed by tt(DFA::processFinAc).
+This function visits all tt(FinAcInfo elements at row 0
+// 
+// It calls processFinAcInfo that picks up the rule nr from the FinAcInfo object
+// calling processRule to process the DFA for the current rule (for each rule
+// using the LA operator this happends only once).
+// 
+// processRule checks whether the requested rule is available at the current
+// DFA row and if so it calls processRule to set/inspect the FinAcInfo for the
+// given rule at the given DFA row.
+//
+// processRule calls processRow to do the actual work, calling inspect for
+// each transition.
+
+tt(processFinacInfo) for each of the 
+operates on a row of the DFA matrix. See section ref(DFAROW)
+for its description.
+
+
+
+
+
+
+
+
 
 
 

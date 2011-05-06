@@ -1,11 +1,13 @@
 #include "dfa.ih"
 
+// See technical/dfa.yo
+
 void DFA::build(std::string const &name, vector<size_t> const &active)    
 {
     d_ranges->clearUsed();
 
         // start with the initial states of all rules that are active in this 
-        // miniscanner (rule nrs provided by the active-vector) compute
+        // miniscanner (rule nrs provided by the active-vector) 
         // At this point: note which rules are LA rules and put these in the
         // rule-startset
     for_each(active.begin(), active.end(),              
@@ -42,6 +44,7 @@ void DFA::build(std::string const &name, vector<size_t> const &active)
     keepUniqueRows();
 
     processFinAc();         // compute accept counts for LA rules
+// TODO: ALSO LOOK AT THE SOURCE mergefinalset.cc
 //    mergeFinalSet();        // calls DFARow::mergeFinalSet for each row.
 
 }

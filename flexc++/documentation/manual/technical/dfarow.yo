@@ -5,11 +5,25 @@ transit to (see figure ref(DFAROWFIG)).
 
 The tt(DFARow)'s row specification itself is defined by a set of states
 accessible as tt(d_stateSets[d_thisIdx]). The values of this set define the
-(e-closure of the) states of this row.
+(e-closure of the) states of this row (see section ref(DFA)).
 
 Each of these states may have a transition to another state when observing a
 character from one of the input ranges. These states to transit to in turn
 define a set of states. 
+
+
+
+
+Then, transitions from this row are probed for each of the character ranges
+(in tt(Ranges), see ref(RANGES)) by tt(DFARow::transitions). See section
+ref(DFAROW) for a description of this function. What it boils down to:
+tt(transitions) may add new elements to tt(d_stateSet), causing the iteration
+to continue until eventually there are as many tt(d_row) elements as there are
+tt(d_transitions) elements.
+
+
+
+
 
 If this set of states to transit to is not yet present in the tt(DFA) then a
 new row is added to the DFA. Adding rows is the task of tt(DFA::build),
@@ -23,8 +37,8 @@ character from that input range has been observed.
 The elements of the pair tt(d_finalRule) contain the indices of the tt(Rules)
 for which this tt(DFARow) represents a final state. See section
 ref(FINALSTATE) for a description of the meaning of these indices. When the
-next input symbol has no transition from this tt(DFARow) and this set is not
-empty then that rule is matched
+next input symbol has no transition from this tt(DFARow) and this pair has
+values unequal zero then that rule has been matched.
 
 Additional data members of a tt(DFARow) are important for handling patterns
 in which the lookahead (LA) operator (tt(/)) has been used. This process is

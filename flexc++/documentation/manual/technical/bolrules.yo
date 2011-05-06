@@ -15,10 +15,14 @@ two indices indicating the rules for which the DFA row represents a final
 state. 
 
 By default the indices are 0, indicating that the DFA row is not a final state
-for a RE. If only one index is unequal 0 (i.e., the first of the two indices)
-then the indicated rule is matched if the DFA row represents a final state. If
-both indices are unequal 0 then one of the indices (in the implementation: the
-second index) is the index of the RE starting at BOL. 
+for an RE. At most two rules can be used in a particular state: a rule 
+starting at BOL and a rule not starting at BOL. The tt(first) element of the
+pair indicates the index for rules starting at BOL, the tt(second) element of
+the pair is used for rules not starting at BOL. When a DFA state could be the
+final state for multiple rules of the same type (BOL or not BOL), then the
+rule having the lowest index is used. By default the elements of the
+tt(d_finalRule) pair are initialized to tt(UINT_MAX), indicating that this row
+does not represent a final state.
 
 When a regular expression has been matched at a DFA row having two rule
 indices then the runtime implementation checks it tt(d_atBOL) member to see if

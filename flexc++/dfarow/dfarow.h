@@ -21,14 +21,13 @@ class States;
 class DFARow
 {
     typedef std::pair<size_t, size_t> Pair;
-
     typedef std::set<size_t> StateSet;
     typedef std::vector<StateSet> StateSetVector;   // a set of states per
                                                     // input symbol
 
     std::vector<FinAcInfo> d_finAcInfo;         // info about LA-using rules
 
-    std::set<size_t> d_finalRule;               // Final state for which 
+    std::pair<size_t, size_t> d_finalRule;      // Final state for which 
                                                 // rule(s)?
 
     typedef std::unordered_map<size_t, size_t>::value_type MapValue;
@@ -38,10 +37,11 @@ class DFARow
 
     States *d_states;                       // using ptrs so no op= needs
                                             // to be implemented
-    StateSetVector *d_stateSets;            // For each DFArow it contains the
-                                            // indices of the States used for
-                                            // that DFArow.
-    Rules const *d_rules;
+
+    StateSetVector *d_stateSets;            // For each DFArow the indices 
+                                            // of the States used for this
+                                            // DFArow.
+    Rules *d_rules;
     Ranges *d_ranges;
 
     size_t d_thisIdx;                       // row index in the DFA
@@ -51,7 +51,7 @@ class DFARow
         DFARow() = default;
 
         DFARow(
-            Rules const &rules,
+            Rules &rules,
                 // all States
             States &states,            
                 // sets of state nrs defining the rows of the DFA
@@ -67,7 +67,7 @@ class DFARow
 
         void tabulate(FBB::Table &table) const;
 
-        std::set<size_t> const &final() const;
+        std::pair<size_t, size_t> const &final() const;
 
         std::unordered_map<size_t, size_t> const &map() const;
         size_t size() const;
@@ -85,6 +85,8 @@ class DFARow
 
         static void mergeFinalSet(DFARow &dfaRow);
     private:
+        void updateViable(size_t &destIdx, size_t ruleIdx); // in setfinal.cc
+
         void tabulateTransitions(FBB::Table &table) const;
         void tabulateFinals(FBB::Table &table) const;
         void tabulateAccepts(FBB::Table &table) const;
@@ -129,7 +131,7 @@ inline std::vector<FinAcInfo> const &DFARow::finAcInfos() const
     return d_finAcInfo;
 }
 
-inline std::set<size_t> const &DFARow::final() const
+inline std::pair<size_t, size_t> const &DFARow::final() const
 {
     return d_finalRule;
 }
@@ -137,11 +139,6 @@ inline std::set<size_t> const &DFARow::final() const
 inline size_t DFARow::size() const
 {
     return d_ranges->size();
-}
-
-inline void DFARow::setFinal(size_t ruleIdx)
-{
-    d_finalRule.insert(ruleIdx);
 }
 
 FBB::Table &operator<<(FBB::Table& out, DFARow const &row);
