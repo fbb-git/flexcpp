@@ -2,9 +2,9 @@
 
 // called from processFinAc
 
-void DFA::processFinAcInfo(FinAcInfo const &finAcInfo, DFA &dfa)
+void DFA::processFinAcElement(FinAc const &finAc, DFA &dfa)
 {
-    int ruleIdx = finAcInfo.rule();
+    int ruleIdx = finAc.rule();
 
     Rule &rule = (*dfa.d_rules)[ruleIdx];
 

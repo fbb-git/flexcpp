@@ -19,8 +19,8 @@ startconditions textval
 fstreaminfo     
 scanner         textval     fstreaminfo block
 ranges          textval     states
-finacinfo  
-dfarow          ranges      rules       finacinfo
+finac  
+dfarow          ranges      rules       finac
 dfa             dfarow
 dfas            dfa
 options         

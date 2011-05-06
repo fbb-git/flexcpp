@@ -4,18 +4,18 @@
 
 // #include <stdexcept>     not needed, see the next comment 
 
-void DFA::processRow(FinAcInfo &finAcInfo, size_t ruleIdx, DFA &dfa,
+void DFA::processRow(FinAc &finAc, size_t ruleIdx, DFA &dfa,
                      size_t rowIdx, int parentFinal, int tailSize)
 {
 // This cannot happen, see the test for ruleIdx in processRule:
 //
-//    if (finAcInfo.rule() != ruleIdx)  // stop if finAcInfo is not for this
+//    if (finAc.rule() != ruleIdx)  // stop if finAc is not for this
 //                                      //rule
 //        throw logic_error("DFA::processRow: rule mismatch");
 
 
     DFARow &thisRow = dfa.d_row[rowIdx];
-    bool final = finAcInfo.final();
+    bool final = finAc.final();
 
         // got post A states for this rule: there are post-A states in this
         // DFA row for the current rule.
@@ -24,13 +24,13 @@ void DFA::processRow(FinAcInfo &finAcInfo, size_t ruleIdx, DFA &dfa,
         if (tailSize == -1)
             tailSize = 0;
 
-//        if (final != FinAcInfo::NOT_FINAL)     // current state is Final
+//        if (final != FinAc::NOT_FINAL)     // current state is Final
         if (final)
 
         {
 // cout << "IN Row " << rowIdx << " has final: " << final << endl;
 
-//            if (final == FinAcInfo::FINAL)
+//            if (final == FinAc::FINAL)
                     // keep the parent's final (if set) or use tailsteps
                 final = parentFinal >= 0 ? parentFinal : tailSize;
 //            else 
@@ -38,7 +38,7 @@ void DFA::processRow(FinAcInfo &finAcInfo, size_t ruleIdx, DFA &dfa,
 
 // cout << "OUT Row " << rowIdx << " has final: " << final << endl;
 
-            finAcInfo.setFinal(final);
+            finAc.setFinal(final);
         }
 
             // if the row only has post-A states and inc hasn't yet been set
@@ -46,9 +46,9 @@ void DFA::processRow(FinAcInfo &finAcInfo, size_t ruleIdx, DFA &dfa,
             // count of the post-A states belonging to this rule.
         if (not thisRow.hasPreAstates(ruleIdx, rowIdx))
         {
-            finAcInfo.setAccept(dfa.maxAccept(rowIdx));
-            finAcInfo.setInc();
-// cerr << "  row " << rowIdx << ": pure post-A FinAcInfo: " << finAcInfo <<
+            finAc.setAccept(dfa.maxAccept(rowIdx));
+            finAc.setInc();
+// cerr << "  row " << rowIdx << ": pure post-A FinAc: " << finAc <<
 // '\n'; 
 
     // this is not a FIXED final value. Is it necessary to set final's value?
@@ -62,15 +62,15 @@ void DFA::processRow(FinAcInfo &finAcInfo, size_t ruleIdx, DFA &dfa,
     // variable anyway. So it looks as though we merely need to know that this
     // is a possible Final state, in which case the current A value is the
     // Final's |TAIL|
-//            if (final != FinAcInfo::NOT_FINAL)
-//                finAcInfo.setFinal(finAcInfo.accept());
+//            if (final != FinAc::NOT_FINAL)
+//                finAc.setFinal(finAc.accept());
             return;
         }
 
-        finAcInfo.setAccept(tailSize);
+        finAc.setAccept(tailSize);
         ++tailSize;
 //    cerr << "  row " << rowIdx << 
-//            ": mixed pre/post-A FinAcInfo " << finAcInfo << '\n';
+//            ": mixed pre/post-A FinAc " << finAc << '\n';
     }
 
         // finally do the transitions: transit to other rows of the DFA and

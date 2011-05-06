@@ -55,7 +55,7 @@ class DFA
         size_t available(DFARow const &nextRow);
         void processFinAc();
 
-        static void processFinAcInfo(FinAcInfo const &finAcInfo, DFA &dfa);
+        static void processFinAcElement(FinAc const &finAc, DFA &dfa);
 
         void propagateLAsteps(std::vector<bool> &visited,
                            size_t stateIdx, int steps);
@@ -63,7 +63,7 @@ class DFA
         static void processRule(size_t rule, DFA &dfa, size_t rowIdx, 
                                 bool parentFinal, int tailSize);
 
-        static void processRow(FinAcInfo &finAcInfo, size_t rule, DFA &dfa, 
+        static void processRow(FinAc &finAc, size_t rule, DFA &dfa, 
                                size_t rowIdx, int parentFinal, int tailSize);
 
         static void inspect(std::pair<size_t, size_t> const &transit, 

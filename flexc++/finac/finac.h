@@ -1,9 +1,9 @@
-#ifndef INCLUDED_FINACINFO_
-#define INCLUDED_FINACINFO_
+#ifndef INCLUDED_FINAC_
+#define INCLUDED_FINAC_
 
 #include <iosfwd>
 
-class FinAcInfo
+class FinAc
 {
     enum Type       // the values are bit-flags
     {   
@@ -12,14 +12,14 @@ class FinAcInfo
         FINAL_STATE     = 4
     };
             
-    friend std::ostream &operator<<(std::ostream &out, FinAcInfo const &la);
+    friend std::ostream &operator<<(std::ostream &out, FinAc const &la);
 
     size_t d_rule;      // which LA rule?
     size_t d_info;      // see above: d_info holds `Type' values
     size_t d_accept;    // accept count
 
     public:
-        explicit FinAcInfo(size_t ruleIdx, bool final = false);
+        explicit FinAc(size_t ruleIdx, bool final = false);
         bool operator==(size_t rule) const;
 
         void setAccept(int accept);
@@ -34,51 +34,51 @@ class FinAcInfo
         size_t rule() const;
 };
         
-inline bool FinAcInfo::inc() const
+inline bool FinAc::inc() const
 {
     return d_info & INCREMENTING;
 }
 
-inline size_t FinAcInfo::rule() const
+inline size_t FinAc::rule() const
 {
     return d_rule;
 }
 
-inline bool FinAcInfo::final() const
+inline bool FinAc::final() const
 {
     return d_info & FINAL_STATE;
 }
 
-inline size_t FinAcInfo::accept() const
+inline size_t FinAc::accept() const
 {
     return d_accept;
 }
 
-inline size_t FinAcInfo::info() const
+inline size_t FinAc::info() const
 {
     return d_info;
 }
 
-inline void FinAcInfo::setAccept(int accept)
+inline void FinAc::setAccept(int accept)
 {
     d_accept = accept;
 }
 
-inline void FinAcInfo::setInc()
+inline void FinAc::setInc()
 {
     d_info |= INCREMENTING;
 }
 
-inline void FinAcInfo::setFinal(int final)
+inline void FinAc::setFinal(int final)
 {
     d_info |= FINAL_STATE;
 }
 
-inline bool FinAcInfo::operator==(size_t ruleIdx) const
+inline bool FinAc::operator==(size_t ruleIdx) const
 {
     return d_rule == ruleIdx;
 }
 
-std::ostream &operator<<(std::ostream &out, FinAcInfo const &la);
+std::ostream &operator<<(std::ostream &out, FinAc const &la);
 
 #endif

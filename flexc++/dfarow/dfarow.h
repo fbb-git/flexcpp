@@ -9,7 +9,7 @@
 #include "../ranges/ranges.h"
 #include "../rules/rules.h"
 #include "../states/states.h"
-#include "../finacinfo/finacinfo.h"
+#include "../finac/finac.h"
 
 namespace FBB
 {
@@ -25,7 +25,7 @@ class DFARow
     typedef std::vector<StateSet> StateSetVector;   // a set of states per
                                                     // input symbol
 
-    std::vector<FinAcInfo> d_finAcInfo;         // info about LA-using rules
+    std::vector<FinAc> d_finAc;         // info about LA-using rules
 
     std::pair<size_t, size_t> d_finalRule;      // Final state for which 
                                                 // rule(s)?
@@ -73,8 +73,8 @@ class DFARow
         size_t size() const;
 
         std::string const &action(size_t idx) const;  // only for FINAL rows
-        std::vector<FinAcInfo> &finAcInfos();
-        std::vector<FinAcInfo> const &finAcInfos() const;
+        std::vector<FinAc> &finAcs();
+        std::vector<FinAc> const &finAcs() const;
              
         bool hasPostAstates(size_t ruleIdx, size_t rowIdx) const;
         bool hasPreAstates(size_t ruleIdx, size_t rowIdx) const;
@@ -105,11 +105,11 @@ class DFARow
 
         static void translate(MapValue &transition, 
                                             std::vector<size_t> const &xlat);
-        static void insertFinAcInfo(size_t idx, DFARow &thisRow);
+        static void insertFinAc(size_t idx, DFARow &thisRow);
         static bool stateOfRule(size_t state, 
                                 std::vector<size_t> const &haystack);
         static void mergeFinal(size_t rule, 
-                               std::vector<FinAcInfo> &finAcInfo);
+                               std::vector<FinAc> &finAc);
 
         static bool sameTransits(
             std::unordered_map<size_t, size_t> const &lhs,
@@ -121,14 +121,14 @@ inline std::unordered_map<size_t, size_t> const &DFARow::map() const
     return d_map;
 }
 
-inline std::vector<FinAcInfo> &DFARow::finAcInfos()
+inline std::vector<FinAc> &DFARow::finAcs()
 {
-    return d_finAcInfo;
+    return d_finAc;
 }
 
-inline std::vector<FinAcInfo> const &DFARow::finAcInfos() const
+inline std::vector<FinAc> const &DFARow::finAcs() const
 {
-    return d_finAcInfo;
+    return d_finAc;
 }
 
 inline std::pair<size_t, size_t> const &DFARow::final() const

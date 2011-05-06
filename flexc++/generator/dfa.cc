@@ -1,7 +1,7 @@
 #include "generator.ih"
 
 void Generator::dfa(DFAs::Pair const &dfaPair, ostream &out, 
-                    vector<FinAcInfo> &finAcs, 
+                    vector<FinAc> &finAcs, 
                     vector<string> &startStates,
                     vector<size_t> &dfaOffsets)
 {

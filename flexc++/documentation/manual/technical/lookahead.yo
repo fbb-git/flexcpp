@@ -1,12 +1,12 @@
-The vector tt(DFARow::d_finAcInfo) contains tt(FinAcInfo) objects. Their data
+The vector tt(DFARow::d_finAcInfo) contains tt(FinAc) objects. Their data
 members are shown in figure ref(DFAROWFIG). They are:
     itemization(
     itt(d_rule): the index of the rule using the LA operator;
     itt(d_accept): the em(accept count) at this point (the accept count is the
         number of transitions after observing the LA operator, it is
-        tt(FinAcInfo::PRE_A_STATE) for pre-accept tt(DFARow)s);
+        tt(FinAc::PRE_A_STATE) for pre-accept tt(DFARow)s);
     itt(d_final): the final state accept count. It equals
-        tt(FinAcInfo::FINAL_NOT_SET) if undetermined; tt(FinAcInfo::NOT_FINAL)
+        tt(FinAc::FINAL_NOT_SET) if undetermined; tt(FinAc::NOT_FINAL)
         if this is not a Final state; when tt(d_final >= 0) it represents the
         Final state accept count;
     itt(d_inc): a tt(bool) which is tt(true) if this is an em(incrementing
@@ -16,15 +16,15 @@ members are shown in figure ref(DFAROWFIG). They are:
         the label(description below)(INCREMENTINGACCEPT).
     )
 
-quote(TO DO: Why is there a vector of tt(FinAcInfo) elements in a tt(DFARow)?)
+quote(TO DO: Why is there a vector of tt(FinAc) elements in a tt(DFARow)?)
 
 subsubsect(processFinAc)
 
-The tt(FinAcInfo) elements are updated by tt(DFA::processFinAc). It visits all
-tt(FinAcInfo) objects of the tt(DFARow) and calls tt(DFA::processFinAcInfo)
+The tt(FinAc) elements are updated by tt(DFA::processFinAc). It visits all
+tt(FinAc) objects of the tt(DFARow) and calls tt(DFA::processFinAc)
 for each of them.
 
-Each rule is only processed once by tt(processsFinAcInfo). So if the same rule
+Each rule is only processed once by tt(processsFinAc). So if the same rule
 is used in, e.g., different mini scanners or in different DFA states, then the
 first occurrence results in it being processed. Since a rule, rather than a
 DFA row, defines how its HEAD and TAIL are computed there is no need to
@@ -75,11 +75,11 @@ Once the LA steps have been determined tt(DFA::processRule) is called to
             current row was a Final state for the current rule (initially: not
             final)); and the number of accept steps so far (initially -1).
         it() At the DFA row currently under inspection it tries to locate the
-            provided rule index in the DFA row's FinAcInfo objects. 
+            provided rule index in the DFA row's FinAc objects. 
         it() If found then that rule is an LA rule that is active in the
             current DFA row. It then calls tt(DFA::processRow) to determine
             that row's accept and final count for that particular rule,
-            passing it the rule's tt(FinAcInfo); rule index; DFA row index;
+            passing it the rule's tt(FinAc); rule index; DFA row index;
             parent final status and current tail size.
         )
 
@@ -87,7 +87,7 @@ subsubsect(DFA::processRow)
 
 tt(DFA::processRow) is called from tt(DFA::processRule) and implements the
     core actions of the tail-size computation algorithm. It consists of two
-    parts. In part I the rule's tt(FinAcInfo) of the current row is updated,
+    parts. In part I the rule's tt(FinAc) of the current row is updated,
     in part II the rows to which the current row may transit to are inspected.
 
     itemization(
@@ -114,7 +114,7 @@ tt(DFA::processRow) is called from tt(DFA::processRule) and implements the
     reached merely representing post-A NFA states |TAIL| must be incremented
     at each transition as there are no backlinks to DFA rows representing
     pre-A NFA states. If the set of tt(State)s defining a DFA row does not
-    contain pre-A states the accept count of the current tt(FinAcInfo) is set
+    contain pre-A states the accept count of the current tt(FinAc) is set
     to incrementing, with an initial value equal to the maximum possible
     accept count when reaching this row for the first time. As a case in
     point, consider the regex and NFA shown in figure ref(INCACCEPTFIG).

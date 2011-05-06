@@ -12,5 +12,5 @@ DFARow::DFARow(Rules &rules,
     d_thisIdx(thisRowIdx)
 {
     for_each(stateSets[thisRowIdx].begin(), stateSets[thisRowIdx].end(),
-             FnWrap::unary(insertFinAcInfo, *this));
+             FnWrap::unary(insertFinAc, *this));
 }

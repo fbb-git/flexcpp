@@ -67,7 +67,7 @@ DFA for INITIAL
     // The fourth value indicates an incrementing (1) tail:
     // the tail length is incremented at each subsequent transition
     //
-    FinAcInfo const ScannerBase::s_finAcInfo[] =
+    FinAc const ScannerBase::s_finAcInfo[] =
     {
            R  F  T  I
          { 3, 0,-1, 0},

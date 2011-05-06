@@ -40,7 +40,7 @@ is saved in the vector tt(dfaOffsets);
 figure ref(DFAROWFIG)). This latter function writes the vector of DFA rows to
 transit to (i.e., rows relative to the current DFA's start row, so not the
 actual rows in tt(s_dfa)) for each of the character ranges (calling
-tt(Generator::dfaTransitions)), followed by the row's tt(FinAcInfo) data: a
+tt(Generator::dfaTransitions)), followed by the row's tt(FinAc) data: a
 value != -1 indicates the rule for which this row is a FINAL state.
 
 The row's final two values are begin and end indices in s_accept, holding

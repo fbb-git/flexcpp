@@ -3,11 +3,11 @@
 
 void DFARow::tabulateFinals(Table &table) const
 {
-    auto firstRule = d_finAcInfo.end();
+    auto firstRule = d_finAc.end();
 
     for         // find the first final rule
     (
-        auto iter = d_finAcInfo.begin(), end = d_finAcInfo.end(); 
+        auto iter = d_finAc.begin(), end = d_finAc.end(); 
             iter != end;
                 ++iter
     )
@@ -19,7 +19,7 @@ void DFARow::tabulateFinals(Table &table) const
         }
     }
 
-    if (firstRule == d_finAcInfo.end())
+    if (firstRule == d_finAc.end())
         table << ' ';
     else
     {

@@ -1,4 +1,4 @@
-#include "finacinfo.h"
+#include "finac.h"
 
 #include <ostream>
 #include <iomanip>

@@ -44,7 +44,7 @@ class Generator
     mutable std::string d_line;
     mutable std::string d_field;
 
-    mutable std::vector<FinAcInfo> d_finacs;    // determined at dfas()
+    mutable std::vector<FinAc> d_finacs;    // determined at dfas()
     mutable std::vector<size_t> d_dfaIndices;   // determined at dfas()
 
     static Map s_insert;
@@ -104,24 +104,24 @@ class Generator
 
         size_t dfaCols() const;
 
-        static void outFinAc(FinAcInfo const &finac, std::ostream &out,
+        static void outFinAc(FinAc const &finac, std::ostream &out,
                                                                 size_t &idx);
         static size_t addFinal(DFARow const &row, std::vector<size_t> &final);
         static void outFinal(size_t rule, std::ostream &out, size_t &count);
 
         static void dfa(DFAs::Pair const &dfaPair, std::ostream &out, 
-                        std::vector<FinAcInfo> &finAcs,
+                        std::vector<FinAc> &finAcs,
                         std::vector<std::string> &startStates,
                         std::vector<size_t> &dfaOffsets);
         static void dfaRow(DFARow const &row, size_t &index, 
                         std::ostream &out, 
-                        std::vector<FinAcInfo> &finAcs);    
+                        std::vector<FinAc> &finAcs);    
         static void dfaTransitions(DFARow const &row, std::ostream &out);
         static void dfaFinAcs(DFARow const &row, std::ostream &out,
-                              std::vector<FinAcInfo> &finAcs);
+                              std::vector<FinAc> &finAcs);
 
-        static void inspectFinAc(FinAcInfo const &finac,
-                                 std::vector<FinAcInfo> &finAcs,
+        static void inspectFinAc(FinAc const &finac,
+                                 std::vector<FinAc> &finAcs,
                                  int &finalRule);
 
         static std::string outDFAbase(std::string const &startState,

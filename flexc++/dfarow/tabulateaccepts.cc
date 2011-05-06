@@ -5,7 +5,7 @@ void DFARow::tabulateAccepts(Table &table) const
     ostringstream out;
     for 
     (
-        auto iter = d_finAcInfo.begin(), end = d_finAcInfo.end(); 
+        auto iter = d_finAc.begin(), end = d_finAc.end(); 
             iter != end;
                 ++iter
     )

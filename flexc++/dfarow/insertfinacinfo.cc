@@ -2,7 +2,7 @@
 
 // called from the DFARow constructor
 
-void DFARow::insertFinAcInfo(size_t stateIdx, DFARow &thisRow)
+void DFARow::insertFinAc(size_t stateIdx, DFARow &thisRow)
 {
     State const &state = (*thisRow.d_states)[stateIdx];
 
@@ -14,17 +14,17 @@ void DFARow::insertFinAcInfo(size_t stateIdx, DFARow &thisRow)
                                 // get the rule information at thisRule
     Rule const &thisRule = (*thisRow.d_rules)[rule];
 
-    auto finAcIter = find(thisRow.d_finAcInfo.begin(), 
-                       thisRow.d_finAcInfo.end(), rule);
+    auto finAcIter = find(thisRow.d_finAc.begin(), 
+                       thisRow.d_finAc.end(), rule);
 
-    if (finAcIter == thisRow.d_finAcInfo.end())     // rule not yet entered
+    if (finAcIter == thisRow.d_finAc.end())     // rule not yet entered
     {
-        thisRow.d_finAcInfo.push_back(FinAcInfo(rule));
-        finAcIter = thisRow.d_finAcInfo.begin() + 
-                                            thisRow.d_finAcInfo.size() - 1;
+        thisRow.d_finAc.push_back(FinAc(rule));
+        finAcIter = thisRow.d_finAc.begin() + 
+                                            thisRow.d_finAc.size() - 1;
     }
 
-    // finAcIter now points at the FinAcInfo record for the current DFA row
+    // finAcIter now points at the FinAc record for the current DFA row
 
     size_t acceptState = thisRule.accept();
     if (acceptState == stateIdx)
