@@ -18,7 +18,9 @@ class Rule
 
     size_t d_start;             // index in States
     size_t d_final;             // index in States
+
     Block d_block;              // action block
+
     bool d_LAdone;              // set to true when LA propagation has been 
                                 // completed (not relevant for rules not
                                 // using the LA operator)

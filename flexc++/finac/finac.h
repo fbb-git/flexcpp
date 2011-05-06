@@ -23,8 +23,9 @@ class FinAc
         bool operator==(size_t rule) const;
 
         void setAccept(int accept);
-        void setFinal(int final);
+        void setFinal();
         void setInc();
+        void setLOP();
 
         bool inc() const;
         bool final() const;
@@ -69,7 +70,12 @@ inline void FinAc::setInc()
     d_info |= INCREMENTING;
 }
 
-inline void FinAc::setFinal(int final)
+inline void FinAc::setLOP()
+{
+    d_info |= USES_LOP;
+}
+
+inline void FinAc::setFinal()
 {
     d_info |= FINAL_STATE;
 }
