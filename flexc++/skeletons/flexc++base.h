@@ -61,7 +61,7 @@ private:
 
     struct FinalInfo
     {
-        int const *finac;
+        int const *acccount;
         size_t matchLen;
     };
 
@@ -108,7 +108,7 @@ private:
     size_t          d_state;
     int             d_nextState;
     std::ostream   *d_out;
-    bool            d_sawEOF;               // saw EOF: ignore finac
+    bool            d_sawEOF;               // saw EOF: ignore acccount
     Input           d_input;
     VectorInt       d_LAtail;
     FinalInfo       d_finalInfo;    
@@ -207,9 +207,9 @@ private:
     void pushStream(std::string const &name,
                       std::istream *streamPtr, bool closeAtPop);
     void incLAtails();
-    void determineMatchedSize(int const *finac);
-    size_t lookAheadTail(int const *finac) const;
-    static bool atFinalState(int const *finac);
+    void determineMatchedSize(int const *acccount);
+    size_t lookAheadTail(int const *acccount) const;
+    static bool atFinalState(int const *acccount);
 };
 
 inline void \@Base::Input::destroy()
@@ -247,9 +247,9 @@ inline void \@Base::switchStreams(std::istream &iStream)
     switchStreams(iStream, *d_out);
 }
 
-inline bool \@Base::atFinalState(int const *finac)
+inline bool \@Base::atFinalState(int const *acccount)
 {
-    return finac && finac[F] != NO_FINAL_STATE;
+    return acccount && acccount[F] != NO_FINAL_STATE;
 }
 
 inline std::string const &\@Base::matched() const

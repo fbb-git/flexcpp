@@ -25,6 +25,7 @@ class DFA
     std::vector<StateSet> d_stateSet;    
 
     bool d_verbose;
+    bool d_sawACCEPT;           // used by computeAccCount
 
     public:
         DFA() = default;        // only used for vector-resizing operations
@@ -40,11 +41,12 @@ class DFA
         size_t size() const;
 
     private:
+        void keepViableAccCounts();
         void mergeFinalSet();
 
-        int maxAccept(size_t rowIdx) const;
-        static bool cmpAccept(size_t left, size_t right, 
-                                                        States const &states);
+//        int maxAccept(size_t rowIdx) const;
+//        static bool cmpAccept(size_t left, size_t right, 
+//                                                        States const &states);
 
         static void translate(DFARow &row, std::vector<size_t> const &unique);
 
@@ -52,23 +54,25 @@ class DFA
         void inspectRows(std::vector<size_t> &unique);
         void shrinkDFA(std::vector<size_t> &unique);
 
+        void inspectAccCount(AccCount &accCount, size_t count);
+
         size_t available(DFARow const &nextRow);
-        void processFinAc();
 
-        static void processFinAcElement(FinAc const &finAc, DFA &dfa);
+        void computeAccCounts();
+        static void computeAccCount(AccCount &accCount, DFA &dfa);
 
-        void propagateLAsteps(std::vector<bool> &visited,
-                           size_t stateIdx, int steps);
+//        void propagateLAsteps(std::vector<bool> &visited,
+//                           size_t stateIdx, int steps);
 
-        static void processRule(size_t rule, DFA &dfa, size_t rowIdx, 
-                                bool parentFinal, int tailSize);
+//        static void processRule(size_t rule, DFA &dfa, size_t rowIdx, 
+//                                bool parentFinal, int tailSize);
 
-        static void processRow(FinAc &finAc, size_t rule, DFA &dfa, 
-                               size_t rowIdx, int parentFinal, int tailSize);
+//        static void processRow(FinAc &finAc, size_t rule, DFA &dfa, 
+//                               size_t rowIdx, int parentFinal, int tailSize);
 
-        static void inspect(std::pair<size_t, size_t> const &transit, 
-                            size_t oldRow, size_t rule, DFA &dfa,
-                            int parentFinal, int tailSize);
+//        static void inspect(std::pair<size_t, size_t> const &transit, 
+//                            size_t oldRow, size_t rule, DFA &dfa,
+//                            int parentFinal, int tailSize);
  
         static void fillStartSet(size_t idx, Rules const &rules, 
                                              StateSet &start);

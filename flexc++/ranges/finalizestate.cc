@@ -10,11 +10,11 @@ void Ranges::finalizeState(State &state, Ranges &obj)
             charsetToRanges(state.data(), obj.d_ranges);
         break;
 
-        case State::BOL:
-            if (obj.d_bol == 0)
-                obj.d_bol = obj.d_subsets++;
-            state.setType(obj.d_bol);
-        break;
+//        case State::BOL:
+//            if (obj.d_bol == 0)
+//                obj.d_bol = obj.d_subsets++;
+//            state.setType(obj.d_bol);
+//        break;
 
         case State::EOF__:
             state.setType(obj.d_eof);

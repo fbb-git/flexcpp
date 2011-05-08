@@ -49,7 +49,7 @@
 
 // operators in pattern: 
 //                      
-%nonassoc   '^' '/'
+%nonassoc   '/'
 %left       '|'
 %left       CHARACTER '.' DECIMAL CC_NEGATED CC_START ESCAPE_SEQUENCE STRING 
             EOF_PATTERN

@@ -1,0 +1,10 @@
+#include "logic.h"
+
+Logic::Logic(bool value)
+:
+    d_value(value)
+{}
+
+
+using namespace std;
+

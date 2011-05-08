@@ -5,6 +5,7 @@ void Parser::modePattern()
     d_scanner.reset(Scanner::pattern);
     s_lastMsg.clear();
     d_parentheses = 0;
-    d_accept = 0;
+    d_usesLOP = false;
+    d_BOLpattern = false;
     d_patternTokenCount = 0;
 }

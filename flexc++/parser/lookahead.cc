@@ -4,7 +4,7 @@ spSemVal Parser::lookahead(SemVal &left, SemVal &right)
 {
     d_doError = false;
 
-    if (d_accept != 0)
+    if (d_usesLOP)
     {
         emsg << "multiple trailing contexts ('/', '$') not supported" << endl;
         ERROR();
@@ -18,11 +18,15 @@ spSemVal Parser::lookahead(SemVal &left, SemVal &right)
     }
 
     d_doError = true;
+    d_usesLOP = true;
 
     PatternVal &lval = SemVal::downCast<PatternVal>(left);
+    setFlags(lval.begin(), State::PRE);
 
-    d_accept = lval.end();
-    d_states[d_accept].setAccept(0);
+    PatternVal &rval = SemVal::downCast<PatternVal>(right);
+    setFlags(rval.begin(), State::POST);
+
+    d_states[rval.begin()].setFlag(State::ACCEPT);
 
     spSemVal ret = PatternVal::concatenate(d_states, left, right);
 

@@ -5,6 +5,8 @@
 
 #include <vector>
 
+#include "../state/state.h"
+
 // $insert baseclass
 #include "parserbase.h"
 // $insert scanner.h
@@ -31,10 +33,12 @@ class Parser: public ParserBase
     std::string d_msg;
     bool d_printTokens;
     size_t d_parentheses;
-    size_t d_accept;                // index in States of ACCEPT state (or 0)
+
+    bool d_usesLOP;
+    bool d_BOLpattern;              // true for patterns starting at BOL
 
     size_t d_patternTokenCount;
-    bool d_doError;                // use the error() function at ERROR
+    bool d_doError;                 // use the error() function at ERRORs
 
     Rules &d_rules;
     States &d_states;
@@ -48,6 +52,8 @@ class Parser: public ParserBase
         int parse();
 
     private:
+
+        void setFlags(size_t idx, State::Flag flag);    // called fm lookahead
 
 //        std::ostream &lineMsg(int deltaLineNo) const;
         void modePattern();

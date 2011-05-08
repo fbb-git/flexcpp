@@ -37,8 +37,7 @@ class Rule
 
     public:
         Rule() = default;               // for vector operations by Rules
-        Rule(States const &states,
-             Pair fstfin, size_t accept, Block const &block,
+        Rule(States const &states, bool bol, Pair fstfin, Block const &block,
              std::string const &source, size_t lineNr);
 
         size_t startState() const;

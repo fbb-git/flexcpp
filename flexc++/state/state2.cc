@@ -3,6 +3,6 @@
 State::State(size_t type)
 :
     d_type(type),
-    d_accept(-1),
+    d_flag(NO_LOP),
     d_rule(-1)
 {}

@@ -5,6 +5,8 @@
 #include <bobcat/fnwrap>
 
 #include "../states/states.h"
+#include "../logic/logic.h"
+#include "../patternval/patternval.ih"
 
 using namespace std;
 using namespace FBB;

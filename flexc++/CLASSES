@@ -3,26 +3,34 @@
 #   depending classes, using icmbuild
 
 semval          
+
 textval         semval
 statedata       semval
+logic           semval
+decimal         semval
+startconditions textval
+charrange       
+charclass       charrange   semval
 statestring     statedata
 state           statestring
 states          state
-charrange       
-charclass       charrange   semval
-block           
-rule            states      block
-rules           rule        startcondition
+ranges          textval     states
+acccount        state
 patternval      charclass   states
-decimal         semval
-startconditions textval
+block           
 fstreaminfo     
 scanner         textval     fstreaminfo block
-ranges          textval     states
-finac  
-dfarow          ranges      rules       finac
+rule            states      block
+rules           rule        startcondition
+dfarow          ranges      rules       acccount
 dfa             dfarow
 dfas            dfa
 options         
-parser          rules  patternval  decimal  scanner options
-generator       dfas        options
+parser          rules  patternval  decimal  scanner options state logic
+
+# generator       dfas        options
+
+
+
+
+

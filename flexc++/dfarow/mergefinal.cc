@@ -1,7 +1,7 @@
-#include "dfarow.ih"
-
-void DFARow::mergeFinal(size_t rule, vector<FinAc> &finAc)
-{
-    if (find(finAc.begin(), finAc.end(), rule) == finAc.end())
-        finAc.push_back(FinAc(rule, true));
-}
+// #include "dfarow.ih"
+// 
+// void DFARow::mergeFinal(size_t rule, vector<AccCount> &accCount)
+// {
+//     if (find(accCount.begin(), accCount.end(), rule) == accCount.end())
+//         accCount.push_back(AccCount(rule, true));
+// }

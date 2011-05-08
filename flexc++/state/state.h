@@ -10,15 +10,15 @@ class State
 {
     typedef char Alphabet;
 
-    std::shared_ptr<StateData> d_data;
-
-    size_t d_type;      // below UNDETERMINED__: a simple character or 
-                        // character range value
-
-    int d_accept;       // -1: pre-accept state
-    int d_rule;         // -1: not an LA rule, rule index irrelevant
-
     public:
+        enum Flag
+        {
+            NO_LOP,     // state not belonging to a LOP-rule (default)
+            ACCEPT,     // the accept-state of a LOP-rule
+            PRE,        // a pre-accept state of a LOP-rule
+            POST        // a post-accept state of a LOP-rule
+        };
+
         enum Type       // values in the Alphabet range are simple characters
         {
             UNDETERMINED__ =  1 << (8 * sizeof(Alphabet)),
@@ -26,10 +26,19 @@ class State
             FINAL,
             CHARSET,                            // string contents of [ ... ]
 
-            BOL,                                // begin of line and
-            EOF__                               // EOF become special chars
+//            BOL,                                // begin of line and
+            EOF__                               // EOF becomes a special char
         };                                      // see README
-        
+
+    private:
+        std::shared_ptr<StateData> d_data;
+
+        size_t d_type;      // if less than UNDETERMINED__: a simple character
+                            // or character range value
+        Flag d_flag;        // a Flags-value
+        size_t d_rule;      // the rule this state refers to
+
+    public:        
         State();
         explicit State(size_t type);
         State(size_t type, StateData *data);  // State will own the data
@@ -40,7 +49,7 @@ class State
         static State factory(unsigned char ch, size_t next1);
 
         StateData &data();
-        size_t next1() const;
+        size_t next1() const;           // 0: no next state(s)
         size_t next2() const;
 
         StateData const &data() const;
@@ -49,10 +58,10 @@ class State
         size_t type() const;            // if < UNDETERMINED__ it's a char
 
         void setRule(size_t idx);       // set the state's rule index
-        int rule() const;
+        size_t rule() const;
 
-        void setAccept(int value);      // Set a State's Accept type
-        int accept() const;             // return Accept value
+        void setFlag(Flag value);       // Set a State's flag
+        Flag flag() const; 
 
 //        void nextAccept();      
 
@@ -96,19 +105,19 @@ inline void State::setRule(size_t index)
     d_rule = index;
 }
 
-inline int State::rule() const
+inline size_t State::rule() const
 {
     return d_rule;
 }
 
-inline int State::accept() const
+inline State::Flag State::flag() const
 {
-    return d_accept;
+    return d_flag;
 }
 
-inline void State::setAccept(int value)
+inline void State::setFlag(Flag value)
 {
-    d_accept = value;
+    d_flag = value;
 }
 
 std::ostream &operator<<(std::ostream &out, State const &state);

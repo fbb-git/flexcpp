@@ -95,7 +95,7 @@ bf(processFinAc)
 Once the final DFA has been constructed the Final and Accept information can
 be computed. This is performed by tt(DFA::processFinAc).
 This function visits all tt(FinAc) elements at row 0, passing them to
-tt(DFA::processFinAcElement) 
+tt(DFA::processFinAcElement). The tt(FinAc) elements 
 
 // 
 // It calls processFinAc that picks up the rule nr from the FinAc object

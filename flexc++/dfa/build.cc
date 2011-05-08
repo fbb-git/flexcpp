@@ -43,7 +43,10 @@ void DFA::build(std::string const &name, vector<size_t> const &active)
 
     keepUniqueRows();
 
-    processFinAc();         // compute accept counts for LA rules
+    keepViableAccCounts();
+                            
+    computeAccCounts();         // compute accept counts for LA rules
+
 // TODO: ALSO LOOK AT THE SOURCE mergefinalset.cc
 //    mergeFinalSet();        // calls DFARow::mergeFinalSet for each row.
 

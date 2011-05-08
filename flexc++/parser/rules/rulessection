@@ -64,18 +64,29 @@ miniscanner:
     }
 ;
 
-
-rule:
-    pattern_ws BLOCK
+opt_bol:
+    '^'
     {
-        d_rules.add(SemVal::downCast<PatternVal>(*$1).pair(), 
-                    d_accept, d_scanner.block());
+        $$ = Logic::value(true);
     }
 |
-    pattern_ws
     {
-        d_rules.add(SemVal::downCast<PatternVal>(*$1).pair(), d_accept, 
-                    Block());
+        $$ = Logic::value(false);
+    }
+;
+
+rule:
+    opt_bol pattern_ws BLOCK
+    {
+        d_rules.add($1, $2, 
+//        d_rules.add(SemVal::downCast<PatternVal>(*$1).pair(), 
+                    d_scanner.block());
+    }
+|
+    opt_bol pattern_ws
+    {
+        d_rules.add($1, $2, Block());
+//        d_rules.add(SemVal::downCast<PatternVal>(*$1).pair(), Block());
     }
 ;
 

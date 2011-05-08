@@ -11,7 +11,7 @@ spSemVal PatternVal::concatenate(States &states, SemVal &left, SemVal &right)
     PatternVal &lhs = downCast<PatternVal>(left);
     PatternVal &rhs = downCast<PatternVal>(right);
 
-    states[rhs.begin()].setAccept(states[lhs.end()].accept());
+//    states[rhs.begin()].setAccept(states[lhs.end()].accept());
 
     states[lhs.end()] = states[rhs.begin()];
     states.collect(rhs.begin());

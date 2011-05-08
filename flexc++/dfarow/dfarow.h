@@ -9,7 +9,7 @@
 #include "../ranges/ranges.h"
 #include "../rules/rules.h"
 #include "../states/states.h"
-#include "../finac/finac.h"
+#include "../acccount/acccount.h"
 
 namespace FBB
 {
@@ -25,7 +25,7 @@ class DFARow
     typedef std::vector<StateSet> StateSetVector;   // a set of states per
                                                     // input symbol
 
-    std::vector<FinAc> d_finAc;                 // info about LA-using rules
+    std::vector<AccCount> d_accCount;       // acc counts for LOP rules
 
     std::pair<size_t, size_t> d_finalRule;      // Final state for which 
                                                 // rule(s)?
@@ -70,20 +70,22 @@ class DFARow
         std::pair<size_t, size_t> const &final() const;
 
         std::unordered_map<size_t, size_t> const &map() const;
-        size_t size() const;
+        size_t size() const;            // the number of character-ranges
 
         std::string const &action(size_t idx) const;  // only for FINAL rows
-        std::vector<FinAc> &finAcs();
-        std::vector<FinAc> const &finAcs() const;
+        std::vector<AccCount> &accCounts();
+        std::vector<AccCount> const &accCounts() const;
              
-        bool hasPostAstates(size_t ruleIdx, size_t rowIdx) const;
-        bool hasPreAstates(size_t ruleIdx, size_t rowIdx) const;
+//        bool hasPostAstates(size_t ruleIdx, size_t rowIdx) const;
+//        bool hasPreAstates(size_t ruleIdx, size_t rowIdx) const;
 
         bool operator==(DFARow const &rhs) const;
 
         void uniqueMap(std::vector<size_t> const &xlat);
 
         static void mergeFinalSet(DFARow &dfaRow);
+        static void keepViableAccCounts(DFARow &dfaRow);
+
     private:
         void updateViable(size_t &destIdx, size_t ruleIdx); // in setfinal.cc
 
@@ -105,11 +107,11 @@ class DFARow
 
         static void translate(MapValue &transition, 
                                             std::vector<size_t> const &xlat);
-        static void insertFinAc(size_t idx, DFARow &thisRow);
+        static void probeAccCount(size_t stateIdx, DFARow &thisRow);
         static bool stateOfRule(size_t state, 
                                 std::vector<size_t> const &haystack);
-        static void mergeFinal(size_t rule, 
-                               std::vector<FinAc> &finAc);
+//        static void mergeFinal(size_t rule, 
+//                               std::vector<AccCount> &accCount);
 
         static bool sameTransits(
             std::unordered_map<size_t, size_t> const &lhs,
@@ -121,14 +123,14 @@ inline std::unordered_map<size_t, size_t> const &DFARow::map() const
     return d_map;
 }
 
-inline std::vector<FinAc> &DFARow::finAcs()
+inline std::vector<AccCount> &DFARow::accCounts()
 {
-    return d_finAc;
+    return d_accCount;
 }
 
-inline std::vector<FinAc> const &DFARow::finAcs() const
+inline std::vector<AccCount> const &DFARow::accCounts() const
 {
-    return d_finAc;
+    return d_accCount;
 }
 
 inline std::pair<size_t, size_t> const &DFARow::final() const

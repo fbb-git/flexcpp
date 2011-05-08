@@ -47,11 +47,11 @@ pattern:
     {
         $$ = PatternVal::concatenate(d_states, *$1, *$2);
     }
-|
-    '^' pattern
-    {
-        $$ = PatternVal::bol(d_states, *$2);
-    }
+//|
+//    '^' pattern
+//    {
+//        $$ = PatternVal::bol(d_states, $2);
+//    }
 |
     pattern '|' pattern
     {

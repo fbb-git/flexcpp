@@ -70,15 +70,15 @@ try
     DFAs dfas(rules, states, ranges);
         dfas.build();
 
-//    if (arg.option('V'))
-//        cout << "RANGES:\n" << ranges << "\n"
-//                "\n"
-//                "RULES:\n" << rules << "\n"
-//                "\n"
-//                "STATES:\n" << states << "\n"
-//                "\n" <<
-//                dfas << '\n';
-//
+    if (arg.option('V'))
+        cout << "RANGES:\n" << ranges << "\n"
+                "\n"
+                "RULES:\n" << rules << "\n"
+                "\n"
+                "STATES:\n" << states << "\n"
+                "\n" <<
+                dfas << '\n';
+
 //    Generator generator(rules, ranges, dfas);
 //
 //        generator.lexSource();

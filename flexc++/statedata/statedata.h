@@ -7,7 +7,7 @@
 
 class StateData: public SemVal
 {
-    size_t d_next1;
+    size_t d_next1;         // 0: no next state(s)
     size_t d_next2;
 
     public:
