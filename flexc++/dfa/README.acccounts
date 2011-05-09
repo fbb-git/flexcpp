@@ -1,20 +1,4 @@
-#include "dfa.ih"
-
-// called from computeAccCounts
-
-// Using the AccCount element 
-// the receiving the rule nr from the AccCount object
-// calling processRule to process the DFA for the current rule (for each rule
-// using the LA operator this happends only once).
-// 
-// processRule checks whether the requested rule is available at the current
-// DFA row and if so it calls processRule to set/inspect the AccCount for the
-// given rule at the given DFA row.
-//
-// processRule calls processRow to do the actual work, calling inspect for
-// each transition.
-
-/*
+See also inspectacccount.cc
 
 Flag Logic (all alternatives are ignored if PROCESSED has been set as well).
 
@@ -81,29 +65,4 @@ or POST
  16  0        0      0          0    	-       no action (does not occur)
     ----------------------------------------------------------------------
 
-*///////////////////////////////////////////////////////////////////////
-    
-void DFA::computeAccCount(AccCount &accCount, DFA &dfa)
-{
-    dfa.d_sawACCEPT = false;
-
-                             //   count,
-    dfa.inspectAccCount(accCount, 0);
-
-
-
-//    int ruleIdx = accCount.rule();
-//
-//    Rule &rule = (*dfa.d_rules)[ruleIdx];
-//
-//    if (rule.LAdone())
-//        return;
-
-//    vector<bool> visited(dfa.d_states->size());
-//    dfa.propagateLAsteps(visited, rule.accept(), 0);
-
-                           // rowIdx, parentFinal,  tailSize          
-//    processRule(ruleIdx, dfa, 0,      false,        -1);
-//    rule.setLAdone();
-}
 

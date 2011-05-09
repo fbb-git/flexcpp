@@ -6,7 +6,6 @@ semval
 
 textval         semval
 statedata       semval
-logic           semval
 decimal         semval
 startconditions textval
 charrange       
@@ -26,7 +25,7 @@ dfarow          ranges      rules       acccount
 dfa             dfarow
 dfas            dfa
 options         
-parser          rules  patternval  decimal  scanner options state logic
+parser          rules  patternval  decimal  scanner options state
 
 # generator       dfas        options
 

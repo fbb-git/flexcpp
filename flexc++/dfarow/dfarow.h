@@ -30,7 +30,6 @@ class DFARow
     std::pair<size_t, size_t> d_finalRule;      // Final state for which 
                                                 // rule(s)?
 
-    typedef std::unordered_map<size_t, size_t>::value_type MapValue;
     std::unordered_map<size_t, size_t> d_map;   // Relate input symbols (key) 
                                                 // to the row to transit to 
                                                 // (value)
@@ -48,6 +47,8 @@ class DFARow
     size_t d_nRanges;
 
     public:
+        typedef std::unordered_map<size_t, size_t>::value_type MapValue;
+
         DFARow() = default;
 
         DFARow(

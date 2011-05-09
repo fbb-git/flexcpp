@@ -36,8 +36,7 @@ class Rules
 
         Rules(States &states);
 //        void add(Pair const &pair, Block const &block);
-        void add(spSemVal const &logic, spSemVal const &patternVal, 
-                 Block const &block);
+        void add(bool bol, spSemVal const &patternVal, Block const &block);
 
         Rule const &operator[](size_t idx) const;
         Rule &operator[](size_t idx);

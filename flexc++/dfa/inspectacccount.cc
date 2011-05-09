@@ -1,6 +1,6 @@
 #include "dfa.ih"
 
-void DFA::inspectAccCount(AccCount &accCount, size_t count)
+bool DFA::inspectAccCount(AccCount &accCount, size_t count)
 {
     AccCount::Type type = accCount.type();
 
@@ -9,17 +9,21 @@ void DFA::inspectAccCount(AccCount &accCount, size_t count)
     if (!d_sawACCEPT && (type & AccCount::ACCEPT))
     {
         if (type & AccCount::PROCESSED)         // already handled this entry
-            return;
+            return false;
 
-        accCount.setAccCount(count);
+        accCount.setAccCount(0);
         accCount.addFlag(AccCount::PROCESSED | AccCount::COUNT);
         d_sawACCEPT = true;
-        ++count;                                // prepare for the next count
+
+cout << "Initialized AccCount\n";
+        
     }
     else if (not (type & (AccCount::PRE | AccCount::ACCEPT)))
     {
         if (type & AccCount::PROCESSED)         // already handled this entry
-            return;
+            return false;
+
+cout << "Incrementing Acc Count from here\n";
 
         accCount.addFlag(AccCount::PROCESSED | AccCount::INCREMENTING);
     }
@@ -34,14 +38,17 @@ void DFA::inspectAccCount(AccCount &accCount, size_t count)
             }
         }
         else if (type & AccCount::PROCESSED)    // already handled this entry
-            return;
+            return false;
 
-        accCount.setAccCount(count);
+cout << "Incrementing previous count to " << count + 1 << '\n';
+
+        accCount.setAccCount(count + 1);
         accCount.addFlag(AccCount::PROCESSED | AccCount::COUNT);
-        ++count;
     }
+else
+cout << "No action by inspectAccCount\n";
 
-
+    return true;
 }
 
 

@@ -9,7 +9,6 @@
 #include "../options/options.h"
 #include "../state/state.h"
 #include "../patternval/patternval.h"
-#include "../logic/logic.h"
 #include "../decimal/decimal.h"
 #include "../textval/textval.h"
 #include "../rules/rules.h"

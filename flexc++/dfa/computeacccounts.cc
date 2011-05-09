@@ -6,5 +6,5 @@
 void DFA::computeAccCounts()
 {
     for_each(d_row[0].accCounts().begin(), d_row[0].accCounts().end(),
-             FnWrap::unary(computeAccCount, *this));
+             FnWrap::unary(visitAccCount, *this));
 }

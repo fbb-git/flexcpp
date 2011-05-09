@@ -25,7 +25,9 @@ class DFA
     std::vector<StateSet> d_stateSet;    
 
     bool d_verbose;
-    bool d_sawACCEPT;           // used by computeAccCount
+    bool d_sawACCEPT;           // used by visitAccCount
+
+    bool d_rule;                // used when computing AccCount values 
 
     public:
         DFA() = default;        // only used for vector-resizing operations
@@ -54,12 +56,16 @@ class DFA
         void inspectRows(std::vector<size_t> &unique);
         void shrinkDFA(std::vector<size_t> &unique);
 
-        void inspectAccCount(AccCount &accCount, size_t count);
 
         size_t available(DFARow const &nextRow);
 
         void computeAccCounts();
-        static void computeAccCount(AccCount &accCount, DFA &dfa);
+        static void visitAccCount(AccCount &accCount, DFA &dfa);
+        static void determineAccCount(AccCount &accCount, size_t thisRow,
+                                      size_t fmRow, size_t fmCount, DFA &dfa);
+        bool inspectAccCount(AccCount &accCount, size_t count);
+        static void transitAccCount(DFARow::MapValue const &rangeToRow, 
+                    size_t fmRow, size_t fmCount, DFA &dfa);
 
 //        void propagateLAsteps(std::vector<bool> &visited,
 //                           size_t stateIdx, int steps);
