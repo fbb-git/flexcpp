@@ -63,7 +63,8 @@ class DFA
         static void visitAccCount(AccCount &accCount, DFA &dfa);
         static void determineAccCount(AccCount &accCount, size_t thisRow,
                                       size_t fmRow, size_t fmCount, DFA &dfa);
-        bool inspectAccCount(AccCount &accCount, size_t count);
+        bool setAccCount(AccCount &accCount, size_t thisRow, size_t fmRow, 
+                         size_t fmCount);
         static void transitAccCount(DFARow::MapValue const &rangeToRow, 
                     size_t fmRow, size_t fmCount, DFA &dfa);
 

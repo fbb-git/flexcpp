@@ -1,68 +1,52 @@
-See also inspectacccount.cc
+See also setacccount.cc
 
 Flag Logic (all alternatives are ignored if PROCESSED has been set as well).
 
-    PRE     ACCEPT  POST    d_sawAccept
-    -----------------------------------------------------------------------
+ d_sawAccept   PRE     ACCEPT  POST    
+-----------------------------------------------------------------------
 initialize count for rows representing ACCEPT for the 1st time:
 
- 2   1        1      1          0    	- set COUNT, d_accCount = 0, 
-                                                     d_sawAccept = true
-
- 4   1        1      0          0    	- set COUNT, d_accCount = 0, 
-                                                     d_sawAccept = true
-                                     	
- 10  0        1      1          0    	- set COUNT, d_accCount = 0
-                                                     d_sawAccept = true
-
- 12  0        1      0          0    	- set COUNT, d_accCount = 0, 
-                                                     d_sawAccept = true
-                                     	
-    -----------------------------------------------------------------------
+ 2   0   		0        1      0       	- set COUNT, d_accCount = 0, 
+         		                                            d_sawAccept = true
+ 3   0   		0        1      1       	- set COUNT, d_accCount = 0
+         		                                        d_sawAccept = true
+ 6   0   		1        1      0       	- set COUNT, d_accCount = 0, 
+         		                                        d_sawAccept = true
+ 7   0   		1        1      1       	- set COUNT, d_accCount = 0, 
+         		                                        d_sawAccept = true
+-----------------------------------------------------------------------
 set INCREMENTING for rows only representing POST states:
 
- 13  0        0      1          1    	- set INCREMENTING
-
- 14  0        0      1          0    	- set INCREMENTING
-
-    -----------------------------------------------------------------------
+ 1   0    		0        0      1    	- set INCREMENTING
+ 9   1    		0        0      1    	- set INCREMENTING
+-----------------------------------------------------------------------
 increment the count for rows representing PRE/ACCEPT and POST states
-(this can be handled after the above checks by simply testing for POST)
 
- 1   1        1      1          1    	- set COUNT
-                                          d_accCount = previousCount + 1
-
- 5   1        0      1          1    	- set COUNT
-                                          d_accCount = previousCount + 1
-
- 9   0        1      1          1    	- set COUNT
-                                          d_accCount = previousCount + 1
-
- 6   1        0      1          0    	- set COUNT
-                                          d_accCount = previousCount + 1
-
-
-    -----------------------------------------------------------------------
+ 5   0   		1        0      1       	- set COUNT
+         		                             d_accCount = previousCount + 1
+11   1   		0        1      1       	- set COUNT
+         		                             d_accCount = previousCount + 1
+13   1   		1        0      1       	- set COUNT
+         		                             d_accCount = previousCount + 1
+15   1   		1        1      1       	- set COUNT
+                                             d_accCount = previousCount + 1
+-----------------------------------------------------------------------
 only PRE/ACCEPT states, and ACCEPT has already been seen: no action
-
- 3   1        1      0          1    	- no action
-
- 11  0        1      0          1    	- no action
-
-    -----------------------------------------------------------------------
+10    1    		0        1      0    	- no action
+14    1    		1        1      0    	- no action
+-----------------------------------------------------------------------
 only PRE states: no action
-
- 7   1        0      0          1    	- no action
-
- 8   1        0      0          0    	- no action
-
-    -----------------------------------------------------------------------
+ 4    0    		1        0      0     	- no action
+12    1    		1        0      0     	- no action
+-----------------------------------------------------------------------
 these states cannot occur with LOP rules as LOP rules either set PRE, ACCEPT
 or POST
+ 0    0    		0        0      0     	-       no action (does not occur)
+ 8    1    		0        0      0     	-       no action (does not occur)
+----------------------------------------------------------------------
 
- 15  0        0      0          1    	-       no action (does not occur)
 
- 16  0        0      0          0    	-       no action (does not occur)
-    ----------------------------------------------------------------------
+
+
 
 

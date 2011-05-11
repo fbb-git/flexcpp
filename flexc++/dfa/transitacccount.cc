@@ -8,7 +8,7 @@ void DFA::transitAccCount(DFARow::MapValue const &rangeToRow, size_t fmRow,
     if (toRow == -1)        // no transition
         return;
 
-cout << " transiting from row " << fmRow << " to " << toRow << '\n';
+//cout << " transiting from row " << fmRow << " to " << toRow << '\n';
 
     std::vector<AccCount> &accCounts = dfa.d_row[toRow].accCounts();
     auto endIter = accCounts.end();
@@ -17,7 +17,7 @@ cout << " transiting from row " << fmRow << " to " << toRow << '\n';
     if (iter == endIter)
         return;
 
-cout << "Next accCount...\n";
+//cout << "Next accCount...\n";
 
     determineAccCount(*iter, toRow, fmRow, fmCount, dfa);
 }

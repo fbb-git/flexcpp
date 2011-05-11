@@ -10,8 +10,17 @@ void DFARow::tabulateAccepts(Table &table) const
                 ++iter
     )
     {
-        if (iter->inc())
-            out << iter->rule() << ":++" << iter->accCount() << ',';
+        AccCount::Type type = iter->type();      // get the accCount flags
+
+        if (type & (AccCount::COUNT | AccCount::INCREMENTING))
+        {
+            out << iter->rule() << ':';
+            if (type &AccCount::INCREMENTING)
+                out << "+";
+            else
+                out << iter->accCount();
+            out  << ',';
+        }
     }
 
     std::string const &str = out.str();
@@ -20,3 +29,7 @@ void DFARow::tabulateAccepts(Table &table) const
     else
         table << ' ';
 }
+
+
+
+

@@ -6,17 +6,17 @@ void DFA::determineAccCount(AccCount &accCount, size_t thisRow, size_t fmRow,
     if (dfa.d_rule != accCount.rule())
         return;
 
-cout << "   initialize accCount in row " << thisRow << ", coming from " <<
-fmRow << ", previous AccCount value: " << fmCount << '\n';
+//cout << "   initialize accCount in row " << thisRow << ", coming from " <<
+//fmRow << ", previous AccCount value: " << fmCount << '\n';
 
-    if (not dfa.inspectAccCount(accCount, fmCount))
+    if (not dfa.setAccCount(accCount, thisRow, fmRow, fmCount))
 {
-cout << "No action for this accCount: done here\n";
+//cout << "No action for this accCount: done here\n";
         return;
 }
 
-cout << "accCount in row " << thisRow << " for rule " << dfa.d_rule << ": " <<
-accCount.accCount() << '\n';
+//cout << "accCount in row " << thisRow << " for rule " << dfa.d_rule << ": " <<
+//accCount.accCount() << '\n';
 
     std::unordered_map<size_t, size_t> const &transitMap = 
                                                     dfa.d_row[thisRow].map();

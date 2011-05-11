@@ -20,7 +20,7 @@ void DFA::visitAccCount(AccCount &accCount, DFA &dfa)
     dfa.d_sawACCEPT = false;
     dfa.d_rule = accCount.rule();
 
-cout << "visitAccCount (initial) for rule " << dfa.d_rule << '\n';    
+//cout << "visitAccCount (initial) for rule " << dfa.d_rule << '\n';    
 
                             // this row, previous row, previous count
     determineAccCount(accCount, 0, 0, 0, dfa);

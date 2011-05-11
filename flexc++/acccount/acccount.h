@@ -42,7 +42,7 @@ class AccCount
         size_t accCount() const;
         size_t rule() const;
 
-        Type type() const;        
+        Type type() const;
 };
         
 inline AccCount::Type operator|(AccCount::Type lhs, AccCount::Type rhs)
