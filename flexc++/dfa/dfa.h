@@ -27,7 +27,7 @@ class DFA
     bool d_verbose;
     bool d_sawACCEPT;           // used by visitAccCount
 
-    bool d_rule;                // used when computing AccCount values 
+    size_t d_rule;              // used when computing AccCount values 
 
     public:
         DFA() = default;        // only used for vector-resizing operations

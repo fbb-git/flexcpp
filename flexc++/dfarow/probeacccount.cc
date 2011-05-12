@@ -19,10 +19,11 @@ void DFARow::probeAccCount(size_t stateIdx, DFARow &thisRow)
                              thisRow.d_accCount.end(), rule);
 
         // add an AccCount element if not yet there
-    if (accCountIter == thisRow.d_accCount.end())     
+    if (accCountIter == thisRow.d_accCount.end())
         thisRow.d_accCount.push_back(AccCount(rule, flag));
     else
         accCountIter->addFlag(flag);
+
 }
 
 

@@ -14,7 +14,7 @@ ostream &operator<<(ostream &out, DFA const &dfa)
     support << TableSupport::HLine(1, 1, nCols + 1);// partial 2nd line 
 
     Table table(support, nCols, Table::ROWWISE);
-    table << Align(nCols - 2, std::left);
+    table << Align(nCols - 2, std::left) << Align(nCols - 1, std::left);
 
 
     table << "   ";                                // char-ranges display

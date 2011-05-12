@@ -15,12 +15,17 @@ void DFARow::tabulateAccepts(Table &table) const
         if (type & (AccCount::COUNT | AccCount::INCREMENTING))
         {
             out << iter->rule() << ':';
+
             if (type &AccCount::INCREMENTING)
                 out << "+";
             else
                 out << iter->accCount();
+
             out  << ',';
         }
+//        else
+//            out << '-';
+
     }
 
     std::string const &str = out.str();
