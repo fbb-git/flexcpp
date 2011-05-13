@@ -62,11 +62,12 @@ class DFA
         void computeAccCounts();
         static void visitAccCount(AccCount &accCount, DFA &dfa);
         static void determineAccCount(AccCount &accCount, size_t thisRow,
-                                      size_t fmRow, size_t fmCount, DFA &dfa);
+                                      size_t fmRow, AccCount *fmAccCount, 
+                                      DFA &dfa);
         bool setAccCount(AccCount &accCount, size_t thisRow, size_t fmRow, 
-                         size_t fmCount);
+                         AccCount *fmAccCount);
         static void transitAccCount(DFARow::MapValue const &rangeToRow, 
-                    size_t fmRow, size_t fmCount, DFA &dfa);
+                    size_t fmRow, AccCount *fmAccCount, DFA &dfa);
 
 //        void propagateLAsteps(std::vector<bool> &visited,
 //                           size_t stateIdx, int steps);

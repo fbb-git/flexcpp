@@ -1,7 +1,7 @@
 #include "dfa.ih"
 
 void DFA::determineAccCount(AccCount &accCount, size_t thisRow, size_t fmRow, 
-                            size_t fmCount, DFA &dfa)
+                            AccCount *fmAccCount, DFA &dfa)
 {
     if (dfa.d_rule != accCount.rule())
         return;
@@ -9,7 +9,7 @@ void DFA::determineAccCount(AccCount &accCount, size_t thisRow, size_t fmRow,
 //cout << "   initialize accCount in row " << thisRow << ", coming from " <<
 //fmRow << ", previous AccCount value: " << fmCount << '\n';
 
-    if (not dfa.setAccCount(accCount, thisRow, fmRow, fmCount))
+    if (not dfa.setAccCount(accCount, thisRow, fmRow, fmAccCount))
 {
 //cout << "No action for this accCount: done here\n";
         return;
@@ -22,5 +22,5 @@ void DFA::determineAccCount(AccCount &accCount, size_t thisRow, size_t fmRow,
                                                     dfa.d_row[thisRow].map();
 
     for_each(transitMap.begin(), transitMap.end(), 
-        FnWrap::unary(transitAccCount, thisRow, accCount.accCount(), dfa));
+        FnWrap::unary(transitAccCount, thisRow, &accCount, dfa));
 }

@@ -1,7 +1,7 @@
 #include "dfa.ih"
 
 void DFA::transitAccCount(DFARow::MapValue const &rangeToRow, size_t fmRow, 
-                          size_t fmCount, DFA &dfa)
+                          AccCount *fmAccCount, DFA &dfa)
 {
     int toRow = rangeToRow.second;
 
@@ -19,5 +19,5 @@ void DFA::transitAccCount(DFARow::MapValue const &rangeToRow, size_t fmRow,
 
 //cout << "Next accCount...\n";
 
-    determineAccCount(*iter, toRow, fmRow, fmCount, dfa);
+    determineAccCount(*iter, toRow, fmRow, fmAccCount, dfa);
 }

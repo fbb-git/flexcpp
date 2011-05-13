@@ -1,11 +1,12 @@
 #include "dfa.ih"
 
 bool DFA::setAccCount(AccCount &accCount, size_t fmRow, size_t thisRow,
-                          size_t fmCount)
+                      AccCount *fmAccCount)
 {
     AccCount::Type type = accCount.type();      // get the accCount flags
 
-//cout << "AccCount row: " << thisRow << ": " << accCount  << '\n';
+cout << "setAccount: fromRow = " << fmRow << ", this row = " << thisRow << 
+", accCount = " << accCount  << '\n';
 
         // only POST states
     if
@@ -18,7 +19,8 @@ bool DFA::setAccCount(AccCount &accCount, size_t fmRow, size_t thisRow,
         if (type & AccCount::PROCESSED)         // already handled this entry
             return false;
 
-//cout << "Incrementing Acc Count from here\n";
+cout << "From " << fmRow << ": incrementing Acc Count for row " << 
+thisRow << "from here\n";
 
         accCount.addFlag(AccCount::PROCESSED | AccCount::INCREMENTING);
     }
@@ -33,30 +35,36 @@ bool DFA::setAccCount(AccCount &accCount, size_t fmRow, size_t thisRow,
         accCount.addFlag(AccCount::PROCESSED | AccCount::COUNT);
         d_sawACCEPT = true;
 
-//cout << "Initialized AccCount\n";
+cout << "From " << fmRow << ": initialized AccCount for row " << 
+thisRow << " to " << accCount << '\n';
     }
     else if (
         (type & AccCount::POST) && (type & (AccCount::PRE | AccCount::POST))
     )
     {
-        ++fmCount;                        // increment the step count
+        size_t fmCount = fmAccCount->accCount() + 1; // inc. the step count
+
         if (type && AccCount::COUNT)
         {
             if (fmRow < thisRow && accCount.accCount() != fmCount)
             {
-                wmsg << "Conflicting counts reset to 0" << endl;
-                fmCount = 0;
+                wmsg << "Rule " << accCount.rule() << 
+                        ": conflicting counts for " << fmRow <<
+                        " reset to 0" << endl;
+
+                fmAccCount->setAccCount(0);
             }
             else if (type & AccCount::PROCESSED)// already handled this entry
-            return false;
+                return false;
         }
         else if (type & AccCount::PROCESSED)    // already handled this entry
             return false;
 
-//cout << "Incrementing previous count to " << fmCount << '\n';
-
         accCount.setAccCount(fmCount);
         accCount.addFlag(AccCount::PROCESSED | AccCount::COUNT);
+cout << "From " << fmRow << ": setting count of row " << thisRow << " to " << 
+accCount << '\n';
+
     }
 else
 {
