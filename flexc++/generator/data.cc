@@ -15,11 +15,13 @@ Generator::Map Generator::s_insert =
     {"debugInit",           &Generator::debugInit},
     {"debugStep",           &Generator::debugStep},
     {"declarations",        &Generator::declarations},
-    {"finAcs",              &Generator::finAcs},
+//    {"finAcs",              &Generator::finAcs},
+
 //    {"ifStartsAtBOLelse",   &Generator::ifStartsAtBOLelse},
-    {"ignoreBOLaction",     &Generator::ignoreBOLaction},
+//    {"ignoreBOLaction",     &Generator::ignoreBOLaction},
 //    {"ignoreBOLcall",       &Generator::ignoreBOLcall},
 //    {"ignoreBOLimpl",       &Generator::ignoreBOLimpl},
+
     {"inlineLexFunction",   &Generator::inlineLexFunction},
     {"inputMembers",        &Generator::inputMembers},
     {"lexFunctionDecl",     &Generator::lexFunctionDecl},
@@ -27,12 +29,17 @@ Generator::Map Generator::s_insert =
     {"namespace-open",      &Generator::namespaceOpen},
     {"namespace-use",       &Generator::namespaceUse},
     {"ranges",              &Generator::ranges},
-    {"rangeAtBOL",          &Generator::rangeAtBOL},
+
+//    {"rangeAtBOL",          &Generator::rangeAtBOL},
+
     {"startCondNames",      &Generator::startCondNames},
-    {"resetStartsAtBOL",    &Generator::resetStartsAtBOL},
+
+//    {"resetStartsAtBOL",    &Generator::resetStartsAtBOL},
+
     {"pushFront",           &Generator::pushFront},
     {"pushFrontCall",       &Generator::pushFrontCall},
-    {"checkBOL",            &Generator::checkBOL},
+
+//    {"checkBOL",            &Generator::checkBOL},
 };
 
 char const *Generator::s_baseFlag = "\\@";

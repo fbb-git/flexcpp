@@ -46,7 +46,7 @@ class Generator
     mutable std::string d_line;
     mutable std::string d_field;
 
-    mutable std::vector<FinAc> d_acccounts;    // determined at dfas()
+    mutable std::vector<AccCount> d_acccounts;    // determined at dfas()
     mutable std::vector<size_t> d_dfaIndices;   // determined at dfas()
 
     static Map s_insert;
@@ -60,75 +60,79 @@ class Generator
 
     public:
         Generator(Rules const &rules, Ranges const &ranges, DFAs const &dfas);
-// 
-//         void baseclassHeader() const;
-//         void classHeader() const;
-//         void implementationHeader() const;
-//         void lexSource() const;
-// 
-//         void declarations();
-// 
+ 
+         void baseclassHeader() const;
+         void classHeader() const;
+         void implementationHeader() const;
+         void lexSource() const;
+ 
+         void declarations();
+ 
 //     private:
-//         void DFAbases(std::ostream &out) const;
-//         void actions(std::ostream &out) const;
-//         void baseClassH(std::ostream &out) const;
-//         void classH(std::ostream &out) const;
-//         void classIH(std::ostream &out) const;
-//         void debug(std::ostream &out) const;
-//         void debugDecl(std::ostream &out) const;
-//         void debugFunctions(std::ostream &out) const;
-//         void debugIncludes(std::ostream &out) const;
-//         void debugInit(std::ostream &out) const;
-//         void debugStep(std::ostream &out) const;
-//         void declarations(std::ostream &out) const;
-//         void dfas(std::ostream &out) const;
-//         void filter(std::istream &in, std::ostream &out) const;
-//         void finAcs(std::ostream &out) const;
+         void DFAbases(std::ostream &out) const;
+         void actions(std::ostream &out) const;
+         void baseClassH(std::ostream &out) const;
+         void classH(std::ostream &out) const;
+         void classIH(std::ostream &out) const;
+         void debug(std::ostream &out) const;
+         void debugDecl(std::ostream &out) const;
+         void debugFunctions(std::ostream &out) const;
+         void debugIncludes(std::ostream &out) const;
+         void debugInit(std::ostream &out) const;
+         void debugStep(std::ostream &out) const;
+         void declarations(std::ostream &out) const;
+         void dfas(std::ostream &out) const;
+
+         void filter(std::istream &in, std::ostream &out) const;
+
+//         void accCounts(std::ostream &out) const;
 // //        void ifStartsAtBOLelse(std::ostream &out) const;      REMOVE SOURCE
 //         void ignoreBOLaction(std::ostream &out) const;
 // //        void ignoreBOLcall(std::ostream &out) const;          REMOVE SOURCE
 // //        void ignoreBOLimpl(std::ostream &out) const;          REMOVE SOURCE
-//         void inlineLexFunction(std::ostream &out) const;
-//         void inputMembers(std::ostream &out) const;
-//         void insert(std::ostream &out) const;
-//         void key(std::ostream &out) const;
-//         void lexFunctionDecl(std::ostream &out) const;
-//         void namespaceClose(std::ostream &out) const;
-//         void namespaceOpen(std::ostream &out) const;
-//         void namespaceUse(std::ostream &out) const;
-//         void ranges(std::ostream &out) const;
+         void inlineLexFunction(std::ostream &out) const;
+         void inputMembers(std::ostream &out) const;
+         void insert(std::ostream &out) const;
+         void key(std::ostream &out) const;
+         void lexFunctionDecl(std::ostream &out) const;
+         void namespaceClose(std::ostream &out) const;
+         void namespaceOpen(std::ostream &out) const;
+         void namespaceUse(std::ostream &out) const;
+         void ranges(std::ostream &out) const;
 //         void rangeAtBOL(std::ostream &out) const;
-//         void startCondNames(std::ostream &out) const;
+         void startCondNames(std::ostream &out) const;
 //         void resetStartsAtBOL(std::ostream &out) const;
-//         void pushFront(std::ostream &out) const;
-//         void pushFrontCall(std::ostream &out) const;
+         void pushFront(std::ostream &out) const;
+         void pushFrontCall(std::ostream &out) const;
 //         void checkBOL(std::ostream &out) const;
-// 
-//         size_t dfaCols() const;
-// 
+
+         size_t dfaCols() const;
+
 //         static void outFinAc(FinAc const &acccount, std::ostream &out,
 //                                                                 size_t &idx);
 //         static size_t addFinal(DFARow const &row, std::vector<size_t> &final);
 //         static void outFinal(size_t rule, std::ostream &out, size_t &count);
 // 
 //         static void dfa(DFAs::Pair const &dfaPair, std::ostream &out, 
-//                         std::vector<FinAc> &finAcs,
+//                         std::vector<FinAc> &accCounts,
 //                         std::vector<std::string> &startStates,
 //                         std::vector<size_t> &dfaOffsets);
 //         static void dfaRow(DFARow const &row, size_t &index, 
 //                         std::ostream &out, 
-//                         std::vector<FinAc> &finAcs);    
+//                         std::vector<FinAc> &accCounts);    
 //         static void dfaTransitions(DFARow const &row, std::ostream &out);
 //         static void dfaFinAcs(DFARow const &row, std::ostream &out,
-//                               std::vector<FinAc> &finAcs);
+//                               std::vector<FinAc> &accCounts);
 // 
 //         static void inspectFinAc(FinAc const &acccount,
-//                                  std::vector<FinAc> &finAcs,
+//                                  std::vector<FinAc> &accCounts,
 //                                  int &finalRule);
 // 
 //         static std::string outDFAbase(std::string const &startState,
 //                                       size_t offset);
-//         static void outStartState(std::string const &name, std::ostream &out);
+
+         static void outStartState(std::string const &name, std::ostream &out);
+
 //         static void ruleAction(Rule const &rule, std::ostream &out, 
 //                                size_t &idx, bool lineDirectives);
 

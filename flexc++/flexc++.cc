@@ -67,8 +67,12 @@ try
         ranges.determineSubsets();
         ranges.finalizeStates();
 
+cout << "DNE\n";
+
     DFAs dfas(rules, states, ranges);
         dfas.build();
+
+cout << "DNE\n";
 
     if (arg.option('V'))
         cout << "RANGES:\n" << ranges << "\n"
@@ -79,12 +83,19 @@ try
                 "\n" <<
                 dfas << '\n';
 
-    Generator generator(rules, ranges, dfas);
+cerr << "DNE\n";
+//
+//    Generator generator(rules, ranges, dfas);
+//
+//cerr << "DNE\n";
 //
 //        generator.lexSource();
-//        generator.baseclassHeader();
-//        generator.classHeader();
-//        generator.implementationHeader();
+//
+//cerr << "DNE\n";
+//
+////        generator.baseclassHeader();
+////        generator.classHeader();
+////        generator.implementationHeader();
 }
 catch (int x)
 {

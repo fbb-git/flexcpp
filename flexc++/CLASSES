@@ -26,8 +26,7 @@ dfa             dfarow
 dfas            dfa
 options         
 parser          rules  patternval  decimal  scanner options state
-
-# generator       dfas        options
+generator       dfas        options
 
 
 
