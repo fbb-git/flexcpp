@@ -46,10 +46,6 @@ class DFA
         void keepViableAccCounts();
         void mergeFinalSet();
 
-//        int maxAccept(size_t rowIdx) const;
-//        static bool cmpAccept(size_t left, size_t right, 
-//                                                        States const &states);
-
         static void translate(DFARow &row, std::vector<size_t> const &unique);
 
         void keepUniqueRows();
@@ -62,26 +58,13 @@ class DFA
         void computeAccCounts();
         static void visitAccCount(AccCount &accCount, DFA &dfa);
         static void determineAccCount(AccCount &accCount, size_t thisRow,
-                                      size_t fmRow, AccCount *fmAccCount, 
+                                      AccCount *fmAccCount, size_t fmRow, 
                                       DFA &dfa);
-        bool setAccCount(AccCount &accCount, size_t thisRow, size_t fmRow, 
-                         AccCount *fmAccCount);
+        bool setAccCount(AccCount &accCount, size_t thisRow, 
+                         AccCount *fmAccCount, size_t fmRow);
         static void transitAccCount(DFARow::MapValue const &rangeToRow, 
-                    size_t fmRow, AccCount *fmAccCount, DFA &dfa);
+                    AccCount *fmAccCount, size_t fmRow, DFA &dfa);
 
-//        void propagateLAsteps(std::vector<bool> &visited,
-//                           size_t stateIdx, int steps);
-
-//        static void processRule(size_t rule, DFA &dfa, size_t rowIdx, 
-//                                bool parentFinal, int tailSize);
-
-//        static void processRow(FinAc &finAc, size_t rule, DFA &dfa, 
-//                               size_t rowIdx, int parentFinal, int tailSize);
-
-//        static void inspect(std::pair<size_t, size_t> const &transit, 
-//                            size_t oldRow, size_t rule, DFA &dfa,
-//                            int parentFinal, int tailSize);
- 
         static void fillStartSet(size_t idx, Rules const &rules, 
                                              StateSet &start);
 };
@@ -100,6 +83,24 @@ inline size_t DFA::size() const
 {
     return d_row.size();
 }
+
+//        int maxAccept(size_t rowIdx) const;
+//        static bool cmpAccept(size_t left, size_t right, 
+//                                                        States const &states);
+
+//        void propagateLAsteps(std::vector<bool> &visited,
+//                           size_t stateIdx, int steps);
+
+//        static void processRule(size_t rule, DFA &dfa, size_t rowIdx, 
+//                                bool parentFinal, int tailSize);
+
+//        static void processRow(FinAc &finAc, size_t rule, DFA &dfa, 
+//                               size_t rowIdx, int parentFinal, int tailSize);
+
+//        static void inspect(std::pair<size_t, size_t> const &transit, 
+//                            size_t oldRow, size_t rule, DFA &dfa,
+//                            int parentFinal, int tailSize);
+ 
 
 #endif
 

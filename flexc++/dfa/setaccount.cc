@@ -1,12 +1,12 @@
 #include "dfa.ih"
 
-bool DFA::setAccCount(AccCount &accCount, size_t fmRow, size_t thisRow,
-                      AccCount *fmAccCount)
+bool DFA::setAccCount(AccCount &thisAccCount, size_t thisRow,
+                      AccCount *fmAccCount, size_t fmRow)
 {
-    AccCount::Type type = accCount.type();      // get the accCount flags
+    AccCount::Type type = thisAccCount.type();      // get the accCount flags
 
 cout << "setAccount: fromRow = " << fmRow << ", this row = " << thisRow << 
-", accCount = " << accCount  << '\n';
+", this AccCount = " << thisAccCount  << '\n';
 
         // only POST states
     if
@@ -22,7 +22,7 @@ cout << "setAccount: fromRow = " << fmRow << ", this row = " << thisRow <<
 cout << "From " << fmRow << ": incrementing Acc Count for row " << 
 thisRow << "from here\n";
 
-        accCount.addFlag(AccCount::PROCESSED | AccCount::INCREMENTING);
+        thisAccCount.addFlag(AccCount::PROCESSED | AccCount::INCREMENTING);
     }
 
         // initialize count for rows representing ACCEPT for the 1st time:
@@ -31,39 +31,54 @@ thisRow << "from here\n";
         if (type & AccCount::PROCESSED)         // already handled this entry
             return false;
 
-        accCount.setAccCount(0);
-        accCount.addFlag(AccCount::PROCESSED | AccCount::COUNT);
+        thisAccCount.setAccCount(0);
+        thisAccCount.addFlag(AccCount::PROCESSED | AccCount::COUNT);
         d_sawACCEPT = true;
 
 cout << "From " << fmRow << ": initialized AccCount for row " << 
-thisRow << " to " << accCount << '\n';
+thisRow << " to " << thisAccCount << '\n';
     }
-    else if (
-        (type & AccCount::POST) && (type & (AccCount::PRE | AccCount::POST))
+
+    else if (       // Set contains pre/accept  and post states
+        (type & AccCount::POST) && (type & (AccCount::PRE | AccCount::ACCEPT))
     )
     {
-        size_t fmCount = fmAccCount->accCount() + 1; // inc. the step count
+                                            // compute next Acc. count
+        size_t nextCount = fmAccCount->accCount() + 1; 
 
-        if (type && AccCount::COUNT)
-        {
-            if (fmRow < thisRow && accCount.accCount() != fmCount)
+        if (type && AccCount::COUNT)        // accCount was previously set
+        {                                       
+                                            // get the actual Acc. count
+            size_t thisCount = thisAccCount.accCount(); 
+
+            if (thisRow > fmRow)            // jumping forward
             {
-                wmsg << "Rule " << accCount.rule() << 
-                        ": conflicting counts for " << fmRow <<
-                        " reset to 0" << endl;
-
-                fmAccCount->setAccCount(0);
+                if (thisCount != nextCount) // counts differ: reset count to 0
+                {
+                    wmsg << "Rule " << thisAccCount.rule() << 
+                            ": conflicting counts for " << fmRow <<
+                            " reset to 0" << endl;
+    
+                    fmAccCount->setAccCount(0);
+                }
             }
-            else if (type & AccCount::PROCESSED)// already handled this entry
+            else                            // jumping backward
+            {                           
+                if (nextCount < thisCount)  // next count is smaller: use it
+                    fmAccCount->setAccCount(nextCount);
+            }
+
+            if (type & AccCount::PROCESSED) // already handled this entry
                 return false;
         }
         else if (type & AccCount::PROCESSED)    // already handled this entry
             return false;
 
-        accCount.setAccCount(fmCount);
-        accCount.addFlag(AccCount::PROCESSED | AccCount::COUNT);
+        thisAccCount.setAccCount(nextCount);
+        thisAccCount.addFlag(AccCount::PROCESSED | AccCount::COUNT);
+
 cout << "From " << fmRow << ": setting count of row " << thisRow << " to " << 
-accCount << '\n';
+thisAccCount << '\n';
 
     }
 else
