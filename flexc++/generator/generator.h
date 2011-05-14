@@ -1,63 +1,65 @@
 #ifndef INCLUDED_GENERATOR_
 #define INCLUDED_GENERATOR_
 
-// #include <vector>
-// #include <string>
-// #include <fstream>
-// #include <set>
-// #include <unordered_map>
-// 
-// #include "../dfas/dfas.h"
-// #include "../startconditions/startconditions.h"
-// 
-// class Ranges;
-// class Options;
-// 
-// namespace FBB
-// {
-//     class Arg;
-// }
-// 
-// class Generator
-// {
-//     typedef void (Generator::*Inserter)(std::ostream &) const;
-//     typedef std::unordered_map<std::string, Inserter>   Map;
-//     typedef Map::value_type                             MapValue;
-//     typedef Map::const_iterator                         MapConstIter;
-// 
-//     typedef std::pair<size_t, size_t> Pair;
-//     typedef std::vector<Pair> PVector;
-// 
-//     Options &d_options;
-//     FBB::Arg &d_arg;
-//     Rules const &d_rules;
-//     Ranges const &d_ranges;
-//     DFAs const &d_dfas;
-//     std::string d_baseclassScope;
+#include <vector>
+#include <string>
+#include <fstream>
+#include <set>
+#include <unordered_map>
+
+#include "../dfas/dfas.h"
+#include "../startconditions/startconditions.h"
+
+class Ranges;
+class Options;
+
+namespace FBB
+{
+    class Arg;
+}
+
+class Generator
+{
+    typedef void (Generator::*Inserter)(std::ostream &) const;
+    typedef std::unordered_map<std::string, Inserter>   Map;
+    typedef Map::value_type                             MapValue;
+    typedef Map::const_iterator                         MapConstIter;
+
+    typedef std::pair<size_t, size_t> Pair;
+    typedef std::vector<Pair> PVector;
+
+    Options &d_options;
+    FBB::Arg &d_arg;
+    Rules const &d_rules;
+    Ranges const &d_ranges;
+    DFAs const &d_dfas;
+    std::string d_baseclassScope;
+
 //     bool d_useBOL;
-//     bool d_lineDirectives;
-//     bool d_debug;
-//     bool d_debugStep;
-// 
-//     mutable std::vector<std::string> d_startStates;
-//     mutable std::string d_key;          // extracted at $insert statements
-//     mutable std::string d_line;
-//     mutable std::string d_field;
-// 
-//     mutable std::vector<FinAc> d_acccounts;    // determined at dfas()
-//     mutable std::vector<size_t> d_dfaIndices;   // determined at dfas()
-// 
-//     static Map s_insert;
-//     static char const *s_baseFlag;          // text to change to the class 
-//                                             // name
-//     static size_t const s_baseFlagSize;     // # of characters in s_baseFlag
-// 
-//     static std::string s_matchedTextFunction;   // default way to call the
-//     static std::string s_scannerTokenFunction;  // scanner's token en text
-//                                                 // functions.
-// 
-//     public:
-//         Generator(Rules const &rules, Ranges const &ranges, DFAs const &dfas);
+
+    bool d_lineDirectives;
+    bool d_debug;
+    bool d_debugStep;
+
+    mutable std::vector<std::string> d_startStates;
+    mutable std::string d_key;          // extracted at $insert statements
+    mutable std::string d_line;
+    mutable std::string d_field;
+
+    mutable std::vector<FinAc> d_acccounts;    // determined at dfas()
+    mutable std::vector<size_t> d_dfaIndices;   // determined at dfas()
+
+    static Map s_insert;
+    static char const *s_baseFlag;          // text to change to the class 
+                                            // name
+    static size_t const s_baseFlagSize;     // # of characters in s_baseFlag
+
+    static std::string s_matchedTextFunction;   // default way to call the
+    static std::string s_scannerTokenFunction;  // scanner's token en text
+                                                // functions.
+
+    public:
+        Generator(Rules const &rules, Ranges const &ranges, DFAs const &dfas);
 // 
 //         void baseclassHeader() const;
 //         void classHeader() const;
@@ -129,7 +131,8 @@
 //         static void outStartState(std::string const &name, std::ostream &out);
 //         static void ruleAction(Rule const &rule, std::ostream &out, 
 //                                size_t &idx, bool lineDirectives);
-// };
+
+};
 
         
 #endif

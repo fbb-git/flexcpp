@@ -8,7 +8,6 @@ Generator::Generator(Rules const &rules, Ranges const &ranges,
     d_rules(rules),
     d_ranges(ranges),
     d_dfas(dfas),
-    d_useBOL(d_ranges.rangeOfEOF() + 3 != dfaCols()),
     d_dfaIndices(1, 0)
 {
     d_options.setAccessorVariables();

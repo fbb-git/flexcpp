@@ -79,7 +79,7 @@ try
                 "\n" <<
                 dfas << '\n';
 
-//    Generator generator(rules, ranges, dfas);
+    Generator generator(rules, ranges, dfas);
 //
 //        generator.lexSource();
 //        generator.baseclassHeader();

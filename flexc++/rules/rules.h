@@ -35,7 +35,6 @@ class Rules
         typedef std::vector<Rule>::const_iterator rule_const_iterator;
 
         Rules(States &states);
-//        void add(Pair const &pair, Block const &block);
         void add(bool bol, spSemVal const &patternVal, Block const &block);
 
         Rule const &operator[](size_t idx) const;
@@ -62,7 +61,6 @@ class Rules
 
     private:
         void setRule(size_t state, size_t index);
-//        void propagateLAsteps(size_t stateIdx, int steps);
 };
 
 inline size_t Rules::size() const

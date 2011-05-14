@@ -44,7 +44,6 @@ class DFA
 
     private:
         void keepViableAccCounts();
-        void mergeFinalSet();
 
         static void translate(DFARow &row, std::vector<size_t> const &unique);
 
@@ -62,6 +61,11 @@ class DFA
                                       DFA &dfa);
         bool setAccCount(AccCount &accCount, size_t thisRow, 
                          AccCount *fmAccCount, size_t fmRow);
+        bool setIncAccCount(AccCount::Type type, AccCount &thisAccCount);
+        bool setInitAccCount(AccCount::Type type, AccCount &thisAccCount);
+        bool setNextAccCount(AccCount::Type type,
+                            AccCount &thisAccCount, size_t thisRow,
+                            AccCount &fmAccCount, size_t fmRow);
         static void transitAccCount(DFARow::MapValue const &rangeToRow, 
                     AccCount *fmAccCount, size_t fmRow, DFA &dfa);
 
@@ -84,23 +88,7 @@ inline size_t DFA::size() const
     return d_row.size();
 }
 
-//        int maxAccept(size_t rowIdx) const;
-//        static bool cmpAccept(size_t left, size_t right, 
-//                                                        States const &states);
-
-//        void propagateLAsteps(std::vector<bool> &visited,
-//                           size_t stateIdx, int steps);
-
-//        static void processRule(size_t rule, DFA &dfa, size_t rowIdx, 
-//                                bool parentFinal, int tailSize);
-
-//        static void processRow(FinAc &finAc, size_t rule, DFA &dfa, 
-//                               size_t rowIdx, int parentFinal, int tailSize);
-
-//        static void inspect(std::pair<size_t, size_t> const &transit, 
-//                            size_t oldRow, size_t rule, DFA &dfa,
-//                            int parentFinal, int tailSize);
- 
+//        void mergeFinalSet();
 
 #endif
 

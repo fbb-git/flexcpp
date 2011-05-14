@@ -77,14 +77,10 @@ class DFARow
         std::vector<AccCount> &accCounts();
         std::vector<AccCount> const &accCounts() const;
              
-//        bool hasPostAstates(size_t ruleIdx, size_t rowIdx) const;
-//        bool hasPreAstates(size_t ruleIdx, size_t rowIdx) const;
-
         bool operator==(DFARow const &rhs) const;
 
         void uniqueMap(std::vector<size_t> const &xlat);
 
-        static void mergeFinalSet(DFARow &dfaRow);
         static void keepViableAccCounts(DFARow &dfaRow);
 
     private:
@@ -111,8 +107,6 @@ class DFARow
         static void probeAccCount(size_t stateIdx, DFARow &thisRow);
         static bool stateOfRule(size_t state, 
                                 std::vector<size_t> const &haystack);
-//        static void mergeFinal(size_t rule, 
-//                               std::vector<AccCount> &accCount);
 
         static bool sameTransits(
             std::unordered_map<size_t, size_t> const &lhs,
@@ -145,6 +139,10 @@ inline size_t DFARow::size() const
 }
 
 FBB::Table &operator<<(FBB::Table& out, DFARow const &row);
+
+//        static void mergeFinalSet(DFARow &dfaRow);
+//        static void mergeFinal(size_t rule, 
+//                               std::vector<AccCount> &accCount);
         
 #endif
 

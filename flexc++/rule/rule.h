@@ -21,9 +21,6 @@ class Rule
 
     Block d_block;              // action block
 
-    bool d_LAdone;              // set to true when LA propagation has been 
-                                // completed (not relevant for rules not
-                                // using the LA operator)
     bool d_bol;                 // this rule is matched if starting at BOL
     bool d_viable;              // this rule is viable, i.e., it can be
                                 // matched
@@ -50,11 +47,9 @@ class Rule
         int maxAccept(std::set<size_t> const &stateSet, 
                       States const &states) const;
 
-        void setLAdone();
         void setViable(bool yes);
         void setBol();
 
-        bool LAdone() const;
         bool bol() const;
         bool viable() const;
         
@@ -65,11 +60,6 @@ class Rule
                                                         States const &states);
 };
 
-inline void Rule::setLAdone() 
-{
-    d_LAdone = true;
-}
-
 inline void Rule::setBol() 
 {
     d_bol = true;
@@ -78,11 +68,6 @@ inline void Rule::setBol()
 inline void Rule::setViable(bool yes) 
 {
     d_viable = yes;
-}
-
-inline bool Rule::LAdone() const
-{
-    return d_LAdone;
 }
 
 inline bool Rule::bol() const
