@@ -20,6 +20,26 @@ namespace FBB
 
 class Generator
 {
+    enum
+    {
+        RFC_INDICES = 2, // begin/end indices in the run-time RFC array
+    };
+
+    enum Flags
+    {
+        FINAL           = 1,    // Final row
+        INCREMENTING    = 2,    // Incrementing row of LOP rule
+        COUNT           = 4,    // Count-row (= d_count) of LOP rule 
+        BOL             = 8,    // Rule is a LOP rule
+    };
+
+    struct RuleFlagCount    // (RFC)
+    {
+        size_t d_rule;
+        size_t d_flag;
+        size_t d_count;
+    };
+
     typedef void (Generator::*Inserter)(std::ostream &) const;
     typedef std::unordered_map<std::string, Inserter>   Map;
     typedef Map::value_type                             MapValue;
@@ -46,7 +66,7 @@ class Generator
     mutable std::string d_line;
     mutable std::string d_field;
 
-    mutable std::vector<AccCount> d_acccounts;    // determined at dfas()
+    mutable std::vector<RuleFlagCount> d_rfc;   // determined at dfas()
     mutable std::vector<size_t> d_dfaIndices;   // determined at dfas()
 
     static Map s_insert;
@@ -68,8 +88,11 @@ class Generator
  
          void declarations();
  
-//     private:
+     private:
          void DFAbases(std::ostream &out) const;
+         static std::string outDFAbase(std::string const &startState,
+                                       size_t offset);
+
          void actions(std::ostream &out) const;
          void baseClassH(std::ostream &out) const;
          void classH(std::ostream &out) const;
@@ -86,10 +109,7 @@ class Generator
          void filter(std::istream &in, std::ostream &out) const;
 
 //         void accCounts(std::ostream &out) const;
-// //        void ifStartsAtBOLelse(std::ostream &out) const;      REMOVE SOURCE
-//         void ignoreBOLaction(std::ostream &out) const;
-// //        void ignoreBOLcall(std::ostream &out) const;          REMOVE SOURCE
-// //        void ignoreBOLimpl(std::ostream &out) const;          REMOVE SOURCE
+
          void inlineLexFunction(std::ostream &out) const;
          void inputMembers(std::ostream &out) const;
          void insert(std::ostream &out) const;
@@ -99,38 +119,31 @@ class Generator
          void namespaceOpen(std::ostream &out) const;
          void namespaceUse(std::ostream &out) const;
          void ranges(std::ostream &out) const;
-//         void rangeAtBOL(std::ostream &out) const;
          void startCondNames(std::ostream &out) const;
-//         void resetStartsAtBOL(std::ostream &out) const;
          void pushFront(std::ostream &out) const;
          void pushFrontCall(std::ostream &out) const;
-//         void checkBOL(std::ostream &out) const;
 
          size_t dfaCols() const;
 
-//         static void outFinAc(FinAc const &acccount, std::ostream &out,
-//                                                                 size_t &idx);
-//         static size_t addFinal(DFARow const &row, std::vector<size_t> &final);
-//         static void outFinal(size_t rule, std::ostream &out, size_t &count);
-// 
-//         static void dfa(DFAs::Pair const &dfaPair, std::ostream &out, 
-//                         std::vector<FinAc> &accCounts,
-//                         std::vector<std::string> &startStates,
-//                         std::vector<size_t> &dfaOffsets);
-//         static void dfaRow(DFARow const &row, size_t &index, 
-//                         std::ostream &out, 
-//                         std::vector<FinAc> &accCounts);    
-//         static void dfaTransitions(DFARow const &row, std::ostream &out);
-//         static void dfaFinAcs(DFARow const &row, std::ostream &out,
-//                               std::vector<FinAc> &accCounts);
-// 
-//         static void inspectFinAc(FinAc const &acccount,
-//                                  std::vector<FinAc> &accCounts,
-//                                  int &finalRule);
-// 
-//         static std::string outDFAbase(std::string const &startState,
-//                                       size_t offset);
+         void rfcs(std::ostream &out) const;
+         static void outRFC(RuleFlagCount const &rfc, std::ostream &out,
+                                                      size_t &idx);
 
+//     static size_t addFinal(DFARow const &row, std::vector<size_t> &final);
+
+         static void dfa(DFAs::Pair const &dfaPair, std::ostream &out, 
+                         std::vector<RuleFlagCount> &accCounts,
+                         std::vector<std::string> &startStates,
+                         std::vector<size_t> &dfaOffsets);
+         static void dfaRow(DFARow const &row, size_t &index, 
+                         std::ostream &out, std::vector<RuleFlagCount> &rfc);
+         static void dfaTransitions(DFARow const &row, std::ostream &out);
+         static void dfaRFCs(DFARow const &row, std::ostream &out,
+                             std::vector<RuleFlagCount> &rfc);
+         static void storeRFC(AccCount const &acccount,
+                              std::pair<size_t, size_t> const &final,
+                              std::vector<RuleFlagCount> &rfc);
+ 
          static void outStartState(std::string const &name, std::ostream &out);
 
 //         static void ruleAction(Rule const &rule, std::ostream &out, 
@@ -138,6 +151,13 @@ class Generator
 
 };
 
+// //        void ifStartsAtBOLelse(std::ostream &out) const;      REMOVE SOURCE
+//         void ignoreBOLaction(std::ostream &out) const;
+// //        void ignoreBOLcall(std::ostream &out) const;          REMOVE SOURCE
+// //        void ignoreBOLimpl(std::ostream &out) const;          REMOVE SOURCE
+//         void rangeAtBOL(std::ostream &out) const;
+//         void resetStartsAtBOL(std::ostream &out) const;
+//         void checkBOL(std::ostream &out) const;
         
 #endif
 

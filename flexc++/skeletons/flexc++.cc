@@ -19,20 +19,16 @@ $insert ranges
     // character range was sensed. Row numbers are relative to the
     // used DFA and d_dfaBase is set to the first row of the subset to use.
     // The row's final two values are begin and end indices in
-    // s_accept[], defining the state's final and LA details
+    // s_rfc[] (rule, flags and count), defining the state's rule details
 $insert DFAs
 
     // The first value is the rule index
-    // The second value is the final indicator:
-    //  -2: not a final state (NO_FINAL_STATE), 
-    //  -1: final state, matching all text
-    //  >= 0: final state, the value is the LA tail length.
-    // The third value indicates other LA uses:
-    //  -1: Not a LA state tail length,
-    //  >=0: LA tail on transit FROM this state.
-    // The fourth value indicates an incrementing (1) tail:
-    // the tail length is incremented at each subsequent transition
-$insert finAcs
+    // The second value is the FLAG:
+    // 1: Final     4: Count        11: Final/BOL,Inc     
+    // 2: Inc.      5: Final,Count  13: Final/BOL,Count
+    // 3: Final,Inc 9: Final/BOL    
+    // The third value is the LOP count value (valid for Count flags)
+$insert RFCs
 
 $insert DFAbases
 

@@ -68,13 +68,19 @@ class DFARow
 
         void tabulate(FBB::Table &table) const;
 
-        std::pair<size_t, size_t> const &final() const;
 
         std::unordered_map<size_t, size_t> const &map() const;
         size_t size() const;            // the number of character-ranges
 
         std::string const &action(size_t idx) const;  // only for FINAL rows
+
+        std::pair<size_t, size_t> const &final() const; // final row for which
+                                                        // rules? the 1st
+                                                        // index is a BOL rule
+                                                        // the 2nd not (or
+                                                        // UINT_MAX)
         std::vector<AccCount> &accCounts();
+
         std::vector<AccCount> const &accCounts() const;
              
         bool operator==(DFARow const &rhs) const;

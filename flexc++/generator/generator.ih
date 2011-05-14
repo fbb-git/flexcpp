@@ -24,10 +24,11 @@ using namespace FBB;
 
 inline size_t Generator::dfaCols() const
 {
-    return d_ranges.size() + 2;
+    return d_ranges.size() + RFC_INDICES; 
 }
 
 inline void Generator::outStartState(string const &name, ostream &out)
 {
     out << "        " << name << ",\n";
 }
+

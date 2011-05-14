@@ -4,7 +4,7 @@ Generator::Map Generator::s_insert =
 {
     {"DFAbases",            &Generator::DFAbases},
     {"DFAs",                &Generator::dfas},
-    {"actions",             &Generator::actions},
+//    {"actions",             &Generator::actions},
     {"baseclass_h",         &Generator::baseClassH},
     {"class_h",             &Generator::classH},
     {"class_ih",            &Generator::classIH},
@@ -15,30 +15,26 @@ Generator::Map Generator::s_insert =
     {"debugInit",           &Generator::debugInit},
     {"debugStep",           &Generator::debugStep},
     {"declarations",        &Generator::declarations},
-//    {"finAcs",              &Generator::finAcs},
+    {"RFCs",                &Generator::rfcs},
+    {"inlineLexFunction",   &Generator::inlineLexFunction},
+//    {"inputMembers",        &Generator::inputMembers},
+    {"lexFunctionDecl",     &Generator::lexFunctionDecl},
+    {"namespace-close",     &Generator::namespaceClose},    
+    {"namespace-open",      &Generator::namespaceOpen},
+    {"namespace-use",       &Generator::namespaceUse},
+    {"ranges",              &Generator::ranges},
+
+    {"startCondNames",      &Generator::startCondNames},
+
+//    {"pushFront",           &Generator::pushFront},
+//    {"pushFrontCall",       &Generator::pushFrontCall},
 
 //    {"ifStartsAtBOLelse",   &Generator::ifStartsAtBOLelse},
 //    {"ignoreBOLaction",     &Generator::ignoreBOLaction},
 //    {"ignoreBOLcall",       &Generator::ignoreBOLcall},
 //    {"ignoreBOLimpl",       &Generator::ignoreBOLimpl},
-
-    {"inlineLexFunction",   &Generator::inlineLexFunction},
-    {"inputMembers",        &Generator::inputMembers},
-    {"lexFunctionDecl",     &Generator::lexFunctionDecl},
-    {"namespace-close",     &Generator::namespaceClose},
-    {"namespace-open",      &Generator::namespaceOpen},
-    {"namespace-use",       &Generator::namespaceUse},
-    {"ranges",              &Generator::ranges},
-
 //    {"rangeAtBOL",          &Generator::rangeAtBOL},
-
-    {"startCondNames",      &Generator::startCondNames},
-
 //    {"resetStartsAtBOL",    &Generator::resetStartsAtBOL},
-
-    {"pushFront",           &Generator::pushFront},
-    {"pushFrontCall",       &Generator::pushFrontCall},
-
 //    {"checkBOL",            &Generator::checkBOL},
 };
 
