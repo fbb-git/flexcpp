@@ -49,11 +49,11 @@ $insert 8 startCondNames
 
 private:
 
-    struct FinalInfo
-    {
-        int const *acccount;
-        size_t matchLen;
-    };
+//    struct FinalInfo
+//    {
+//        int const *acccount;
+//        size_t matchLen;
+//    };
 
         // class Input encapsulates all input operations. 
         // Its member get() returns the next input character
@@ -99,11 +99,8 @@ private:
     std::ostream   *d_out;
     bool            d_sawEOF;               // saw EOF: ignore accCount
     bool            d_atBOL;                // the matched text starts at BOL
+    std::vector<size_t> d_accCount;         
     Input           d_input;
-    VectorInt       d_LAtail;
-    FinalInfo       d_finalInfo;    
-
-    std::vector<size_t> d_buffer;           // read buffer
     std::string     d_matched;              // matched characters
     bool            d_return;               // return after a rule's action 
     bool            d_more;                 // set to true by more()
@@ -183,7 +180,7 @@ protected:
     size_t          state__() const;            // current state 
     void            continue__(size_t ch);      // handles a transition
     void            echoFirst__(size_t ch);     // handles unknown input
-    void            inspectFinac__();           // set final/LA tails
+    void            inspectRFCs__();            // update d_accCount
     void            noReturn__();               // d_return to false
     void            pushFront__(size_t ch);     // return char to Input
     void            reset__();                  // prepare for new cycle

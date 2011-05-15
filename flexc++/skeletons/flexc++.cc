@@ -76,6 +76,7 @@ void \@Base::Input::push_front(std::string const &str, size_t fm)
     d_out(&std::cout),
     d_sawEOF(false),
     d_atBOL(true),
+$insert accCount
 $insert debugInit
     d_dfaBase(s_dfa)
 {}
@@ -218,7 +219,7 @@ $insert 4 debug.finac "Fixed tail = " << finac[F]
   // The size of d_matched is determined:
   //
   // The current state is a known final state (as determined by 
-  // inspectFinac__(), just prior to calling matched__). 
+  // inspectRFCs__(), just prior to calling matched__). 
   //
   // The contents of d_matched are reduced by the matched rule's LA size,
   // and the LA tail is returned to the input.
@@ -315,13 +316,9 @@ $insert 4 debug.action "ECHO_FIRST"
 }
 
     // Inspect all s_rfc elements associated with the current state
-    // 
-    // If the current state is a final state for a rule ([F] != NO_FINAL_STATE
-    // then store the address of the current s_finAc element and the current 
-    // buffer length in d_finalInfo.
-    //
-    // If the current state defines an incremental tail ([I] == 1) then 
-    // store the [T] value at d_LAtail[R]
+    // If the s_rfc element has its COUNT flag set then set the 
+    // d_accCount[rule] value to the element's accCount value, if it has its 
+    // INCREMENT flag set then increment d_accCount[rule]
 void \@Base::inspectRFCs__()
 {
     for 
@@ -332,31 +329,12 @@ void \@Base::inspectRFCs__()
                 ++begin
     )
     {
-        int const *finac = s_finAc[begin];
-
-            // If the current state is a rule's final state then store 
-            // the finac info and the current buffer length in d_finalInfo.
-        if (atFinalState(finac))
-        {
-$insert 12 debug.finac "Setting fixed LAtail [" << finac[R] << "] to " +
-$insert 12 debug.finac finac[F]
-            d_finalInfo = 
-                {
-                    finac,              // store the finac info's location
-                    d_matched.size()    // and the match length
-                };
-        }
-
-        if (finac[I])                   // incremental tail
-        {
-            if (d_LAtail[ finac[R] ] == NO_LA_TAIL) // set unless already set
-            {
-$insert 16 debug.finac "Setting LAtail [" << finac[R] << "] to " +
-$insert 16 debug.finac finac[T] << ", incrementing"
-                d_LAtail[ finac[R] ] = finac[T];
-            }
-        }
-    }   
+        size_t flag = s_rfc[begin];
+        if (flag & 4)                           // 4: COUNT
+            d_accCount[begin] = s_rfc[begin][C];
+        else if (flag & 2)                      // 2: INCREMENT
+            ++d_accCount[begin];
+    }
 }
 
 void \@Base::reset__()
@@ -368,8 +346,6 @@ void \@Base::reset__()
         d_matched.clear();
 
     d_more = false;
-    d_finalInfo = {0, };
-    d_LAtail = VectorInt(s_nRules, NO_LA_TAIL);
 }
 
 int \@::executeAction__(int ruleIdx)
