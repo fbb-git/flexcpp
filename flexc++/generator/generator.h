@@ -145,10 +145,8 @@ class Generator
                               std::vector<RuleFlagCount> &rfc);
  
          static void outStartState(std::string const &name, std::ostream &out);
-
-//         static void ruleAction(Rule const &rule, std::ostream &out, 
-//                                size_t &idx, bool lineDirectives);
-
+         static void ruleAction(Rule const &rule, std::ostream &out, 
+                                size_t &idx, bool lineDirectives);
 };
 
 // //        void ifStartsAtBOLelse(std::ostream &out) const;      REMOVE SOURCE

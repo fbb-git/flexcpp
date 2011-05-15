@@ -2,9 +2,11 @@
 
 Generator::Map Generator::s_insert =
 {
+    // $insert-key         function called
+
     {"DFAbases",            &Generator::DFAbases},
     {"DFAs",                &Generator::dfas},
-//    {"actions",             &Generator::actions},
+    {"actions",             &Generator::actions},
     {"baseclass_h",         &Generator::baseClassH},
     {"class_h",             &Generator::classH},
     {"class_ih",            &Generator::classIH},
@@ -17,7 +19,7 @@ Generator::Map Generator::s_insert =
     {"declarations",        &Generator::declarations},
     {"RFCs",                &Generator::rfcs},
     {"inlineLexFunction",   &Generator::inlineLexFunction},
-//    {"inputMembers",        &Generator::inputMembers},
+    {"inputMembers",        &Generator::inputMembers},
     {"lexFunctionDecl",     &Generator::lexFunctionDecl},
     {"namespace-close",     &Generator::namespaceClose},    
     {"namespace-open",      &Generator::namespaceOpen},
@@ -26,9 +28,6 @@ Generator::Map Generator::s_insert =
 
     {"startCondNames",      &Generator::startCondNames},
 
-//    {"pushFront",           &Generator::pushFront},
-//    {"pushFrontCall",       &Generator::pushFrontCall},
-
 //    {"ifStartsAtBOLelse",   &Generator::ifStartsAtBOLelse},
 //    {"ignoreBOLaction",     &Generator::ignoreBOLaction},
 //    {"ignoreBOLcall",       &Generator::ignoreBOLcall},
@@ -36,6 +35,9 @@ Generator::Map Generator::s_insert =
 //    {"rangeAtBOL",          &Generator::rangeAtBOL},
 //    {"resetStartsAtBOL",    &Generator::resetStartsAtBOL},
 //    {"checkBOL",            &Generator::checkBOL},
+//    {"pushFront",           &Generator::pushFront},
+//    {"pushFrontCall",       &Generator::pushFrontCall},
+
 };
 
 char const *Generator::s_baseFlag = "\\@";

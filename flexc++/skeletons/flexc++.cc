@@ -8,7 +8,7 @@ $insert namespace-open
 
     // s_ranges: use (unsigned) characters as index to obtain
     //           that character's range-number.
-    //           Ranges for BOL and EOF are in constants in the
+    //           The range for EOF is defined in a constant in the
     //           class header file
 $insert ranges
 
@@ -54,15 +54,9 @@ size_t \@Base::Input::next()
 
 void \@Base::Input::push_front(size_t ch)
 {
-    if (static_cast<int>(ch) == AT_BOL)
+    if (ch < 0x100)
     {
-$insert 8 debug.input "Input::push_front(AT_BOL), d_returnBOL = true"
-        d_returnBOL = true;
-    }
-    else if (ch < 0x100)
-    {
-$insert 8 debug.input "Input::push_front(" << ch << "), d_returnBOL = false"
-        d_returnBOL = false;
+$insert 8 debug.input "Input::push_front(" << ch << ")"
         if (ch == '\n')
             --d_lineNr;
         d_deque.push_front(ch);
@@ -175,15 +169,10 @@ bool \@Base::popStream()
 
 \@Base::ActionType__ \@Base::actionType__(size_t range)
 {
-$insert 4 checkBOL
-
     d_nextState = d_dfaBase[d_state][range];
 
     if (d_nextState != -1)                  // transition is possible
         return ActionType__::CONTINUE;
-
-$insert 4 ignoreBOLaction
-
 
     if (!d_sawEOF && atFinalState(d_finalInfo.finac))   // FINAL state reached
     {
@@ -265,16 +254,7 @@ size_t \@Base::getRange__(size_t ch)
     if (static_cast<int>(ch) != AT_EOF)
         d_sawEOF = false;
 
-    switch (ch)
-    {
-        case AT_EOF:
-        return s_rangeOfEOF;
-
-$insert 8 rangeAtBOL
-
-        default:
-        return s_ranges[ch];
-    }
+    return ch == AT_EOF? s_rangeOfEOF : s_ranges[ch];
 }
 
 void \@Base::incLAtails()
@@ -306,7 +286,6 @@ $insert 4 debug.action "CONTINUE, NEW STATE: " << d_nextState
     switch (ch)
     {
         case AT_EOF:
-        case AT_BOL:
         break;
 
         default:
@@ -333,8 +312,6 @@ $insert 4 debug.action "ECHO_FIRST"
         std::cerr << (ch = d_matched[0]);
     }
 }
-
-$insert pushFront
 
     // Inspect all s_finAc elements associated with the current state
     // 
@@ -388,9 +365,8 @@ void \@Base::reset__()
 
     if (!d_more)
         d_matched.clear();
-    d_more = false;
-$insert 4 resetStartsAtBOL
 
+    d_more = false;
     d_finalInfo = {0, };
     d_LAtail = VectorInt(s_nRules, NO_LA_TAIL);
 }
@@ -437,10 +413,6 @@ $insert 8 debugStep
 $insert 16 debug.action  "EOF_REACHED"
             return 0;
 
-            case ActionType__::IGNORE_BOL:
-//$insert 16 debug.action "IGNORE_BOL";
-            break;
-
             case ActionType__::MATCH:
             {
                 int ret = executeAction__(matched__(ch));
@@ -450,10 +422,6 @@ $insert 16 debug.action  "EOF_REACHED"
                 preCode__();
                 continue;
             }
-
-            case ActionType__::PUSH_FRONT:
-$insert 16 pushFrontCall
-            break;
         } // switch
     } // while
 }
