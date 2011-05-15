@@ -33,11 +33,10 @@ protected:
     enum class ActionType__
     {
         CONTINUE,               // transition succeeded, go on
-        ECHO_CH,                // echo ch itself (d_buffer empty)
-        ECHO_FIRST,             // echo d_buffer[0], push back the rest
-        EOF_REACHED,            // all input exhausted
+        ECHO_CH,                // echo ch itself (d_matched empty)
+        ECHO_FIRST,             // echo d_matched[0], push back the rest
         MATCH,                  // matched a rule
-        REREAD,                 // return all but the 1st char to the input
+        RETURN,                 // no further continuation, lex returns 0.
     };
 
 public:

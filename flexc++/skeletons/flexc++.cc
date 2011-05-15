@@ -176,17 +176,13 @@ bool \@Base::popStream()
     if (d_nextState != -1)                  // transition is possible
         return ActionType__::CONTINUE;
 
-    if (!d_sawEOF && atFinalState(d_finalInfo.finac))   // FINAL state reached
-    {
-        d_sawEOF = range == s_rangeOfEOF;
+    if (atFinalState())                     // FINAL state reached
         return ActionType__::MATCH;
-    }
 
+    if (d_matched.size())
+        return ActionType__::ECHO_FIRST;    // no match, echo the 1st char
 
-    if (range == s_rangeOfEOF)
-        return ActionType__::EOF_REACHED;
-    
-    return ActionType__::ECHO_FIRST;        // no match, echo the 1st char
+    return range != s_rangeOfEOF ? ECHO_CH : RETURN;
 }
 
 void \@Base::accept(size_t nChars)          // old name: less, now deprecated
@@ -380,16 +376,6 @@ $insert 8 debugStep
                 continue__(ch);
             break;
 
-            case ActionType__::ECHO_FIRST:
-                echoFirst__(ch);
-                reset__();                      // fresh start 
-                preCode__();
-            break;
-
-            case ActionType__::EOF_REACHED:
-$insert 16 debug.action  "EOF_REACHED"
-            return 0;
-
             case ActionType__::MATCH:
             {
                 int ret = executeAction__(matched__(ch));
@@ -399,6 +385,21 @@ $insert 16 debug.action  "EOF_REACHED"
                 preCode__();
                 continue;
             }
+
+            case ActionType__::ECHO_FIRST:
+                echoFirst__(ch);
+                reset__();                      // fresh start 
+                preCode__();
+            break;
+
+            case ActionType__::ECHO_CH:
+                                                // echo the just read char.
+            break;
+
+            case ActionType__::RETURN:
+$insert 16 debug.action  "EOF_REACHED"
+            return 0;
+
         } // switch
     } // while
 }
