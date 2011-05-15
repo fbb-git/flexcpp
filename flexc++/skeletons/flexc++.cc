@@ -75,6 +75,7 @@ void \@Base::Input::push_front(std::string const &str, size_t fm)
     d_state(0),
     d_out(&std::cout),
     d_sawEOF(false),
+    d_atBOL(true),
 $insert debugInit
     d_dfaBase(s_dfa)
 {}
@@ -313,7 +314,7 @@ $insert 4 debug.action "ECHO_FIRST"
     }
 }
 
-    // Inspect all s_finAc elements associated with the current state
+    // Inspect all s_rfc elements associated with the current state
     // 
     // If the current state is a final state for a rule ([F] != NO_FINAL_STATE
     // then store the address of the current s_finAc element and the current 
@@ -321,7 +322,7 @@ $insert 4 debug.action "ECHO_FIRST"
     //
     // If the current state defines an incremental tail ([I] == 1) then 
     // store the [T] value at d_LAtail[R]
-void \@Base::inspectFinac__()
+void \@Base::inspectRFCs__()
 {
     for 
     (

@@ -1,10 +1,14 @@
 #include "generator.ih"
 
+// called from dfarfcs.cc
+
 void Generator::storeRFC(AccCount const &accCount, 
-                         pair<size_t, size_t> const &final,
+                         pair<size_t, size_t> &final,
                          vector<RuleFlagCount> &rfcs)
 {
-    RuleFlagCount rfc {accCount.rule(), 0, accCount.accCount()};
+    size_t rule = accCount.rule();
+
+    RuleFlagCount rfc {rule, 0, accCount.accCount()};
 
     AccCount::Type type = accCount.type();
 
@@ -13,11 +17,20 @@ void Generator::storeRFC(AccCount const &accCount,
         type & AccCount::INCREMENTING ? INCREMENTING : 
                                         0;
 
-    rfc.d_flag |= 
-        rfc.d_rule == final.first   ? FINAL | BOL :
-        rfc.d_rule == final.second  ? FINAL :
-                                      0;
+    if (final.first == rule)
+    {
+        final.first == UINT_MAX;
+        rfc.d_flag |= FINAL | BOL;
+    }
+
+    if (final.second == rule)
+    {
+        final.second == UINT_MAX;
+        rfc.d_flag |= FINAL;
+    }
 
     if (rfc.d_flag != 0)
         rfcs.push_back(rfc);
 }
+
+

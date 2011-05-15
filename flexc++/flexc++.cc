@@ -30,7 +30,7 @@ namespace
         {"lines",                       Arg::None},
         {"no-lines",                    Arg::None},
 
-     // {"show-filenames"               Arg::None},
+        {"show-filenames",              Arg::None},
 
         {"debug",                       'd'},
         {"debug-steps",                 's'},
@@ -82,9 +82,9 @@ try
     Generator generator(rules, ranges, dfas);
 
         generator.lexSource();
-////        generator.baseclassHeader();
-////        generator.classHeader();
-////        generator.implementationHeader();
+        generator.baseclassHeader();
+        generator.classHeader();
+        generator.implementationHeader();
 }
 catch (int x)
 {

@@ -55,8 +55,6 @@ class Generator
     DFAs const &d_dfas;
     std::string d_baseclassScope;
 
-//     bool d_useBOL;
-
     bool d_lineDirectives;
     bool d_debug;
     bool d_debugStep;
@@ -141,7 +139,7 @@ class Generator
          static void dfaRFCs(DFARow const &row, std::ostream &out,
                              std::vector<RuleFlagCount> &rfc);
          static void storeRFC(AccCount const &acccount,
-                              std::pair<size_t, size_t> const &final,
+                              std::pair<size_t, size_t> &final,
                               std::vector<RuleFlagCount> &rfc);
  
          static void outStartState(std::string const &name, std::ostream &out);

@@ -25,5 +25,10 @@ void Generator::implementationHeader() const
     Errno::open(in,  d_options.implementationSkeleton()); 
     Errno::open(out, d_options.implementationHeaderPath()); 
 
+    if (d_arg.option('V'))
+        cout << "Implementation header file: " << 
+                                  d_options.implementationHeaderPath() << '\n';
+
     filter(in, out);    
 }
+

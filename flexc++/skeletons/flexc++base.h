@@ -16,24 +16,15 @@ class \@Base
                 // idx: rule, value: tail length (NO_INCREMENTS if no tail)
     typedef std::vector<int> VectorInt;
 
-    enum 
-    { 
-        NO_LA_TAIL = -2,
-        NO_FINAL_STATE = -2,
-        USE_LA_TAIL = -1,
-    };
-
-    enum        // Finac Indices, see s_finAc[]
+    enum        // RuleFlagsCount Indices, see s_rfc[]
     {
         R = 0,
         F,
-        T,
-        I,
+        C,
     };
 
     enum 
     {
-        AT_BOL = -2,
         AT_EOF = -1
     };
 
@@ -45,7 +36,6 @@ protected:
         ECHO_CH,                // echo ch itself (d_buffer empty)
         ECHO_FIRST,             // echo d_buffer[0], push back the rest
         EOF_REACHED,            // all input exhausted
-        IGNORE_BOL,             // ignore a BOL range
         MATCH,                  // matched a rule
         REREAD,                 // return all but the 1st char to the input
     };
@@ -72,7 +62,6 @@ private:
         std::deque<unsigned char> d_deque;  // pending input chars
         std::istream *d_in;                 //  ptr for easy streamswitching
         size_t d_lineNr;                    // line count
-        bool d_returnBOL;                   // initially true
 
         public:
             Input();
@@ -108,7 +97,8 @@ private:
     size_t          d_state;
     int             d_nextState;
     std::ostream   *d_out;
-    bool            d_sawEOF;               // saw EOF: ignore acccount
+    bool            d_sawEOF;               // saw EOF: ignore accCount
+    bool            d_atBOL;                // the matched text starts at BOL
     Input           d_input;
     VectorInt       d_LAtail;
     FinalInfo       d_finalInfo;    
@@ -124,9 +114,6 @@ protected:
     size_t d_step__;
 
 $insert 4 debugDecl
-
-private:
-    bool           d_startsAtBOL;           // the matched text starts at BOL
 
 $insert 4 declarations
     static size_t  const s_ranges[];
@@ -196,7 +183,6 @@ protected:
     size_t          state__() const;            // current state 
     void            continue__(size_t ch);      // handles a transition
     void            echoFirst__(size_t ch);     // handles unknown input
-    void            ignoreBOL__();              // only if BOL's used
     void            inspectFinac__();           // set final/LA tails
     void            noReturn__();               // d_return to false
     void            pushFront__(size_t ch);     // return char to Input

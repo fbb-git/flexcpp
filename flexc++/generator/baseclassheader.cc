@@ -17,5 +17,9 @@ void Generator::baseclassHeader() const
     Errno::open(in,  d_options.baseclassSkeleton()); 
     Errno::open(out, d_options.baseclassHeaderPath()); 
 
+    if (d_arg.option('V'))
+        cout << "Baseclass header file: " << 
+                                     d_options.baseclassHeaderPath() << '\n';
+
     filter(in, out);    
 }
