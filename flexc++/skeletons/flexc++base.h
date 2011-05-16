@@ -226,7 +226,8 @@ inline void \@Base::push(size_t ch)
 
 inline bool \@Base::atFinalState()
 {
-    return d_final.second != UINT_MAX || d_final.first != UINT_MAX;
+    return d_final.second != UINT_MAX || 
+                (d_atBOL && d_final.first != UINT_MAX);
 }
 
 inline void \@Base::setFilename(std::string const &name)
