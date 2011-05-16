@@ -16,10 +16,6 @@ void Generator::declarations(ostream &out) const
         "    static size_t  const s_finacIdx = " << dfaCols() - 2 << ";\n"
         "    static size_t  const s_nRules = " << d_rules.size() << ";\n"
         ;
-
-//    if (d_useBOL)
-//        out << "    static size_t  const s_rangeOfBOL = " << 
-//                                        (d_ranges.rangeOfEOF() + 1) << ";\n";
 }
 
 

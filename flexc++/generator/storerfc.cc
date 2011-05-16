@@ -19,13 +19,13 @@ void Generator::storeRFC(AccCount const &accCount,
 
     if (final.first == rule)
     {
-        final.first == UINT_MAX;
+        final.first = UINT_MAX;
         rfc.d_flag |= FINAL | BOL;
     }
 
     if (final.second == rule)
     {
-        final.second == UINT_MAX;
+        final.second = UINT_MAX;
         rfc.d_flag |= FINAL;
     }
 

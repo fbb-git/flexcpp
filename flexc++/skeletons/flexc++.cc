@@ -23,7 +23,7 @@ $insert ranges
 $insert DFAs
 
     // The first value is the rule index
-    // The second value is the FLAG:
+    // The second value is the FLAG: see the scannerbase.h file
     // 1: Final     4: Count        11: Final/BOL,Inc     
     // 2: Inc.      5: Final,Count  13: Final/BOL,Count
     // 3: Final,Inc 9: Final/BOL    
@@ -52,21 +52,21 @@ size_t \@Base::Input::next()
     return ch;
 }
 
-void \@Base::Input::push_front(size_t ch)
+void \@Base::Input::reRead(size_t ch)
 {
     if (ch < 0x100)
     {
-$insert 8 debug.input "Input::push_front(" << ch << ")"
+$insert 8 debug.input "Input::reRead(" << ch << ")"
         if (ch == '\n')
             --d_lineNr;
         d_deque.push_front(ch);
     }
 }
 
-void \@Base::Input::push_front(std::string const &str, size_t fm)
+void \@Base::Input::reRead(std::string const &str, size_t fm)
 {
     for (size_t idx = str.size(); idx-- > fm; )
-        push_front(str[idx]);
+        reRead(str[idx]);
 }
 
 \@Base::\@Base()
@@ -87,8 +87,10 @@ $insert debugInit
     d_state(0),
     d_out(&out),
     d_sawEOF(false),
-    d_input(in),
+    d_atBOL(true),
+$insert accCount
 $insert debugInit
+    d_input(in),
     d_dfaBase(s_dfa)
 {}
 
@@ -97,7 +99,7 @@ $insert debugFunctions
 void \@Base::redo(size_t nChars)
 {
     size_t from = nChars >= length() ? 0 : length() - nChars;
-    d_input.push_front(d_matched, from);
+    d_input.reRead(d_matched, from);
     d_matched.resize(from);
 }
 
@@ -106,7 +108,7 @@ void \@Base::switchStreams(std::istream &iStream, std::ostream &out)
     *d_out << std::flush;
     d_out = &out;
     d_input = Input(iStream);
-    d_filename = istreamName();
+    d_filename = istreamName__();
     d_sawEOF = false;
 }
 
@@ -137,7 +139,7 @@ void \@Base::pushStream(std::string const &name)
     pushStream(name, streamPtr, true);
 }
 
-std::string \@Base::istreamName()
+std::string \@Base::istreamName__()
 {
     std::string ret;
     std::ostringstream name;
@@ -148,7 +150,7 @@ std::string \@Base::istreamName()
 
 void \@Base::pushStream(std::istream &iStream)
 {
-    pushStream(istreamName(), &iStream, false);
+    pushStream(istreamName__(), &iStream, false);
 }
 
 bool \@Base::popStream()
@@ -182,116 +184,87 @@ bool \@Base::popStream()
     if (d_matched.size())
         return ActionType__::ECHO_FIRST;    // no match, echo the 1st char
 
-    return range != s_rangeOfEOF ? ECHO_CH : RETURN;
+    return range != s_rangeOfEOF ? 
+                ActionType__::ECHO_CH 
+            : 
+                ActionType__::RETURN;
 }
 
 void \@Base::accept(size_t nChars)          // old name: less, now deprecated
 {
     if (nChars < d_matched.size())
     {
-        d_input.push_front(d_matched, nChars);
+        d_input.reRead(d_matched, nChars);
         d_matched.resize(nChars);
     }
 }
 
-  // If the current state's [F] value is:
-  //    USE_LA_TAIL then d_LAtail[R] defines the LA tail.
-  // Otherwise the current state's [F] value determines the LA tail. It may
-  //    be 0, in which case d_matched is used as-is.
-size_t \@Base::lookAheadTail(int const *finac) const
-{
-    size_t ruleIdx = finac[R];
-
-    if (finac[F] == USE_LA_TAIL)
-    {
-$insert 8 debug.finac "Using (incremented) LA tail " << d_LAtail[ruleIdx]
-        return d_LAtail[ruleIdx];
-    }
-
-$insert 4 debug.finac "Fixed tail = " << finac[F]
-    return finac[F];
-}
-
   // The size of d_matched is determined:
-  //
-  // The current state is a known final state (as determined by 
+  //    The current state is a known final state (as determined by 
   // inspectRFCs__(), just prior to calling matched__). 
-  //
-  // The contents of d_matched are reduced by the matched rule's LA size,
+  //    The contents of d_matched are reduced by the matched rule's LA size,
   // and the LA tail is returned to the input.
-void \@Base::determineMatchedSize(int const *finac)
+void \@Base::determineMatchedSize(size_t length)    // initially: tail length
 {
-    size_t length = d_finalInfo.matchLen;   // length of the matched text
-                                            
-    if (size_t tail = lookAheadTail(finac)) // maybe reduce by LA's length
-        length -=  tail;
-        
-    d_input.push_front(d_matched, length);  // push front the tail
+    if (length == UINT_MAX)
+        return;
+
+    length = d_matched.size() - length;
+
+    d_input.reRead(d_matched, length);  // push-front the tail section
     d_matched.resize(length);               // return what's left
 }
 
   // At this point a rule has been matched.  The next character is not part of
-  // the matched rule and is sent back to the input.  
-  // The final match length is determined, and the index of the matched rule 
-  // is returned.
-int \@Base::matched__(size_t ch)
+  // the matched rule and is sent back to the input.  The final match length
+  // is determined, the index of the matched rule is determined, and then
+  // d_atBOL is updated. Finally the rule index is returned.
+size_t \@Base::matched__(size_t ch)
 {
 $insert 4 debug.action "MATCH"
-    d_input.push_front(ch);
+    d_input.reRead(ch);
 
-    int const *finac = d_finalInfo.finac;   // final info for this state
-    
-    determineMatchedSize(finac);
+    size_t rule = d_atBOL && d_final.first != UINT_MAX ? 
+                        d_final.first
+                    : 
+                        d_final.second;
+
+    determineMatchedSize(d_accCount[rule]);
+
+    d_atBOL = *d_matched.rend() == '\n';
+
 $insert 4 debug.action "match buffer contains `" << d_matched << "'"
 
-    return finac[R];
+    return rule;
 }
 
-size_t \@Base::getRange__(size_t ch)
+size_t \@Base::getRange__(int ch)       // using int to prevent casts
 {
-    if (static_cast<int>(ch) != AT_EOF)
+    if (ch != AT_EOF)
         d_sawEOF = false;
 
-    return ch == AT_EOF? s_rangeOfEOF : s_ranges[ch];
-}
-
-void \@Base::incLAtails()
-{
-    for
-    (
-        auto iter = d_LAtail.begin(), end = d_LAtail.end(); 
-            iter != end; 
-                ++iter
-    )
-    {
-        if (*iter != NO_LA_TAIL)
-        {
-            ++*iter;
-$insert 12 debug.finac "LA tail for rule " << (iter - d_LAtail.begin()) +
-$insert 12 debug.finac " now: " << *iter
-        }
-    }
+    return ch == AT_EOF ? static_cast<size_t>(s_rangeOfEOF) : s_ranges[ch];
 }
 
   // At this point d_nextState contains the next state and continuation is
-  // possible. The just read char. is appended to d_match, and LA tail 
-  // counts are incremented.
-void \@Base::continue__(size_t ch)
+  // possible. The just read char. is appended to d_match, and LOP counts
+  // are updated.
+void \@Base::continue__(int ch)
 {
-$insert 4 debug.action "CONTINUE, NEW STATE: " << d_nextState
+$insert 4 debug.action "CONTINUE, NEXT STATE: " << d_nextState
     d_state = d_nextState;
 
-    switch (ch)
-    {
-        case AT_EOF:
-        break;
-
-        default:
-            d_matched += ch;
-            incLAtails();
-        break;
-    }
+    if (ch != AT_EOF)
+        d_matched += ch;
 }
+
+void \@Base::echoCh__(size_t ch)
+{
+$insert 4 debug.action "ECHO_CH" 
+    std::cerr << ch;
+    d_atBOL = ch == '\n';
+}
+
 
    // At this point there is no continuation. The last character is
    // pushed back into the input stream as well as all but the first char. in
@@ -301,22 +274,24 @@ $insert 4 debug.action "CONTINUE, NEW STATE: " << d_nextState
 void \@Base::echoFirst__(size_t ch)
 {
 $insert 4 debug.action "ECHO_FIRST"
-    if (d_matched.empty())          // no match possible: echo ch itself
-        std::cout << ch;
-    else                            // echo the 1st matched char, push_front
-    {                               // the rest
-        d_input.push_front(ch);
-        d_input.push_front(d_matched, 1);
-        std::cerr << (ch = d_matched[0]);
-    }
+    d_input.reRead(ch);
+    d_input.reRead(d_matched, 1);
+    echoCh__(d_matched[0]);
 }
 
     // Inspect all s_rfc elements associated with the current state
     // If the s_rfc element has its COUNT flag set then set the 
     // d_accCount[rule] value to the element's accCount value, if it has its 
     // INCREMENT flag set then increment d_accCount[rule]
+    // If neither was set set the d_accCount[rule] to UINT_MAX
+    // d_final is reset to UINT_MAX values.
+    // If the s_rfc element has its FINAL flag set then store the rule number
+    // in d_final.second. If it has its FINAL + BOL flags set then store the
+    // rule number in d_final.first
 void \@Base::inspectRFCs__()
 {
+    d_final = std::pair<size_t, size_t> { UINT_MAX, UINT_MAX };
+
     for 
     (
         size_t begin = d_dfaBase[d_state][s_finacIdx], 
@@ -325,11 +300,22 @@ void \@Base::inspectRFCs__()
                 ++begin
     )
     {
-        size_t flag = s_rfc[begin];
-        if (flag & 4)                           // 4: COUNT
-            d_accCount[begin] = s_rfc[begin][C];
-        else if (flag & 2)                      // 2: INCREMENT
-            ++d_accCount[begin];
+        size_t const *rfc = s_rfc[begin];
+        size_t flag = rfc[FLAGS];
+        size_t rule = rfc[RULE];
+
+        if (flag & INCREMENT)
+            ++d_accCount[rule];
+        else 
+            d_accCount[rule] = (flag & COUNT) ? rfc[ACCCOUNT] : UINT_MAX;
+
+        if (flag & FINAL)
+        {
+            if (flag & BOL)
+                d_final.first = rule;
+            else
+                d_final.second = rule;
+        }
     }
 }
 
@@ -344,7 +330,7 @@ void \@Base::reset__()
     d_more = false;
 }
 
-int \@::executeAction__(int ruleIdx)
+int \@::executeAction__(size_t ruleIdx)
 {
 $insert 4 debug.action  "Executing actions of rule " << ruleIdx
     switch (ruleIdx)
@@ -359,7 +345,7 @@ $insert 4 debug.action "Rule " << ruleIdx << " did not do 'return'"
 int \@::lex__()
 {
     reset__();
-    preCode__();
+    preCode();
 
     while (true)
     {
@@ -368,32 +354,28 @@ int \@::lex__()
 
 $insert 8 debugStep
 
-        inspectFinac__();
+        inspectRFCs__();                    // update d_accCount values
 
         switch (actionType__(range))        // determine the action
         {
             case ActionType__::CONTINUE:
                 continue__(ch);
-            break;
+            continue;
 
             case ActionType__::MATCH:
             {
                 int ret = executeAction__(matched__(ch));
                 if (return__())
                     return ret;
-                reset__();
-                preCode__();
-                continue;
+                break;
             }
 
             case ActionType__::ECHO_FIRST:
                 echoFirst__(ch);
-                reset__();                      // fresh start 
-                preCode__();
             break;
 
             case ActionType__::ECHO_CH:
-                                                // echo the just read char.
+                echoCh__(ch);
             break;
 
             case ActionType__::RETURN:
@@ -401,6 +383,9 @@ $insert 16 debug.action  "EOF_REACHED"
             return 0;
 
         } // switch
+
+        reset__();
+        preCode();
     } // while
 }
 

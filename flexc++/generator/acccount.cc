@@ -3,5 +3,5 @@
 void Generator::accCount(ostream &out) const
 {
     out <<
-    "    accCount(" << d_rules.size() << ")\n";
+    "    d_accCount(" << d_rules.size() << ", UINT_MAX),\n";
 }

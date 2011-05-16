@@ -1,6 +1,7 @@
 #ifndef \@BASE_H_INCLUDED
 #define \@BASE_H_INCLUDED
 
+#include <climits>
 #include <iostream>
 #include <deque>
 #include <stack>
@@ -18,9 +19,17 @@ class \@Base
 
     enum        // RuleFlagsCount Indices, see s_rfc[]
     {
-        R = 0,
-        F,
-        C,
+        RULE = 0,
+        FLAGS,
+        ACCCOUNT,
+    };
+
+    enum
+    {
+        FINAL = 1,
+        INCREMENT = 2,
+        COUNT = 4,
+        BOL = 8
     };
 
     enum 
@@ -69,7 +78,7 @@ private:
             size_t lineNr() const;          
             void reRead(size_t ch);     // push back 'ch' (if <= 0x100)
                                             // push back string from idx 'fm'
-            void reRead(std::string const &str, size_t fm = 1);
+            void reRead(std::string const &str, size_t fm);
 
             void destroy();                 // delete dynamically allocated
                                             // d_in
@@ -99,6 +108,7 @@ private:
     bool            d_sawEOF;               // saw EOF: ignore accCount
     bool            d_atBOL;                // the matched text starts at BOL
     std::vector<size_t> d_accCount;         
+    std::pair<size_t, size_t> d_final;      // UINT_MAX if not, 1st for BOL
     Input           d_input;
     std::string     d_matched;              // matched characters
     bool            d_return;               // return after a rule's action 
@@ -113,7 +123,7 @@ $insert 4 debugDecl
 
 $insert 4 declarations
     static size_t  const s_ranges[];
-    static int     const s_finAc[][4];
+    static size_t  const s_rfc[][3];
                                             // TODO: make configurable
     static size_t  const s_maxSizeofStreamStack = 10; 
 
@@ -161,23 +171,25 @@ protected:
     void            more();
     void            push(size_t ch);                // push char to Input
     void            push(std::string const &txt);   // same: chars
+
     void            pushStream(std::istream &curStream);
     void            pushStream(std::string const &curName);
     void            setFilename(std::string const &name);
     void            setMatched(std::string const &text);
 
-    static std::string istreamName();
+    static std::string istreamName__();
         
         // members used by lex__(): they end in __ and should not be used
         // otherwise.
 
     ActionType__    actionType__(size_t range); // next action
     bool            return__();                 // 'return' from codeblock
-    int             matched__(size_t ch);       // handles a matched rule
-    size_t          getRange__(size_t ch);      // convert char to range
+    size_t          matched__(size_t ch);       // handles a matched rule
+    size_t          getRange__(int ch);         // convert char to range
     size_t          get__();                    // next character
     size_t          state__() const;            // current state 
-    void            continue__(size_t ch);      // handles a transition
+    void            continue__(int ch);         // handles a transition
+    void            echoCh__(size_t ch);        // echoes ch, sets d_atBOL
     void            echoFirst__(size_t ch);     // handles unknown input
     void            inspectRFCs__();            // update d_accCount
     void            noReturn__();               // d_return to false
@@ -188,10 +200,8 @@ private:
 
     void pushStream(std::string const &name,
                       std::istream *streamPtr, bool closeAtPop);
-    void incLAtails();
-    void determineMatchedSize(int const *acccount);
-    size_t lookAheadTail(int const *acccount) const;
-    static bool atFinalState(int const *acccount);
+    void determineMatchedSize(size_t length);
+    bool atFinalState();
 };
 
 inline void \@Base::Input::destroy()
@@ -214,6 +224,11 @@ inline void \@Base::push(size_t ch)
     d_input.reRead(ch);
 }
 
+inline bool \@Base::atFinalState()
+{
+    return d_final.second != UINT_MAX || d_final.first != UINT_MAX;
+}
+
 inline void \@Base::setFilename(std::string const &name)
 {
     d_filename = name;
@@ -227,11 +242,6 @@ inline void \@Base::setMatched(std::string const &text)
 inline void \@Base::switchStreams(std::istream &iStream)
 {
     switchStreams(iStream, *d_out);
-}
-
-inline bool \@Base::atFinalState(int const *acccount)
-{
-    return acccount && acccount[F] != NO_FINAL_STATE;
 }
 
 inline std::string const &\@Base::matched() const

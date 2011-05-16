@@ -15,7 +15,7 @@ $insert 8 lexFunctionDecl
 
     private:
         int lex__();
-        int executeAction__(int ruleNr);
+        int executeAction__(size_t ruleNr);
 
         void preCode();     // re-implement this function for code that must 
                             // be exec'ed before the patternmatching starts
@@ -29,9 +29,10 @@ inline void \@::preCode()
 
 inline \@::\@(std::istream &iStream, std::ostream &oStream)
 :
-    \@Base(iStream, oStream),
-    setFilename(istreamName__()),
-{}
+    \@Base(iStream, oStream)
+{
+    setFilename(istreamName__());
+}
 
 $insert inlineLexFunction
 

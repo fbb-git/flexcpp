@@ -39,8 +39,16 @@ void Generator::inputMembers(ostream &out) const
     if (hasInput)
         out <<
         "            if (s_debug__)\n"
-        "                s_out__ << \"Input::get() returns \" << ch << " 
-                                            "'\\n' << dflush__;\n";
+        "            {\n"
+        "                s_out__ << \"Input::get() returns \";\n"
+        "                if (isprint(ch))\n"
+        "                    s_out__ << '`' << static_cast<char>(ch) << "
+                                                                "'\\\'';\n"
+        "                else\n"
+        "                    s_out__ << '#' << static_cast<int>(ch);\n"
+        "                s_out__ << '\\n' << dflush__;\n"
+        "            }\n";
+
     out <<
         "        return ch;\n"
         "    }\n"

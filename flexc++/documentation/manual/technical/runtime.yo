@@ -70,12 +70,13 @@ stops as soon as a condition hold true, returning the action type:
 For each of the returned action types actions must be performed:
 
 itemization(
-    itt(CONTINUE:)   store the character in the buffer, set tt(d_atBOL) to
-        false, continue scanning
+    itt(CONTINUE:) store the input character (not being tt(AT_EOF)) in the
+        buffer, continue scanning
     itt(MATCH:) push the just read char back to the input, copy the non-pseudo
         character (i.e., other than AT_EOF) to the match-buffer, set
-        tt(d_atBOL) to tt(d_lastNL), execute the rule's actions, continue
-        scanning (but the action may end tt(lex)'s call).
+        tt(d_atBOL) to tt(true) if the last character in the tt(d_matched)
+        buffer is tt('\n'), execute the rule's actions, continue scanning (but
+        the action may end tt(lex)'s call).
     itt(ECHO1ST:) echo the 1st char. of the buffer to stderr, set tt(d_atBOL)
         to tt(true) if that character equals tt('\n'), otherwise to tt(false),
         return all but the first character in the buffer back to the input,
@@ -86,7 +87,10 @@ itemization(
     itt(RETURN:) the function tt(lex) returns with token value 0.
 )
 
-
+The data member tt(d_atBOL) is also set to tt(true) at a stream-switch: when
+switching to another stream or returning to a stacked stream. This handles the
+borderline case where a file's last line is not properly terminated with a
+tt('\n') character.
 
 quote(TODO: Subsequent text of this section may require extensive
 editing/rewriting) 
