@@ -202,16 +202,15 @@ void \@Base::accept(size_t nChars)          // old name: less, now deprecated
   // The size of d_matched is determined:
   //    The current state is a known final state (as determined by 
   // inspectRFCs__(), just prior to calling matched__). 
-  //    The contents of d_matched are reduced by the matched rule's LA size,
-  // and the LA tail is returned to the input.
-void \@Base::determineMatchedSize(size_t length)    // initially: tail length
+  //    The contents of d_matched are reduced to d_final's size or (if set)
+  // to the LOP-rule's tail size.
+void \@Base::determineMatchedSize(FinData const &final)
 {
-    if (length == UINT_MAX)
-        return;
+    size_t length = final.matchLen;
+    if (final.accCount != UINT_MAX)
+        length -= final.accCount;
 
-    length = d_matched.size() - length;
-
-    d_input.reRead(d_matched, length);  // push-front the tail section
+    d_input.reRead(d_matched, length);      // reread the tail section
     d_matched.resize(length);               // return what's left
 }
 
@@ -224,18 +223,21 @@ size_t \@Base::matched__(size_t ch)
 $insert 4 debug.action "MATCH"
     d_input.reRead(ch);
 
-    size_t rule = d_atBOL && d_final.first != UINT_MAX ? 
-                        d_final.first
-                    : 
-                        d_final.second;
+    if (!d_atBOL)
+        d_final.atBOL.rule = UINT_MAX;
 
-    determineMatchedSize(d_accCount[rule]);
+    FinData &final = d_final.atBOL.rule == UINT_MAX ? 
+                            d_final.notAtBOL
+                        :
+                            d_final.atBOL;
+
+    determineMatchedSize(final);
 
     d_atBOL = *d_matched.rend() == '\n';
 
 $insert 4 debug.action "match buffer contains `" << d_matched << "'"
 
-    return rule;
+    return final.rule;
 }
 
 size_t \@Base::getRange__(int ch)       // using int to prevent casts
@@ -280,18 +282,16 @@ $insert 4 debug.action "ECHO_FIRST"
 }
 
     // Inspect all s_rfc elements associated with the current state
-    // If the s_rfc element has its COUNT flag set then set the 
+    //  If the s_rfc element has its COUNT flag set then set the 
     // d_accCount[rule] value to the element's accCount value, if it has its 
     // INCREMENT flag set then increment d_accCount[rule]
-    // If neither was set set the d_accCount[rule] to UINT_MAX
-    // d_final is reset to UINT_MAX values.
+    //  If neither was set set the d_accCount[rule] to UINT_MAX
+    // 
     // If the s_rfc element has its FINAL flag set then store the rule number
     // in d_final.second. If it has its FINAL + BOL flags set then store the
     // rule number in d_final.first
 void \@Base::inspectRFCs__()
 {
-    d_final = std::pair<size_t, size_t> { UINT_MAX, UINT_MAX };
-
     for 
     (
         size_t begin = d_dfaBase[d_state][s_finacIdx], 
@@ -304,23 +304,23 @@ void \@Base::inspectRFCs__()
         size_t flag = rfc[FLAGS];
         size_t rule = rfc[RULE];
 
+        if (flag & FINAL)
+        {
+            FinData &final = (flag & BOL) ? d_final.atBOL : d_final.notAtBOL;
+            final = FinData { rule, d_matched.size(), d_accCount[rule] };
+        }
+
         if (flag & INCREMENT)
             ++d_accCount[rule];
         else 
             d_accCount[rule] = (flag & COUNT) ? rfc[ACCCOUNT] : UINT_MAX;
-
-        if (flag & FINAL)
-        {
-            if (flag & BOL)
-                d_final.first = rule;
-            else
-                d_final.second = rule;
-        }
     }
 }
 
 void \@Base::reset__()
 {
+    d_final = Final { {UINT_MAX, UINT_MAX, UINT_MAX }, 
+                      {UINT_MAX, UINT_MAX, UINT_MAX } };
     d_state = 0;
     d_return = true;
 

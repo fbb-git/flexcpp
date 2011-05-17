@@ -56,12 +56,18 @@ $insert 8 startCondNames
 
 
 private:
+    struct FinData            // Info about intermediate matched rules while
+    {                           // traversing the DFA
+        size_t rule;
+        size_t matchLen;
+        size_t accCount;
+    };
 
-//    struct FinalInfo
-//    {
-//        int const *acccount;
-//        size_t matchLen;
-//    };
+    struct Final
+    {
+        FinData atBOL;
+        FinData notAtBOL;
+    };
 
         // class Input encapsulates all input operations. 
         // Its member get() returns the next input character
@@ -76,9 +82,9 @@ private:
             Input(std::istream &iStream);
             size_t get();                   // the next range
             size_t lineNr() const;          
-            void reRead(size_t ch);     // push back 'ch' (if <= 0x100)
-                                            // push back string from idx 'fm'
-            void reRead(std::string const &str, size_t fm);
+            void reRead(size_t ch);         // push back 'ch' (if <= 0x100)
+                                            // push back str from idx 'fmIdx'
+            void reRead(std::string const &str, size_t fmIdx);
 
             void destroy();                 // delete dynamically allocated
                                             // d_in
@@ -108,7 +114,7 @@ private:
     bool            d_sawEOF;               // saw EOF: ignore accCount
     bool            d_atBOL;                // the matched text starts at BOL
     std::vector<size_t> d_accCount;         
-    std::pair<size_t, size_t> d_final;      // UINT_MAX if not, 1st for BOL
+    Final d_final;                          // 1st for BOL rules
     Input           d_input;
     std::string     d_matched;              // matched characters
     bool            d_return;               // return after a rule's action 
@@ -200,7 +206,7 @@ private:
 
     void pushStream(std::string const &name,
                       std::istream *streamPtr, bool closeAtPop);
-    void determineMatchedSize(size_t length);
+    void determineMatchedSize(FinData const &final);
     bool atFinalState();
 };
 
@@ -226,8 +232,8 @@ inline void \@Base::push(size_t ch)
 
 inline bool \@Base::atFinalState()
 {
-    return d_final.second != UINT_MAX || 
-                (d_atBOL && d_final.first != UINT_MAX);
+    return d_final.notAtBOL.rule != UINT_MAX || 
+            (d_atBOL && d_final.atBOL.rule != UINT_MAX);
 }
 
 inline void \@Base::setFilename(std::string const &name)
