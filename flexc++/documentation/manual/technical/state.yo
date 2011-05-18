@@ -3,22 +3,14 @@ link(pattern)(PATTERNS). A tt(State) contains/offers:
     itemization(
     itt(d_type): the type represented by the State (EMPTY, FINAL, CHARSET,
         BOL), the internally used tt(UNDETERMINED__) and tt(EOF__) types, or
-        the ascii-value of a single character.
-    itt(d_accept): a flag, which is -1 unless the state represents an
-        accepting state. Patterns using a lookahead operator have a state in
-        which the em(accept) flag is set at the location of the lookahead (LA)
-        operator. In fact the LA operator never literally enters the pattern's
-        state. In the sequence of tt(State)s its presence can be inferred from
-        the existence of a tt(State) which has the em(accept) flag set.
-
-        Values unequal -1 indicate that this is an accepting state. If the
-        state is a final state then tt(d_accept) defines the length of the the
-        tail when a lookahead operator is used.
-
-
-    it() An index into the link(Rules)(RULES) object to the link(rule)(RULE)
-        object defining the pattern (-1 if the rule does not use the LA
-        operator, indicating that its index is irrelevant);
+        the ascii-value of a single character;
+    itt(d_flag): the state-type: tt(NO_LOP) if the RE for this state does not
+        use the LOP; tt(ACCEPT) if this state is the first state following the
+        LOP (reached via an empty transition from the last state before the
+        LOP); tt(PRE) for all states preceding the tt(ACCEPT) state; tt(POST)
+        for all states following the tt(ACCEPT) state.
+    itt(d_rule): an index into the link(Rules)(RULES) object to the
+        link(rule)(RULE) object defining the pattern;
     it() A shared pointer to tt(StateData). The class tt(StateData) is derived
         from link(SemVal)(SEMVAL), and contains two indices: the tt(State)
         indices of the states following the current tt(State). The second

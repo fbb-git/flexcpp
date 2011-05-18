@@ -19,7 +19,6 @@ class PatternVal: public SemVal
         size_t end() const;
         States::Pair const &pair() const;
 
-//        static spSemVal bol(States &states, spSemVal &pattern);
         static spSemVal charSet(States &states, SemVal const &charClass);
         static spSemVal concatenate(States &states, SemVal &lhs, SemVal &rhs);
         static spSemVal dot(States &states);
