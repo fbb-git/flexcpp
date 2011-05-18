@@ -21,40 +21,18 @@ processed as follows:
     itemization(
     it() First the indices of two free tt(State) vector locations are
 requested (see link(the tt(next2) description)(STATESNEXTTWO) in the
-link(tt(States) clas)(STATES)). 
-    it() The tt(State) at the first state index is then
-set to a state containing the plain character, linking to the next free state
-which has been initialized to the tt(FINAL) state by tt(States::next2). 
-    it() Then the
-tt(PatternVal) is embedded in a tt(SemVal) (see the link(tt(SemVal)
-class)(SEMVAL) description).
+link(tt(States) clas)(STATES)).
+    it() The tt(State) at the first state index is then set to a state
+containing the plain character, linking to the next free state which has been
+initialized to the tt(FINAL) state by tt(States::next2).
+    it() Then the tt(PatternVal) is embedded in a tt(SemVal) (see the
+link(tt(SemVal) class)(SEMVAL) description).
     it() The tt(SemVal) is then returned in a
 tt(std::shared_ptr) (cf. figure ref(PATTERNVALPLAIN)).
     )
 
     figure(images/patternvalplain)(A plain character pattern)(PATTERNVALPLAIN)
 
-A second pattern of interes is the tt(BOL) (begin of line) pattern as it
-combines an operator (tt(^)) and a separately recognized pattern. The parser
-has seen tt('^' pattern) and the tt(pattern)'s begin and end states. The
-general approach that is followed in these cases is as follows:
-    itemization(
-    it() A tt(PatternVal) is constructed for the tt(^) operator. This is done
-by requesting a tt(State::BOL) from tt(State::factory), returning a pair of
-state indices matching the begin-of-line state.
-    it() The tt(pattern) following the tt(^) is available through the
-tt(SemVal), passed to the tt(PatternVal::bol) function. This pattern too has 
-begin and end state indices.
-    it() The two sets of states are now concatenated (see the description of
-the link(concatenation process)(CONCAT) below), the BOL states preceding the
-available tt(pattern) states, and the concatenated states are returned as one
-single series of states, having one begin state and one final state (see
-figure ref(PATTERNVALBOL)).
-    )
-
-    figure(images/patternvalbol)(The pattern tt('^' pattern))(PATTERNVALBOL)
-
-    
 label(PATTERNVALOR)
 
 

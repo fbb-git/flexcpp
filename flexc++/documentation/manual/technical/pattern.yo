@@ -27,7 +27,6 @@ The following patterns are defined (more extensive descriptions follow):
     itt(pattern pattern): two patterns immediately following each other. These
 two patterns have the precedence of tt(CHARACTER), and are combined 
 left-associatively.
-    itt('^' pattern): the begin-of-line pattern.
     itt(pattern '|' pattern)  Two alternative continuations.
     itt(pattern quantifier): quantifiers are tt(*, +) and tt(?).
     itt('(' incParen pattern ')' decParen) a pattern nested in parentheses

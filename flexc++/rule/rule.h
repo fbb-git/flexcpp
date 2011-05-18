@@ -25,10 +25,6 @@ class Rule
     bool d_viable;              // this rule is viable, i.e., it can be
                                 // matched
 
-                                    // for rules using LA operators:
-    std::vector<size_t> d_preAstates;  // all pre-A states
-    std::vector<size_t> d_postAstates; // all post-A states
-
     std::string d_source;       // context of the rule: source and lineNr
     size_t      d_lineNr;
 
@@ -39,13 +35,7 @@ class Rule
 
         size_t startState() const;
         size_t finalState() const;
-        size_t accept() const;
         Block const &block() const;
-
-        std::vector<size_t> const &preAstates() const;
-        std::vector<size_t> const &postAstates() const;
-        int maxAccept(std::set<size_t> const &stateSet, 
-                      States const &states) const;
 
         void setViable(bool yes);
         void setBol();
@@ -80,16 +70,6 @@ inline bool Rule::viable() const
     return d_viable;
 }
 
-inline std::vector<size_t> const &Rule::preAstates() const
-{
-    return d_preAstates;
-}
-
-inline std::vector<size_t> const &Rule::postAstates() const
-{
-    return d_postAstates;
-}
-
 inline size_t Rule::startState() const
 {
     return d_start;
@@ -98,11 +78,6 @@ inline size_t Rule::startState() const
 inline size_t Rule::finalState() const
 {
     return d_final;
-}
-
-inline size_t Rule::accept() const
-{
-    return d_postAstates.size() ? d_postAstates[0] : 0;
 }
 
 inline Block const &Rule::block() const

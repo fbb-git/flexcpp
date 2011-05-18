@@ -43,6 +43,8 @@ sect(Technical documentation (PIPETHROUGH(date -R)()))
     
     subsect(The class DFAs)
     includefile(technical/dfas)
+
+COMMENT(WIP FROM HERE)
     
     lsubsect(DFA)(The DFA)
     includefile(technical/dfa)

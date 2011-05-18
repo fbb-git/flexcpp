@@ -7,23 +7,24 @@ index back to its rule number (see figure ref(RULESFIG))
 
 
 When the parser has detected a rule it calls tt(Rules::add). A tt(Rule) object
-is added to tt(d_rules), storing begin and end state indices, accept state
-index (if available) and action block. tt(Rules::add) also stores the
-association between the rule's final state and rule index in its 
-tt(unordered_map d_finalToRule).
+is added to tt(d_rules), storing begin and end state indices, a flag
+indicating whether or not this rule's RE started at BOL and a em(viable) flag,
+indicating whether the rule can at all be matched. This flag is initially
+tt(false), but it is set to tt(true) if the rule is mentioned in at least one
+of the final states of any of the DFAs. A rule also contains the code of any
+action block that's associated with it (empty if there are no actions), see
+also section ref(BLOCKS).
 
-States of rules using the LA operator need access to the rule to which they
+tt(Rules::add) also stores the association between the rule's final state and
+rule index in its tt(unordered_map d_finalToRule).
+
+States of rules using the LOP need access to the rule to which they
 belong. For those rules tt(Rules::setRuleIndices) is called to assign the
-link(State's)(STATE) tt(d_rule) field. This tt(d_rule) field is only available
-for rules using the LA operator.
+link(State's)(STATE) tt(d_rule) field. 
 
 label(RULE)
 The tt(Rule) object themselves have an organization shown in figure
-ref(RULEFIG). Its data members tt(d_start) and tt(d_final) are indices into
-the link(States)(STATES) object, accessing the rule's start and final states,
-respectively. A tt(Rule) stores any actions that must be executed when the
-rule has been matched in its tt(std::string d_action) (empty if there are no
-actions), see also section ref(BLOCKS).
+ref(RULEFIG). 
 
 Rules starting with tt(^) can only be matched at em(begin-of-line)
 (BOL). The data member tt(d_bol) of such rules is set to tt(true).
@@ -36,22 +37,8 @@ be matched in the same DFA state. In those cases the viable state of the later
 rule is reset to tt(false). Once all DFAs have been constructed a simple visit
 of the tt(Rules) provides information about their viability.
 
-If a rule uses the lookahead (LA) operator (tt('/')) then all states before
-the LA operator can be accessed from the indices stored in the
-tt(d_preAstates) vector of tt(size_t) elements, and all states from the LA
-operator and beyond are available from the tt(d_postAstates) vector. 
-
-The constructor of those rules visits all its states until reaching the
-A-state, storing the state indices in its tt(d_preAstates) vector. Then the
-same procedure is followed for the states from the A-state until the final
-state, storing these states in its d_postAstates vector.
-
             figure(images/rule)(The Rule class data members)(RULEFIG)
 
-With those rules the data member tt(d_LAdone) indicates that its 
- link(LA propagation)(PROPAGATELA) (see section ref(DFAROW)) has been
-completed. These latter three members are not used with rules not using the LA
-operator.
 
 
 
