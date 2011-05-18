@@ -304,16 +304,16 @@ void \@Base::inspectRFCs__()
         size_t flag = rfc[FLAGS];
         size_t rule = rfc[RULE];
 
+        if (flag & INCREMENT)
+            ++d_accCount[rule];
+        else 
+            d_accCount[rule] = (flag & COUNT) ? rfc[ACCCOUNT] : UINT_MAX;
+
         if (flag & FINAL)
         {
             FinData &final = (flag & BOL) ? d_final.atBOL : d_final.notAtBOL;
             final = FinData { rule, d_matched.size(), d_accCount[rule] };
         }
-
-        if (flag & INCREMENT)
-            ++d_accCount[rule];
-        else 
-            d_accCount[rule] = (flag & COUNT) ? rfc[ACCCOUNT] : UINT_MAX;
     }
 }
 
