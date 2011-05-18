@@ -233,7 +233,7 @@ $insert 4 debug.action "MATCH"
 
     determineMatchedSize(final);
 
-    d_atBOL = *d_matched.rend() == '\n';
+    d_atBOL = *d_matched.rbegin() == '\n';
 
 $insert 4 debug.action "match buffer contains `" << d_matched << "'"
 
@@ -263,7 +263,7 @@ $insert 4 debug.action "CONTINUE, NEXT STATE: " << d_nextState
 void \@Base::echoCh__(size_t ch)
 {
 $insert 4 debug.action "ECHO_CH" 
-    std::cerr << ch;
+    std::cerr << static_cast<char>(ch);
     d_atBOL = ch == '\n';
 }
 
