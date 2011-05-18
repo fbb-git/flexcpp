@@ -1,7 +1,7 @@
 // #include "dfarow.ih"
 // 
-// void DFARow::mergeFinal(size_t rule, vector<AccCount> &accCount)
+// void DFARow::mergeFinal(size_t rule, vector<TailCount> &tailCount)
 // {
-//     if (find(accCount.begin(), accCount.end(), rule) == accCount.end())
-//         accCount.push_back(AccCount(rule, true));
+//     if (find(tailCount.begin(), tailCount.end(), rule) == tailCount.end())
+//         tailCount.push_back(TailCount(rule, true));
 // }

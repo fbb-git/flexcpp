@@ -5,21 +5,21 @@ void DFARow::tabulateAccepts(Table &table) const
     ostringstream out;
     for 
     (
-        auto iter = d_accCount.begin(), end = d_accCount.end(); 
+        auto iter = d_tailCount.begin(), end = d_tailCount.end(); 
             iter != end;
                 ++iter
     )
     {
-        AccCount::Type type = iter->type();      // get the accCount flags
+        TailCount::Type type = iter->type();      // get the tailCount flags
 
-        if (type & (AccCount::COUNT | AccCount::INCREMENTING))
+        if (type & (TailCount::COUNT | TailCount::INCREMENTING))
         {
             out << iter->rule() << ':';
 
-            if (type &AccCount::INCREMENTING)
+            if (type &TailCount::INCREMENTING)
                 out << "+";
             else
-                out << iter->accCount();
+                out << iter->tailCount();
 
             out  << ',';
         }

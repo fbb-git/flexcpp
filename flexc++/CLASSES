@@ -14,14 +14,14 @@ statestring     statedata
 state           statestring
 states          state
 ranges          textval     states
-acccount        state
+tailcount       state
 patternval      charclass   states
 block           
 fstreaminfo     
 scanner         textval     fstreaminfo block
 rule            states      block
 rules           rule        startcondition
-dfarow          ranges      rules       acccount
+dfarow          ranges      rules       tailcount
 dfa             dfarow
 dfas            dfa
 options         

@@ -25,9 +25,9 @@ class DFA
     std::vector<StateSet> d_stateSet;    
 
     bool d_verbose;
-    bool d_sawACCEPT;           // used by visitAccCount
+    bool d_sawACCEPT;           // used by visitTailCount
 
-    size_t d_rule;              // used when computing AccCount values 
+    size_t d_rule;              // used when computing TailCount values 
 
     public:
         DFA() = default;        // only used for vector-resizing operations
@@ -43,7 +43,7 @@ class DFA
         size_t size() const;
 
     private:
-        void keepViableAccCounts();
+        void keepViableTailCounts();
 
         static void translate(DFARow &row, std::vector<size_t> const &unique);
 
@@ -54,20 +54,20 @@ class DFA
 
         size_t available(DFARow const &nextRow);
 
-        void computeAccCounts();
-        static void visitAccCount(AccCount &accCount, DFA &dfa);
-        static void determineAccCount(AccCount &accCount, size_t thisRow,
-                                      AccCount *fmAccCount, size_t fmRow, 
+        void computeTailCounts();
+        static void visitTailCount(TailCount &tailCount, DFA &dfa);
+        static void determineTailCount(TailCount &tailCount, size_t thisRow,
+                                      TailCount *fmTailCount, size_t fmRow, 
                                       DFA &dfa);
-        bool setAccCount(AccCount &accCount, size_t thisRow, 
-                         AccCount *fmAccCount, size_t fmRow);
-        bool setIncAccCount(AccCount::Type type, AccCount &thisAccCount);
-        bool setInitAccCount(AccCount::Type type, AccCount &thisAccCount);
-        bool setNextAccCount(AccCount::Type type,
-                            AccCount &thisAccCount, size_t thisRow,
-                            AccCount &fmAccCount, size_t fmRow);
-        static void transitAccCount(DFARow::MapValue const &rangeToRow, 
-                    AccCount *fmAccCount, size_t fmRow, DFA &dfa);
+        bool setTailCount(TailCount &tailCount, size_t thisRow, 
+                         TailCount *fmTailCount, size_t fmRow);
+        bool setIncTailCount(TailCount::Type type, TailCount &thisTailCount);
+        bool setInitTailCount(TailCount::Type type, TailCount &thisTailCount);
+        bool setNextTailCount(TailCount::Type type,
+                            TailCount &thisTailCount, size_t thisRow,
+                            TailCount &fmTailCount, size_t fmRow);
+        static void transitTailCount(DFARow::MapValue const &rangeToRow, 
+                    TailCount *fmTailCount, size_t fmRow, DFA &dfa);
 
         static void fillStartSet(size_t idx, Rules const &rules, 
                                              StateSet &start);

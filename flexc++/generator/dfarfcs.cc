@@ -7,7 +7,7 @@ void Generator::dfaRFCs(DFARow const &row, ostream &out,
 
     pair<size_t, size_t> final = row.final();
 
-    for_each(row.accCounts().begin(), row.accCounts().end(), 
+    for_each(row.tailCounts().begin(), row.tailCounts().end(), 
              FnWrap::unary(storeRFC, final, rfc));
 
     if (final.first != UINT_MAX)

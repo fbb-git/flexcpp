@@ -3,7 +3,7 @@
 // called from the DFARow constructor for each of the States defining a dfa
 // row, passing the successive stateIdx values of the states to this function
 
-void DFARow::probeAccCount(size_t stateIdx, DFARow &thisRow)
+void DFARow::probeTailCount(size_t stateIdx, DFARow &thisRow)
 {
     State const &state = (*thisRow.d_states)[stateIdx]; // state shorthand
 
@@ -14,15 +14,15 @@ void DFARow::probeAccCount(size_t stateIdx, DFARow &thisRow)
 
     int rule = state.rule();    // To which rule does this state belong?
 
-        // obtain the iterator to the AccCount object for `rule'
-    auto accCountIter = find(thisRow.d_accCount.begin(), 
-                             thisRow.d_accCount.end(), rule);
+        // obtain the iterator to the TailCount object for `rule'
+    auto tailCountIter = find(thisRow.d_tailCount.begin(), 
+                             thisRow.d_tailCount.end(), rule);
 
-        // add an AccCount element if not yet there
-    if (accCountIter == thisRow.d_accCount.end())
-        thisRow.d_accCount.push_back(AccCount(rule, flag));
+        // add an TailCount element if not yet there
+    if (tailCountIter == thisRow.d_tailCount.end())
+        thisRow.d_tailCount.push_back(TailCount(rule, flag));
     else
-        accCountIter->addFlag(flag);
+        tailCountIter->addFlag(flag);
 
 }
 

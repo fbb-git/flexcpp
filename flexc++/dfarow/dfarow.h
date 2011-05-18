@@ -9,7 +9,7 @@
 #include "../ranges/ranges.h"
 #include "../rules/rules.h"
 #include "../states/states.h"
-#include "../acccount/acccount.h"
+#include "../tailcount/tailcount.h"
 
 namespace FBB
 {
@@ -25,7 +25,7 @@ class DFARow
     typedef std::vector<StateSet> StateSetVector;   // a set of states per
                                                     // input symbol
 
-    std::vector<AccCount> d_accCount;       // acc counts for LOP rules
+    std::vector<TailCount> d_tailCount;       // acc counts for LOP rules
 
     std::pair<size_t, size_t> d_finalRule;      // Final state for which 
                                                 // rule(s)?
@@ -79,15 +79,15 @@ class DFARow
                                                         // index is a BOL rule
                                                         // the 2nd not (or
                                                         // UINT_MAX)
-        std::vector<AccCount> &accCounts();
+        std::vector<TailCount> &tailCounts();
 
-        std::vector<AccCount> const &accCounts() const;
+        std::vector<TailCount> const &tailCounts() const;
              
         bool operator==(DFARow const &rhs) const;
 
         void uniqueMap(std::vector<size_t> const &xlat);
 
-        static void keepViableAccCounts(DFARow &dfaRow);
+        static void keepViableTailCounts(DFARow &dfaRow);
 
     private:
         void updateViable(size_t &destIdx, size_t ruleIdx); // in setfinal.cc
@@ -110,7 +110,7 @@ class DFARow
 
         static void translate(MapValue &transition, 
                                             std::vector<size_t> const &xlat);
-        static void probeAccCount(size_t stateIdx, DFARow &thisRow);
+        static void probeTailCount(size_t stateIdx, DFARow &thisRow);
         static bool stateOfRule(size_t state, 
                                 std::vector<size_t> const &haystack);
 
@@ -124,14 +124,14 @@ inline std::unordered_map<size_t, size_t> const &DFARow::map() const
     return d_map;
 }
 
-inline std::vector<AccCount> &DFARow::accCounts()
+inline std::vector<TailCount> &DFARow::tailCounts()
 {
-    return d_accCount;
+    return d_tailCount;
 }
 
-inline std::vector<AccCount> const &DFARow::accCounts() const
+inline std::vector<TailCount> const &DFARow::tailCounts() const
 {
-    return d_accCount;
+    return d_tailCount;
 }
 
 inline std::pair<size_t, size_t> const &DFARow::final() const
@@ -148,7 +148,7 @@ FBB::Table &operator<<(FBB::Table& out, DFARow const &row);
 
 //        static void mergeFinalSet(DFARow &dfaRow);
 //        static void mergeFinal(size_t rule, 
-//                               std::vector<AccCount> &accCount);
+//                               std::vector<TailCount> &tailCount);
         
 #endif
 

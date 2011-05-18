@@ -1,0 +1,5 @@
+#include "tailcount.ih"
+
+TailCount::
+{
+}

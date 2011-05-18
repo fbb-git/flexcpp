@@ -92,7 +92,7 @@ class Generator
                                       size_t offset);
 
         void actions(std::ostream &out) const;
-        void accCount(std::ostream &out) const;
+        void tailCount(std::ostream &out) const;
         void baseClassH(std::ostream &out) const;
         void classH(std::ostream &out) const;
         void classIH(std::ostream &out) const;
@@ -107,7 +107,7 @@ class Generator
 
         void filter(std::istream &in, std::ostream &out) const;
 
-//         void accCounts(std::ostream &out) const;
+//         void tailCounts(std::ostream &out) const;
 
         void inlineLexFunction(std::ostream &out) const;
         void inputMembers(std::ostream &out) const;
@@ -131,7 +131,7 @@ class Generator
 //     static size_t addFinal(DFARow const &row, std::vector<size_t> &final);
 
         static void dfa(DFAs::Pair const &dfaPair, std::ostream &out, 
-                        std::vector<RuleFlagCount> &accCounts,
+                        std::vector<RuleFlagCount> &tailCounts,
                         std::vector<std::string> &startStates,
                         std::vector<size_t> &dfaOffsets);
         static void dfaRow(DFARow const &row, size_t &index, 
@@ -139,7 +139,7 @@ class Generator
         static void dfaTransitions(DFARow const &row, std::ostream &out);
         static void dfaRFCs(DFARow const &row, std::ostream &out,
                             std::vector<RuleFlagCount> &rfc);
-        static void storeRFC(AccCount const &acccount,
+        static void storeRFC(TailCount const &tailcount,
                              std::pair<size_t, size_t> &final,
                              std::vector<RuleFlagCount> &rfc);
 

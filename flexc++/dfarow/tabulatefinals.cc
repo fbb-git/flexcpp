@@ -18,11 +18,11 @@ void DFARow::tabulateFinals(Table &table) const
 
     table << out.str();
 
-//    auto firstRule = d_accCount.end();
+//    auto firstRule = d_tailCount.end();
 //
 //    for         // find the first final rule
 //    (
-//        auto iter = d_accCount.begin(), end = d_accCount.end(); 
+//        auto iter = d_tailCount.begin(), end = d_tailCount.end(); 
 //            iter != end;
 //                ++iter
 //    )
@@ -34,7 +34,7 @@ void DFARow::tabulateFinals(Table &table) const
 //        }
 //    }
 //
-//    if (firstRule == d_accCount.end())
+//    if (firstRule == d_tailCount.end())
 //        table << ' ';
 //    else
 //    {

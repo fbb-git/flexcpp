@@ -76,7 +76,7 @@ void \@Base::Input::reRead(std::string const &str, size_t fm)
     d_out(&std::cout),
     d_sawEOF(false),
     d_atBOL(true),
-$insert accCount
+$insert tailCount
 $insert debugInit
     d_dfaBase(s_dfa)
 {}
@@ -88,7 +88,7 @@ $insert debugInit
     d_out(&out),
     d_sawEOF(false),
     d_atBOL(true),
-$insert accCount
+$insert tailCount
 $insert debugInit
     d_input(in),
     d_dfaBase(s_dfa)
@@ -207,8 +207,8 @@ void \@Base::accept(size_t nChars)          // old name: less, now deprecated
 void \@Base::determineMatchedSize(FinData const &final)
 {
     size_t length = final.matchLen;
-    if (final.accCount != UINT_MAX)
-        length -= final.accCount;
+    if (final.tailCount != UINT_MAX)
+        length -= final.tailCount;
 
     d_input.reRead(d_matched, length);      // reread the tail section
     d_matched.resize(length);               // return what's left
@@ -283,9 +283,9 @@ $insert 4 debug.action "ECHO_FIRST"
 
     // Inspect all s_rfc elements associated with the current state
     //  If the s_rfc element has its COUNT flag set then set the 
-    // d_accCount[rule] value to the element's accCount value, if it has its 
-    // INCREMENT flag set then increment d_accCount[rule]
-    //  If neither was set set the d_accCount[rule] to UINT_MAX
+    // d_tailCount[rule] value to the element's tailCount value, if it has its 
+    // INCREMENT flag set then increment d_tailCount[rule]
+    //  If neither was set set the d_tailCount[rule] to UINT_MAX
     // 
     // If the s_rfc element has its FINAL flag set then store the rule number
     // in d_final.second. If it has its FINAL + BOL flags set then store the
@@ -305,14 +305,14 @@ void \@Base::inspectRFCs__()
         size_t rule = rfc[RULE];
 
         if (flag & INCREMENT)
-            ++d_accCount[rule];
+            ++d_tailCount[rule];
         else 
-            d_accCount[rule] = (flag & COUNT) ? rfc[ACCCOUNT] : UINT_MAX;
+            d_tailCount[rule] = (flag & COUNT) ? rfc[ACCCOUNT] : UINT_MAX;
 
         if (flag & FINAL)
         {
             FinData &final = (flag & BOL) ? d_final.atBOL : d_final.notAtBOL;
-            final = FinData { rule, d_matched.size(), d_accCount[rule] };
+            final = FinData { rule, d_matched.size(), d_tailCount[rule] };
         }
     }
 }
@@ -354,7 +354,7 @@ int \@::lex__()
 
 $insert 8 debugStep
 
-        inspectRFCs__();                    // update d_accCount values
+        inspectRFCs__();                    // update d_tailCount values
 
         switch (actionType__(range))        // determine the action
         {

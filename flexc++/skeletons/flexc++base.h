@@ -60,7 +60,7 @@ private:
     {                           // traversing the DFA
         size_t rule;
         size_t matchLen;
-        size_t accCount;
+        size_t tailCount;
     };
 
     struct Final
@@ -111,9 +111,9 @@ private:
     size_t          d_state;
     int             d_nextState;
     std::ostream   *d_out;
-    bool            d_sawEOF;               // saw EOF: ignore accCount
+    bool            d_sawEOF;               // saw EOF: ignore tailCount
     bool            d_atBOL;                // the matched text starts at BOL
-    std::vector<size_t> d_accCount;         
+    std::vector<size_t> d_tailCount;         
     Final d_final;                          // 1st for BOL rules
     Input           d_input;
     std::string     d_matched;              // matched characters
@@ -197,7 +197,7 @@ protected:
     void            continue__(int ch);         // handles a transition
     void            echoCh__(size_t ch);        // echoes ch, sets d_atBOL
     void            echoFirst__(size_t ch);     // handles unknown input
-    void            inspectRFCs__();            // update d_accCount
+    void            inspectRFCs__();            // update d_tailCount
     void            noReturn__();               // d_return to false
     void            pushFront__(size_t ch);     // return char to Input
     void            reset__();                  // prepare for new cycle

@@ -57,7 +57,6 @@ class Rules
         rule_const_iterator ruleEnd() const;
 
         size_t size() const;
-        void setContext(std::string const &source, size_t lineNr);
 
     private:
         void setRule(size_t state, size_t index);
