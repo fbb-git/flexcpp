@@ -28,17 +28,6 @@ Generator::Map Generator::s_insert =
     {"ranges",              &Generator::ranges},
 
     {"startCondNames",      &Generator::startCondNames},
-
-//    {"ifStartsAtBOLelse",   &Generator::ifStartsAtBOLelse},
-//    {"ignoreBOLaction",     &Generator::ignoreBOLaction},
-//    {"ignoreBOLcall",       &Generator::ignoreBOLcall},
-//    {"ignoreBOLimpl",       &Generator::ignoreBOLimpl},
-//    {"rangeAtBOL",          &Generator::rangeAtBOL},
-//    {"resetStartsAtBOL",    &Generator::resetStartsAtBOL},
-//    {"checkBOL",            &Generator::checkBOL},
-//    {"pushFront",           &Generator::pushFront},
-//    {"pushFrontCall",       &Generator::pushFrontCall},
-
 };
 
 char const *Generator::s_baseFlag = "\\@";

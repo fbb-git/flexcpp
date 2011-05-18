@@ -46,9 +46,6 @@ void DFA::build(std::string const &name, vector<size_t> const &active)
     keepViableTailCounts();
                             
     computeTailCounts();         // compute accept counts for LA rules
-
-//    mergeFinalSet();        // calls DFARow::mergeFinalSet for each row.
-
 }
 
 

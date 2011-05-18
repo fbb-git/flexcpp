@@ -25,8 +25,6 @@ class State
             EMPTY,                              
             FINAL,
             CHARSET,                            // string contents of [ ... ]
-
-//            BOL,                                // begin of line and
             EOF__                               // EOF becomes a special char
         };                                      // see README
 
@@ -62,8 +60,6 @@ class State
 
         void setFlag(Flag value);       // Set a State's flag
         Flag flag() const; 
-
-//        void nextAccept();      
 
             // true is returned if the state's string contains rangeChar.
             // Only defined for d_type == CHARSET

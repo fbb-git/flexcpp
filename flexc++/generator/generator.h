@@ -104,11 +104,7 @@ class Generator
         void debugStep(std::ostream &out) const;
         void declarations(std::ostream &out) const;
         void dfas(std::ostream &out) const;
-
         void filter(std::istream &in, std::ostream &out) const;
-
-//         void tailCounts(std::ostream &out) const;
-
         void inlineLexFunction(std::ostream &out) const;
         void inputMembers(std::ostream &out) const;
         void insert(std::ostream &out) const;
@@ -119,17 +115,12 @@ class Generator
         void namespaceUse(std::ostream &out) const;
         void ranges(std::ostream &out) const;
         void startCondNames(std::ostream &out) const;
-        void pushFront(std::ostream &out) const;
-        void pushFrontCall(std::ostream &out) const;
 
         size_t dfaCols() const;
 
         void rfcs(std::ostream &out) const;
         static void outRFC(RuleFlagCount const &rfc, std::ostream &out,
                                                      size_t &idx);
-
-//     static size_t addFinal(DFARow const &row, std::vector<size_t> &final);
-
         static void dfa(DFAs::Pair const &dfaPair, std::ostream &out, 
                         std::vector<RuleFlagCount> &tailCounts,
                         std::vector<std::string> &startStates,
@@ -148,14 +139,6 @@ class Generator
                                size_t &idx, bool lineDirectives);
 };
 
-// //        void ifStartsAtBOLelse(std::ostream &out) const;      REMOVE SOURCE
-//         void ignoreBOLaction(std::ostream &out) const;
-// //        void ignoreBOLcall(std::ostream &out) const;          REMOVE SOURCE
-// //        void ignoreBOLimpl(std::ostream &out) const;          REMOVE SOURCE
-//         void rangeAtBOL(std::ostream &out) const;
-//         void resetStartsAtBOL(std::ostream &out) const;
-//         void checkBOL(std::ostream &out) const;
-        
 #endif
 
 
