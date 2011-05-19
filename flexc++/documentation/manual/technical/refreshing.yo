@@ -1,0 +1,44 @@
+When a new flexc++ release is prepared (resulting from 
+a minor or major upgrade or even rewrite) several steps should be
+performed before the new version is released. Below the following terminology
+        is used:
+    itemization(
+    itt(flexc++): the current version;
+    itt(flexc++-new): the new tt(flexc++) program.
+    )
+
+These are the steps to take:
+    itemization(
+    it() The current version uses the new skeleton files to generate
+        tt(lex.cc) and tt(scannerbase.h) files. These file were therefore
+        created by the current tt(flexc++) and new skeleton files.
+    it() These tt(lex.cc) and tt(scannerbase.h) files (built from the current
+        tt(flexc++) and new skeleton files) now replace the
+        ones in the tt(./scanner) directory.nl()
+            When the Scanner's organization itself has also been altered then
+        this may require additional modifications of, e.g.,
+        tt(./scanner/scanner.h). In that case: 
+        itemization(
+        it() rename tt(./scanner) to tt(./scanner.org)
+        it() copy tt(./scanner.org) to tt(./scanner.isn)
+        it() implement the necessary modifications in tt(./scanner.isn)'s
+            files
+        it() link tt(./scanner) to tt(./scanner.isn)
+        )
+    it() Rebuild tt(flexc++), resulting in tt(flexc++-new), based on a lexical
+        scanner function tt(lex) created from new skeleton files by the
+        current tt(flexc++) program. tt(Flexc++-new), however, is now fully
+        based on the latest release. To accept it, it must properly process
+        existing lexical scanner specification files. So several additional
+        steps must be taken:
+        itemization(
+        it() First, tt(flexc++-new) is used to create tt(lex.cc) and
+            tt(scannerbase.h) using its own scanner specification files and 
+            the new skeleton files. The generated tt(lex.cc) and
+            tt(scannerbase.h) files must be identical to 
+            the tt(lex.cc) and tt(scannerbase.h) files found in
+            tt(./scanner/), except for their timestamps.
+        it() All collected regression tests must properly be processed by
+            tt(flexc++-new). 
+        )
+    )

@@ -1,0 +1,27 @@
+<INITIAL,pattern>{
+
+    [[:blank:]]*"|"     begin(vbar);
+    
+                        // rm all consecutive blank delimited \n chars
+    ([[:blank:]]*\n)+[[:blank:]]*   return '\n';
+    
+    "%%"                return Parser::SECTION_DELIMITER;
+    
+    "\""                {
+                            more();
+                            begin(str);
+                        }
+    
+    \\({OCTAL}{3})          |
+    \\x([[:xdigit:]]{2})    |
+    \\.                     return Parser::ESCAPE_SEQUENCE;
+    
+    "^"                 return d_beginOfPattern? '^' : Parser::CHARACTER;
+
+    [/.=*+?,{}<>()-]   return matched()[0];   // All single char tokens
+
+    ^"//include"[[:blank:]].*   maybeSwitchStream();
+}
+
+<option,pattern>{DECIMAL}               return Parser::DECIMAL;
+

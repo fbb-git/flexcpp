@@ -94,6 +94,20 @@ $insert debugInit
     d_dfaBase(s_dfa)
 {}
 
+\@Base::\@Base(std::string const &filename)
+:
+    d_startCondition(INITIAL),
+    d_state(0),
+    d_in(new std::ifstream(filename)),
+    d_out(&std::cout),
+    d_sawEOF(false),
+    d_atBOL(true),
+$insert tailCount
+$insert debugInit
+    d_input(*d_in),
+    d_dfaBase(s_dfa)
+{}
+
 $insert debugFunctions
 
 void \@Base::redo(size_t nChars)

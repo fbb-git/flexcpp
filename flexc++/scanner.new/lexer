@@ -1,0 +1,278 @@
+%option class-name = "Scanner" 
+%option lex-source = "lex.cc"
+%option skeleton-directory = "../skeletons"
+
+%x pattern mblock comment option quote str vbar charclass patterntxt
+
+DECIMAL                 0|[1-9][[:digit:]]*
+OCTAL                   [0-7]
+NAME                    [A-Za-z_][-A-Za-z0-9_]*
+
+
+
+%%
+
+<INITIAL,pattern>{
+
+    [[:blank:]]*"|"     begin(vbar);
+    
+                        // rm all consecutive blank delimited \n chars
+    ([[:blank:]]*\n)+[[:blank:]]*   return '\n';
+    
+    "%%"                return Parser::SECTION_DELIMITER;
+    
+    "\""                {
+                            more();
+                            begin(str);
+                        }
+    
+    \\({OCTAL}{3})          |
+    \\x([[:xdigit:]]{2})    |
+    \\.                     return Parser::ESCAPE_SEQUENCE;
+    
+    "^"                 return d_beginOfPattern? '^' : Parser::CHARACTER;
+
+    [/.=*+?,{}<>()-]   return matched()[0];   // All single char tokens
+
+    ^"//include"[[:blank:]].*   maybeSwitchStream();
+}
+
+<option,pattern>{DECIMAL}               return Parser::DECIMAL;
+
+
+    // The top-level rules for recognizing directives
+    // The ^ requirement was relaxed: no clear need to require
+    // %-directives to begin at column 1
+
+<INITIAL>{
+
+    {NAME}[[:blank:]]*      return Parser::NAME;
+    
+    "%option"               return begin(option, Parser::OPTION_DIRECTIVE);
+    
+    "%s"                    return Parser::INCL_START_CONDITION;
+    "%x"                    return Parser::EXCL_START_CONDITION;
+    
+    [[:blank:]]+
+}
+
+
+<pattern>{
+
+    [[:blank:]]+        {
+                            d_block.clear();
+                            d_block.open(lineno(), filename()); 
+                            return Parser::WS;
+                        }
+
+    "[^"                |
+    "[^]"               |
+    "[^]["              {
+                            size_t pos = matched().find(']');
+                            if (pos != string::npos)
+                            {
+                                d_initialClosingBracket =  true;
+                                less(2);
+                            }
+                            return begin(charclass, Parser::CC_NEGATED);
+                        }
+
+    "["                 |
+    "[]"                |   
+    "[]["               {
+                            size_t pos = matched().find(']');
+                            if (pos != string::npos)
+                            {
+                                d_initialClosingBracket =  true;
+                                less(1);
+                            }
+                            return begin(charclass, Parser::CC_START);
+                        }
+
+    
+    "{+}"               return Parser::CC_PLUS;
+    "{-}"               return Parser::CC_MINUS;
+
+    \{{NAME}\}          pushNameExpansion();
+    
+    "$"/[^[:space:]\n]  return Parser::CHARACTER;
+
+    "$"                 push("/\\n");
+
+    "<<EOF>>"           return Parser::EOF_PATTERN;
+}
+
+
+<mblock>{
+
+[[:blank:]]+    d_block(' ');
+
+([[:blank:]]*\n)+   {
+                        if (d_block.level() == 1)    // close a block
+                        {
+                            d_block.close();
+                            less(leng() - 1);
+                            return end(Parser::BLOCK);
+                        }
+
+                        d_block += "\n        ";
+                    }
+
+"{"             d_block.open(lineno(), filename()); 
+                
+"}"             d_block.close();
+
+"/*"            {
+                    begin(comment);
+                    d_block(' ');
+                }
+
+\"              {
+                    more();
+                    begin(str);
+                }
+
+"'"             {
+                    more();
+                    begin(quote);
+                }
+
+NAME            d_block += matched();
+
+.               d_block += matched()[0];
+
+}
+
+
+<comment>{
+
+"*/"    end();
+
+.|\n    
+
+}
+
+<option>{
+
+    [[:blank:]]+
+    
+    "\""                    {
+                                more();
+                                begin(str);
+                            }
+    
+    =                       return '=';
+    
+    baseclass-header        return Parser::BASECLASSHEADER;
+    class-header            return Parser::CLASSHEADER;
+    class-name              return Parser::CLASSNAME;
+    debug                   return Parser::DEBUG;
+    debug-steps             return Parser::DEBUG_STEPS;
+    implementation-header   return Parser::IMPLEMENTATIONHEADER;
+    interactive             return Parser::INTERACTIVE;
+    lex-function-name       return Parser::LEXFUNCTIONNAME;
+    lex-source              return Parser::LEXSOURCE;
+    no-lines                return Parser::NOLINES;
+    namespace               return Parser::NAMESPACE;
+    skeleton-directory      return Parser::SKELETON_DIRECTORY;
+    /*
+        streaminfo-class-name     return Parser::STREAM_INFO_CLASSNAME;
+        streaminfo-include       return Parser::STREAM_INFO_INCLUDE;
+    */
+
+    {NAME}                  return Parser::NAME;
+
+    .|\n                    return end(matched()[0]);
+}
+
+
+<quote>{
+    '                       {
+                                if (d_block)
+                                    d_block += matched();
+                                end();
+                            }
+
+    \\.                     |
+    .                       more(); 
+
+    \n                      return end(-1);     // error-generating token
+}
+
+
+<str>{
+
+\"          {
+                if (!d_block)
+                    return end(Parser::STRING);
+                d_block += matched();
+                end();
+            }
+            
+\\.         |
+.           more(); 
+            
+\n          return end(-1);
+
+}
+
+
+<vbar>{
+
+[[:blank:]\n]+    
+
+.               {
+                    less(0);
+                    return end('|');
+                }
+}
+
+<charclass>{
+
+    "[:"\^?"alnum:]"        |
+    "[:"\^?"alpha:]"        |
+    "[:"\^?"blank:]"        |
+    "[:"\^?"cntrl:]"        |
+    "[:"\^?"digit:]"        |
+    "[:"\^?"graph:]"        |
+    "[:"\^?"lower:]"        |
+    "[:"\^?"print:]"        |
+    "[:"\^?"punct:]"        |
+    "[:"\^?"space:]"        |
+    "[:"\^?"upper:]"        |
+    "[:"\^?"xdigit:]"       return Parser::PREDEFINED_CLASS;
+    
+    \\.                     return Parser::ESCAPE_SEQUENCE;
+    
+    "]"                     {
+                                if (d_initialClosingBracket)
+                                {
+                                    d_initialClosingBracket = false;
+                                    return Parser::CHARACTER;
+                                }
+                                return end(']');
+                            }
+    
+    \n                      return '\n';
+}
+
+<patterntxt>{
+    [[:blank:]]+        return Parser::WS;
+
+    \n                  return '\n';
+
+    "\""                {
+                            more();
+                            begin(str);
+                        }
+
+    [^[:blank:]\n]+     return Parser::STRING;
+}
+
+<INITIAL,mblock,option,pattern>[[:blank:]]*"//".*
+
+<INITIAL,option,pattern,vbar>"/*"       begin(comment);
+
+<INITIAL,charclass,pattern>.            return Parser::CHARACTER;
+
+

@@ -40,17 +40,18 @@ int find(string needle, list haystack)
     return idx;
 }
 
-/*
 void dependent(int idx)
 {
     list dependencies;
-    int depIdx;
     string target;
+    int ret;
+    int depIdx;
 
     target = g_classes[idx];
     g_depHaystack += (list)target;
 
     printf("RECOMPILE: ", target, "\n");
+    system("touch " + target + "/*.cc");
 
     for (depIdx = idx + 1; depIdx != g_nClasses; ++depIdx)
     {
@@ -68,18 +69,28 @@ void dependent(int idx)
 void checkALL()
 {
     int idx;
+    int base;
     string all;
 
+    base = 0;
     for (idx = 0; idx != g_nClasses; ++idx)
     {
         all = g_classes[idx] + "/a";
 
         if (exists(all))
+        {
             dependent(idx);
+            base = 1;
+        }
+    }
+    if (base)
+    {
+        system("rm -f */a");
+        system("touch *.cc");
     }
 }
-*/
 
+/*
 void childrenOf(int parentIdx)
 {
     list parents;
@@ -124,7 +135,9 @@ void checkALL()
             childrenOf(idx);                // activate all its children
     }
 }
-          
+
+*/
+        
 void setClasses()
 {
     list candidate;
@@ -151,7 +164,7 @@ void static_lib(string ofiles, string library)
     {
         run("ar cru " + library + " " + ofiles);
         run("ranlib " + library);
-        run("rm " + ofiles);
+        run("rm -f " + ofiles);
     }
 }
 

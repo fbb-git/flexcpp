@@ -88,6 +88,9 @@ sect(Technical documentation (PIPETHROUGH(date -R)()))
     subsect(Code generation)
     includefile(technical/codegeneration)
 
+    subsect(Refreshing flexc++)
+    includefile(technical/refreshing)
+
 COMMENT(
 includefile(introduction.yo)
 includefile(simpleexamples.yo)

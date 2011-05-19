@@ -1,0 +1,28 @@
+<charclass>{
+
+    "[:"\^?"alnum:]"        |
+    "[:"\^?"alpha:]"        |
+    "[:"\^?"blank:]"        |
+    "[:"\^?"cntrl:]"        |
+    "[:"\^?"digit:]"        |
+    "[:"\^?"graph:]"        |
+    "[:"\^?"lower:]"        |
+    "[:"\^?"print:]"        |
+    "[:"\^?"punct:]"        |
+    "[:"\^?"space:]"        |
+    "[:"\^?"upper:]"        |
+    "[:"\^?"xdigit:]"       return Parser::PREDEFINED_CLASS;
+    
+    \\.                     return Parser::ESCAPE_SEQUENCE;
+    
+    "]"                     {
+                                if (d_initialClosingBracket)
+                                {
+                                    d_initialClosingBracket = false;
+                                    return Parser::CHARACTER;
+                                }
+                                return end(']');
+                            }
+    
+    \n                      return '\n';
+}

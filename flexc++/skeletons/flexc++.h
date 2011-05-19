@@ -10,6 +10,7 @@ class \@: public \@Base
     public:
         \@() = default;
         explicit \@(std::istream &iStream, std::ostream &out = std::cout);
+        \@(std::string const &filename);    // need one for output name too
 
 $insert 8 lexFunctionDecl
 
@@ -33,6 +34,11 @@ inline \@::\@(std::istream &iStream, std::ostream &oStream)
 {
     setFilename(istreamName__());
 }
+
+inline \@::\@(std::string const &filename)
+:
+    \@Base(filename)
+{}
 
 $insert inlineLexFunction
 

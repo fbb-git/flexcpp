@@ -1,0 +1,20 @@
+#!/bin/bash
+
+rm -f lexer
+
+for x in head definitions 
+do
+    cat inc/$x >> lexer
+    echo >> lexer
+done
+
+echo "
+%%
+"               >> lexer
+
+for x in precommon initial pattern mblock comment option quote str vbar \
+         charclass patterntxt postcommon 
+do
+    cat inc/$x >> lexer
+    echo >> lexer
+done

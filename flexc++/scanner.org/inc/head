@@ -1,0 +1,6 @@
+%option classname = "Scanner" 
+%option lexsource = "lex.cc"
+%option streaminfoclassname = "FStreamInfo"
+%option streaminfoinclude = "../fstreaminfo/fstreaminfo.h"
+
+%x pattern mblock comment option quote str vbar charclass patterntxt
