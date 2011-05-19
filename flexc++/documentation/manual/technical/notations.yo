@@ -1,9 +1,15 @@
 subsubsect(Notations)
 
     itemization(
+    itt(BOL): Begin-of-line is abbreviated to BOL.
+    itt(LOP): the lookahead operator (tt(/)) is abbreviated to LOP.
+    itt(RE): A regular expression.
+    )
+
+    itemization(
     itt(Ax): accept count, indicating that em(x) state transitions have been
         performed since the initial accepting state (tt(A0)).
-    itt(++Ax): incrementing accept count. The accept count of this state is
+    itt(Ax): incrementing accept count. The accept count of this state is
         incremented each time this state is reached again
     itt(Fx): A final state with an associated accept count.
     it() em(pre-A-state): any NFA state in a pattern preceding its tt(A0)
@@ -17,7 +23,7 @@ subsubsect(Notations)
 
 subsubsect(Example patterns with an LA operator)
 
-    When an tt(F) state of a pattern with an LA operator is reached and there
+    When an tt(F) state of a LOP pattern  is reached and there
         is no continuation at that point then the pattern until the A0 state
         is considered matched and is returned.
 

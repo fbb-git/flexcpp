@@ -3,9 +3,9 @@ the LOP. It would be nice if at some point we could prove its
 correctness. Some of its steps can be shown to be correct, but that doesn't
 hold true for other parts of the algorithm, which may or may not be correct.
 
-First we'll provide some examples showing how the RE can be analyzed,
-concentrating on various complexities encountered with LOPs. At the end a
-description of the algorithm is attempted. 
+First we'll provide examples showing how the RE can be analyzed, concentrating
+on various complexities encountered with LOPs. At the end a description of the
+current algorithm is given.
 
 Comment and suggestions for improvement are (more than) welcome!
 
