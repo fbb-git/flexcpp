@@ -1,10 +1,11 @@
 #include "rules.ih"
 
-void Rules::add(bool bol, spSemVal const &patternVal, Block const &block)
+void Rules::add(bool bol, spSemVal const &patternVal, Block const &block,
+                string const &fileName, size_t lineNr)
 {
     Pair const &pair = SemVal::downCast<PatternVal>(*patternVal).pair();
 
-    d_rules.push_back( { d_states, bol, pair, block, d_source, d_lineNr } );
+    d_rules.push_back( { d_states, bol, pair, block, fileName, lineNr } );
 
     size_t ruleIdx = d_rules.size() - 1;
 

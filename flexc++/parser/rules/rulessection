@@ -67,28 +67,26 @@ miniscanner:
 rule:
     '^' pattern_ws BLOCK
     {
-        d_rules.add(true, $2, 
-//        d_rules.add(SemVal::downCast<PatternVal>(*$1).pair(), 
-                    d_scanner.block());
+        d_rules.add(true, $2, d_scanner.block(), 
+                    d_scanner.filename(), d_scanner.lineno());
     }
 |
     '^' pattern_ws
     {
-        d_rules.add(true, $2, Block());
-//        d_rules.add(SemVal::downCast<PatternVal>(*$1).pair(), Block());
+        d_rules.add(true, $2, Block(), 
+                    d_scanner.filename(), d_scanner.lineno());
     }
 |
     pattern_ws BLOCK
     {
-        d_rules.add(false, $1, 
-//        d_rules.add(SemVal::downCast<PatternVal>(*$1).pair(), 
-                    d_scanner.block());
+        d_rules.add(false, $1, d_scanner.block(), 
+                    d_scanner.filename(), d_scanner.lineno());
     }
 |
     pattern_ws
     {
-        d_rules.add(false, $1, Block());
-//        d_rules.add(SemVal::downCast<PatternVal>(*$1).pair(), Block());
+        d_rules.add(false, $1, Block(), 
+                    d_scanner.filename(), d_scanner.lineno());
     }
 ;
 

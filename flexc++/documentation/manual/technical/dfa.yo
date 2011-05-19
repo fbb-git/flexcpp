@@ -93,19 +93,14 @@ final DFA becomes:
 bf(keepViableTailCounts)
 
 Tail counts of rules which cannot be matched (i.e., for rules not having the
-tt(viable) attribute set) may have been computed when ...
-
-TO DO
-
-as such rules can never be matched their tt(TailCount) elements can be removed
-from the DFA's rows. This is handled by the member tt(keepViableTailCounts).
+tt(viable) attribute set) are removed by this function. Rule's
+tt(TailCount) elements were determined by the tt(DFARow)'s constructor (see
+section ref(DFAROW)).
 
 bf(computeTailCounts)
 
-The member tt(compueTailCounts) starts from the first row of the DFA,
-transiting to all its rows, computing the tail lengths of all the LOP-rules.
-
-TO DO
+Finally, any remaining tt(TailCount) elements are processed by
+tt(computTailCounts). 
 
 
 

@@ -17,42 +17,6 @@ void DFARow::tabulateFinals(Table &table) const
         out << second;
 
     table << out.str();
-
-//    auto firstRule = d_tailCount.end();
-//
-//    for         // find the first final rule
-//    (
-//        auto iter = d_tailCount.begin(), end = d_tailCount.end(); 
-//            iter != end;
-//                ++iter
-//    )
-//    {
-//        if (iter->final())
-//        {
-//            firstRule = iter;
-//            break;
-//        }
-//    }
-//
-//    if (firstRule == d_tailCount.end())
-//        table << ' ';
-//    else
-//    {
-//        ostringstream out;
-//        if 
-//        (
-//            firstRule->final() == 0 
-//            ||
-//            firstRule->inc()
-//            || 
-//            firstRule->final()
-//        )
-//            out << firstRule->rule();
-//        else if (firstRule->final() > 0) 
-//            out << firstRule->rule() << ':' << firstRule->final();
-//
-//        table << out.str();
-//    }
 }
 
 

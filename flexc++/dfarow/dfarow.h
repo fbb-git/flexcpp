@@ -25,26 +25,25 @@ class DFARow
     typedef std::vector<StateSet> StateSetVector;   // a set of states per
                                                     // input symbol
 
-    std::vector<TailCount> d_tailCount;       // acc counts for LOP rules
-
-    std::pair<size_t, size_t> d_finalRule;      // Final state for which 
-                                                // rule(s)?
+    std::vector<TailCount> d_tailCount;         // tail counts for LOP rules
 
     std::unordered_map<size_t, size_t> d_map;   // Relate input symbols (key) 
                                                 // to the row to transit to 
                                                 // (value)
 
-    States *d_states;                       // using ptrs so no op= needs
-                                            // to be implemented
+    std::pair<size_t, size_t> d_finalRule;      // Final state for which 
+                                                // rule(s)?
+    size_t d_thisIdx;                           // this row's index in the DFA
+
+    // pointers to the outside world (using ptrs so no op= is required)
+
+    States *d_states;
 
     StateSetVector *d_stateSets;            // For each DFArow the indices 
                                             // of the States used for this
                                             // DFArow.
     Rules *d_rules;
     Ranges *d_ranges;
-
-    size_t d_thisIdx;                       // row index in the DFA
-    size_t d_nRanges;
 
     public:
         typedef std::unordered_map<size_t, size_t>::value_type MapValue;

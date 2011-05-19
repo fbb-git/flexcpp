@@ -11,36 +11,35 @@ Each of these states may have a transition to another state when observing a
 character from one of the input ranges. These states to transit to in turn
 define a set of states. 
 
-
-
-
-Then, transitions from this row are probed for each of the character ranges
+Transitions from this row are probed for each of the character ranges
 (in tt(Ranges), see ref(RANGES)) by tt(DFARow::transitions). See section
 ref(DFAROW) for a description of this function. What it boils down to:
 tt(transitions) may add new elements to tt(d_stateSet), causing the iteration
 to continue until eventually there are as many tt(d_row) elements as there are
 tt(d_transitions) elements.
 
-
-
-
-
 If this set of states to transit to is not yet present in the tt(DFA) then a
 new row is added to the DFA. Adding rows is the task of tt(DFA::build),
 defining and adding new sets of tt(State)s is the responsibility of
 tt(DFARow::transition).
 
-The tt(DFARow)'s tt(unordered_map d_map) defines the relationship between an
-input character range (the map's key) and the row to transit to when a
-character from that input range has been observed. 
-
-The elements of the pair tt(d_finalRule) contain the indices of the tt(Rules)
-for which this tt(DFARow) represents a final state. See section
-ref(FINALSTATE) for a description of the meaning of these indices. When the
-next input symbol has no transition from this tt(DFARow) and this pair has
-values unequal zero then that rule has been matched.
-
-Additional data members of a tt(DFARow) are important for handling patterns
-in which the lookahead (LA) operator (tt(/)) has been used. This process is
-link(described here)(LOOKAHEAD) (section ref(LOOKAHEAD).
-
+itemization(
+    itt(d_tailCount): if the current row is visited while recognizing a rule
+using the LOP then tt(d_tailCount) contains a tt(TailCount) element for that
+rule. See section ref(LOOKAHEAD) for a description of the used algorithm.
+    itt(d_map): the tt(DFARow)'s tt(unordered_map d_map) defines the
+relationship between an input character range (the map's key) and the row to
+transit to when a character from that input range has been observed.
+    itt(d_finalRule): the elements of the pair tt(d_finalRule) are
+indices of the tt(Rules) for which this tt(DFARow) represents a final
+state. The em(first) element of the pair refers to a rule whose RE starts at
+BOL, the em(second) element refers to a rule whose RE does not explicitly
+start at BOL. When a value equals tt(UINT_MAX) then the current row is no
+final state for such a rule (BOL or not BOL).
+    itt(d_thisIdx): the index of the current tt(DFARow) element in its tt(DFA)
+matrix.
+    itt(d_stateSets): this data member is a pointer to a vector containing
+sets of states represented by the rows of the DFA. Element
+tt(d_stateSets[d_thisIdx]) is the set of states represented by the current DFA
+row. 
+    )

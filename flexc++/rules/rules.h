@@ -23,11 +23,7 @@ class Rules
     std::vector<Rule> d_rules;
     std::unordered_map<size_t, size_t>  d_finalToRule;  // from FINAL state to
                                                         // Rule index
-
     StartConditions d_startConditions;
-
-    std::string d_source;               // source and line of a rule definition
-    size_t      d_lineNr;
 
     public:
         typedef StartConditions::const_iterator const_iterator;
@@ -35,7 +31,8 @@ class Rules
         typedef std::vector<Rule>::const_iterator rule_const_iterator;
 
         Rules(States &states);
-        void add(bool bol, spSemVal const &patternVal, Block const &block);
+        void add(bool bol, spSemVal const &patternVal, Block const &block,
+                 std::string const &fileName, size_t lineNr);
 
         Rule const &operator[](size_t idx) const;
         Rule &operator[](size_t idx);
