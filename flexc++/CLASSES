@@ -17,8 +17,9 @@ ranges          textval     states
 tailcount       state
 patternval      charclass   states
 block           
-fstreaminfo     
-scanner         textval     fstreaminfo block
+# fstreaminfo     
+# scanner         textval     fstreaminfo block
+scanner         textval     block
 rule            states      block
 rules           rule        startcondition
 dfarow          ranges      rules       tailcount
