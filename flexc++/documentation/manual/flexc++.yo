@@ -18,7 +18,7 @@ COMMENT(
         lsubsubsect(FINACALGO)(The FinAc computing algorithm)
         includefile(technical/finacalgo)
 END)
-    
+
     lsubsect(PARSER)(The parser)
     includefile(technical/parser)
     
@@ -42,13 +42,20 @@ END)
     
     lsubsect(RANGES)(Ranges)
     includefile(technical/ranges)
+
+    subsect(The class TailCount)
+    includefile(technical/tailcount)
     
     subsect(The class DFAs)
     includefile(technical/dfas)
 
+
     lsubsect(DFA)(The DFA)
     includefile(technical/dfa)
-    
+
+        lsubsubsect(TAILLOGIC)(The logic used in 'setTailCount')
+        includefile(technical/taillogic)
+
     lsubsect(DFAROW)(The rows of the DFA: DFAROW)
     includefile(technical/dfarow)
 

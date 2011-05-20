@@ -1,0 +1,25 @@
+The class tt(TailCount) collects the tail sizes of rules using the LOP. Its
+organization is shown in figure ref(TAILCOUNTFIG). tt(TailCount) objects are
+used in the rows of DFAs (cf. section ref(DFAROW)).
+
+    figure(images/tailcount)(The TailCount class)(TAILCOUNTFIG)
+
+A tt(TailCount) object has three data members:
+    itemization(
+    itt(d_rule): this data member holds the index of the rule to which the
+        tt(TailCount) object refers.
+    itt(d_type): this is a tt(TailCount::Type) (a public accessible type). Its
+        values are bit-flagged values, and the values PRE, ACCEPT, and POST
+        may be combined with the values COUNT and INCREMENTING.nl()
+            The values PRE, ACCEPT, and POST indicate that the DFA row
+        containing the tt(TailCount) object represents NFA states before
+        (PRE), at (ACCEPT) or beyond (POST) the LOP.nl()
+            The flag COUNT is set when the tt(TailCount)'s tt(d_tailCount)
+        value is a fixed value and the flag tt(INCREMENTING) is set when
+        the current length of the tail must be incremented (cf. section
+        ref(LOOKAHEAD)). 
+    itt(d_tailCount): the tail length (so far) of a matched text. Its value is
+        only valid if the COUNT flag is also set in tt(d_type).
+    )
+
+        

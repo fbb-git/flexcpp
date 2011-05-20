@@ -15,8 +15,8 @@ void DFA::determineTailCount(TailCount &tailCount, size_t thisRow,
         return;
 }
 
-//cout << "tailCount in row " << thisRow << " for rule " << dfa.d_rule << ": " <<
-//tailCount.tailCount() << '\n';
+//cout << "tailCount in row " << thisRow << " for rule " << dfa.d_rule << 
+//": " << tailCount.tailCount() << '\n';
 
     std::unordered_map<size_t, size_t> const &transitMap = 
                                                     dfa.d_row[thisRow].map();

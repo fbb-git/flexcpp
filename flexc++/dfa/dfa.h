@@ -15,15 +15,14 @@ class DFA
 {
     friend std::ostream &operator<<(std::ostream & out, DFA const &dfa);
 
+    typedef std::set<size_t> StateSet;
+
     Ranges *d_ranges;
     Rules *d_rules;
     States *d_states;
 
     std::vector<DFARow> d_row;
-
-    typedef std::set<size_t> StateSet;
     std::vector<StateSet> d_stateSet;    
-
     bool d_verbose;
     bool d_sawACCEPT;           // used by visitTailCount
 

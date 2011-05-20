@@ -3,9 +3,9 @@
 bool DFA::setTailCount(TailCount &thisTailCount, size_t thisRow,
                       TailCount *fmTailCount, size_t fmRow)
 {
-    TailCount::Type type = thisTailCount.type();      // get the tailCount flags
+    TailCount::Type type = thisTailCount.type();  // get the tailCount flags
 
-//cout << "setAccount: fromRow = " << fmRow << ", this row = " << thisRow << 
+//cout << "setTailCount: fromRow = " << fmRow << ", this row = " << thisRow <<
 //", this TailCount = " << thisTailCount  << '\n';
         
     if (not (type & (TailCount::PRE | TailCount::ACCEPT)))    // only POST st.

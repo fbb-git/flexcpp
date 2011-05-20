@@ -1,4 +1,4 @@
-See also setacccount.cc
+See also setTailCount.cc
 
 Flag Logic (all alternatives are ignored if PROCESSED has been set as well).
 
@@ -6,43 +6,43 @@ Flag Logic (all alternatives are ignored if PROCESSED has been set as well).
 -----------------------------------------------------------------------
 initialize count for rows representing ACCEPT for the 1st time:
 
- 2   0   		0        1      0       	- set COUNT, d_accCount = 0, 
-         		                                            d_sawAccept = true
- 3   0   		0        1      1       	- set COUNT, d_accCount = 0
-         		                                        d_sawAccept = true
- 6   0   		1        1      0       	- set COUNT, d_accCount = 0, 
-         		                                        d_sawAccept = true
- 7   0   		1        1      1       	- set COUNT, d_accCount = 0, 
-         		                                        d_sawAccept = true
+ 2   0          0        1      0           - set COUNT, d_accCount = 0, 
+                                                            d_sawAccept = true
+ 3   0          0        1      1           - set COUNT, d_accCount = 0
+                                                        d_sawAccept = true
+ 6   0          1        1      0           - set COUNT, d_accCount = 0, 
+                                                        d_sawAccept = true
+ 7   0          1        1      1           - set COUNT, d_accCount = 0, 
+                                                        d_sawAccept = true
 -----------------------------------------------------------------------
 set INCREMENTING for rows only representing POST states:
 
- 1   0    		0        0      1    	- set INCREMENTING
- 9   1    		0        0      1    	- set INCREMENTING
+ 1   0          0        0      1       - set INCREMENTING
+ 9   1          0        0      1       - set INCREMENTING
 -----------------------------------------------------------------------
 increment the count for rows representing PRE/ACCEPT and POST states
 
- 5   0   		1        0      1       	- set COUNT
-         		                             d_accCount = previousCount + 1
-11   1   		0        1      1       	- set COUNT
-         		                             d_accCount = previousCount + 1
-13   1   		1        0      1       	- set COUNT
-         		                             d_accCount = previousCount + 1
-15   1   		1        1      1       	- set COUNT
+ 5   0          1        0      1           - set COUNT
+                                             d_accCount = previousCount + 1
+11   1          0        1      1           - set COUNT
+                                             d_accCount = previousCount + 1
+13   1          1        0      1           - set COUNT
+                                             d_accCount = previousCount + 1
+15   1          1        1      1           - set COUNT
                                              d_accCount = previousCount + 1
 -----------------------------------------------------------------------
 only PRE/ACCEPT states, and ACCEPT has already been seen: no action
-10    1    		0        1      0    	- no action
-14    1    		1        1      0    	- no action
+10    1         0        1      0       - no action
+14    1         1        1      0       - no action
 -----------------------------------------------------------------------
 only PRE states: no action
- 4    0    		1        0      0     	- no action
-12    1    		1        0      0     	- no action
+ 4    0         1        0      0       - no action
+12    1         1        0      0       - no action
 -----------------------------------------------------------------------
 these states cannot occur with LOP rules as LOP rules either set PRE, ACCEPT
 or POST
- 0    0    		0        0      0     	-       no action (does not occur)
- 8    1    		0        0      0     	-       no action (does not occur)
+ 0    0         0        0      0       -       no action (does not occur)
+ 8    1         0        0      0       -       no action (does not occur)
 ----------------------------------------------------------------------
 
 
