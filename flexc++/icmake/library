@@ -203,10 +203,8 @@ void scanner()
         ||
         "../parser/parse.cc" younger "lex.cc"
     )
-    {
-        exec("buildlexer");
         exec("flexc++", "lexer");
-    }
+
     chdir("..");
 }
 
