@@ -19,7 +19,7 @@ class SemVal;
 class Scanner: public ScannerBase
 {
     Block   d_block;
-    std::string d_filename;
+//    std::string d_filename;
     std::stack<StartCondition> d_fromCondition;
 
     std::unordered_map<std::string, std::string> d_nameExpansion;
@@ -33,14 +33,10 @@ class Scanner: public ScannerBase
         int lex();
         int pLex();     // calls/returns lex(), clears beginOfPattern
 
-        std::string const &filename() const;
         void addDefinition(SemVal const &name, SemVal const &definition);
         void newDefinition();
         void reset(StartCondition start);
-//        void undelimit();
         Block const &block() const;
-
-        std::string const &match() const;
 
     private:
         void begin(StartCondition to);
@@ -58,19 +54,9 @@ class Scanner: public ScannerBase
         int executeAction__(size_t ruleNr);
 };
 
-inline std::string const &Scanner::match() const     // TEMPORARILY
-{
-    return matched();
-}
-
 inline void Scanner::preCode() 
 {
     // optionally replace by your own code
-}
-
-inline std::string const &Scanner::filename() const
-{
-    return d_filename;
 }
 
 inline void Scanner::newDefinition()

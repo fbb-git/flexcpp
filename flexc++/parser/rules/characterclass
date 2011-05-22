@@ -29,7 +29,7 @@ cc_start:
     {
         string str;
         if (d_scanner.leng() > 1)
-            str = d_scanner.match().substr(1);
+            str = d_scanner.matched().substr(1);
         //cout << "CC_START\n";
         $$ = CharClass::escape(str);
     }
@@ -40,7 +40,7 @@ cc_negated:
     {
         string str;
         if (d_scanner.leng() > 2)
-            str = d_scanner.match().substr(2);
+            str = d_scanner.matched().substr(2);
         //cout << "CC_NEG\n";
         $$ = CharClass::escape(str);
     }
@@ -58,17 +58,17 @@ cc_contents:
 cc_element:
     PREDEFINED_CLASS
     {
-       $$ = CharClass::predefined(d_scanner.match());
+       $$ = CharClass::predefined(d_scanner.matched());
     }
 |
     plain_cc_characters
     {
-       $$ = CharClass::plain(d_scanner.match()[0]);
+       $$ = CharClass::plain(d_scanner.matched()[0]);
     }
 |
     ESCAPE_SEQUENCE
     {
-        $$ = CharClass::escape(d_scanner.match());
+        $$ = CharClass::escape(d_scanner.matched());
     }
 ;
 

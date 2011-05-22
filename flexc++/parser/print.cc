@@ -19,7 +19,7 @@ void Parser::print()
                                             block.substr(len - 20) << "'\n";
         }
         else if (isprint(d_token__) || d_token__ > 0xff)
-            std::cout << ", text: `" << d_scanner.match() << "'\n";
+            std::cout << ", text: `" << d_scanner.matched() << "'\n";
         else
             std::cout << '\n';
     }

@@ -7,42 +7,42 @@ options:
 option:
     classname_m '=' STRING
     {
-        d_options.setClassName(d_scanner.match());
+        d_options.setClassName(d_scanner.matched());
     }
 |
     lexfunctionname_m '=' STRING
     {
-        d_options.setLexFunctionName(d_scanner.match());
+        d_options.setLexFunctionName(d_scanner.matched());
     }
 |
     baseclassheader_m '=' STRING
     {
-        d_options.setBaseClassHeaderPath(d_scanner.match());
+        d_options.setBaseClassHeaderPath(d_scanner.matched());
     }
 |
     classheader_m '=' STRING
     {
-        d_options.setClassHeaderPath(d_scanner.match());
+        d_options.setClassHeaderPath(d_scanner.matched());
     }
 |
     implementationheader_m '=' STRING
     {
-        d_options.setImplementationHeaderPath(d_scanner.match());
+        d_options.setImplementationHeaderPath(d_scanner.matched());
     }
 |
     lexsource_m '=' STRING
     {
-        d_options.setLexSourcePath(d_scanner.match());
+        d_options.setLexSourcePath(d_scanner.matched());
     }
 |
     skeleton_directory_m '=' STRING
     {
-        d_options.setSkeletonDirectory(d_scanner.match());
+        d_options.setSkeletonDirectory(d_scanner.matched());
     }
 |
     namespace_m '=' STRING
     {
-        d_options.setNameSpace(d_scanner.match());
+        d_options.setNameSpace(d_scanner.matched());
     }
 |
     INTERACTIVE
@@ -85,7 +85,7 @@ opt_comma:
 debugname:
     NAME
     {
-        d_options.setDebug(d_scanner.match());
+        d_options.setDebug(d_scanner.matched());
     }
 ;
 
@@ -100,7 +100,7 @@ opt_steprange:
 firststep:
     DECIMAL
     {
-        d_options.setStepRange(d_scanner.match());
+        d_options.setStepRange(d_scanner.matched());
     }
 ;
 
@@ -109,6 +109,6 @@ opt_laststep:
 |
     DECIMAL
     {
-        d_options.setLastStep(d_scanner.match());
+        d_options.setLastStep(d_scanner.matched());
     }
 ;

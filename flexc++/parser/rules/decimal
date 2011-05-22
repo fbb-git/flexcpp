@@ -1,6 +1,6 @@
 decimal:
     DECIMAL
     {
-        $$ = Decimal::exact(d_scanner.match());
+        $$ = Decimal::exact(d_scanner.matched());
     }
 ;

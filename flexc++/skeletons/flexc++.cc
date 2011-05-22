@@ -394,8 +394,9 @@ $insert 8 debugStep
 
             case ActionType__::RETURN:
 $insert 16 debug.action  "EOF_REACHED"
-            return 0;
-
+                if (!popStream())
+                    return 0;
+            continue;
         } // switch
 
         reset__();

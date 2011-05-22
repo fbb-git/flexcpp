@@ -1,6 +1,0 @@
-<INITIAL,mblock,option,pattern>[[:blank:]]*"//".*
-
-<INITIAL,option,pattern,vbar>"/*"       begin(comment);
-
-<INITIAL,charclass,pattern>.            return Parser::CHARACTER;
-

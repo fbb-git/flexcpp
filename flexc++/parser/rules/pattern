@@ -7,17 +7,17 @@ pattern:
     STRING
     {                                                   
         $$ = PatternVal::str(d_states,
-                        d_scanner.match().substr(1, d_scanner.leng() - 2));
+                        d_scanner.matched().substr(1, d_scanner.leng() - 2));
     }
 |
     DECIMAL
     {                                                   
-        $$ = PatternVal::str(d_states, d_scanner.match());
+        $$ = PatternVal::str(d_states, d_scanner.matched());
     }
 |
     SECTION_DELIMITER
     {
-        $$ = PatternVal::str(d_states, d_scanner.match());
+        $$ = PatternVal::str(d_states, d_scanner.matched());
     }
 |
     character_class
@@ -29,13 +29,13 @@ pattern:
     {
         $$ = PatternVal::plain(
                 d_states, 
-                static_cast<unsigned char>(d_scanner.match()[0])
+                static_cast<unsigned char>(d_scanner.matched()[0])
             );
     }
 |
     ESCAPE_SEQUENCE
     {
-        $$ = PatternVal::plain(d_states, d_scanner.match());
+        $$ = PatternVal::plain(d_states, d_scanner.matched());
     }
 |
     '.'
@@ -60,7 +60,7 @@ pattern:
 |
     pattern quantifier
     {
-        $$ = PatternVal::quantifier(d_states, *$1, d_scanner.match()[0]);
+        $$ = PatternVal::quantifier(d_states, *$1, d_scanner.matched()[0]);
     }
 |
     '(' incParen pattern ')' decParen

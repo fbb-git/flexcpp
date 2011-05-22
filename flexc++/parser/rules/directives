@@ -70,7 +70,7 @@ pattern_txt:
 patterntxt_string:
     STRING
     {
-        $$ = TextVal::plain(d_scanner.match());   
+        $$ = TextVal::plain(d_scanner.matched());   
     }
 ;
 
@@ -84,7 +84,7 @@ name_def:
 name:
     NAME
     {
-        $$ = TextVal::trimmed(d_scanner.match());
+        $$ = TextVal::trimmed(d_scanner.matched());
     }
 ;
         

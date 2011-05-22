@@ -1,4 +1,0 @@
-DECIMAL                 0|[1-9][[:digit:]]*
-OCTAL                   [0-7]
-NAME                    [A-Za-z_][-A-Za-z0-9_]*
-

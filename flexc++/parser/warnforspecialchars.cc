@@ -2,7 +2,7 @@
 
 void Parser::warnForSpecialChars() const
 {
-    int ch = d_scanner.match()[0];
+    int ch = d_scanner.matched()[0];
 
     if (ch == '$' || ch == '^')
         wmsg << '\'' << static_cast<char>(ch) << 

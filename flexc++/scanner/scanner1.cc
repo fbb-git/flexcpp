@@ -2,8 +2,7 @@
 
 Scanner::Scanner(string const &fname)
 :
-    ScannerBase(new StreamInfoType(fname)),
-    d_filename(fname),
+    ScannerBase(fname),
     d_initialClosingBracket(false)
 {
     string tag = fname + ", line";

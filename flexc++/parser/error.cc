@@ -17,13 +17,13 @@ void Parser::error(char const *msg)
     if (d_msg.empty())
     {
         if (not repeated)
-            emsg << "unrecognized input (`" << d_scanner.match() << 
+            emsg << "unrecognized input (`" << d_scanner.matched() << 
                          "') encountered" << endl;
         repeated = true;
     }
     else
     {
-        string const *txt = &d_scanner.match();
+        string const *txt = &d_scanner.matched();
         if (*txt == "\n")
             txt = &eoln;
 

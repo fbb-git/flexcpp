@@ -264,6 +264,7 @@ inline bool ScannerBase::atFinalState()
 inline void ScannerBase::setFilename(std::string const &name)
 {
     d_filename = name;
+std::cerr << "SET FILENAME: " << d_filename << '\n';
 }
 
 inline void ScannerBase::setMatched(std::string const &text)
