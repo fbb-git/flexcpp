@@ -24,6 +24,8 @@ class Rules;
 #undef Parser
 class Parser: public ParserBase
 {
+    typedef Scanner::StartCondition__ StartCondition__;
+
     FBB::Arg &d_arg;
 
     // $insert scannerobject

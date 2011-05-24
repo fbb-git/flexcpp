@@ -51,7 +51,7 @@ protected:
 
 public:
 
-    enum StartCondition {
+    enum class StartCondition__ {
 $insert 8 startCondNames
     };
 
@@ -108,7 +108,7 @@ private:
                                             // the name "<istream #>", where
                                             // # is the sequence number of the 
                                             // istream (starting at 1)
-    StartCondition  d_startCondition;
+    StartCondition__  d_startCondition;
     size_t          d_state;
     int             d_nextState;
     std::shared_ptr<std::istream> d_in;
@@ -159,10 +159,10 @@ protected:
     \@Base(std::istream &in, std::ostream &out);
     \@Base(std::string const &filename);
 
-    StartCondition  startCondition() const;   // current start condition
+    StartCondition__  startCondition() const;   // current start condition
     bool            popStream();
     std::ostream   &out();
-    void            begin(StartCondition startCondition);
+    void            begin(StartCondition__ startCondition);
     void            echo() const;
 
 //    `less(n)' returns all but the first `n' characters of the current
@@ -264,7 +264,7 @@ inline std::string const &\@Base::matched() const
     return d_matched;
 }
 
-inline \@Base::StartCondition \@Base::startCondition() const
+inline \@Base::StartCondition__ \@Base::startCondition() const
 {
     return d_startCondition;
 }
@@ -314,9 +314,10 @@ inline void \@Base::less(size_t nChars)
     accept(nChars);
 }
 
-inline void \@Base::begin(StartCondition startCondition)
+inline void \@Base::begin(StartCondition__ startCondition)
 {
-    d_dfaBase = s_dfaBase[d_startCondition = startCondition];
+    d_dfaBase = 
+        s_dfaBase[static_cast<int>(d_startCondition = startCondition)];
 }
 
 inline size_t \@Base::state__() const

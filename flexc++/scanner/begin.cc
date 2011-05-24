@@ -1,6 +1,6 @@
 #include "scanner.ih"
 
-int Scanner::begin(StartCondition to, int token)
+int Scanner::begin(StartCondition__ to, int token)
 {
     begin(to);
     return token;

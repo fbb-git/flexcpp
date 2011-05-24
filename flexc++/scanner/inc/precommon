@@ -1,6 +1,6 @@
 <INITIAL,pattern>{
 
-    [[:blank:]]*"|"     begin(vbar);
+    [[:blank:]]*"|"     begin(StartCondition__::vbar);
     
                         // rm all consecutive blank delimited \n chars
     ([[:blank:]]*\n)+[[:blank:]]*   return '\n';
@@ -9,7 +9,7 @@
     
     "\""                {
                             more();
-                            begin(str);
+                            begin(StartCondition__::str);
                         }
     
     \\({OCTAL}{3})          |

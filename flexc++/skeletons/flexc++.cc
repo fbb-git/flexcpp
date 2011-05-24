@@ -13,7 +13,7 @@ $insert namespace-open
 $insert ranges
 
     // s_dfa contains the rows of *all* DFAs ordered by start state.
-    // The enum class StartCondition is defined in the baseclass header
+    // The enum class StartCondition__ is defined in the baseclass header
     // INITIAL is always 0.
     // Each entry defines the row to transit to if the column's
     // character range was sensed. Row numbers are relative to the
@@ -71,7 +71,7 @@ void \@Base::Input::reRead(std::string const &str, size_t fm)
 
 \@Base::\@Base()
 :
-    d_startCondition(INITIAL),
+    d_startCondition(StartCondition__::INITIAL),
     d_state(0),
     d_out(&std::cout),
     d_sawEOF(false),
@@ -83,7 +83,7 @@ $insert debugInit
 
 \@Base::\@Base(std::istream &in, std::ostream &out)
 :
-    d_startCondition(INITIAL),
+    d_startCondition(StartCondition__::INITIAL),
     d_state(0),
     d_out(&out),
     d_sawEOF(false),
@@ -96,7 +96,7 @@ $insert debugInit
 
 \@Base::\@Base(std::string const &filename)
 :
-    d_startCondition(INITIAL),
+    d_startCondition(StartCondition__::INITIAL),
     d_state(0),
     d_in(new std::ifstream(filename)),
     d_out(&std::cout),

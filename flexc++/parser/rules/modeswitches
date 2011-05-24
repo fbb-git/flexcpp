@@ -1,13 +1,13 @@
 mode_initial:
     {
-        d_scanner.reset(Scanner::INITIAL);
+        d_scanner.reset(StartCondition__::INITIAL);
     }
 ;
 
 mode_block:
     action_m
     {
-        d_scanner.reset(Scanner::mblock);
+        d_scanner.reset(StartCondition__::mblock);
     }
 ;
 
@@ -20,7 +20,7 @@ mode_pattern:
 
 mode_patterntxt:
     {
-        d_scanner.reset(Scanner::patterntxt);
+        d_scanner.reset(StartCondition__::patterntxt);
     }
 ;
 

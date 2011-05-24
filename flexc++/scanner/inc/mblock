@@ -18,18 +18,18 @@
 "}"             d_block.close();
 
 "/*"            {
-                    begin(comment);
+                    begin(StartCondition__::comment);
                     d_block(' ');
                 }
 
 \"              {
                     more();
-                    begin(str);
+                    begin(StartCondition__::str);
                 }
 
 "'"             {
                     more();
-                    begin(quote);
+                    begin(StartCondition__::quote);
                 }
 
 NAME            d_block += matched();

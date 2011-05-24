@@ -4,7 +4,7 @@
     
     "\""                    {
                                 more();
-                                begin(str);
+                                begin(StartCondition__::str);
                             }
     
     =                       return '=';

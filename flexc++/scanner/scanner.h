@@ -20,7 +20,7 @@ class Scanner: public ScannerBase
 {
     Block   d_block;
 //    std::string d_filename;
-    std::stack<StartCondition> d_fromCondition;
+    std::stack<StartCondition__> d_fromCondition;
 
     std::unordered_map<std::string, std::string> d_nameExpansion;
     std::string d_patternName;
@@ -35,12 +35,12 @@ class Scanner: public ScannerBase
 
         void addDefinition(SemVal const &name, SemVal const &definition);
         void newDefinition();
-        void reset(StartCondition start);
+        void reset(StartCondition__ start);
         Block const &block() const;
 
     private:
-        void begin(StartCondition to);
-        int begin(StartCondition to, int token);
+        void begin(StartCondition__ to);
+        int begin(StartCondition__ to, int token);
         int end(int token = -1);    // go back to pushed startcondition
                                     // (if any) return token. 
 

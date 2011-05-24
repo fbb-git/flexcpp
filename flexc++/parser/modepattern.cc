@@ -2,7 +2,7 @@
 
 void Parser::modePattern()
 {
-    d_scanner.reset(Scanner::pattern);
+    d_scanner.reset(StartCondition__::pattern);
     s_lastMsg.clear();
     d_parentheses = 0;
     d_usesLOP = false;

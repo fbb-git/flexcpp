@@ -1,13 +1,13 @@
 #include "scanner.ih"
 
-void Scanner::reset(StartCondition to)
+void Scanner::reset(StartCondition__ to)
 {
-    d_fromCondition = stack<StartCondition>();
+    d_fromCondition = stack<StartCondition__>();
 
-    if (to != INITIAL)
+    if (to != StartCondition__::INITIAL)
         d_fromCondition.push(startCondition());
 
-    if (to == pattern)
+    if (to == StartCondition__::pattern)
         d_beginOfPattern = true;
 
     ScannerBase::begin(to);
