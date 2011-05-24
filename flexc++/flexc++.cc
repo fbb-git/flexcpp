@@ -30,17 +30,18 @@ namespace
         {"lines",                       Arg::None},
         {"no-lines",                    Arg::None},
 
-        {"show-filenames",              Arg::None},
+        {"namespace",                   'n'},
+
+        {"help",                        'h'},
+        {"usage",                       'h'},
+        {"version",                     'v'},
 
         {"debug",                       'd'},
         {"debug-steps",                 's'},
-
-        {"help",                        'h'},
-        {"namespace",                   'n'},
+        {"construction",                'K'},
         {"print-tokens",                't'},
-        {"usage",                       'h'},
+        {"show-filenames",              'F'},
         {"verbose",                     'V'},
-        {"version",                     'v'},
     };
 
     auto longEnd = longOptions +
@@ -50,7 +51,7 @@ namespace
 int main(int argc, char **argv)
 try
 {
-    Arg &arg = Arg::initialize("b:c:dhi:l:n:s::tB:C:I:L:S:Vv",
+    Arg &arg = Arg::initialize("b:B:c:C:dFhi:I:Kl:L:n:s::S:tvV",
                     longOptions, longEnd, argc, argv);
     arg.versionHelp(usage, version, 1);
 
@@ -70,21 +71,13 @@ try
     DFAs dfas(rules, states, ranges);
         dfas.build();
 
-    if (arg.option('V'))
-        cout << "RANGES:\n" << ranges << "\n"
-                "\n"
-                "RULES:\n" << rules << "\n"
-                "\n"
-                "STATES:\n" << states << "\n"
-                "\n" <<
-                dfas << '\n';
-
     Generator generator(rules, ranges, dfas);
-
+        generator.construction(states);
         generator.lexSource();
         generator.baseclassHeader();
         generator.classHeader();
         generator.implementationHeader();
+        generator.showFilenames();
 }
 catch (int x)
 {

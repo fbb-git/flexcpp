@@ -14,6 +14,7 @@
 #include <iomanip>
 
 #include "../ranges/ranges.h"
+#include "../states/states.h"
 #include "../state/state.h"
 #include "../options/options.h"
 

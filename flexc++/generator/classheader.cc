@@ -22,8 +22,5 @@ void Generator::classHeader() const
     Errno::open(in,  d_options.classSkeleton()); 
     Errno::open(out, d_options.classHeaderPath()); 
 
-    if (d_arg.option('V'))
-        cout << "Class header file: " << d_options.classHeaderPath() << '\n';
-
     filter(in, out);    
 }

@@ -12,6 +12,7 @@
 
 class Ranges;
 class Options;
+class States;
 
 namespace FBB
 {
@@ -54,6 +55,7 @@ class Generator
     Ranges const &d_ranges;
     DFAs const &d_dfas;
     std::string d_baseclassScope;
+    std::string d_constructionFilename;
 
     bool d_lineDirectives;
     bool d_debug;
@@ -79,10 +81,12 @@ class Generator
     public:
         Generator(Rules const &rules, Ranges const &ranges, DFAs const &dfas);
 
+        void construction(States const &states);
         void baseclassHeader() const;
         void classHeader() const;
         void implementationHeader() const;
         void lexSource() const;
+        void showFilenames() const;
 
         void declarations();
 
