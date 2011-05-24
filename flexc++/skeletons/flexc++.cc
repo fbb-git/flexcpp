@@ -96,6 +96,7 @@ $insert debugInit
 
 \@Base::\@Base(std::string const &filename)
 :
+    d_filename(filename)
     d_startCondition(StartCondition__::INITIAL),
     d_state(0),
     d_in(new std::ifstream(filename)),

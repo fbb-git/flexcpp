@@ -55,9 +55,17 @@ class Rules
 
         size_t size() const;
 
+        void warnNonViable() const;
+
     private:
         void setRule(size_t state, size_t index);
+        static bool nonViable(Rule const &rule);
 };
+
+inline bool Rules::nonViable(Rule const &rule)
+{
+    return not rule.viable();
+}
 
 inline size_t Rules::size() const
 {

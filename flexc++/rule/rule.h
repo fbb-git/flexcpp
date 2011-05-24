@@ -42,6 +42,9 @@ class Rule
 
         bool bol() const;
         bool viable() const;
+
+        std::string const &source() const;
+        size_t lineNr() const;
         
     private:
         void setStates(std::vector<size_t> &prePostA, 
@@ -49,6 +52,17 @@ class Rule
         static bool cmpAccept(size_t left, size_t right, 
                                                         States const &states);
 };
+
+inline std::string const &Rule::source() const
+{
+    return d_source;
+}
+
+inline size_t Rule::lineNr() const
+{
+    return d_lineNr;
+}
+
 
 inline void Rule::setBol() 
 {

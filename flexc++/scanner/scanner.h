@@ -19,7 +19,6 @@ class SemVal;
 class Scanner: public ScannerBase
 {
     Block   d_block;
-//    std::string d_filename;
     std::stack<StartCondition__> d_fromCondition;
 
     std::unordered_map<std::string, std::string> d_nameExpansion;
@@ -49,6 +48,8 @@ class Scanner: public ScannerBase
 
         void pushNameExpansion();
         void maybeSwitchStream();
+        bool popStream();
+        void setLineTags(std::string const &filename) const;
 
         int lex__();
         int executeAction__(size_t ruleNr);

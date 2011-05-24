@@ -13,9 +13,6 @@ void Scanner::maybeSwitchStream()
         return;
     }
 
-    string tag = text + ", line";
-    emsg.setLineTag(tag);
-    wmsg.setLineTag(tag);
-
+    setLineTags(text);
     pushStream(text);
 }

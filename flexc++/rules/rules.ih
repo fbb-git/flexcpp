@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <bobcat/fnwrap>
+#include <bobcat/mstream>
 
 #include "../states/states.h"
 #include "../patternval/patternval.ih"

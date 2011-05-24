@@ -71,6 +71,8 @@ try
     DFAs dfas(rules, states, ranges);
         dfas.build();
 
+        rules.warnNonViable();
+
     Generator generator(rules, ranges, dfas);
         generator.construction(states);
         generator.lexSource();
