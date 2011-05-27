@@ -100,6 +100,8 @@ class Generator
         void baseClassH(std::ostream &out) const;
         void classH(std::ostream &out) const;
         void classIH(std::ostream &out) const;
+        void inputInterface(std::ostream &out) const;
+        void inputImplementation(std::ostream &out) const;
         void debug(std::ostream &out) const;
         void debugDecl(std::ostream &out) const;
         void debugFunctions(std::ostream &out) const;
@@ -110,7 +112,6 @@ class Generator
         void dfas(std::ostream &out) const;
         void filter(std::istream &in, std::ostream &out) const;
         void inlineLexFunction(std::ostream &out) const;
-        void inputMembers(std::ostream &out) const;
         void insert(std::ostream &out) const;
         void key(std::ostream &out) const;
         void lexFunctionDecl(std::ostream &out) const;

@@ -3,14 +3,15 @@
 Generator::Map Generator::s_insert =
 {
     // $insert-key         function called
-
     {"DFAbases",            &Generator::DFAbases},
     {"DFAs",                &Generator::dfas},
+    {"RFCs",                &Generator::rfcs},
     {"actions",             &Generator::actions},
-    {"tailCount",            &Generator::tailCount},
     {"baseclass_h",         &Generator::baseClassH},
     {"class_h",             &Generator::classH},
     {"class_ih",            &Generator::classIH},
+    {"inputInterface",      &Generator::inputInterface},
+    {"inputImplementation", &Generator::inputImplementation},
     {"debug",               &Generator::debug},
     {"debugDecl",           &Generator::debugDecl},
     {"debugFunctions",      &Generator::debugFunctions},
@@ -18,16 +19,14 @@ Generator::Map Generator::s_insert =
     {"debugInit",           &Generator::debugInit},
     {"debugStep",           &Generator::debugStep},
     {"declarations",        &Generator::declarations},
-    {"RFCs",                &Generator::rfcs},
     {"inlineLexFunction",   &Generator::inlineLexFunction},
-    {"inputMembers",        &Generator::inputMembers},
     {"lexFunctionDecl",     &Generator::lexFunctionDecl},
     {"namespace-close",     &Generator::namespaceClose},    
     {"namespace-open",      &Generator::namespaceOpen},
     {"namespace-use",       &Generator::namespaceUse},
     {"ranges",              &Generator::ranges},
-
     {"startCondNames",      &Generator::startCondNames},
+    {"tailCount",            &Generator::tailCount},
 };
 
 char const *Generator::s_baseFlag = "\\@";

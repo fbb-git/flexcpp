@@ -34,78 +34,33 @@ $insert DFAbases
 
 size_t \@Base::s_istreamNr = 0;
 
-$insert inputMembers
-
-size_t \@Base::Input::next()
-{
-    size_t ch;
-
-    if (d_deque.empty())                    // deque empty: next char fm
-    {
-        ch = d_in->get();                   // istream
-        return *d_in ? ch : AT_EOF;
-    }
-
-    ch = d_deque.front();
-    d_deque.pop_front();
-
-    return ch;
-}
-
-void \@Base::Input::reRead(size_t ch)
-{
-    if (ch < 0x100)
-    {
-$insert 8 debug.input "Input::reRead(" << ch << ")"
-        if (ch == '\n')
-            --d_lineNr;
-        d_deque.push_front(ch);
-    }
-}
-
-void \@Base::Input::reRead(std::string const &str, size_t fm)
-{
-    for (size_t idx = str.size(); idx-- > fm; )
-        reRead(str[idx]);
-}
-
-\@Base::\@Base()
-:
-    d_startCondition(StartCondition__::INITIAL),
-    d_state(0),
-    d_out(&std::cout),
-    d_sawEOF(false),
-    d_atBOL(true),
-$insert tailCount
-$insert debugInit
-    d_dfaBase(s_dfa)
-{}
-
-\@Base::\@Base(std::istream &in, std::ostream &out)
-:
-    d_startCondition(StartCondition__::INITIAL),
-    d_state(0),
-    d_out(&out),
-    d_sawEOF(false),
-    d_atBOL(true),
-$insert tailCount
-$insert debugInit
-    d_input(in),
-    d_dfaBase(s_dfa)
-{}
+$insert inputImplementation
 
 \@Base::\@Base(std::string const &filename)
 :
-    d_filename(filename)
+    d_filename(filename),
     d_startCondition(StartCondition__::INITIAL),
     d_state(0),
-    d_in(new std::ifstream(filename)),
-    d_out(&std::cout),
+    d_out(new std::ostream(std::cout.rdbuf())),
     d_sawEOF(false),
     d_atBOL(true),
 $insert tailCount
 $insert debugInit
-    d_input(*d_in),
+    d_input(new std::ifstream(filename)),
+    d_dfaBase(s_dfa)
+{}
+
+\@Base::\@Base(std::string const &infilename, std::string const &outfilename)
+:
+    d_filename(infilename),
+    d_startCondition(StartCondition__::INITIAL),
+    d_state(0),
+    d_out(new std::ofstream(outfilename)),
+    d_sawEOF(false),
+    d_atBOL(true),
+$insert tailCount
+$insert debugInit
+    d_input(new std::ifstream(infilename)),
     d_dfaBase(s_dfa)
 {}
 
@@ -118,28 +73,35 @@ void \@Base::redo(size_t nChars)
     d_matched.resize(from);
 }
 
-void \@Base::switchStreams(std::istream &iStream, std::ostream &out)
+void \@Base::switchStreams(std::string const &infilename)
 {
-    *d_out << std::flush;
-    d_out = &out;
-    d_input = Input(iStream);
-    d_filename = istreamName__();
+    d_input.close();
+    d_filename = infilename;
+    d_input = Input(new ifstream(infilename));
     d_sawEOF = false;
+    d_atBOL = true;
 }
 
-void \@Base::pushStream(std::string const &name,
-                          std::istream *streamPtr, bool closeAtPop)
+void \@Base::switchStreams(std::string const &infilename,
+                           std::string const &outfilename)
+{
+    *d_out << std::flush;
+    d_out.reset(new ofstream(outfilename));
+
+    switchStreams(infilename);
+}
+
+void \@Base::pushStream(std::string const &name, std::istream *streamPtr)
 {
     if (d_streamStack.size() == s_maxSizeofStreamStack)
     {
-        if (closeAtPop)
-            delete streamPtr;
+        delete streamPtr;
         throw std::length_error("Max stream stack size exceeded");
     }
 
-    d_streamStack.push(StreamStruct{d_filename, d_input, closeAtPop});
+    d_streamStack.push(StreamStruct{d_filename, d_input});
     d_filename = name;
-    d_input = Input(*streamPtr);
+    d_input = Input(streamPtr);
     d_sawEOF = false;
 }
 
@@ -151,32 +113,17 @@ void \@Base::pushStream(std::string const &name)
         delete streamPtr;
         throw std::runtime_error("Cannot read " + name);
     }
-    pushStream(name, streamPtr, true);
-}
-
-std::string \@Base::istreamName__()
-{
-    std::string ret;
-    std::ostringstream name;
-    name << "<istream " << ++s_istreamNr << ">";
-    ret = name.str();
-    return ret;
-}
-
-void \@Base::pushStream(std::istream &iStream)
-{
-    pushStream(istreamName__(), &iStream, false);
+    pushStream(name, streamPtr);
 }
 
 bool \@Base::popStream()
 {
+    d_input.close();
+
     if (d_streamStack.empty())
         return false;
 
     StreamStruct &top = d_streamStack.top();
-
-    if (top.newIstream)
-        d_input.destroy();
 
     d_input =   top.pushedInput;
     d_filename = top.pushedName;

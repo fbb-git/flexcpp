@@ -16,8 +16,8 @@ class Options
     std::string d_className;
     std::string d_lexFunctionName;
     std::string d_nameSpace;
-    std::string d_streamInfoClassName;
-    std::string d_streamInfoInclude;
+    std::string d_inputImplementation;
+    std::string d_inputInterface;
 
     bool d_interactive;
     bool d_lines;
@@ -46,6 +46,9 @@ class Options
         static Options &instance();
 
         Options(Options const &other) = delete;
+
+        void setInputInterfacePath(std::string const &name);
+        void setInputImplementationPath(std::string const &name);
 
         void setBaseClassHeaderPath(std::string const &name);
         void setClassHeaderPath(std::string const &name);
@@ -80,6 +83,9 @@ class Options
         std::string classHeaderName() const;
         std::string implementationHeaderName() const;
 
+        std::string const &inputInterface() const;
+        std::string const &inputImplementation() const;
+
         std::string const &className() const;
         std::string const &lexFunctionName() const;
         std::string const &nameSpace() const;
@@ -101,6 +107,16 @@ class Options
         std::string undelimit(std::string const &str);
         void setPath(std::string *target, std::string const &name);
 };
+
+inline std::string const &Options::inputInterface() const
+{
+    return d_inputInterface;
+}
+
+inline std::string const &Options::inputImplementation() const
+{
+    return d_inputImplementation;
+}
 
 inline std::string const &Options::baseclassSkeleton() const
 {
@@ -157,6 +173,16 @@ inline std::string const &Options::nameSpace() const
     return d_nameSpace;
 }
 
+inline void Options::setInputImplementationPath(std::string const &name)
+{
+    setPath(&d_inputImplementation, name);
+}
+   
+inline void Options::setInputInterfacePath(std::string const &name)
+{
+    setPath(&d_inputInterface, name);
+}
+   
 inline void Options::setBaseClassHeaderPath(std::string const &name)
 {
     setPath(&d_baseClassHeaderPath, name);

@@ -1,3 +1,17 @@
+inputinterface_m:
+    INPUTINTERFACE
+    {
+        d_msg = "name of the file holding Input's interface";
+    }
+;
+
+inputimplementation_m:
+    INPUTIMPLEMENTATION
+    {
+        d_msg = "name of the file holding Input's implementations";
+    }
+;
+
 classname_m:
     CLASSNAME
     {

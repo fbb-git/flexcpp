@@ -97,6 +97,9 @@ END)
     subsect(Code generation)
     includefile(technical/codegeneration)
 
+    subsect(Handling input your own way)
+    includefile(technical/input)
+
     subsect(Refreshing flexc++)
     includefile(technical/refreshing)
 

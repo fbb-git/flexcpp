@@ -5,6 +5,16 @@ options:
 ;
 
 option:
+    inputinterface_m '=' STRING
+    {
+        d_options.setInputInterfacePath(d_scanner.matched());
+    }
+|
+    inputimplementation_m '=' STRING
+    {
+        d_options.setInputImplementationPath(d_scanner.matched());
+    }
+|
     classname_m '=' STRING
     {
         d_options.setClassName(d_scanner.matched());

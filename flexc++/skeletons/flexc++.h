@@ -8,9 +8,7 @@ $insert namespace-open
 class \@: public \@Base
 {
     public:
-        \@() = default;
-        explicit \@(std::istream &iStream, std::ostream &out = std::cout);
-        \@(std::string const &filename);    // need one for output name too
+        \@(std::string const &filename);
 
 $insert 8 lexFunctionDecl
 
@@ -20,19 +18,11 @@ $insert 8 lexFunctionDecl
 
         void preCode();     // re-implement this function for code that must 
                             // be exec'ed before the patternmatching starts
-
 };
 
 inline void \@::preCode() 
 {
     // optionally replace by your own code
-}
-
-inline \@::\@(std::istream &iStream, std::ostream &oStream)
-:
-    \@Base(iStream, oStream)
-{
-    setFilename(istreamName__());
 }
 
 inline \@::\@(std::string const &filename)

@@ -39,7 +39,6 @@ class \@Base
     };
 
 protected:
-
     enum class ActionType__
     {
         CONTINUE,               // transition succeeded, go on
@@ -50,11 +49,9 @@ protected:
     };
 
 public:
-
     enum class StartCondition__ {
 $insert 8 startCondNames
     };
-
 
 private:
     struct FinData            // Info about intermediate matched rules while
@@ -72,34 +69,13 @@ private:
 
         // class Input encapsulates all input operations. 
         // Its member get() returns the next input character
-    class Input
-    {
-        std::deque<unsigned char> d_deque;  // pending input chars
-        std::istream *d_in;                 //  ptr for easy streamswitching
-        size_t d_lineNr;                    // line count
-
-        public:
-            Input();
-            Input(std::istream &iStream);
-            size_t get();                   // the next range
-            size_t lineNr() const;          
-            void reRead(size_t ch);         // push back 'ch' (if <= 0x100)
-                                            // push back str from idx 'fmIdx'
-            void reRead(std::string const &str, size_t fmIdx);
-
-            void destroy();                 // delete dynamically allocated
-                                            // d_in
-        private:
-            size_t next();                  // obtain the next character
-    };
+$insert inputInterface
 
     struct StreamStruct
     {
         std::string pushedName;
         Input pushedInput;
-        bool newIstream;
     };
-
 
     std::stack<StreamStruct>    d_streamStack;
 
@@ -111,8 +87,7 @@ private:
     StartCondition__  d_startCondition;
     size_t          d_state;
     int             d_nextState;
-    std::shared_ptr<std::istream> d_in;
-    std::ostream   *d_out;
+    std::shared_ptr<std::ostream> d_out;
     bool            d_sawEOF;               // saw EOF: ignore tailCount
     bool            d_atBOL;                // the matched text starts at BOL
     std::vector<size_t> d_tailCount;         
@@ -136,6 +111,8 @@ $insert 4 declarations
     static size_t  const s_maxSizeofStreamStack = 10; 
 
 public:
+    \@Base(\@Base const &other)             = delete;
+    \@Base &operator=(\@Base const &rhs)    = delete;
 
     bool                debug()     const;
     std::string const  &filename()  const;
@@ -150,14 +127,12 @@ public:
     size_t              lineno()    const;
 
     void                setDebug(bool onOff);
-    void                switchStreams(std::istream &iStream);
-    void                switchStreams(std::istream &iStream,
-                                      std::ostream &oStream);
+    void                switchStreams(std::string const &infilename);
+    void                switchStreams(std::string const &infilename,
+                                      std::string const &outfilename);
 protected:
-
-    \@Base();
-    \@Base(std::istream &in, std::ostream &out);
     \@Base(std::string const &filename);
+    \@Base(std::string const &infilename, std::string const &outfilename);
 
     StartCondition__  startCondition() const;   // current start condition
     bool            popStream();
@@ -206,22 +181,10 @@ protected:
     void            reset__();                  // prepare for new cycle
 
 private:
-
-    void pushStream(std::string const &name,
-                      std::istream *streamPtr, bool closeAtPop);
+    void pushStream(std::string const &name, std::istream *streamPtr);
     void determineMatchedSize(FinData const &final);
     bool atFinalState();
 };
-
-inline void \@Base::Input::destroy()
-{
-    delete d_in;
-}
-
-inline size_t \@Base::Input::lineNr() const
-{
-    return d_lineNr;
-}
 
 inline std::ostream &\@Base::out()
 {
@@ -252,11 +215,6 @@ inline void \@Base::setFilename(std::string const &name)
 inline void \@Base::setMatched(std::string const &text)
 {
     d_matched = text;
-}
-
-inline void \@Base::switchStreams(std::istream &iStream)
-{
-    switchStreams(iStream, *d_out);
 }
 
 inline std::string const &\@Base::matched() const
