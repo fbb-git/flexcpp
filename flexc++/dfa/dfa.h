@@ -44,8 +44,6 @@ class DFA
     private:
         void keepViableTailCounts();
 
-        static void translate(DFARow &row, std::vector<size_t> const &unique);
-
         void keepUniqueRows();
         void inspectRows(std::vector<size_t> &unique);
         void shrinkDFA(std::vector<size_t> &unique);
@@ -54,10 +52,11 @@ class DFA
         size_t available(DFARow const &nextRow);
 
         void computeTailCounts();
-        static void visitTailCount(TailCount &tailCount, DFA &dfa);
-        static void determineTailCount(TailCount &tailCount, size_t thisRow,
-                                      TailCount *fmTailCount, size_t fmRow, 
-                                      DFA &dfa);
+        void visitTailCount(TailCount &tailCount);
+
+        void determineTailCount(TailCount &tailCount, size_t thisRow,
+                                      TailCount *fmTailCount, size_t fmRow);
+
         bool setTailCount(TailCount &tailCount, size_t thisRow, 
                          TailCount *fmTailCount, size_t fmRow);
         bool setIncTailCount(TailCount::Type type, TailCount &thisTailCount);
@@ -65,11 +64,8 @@ class DFA
         bool setNextTailCount(TailCount::Type type,
                             TailCount &thisTailCount, size_t thisRow,
                             TailCount &fmTailCount, size_t fmRow);
-        static void transitTailCount(DFARow::MapValue const &rangeToRow, 
-                    TailCount *fmTailCount, size_t fmRow, DFA &dfa);
-
-        static void fillStartSet(size_t idx, Rules const &rules, 
-                                             StateSet &start);
+        void transitTailCount(DFARow::MapValue const &rangeToRow, 
+                    TailCount *fmTailCount, size_t fmRow);
 };
 
 inline std::vector<DFARow>::const_iterator DFA::begin() const

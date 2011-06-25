@@ -10,8 +10,15 @@ void DFA::build(std::string const &name, vector<size_t> const &active)
         // miniscanner (rule nrs provided by the active-vector) 
         // At this point: note which rules are LA rules and put these in the
         // rule-startset
-    for_each(active.begin(), active.end(),              
-        FnWrap::unary(fillStartSet, *d_rules, d_stateSet[0]));
+
+    StateSet &start = d_stateSet[0];
+    for_each(
+        active.begin(), active.end(),              
+        [&](size_t idx)
+        {
+            start.insert((*d_rules)[idx].startState());
+        }
+    );
 
         // compute the e-closure of the start-set
     d_stateSet[0] = d_states->eClosure(d_stateSet[0]);  

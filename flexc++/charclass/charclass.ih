@@ -7,7 +7,6 @@
 
 #include <bobcat/string>
 #include "bobcat/mstream"
-#include <bobcat/fnwrap>
 
 #include "../charrange/charrange.h"
 
@@ -25,26 +24,25 @@ inline CharClass::CharClass(char ch)
 
 inline CharClass::CharClass(string const &str)
 {
-    for_each(str.begin(), str.end(), FnWrap::unary(addPlain, d_chars));
+    for_each(
+        str.begin(), str.end(),
+        [&](char ch)
+        {
+            d_chars.push_back({ch, false});
+        }
+    );
 }
 
 inline CharClass::CharClass(std::set<char> const &charSet)
 {
-    for_each(charSet.begin(), charSet.end(), 
-                                FnWrap::unary(addPredefined, d_chars));
+    for_each(
+        charSet.begin(), charSet.end(), 
+        [&](char ch)
+        {
+            d_chars.push_back({ch, true});
+        }
+    );
 }
-
-inline void CharClass::addPlain(char ch, Vector &vect)
-{
-    vect.push_back({ch, false});
-}
-
-inline void CharClass::addPredefined(char ch, Vector &vect)
-{
-    vect.push_back({ch, true});
-}
-
-
  
 
 

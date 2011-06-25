@@ -15,13 +15,13 @@
 // each transition.
 
     
-void DFA::visitTailCount(TailCount &tailCount, DFA &dfa)
+void DFA::visitTailCount(TailCount &tailCount)
 {
-    dfa.d_sawACCEPT = false;
-    dfa.d_rule = tailCount.rule();
+    d_sawACCEPT = false;
+    d_rule = tailCount.rule();
 
                             // this/previous row, ptr to previous TailCount 
-    determineTailCount(tailCount, 0, 0, 0, dfa);
+    determineTailCount(tailCount, 0, 0, 0);
 }
 
 

@@ -34,9 +34,6 @@ static void display(Vector const &vect);
         CharClass(std::string const &str);
         CharClass(std::set<char> const &charSet);
 
-        static void addPlain(char ch, Vector &vect);
-        static void addPredefined(char ch, Vector &vect);
-
         std::set<char> set() const;                 // create a set (or F)
 
 
