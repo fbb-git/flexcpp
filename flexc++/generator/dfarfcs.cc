@@ -7,8 +7,13 @@ void Generator::dfaRFCs(DFARow const &row, ostream &out,
 
     pair<size_t, size_t> final = row.final();
 
-    for_each(row.tailCounts().begin(), row.tailCounts().end(), 
-             FnWrap::unary(storeRFC, final, rfc));
+    for_each(
+        row.tailCounts().begin(), row.tailCounts().end(), 
+        [&](TailCount const &tailCount)
+        {
+            storeRFC(tailCount, final, rfc);
+        }
+    );
 
     if (final.first != UINT_MAX)
         rfc.push_back(RuleFlagCount {final.first, FINAL | BOL, 0});

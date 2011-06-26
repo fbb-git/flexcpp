@@ -10,6 +10,12 @@ void Generator::rfcs(ostream &out) const
         "//     R  F  C\n";
 
     size_t idx = 0;
-    for_each(d_rfc.begin(), d_rfc.end(), FnWrap::unary(outRFC, out, idx));
+    for_each(
+        d_rfc.begin(), d_rfc.end(),
+        [&](RuleFlagCount const &rfc)
+        {
+            outRFC(rfc, out, idx);
+        }
+    );
     out << "};";
 }

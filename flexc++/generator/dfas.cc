@@ -12,8 +12,13 @@ void Generator::dfas(ostream &out) const
     if (iter != d_dfas.end())
         dfa(*iter, out, d_rfc, d_startStates, d_dfaIndices);
  
-    for_each(d_dfas.begin(), d_dfas.end(), 
-            FnWrap::unary(dfa, out, d_rfc, d_startStates, d_dfaIndices));
+    for_each(
+        d_dfas.begin(), d_dfas.end(), 
+        [&](DFAs::Pair const &dfaPair)
+        {
+            dfa(dfaPair, out, d_rfc, d_startStates, d_dfaIndices);
+        }
+    );
  
     out << "};\n";
 }

@@ -1,6 +1,5 @@
 #include "generator.h"
 
-#include <bobcat/fnwrap>
 #include <bobcat/x2a>
 #include <bobcat/mstream>
 #include <bobcat/datetime>
