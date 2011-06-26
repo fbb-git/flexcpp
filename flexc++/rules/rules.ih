@@ -1,7 +1,6 @@
 #include "rules.h"
 
 #include <algorithm>
-#include <bobcat/fnwrap>
 #include <bobcat/mstream>
 
 #include "../states/states.h"
