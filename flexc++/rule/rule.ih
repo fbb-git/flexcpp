@@ -1,11 +1,8 @@
 #include "rule.h"
 
-#include <bobcat/fnwrap>
-
 #include "../states/states.h"
 
-#include <iostream>     // TEMPO
+// #include <iostream>     // TEMPO
 
 using namespace std;
-using namespace FBB;
 
