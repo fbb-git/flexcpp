@@ -6,14 +6,8 @@
 #include <algorithm>
 
 #include <bobcat/string>
-#include <bobcat/fnwrap>
 
 #include "../charclass/charclass.h"
 
 using namespace std;
 using namespace FBB;
-
-inline void PatternVal::exitPath(size_t from, States &states, size_t to)
-{
-    states[from].data().set2nd(to);
-}

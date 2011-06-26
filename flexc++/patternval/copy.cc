@@ -47,8 +47,13 @@ spSemVal PatternVal::copy(States &states, SemVal &semval, size_t lower,
         // finally make an exit EMPTY transition from each of the last copied
         // patterns to the final state
         //
-    for_each(exitTransition.begin(), exitTransition.end(),
-        FnWrap::unary(exitPath, states, end));
+    for_each(
+        exitTransition.begin(), exitTransition.end(),
+        [&](size_t from)
+        {
+            states[from].data().set2nd(end);
+        }
+    );
 
     ret = spSemVal(new PatternVal( {orgBegin, end} ));
     return ret;

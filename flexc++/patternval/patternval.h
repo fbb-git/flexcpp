@@ -37,7 +37,6 @@ class PatternVal: public SemVal
         static spSemVal questionMark(States &states, SemVal &pattern);
 
         static size_t patternCopy(States &states, size_t begin, size_t end);
-        static void exitPath(size_t from, States &states, size_t to);
         static void add(States &states, 
                         std::unordered_map<size_t, size_t> &old2new, 
                         size_t idx);
