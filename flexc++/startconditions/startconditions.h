@@ -88,9 +88,6 @@ class StartConditions
         std::vector<size_t> const &operator()(std::string const &name) const;
 
     private:
-        static void addVector(Hash::value_type &mini, 
-                              std::vector<StartCondition *> &active);
-        static void addRule(StartCondition *sc, size_t ruleIdx);
         static std::string const &strOf(SemVal const &nameVal);
 };
 
