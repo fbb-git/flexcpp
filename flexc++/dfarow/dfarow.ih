@@ -6,7 +6,6 @@
 #include <iterator>
 #include <sstream>
 
-#include <bobcat/fnwrap>
 #include <bobcat/table>
 #include <bobcat/x2a>
 

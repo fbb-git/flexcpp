@@ -1,15 +1,13 @@
 #include "dfarow.ih"
 
-void DFARow::transit(size_t stateIdx, DFARow &thisRow,
-                                      size_t rangeChar,
-                                      StateSet &nextSet)
+void DFARow::transit(size_t stateIdx, size_t rangeChar, StateSet &nextSet)
 {
-    State const &state = (*(thisRow.d_states))[stateIdx];
+    State const &state = (*d_states)[stateIdx];
 
     switch (size_t type = state.type())
     {
         case State::FINAL:
-            thisRow.setFinal(thisRow.d_rules->ruleFromFinalState(stateIdx));
+            setFinal(d_rules->ruleFromFinalState(stateIdx));
         break;
 
         case State::CHARSET:

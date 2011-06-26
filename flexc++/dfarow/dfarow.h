@@ -101,15 +101,13 @@ class DFARow
             // If that e-closure isn't in d_stateSets yet, add it to that
             // vector. 
             // Construct d_map mapping an input symbol to a row in the DFA
-        static void transit(size_t stateIdx, DFARow &thisRow, 
-                                             size_t rangeChar,
-                                             StateSet &nextSet);
+        void transit(size_t stateIdx, size_t rangeChar, StateSet &nextSet);
         void setFinal(size_t ruleIdx);
         static void nextAcceptType(size_t rule, DFARow &row);
 
         static void translate(MapValue &transition, 
                                             std::vector<size_t> const &xlat);
-        static void probeTailCount(size_t stateIdx, DFARow &thisRow);
+        void probeTailCount(size_t stateIdx);
         static bool stateOfRule(size_t state, 
                                 std::vector<size_t> const &haystack);
 
