@@ -8,24 +8,8 @@
 #include <iomanip>
 #include <cctype>
 
-
-#include <bobcat/fnwrap>
-
 #include "../textval/textval.h"
 #include "../states/states.h"
 #include "../statestring/statestring.h"
 
 using namespace std;
-using namespace FBB;
-
-
-inline void Ranges::incIf(char const &ch, size_t *next)
-{
-    ++next[static_cast<unsigned char>(ch)];
-}
-
-inline void Ranges::addRangeNr(char ch, size_t const *ranges, 
-                                                    set<size_t> &rangeSet)
-{
-    rangeSet.insert(ranges[static_cast<unsigned char>(ch)]);
-}

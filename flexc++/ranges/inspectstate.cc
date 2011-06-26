@@ -1,14 +1,12 @@
 #include "ranges.ih"
 
-void Ranges::inspectState(State const &state, Ranges &ranges)
+void Ranges::inspectState(State const &state)
 {
     size_t type = state.type();
     
     if (type < State::UNDETERMINED__)
-        ranges.add(type);
+        add(type);
     else if (type == State::CHARSET)
-        ranges.add(SemVal::downCast<StateString>(state.data()).str());
-
-
+        add(SemVal::downCast<StateString>(state.data()).str());
 }
 

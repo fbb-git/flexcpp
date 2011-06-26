@@ -38,8 +38,13 @@ bool Ranges::collision(std::string const &str, size_t const *next)
         (pre != 0 && next[pre - 1] == next[pre])
         ||
             // range-test
-        find_if(str.begin() + 1, str.end(), 
-                FnWrap::unary(chCollision, pre, next)) != str.end()
+        find_if(
+            str.begin() + 1, str.end(), 
+            [&, next](unsigned char ch)
+            {
+                return chCollision(ch, pre, next);
+            }
+        ) != str.end()
     )
         return true;
 

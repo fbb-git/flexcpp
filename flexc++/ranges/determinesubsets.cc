@@ -2,8 +2,13 @@
 
 void Ranges::determineSubsets()
 {
-    for_each(d_states.begin(), d_states.end(), 
-                FnWrap::unary(inspectState, *this));
+    for_each(
+        d_states.begin(), d_states.end(), 
+        [this](State const &state)
+        {
+            this->inspectState(state);
+        }
+    );
 
     // now convert counts to ranges. At each transition increment the range 
     // nr. The initial range is 0

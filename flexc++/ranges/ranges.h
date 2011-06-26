@@ -62,8 +62,6 @@ class Ranges
         size_t const *ranges() const;
         
     private:
-        static void incIf(char const &ch, size_t *next);
-
         static bool collision(std::string const &str, size_t const *next);
         static bool chCollision(unsigned char ch, unsigned char &pre, 
                                                         size_t const *next);
@@ -74,12 +72,9 @@ class Ranges
         void subsetCount();
         static void reassign(size_t &count, std::vector<size_t> &ranges);
 
-        static void inspectState(State const &state, Ranges &ranges);
+        void inspectState(State const &state);
+        void finalizeState(State &state);
 
-
-        static void finalizeState(State &state, Ranges &obj);
-        static void addRangeNr(char ch, size_t const *ranges, 
-                                      std::set<size_t> &rangeSet);
         static void charsetToRanges(StateData &data, size_t *ranges);
         static void outChar(std::ostream &out, size_t idx);
 };

@@ -12,9 +12,13 @@
 void Ranges::finalizeStates()
 {
     d_eof = d_subsets++;                    // always use the <<EOF>> range
-    for_each(d_states.begin(), d_states.end(), 
-                                FnWrap::unary(finalizeState, *this));
-
+    for_each(
+        d_states.begin(), d_states.end(), 
+        [this](State &state)
+        {
+            this->finalizeState(state);
+        }
+    );
     d_used = new bool[d_subsets];
     clearUsed();
 }
