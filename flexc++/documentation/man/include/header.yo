@@ -1,0 +1,37 @@
+DEFINEMACRO(Manpage)(1)(\
+    whenman((Manpage: bf(man -e flexc++ ARG1)))\
+    whenhtml((Manpage: url(ARG1(3flexc++))(ARG1.3.html)))\
+)
+
+DEFINEMACRO(itb)(1)(it() bf(ARG1):nl())
+DEFINEMACRO(itt)(1)(it() tt(ARG1))
+DEFINEMACRO(itrange)(2)(tt(CHAR(91)ARG1, ARG2+CHAR(41)))
+
+includefile(../../../release.yo)
+
+htmlbodyopt(text)(#27408B)
+htmlbodyopt(bgcolor)(#FFFAF0)
+whenhtml(mailto(Frank B. Brokken: f.b.brokken@rug.nl))
+
+DEFINEMACRO(lsoption)(3)(\
+    bf(--ARG1)=tt(ARG3) (bf(-ARG2))\
+)
+DEFINEMACRO(laoption)(2)(\
+    bf(--ARG1)=tt(ARG2)\
+)
+DEFINEMACRO(loption)(1)(\
+    bf(--ARG1)\
+)
+DEFINEMACRO(soption)(1)(\
+    bf(-ARG1)\
+)
+
+
+DEFINEMACRO(flc)(0)(bf(flexc++))
+DEFINEMACRO(Flc)(0)(bf(Flexc++))
+DEFINEMACRO(Cpp)(0)(bf(C++))
+DEFINEMACRO(prot)(0)(tt((prot)))
+
+DELETEMACRO(tt)
+DEFINEMACRO(tt)(1)(em(ARG1))
+
