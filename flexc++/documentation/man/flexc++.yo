@@ -70,20 +70,20 @@ is named tt(scanner.h). The scanner class itself is generated once and is
 thereafter `owned' by the programmer, who may change it em(ad-lib). Newly
 added members (data members, function members) will survive future flc() runs
 as flc() will never rewrite an existing scanner class interface file, unless
-explicitly ordered to do so.
+explicitly ordered to do so. (see also bf(scanner)(3flexc++)).
     it() A file containing the interface of the scanner class's em(base
 class). The scanner class is publicly derived from this base class. It is used
 to minimize the size of the scanner interface itself. The scanner base class
 is `owned' by bf(flexc++) and should never be hand-modified. By
 default the scanner's base class is provided in the file
 tt(scannerbase.h). At each new flc() run this file is rewritten unless flc()
-is explicitly ordered em(not) to do so.
+is explicitly ordered em(not) to do so (see also bf(scannerbase)(3flexc++)).
     it() A file containing the em(implementation header). This file should
 contain includes and declarations that are only required when compiling the
 members of the scanner class. By default this file is named
 tt(scanner.ih). This file, like the file containing the scanner class's
 interface is never rewritten by flc() unless flc() is explicitly ordered to do
-so. 
+so (see also bf(implementationheader)(3flexc++)). 
     )
 
 manpageoptions()
@@ -92,28 +92,40 @@ manpageoptions()
 following their associated long-option variants. Single letter options require
 arguments if their associated long options require arguments as well.
     itemization(
+    it() lsoption(baseclass-header)(b)(header)nl()
+           Use tt(header) as the pathname of the file containing the scanner
+           class's base class. Defaults to the name of the scanner class plus
+           tt(base.h)
+    it() lsoption(baseclass-skeleton)(C)(skeleton)nl() 
+           Use tt(skeleton) as the pathname of the file containing the
+            skeleton of the scanner class's base class. Its filename defaults
+            to tt(flexc++base.h).
     it() lsoption(class-header)(c)(header)nl()
            Use tt(header) as the pathname of the file containing the scanner
             class. Defaults to the name of the scanner class plus the suffix
             tt(.h)
+    it() laoption(class-name)(class)nl()
+           Use tt(class) (rather than tt(Scanner)) as the name of the scanner
+            class. Unless overridden by other options generated files will be
+            given the (transformed to lower case) tt(class*) name instead of
+            tt(scanner)*.
     it() lsoption(class-skeleton)(C)(skeleton)nl()
            Use tt(skeleton) as the pathname of the file containing the
             skeleton of the scanner class. Its filename defaults to
             tt(flexc++.h). 
-    it() loption(debug)nl() 
-           Provide bf(lex()) and its support functions with debugging code,
+    it() lloption(construction)(K)nl() 
+           To do
+    it() loption(debug) (soption(d))nl() 
+           Provide tt(lex) and its support functions with debugging code,
             showing the actual parsing process on the standard output
             stream. When included, the debugging output is active by default,
-            but its activity may be controlled using the bf(setDebug(bool
+            but its activity may be controlled using the tt(setDebug(bool
             on-off)) member. Note that no tt(#ifdef DEBUG) macros are used
             anymore. By rerunning flc() without the bf(--debug) option an
             equivalent scanner is generated not containing the debugging
             code. 
-    it() lsoption(filenames)(f)(filename)nl()
-           Specify a filename to use for all files produced by flc(). 
-            Specific options overriding particular filenames are also
-            available (which then, in turn, overide the name specified by this
-            option).
+    it() loption(debug-steps) (soption(s))nl() 
+           To do
     it() loption(force-class-header)nl()
            By default the generated class header is not overwritten once it
             has been created. This option can be used to force the
@@ -141,51 +153,61 @@ arguments if their associated long options require arguments as well.
            Use tt(skeleton) as the pathname of the file containing the
             skeleton of the implementation header. Its filename defaults to
             tt(flexc++.ih).
-    it() loption(lines) (soption(l))nl() 
-           Put bf(#line) preprocessor directives in the file containing the
-            scanner's bf(lex()) function. By including this option the
+    it() lsoption(lex-skeleton)(L)(skeleton)nl()
+           Use tt(skeleton) as the pathname of the file containing the
+            tt(lex()) member function's skeleton. Its filename defaults to
+            tt(flexc++.cc).
+    it() lsoption(lex-function-name)(funname)nl()
+           Use tt(funname) rather than tt(lex) as the name of the member
+            function performing the lexical scanning.
+    it() lsoption(lex-source)(l)(source)nl()
+           Define tt(source) as the name of the source file containing the
+            scanner member function tt(lex). Defaults to tt(lex.cc).
+    it() loption(lines) nl() 
+           Put tt(#line) preprocessor directives in the file containing the
+            scanner's tt(lex) function. By including this option the
             compiler and debuggers will associate errors with lines in your
             grammar specification file, rather than with the source file
-            containing the bf(lex()) function itself.
+            containing the tt(lex) function itself.
     it() lsoption(namespace)(n)(namespace)nl()
            Define the scanner base class, the paser class and the scanner
             implentations in the namespace tt(namespace). By default
             no namespace is defined. If this options is used the
             implementation header will contain a commented out tt(using
             namespace) declaration for the requested namespace. 
+    it() loption(no-baseclass-header)nl()
+           Do not write the file containing the scanner's base class interface
+            even if it doesn't yet exist. By default the file containing the
+            scanner's base class interface is (re)written each time flc() is
+            called.
     it() loption(no-lines)nl() 
            Do not put bf(#line) preprocessor directives in the file containing
-            the scanner's bf(lex()) function. This option is primarily useful
+            the scanner's tt(lex) function. This option is primarily useful
             in combination with the bf(%lines) directive, to suppress that
             directive. It also overrides option bf(--lines), though.
-    it() loption(no-lex-member)nl()
+    it() loption(no-lex-source)nl()
            Do not write the file containing the scanner's predefined scanner
             member functions, even if that file doesn't yet exist. By default
-            the file containing the scanner's bf(lex()) member function is
-            (re)written each time flc() is called. Note that this option
+            the file containing the scanner's tt(lex) member function is
+            (re)written each time flc() is called. This option
             should normally be avoided, as this file contains parsing
             tables which are altered whenever the grammar definition is
             modified. 
-    it() lsoption(lexfun-skeleton)(P)(skeleton)nl()
-           Use tt(skeleton) as the pathname of the file containing the
-            tt(lex()) member function's skeleton. Its filename defaults to
-            tt(flexc++.cc).
-    it() lsoption(lexfun-source)(p)(source)nl()
-           Define tt(source) as the name of the source file containing the
-            scanner member function bf(lex()). Defaults to tt(lex.cc).
-    it() loption(show-filenames)nl() 
+    it() loption(print-tokens) (soption(t))nl() 
+           To do
+    it() loption(show-filenames) (soption(F))nl() 
            Write the names of the files that are generated to the 
             standard error stream.
-    it() laoption(skeleton-directory)(directory)nl() 
+    it() lsoption(skeleton-directory)(S)(directory)nl() 
            Specifies the directory containing the skeleton files to use. This
             option can be overridden by the specific skeleton-specifying
             options (tt(-B -C, -H,) and tt(-I)).
-    it() loption(thread-safe)nl() 
-           No static data are modified, making flc() thread-safe.
-    it() loption(usage)nl()
+    it() loption(usage) (option(h))nl()
             Write basic usage information to the standard output stream and
             terminate. 
-    it() loption(version) (soption(v))nl()
+    it() loption(verbose)(soption(V))nl() 
+           To do
+     it() loption(version) (soption(v))nl()
             Display flc()'s version number and terminate.
     )
 
@@ -209,7 +231,7 @@ specification file.
             file. However, it may be defined only once. If no bf(%class-name)
             is specified the default class name tt(Scanner) will be used.
     it() bf(%debug) nl() 
-           Provide bf(lex()) and its support functions with debugging code,
+           Provide tt(lex) and its support functions with debugging code,
             showing the actual parsing process on the standard output
             stream. When included, the debugging output is active by default,
             but its activity may be controlled using the bf(setDebug(bool
@@ -227,7 +249,7 @@ specification file.
             bf(--implementation-header) or bf(-i) command-line options.
     it() bf(%lines) nl() 
            Put bf(#line) preprocessor directives in the file containing the
-            scanner's bf(lex()) function. It acts identically to the bf(-l)
+            scanner's tt(lex) function. It acts identically to the bf(-l)
             command line option, and is suppressed by the bf(--no-lines)
             option.
     it() bf(%namespace) tt(namespace) nl()
@@ -239,7 +261,7 @@ specification file.
             option.
     it() bf(%lexfun-source) tt(source) nl()
            Defines the pathname of the file containing the scanner member
-            bf(lex()). This directive is overridden by the 
+            tt(lex). This directive is overridden by the 
             bf(--lex-source) or bf(-l) command-line options.
     )
 
