@@ -8,7 +8,10 @@ $insert namespace-open
 class \@: public \@Base
 {
     public:
-        \@(std::string const &filename);
+        explicit \@(std::istream &in = std::cin, 
+                    std::ostream &out = std::cout);
+        
+        \@(std::string const &infile, std::string const &outfile);
 
 $insert 8 lexFunctionDecl
 
@@ -25,9 +28,9 @@ inline void \@::preCode()
     // optionally replace by your own code
 }
 
-inline \@::\@(std::string const &filename)
+inline \@::\@(std::string const &infile, std::string const &outfile)
 :
-    \@Base(filename)
+    \@Base(infile, outfile)
 {}
 
 $insert inlineLexFunction

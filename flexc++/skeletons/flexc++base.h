@@ -131,7 +131,7 @@ public:
     void                switchStreams(std::string const &infilename,
                                       std::string const &outfilename);
 protected:
-    \@Base(std::string const &filename);
+    \@Base(std::istream &in, std::ostream &out);
     \@Base(std::string const &infilename, std::string const &outfilename);
 
     StartCondition__  startCondition() const;   // current start condition

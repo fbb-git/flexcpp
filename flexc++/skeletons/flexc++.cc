@@ -36,17 +36,17 @@ size_t \@Base::s_istreamNr = 0;
 
 $insert inputImplementation
 
-\@Base::\@Base(std::string const &filename)
+\@Base::\@Base(std::istream &in, std::ostream &out)
 :
-    d_filename(filename),
+    d_filename("-"),
     d_startCondition(StartCondition__::INITIAL),
     d_state(0),
-    d_out(new std::ostream(std::cout.rdbuf())),
+    d_out(new std::ostream(out.rdbuf())),
     d_sawEOF(false),
     d_atBOL(true),
 $insert tailCount
 $insert debugInit
-    d_input(new std::ifstream(filename)),
+    d_input(new std::istream(in.rdbuf())),
     d_dfaBase(s_dfa)
 {}
 
@@ -77,7 +77,7 @@ void \@Base::switchStreams(std::string const &infilename)
 {
     d_input.close();
     d_filename = infilename;
-    d_input = Input(new ifstream(infilename));
+    d_input = Input(new std::ifstream(infilename));
     d_sawEOF = false;
     d_atBOL = true;
 }
@@ -86,7 +86,7 @@ void \@Base::switchStreams(std::string const &infilename,
                            std::string const &outfilename)
 {
     *d_out << std::flush;
-    d_out.reset(new ofstream(outfilename));
+    d_out.reset(new std::ofstream(outfilename));
 
     switchStreams(infilename);
 }
