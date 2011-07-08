@@ -213,57 +213,6 @@ arguments if their associated long options require arguments as well.
 
 manpagesection(DIRECTIVES)
 
-    The following directives can be used in the initial section of the
-grammar specification file. When command-line options for directives exist,
-they overrule the corresponding directives given in the grammar
-specification file.
-    itemization(
-    it() bf(%class-header) tt(header) nl()
-           Defines the pathname of the file containing the scanner 
-            class. This directive is overridden by the
-            bf(--class-header) or bf(-c) command-line options.
-    it() bf(%class-name) tt(scanner-class-name) nl()
-           Declares the name of this scanner. This directive replaces the
-            bf(%name) declaration previously used by bf(flex++). It defines
-            the name of the bf(C++) class that will be generated. Contrary to
-            bf(flex++)'s bf(%name) declaration, bf(%class-name) may appear
-            anywhere in the first section of the grammar specification
-            file. However, it may be defined only once. If no bf(%class-name)
-            is specified the default class name tt(Scanner) will be used.
-    it() bf(%debug) nl() 
-           Provide tt(lex) and its support functions with debugging code,
-            showing the actual parsing process on the standard output
-            stream. When included, the debugging output is active by default,
-            but its activity may be controlled using the bf(setDebug(bool
-            on-off)) member. Note that no tt(#ifdef DEBUG) macros are used
-            anymore. By rerunning flc() without the bf(--debug) option an
-            equivalent scanner is generated not containing the debugging
-            code. 
-    it() bf(%filenames) tt(header) nl()
-           Defines the generic name of all generated files, unless overridden
-            by specific names. This directive is overridden by the
-            bf(--filenames) or bf(-f) command-line options.
-    it() bf(%implementation-header) tt(header) nl()
-           Defines the pathname of the file containing the implementation
-            header.  This directive is overridden by the
-            bf(--implementation-header) or bf(-i) command-line options.
-    it() bf(%lines) nl() 
-           Put bf(#line) preprocessor directives in the file containing the
-            scanner's tt(lex) function. It acts identically to the bf(-l)
-            command line option, and is suppressed by the bf(--no-lines)
-            option.
-    it() bf(%namespace) tt(namespace) nl()
-           Define the scanner class in the namespace tt(namespace). By default
-            no namespace is defined. If this options is used the
-            implementation header will contain a commented out tt(using
-            namespace) declaration for the requested namespace.  This
-            directive is overridden by the bf(--namespace) command-line
-            option.
-    it() bf(%lexfun-source) tt(source) nl()
-           Defines the pathname of the file containing the scanner member
-            tt(lex). This directive is overridden by the 
-            bf(--lex-source) or bf(-l) command-line options.
-    )
 
 manpagesection(PUBLIC MEMBERS AND -TYPES)
 
@@ -339,6 +288,6 @@ manpagesection(ABOUT flexc++)
     
 manpageauthor()
 
-Richard Berendsen (richardberendsen@xs4all.nl),nl()
 Frank B. Brokken (f.b.brokken@rug.nl),nl()
-Jean-Paul van Oosten (jpoosten@ai.rug.nl)
+Jean-Paul van Oosten (j.p.van.poosten@rug.nl),nl()
+Richard Berendsen (richardberendsen@xs4all.nl) (until 2010).nl()
