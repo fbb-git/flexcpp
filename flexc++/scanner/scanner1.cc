@@ -2,7 +2,7 @@
 
 Scanner::Scanner(string const &fname)
 :
-    ScannerBase(fname),
+    ScannerBase(fname, "-"),
     d_initialClosingBracket(false)
 {
     setLineTags(fname);
