@@ -1,0 +1,17 @@
+When a new program is created make sure the new flexc++ can recreate the
+current scanner.
+
+Proceed as follows:
+
+    0. Create a new flexc++ program. It is created in ../tmp/bin/
+
+    1. Run flexc++ in ../tmp/bin on the copy of flexc++'s scanner files
+        (cp -r lexer inc ../tmp/bin)
+
+    2. If the newly generated lex.cc and scannerbase.h only differ by their
+        timestamps, the new flexc++ is able to recreate its own scanner.
+
+    3. If a difference is observed, then cp the newly generated lex.cc
+        and scannerbase.h to ../../scanner, touch a and continue at step 0.
+        This time, step 2 should result in only changed timestamps.
+
