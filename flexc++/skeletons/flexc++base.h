@@ -107,8 +107,6 @@ $insert 4 debugDecl
 $insert 4 declarations
     static size_t  const s_ranges__[];
     static size_t  const s_rfc__[][3];
-                                            // TODO: make configurable
-    static size_t  const s_maxSizeofStreamStack = 10; 
 
 public:
     \@Base(\@Base const &other)             = delete;

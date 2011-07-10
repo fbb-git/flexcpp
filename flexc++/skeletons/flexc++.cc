@@ -93,7 +93,7 @@ void \@Base::switchStreams(std::string const &infilename,
 
 void \@Base::pushStream(std::string const &name, std::istream *streamPtr)
 {
-    if (d_streamStack.size() == s_maxSizeofStreamStack)
+    if (d_streamStack.size() == s_maxSizeofStreamStack__)
     {
         delete streamPtr;
         throw std::length_error("Max stream stack size exceeded");
