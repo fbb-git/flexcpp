@@ -1,5 +1,9 @@
 void install(string where, int all)
 {
+    list pages;
+    string page;
+    int idx;
+
     printf("  installing the executable\n");
     md(where + BIN);
     run("cp tmp/bin/* " + where + BIN);
@@ -10,15 +14,30 @@ void install(string where, int all)
 
     if (all)
     {
-        printf("  installing the manual page flexc++.1\n");
         md(where + MAN);
-        run("gzip -9 < tmp/man/flexc++.1 > " + 
-                                        where + MAN + "/flexc++.1.gz");
-
-        printf("  installing the manual page flexc++man.html\n");
         md(where + DOC + "/man");
-        run("cp tmp/manhtml/flexc++man.html " + where + DOC + "/man");
-    
+
+        printf("  installing the manual pages\n");
+        chdir("tmp/man");
+        pages = makelist("*");
+
+        for (idx = sizeof(pages); idx--; )
+        {
+            page = pages[idx];
+            run("gzip -9 < page > " + where + MAN + "/" + page + ".gz");
+        }
+
+        chdir("../manhtml");
+        pages = makelist("*");
+
+        for (idx = sizeof(pages); idx--; )
+        {
+            page = pages[idx];
+            run("cp " + page + " " + where + DOC + "/man");
+        }
+
+        chdir("../..");
+
         printf("  installing the information directly in and under $DOC\n");
         run("gzip -9 < changelog > " + where + DOC + "/changelog.gz");
     
