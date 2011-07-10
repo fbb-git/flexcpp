@@ -6,14 +6,14 @@
                         if (d_block.level() == 1)    // close a block
                         {
                             d_block.close();
-                            less(leng() - 1);
+                            less(length() - 1);
                             return end(Parser::BLOCK);
                         }
 
                         d_block += "\n        ";
                     }
 
-"{"             d_block.open(lineno(), filename()); 
+"{"             d_block.open(lineNr(), filename()); 
                 
 "}"             d_block.close();
 

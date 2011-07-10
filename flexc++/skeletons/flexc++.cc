@@ -6,20 +6,20 @@ $insert class_ih
 
 $insert namespace-open
 
-    // s_ranges: use (unsigned) characters as index to obtain
+    // s_ranges__: use (unsigned) characters as index to obtain
     //           that character's range-number.
     //           The range for EOF is defined in a constant in the
     //           class header file
 $insert ranges
 
-    // s_dfa contains the rows of *all* DFAs ordered by start state.
+    // s_dfa__ contains the rows of *all* DFAs ordered by start state.
     // The enum class StartCondition__ is defined in the baseclass header
     // INITIAL is always 0.
     // Each entry defines the row to transit to if the column's
     // character range was sensed. Row numbers are relative to the
-    // used DFA and d_dfaBase is set to the first row of the subset to use.
+    // used DFA and d_dfaBase__ is set to the first row of the subset to use.
     // The row's final two values are begin and end indices in
-    // s_rfc[] (rule, flags and count), defining the state's rule details
+    // s_rfc__[] (rule, flags and count), defining the state's rule details
 $insert DFAs
 
     // The first value is the rule index
@@ -47,7 +47,7 @@ $insert inputImplementation
 $insert tailCount
 $insert debugInit
     d_input(new std::istream(in.rdbuf())),
-    d_dfaBase(s_dfa)
+    d_dfaBase__(s_dfa__)
 {}
 
 \@Base::\@Base(std::string const &infilename, std::string const &outfilename)
@@ -61,7 +61,7 @@ $insert debugInit
 $insert tailCount
 $insert debugInit
     d_input(new std::ifstream(infilename)),
-    d_dfaBase(s_dfa)
+    d_dfaBase__(s_dfa__)
 {}
 
 $insert debugFunctions
@@ -135,7 +135,7 @@ bool \@Base::popStream()
 
 \@Base::ActionType__ \@Base::actionType__(size_t range)
 {
-    d_nextState = d_dfaBase[d_state][range];
+    d_nextState = d_dfaBase__[d_state][range];
 
     if (d_nextState != -1)                  // transition is possible
         return ActionType__::CONTINUE;
@@ -146,7 +146,7 @@ bool \@Base::popStream()
     if (d_matched.size())
         return ActionType__::ECHO_FIRST;    // no match, echo the 1st char
 
-    return range != s_rangeOfEOF ? 
+    return range != s_rangeOfEOF__ ? 
                 ActionType__::ECHO_CH 
             : 
                 ActionType__::RETURN;
@@ -207,7 +207,7 @@ size_t \@Base::getRange__(int ch)       // using int to prevent casts
     if (ch != AT_EOF)
         d_sawEOF = false;
 
-    return ch == AT_EOF ? static_cast<size_t>(s_rangeOfEOF) : s_ranges[ch];
+    return ch == AT_EOF ? static_cast<size_t>(s_rangeOfEOF__) : s_ranges__[ch];
 }
 
   // At this point d_nextState contains the next state and continuation is
@@ -243,26 +243,26 @@ $insert 4 debug.action "ECHO_FIRST"
     echoCh__(d_matched[0]);
 }
 
-    // Inspect all s_rfc elements associated with the current state
-    //  If the s_rfc element has its COUNT flag set then set the 
+    // Inspect all s_rfc__ elements associated with the current state
+    //  If the s_rfc__ element has its COUNT flag set then set the 
     // d_tailCount[rule] value to the element's tailCount value, if it has its 
     // INCREMENT flag set then increment d_tailCount[rule]
     //  If neither was set set the d_tailCount[rule] to UINT_MAX
     // 
-    // If the s_rfc element has its FINAL flag set then store the rule number
+    // If the s_rfc__ element has its FINAL flag set then store the rule number
     // in d_final.second. If it has its FINAL + BOL flags set then store the
     // rule number in d_final.first
 void \@Base::inspectRFCs__()
 {
     for 
     (
-        size_t begin = d_dfaBase[d_state][s_finacIdx], 
-                 end = d_dfaBase[d_state][s_finacIdx + 1];
+        size_t begin = d_dfaBase__[d_state][s_finacIdx__], 
+                 end = d_dfaBase__[d_state][s_finacIdx__ + 1];
             begin != end;
                 ++begin
     )
     {
-        size_t const *rfc = s_rfc[begin];
+        size_t const *rfc = s_rfc__[begin];
         size_t flag = rfc[FLAGS];
         size_t rule = rfc[RULE];
 

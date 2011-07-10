@@ -3,7 +3,7 @@
 void Generator::dfaRFCs(DFARow const &row, ostream &out, 
                         vector<RuleFlagCount> &rfc)
 {
-    out << setw(2) << rfc.size() << ',';        // begin index in s_rfc
+    out << setw(2) << rfc.size() << ',';        // begin index in s_rfc__
 
     pair<size_t, size_t> final = row.final();
 
@@ -21,7 +21,7 @@ void Generator::dfaRFCs(DFARow const &row, ostream &out,
     if (final.second != UINT_MAX)
         rfc.push_back(RuleFlagCount {final.second, FINAL, 0});
 
-    out << setw(2) << rfc.size();               // end index in s_rfc
+    out << setw(2) << rfc.size();               // end index in s_rfc__
 }
 
 

@@ -18,7 +18,7 @@ class \@Base
                 // idx: rule, value: tail length (NO_INCREMENTS if no tail)
     typedef std::vector<int> VectorInt;
 
-    enum        // RuleFlagsCount Indices, see s_rfc[]
+    enum        // RuleFlagsCount Indices, see s_rfc__[]
     {
         RULE = 0,
         FLAGS,
@@ -105,8 +105,8 @@ protected:
 $insert 4 debugDecl
 
 $insert 4 declarations
-    static size_t  const s_ranges[];
-    static size_t  const s_rfc[][3];
+    static size_t  const s_ranges__[];
+    static size_t  const s_rfc__[][3];
                                             // TODO: make configurable
     static size_t  const s_maxSizeofStreamStack = 10; 
 
@@ -117,14 +117,9 @@ public:
     bool                debug()     const;
     std::string const  &filename()  const;
     std::string const  &matched()   const;
-    std::string const  &text()      const;
 
     size_t              length()    const;
     size_t              lineNr()    const;
-
-    // deprecated, kept for backward compatibility
-    size_t              leng()      const;
-    size_t              lineno()    const;
 
     void                setDebug(bool onOff);
     void                switchStreams(std::string const &infilename);
@@ -232,11 +227,6 @@ inline std::string const &\@Base::filename() const
     return d_filename;
 }
 
-inline std::string const &\@Base::text() const
-{
-    return d_matched;
-}
-
 inline void \@Base::echo() const
 {
     *d_out << d_matched;
@@ -248,16 +238,6 @@ inline size_t \@Base::length() const
 }
 
 inline size_t \@Base::lineNr() const
-{
-    return d_input.lineNr();
-}
-
-inline size_t \@Base::leng() const
-{
-    return d_matched.size();
-}
-
-inline size_t \@Base::lineno() const
 {
     return d_input.lineNr();
 }
@@ -274,8 +254,8 @@ inline void \@Base::less(size_t nChars)
 
 inline void \@Base::begin(StartCondition__ startCondition)
 {
-    d_dfaBase = 
-        s_dfaBase[static_cast<int>(d_startCondition = startCondition)];
+    d_dfaBase__ = 
+        s_dfaBase__[static_cast<int>(d_startCondition = startCondition)];
 }
 
 inline size_t \@Base::state__() const

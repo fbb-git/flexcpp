@@ -28,7 +28,7 @@ cc_start:
     cc_start_m
     {
         string str;
-        if (d_scanner.leng() > 1)
+        if (d_scanner.length() > 1)
             str = d_scanner.matched().substr(1);
         //cout << "CC_START\n";
         $$ = CharClass::escape(str);
@@ -39,7 +39,7 @@ cc_negated:
     cc_negated_m
     {
         string str;
-        if (d_scanner.leng() > 2)
+        if (d_scanner.length() > 2)
             str = d_scanner.matched().substr(2);
         //cout << "CC_NEG\n";
         $$ = CharClass::escape(str);

@@ -5,7 +5,7 @@ void Generator::ranges(ostream &out) const
     string const &className = d_options.className();
 
     out <<
-        "size_t const " << className << "Base::s_ranges[] =\n" 
+        "size_t const " << className << "Base::s_ranges__[] =\n" 
         "{";
 
     size_t const *charRange = d_ranges.ranges();

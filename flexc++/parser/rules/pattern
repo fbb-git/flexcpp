@@ -7,7 +7,7 @@ pattern:
     STRING
     {                                                   
         $$ = PatternVal::str(d_states,
-                        d_scanner.matched().substr(1, d_scanner.leng() - 2));
+                        d_scanner.matched().substr(1, d_scanner.length() - 2));
     }
 |
     DECIMAL

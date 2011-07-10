@@ -30,7 +30,7 @@ void Parser::error(char const *msg)
         if (s_lastMsg != d_msg)
         {
             if (txt == &eoln)
-                emsg.setLineNr(d_scanner.lineno() - 1);
+                emsg.setLineNr(d_scanner.lineNr() - 1);
             emsg << "at `" << *txt << "': " << d_msg << " expected." << endl;
 
             repeated = false;

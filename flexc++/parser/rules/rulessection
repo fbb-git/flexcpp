@@ -68,25 +68,25 @@ rule:
     '^' pattern_ws BLOCK
     {
         d_rules.add(true, $2, d_scanner.block(), 
-                    d_scanner.filename(), d_scanner.lineno());
+                    d_scanner.filename(), d_scanner.lineNr());
     }
 |
     '^' pattern_ws
     {
         d_rules.add(true, $2, Block(), 
-                    d_scanner.filename(), d_scanner.lineno());
+                    d_scanner.filename(), d_scanner.lineNr());
     }
 |
     pattern_ws BLOCK
     {
         d_rules.add(false, $1, d_scanner.block(), 
-                    d_scanner.filename(), d_scanner.lineno());
+                    d_scanner.filename(), d_scanner.lineNr());
     }
 |
     pattern_ws
     {
         d_rules.add(false, $1, Block(), 
-                    d_scanner.filename(), d_scanner.lineno());
+                    d_scanner.filename(), d_scanner.lineNr());
     }
 ;
 

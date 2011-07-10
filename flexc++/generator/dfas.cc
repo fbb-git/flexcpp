@@ -5,7 +5,7 @@ void Generator::dfas(ostream &out) const
     string const &className = d_options.className();
 
     out <<
-    "int const " << className << "Base::s_dfa[][" << dfaCols() << "] =\n" 
+    "int const " << className << "Base::s_dfa__[][" << dfaCols() << "] =\n" 
     "{\n";
 
     auto iter = d_dfas.find("INITIAL");

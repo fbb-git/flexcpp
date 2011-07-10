@@ -5,7 +5,7 @@ void Generator::rfcs(ostream &out) const
     string const &className = d_options.className();
 
     out << 
-        "size_t const " << className << "Base::s_rfc[][3] =\n"
+        "size_t const " << className << "Base::s_rfc__[][3] =\n"
         "{\n"
         "//     R  F  C\n";
 

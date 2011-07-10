@@ -4,8 +4,8 @@ int Scanner::pLex()
 {
     int ret = lex();
 
-    emsg.setLineNr(lineno());
-    wmsg.setLineNr(lineno());
+    emsg.setLineNr(lineNr());
+    wmsg.setLineNr(lineNr());
 
     d_beginOfPattern = false;
     return ret;

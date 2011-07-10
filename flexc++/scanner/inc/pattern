@@ -2,7 +2,7 @@
 
     [[:blank:]]+        {
                             d_block.clear();
-                            d_block.open(lineno(), filename()); 
+                            d_block.open(lineNr(), filename()); 
                             return Parser::WS;
                         }
 
