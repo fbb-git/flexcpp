@@ -31,6 +31,26 @@ comment text, followed by tt(*/), and it may be bf(C++) end-of-line comment:
 two consecutive slashes (tt(//)) start the comment, which continues up to
 the next newline character.
 
+manpagesection(SUB-FILE SWITCHING)
+
+Flc()'s rules file may be split into multiple files. This allows you to define
+logically separate elements of the specifications in different files. Include
+directives should be specified on a line of their own. To
+switch to another specification file the following stanza should be used:
+        verb(
+//include file-location
+        )
+    The tt(//include) directive should start in the line's first column. File
+locations can be absolute or relative to the location of the file containing
+the tt(//include) directive. White space characters following tt(//include)
+and before the end of the line are ignored. The file specification may be
+surrounded by double quotes, but these double quotes are not required and are
+ignored (removed) if present. All remaining characters are expected to define
+the name of the file where flc()'s rules specifications continue. Once end of
+file of a sub-file has been reached, processing continues at the line beyond
+the tt(//include) directive of the previously scanned file. The end of file of
+the file that was initially specified when flc() was called flags the end of
+flc()'s rules specification.
 
 manpagesection(DIRECTIVES)
 

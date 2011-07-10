@@ -269,7 +269,6 @@ manpagesection(EXAMPLE)
 
     See the bf(rules)(3flexc++) man-page
 
-
 manpagefiles()
 
     Flc()'s default skeleton files are in tt(/usr/share/flexc++).nl()
@@ -286,6 +285,7 @@ manpagefiles()
         itt(lex.cc): the source file implementing the scanner class member
             function tt(lex) (and support functions), performing the lexical
             scan.
+    )
 
 manpageseealso()
 
@@ -294,10 +294,13 @@ manpageseealso()
 
 manpagebugs()
 
-    To do
+    None reported
 
 manpagesection(ABOUT flexc++)
 
     To do
     
-manpageauthor()
+includefile(include/trailer.yo)
+
+
+
