@@ -135,15 +135,12 @@ protected:
     void            begin(StartCondition__ startCondition);
     void            echo() const;
 
-//    `less(n)' returns all but the first `n' characters of the current
+//    `accept(n)' returns all but the first `n' characters of the current
 // token back to the input stream, where they will be rescanned when the
 // scanner looks for the next match.
 //  So, it matches n of the characters in the input buffer, and so it accepts
-//  n characters, rescanning the rest. I think 'less' is a highly confusing
-// name. Use 'accept' instead, and avoid using 'less'.
-
+//  n characters, rescanning the rest. 
     void            accept(size_t nChars = 0);      // former: less
-    void            less(size_t nChars = 0);        // deprecated
     void            redo(size_t nChars = 0);        // rescan the last nChar
                                                     // characters, reducing
                                                     // length() by nChars
@@ -245,11 +242,6 @@ inline size_t \@Base::lineNr() const
 inline void \@Base::more()
 {
     d_more = true;
-}
-
-inline void \@Base::less(size_t nChars)
-{
-    accept(nChars);
 }
 
 inline void \@Base::begin(StartCondition__ startCondition)

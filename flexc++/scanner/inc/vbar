@@ -3,7 +3,7 @@
 [[:blank:]\n]+    
 
 .               {
-                    less(0);
+                    accept(0);
                     return end('|');
                 }
 }

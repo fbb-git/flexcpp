@@ -152,7 +152,7 @@ bool \@Base::popStream()
                 ActionType__::RETURN;
 }
 
-void \@Base::accept(size_t nChars)          // old name: less, now deprecated
+void \@Base::accept(size_t nChars)          // old name: less
 {
     if (nChars < d_matched.size())
     {

@@ -6,7 +6,7 @@
                         if (d_block.level() == 1)    // close a block
                         {
                             d_block.close();
-                            less(length() - 1);
+                            accept(length() - 1);
                             return end(Parser::BLOCK);
                         }
 
