@@ -4,5 +4,7 @@ manpagesection(COPYRIGHT)
     GNU General Public License (GPL).
 
 manpageauthor()
-    Frank B. Brokken (bf(f.b.brokken@rug.nl)).
+    Frank B. Brokken (bf(f.b.brokken@rug.nl)),nl()
+    Jean-Paul van Oosten (bf(j.pp.van.oosten@rug.nl)),nl()
+    Richard Berendsen (richardberendsen@xs4all.nl) (until 2010).nl()
 

@@ -267,16 +267,30 @@ can simply be declared in the class header file and defined elsewhere.
                     
 manpagesection(EXAMPLE)
 
-    To do
+    See the bf(rules)(3flexc++) man-page
 
 
 manpagefiles()
 
-    To do
+    Flc()'s default skeleton files are in tt(/usr/share/flexc++).nl()
+    Flc() by default generates the following files:
+        itemization(
+        itt(scanner.h): the header file containing the scanner class's
+            interface. 
+        itt(scannerbase.h): the header file containing the interface of the 
+            scanner class's base class.
+        itt(scanner.ih): the internal header file that is meant to be included
+            by the scanner class's source files (e.g., it is included by
+            tt(lex.cc), see the next file), and that should contain all
+            declarations required for compiling the scanner class's sources.
+        itt(lex.cc): the source file implementing the scanner class member
+            function tt(lex) (and support functions), performing the lexical
+            scan.
 
 manpageseealso()
 
-    To do
+    bf(input)(3flexc++),  bf(rules)(3flexc++),  bf(scanner)(3flexc++),  
+    bf(scannerbase)(3flexc++), 
 
 manpagebugs()
 
@@ -287,7 +301,3 @@ manpagesection(ABOUT flexc++)
     To do
     
 manpageauthor()
-
-Frank B. Brokken (f.b.brokken@rug.nl),nl()
-Jean-Paul van Oosten (j.p.van.poosten@rug.nl),nl()
-Richard Berendsen (richardberendsen@xs4all.nl) (until 2010).nl()
