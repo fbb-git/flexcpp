@@ -1,18 +1,46 @@
-#define MANPAGE "../../src/tmp/man/flexc++.1"
-#define MANHTML "../../src/tmp/manhtml/flexc++man.html"
+#define MANPAGE "../../tmp/man/"
+#define MANHTML "../../tmp/manhtml/"
 
 void manpage()
 {
+    string pages;
+    list pagelist;
+    string man;
+    list manlist;
+    int idx;
+    string name;
+    string manpage;
+
+    pages = "flexc++ input rules scanner scannerbase";
+    pagelist = strtok(pages, " ");
+
+    man =  ".1 .3flexc++ .3flexc++ .3flexc++ .3flexc++";
+    manlist = strtok(man, " ");
+
     md("tmp/man tmp/manhtml");
 
     special();
 
-    chdir("../documentation/man");
+    chdir("documentation/man");
 
-    if ("flexc++.yo" younger MANPAGE || "release.yo" younger MANPAGE)
-    {
-        run("yodl2man  -o " MANPAGE " flexc++");
-        run("yodl2html  -o " MANHTML " flexc++");
+    for (idx = sizeof(pagelist); idx--; )
+    {    
+        name = pagelist[idx];
+        manpage = MANPAGE + name + manlist[idx];
+
+        if 
+        (
+            name + ".yo" younger manpage 
+            || 
+            "../../../release.yo" younger manpage
+        )
+        {
+            run("yodl2man --no-warnings -o " + manpage + " " + name);
+            run("yodl2html --no-warnings -o " MANHTML + name + ".html " 
+                                                                    + name);
+        }
     }
+
     exit(0);
 }
+

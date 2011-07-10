@@ -7,7 +7,7 @@ DEFINEMACRO(itb)(1)(it() bf(ARG1):nl())
 DEFINEMACRO(itt)(1)(it() tt(ARG1))
 DEFINEMACRO(itrange)(2)(tt(CHAR(91)ARG1, ARG2+CHAR(41)))
 
-includefile(../../../release.yo)
+includefile(../../../../release.yo)
 
 htmlbodyopt(text)(#27408B)
 htmlbodyopt(bgcolor)(#FFFAF0)

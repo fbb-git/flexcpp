@@ -54,7 +54,6 @@ void setLocations()
     DOC  = BASE + "/share/doc/flexc++";
 
     COMPILER = "g++";
-//    COMPILER = "g++-4.5";
 
     COMPILER += " --std=c++0x -Wall";
 }

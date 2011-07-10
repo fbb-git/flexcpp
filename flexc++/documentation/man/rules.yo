@@ -112,25 +112,8 @@ the definition of a directive:
             user-defined tt(Input) class. 
     it() bf(%input-interface) tt(= "interface") nl()
            Defines the pathname of the file containing the interface of a
-            user-defined tt(Input) class. This interface must at least offer
-            the following elements:
-        verb(
-    class Input
-    {
-        public:
-            Input();
-            Input(std::istream *iStream);   // dynamically allocated iStream
-            size_t get();                   // the next character
-            size_t lineNr() const;          
-            void reRead(size_t ch);         // push back 'ch' (if <= 0x100)
-                                            // push back str from idx 'fmIdx'
-            void reRead(std::string const &str, size_t fmIdx);
-
-            void close();                 // delete dynamically allocated
-    };
-        )        
-        (See the technical manual for additional information about
-            user-defined tt(Input) classes.
+            user-defined tt(Input) class. See bf(input)(3flexc++) for
+            additional information about user-defined tt(Input) classes.
     it() bf(%interactive)nl()
            This directive is provided for backward compatibility. It
             is silently ignored.
