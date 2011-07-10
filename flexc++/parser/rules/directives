@@ -9,7 +9,7 @@ directive_line:
 ;
 
 directive:
-    OPTION_DIRECTIVE options 
+    option
 |
     start_condition_directive
 |

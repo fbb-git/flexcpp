@@ -1,9 +1,3 @@
-options:
-    options option
-|
-    // empty
-;
-
 option:
     inputinterface_m '=' STRING
     {
@@ -68,8 +62,8 @@ option:
     {
         d_options.setLines(false);
     }
-|
-    error    
+//|
+//    error    
 ;
 
 opt_debugnamelist:
