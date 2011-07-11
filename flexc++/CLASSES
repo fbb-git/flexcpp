@@ -3,7 +3,6 @@
 #   depending classes, using icmbuild
 
 semval          
-
 textval         semval
 statedata       semval
 decimal         semval
@@ -17,8 +16,6 @@ ranges          textval     states
 tailcount       state
 patternval      charclass   states
 block           
-# fstreaminfo     
-# scanner         textval     fstreaminfo block
 scanner         textval     block
 rule            states      block
 rules           rule        startcondition
@@ -28,8 +25,3 @@ dfas            dfa
 options         
 parser          rules  patternval  decimal  scanner options state
 generator       dfas        options
-
-
-
-
-

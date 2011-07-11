@@ -7,8 +7,10 @@ void setRemovals()
     // always:
         remove1 = 
             "build-stamp configure-stamp options/SKEL "
-            "flexc++ o */o release.yo libflexc++.a "    // scanner/lex.cc "
-            "parser/parse.cc parser/parserbase.h parser/grammar.output";
+            "flexc++ o */o release.yo libflexc++.a "    
+            // "scanner/lex.cc "
+            // "parser/parse.cc parser/parserbase.h parser/grammar.output"
+            ;
 
     // dist:
         remove2 =

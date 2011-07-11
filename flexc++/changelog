@@ -1,3 +1,12 @@
+flexc++ (0.8.0)
+
+  * Rebuilt of flexc++, see the git logs for details. Intermediate version
+    updates not separately logged before this date.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 11 Jul 2011 12:58:12 +0200
+
+flexc++ (0.0.0)
+
   * Project Start.
 
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 18 Apr 2008 23:29:36 +0200
