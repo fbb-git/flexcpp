@@ -15,8 +15,8 @@ void setRemovals()
             "tmp";
 
     // in ./documentation:
-        remove3 = "man/*.1 man/*.html manual/manual-stamp manual/*.html "
-                  "manual/invoking/usage flexc++ usage/usage";
+        remove3 = "man/*.1 man/*.3flexc++ man/*.html manual/manual-stamp "
+                  "manual/*.html manual/invoking/usage flexc++ usage/usage";
 }
 
 void clean(int dist)
