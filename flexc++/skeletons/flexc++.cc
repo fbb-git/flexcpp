@@ -55,7 +55,10 @@ $insert debugInit
     d_filename(infilename),
     d_startCondition(StartCondition__::INITIAL),
     d_state(0),
-    d_out(new std::ofstream(outfilename)),
+    d_out(outfilename == "-" ? 
+                new std::ostream(cout.rdbuf())
+            :
+                new std::ofstream(outfilename)),
     d_sawEOF(false),
     d_atBOL(true),
 $insert tailCount
