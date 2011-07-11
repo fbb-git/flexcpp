@@ -20,6 +20,7 @@ void install(string where, int all)
         printf("  installing the manual pages\n");
         chdir("tmp/man");
         pages = makelist("*");
+        chdir("../..");
 
         for (idx = sizeof(pages); idx--; )
         {
@@ -31,12 +32,11 @@ void install(string where, int all)
                 mandir = "/man3/";
 
             md(where + MAN + mandir);
-            run("gzip -9 < " + page + " > " + 
+            run("gzip -9 < tmp/man/" + page + " > " + 
                             where + MAN + mandir + page + ".gz");
         }
 
         printf("  installing the man pages in html format\n");
-        chdir("../..");
         run("cp tmp/manhtml/* " + where + DOC + "/man");
 
         printf("  installing the information directly in and under $DOC\n");
