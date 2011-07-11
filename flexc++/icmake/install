@@ -2,11 +2,12 @@ void install(string where, int all)
 {
     list pages;
     string page;
+    string mandir;
     int idx;
 
     printf("  installing the executable\n");
     md(where + BIN);
-    run("cp tmp/bin/* " + where + BIN);
+    run("cp " + g_binary + " " + where + BIN);
 
     printf("  installing the skeleton files\n");
     md(where + SKEL);
@@ -14,7 +15,6 @@ void install(string where, int all)
 
     if (all)
     {
-        md(where + MAN);
         md(where + DOC + "/man");
 
         printf("  installing the manual pages\n");
@@ -24,7 +24,15 @@ void install(string where, int all)
         for (idx = sizeof(pages); idx--; )
         {
             page = pages[idx];
-            run("gzip -9 < page > " + where + MAN + "/" + page + ".gz");
+
+            if (strfind(page, "1") != -1)
+                mandir = "/man1/";
+            else
+                mandir = "/man3/";
+
+            md(where + MAN + mandir);
+            run("gzip -9 < " + page + " > " + 
+                            where + MAN + mandir + page + ".gz");
         }
 
         chdir("../manhtml");
@@ -40,16 +48,6 @@ void install(string where, int all)
 
         printf("  installing the information directly in and under $DOC\n");
         run("gzip -9 < changelog > " + where + DOC + "/changelog.gz");
-    
-        // printf("  installing flex's docs\n");
-        // md(where + DOC + "/flex-docs");
-        // run("cp -r documentation/html documentation/flex.ps.org " + 
-        //                                 where + DOC + "/flex-docs");
-        
-        // printf("  installing examples\n");
-        // md(where + DOC + "/examples");
-        // run("cp -r documentation/examples " + where + DOC);
-        // run("cp -r documentation/regression " + where + DOC);
     
         printf("  installing manual\n");
         run("cp -r tmp/manual " + where + DOC);

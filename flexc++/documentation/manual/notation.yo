@@ -1,0 +1,33 @@
+It is also possible to write the pattern right after the start condition tag
+in the rules section:
+
+    verb(
+%%
+<cstring>\"     begin(INITIAL);
+<cstring>\/\"   more();
+...
+    )
+
+A rule can be added to multiple startconditions:
+
+verb(
+%%
+<cstring, character>{
+    \\n         return ESCAPED_CHARACTER;
+}
+)
+
+Or:
+
+verb(
+%%
+<cstring>{
+    <character>\\n      return ESCAPED_CHARACTER;
+}
+)
+
+which has the same effect. The last example shows that startconditions may be
+nested.  Note that the actions above return something we have not yet seen
+before. We shouldn't.  It assumes that in the Scanner class, or somewhere
+else, an tt(enum) was defined that has a value ESCAPED_CHARACTER. In this way,
+flc() can be used with a parser such as bf(bisonc++)(1).

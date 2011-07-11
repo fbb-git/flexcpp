@@ -1,0 +1,18 @@
+itemization(
+    nosupport(Indented text or tt(`%{ ... %}') blocks before first rule copied
+            to the top of the function body of yylex.cc)
+        (Declare local variables for NOEXPAND(yylex)().)
+        (Use data members to keep track of state, or if you want to execute
+            some code everytime NOEXPAND(lex)() is called, redefine
+            NOEXPAND(lex)() to do more than just call the generated function
+            NOEXPAND(lex__()).)
+    nosupport(Other indented text or tt(`%{ ... %}') blocks are copied
+            to the output, but meaning is ill-defined and compiler errors may
+            result.)
+        (POSIX compliance)
+        (As of now, for the format of the input file we are not fully POSIX
+            compliant.)
+)
+
+
+

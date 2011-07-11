@@ -1,0 +1,76 @@
+Since Cpp() supports namespaces, the tt(yy)-prefix for every
+member and macro is no longer needed. Most functions can now be used without
+the prefix. Also, because flc() generates a scanner class, instead of macros
+often member functions of the scanner class may be used.  See the conversion
+table below.
+
+table(3)(lll)(
+    row(cell(bf(flex))
+        cell(bf(flc()))
+        cell(bf(flc()) alternative)
+    )
+    row(cell(tt(yylex()))
+        cell(tt(lex()))
+    )
+    row(cell(tt(YYText()))
+        cell(tt(text()))
+        cell(tt(match()))
+    )
+    row(cell(tt(YYLeng()))
+        cell(tt(leng()))
+    )
+    row(cell(tt(ECHO))
+        cell(tt(ECHO()))
+    )
+    row(cell(tt(yymore()))
+        cell(tt(more()))
+    )
+    row(cell(tt(yyless()))
+        cell(tt(less()))
+    )
+    row(cell(tt(BEGIN startcondition))
+        cell(tt(begin(startcondition)))
+    )
+    row(cell(tt(YY_AT_BOL))
+        cell(tt(atBol()))
+    )
+    row(cell(tt(yy_set_bol(at_bol)))
+        cell(tt(setBol(bool atBol)))
+    )
+)
+
+The member functions in the flc() column above are either members of
+tt(Scanner) or one of it's base classes. Also note that flc() no longer uses
+macros and all member functions can be used from either actions or other
+member functions.
+
+Flex also offers macros that flc() no longer supports. We list them here,
+along with their purpose and suggestions for alternative solutions with flc().
+
+itemization(
+    nosupport(tt(YY_USER_ACTION) and tt(yy_act))
+        (run before exuting an action, yy_act contains rule number)
+        (modify wrapper function executeAction, which receives a state
+            number corresponding to an accepting state in the finite automaton
+            that corresponds to the rule that matched)
+    nosupport(tt(YY_NUM_RULES))
+        (the number of rules in the lexer file)
+        (Not yet implemented)
+    nosupport(tt(YY_USER_INIT))
+        (provide an action that is executed before initializing scanner)
+        (add or modify a constructor of the scanner class)
+    nosupport(tt(yy_set_interactive))
+        (before scanning a buffer, set if it is interactive or not)
+        (Not yet implemented)
+    nosupport(tt(YY_BREAK))
+        (contains the tt(break) statement in the tt(switch) statement that
+            contains all actions. It is suggested that C++ programmers might
+            redefine it to nothing, and manually make sure that all actions in
+            the lexer have either a break or a return statement. The reason
+            being that otherwise the compiler might give a warning that the
+            break statement is unreachable because of the return statement
+            above it.)
+        (Not implemented, and no plans to implement it, we do not get
+            such warnings with tt(g++ -pedantic). We would be glad to hear if
+            you experience problems.)
+)

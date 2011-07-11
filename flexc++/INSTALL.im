@@ -20,7 +20,7 @@ string SKEL;
     // stored
 
 string MAN;
-    // MAN is the directory in which the manual page will be stored
+    // MAN is the base directory of the man pages
 
 string DOC;
     // DOC is the directory in which all other documentation will be stored
@@ -50,7 +50,7 @@ void setLocations()
     BASE  = "/usr/local";
     BIN  = BASE + "/bin";
     SKEL = BASE + "/share/flexc++";
-    MAN  = BASE + "/share/man/man1";
+    MAN  = BASE + "/share/man";
     DOC  = BASE + "/share/doc/flexc++";
 
     COMPILER = "g++";

@@ -1,4 +1,3 @@
-lchapter(introduction)(Introduction)
 This manual describes flc(), a tool which can generate lexical scanners:
 programs recognizing patterns in text. Usually, scanners are used in
 combination with parsers, which in turn can be generated, by

@@ -1,5 +1,3 @@
-lchapter(multiplestreams)(Multiple input streams)
-
 Some scanners (such as those which support `include' files) require reading
 from several input streams. Usually, one switches streams when a directive
 like tt(#include) is encountered. Flc() offers two ways of switching streams:

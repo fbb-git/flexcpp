@@ -1,0 +1,6 @@
+Flc() allows one to place comments anywhere in the document, indented or not.
+Both multiline comments (tt(/* ... */)) and end of line comments (tt(// ...))
+are supported.
+
+When a multiline comment is encountered outside an action, flc() discards the
+comment, while all comments in actions will be copied verbatim to the source.

@@ -1,5 +1,3 @@
-lchapter(patterns)(Patterns)
-
 The patterns in the input (see lref(Rules Section)(rulessection)) are
 written using an extended set of regular expressions. These are:
 

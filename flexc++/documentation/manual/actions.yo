@@ -1,4 +1,3 @@
-lchapter(actions)(Actions)
 
 As described in Section ref(rulessection), the second section of the flc()
 input file contains series of rules: pairs of patterns and actions.

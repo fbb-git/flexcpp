@@ -1,7 +1,3 @@
-lchapter(simpleexamples)(Some simple examples)
-
-lsect(lexermain)(A simple lexer file and main function)
-
 The following lexer file detects identifiers:
 
 verbinclude(examples/simplelexer)

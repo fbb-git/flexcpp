@@ -1,0 +1,21 @@
+
+The most important difference in behaviour with regard to patterns is 
+the fact that flc() can actually match the empty string. For example,
+the regular expression tt(a*) matches zero or more tt(a)'s. Thus, it
+should also match the empty string. In flex, it does not. Currently,
+in flexc++, it does. This means that a lexer file with only the pattern
+tt(a*) in it, and a 'b' on the input will cause flc() to loop forever.
+Therefore, care must be taken with patterns that match the empty string.
+
+Not all patterns that are supported by flex are yet supported by flc().
+Notably, flc() does not yet support certain flags in regular expressions,
+e.g. a flag that makes the regular expression case insensitive, or a flag
+that allows whitespace in a regular expression.
+
+Another small difference in the patterns is that in a named pattern,
+defined in the definion section, we do not allow the lookahead operator (`/')
+or the begin anchor operator (`^'). That is because we treat the name expansion
+as a group if it appears in a pattern in the rule section. Since groups may
+occur any number of times in a regular expression but a lookahead operator or
+a begin anchor operator only once, we do not accept them in a name definition.
+

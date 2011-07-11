@@ -1,0 +1,27 @@
+
+In flex it is possible to provide initialising code in the definition
+section (see section ref(definitionsection)) and as the first lines in the
+rules section.
+
+Flc() does not support these code blocks. Since flc() generates a class with
+appropriate header files, there are other means to include code in your
+scanner. See also lref(generated files)(files) below.
+
+Flc() also does not support a last `user code' section, where additional code
+can be placed to be copied verbatim to the source file. A second section 
+delimiter (%%) is therefore considered a syntax error.
+
+There are two reasons for dropping support of these code blocks. First, 
+the format of the lexer file becomes simpler. Second, the alternatives to
+the code blocks are actually preferred. With flex one would use code blocks
+before the rules to declare local variables that are used in some of the 
+actions. With flc() it is possible to use data members of the scanner class
+for this. With flex the third section of the lexer file could be used
+to define helper functions. With flc() helper methods may be
+defined in the scanner class. Below we list the differences between flex
+and flc(). We provide suggestions for flc() solutions to problems that
+were addressed by flex features that we no longer support.
+
+Sections ref(diffdef), ref(diffrules) and ref(diffusercode) provide a list of
+items which are no longer supported in flc() and the suggested solution.
+

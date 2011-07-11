@@ -1,5 +1,5 @@
 #define STAMP     "manual-stamp"
-#define HTMLDEST    "../../src/tmp/manual"
+#define HTMLDEST    "../../tmp/manual"
 
 void manual()
 {
@@ -14,7 +14,7 @@ void manual()
 
     special();
 
-    chdir("../documentation");
+    chdir("documentation/manual");
 
 //    if (!exists("usage/usage"))
 //    {
@@ -25,7 +25,7 @@ void manual()
 //        chdir("..");
 //    }
 
-    chdir("manual");
+//    chdir("manual");
 
     files = makelist("*.yo") + makelist("*/*.yo");
     for (idx = sizeof(files); idx--; )

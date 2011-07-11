@@ -1,0 +1,10 @@
+The rules section of the flc() input contains a series of rules of the form:
+
+verb(pattern    action)
+
+tt(action) is here an end-of-line comment, a single-line C-statement, or a
+compound statement that may span several lines. tt(action) may also be empty.
+
+An action consisting solely of a vertical bar (`|') means ``same as the action
+for the next rule''.
+

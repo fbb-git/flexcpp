@@ -82,3 +82,12 @@ whenlatex(\
         latexcommand(\hyperref[ARG2]{ARG1})\
     )\
 )
+
+DEFINEMACRO(nosupport)(3)(\
+    it() ARG1
+    description(
+        dit(Purpose:) ARG2
+        dit(Flc() alternative:) ARG3
+    )\
+)
+

@@ -1,0 +1,3 @@
+Flc() differs completely from flex in how it handles multiple input streams.
+The method for stream switching is described in full in
+section ref(multiplestreams).

@@ -1,15 +1,14 @@
-lchapter(startconditions)(Startconditions (Miniscanners))
 
-Flc() enables a programmer to describe tokens with a set of regular expressions.
-When we wrote flc(), we described the tokens that could occur in a lexer file.
-But a lexer file has different languages in it: regular expressions, and code.
-If one were to describe the tokens in a programming language such as C, a 
-c-string would be one of them. But a c-string also has some structure of itself,
-certain characters may have to be escaped in it. A double quote does not always
-end the c-string, for example.
+Flc() enables a programmer to describe tokens with a set of regular
+expressions.  When we wrote flc(), we described the tokens that could occur in
+a lexer file.  But a lexer file has different languages in it: regular
+expressions, and code.  If one were to describe the tokens in a programming
+language such as C, a c-string would be one of them. But a c-string also has
+some structure of itself, certain characters may have to be escaped in it. A
+double quote does not always end the c-string, for example.
 
-For these cases flc(), like flex and lex, offers startconditions. A startcondition
-can be declared in the definition section of the lexer file:
+For these cases flc(), like flex and lex, offers startconditions. A
+startcondition can be declared in the definition section of the lexer file:
 
 verb(
 %x  cstring
@@ -17,8 +16,8 @@ verb(
 ...
 )
 
-This declares an exclusive startcondition. There are also inclusive startconditions,
-but they are less useful.
+This declares an exclusive startcondition. There are also inclusive
+startconditions, but they are less useful.
 
 A startcondition may then be opened in the rulessection of the lexer file:
 
@@ -67,37 +66,3 @@ verb(
 )
 .
 
-sect(Notation details)
-
-It is also possible to write the pattern right after the start condition tag in the rules section:
-
-verb(
-%%
-<cstring>\"     begin(INITIAL);
-<cstring>\/\"   more();
-...
-)
-
-A rule can be added to multiple startconditions:
-
-verb(
-%%
-<cstring, character>{
-    \\n         return ESCAPED_CHARACTER;
-}
-)
-
-Or:
-
-verb(
-%%
-<cstring>{
-    <character>\\n      return ESCAPED_CHARACTER;
-}
-)
-
-which has the same effect. The last example shows that startconditions may be nested.
-Note that the actions above return something we have not yet seen before. We shouldn't.
-It assumes that in the Scanner class, or somewhere else, an tt(enum) was defined that
-has a value ESCAPED_CHARACTER. In this way, flc() can be used with a parser such as
-bisonc++.

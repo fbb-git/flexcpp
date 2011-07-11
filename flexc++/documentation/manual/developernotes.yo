@@ -1,24 +1,25 @@
 lchapter(developernotes)(Notes for developers)
 sect(How we parse a lexer file)
 
-We use flc() and bisonc++ by Brokken to parse a lexer file. That means we wrote
-a lexer file describing the tokens that can appear in a lexer file, and we wrote
-a grammar that describes the lexer file. In the next two subsections some notes
-on our lexer file and grammar are given.
+We use flc() and bisonc++ by Brokken to parse a lexer file. That means we
+wrote a lexer file describing the tokens that can appear in a lexer file, and
+we wrote a grammar that describes the lexer file. In the next two subsections
+some notes on our lexer file and grammar are given.
 
 subsect(The lexer file)
 
-Our lexer file contains quite a lot of miniscanners. That is convenient because
-a lexer file contains a number of mini-languages: strings, comments, regular expressions,
-character classes, name definitions, etc. By making the scanner return different tokens
-in different mini-languages we can more or less parse these sub-languages independently.
+Our lexer file contains quite a lot of miniscanners. That is convenient
+because a lexer file contains a number of mini-languages: strings, comments,
+regular expressions, character classes, name definitions, etc. By making the
+scanner return different tokens in different mini-languages we can more or
+less parse these sub-languages independently.
 
 subsect(The grammar)
 
-We split the grammar up in several files. Probably the most important one is the file
-verb(src/parser/rules/pattern), which contains the grammar rules for patterns. Patterns
-occur in a name definition in the definition section of a lexer file, and they occur in
-the rulesection of a lexer file. 
+We split the grammar up in several files. Probably the most important one is
+the file verb(src/parser/rules/pattern), which contains the grammar rules for
+patterns. Patterns occur in a name definition in the definition section of a
+lexer file, and they occur in the rulesection of a lexer file.
 
 Regular expressions have an interesting grammar. We implemented the regular
 expressions according to the POSIX specification for the lex utility. We
@@ -29,27 +30,27 @@ verb(%right) and verb(%nonassoc).  We tried it, but we encountered a problem:
 Our old grammar had this idea in it:
 
 verb(
-	pattern:
-		character
-	|
-		pattern pattern %prec CONCATENATION
-	|
-		pattern '|' pattern
-	|
-		'(' pattern ')'
-	|
-		...
-	;
+    pattern:
+        character
+    |
+        pattern pattern %prec CONCATENATION
+    |
+        pattern '|' pattern
+    |
+        '(' pattern ')'
+    |
+        ...
+    ;
 )
 
 with precedence:
 
 verb(
-	//low precendence
+    //low precendence
 
-	%left '|'
-	%left CONCATENATION
-	%nonassoc '(' ')'
+    %left '|'
+    %left CONCATENATION
+    %nonassoc '(' ')'
 )
 
 This did not work, however.
@@ -57,7 +58,7 @@ The problem is that there is no token for the concatenation operator.
 So if the parser eats
 
 verb(
-	foo|bar
+    foo|bar
 )
 
 it will get the `a' character at some point. At this point it will
@@ -70,17 +71,17 @@ reduction rule for the token at hand.
 To solve this problem, we could create a concatenation rule like this:
 
 verb(
-	pattern:
-		character
-	|
-		pattern CHARACTER %prec CONCATENATION
-	|
-		pattern '|' pattern
-	|
-		'(' pattern ')'
-	|
-		...
-	;
+    pattern:
+        character
+    |
+        pattern CHARACTER %prec CONCATENATION
+    |
+        pattern '|' pattern
+    |
+        '(' pattern ')'
+    |
+        ...
+    ;
 )
 
 That would solve the problem for concatenating simple characters.
@@ -91,134 +92,161 @@ Our new grammar makes a distinction between disjunctions and conjunctions,
 thereby making operator precedence explicit. So it looks something like this:
 
 verb(
-	pattern:
-		disjunction
-	;
+    pattern:
+        disjunction
+    ;
 
-	disjunction:
-		disjunction '|' disjunct_with_opt_interval_expression
-	|
-		disjunct_with_opt_interval_expression
-	;
+    disjunction:
+        disjunction '|' disjunct_with_opt_interval_expression
+    |
+        disjunct_with_opt_interval_expression
+    ;
 
-	disjunct_with_opt_interval_expression:
-		conjunction opt_interval_expression
-	;
+    disjunct_with_opt_interval_expression:
+        conjunction opt_interval_expression
+    ;
 
-	opt_interval_expression:
-		// empty
-	|
-		interval_expression // {m, n}
-	;
+    opt_interval_expression:
+        // empty
+    |
+        interval_expression // {m, n}
+    ;
 
-	conjunction:
-		conjunction conjunct_with_opt_quantifier
-	|
-		conjunct_with_opt_quantifier 
-	;
+    conjunction:
+        conjunction conjunct_with_opt_quantifier
+    |
+        conjunct_with_opt_quantifier 
+    ;
 )
 
-Where verb(conjunct_with_opt_quantifier) is an expression like verb(a*), or simply verb(a).
+Where verb(conjunct_with_opt_quantifier) is an expression like verb(a*), or
+simply verb(a).
 
 sect(How we handle characterclasses and locales)
 
-We want flexc++ to work with different locales. Two functions that will come in handy are
-the collation functions `strcoll' and `strxfrom' from the standard C library. These can be
-used to compare two collating elements with regard to the current LOCALE. There is no 
-simple way that we know of to get a list of all collating elements in the current locale
-between two given collating elements. Therefore, a first approach to handling characterclasses
-will be that we transform it to unions of ranges. That way, an edge in our NFA could contain
-a range instead of a single collating element. The NFA would then have to check whether or
-not a new collating element it eats falls in the range. 
+We want flexc++ to work with different locales. Two functions that will come
+in handy are the collation functions `strcoll' and `strxfrom' from the
+standard C library. These can be used to compare two collating elements with
+regard to the current LOCALE. There is no simple way that we know of to get a
+list of all collating elements in the current locale between two given
+collating elements. Therefore, a first approach to handling characterclasses
+will be that we transform it to unions of ranges. That way, an edge in our NFA
+could contain a range instead of a single collating element. The NFA would
+then have to check whether or not a new collating element it eats falls in the
+range.
 
-So, then, an edge in an NFA, and also in a DFA can contain ranges of collating elements.
-Now we will have to remove redundant edges, e.g. an edge over a `b' when we already have
-an edge over `a-c'. This means that for all combinations of edges from a particular state,
-we will have to detect overlap. At each comparison, if one range is entirely contained in
-another, the first is disregarded. If the tail of one range overlaps with the start of another
-range, we could disregard the tail of the first. A little harder is the case where we want
-to subtract character ranges from one-another, using only the functions strcoll and strxfrom. 
-But it can be done. If one range is contained
-in another, we will have to ranges left, with the end-point of the first range equal to the
-starting point of the subtracted range, and the starting point of the second range equal to
-the end point of the subtracted range. The other cases are easier. I do not see any problem,
-in fact, I think it is a quite elegant solution.
+So, then, an edge in an NFA, and also in a DFA can contain ranges of collating
+elements.  Now we will have to remove redundant edges, e.g. an edge over a `b'
+when we already have an edge over `a-c'. This means that for all combinations
+of edges from a particular state, we will have to detect overlap. At each
+comparison, if one range is entirely contained in another, the first is
+disregarded. If the tail of one range overlaps with the start of another
+range, we could disregard the tail of the first. A little harder is the case
+where we want to subtract character ranges from one-another, using only the
+functions strcoll and strxfrom.  But it can be done. If one range is contained
+in another, we will have to ranges left, with the end-point of the first range
+equal to the starting point of the subtracted range, and the starting point of
+the second range equal to the end point of the subtracted range. The other
+cases are easier. I do not see any problem, in fact, I think it is a quite
+elegant solution.
 
-However, in light of the fact that we want to come up with a working version within a few weeks,
-we decided to adopt another approach, postponing the challenge of collating elements until later.
-Flex also does not appear to be able to handle collating elements properly, and implementing them
-does add some complexity. Our NOEXPAND(intermediate)(?) approach is roughly outlined in the next section.
+However, in light of the fact that we want to come up with a working version
+within a few weeks, we decided to adopt another approach, postponing the
+challenge of collating elements until later.  Flex also does not appear to be
+able to handle collating elements properly, and implementing them does add
+some complexity. Our NOEXPAND(intermediate)(?) approach is roughly outlined in
+the next section.
 
 sect(A set of characters as the atomic entity on the edges of our NFA)
 
-We choose to see a characterclass as a set of char's. A single character is also a set containing
-just one character. Instead of generating NFA diagrams that display a character set as a tree of
-unions, we display it as a set of characters on an edge. This keeps the diagram much clearer.
-At first, we will not make attempts to contract the diagram any further, e.g. verb(a|b) will not
-be converted to verb([ab]). Only characterclasses in the regex will lead to sets of more than one
-characters on edges. But our Pattern class will always have a set of characters as a member, even
-if it contains only one character.
+We choose to see a characterclass as a set of char's. A single character is
+also a set containing just one character. Instead of generating NFA diagrams
+that display a character set as a tree of unions, we display it as a set of
+characters on an edge. This keeps the diagram much clearer.  At first, we will
+not make attempts to contract the diagram any further, e.g. verb(a|b) will not
+be converted to verb([ab]). Only characterclasses in the regex will lead to
+sets of more than one characters on edges. But our Pattern class will always
+have a set of characters as a member, even if it contains only one character.
 
 sect(How do we handle character classes and locales, continued)
 
-update from the trenches, 18 nov 2008. I looked into the source code of grep. It contains a huge
-list of locale names. We need to look up why this is necessary. Can we not just write a program
-that works as expected in any locale?
+update from the trenches, 18 nov 2008. I looked into the source code of
+grep. It contains a huge list of locale names. We need to look up why this is
+necessary. Can we not just write a program that works as expected in any
+locale?
 
-I could not let go of the idea of supporting Unicode. Also supporting different locales might be 
-nice. Enumerating Unicode like you would enumerate ASCII seems cumbersome. Would it be possible
-to generate a DFA from an NFA without enumerating the alphabet like they do in the dragon book?
-I think it is not feasible. Without the character, how to evaluate a regex like [^[:print:]\x000-\x888],
-which can be seen as a conjunction: not printable AND not in [\x000-\x888]. Remember this has
-to be evaluated for any locale. It can not be done until the character is known. That is at the time
-the lexer is invoked. Thus, if the NFA has edges like this, it can not be established that it is
-disjoint from other edges emanating from the set of states this vertex is in. Thus, at run time,
-we will still have an NFA, though it will be much more deterministic than the NFA we started with.
+I could not let go of the idea of supporting Unicode. Also supporting
+different locales might be nice. Enumerating Unicode like you would enumerate
+ASCII seems cumbersome. Would it be possible to generate a DFA from an NFA
+without enumerating the alphabet like they do in the dragon book?  I think it
+is not feasible. Without the character, how to evaluate a regex like
+[^[:print:]\x000-\x888], which can be seen as a conjunction: not printable AND
+not in [\x000-\x888]. Remember this has to be evaluated for any locale. It can
+not be done until the character is known. That is at the time the lexer is
+invoked. Thus, if the NFA has edges like this, it can not be established that
+it is disjoint from other edges emanating from the set of states this vertex
+is in. Thus, at run time, we will still have an NFA, though it will be much
+more deterministic than the NFA we started with.
 
 So, what will our NFA look like? Its vertices will be states, along its edges it can have:
-itemization(
-	it()the epsylon,
-	it()a (negated) character,
-	it()a (negated) multicharacter collating element (specified in a characterclass),
-	it()a (negated) range of collating elements (specified in a character class),
-	it()an equivalence class of a collating element (specified in a characterclass),
-	it()a predefined class (specified in a characterclass).
-)
+    itemization(
+    it()the epsylon,
+    it()a (negated) character,
+    it()a (negated) multicharacter collating element (specified in a
+characterclass),
+    it()a (negated) range of collating elements (specified in a character
+class),
+    it()an equivalence class of a collating element (specified in a
+characterclass),
+    it()a predefined class (specified in a characterclass).  
+    )
 
-In fact, we interprete all of these as unary predicates. These unary predicates can be
-considered atoms in a propositional logic. They receive their thruth value when the character
-is known.
+In fact, we interprete all of these as unary predicates. These unary
+predicates can be considered atoms in a propositional logic. They receive
+their thruth value when the character is known.
 
-A range, an equivalence class and a predefined class can occur along an edge because they cannot
-be enumerated beforehand. At runtime it will show if the next character belongs to the range, eq. class
-or predefined class. But there is more: as shown above, conjunctions of ranges and predefined classes
-can not always be reduced to a single predicate. So a possibly negated range can occur alongside a 
-possibly negated predefined class. Probably the same holds for equivalence classes. Because probably 
-predefined class membership need not always be the same for any elements in an equivalence class, in
-any locale. Thus, also possibly negated equivalence classes can occur with one or more possibly negated
-predefined classes. In general, our edges will contain Horn sentences, which are CNF sentences with
-at most one positive atomic literal in each conjunction. (all conjunctions will consist of only one
-atom, so in fact the sentences are a special kind of Horn sentences).
+A range, an equivalence class and a predefined class can occur along an edge
+because they cannot be enumerated beforehand. At runtime it will show if the
+next character belongs to the range, eq. class or predefined class. But there
+is more: as shown above, conjunctions of ranges and predefined classes can not
+always be reduced to a single predicate. So a possibly negated range can occur
+alongside a possibly negated predefined class. Probably the same holds for
+equivalence classes. Because probably predefined class membership need not
+always be the same for any elements in an equivalence class, in any
+locale. Thus, also possibly negated equivalence classes can occur with one or
+more possibly negated predefined classes. In general, our edges will contain
+Horn sentences, which are CNF sentences with at most one positive atomic
+literal in each conjunction. (all conjunctions will consist of only one atom,
+so in fact the sentences are a special kind of Horn sentences).
 
-Now when we generate the DFA from the NFA we will use a similar algorithm as described in the dragon
-book. But we cannot enumerate the alphabet. Thus we start with the start state of the NFA, and take
-the true-closure of it. (the predicate interpretation of the epsylon along the edge). Then we have
-a set T of NFA states, that corresponds to the start state of our DFA. Now, recursively we do as
-follows: For all outgoing n edges in T (T has no true edges at this point), make 2 to the power n edges
-that contain all possible combinations of negations or positive versions of the predicates along the edges.
-(a conjunction counts as one predicate, negation will distribute over the conjunction later on).
+Now when we generate the DFA from the NFA we will use a similar algorithm as
+described in the dragon book. But we cannot enumerate the alphabet. Thus we
+start with the start state of the NFA, and take the true-closure of it. (the
+predicate interpretation of the epsylon along the edge). Then we have a set T
+of NFA states, that corresponds to the start state of our DFA. Now,
+recursively we do as follows: For all outgoing n edges in T (T has no true
+edges at this point), make 2 to the power n edges that contain all possible
+combinations of negations or positive versions of the predicates along the
+edges.  (a conjunction counts as one predicate, negation will distribute over
+the conjunction later on).
 
-Now this is an unacceptable complexity, of course, but I do not see a way to get a fundamentally quicker way
-without enumerating the alphabet at the moment. Makes you wonder how grep handles this (they use a recursive descent
-parser, by the way). Also note that even if you can enumerate the alphabet, as in the Dragon book where they
-use ASCII, the number of states in a DFA can be exponential w.r.t. the number of states in the NFA.
+Now this is an unacceptable complexity, of course, but I do not see a way to
+get a fundamentally quicker way without enumerating the alphabet at the
+moment. Makes you wonder how grep handles this (they use a recursive descent
+parser, by the way). Also note that even if you can enumerate the alphabet, as
+in the Dragon book where they use ASCII, the number of states in a DFA can be
+exponential w.r.t. the number of states in the NFA.
 
-Most of these edges will not be possible, the domain that makes them true will be empty. In fact, this does
-greatly reduce the complexity in most cases, but worst case, fundamentally, it is exponential.
-But the edges that are possible all lead to unique sets of NFA states, which will correspond to new DFA states.
-Now recursively we will build our DFA from these new states as before. One problem remains: for some predicate combinations,
-we cannot determine without knowing the character if they are disjoint or not.
-Thus our DFA is actually still an NFA. The only thing this algorithm does is determine as much as possible compile time,
-and build a much more deterministic NFA. At run time then, the same algorithm will have to be followed, and it will
-take the remainder of the execution time of simulating the NFA. So yes, evaluation of this will be exponential, too.
-But in real life, this may not give too much problems.
+Most of these edges will not be possible, the domain that makes them true will
+be empty. In fact, this does greatly reduce the complexity in most cases, but
+worst case, fundamentally, it is exponential.  But the edges that are possible
+all lead to unique sets of NFA states, which will correspond to new DFA
+states.  Now recursively we will build our DFA from these new states as
+before. One problem remains: for some predicate combinations, we cannot
+determine without knowing the character if they are disjoint or not.  Thus our
+DFA is actually still an NFA. The only thing this algorithm does is determine
+as much as possible compile time, and build a much more deterministic NFA. At
+run time then, the same algorithm will have to be followed, and it will take
+the remainder of the execution time of simulating the NFA. So yes, evaluation
+of this will be exponential, too.  But in real life, this may not give too
+much problems.

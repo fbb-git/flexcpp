@@ -1,0 +1,14 @@
+
+itemization(
+    nosupport(tt(%top) block, copies code to top of yylex.cc.)
+        (Define macros or include files.)
+        (Include header files in scanner.ih.)
+    nosupport(Indented text or tt(`%{ ... %}') blocks copied verbatim to
+            yylex.cc)
+        (Can be used for helper code)
+        (Member functions and data members of scanner class may be defined.)
+    nosupport(An unindented c-comment (tt(`/* ... */')) is copied to yylex.cc)
+        (Commenting helper code.)
+        (Any comments outside actions are ignored, they are part of the lexer.)
+)
+

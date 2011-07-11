@@ -22,6 +22,7 @@ void main(int argc, list argv, list envp)
     string strip;
 
     g_env = envp;
+    g_binary = "tmp/bin/flexc++" EXTENSION;
 
     setLocations();     // from INSTALL.im
 

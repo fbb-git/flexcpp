@@ -1,0 +1,6 @@
+itemization(
+    nosupport(The entire last section is copied to yylex.cc verbatim)
+        (defining companion routines)
+        (define member functions in scanner class)
+)
+
