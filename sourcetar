@@ -17,11 +17,11 @@ tgz()
 }
 
 case "$1" in 
-    (o)
+    (l)
         tgz ${HOME}/debian/${PROJECT}/tarballs/${PROJECT}_${VERSION}.orig.tar.gz
     ;;
 
-    (t|u)
+    (d|u)
         tgz ${PROJECT}_${VERSION}.tar.gz
 
         if [ "$1" == "u" ]
@@ -35,10 +35,10 @@ case "$1" in
     (*)
         echo "
 Provide arg:
-    o (orig.tar.gz) to create a local .orig.tar.gz archive in 
-                    ../debian/${PROJECT}/tarballs
-    t (tar.gz)      to create ${PROJECT}_${VERSION}.tar.gz in this directory
-    u (upload)      same as 't', but upload to oosix and show MD5 hash
+    d (debian)	to create a local .orig.tar.gz archive in 
+                ../debian/${PROJECT}/tarballs
+    l (local)   to create ${PROJECT}_${VERSION}.tar.gz in this directory
+    u (upload)  same as 'l', but upload to oosix and show MD5 hash
 "
     exit 1
     ;;
