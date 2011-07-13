@@ -21,7 +21,7 @@ void Generator::inputInterface(std::ostream &out) const
 "            Input(std::istream *iStream);   // iStream: dynamically "
                                                                 "allocated\n"
 "            size_t get();                   // the next range\n"
-"            void reRead(size_t ch);         // push back 'ch' (if <= 0x100)\n"
+"            void reRead(size_t ch);         // push back 'ch' (if < 0x100)\n"
 "                                            // push back str from idx "
                                                                 "'fmIdx'\n"
 "            void reRead(std::string const &str, size_t fmIdx);\n"
