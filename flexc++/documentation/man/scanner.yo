@@ -53,7 +53,8 @@ tt(Scanner) object goes out of scope the input and output files are closed.
     itb(Scanner(std::string const &infile, std::string const &outfile))
         This constructor opens the input and output streams whose file names
 were specified. When the tt(Scanner) object goes out of scope the input and
-output files are closed.
+output files are closed. If tt(outfile == "-") then the standard output stream
+will be used as the scanner's output medium.
     )
     
 manpagesection(PUBLIC MEMBER FUNCTION)
