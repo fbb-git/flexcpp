@@ -28,6 +28,11 @@ inline void \@::preCode()
     // optionally replace by your own code
 }
 
+inline \@::\@(std::istream &in, std::ostream &out)
+:
+    \@Base(in, out)
+{}
+
 inline \@::\@(std::string const &infile, std::string const &outfile)
 :
     \@Base(infile, outfile)
