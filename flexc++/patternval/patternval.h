@@ -9,6 +9,7 @@
 
 class PatternVal: public SemVal
 {
+    typedef std::unordered_map<size_t, size_t> Map;
     States::Pair d_pair;
 
     public:
@@ -47,6 +48,9 @@ class PatternVal: public SemVal
         static void copyState(std::pair<size_t, size_t> const &fromTo, 
                        std::unordered_map<size_t, size_t> const &old2new,
                        States &states);
+//////////
+        static size_t copyPattern(Map &map, States &states, size_t idx);
+
 };
         
 inline size_t PatternVal::begin() const

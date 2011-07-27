@@ -1,5 +1,7 @@
 #include "patternval.ih"
 
+#include <iostream>
+
 size_t PatternVal::patternCopy(States &states, size_t begin, size_t end)
 {
     size_t nextFinal = states.next();
@@ -25,11 +27,21 @@ size_t PatternVal::patternCopy(States &states, size_t begin, size_t end)
 
         // now that all states have been prepared, copy them
         // making sure that the proper transitions are set.
+
+    cout << "OLD2NEW:\n";
+    for_each(old2new.begin(), old2new.end(),
+        [](unordered_map<size_t, size_t>::value_type const &vt)
+        {
+            cout << vt.first << " -> " << vt.second << '\n';
+        }
+    );
+
     copyStates(states, old2new);
 
     states[nextFinal] = State::factory(State::FINAL, 0, 0);
 
     return nextFinal;
 }
+
 
 

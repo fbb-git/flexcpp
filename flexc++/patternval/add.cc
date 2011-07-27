@@ -1,5 +1,7 @@
 #include "patternval.ih"
 
+#include <iostream>
+
 void PatternVal::add(States &states, unordered_map<size_t, size_t> &old2new, 
                      size_t idx)
 {
@@ -12,6 +14,7 @@ void PatternVal::add(States &states, unordered_map<size_t, size_t> &old2new,
         //
     old2new[idx] = states.next();
 
+cout << "ADD STATE " << old2new[idx] << " FROM STATE " << idx << '\n';
         // inspect the current state's transitions
         //
     add(states, old2new, states[idx].data().next1());

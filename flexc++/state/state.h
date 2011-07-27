@@ -52,6 +52,9 @@ class State
 
         StateData const &data() const;
 
+        void setData(StateData *data);      // State will own the data
+
+
         void setType(size_t type);      // change the char. type
         size_t type() const;            // if < UNDETERMINED__ it's a char
 
@@ -65,6 +68,11 @@ class State
             // Only defined for d_type == CHARSET
         bool contains(size_t rangeChar) const;
 };
+
+inline void State::setData(StateData *data)
+{
+    d_data.reset(data);
+}
         
 inline StateData &State::data()
 {
