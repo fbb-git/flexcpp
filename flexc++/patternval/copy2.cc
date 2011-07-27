@@ -17,53 +17,57 @@ cout << "PRE:\n" <<
 
     PatternVal &pattern = downCast<PatternVal>(semval); // the pattern to copy
 
-    size_t begin = pattern.begin();
+    size_t begin = pattern.begin();     // remember its begin/end states
     size_t end  = pattern.end();
 
-    vector<Map> copied(1);    // each map contains the mapping of old state
-                           // indices (index) to new state indices (values)
-                           // The value 0, 0 indicates the end of
-                           // link and is always initially added.
+        // A vector of pairs is used to retrieve the begin/end State indices
+        // of the original and copied patterns
+    vector<States::Pair> beginEnd(1, States::Pair{begin, end});
 
     for (size_t idx = 1; idx != lower; ++idx)       // copy the initial
     {                                               // required patterns
-        copied.push_back(Map());
-        copied.back()[0] = 0;
 
+        Map copied;     // a map is used to related old state indices (index)
+                        // to new state indices (values). The value 0, 0
+                        // indicates the end of  link and is always initially
+                        // added. 
+        copied[0] = 0;
                                                     // copy the pattern
-        copyPattern(copied.back(), states, pattern.begin());
+        copyPattern(copied, states, pattern.begin());
 
-cout << "Pattern " << idx << " starts at " << copied.back()[begin] << 
-", ends at " << copied.back()[end] << '\n';
+cout << "Pattern " << idx << " starts at " << copied[begin] << 
+", ends at " << copied[end] << '\n';
+
+        beginEnd.push_back(States::Pair{copied[begin], copied[end]});        
     }
-
 
 
     spSemVal ret;
 
-    if (upper == UINT_MAX)          // no upper limit: optionally cycle back
-    {
-        Map &map = copied.back();     // the last map
-
-                                                // begin/end states
-        PatternVal last(States::Pair{map[begin], map[end]});    
-
-        spSemVal sp = plus(states, last);   // change to pattern+
-        PatternVal &rept = downCast<PatternVal>(*sp);
-
-        map[begin] = rept.begin();
-        map[end] = rept.end();
-
-cout << "Last pattern repeatable: starts at " << rept.begin() << 
-", ends at " << rept.end() << '\n';
-
-        
-cout << "POST {x,}:\n" <<
-        states << '\n';
-
-    throw Errno("copy2 completed\n");
-
-    }        
+// TO DO:
+//    if (upper == UINT_MAX)          // no upper limit: optionally cycle back
+//    {
+//        Map &map = copied.back();     // the last map
+//
+//                                                // begin/end states
+//        PatternVal last(States::Pair{map[begin], map[end]});    
+//
+//        spSemVal sp = plus(states, last);   // change to pattern+
+//        PatternVal &rept = downCast<PatternVal>(*sp);
+//
+//        map[begin] = rept.begin();
+//        map[end] = rept.end();
+//
+//cout << "Last pattern repeatable: starts at " << rept.begin() << 
+//", ends at " << rept.end() << '\n';
+//
+//        
+//cout << "POST {x,}:\n" <<
+//        states << '\n';
+//
+//    throw Errno("copy2 completed\n");
+//
+//    }        
         
 cout << "Optionally: " << lower << " to " << upper << '\n';
 
@@ -71,29 +75,31 @@ cout << "Optionally: " << lower << " to " << upper << '\n';
 
     for (size_t idx = lower; idx != upper; ++idx)   // copy the remaining
     {                                               // optional patterns
-        copied.push_back(Map());
-        copied.back()[0] = 0;
-
+        Map copied;
+        copied[0] = 0;
                                                     // copy the pattern
-        copyPattern(copied.back(), states, pattern.begin());
+        copyPattern(copied, states, pattern.begin());
+
+        beginEnd.push_back(States::Pair{copied[begin], copied[end]});        
+
 
         size_t first = states.next();
 
-cout << "Pattern " << idx << " starts at " << copied.back()[begin] << 
-", ends at " << copied.back()[end] << ", prefixing state " << first << '\n';
+cout << "Pattern " << idx << " starts at " << copied[begin] << 
+", ends at " << copied[end] << ", prefixing state " << first << '\n';
 
         optionals[idx] = first;         // 1st state of pattern[idx] becomes
                                         // first
     }
 
-    size_t finalState = copied.back()[end];
+    size_t finalState = beginEnd.back().second;
 
     for (size_t idx = lower; idx != upper; ++idx)   // set the optionals to
     {                                               // the end-state
         states[optionals[idx]] = 
-            State::factory(State::EMPTY, copied[idx][begin], finalState);
+            State::factory(State::EMPTY, beginEnd[idx].first, finalState);
 
-        copied[idx][begin] = optionals[idx];    // new begin state
+        beginEnd[idx].first = optionals[idx];    // new begin state
     }
 
 
@@ -101,8 +107,7 @@ cout << "Pattern " << idx << " starts at " << copied.back()[begin] <<
     PatternVal next;
     for (size_t idx = 1; idx != upper; ++idx)
     {
-        next.d_pair.first = copied[idx][begin];
-        next.d_pair.second = copied[idx][end];
+        next.d_pair = beginEnd[idx];
 
         spSemVal sp = concatenate(states, pattern, next);
         pattern = downCast<PatternVal>(*sp);
