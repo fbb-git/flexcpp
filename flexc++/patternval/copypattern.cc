@@ -2,31 +2,26 @@
 
 #include <iostream>
 
-size_t PatternVal::copyPattern(Map &map, States &states, size_t idx)
+void PatternVal::copyPattern(States &states, size_t count, 
+                                                PairVector &beginEnd)
 {
-        // done if no link or if the idx is already in map
-        //
-    auto iter = map.find(idx);
-    if (iter != map.end())
-        return iter->second;
+    size_t begin = beginEnd[0].first;
+    size_t end = beginEnd[0].second;
 
-        // add a new state
-        //
-    size_t newIdx = states.next();
-    states[newIdx] = states[idx];        // copy the existing state
-    map[idx] = newIdx;                   // define the transition
+    for (size_t idx = count; count--; )       // copy 'count' patterns
+    {
+        Map copied;     // a map is used to related old state indices (index)
+                        // to new state indices (values). The value 0, 0
+                        // indicates the end of  link and is always initially
+                        // added. 
+        copied[0] = 0;
+                                                    // duplicate the pattern
+        dupPattern(copied, states, begin);
 
-        // inspect the current state's transitions
-        //
-    StateData const &link = states[newIdx].data();
+cout << "Pattern " << idx << " starts at " << copied[begin] << 
+", ends at " << copied[end] << '\n';
 
-    states[newIdx].setData(
-        new StateData(
-            copyPattern(map, states, link.next1()),
-            copyPattern(map, states, link.next2())
-        )
-    );
-
-    return newIdx;
+        beginEnd.push_back(States::Pair{copied[begin], copied[end]});
+    }
 }
 
