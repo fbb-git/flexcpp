@@ -40,14 +40,6 @@ class PatternVal: public SemVal
         static spSemVal plus(States &states, SemVal &pattern);
         static spSemVal questionMark(States &states, SemVal &pattern);
 
-        static size_t patternCopy(States &states, size_t begin, size_t end);
-
-        static void copyStates(States &states, 
-                        std::unordered_map<size_t, size_t> const &old2new);
-        static void copyState(std::pair<size_t, size_t> const &fromTo, 
-                       std::unordered_map<size_t, size_t> const &old2new,
-                       States &states);
-//////////
         static spSemVal copy(States &states, SemVal &semval, size_t lower, 
                                                         size_t upper);
         static void copyPattern(States &states, size_t count, PairVector &pv);

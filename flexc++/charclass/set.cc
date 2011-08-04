@@ -1,6 +1,4 @@
 #include "charclass.ih"
-#include <iostream>
-
 
 set<char> CharClass::set() const
 {

@@ -1,7 +1,5 @@
 #include "patternval.ih"
 
-#include <iostream>
-
 spSemVal PatternVal::charSet(States &states, SemVal const &charClass)
 {
     States::Pair pair = states.next2();

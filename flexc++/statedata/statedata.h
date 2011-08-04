@@ -13,6 +13,8 @@ class StateData: public SemVal
     public:
         StateData(size_t next1, size_t next2);
 
+        virtual StateData *clone(size_t next1, size_t next2) const;
+
         size_t next1() const;
         size_t next2() const;
         void set(size_t next1, size_t next2 = 0);

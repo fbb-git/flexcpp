@@ -27,3 +27,9 @@ spSemVal PatternVal::interval(States &states, SemVal &semval, size_t lower,
 
     return ret;
 }
+
+
+
+
+
+

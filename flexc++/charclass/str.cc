@@ -1,5 +1,4 @@
 #include "charclass.ih"
-#include <iostream>
 
 string CharClass::str() const
 {

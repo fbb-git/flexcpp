@@ -41,14 +41,20 @@ class State
         explicit State(size_t type);
         State(size_t type, StateData *data);  // State will own the data
 
+                            // create a State for a non-string/charset state
         static State factory(size_t type, size_t next1, size_t next2);
+
+                            // create a State for a string/charset state
         static State factory(size_t type, std::string const &str, 
                                         size_t next1 = 0, size_t next2 = 0);
         static State factory(unsigned char ch, size_t next1);
 
         StateData &data();
+
         size_t next1() const;           // 0: no next state(s)
         size_t next2() const;
+
+        void dup(State const &src, size_t next1, size_t next2);
 
         StateData const &data() const;
 

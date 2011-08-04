@@ -13,6 +13,8 @@ class StateString: public StateData
         StateString(std::string const &str, size_t next1, size_t next2);
         std::string const &str() const;
         void set(std::string const &str);
+
+        virtual StateData *clone(size_t next1, size_t next2) const;
 };
 
 inline void StateString::set(std::string const &str)

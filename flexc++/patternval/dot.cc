@@ -1,5 +1,4 @@
 #include "patternval.ih"
-#include <iostream>
 
 spSemVal PatternVal::dot(States &states)
 {

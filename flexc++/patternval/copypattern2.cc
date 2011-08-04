@@ -1,7 +1,5 @@
 #include "patternval.ih"
 
-#include <iostream>
-
 void PatternVal::copyPattern(States &states, size_t lower, size_t upper, 
                                 Map &eject, PairVector &beginEnd)
 {
@@ -22,10 +20,6 @@ void PatternVal::copyPattern(States &states, size_t lower, size_t upper,
                                         copied[beginEnd[0].second]});
 
         size_t first = states.next();
-
-cout << "Pattern " << idx << " starts at " << copied[begin] << 
-", ends at " << copied[beginEnd[0].second] << ", prefixing state " << first <<
-'\n'; 
 
         eject[idx] = first;             // 1st state of pattern[idx] will be
                                         // 'first'
