@@ -13,7 +13,7 @@ void Options::setAccessorVariables()
     arg.option(&d_nameSpace, 'n');  // -n overrules %namespace spec in lexer
 
     // Skeletons
-    if (d_skeletonDirectory.empty() && !arg.option(&d_skeletonDirectory, 'S'))
+    if (!arg.option(&d_skeletonDirectory, 'S') && d_skeletonDirectory.empty())
         d_skeletonDirectory = s_defaultSkeletonDirectory;
 
     if (!arg.option(&d_baseClassSkeleton, 'B'))
