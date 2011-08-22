@@ -28,11 +28,11 @@ class Ranges
         Ranges(States &states, size_t size = 256);  // default:   
                                                     // 1 << (sizeof(char) * 8)
         Ranges(Ranges const &other);
-        Ranges(Ranges const &&tmp);
+        Ranges(Ranges &&tmp);
         ~Ranges();
 
         Ranges &operator=(Ranges const &other);
-        Ranges &operator=(Ranges const &&tmp);
+        Ranges &operator=(Ranges &&tmp);
 
         void swap(Ranges &other);
 
