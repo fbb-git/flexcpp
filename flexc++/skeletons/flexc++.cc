@@ -1,3 +1,4 @@
+#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
@@ -56,7 +57,7 @@ $insert debugInit
     d_startCondition(StartCondition__::INITIAL),
     d_state(0),
     d_out(outfilename == "-" ? 
-                new std::ostream(cout.rdbuf())
+                new std::ostream(std::cout.rdbuf())
             :
                 new std::ofstream(outfilename)),
     d_sawEOF(false),

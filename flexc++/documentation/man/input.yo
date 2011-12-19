@@ -34,6 +34,10 @@ class Input
 the operations of tt(ScannerBase) and flc()'s actual input file that's being
 processed. 
 
+    By default, flc() provides an implementation for all of tt(Input)'s
+required members. Therefore, in most situations this man-page can safely be
+ignored.
+
     However, users may define and extend their own tt(Input) class and provide
 flc()'s base class with that tt(Input) class. To do so flc()'s rules file must
 contain the following two directives:
