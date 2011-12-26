@@ -139,9 +139,96 @@ int main()
         )
     )
 
-    manpagesection(GENERATED FILES)
+    manpagesection(QUICK START: FLEXC++ and BISONC++)
 
-COMMENT(SO FAR)
+To interface flc() to the bf(bisonc++)(1) parser generator proceed as follows:
+    itemization(
+    it() Specify a grammar that can be processed by bf(bisonc++)(1). Assuming
+that the scanner and parser are developed in, respectively, the
+sub-directories tt(scanner) and tt(parser), then a simple grammar
+specification that can be used with the scanner developed in the previous
+section is, e.g., write the file tt(parser/grammar):
+        verb(
+%scanner                ../scanner/scanner.h
+%scanner-token-function d_scanner.lex()
+
+%token IDENTIFIER NUMBER CHAR
+
+%%
+
+startrule:
+    startrule tokenshow
+|
+    tokenshow
+;
+
+tokenshow:
+    token
+    {
+        std::cout << "matched: " << d_scanner.matched() << '\n';
+    }
+;
+
+token:
+    IDENTIFIER
+|
+    NUMBER
+|
+    CHAR
+;
+    )
+    it() Write a scanner specification file. E.g.,
+    verb(
+%%
+
+[ \t\n]+                            // skip white space chars.
+[0-9]+                              return Parser::NUMBER;
+[[:alpha:]_][[:alpha:][:digit:]_]*  return Parser::IDENTIFIER;
+.                                   return Parser::CHAR;
+    )
+    This causes the scanner to  return tt(Parser) tokens to the generated
+parser. 
+
+    it() Add the line
+    verb(
+#include "../parser/Parserbase.h"
+    )
+    to the file tt(scanner/scanner.ih)
+
+    it() Write a simple tt(main) function in the file tt(main.cc). E.g.,
+    verb(
+#include "parser/Parser.h"
+
+int main(int argc, char **argv)
+{
+    Parser parser;
+
+    parser.parse();
+}
+    )
+    
+    it() Generate a scanner in the tt(scanner) subdirectory:
+    verb(
+flexc++ lexer
+    )
+    
+    it() Generate a parser in the tt(parser) subdirectory:
+    verb(
+bisonc++ grammar
+    )
+    
+    it() Compile all sources:
+    verb(
+g++ --std=c++0x *.cc */*.cc
+    )
+
+    it() Execute the program, providing it some source file to be processed:
+    verb(
+a.out < main.cc
+    )
+        )
+
+    manpagesection(GENERATED FILES)
 
 Flc() generates three files from a well-formed input file:
     itemization(
