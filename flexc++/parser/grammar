@@ -88,7 +88,7 @@ section_delimiter:
 %include    rules/incparen
 %include    rules/decparen
 %include    rules/patternws
-%include rules/pattern
+%include    rules/pattern
 
 %include rules/option                   
 %include rules/directives               

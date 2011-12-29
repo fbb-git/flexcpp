@@ -9,6 +9,8 @@ void Scanner::addDefinition(SemVal const &nm, SemVal const &def)
         emsg << "pattern '" << name << "' multiply defined" << endl;
     else
         d_nameExpansion[namePattern] = '(' + 
-                                SemVal::downCast<TextVal>(def).str() +
+                                String::trim(
+                                    SemVal::downCast<TextVal>(def).str()
+                                ) +
                                         ')';
 }

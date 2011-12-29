@@ -1,3 +1,9 @@
+flexc++ (0.8.1)
+
+  * Added missing ' ' and ':' characters to character-classes
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 29 Dec 2011 22:23:50 +0100
+
 flexc++ (0.8.0)
 
   * Rebuilt of flexc++, see the git logs for details. Intermediate version

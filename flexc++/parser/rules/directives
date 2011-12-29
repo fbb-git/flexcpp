@@ -52,24 +52,15 @@ start_condition_names:
 ;
 
 name_definition:
-    name_mode_patterntxt pattern_txt opt_ws
+    name_mode_patterntxt pattern_txt patternContext
     {
         d_scanner.addDefinition(*$1, *$2);
     }
 ;
 
 pattern_txt:
-    pattern_txt patterntxt_string   // these aren't really STRINGs, but 
-    {                               // char-sequences defining a pattern.
-        $$ = TextVal::cat($1, $2);
-    }
-|
-    patterntxt_string
-;
-
-patterntxt_string:
-    STRING
-    {
+    STRING                  // all text beyond the definition name,
+    {                       // which is trimmed by 'addDefinition'
         $$ = TextVal::plain(d_scanner.matched());   
     }
 ;
@@ -92,5 +83,3 @@ name:
         $$ = TextVal::trimmed(d_scanner.matched());
     }
 ;
-        
-

@@ -1,12 +1,4 @@
 <patterntxt>{
-    [[:blank:]]+        return Parser::WS;
-
+    .*                  return Parser::STRING;
     \n                  return '\n';
-
-    "\""                {
-                            more();
-                            begin(StartCondition__::str);
-                        }
-
-    [^[:blank:]\n]+     return Parser::STRING;
 }
