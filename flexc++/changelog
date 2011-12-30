@@ -1,3 +1,10 @@
+flexc++ (0.8.2)
+
+  * Added ScannerBase::switchStreams(istream &, ostream &) and updated the
+    man-pages accordingly
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 30 Dec 2011 17:32:16 +0100
+
 flexc++ (0.8.1)
 
   * Added missing ' ' and ':' characters to character-classes

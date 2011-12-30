@@ -32,6 +32,7 @@ void Generator::inputInterface(std::ostream &out) const
 "            void close()                    // force closing the stream\n"
 "            {\n"
 "                delete d_in;\n"
+"                d_in = 0;                   // switchStreams also closes\n"
 "            }\n"
 "\n"
 "        private:\n"

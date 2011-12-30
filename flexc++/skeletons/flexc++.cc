@@ -77,6 +77,18 @@ void \@Base::redo(size_t nChars)
     d_matched.resize(from);
 }
 
+void \@Base::switchStreams(std::istream &in, std::ostream &out)
+{
+    d_input.close();
+    d_state = 0;
+    *d_out << std::flush;
+    d_out.reset(new std::ostream(out.rdbuf()));
+    d_filename = "-";
+    d_input = Input(new std::istream(in.rdbuf()));
+    d_sawEOF = false;
+    d_atBOL = true;
+}
+
 void \@Base::switchStreams(std::string const &infilename)
 {
     d_input.close();

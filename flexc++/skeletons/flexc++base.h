@@ -120,6 +120,8 @@ public:
     size_t              lineNr()    const;
 
     void                setDebug(bool onOff);
+    void                switchStreams(std::istream &in, 
+                                        std::ostream &out = std::cout);
     void                switchStreams(std::string const &infilename);
     void                switchStreams(std::string const &infilename,
                                       std::string const &outfilename);

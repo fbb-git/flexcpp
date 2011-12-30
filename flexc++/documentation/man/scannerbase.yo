@@ -69,6 +69,12 @@ manpagesection(PUBLIC MEMBER FUNCTIONS)
        Switches on/off  debugging output by providing the argument tt(true)
         or tt(false). Switching on debugging output only has visible effects
         if the tt(debug) or tt(debug-steps) option was specified.
+    itb(void switchStreams(std::istream &in,
+                                      std::ostream &out = std::cout))
+       The currently processed input and output streams are closed, and
+        processing continues at tt(in), writing output to tt(out). This is
+        em(not) a stack-operation: after processing tt(in) processing
+        does not return to the original stream.
     itb(void switchStreams(std::string const &infilename))
        The currently processed input stream is closed, and processing
         continues at the stream whose name is specified as the function's
