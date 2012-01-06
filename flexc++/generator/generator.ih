@@ -7,7 +7,6 @@
 #include <bobcat/stat>
 #include <bobcat/indent>
 
-#include <algorithm>
 #include <iterator>
 #include <climits>
 #include <iomanip>

@@ -16,6 +16,7 @@ void Ranges::update(string const &str, size_t const *next)
         // Determine the numbers used in the ranges, reduce the actual
         // d_range vaues by their indices in rangeNrs
     vector<size_t> rangeNrs;
+
     for_each(
         d_ranges, d_ranges + d_size, 
         [&](size_t &count)

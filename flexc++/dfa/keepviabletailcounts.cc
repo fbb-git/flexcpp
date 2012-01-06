@@ -2,5 +2,6 @@
 
 void DFA::keepViableTailCounts()
 {
-    for_each(d_row.begin(), d_row.end(), DFARow::keepViableTailCounts);
+    for (auto &row: d_row)
+        DFARow::keepViableTailCounts(row);
 }

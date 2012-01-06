@@ -12,13 +12,9 @@ void DFA::build(std::string const &name, vector<size_t> const &active)
         // rule-startset
 
     StateSet &start = d_stateSet[0];
-    for_each(
-        active.begin(), active.end(),              
-        [&](size_t idx)
-        {
-            start.insert((*d_rules)[idx].startState());
-        }
-    );
+
+    for (auto idx: active)
+        start.insert((*d_rules)[idx].startState());
 
         // compute the e-closure of the start-set
     d_stateSet[0] = d_states->eClosure(d_stateSet[0]);  

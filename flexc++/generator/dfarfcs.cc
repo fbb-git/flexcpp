@@ -5,15 +5,10 @@ void Generator::dfaRFCs(DFARow const &row, ostream &out,
 {
     out << setw(2) << rfc.size() << ',';        // begin index in s_rfc__
 
-    pair<size_t, size_t> final = row.final();
+    auto final = row.final();
 
-    for_each(
-        row.tailCounts().begin(), row.tailCounts().end(), 
-        [&](TailCount const &tailCount)
-        {
-            storeRFC(tailCount, final, rfc);
-        }
-    );
+    for (auto &tailCount: row.tailCounts())
+        storeRFC(tailCount, final, rfc);
 
     if (final.first != UINT_MAX)
         rfc.push_back(RuleFlagCount {final.first, FINAL | BOL, 0});

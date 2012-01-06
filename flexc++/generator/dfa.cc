@@ -17,11 +17,6 @@ void Generator::dfa(DFAs::Pair const &dfaPair, ostream &out,
     dfaOffsets.push_back(*(dfaOffsets.rbegin()) + dfaPair.second.size());
 
     size_t index = 0;
-    for_each(
-        dfaPair.second.begin(), dfaPair.second.end(), 
-        [&](DFARow const &row)
-        {
-            dfaRow(row, index, out, rfc);
-        }
-    );
+    for (auto &row: dfaPair.second)
+        dfaRow(row, index, out, rfc);
 }

@@ -1,7 +1,6 @@
 #include "dfa.h"
 
 #include <ostream>
-#include <algorithm>
 #include <iomanip>
 
 #include <bobcat/tablelines>

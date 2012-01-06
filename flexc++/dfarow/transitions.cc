@@ -19,13 +19,8 @@ void DFARow::transitions()
 
             // visit all states of thisSet. Add the sets to transit to on the
             // current input character `nr' to the next set
-        for_each(
-            thisSet.begin(), thisSet.end(), 
-            [&, nr](size_t stateIdx)
-            {
-                transit(stateIdx, nr, nextSet);
-            }
-        );
+        for (auto stateIdx: thisSet)
+            transit(stateIdx, nr, nextSet);
 
         nextSet = d_states->eClosure(nextSet);
 

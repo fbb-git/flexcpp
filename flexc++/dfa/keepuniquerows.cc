@@ -17,13 +17,8 @@ void DFA::keepUniqueRows()
         cout << '\n';
     }
 
-    for_each(
-        d_row.begin(), d_row.end(), 
-        [&](DFARow &row)
-        {
-            row.uniqueMap(unique);
-        }
-    );
+    for (auto &row: d_row)
+        row.uniqueMap(unique);
 
     shrinkDFA(unique);
 }

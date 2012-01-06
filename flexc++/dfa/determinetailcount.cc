@@ -21,13 +21,8 @@ void DFA::determineTailCount(TailCount &tailCount, size_t thisRow,
     std::unordered_map<size_t, size_t> const &transitMap = 
                                                     d_row[thisRow].map();
 
-    for_each(
-        transitMap.begin(), transitMap.end(), 
-        [&, this](DFARow::MapValue const &rangeToRow)
-        {
-            this->transitTailCount(rangeToRow, &tailCount, thisRow);
-        }
-    );
+    for (auto &rangeToRow: transitMap)
+        transitTailCount(rangeToRow, &tailCount, thisRow);
 }
 
 

@@ -5,11 +5,6 @@
 
 void DFA::computeTailCounts()
 {
-    for_each(
-        d_row[0].tailCounts().begin(), d_row[0].tailCounts().end(),
-        [this](TailCount &tailCount)
-        {
-            this->visitTailCount(tailCount);
-        }
-    );
+    for (auto &tailCount: d_row[0].tailCounts())
+        visitTailCount(tailCount);
 }

@@ -12,11 +12,6 @@ DFARow::DFARow(Rules &rules,
     d_rules(&rules),
     d_ranges(&ranges)
 {
-    for_each(
-        stateSets[thisRowIdx].begin(), stateSets[thisRowIdx].end(),
-        [this](size_t stateIdx)
-        {
-            this->probeTailCount(stateIdx);
-        }
-    );
+    for (auto stateIdx: stateSets[thisRowIdx])
+        probeTailCount(stateIdx);
 }
