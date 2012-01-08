@@ -8,7 +8,8 @@ void DFA::transitTailCount(DFARow::MapValue const &rangeToRow,
     if (toRow == -1)        // no transition
         return;
 
-//cout << " transiting from row " << fmRow << " to " << toRow << '\n';
+//cout << " transitTailCount: transiting from row " << 
+//fmRow << " to " << toRow << '\n';
 
     std::vector<TailCount> &tailCounts = d_row[toRow].tailCounts();
     auto endIter = tailCounts.end();

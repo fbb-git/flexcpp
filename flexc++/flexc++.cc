@@ -68,6 +68,15 @@ try
         ranges.determineSubsets();
         ranges.finalizeStates();
 
+    if (arg.option('V'))
+        cout << 
+            "RULES:\n"      <<
+            rules << "\n"
+            "RANGES:\n"     << 
+            ranges << "\n"
+            "STATES:\n"     <<
+            states << '\n';
+
     DFAs dfas(rules, states, ranges);
         dfas.build();
 

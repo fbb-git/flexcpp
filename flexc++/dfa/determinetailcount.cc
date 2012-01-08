@@ -7,7 +7,7 @@ void DFA::determineTailCount(TailCount &tailCount, size_t thisRow,
         return;
 
 //cout << "   initialize tailCount in row " << thisRow << ", coming from " <<
-//fmRow << ", previous TailCount value: " << fmCount << '\n';
+//fmRow << ", previous TailCount (pointer) value: " << fmTailCount << '\n';
 
     if (not setTailCount(tailCount, thisRow, fmTailCount, fmRow))
 {
@@ -24,6 +24,8 @@ void DFA::determineTailCount(TailCount &tailCount, size_t thisRow,
     for (auto &rangeToRow: transitMap)
         transitTailCount(rangeToRow, &tailCount, thisRow);
 }
+
+
 
 
 

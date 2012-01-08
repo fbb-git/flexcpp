@@ -1,5 +1,7 @@
 #include "dfas.h"
 
+#include <iostream>
+
 #include <ostream>
 
 #include "../dfa/dfa.h"

@@ -2,12 +2,12 @@ The regular expression patterns define non-finite state automata (NFA) which
 must be converted to deterministic finite state automata (DFA). Each mini
 scanner has its own DFA and the class tt(DFAs) builds the various DFAs for
 each of the mini scanners. The DFA construction needs access to the rules,
-states and character ranges, which are on to the tt(DFAs) object) (cf. figure
-ref(DFASFIG))
+states and character ranges, which are available to the tt(DFAs) object)
+(cf. figure ref(DFASFIG))
 
     figure(images/dfas)(The DFAs class organization)(DFASFIG)
 
-The tt(DFAs) object real work is performed by its tt(build) member. The
+The tt(DFAs) object's real work is performed by its tt(build) member. The
 tt(build) member visits all the elements of tt(Rules), passing each of the
 start conditions (stored in the tt(Rules) object) to tt(buildDFA). For each of
 the start conditions, holding the indices of the rules that are defined for
