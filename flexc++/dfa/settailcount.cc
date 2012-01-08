@@ -39,6 +39,8 @@ bool DFA::setTailCount(TailCount &thisTailCount, size_t thisRow,
     else if (type & TailCount::PROCESSED)
         return false;
 
+    thisTailCount.addFlag(TailCount::PROCESSED);
+
     // States: 0       4       8   10    12    14
     return true;
 }
