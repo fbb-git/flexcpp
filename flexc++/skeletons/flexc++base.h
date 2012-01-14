@@ -8,9 +8,8 @@
 #include <string>
 #include <vector>
 #include <memory>
-$insert sstream
 
-$insert debugIncludes
+$insert baseIncludes
 
 $insert namespace-open
 
