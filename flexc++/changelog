@@ -1,3 +1,16 @@
+flexc++ (0.08.03)
+
+  * Repaired Jean-Paul's segfault for a simple scanner:
+        .*/b
+        .*
+  * Standardized the version to format v.mm.ss
+
+  * This version after merging fbb-wip Sat Jan 14 11:48:38 2012 +0100
+    (9ecf7b694c7e3f37a1e8f3d46b25e96c5d5e3d90) and master, a.k.a. tag
+    0.7.1-pre
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 14 Jan 2012 13:43:22 +0100
+
 flexc++ (0.8.2)
 
   * Added ScannerBase::switchStreams(istream &, ostream &) and updated the
