@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+$insert sstream
 
 $insert debugIncludes
 

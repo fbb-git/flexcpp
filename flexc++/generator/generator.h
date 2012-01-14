@@ -98,6 +98,7 @@ class Generator
         void actions(std::ostream &out) const;
         void tailCount(std::ostream &out) const;
         void baseClassH(std::ostream &out) const;
+        void className(std::ostream &out) const;
         void classH(std::ostream &out) const;
         void classIH(std::ostream &out) const;
         void inputInterface(std::ostream &out) const;
@@ -113,6 +114,7 @@ class Generator
         void filter(std::istream &in, std::ostream &out) const;
         void inlineLexFunction(std::ostream &out) const;
         void insert(std::ostream &out) const;
+        void insertSstream(std::ostream &out) const;
         void key(std::ostream &out) const;
         void lexFunctionDecl(std::ostream &out) const;
         void namespaceClose(std::ostream &out) const;

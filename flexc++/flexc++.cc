@@ -33,6 +33,7 @@ namespace
         {"namespace",                   'n'},
 
         {"help",                        'h'},
+        {"interactive",                 Arg::None},
         {"usage",                       'h'},
         {"version",                     'v'},
 

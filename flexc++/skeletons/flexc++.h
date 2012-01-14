@@ -5,7 +5,7 @@ $insert baseclass_h
 
 $insert namespace-open
 
-class \@: public \@Base
+$insert className
 {
     public:
         explicit \@(std::istream &in = std::cin, 

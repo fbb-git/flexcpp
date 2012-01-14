@@ -8,6 +8,7 @@ Generator::Map Generator::s_insert =
     {"RFCs",                &Generator::rfcs},
     {"actions",             &Generator::actions},
     {"baseclass_h",         &Generator::baseClassH},
+    {"className",           &Generator::className},
     {"class_h",             &Generator::classH},
     {"class_ih",            &Generator::classIH},
     {"inputInterface",      &Generator::inputInterface},
@@ -26,7 +27,8 @@ Generator::Map Generator::s_insert =
     {"namespace-use",       &Generator::namespaceUse},
     {"ranges",              &Generator::ranges},
     {"startCondNames",      &Generator::startCondNames},
-    {"tailCount",            &Generator::tailCount},
+    {"sstream",             &Generator::insertSstream},
+    {"tailCount",           &Generator::tailCount},
 };
 
 char const *Generator::s_baseFlag = "\\@";
