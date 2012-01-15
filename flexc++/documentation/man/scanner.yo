@@ -54,7 +54,8 @@ tt(Scanner) object goes out of scope the input and output files are closed.
         This constructor opens the input and output streams whose file names
 were specified. When the tt(Scanner) object goes out of scope the input and
 output files are closed. If tt(outfile == "-") then the standard output stream
-will be used as the scanner's output medium.
+will be used as the scanner's output medium. This constructor is not
+implemented with interactive scanners.
     )
     
 manpagesection(PUBLIC MEMBER FUNCTION)
@@ -74,6 +75,8 @@ inline int Scanner::lex()
     return lex__();
 }
         )
+        With interactive scanners the tt(lex) function is defined in the
+generated tt(lex.cc) file. See the bf(flexc++)(1) man page for details.
     )
 
 manpagesection(PRIVATE MEMBER FUNCTIONS)

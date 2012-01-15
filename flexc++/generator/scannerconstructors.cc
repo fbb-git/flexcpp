@@ -8,9 +8,11 @@ void Generator::scannerConstructors(ostream &out) const
 
     if (d_options.interactive())
         out << 
-            "inline " << name << "::" << name << "(std::ostream &out)\n"
+			"inline " << name << "::" << name << 
+                                "(std::istream &in, std::ostream &out)\n"
             ":\n"
-            "    " << name << "Base(*this, out)\n"
+            "    " << name << "Base(*this, out),\n"
+            "     d_in__(&in)\n"
             "{}\n";
     else
         out <<

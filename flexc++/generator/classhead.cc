@@ -13,18 +13,19 @@ void Generator::classHead(ostream &out) const
         out << "private std::istringstream, ";
 
     out << "public " << name << "Base\n"
-        "{\n"
-        "    public:\n";
+        "{\n";
 
     if (interactive)
+        out << "    std::istream *d_in__;\n"
+               "\n";
+
+    out <<
+        "    public:\n"
+        "        explicit " << name << "(std::istream &in = std::cin,\n"
+        "                                std::ostream &out = std::cout);\n";
+
+    if (not interactive)
         out << 
-            "        explicit " << name << "(std::ostream &out = std::cout);"
-                                                                        "\n";
-    else
-        out << 
-            "        explicit " << name << "(std::istream &in = std::cin,\n"
-            "                                std::ostream &out = std::cout);"
-                                                                        "\n"
             "\n"
             "        " << name << "(std::string const &infile, "
                                             "std::string const &outfile);\n";
