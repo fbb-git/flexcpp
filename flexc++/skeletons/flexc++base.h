@@ -9,7 +9,7 @@
 #include <vector>
 #include <memory>
 
-$insert debugIncludes
+$insert baseIncludes
 
 $insert namespace-open
 
@@ -120,11 +120,12 @@ public:
     size_t              lineNr()    const;
 
     void                setDebug(bool onOff);
-    void                switchStreams(std::istream &in, 
-                                        std::ostream &out = std::cout);
     void                switchStreams(std::string const &infilename);
     void                switchStreams(std::string const &infilename,
                                       std::string const &outfilename);
+$insert interactiveProtected
+    void                switchStreams(std::istream &in, 
+                                        std::ostream &out = std::cout);
 protected:
     \@Base(std::istream &in, std::ostream &out);
     \@Base(std::string const &infilename, std::string const &outfilename);

@@ -3,10 +3,12 @@
 void Generator::inlineLexFunction(std::ostream &out) const
 {
     key(out);
-    out << 
-        "inline int " << d_options.className() << "::" << 
+
+    if (not d_options.interactive())
+        out << 
+            "inline int " << d_options.className() << "::" << 
                                         d_options.lexFunctionName() << "()\n"
-        "{\n"
-        "    return lex__();\n"
-        "}\n";
+            "{\n"
+            "    return lex__();\n"
+            "}\n";
 }

@@ -75,11 +75,19 @@ manpagesection(PUBLIC MEMBER FUNCTIONS)
         processing continues at tt(in), writing output to tt(out). This is
         em(not) a stack-operation: after processing tt(in) processing
         does not return to the original stream.
+
+        When flc() generates an interactive scanner, this member is 
+        available (as a protected member). However, it should be considered an
+        internal use only member.
+
     itb(void switchStreams(std::string const &infilename))
        The currently processed input stream is closed, and processing
         continues at the stream whose name is specified as the function's
         argument. This is em(not) a stack-operation: after processing
         tt(infilename) processing does not return to the original stream.
+
+        This member is not available with interactive scanners.
+
     itb(void switchStreams(std::string const &infilename,
                                       std::string const &outfilename))
        The currently processed input and output streams are closed, and
@@ -88,6 +96,8 @@ manpagesection(PUBLIC MEMBER FUNCTIONS)
         specified as the function's second argument. This latter file is
         rewritten. This is em(not) a stack-operation: after processing
         tt(infilename) processing does not return to the original stream.
+
+        This member is not available with interactive scanners.
     )
 
 manpagesection(PROTECTED CONSTRUCTORS)
@@ -159,9 +169,11 @@ manpagesection(PROTECTED MEMBER FUNCTIONS)
         that's retrieved next, followed by tt('e'), etc, until tt('o').
     itb(void pushStream(std::istream &curStream))
         this function pushes tt(curStream) on the stream stack.
+        This member is not available with interactive scanners.
     itb(void pushStream(std::string const &curName))
        same, but the stream tt(curName) is opened first, and the resulting
         tt(istream) is pushed on the stream stack.
+        This member is not available with interactive scanners.
     itb(void setFilename(std::string const &name))
        this function sets the name of the stream returned by tt(filename) to
         tt(name). 

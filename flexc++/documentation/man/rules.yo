@@ -116,8 +116,13 @@ the definition of a directive:
             user-defined tt(Input) class. See bf(input)(3flexc++) for
             additional information about user-defined tt(Input) classes.
     it() bf(%interactive)nl()
-           This directive is provided for backward compatibility. It
-            is silently ignored.
+           Generate an interactive scanner. An interactive scanner reads lines
+            from the input stream, and then returns the tokens encountered on
+            that line. The interactive scanner implemented by flc() only
+            predefines the tt(Scanner(std::istream &in, std::ostream &out))
+            constructor, by default assuming that input is read from
+            tt(std::cin). See also the tt(INTERACTIVE SCANNER) section in
+            bf(flexc++)(1). 
     it() bf(%lex-function-name) tt(= "funname") nl()
            Defines the name of the scanner class's member to perform the
             lexical scanning. If this directive is omitted the default name

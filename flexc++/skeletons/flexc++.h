@@ -5,14 +5,8 @@ $insert baseclass_h
 
 $insert namespace-open
 
-class \@: public \@Base
-{
-    public:
-        explicit \@(std::istream &in = std::cin, 
-                    std::ostream &out = std::cout);
+$insert classHead
         
-        \@(std::string const &infile, std::string const &outfile);
-
 $insert 8 lexFunctionDecl
 
     private:
@@ -23,22 +17,14 @@ $insert 8 lexFunctionDecl
                             // be exec'ed before the patternmatching starts
 };
 
+$insert scannerConstructors
+
+$insert inlineLexFunction
+
 inline void \@::preCode() 
 {
     // optionally replace by your own code
 }
-
-inline \@::\@(std::istream &in, std::ostream &out)
-:
-    \@Base(in, out)
-{}
-
-inline \@::\@(std::string const &infile, std::string const &outfile)
-:
-    \@Base(infile, outfile)
-{}
-
-$insert inlineLexFunction
 
 $insert namespace-close
 

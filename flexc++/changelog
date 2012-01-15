@@ -1,3 +1,10 @@
+flexc++ (0.08.04)
+
+  * Implemented the %interactive option and --interactive flag to generate an
+    interactive scanner.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 15 Jan 2012 13:07:52 +0100
+
 flexc++ (0.08.03)
 
   * Repaired Jean-Paul's segfault for a simple scanner:

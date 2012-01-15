@@ -89,6 +89,8 @@ void \@Base::switchStreams(std::istream &in, std::ostream &out)
     d_atBOL = true;
 }
 
+$ignoreInteractive BEGIN    ignored from generator/filter.cc
+
 void \@Base::switchStreams(std::string const &infilename)
 {
     d_input.close();
@@ -131,6 +133,8 @@ void \@Base::pushStream(std::string const &name)
     }
     pushStream(name, streamPtr);
 }
+
+$ignoreInteractive END      ignored from generator/filter.cc
 
 bool \@Base::popStream()
 {
@@ -367,5 +371,7 @@ $insert 16 debug.action  "EOF_REACHED"
         preCode();
     } // while
 }
+
+$insert interactiveLex
 
 $insert namespace-close

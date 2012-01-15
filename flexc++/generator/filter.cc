@@ -21,6 +21,18 @@ void Generator::filter(istream &in, ostream &out) const
             continue;
         }
 
+        if (d_line.find("$ignoreInteractive") == 0)
+        {
+            if (not  d_options.interactive())
+                continue;
+
+            do
+                getline(in, d_line);
+            while (d_line.find("$ignoreInteractive") != 0);
+
+            continue;
+        }
+
         while (true)
         {
             size_t pos = d_line.rfind(s_baseFlag);
