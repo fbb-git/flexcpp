@@ -1,5 +1,7 @@
 <mblock>{
 
+[ \t]*"|"[ \t]*\n   return end(Parser::OR);
+
 [[:blank:]]+    d_block(' ');
 
 ([[:blank:]]*\n)+   {
