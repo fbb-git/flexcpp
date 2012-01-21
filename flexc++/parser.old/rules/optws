@@ -1,0 +1,6 @@
+opt_ws:
+    WS
+    patternContext
+|
+    patternContext
+;

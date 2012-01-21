@@ -1,0 +1,3 @@
+//pattern_ws:
+//    pattern opt_ws mode_block
+//;

@@ -1,0 +1,74 @@
+character_class:
+    character_class CC_PLUS character_class
+    {
+        $$ = CharClass::unite($1, *$3);
+    }
+|
+    character_class CC_MINUS character_class
+    {
+        $$ = CharClass::difference(*$1, *$3);
+    }
+|
+    cc_set
+;
+
+cc_set:
+    cc_start cc_contents cc_end_m
+    {
+        $$ = CharClass::concatenate($1, *$2);
+    }
+|
+    cc_negated cc_contents cc_end_m
+    {
+        $$ = CharClass::negate($1, *$2);
+    }
+;
+
+cc_start:
+    cc_start_m
+    {
+        string str;
+        if (d_scanner.length() > 1)
+            str = d_scanner.matched().substr(1);
+        //cout << "CC_START\n";
+        $$ = CharClass::escape(str);
+    }
+;
+
+cc_negated:
+    cc_negated_m
+    {
+        string str;
+        if (d_scanner.length() > 2)
+            str = d_scanner.matched().substr(2);
+        //cout << "CC_NEG\n";
+        $$ = CharClass::escape(str);
+    }
+;
+    
+cc_contents:
+    cc_contents cc_element
+    {
+        $$ = CharClass::concatenate($1, *$2); 
+    }
+|
+    cc_element
+;
+
+cc_element:
+    PREDEFINED_CLASS
+    {
+       $$ = CharClass::predefined(d_scanner.matched());
+    }
+|
+    plain_cc_characters
+    {
+       $$ = CharClass::plain(d_scanner.matched()[0]);
+    }
+|
+    ESCAPE_SEQUENCE
+    {
+        $$ = CharClass::escape(d_scanner.matched());
+    }
+;
+

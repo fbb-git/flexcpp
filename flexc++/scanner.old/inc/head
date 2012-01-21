@@ -1,0 +1,5 @@
+%class-name = "Scanner" 
+%lex-source = "lex.cc"
+%skeleton-directory = "../skeletons"
+
+%x pattern mblock comment option quote str vbar charclass patterntxt

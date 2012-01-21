@@ -1,0 +1,48 @@
+From the flexc++ manual:
+
+    A rule can have at most one instance of trailing context (the / operator)
+
+    The ^ and <<EOF>> patterns can only occur at the beginning of a pattern.
+
+    If the $ is not used as a pattern's last character it is  treated as a
+    normal character. 
+    If the ^ is not used as a pattern's first character it is  treated as a
+    normal character. 
+    
+    The begin-^, <<EOF>>, '/' and end-'$', cannot be grouped inside
+    parentheses. 
+
+A warning is issued when ^ and $ are used inside patterns, an error is issued
+when <<EOF>> or '/' appears inside a pattern.
+
+Flags and the scanner itself are used to monitor these situations:
+
+    $. is returned by the scanner as CHARACTER, less(1)
+
+    The scanner is informed by the parser whether or not it is at the begin of
+a pattern. The scanner flag d_beginOfPattern is set to true/false by the
+parser using the scanner's setBeginOfPattern flag. 
+
+
+
+Priorities:
+
+Should ^ and / have the same nonassoc priorities? or should '/' have a
+slightly higher priority? Or does it make no difference? With pri(^) < pri(/)
+^ RE / RE will be interpreted as ^ (RE / RE), but at equal priorities it
+becomes (^ RE) / RE.  Eventually it makes no difference since ^ and / may only
+appear once. In that case equal priorities are probably preferred from a
+technical point of view as it doesn't require stacking ^ while RE/RE is being
+evaluated. Here are the trees:
+
+    equal, nonassoc                     pri(^) < pri(/)
+
+           RE                            RE
+            |                             |
+      +-----+---+                   +-----+----+
+      |     |   |                   |          | 
+     RE     |   |                   |         RE
+      |     |   |                   |          |
+    +---+   |   |                   |    +-----+----+
+    |   |   |   |                   |    |     |    |
+    ^  RE   /  RE                   ^   RE     /   RE

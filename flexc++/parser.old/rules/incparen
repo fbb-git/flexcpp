@@ -1,0 +1,5 @@
+incParen:
+    {
+        ++d_parentheses;
+    }
+;

@@ -1,0 +1,40 @@
+<mblock>{
+
+[[:blank:]]+    d_block(' ');
+
+([[:blank:]]*\n)+   {
+                        if (d_block.level() == 1)    // close a block
+                        {
+                            d_block.close();
+                            accept(length() - 1);
+                            return end(Parser::BLOCK);
+                        }
+
+                        d_block += "\n        ";
+                    }
+
+"{"             d_block.open(lineNr(), filename()); 
+                
+"}"             d_block.close();
+
+"/*"            {
+                    begin(StartCondition__::comment);
+                    d_block(' ');
+                }
+
+\"              {
+                    more();
+                    begin(StartCondition__::str);
+                }
+
+"'"             {
+                    more();
+                    begin(StartCondition__::quote);
+                }
+
+NAME            d_block += matched();
+
+.               d_block += matched()[0];
+
+}
+

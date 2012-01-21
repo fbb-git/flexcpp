@@ -1,0 +1,18 @@
+//include inc/head
+//include inc/definitions
+
+%%
+
+//include inc/precommon
+//include inc/initial
+//include inc/pattern
+//include inc/mblock
+//include inc/comment
+//include inc/option
+//include inc/quote
+//include inc/str
+//include inc/vbar
+//include inc/charclass
+//include inc/patterntxt
+//include inc/postcommon
+
