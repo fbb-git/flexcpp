@@ -1,4 +1,4 @@
-#define EXTENSION ""
+#define EXTENSION "-wip"
     // EXTENSION should be changed to ".exe" when compiling Bisonc++ for 
     // Cygwin environments. Don't forget the initial dot (.)
     // See also README.CYGWIN

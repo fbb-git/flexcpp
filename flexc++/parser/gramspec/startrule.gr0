@@ -1,9 +1,0 @@
-/*
-                        Enter the starting rule below,
-                    (the name `startrule' may be altered)
-                    add other rules in separate .gr files
-    >>>>>>>>> ------------------------------->  ***
-*/
-
-startrule:
-;
