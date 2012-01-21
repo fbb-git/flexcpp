@@ -1,0 +1,69 @@
+opt_directives:
+    opt_directives directive_line
+|
+    // empty
+;
+
+directive_line:
+    directive '\n'
+;
+
+directive:
+    option
+|
+    start_condition_directive
+|
+    name_definition
+|
+    error
+|
+    // empty
+;
+
+start_condition_directive:
+    start_condition_type
+    start_condition_names
+;
+
+start_condition_type:
+    INCL_START_CONDITION 
+    start_condition_name_m
+    {
+        //d_rules.setType(StartConditions::INCLUSIVE);
+    }
+|
+    EXCL_START_CONDITION 
+    start_condition_name_m
+    {
+        //d_rules.setType(StartConditions::EXCLUSIVE);
+    }
+;
+
+start_condition_names:
+    start_condition_names identifier
+    {
+        //d_rules.addStartCondition(*$2);
+    }
+|
+    identifier
+    {
+        //d_rules.addStartCondition(*$1);
+    }
+;
+
+name_definition:
+    name_def STRING
+    {
+        d_scanner.addDefinition($1, d_scanner.matched());
+    }
+;
+
+name_def:
+    identifier
+    {
+        d_scanner.newDefinition();  // briefly switches to 'line'
+    }
+;
+
+
+

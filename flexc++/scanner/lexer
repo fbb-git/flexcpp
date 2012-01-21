@@ -1,0 +1,133 @@
+%class-name = "Scanner" 
+%lex-source = "lex.cc"
+%skeleton-directory = "../skeletons"
+%debug
+
+DECIMAL                 0|[1-9][[:digit:]]*
+OCTAL                   [0-7]
+IDENTIFIER              [A-Za-z_][-A-Za-z0-9_]*
+BL                      [[:blank:]]+
+OPTBL                   [[:blank:]]*
+
+// quotes are returned as STRINGS. STRINGS and QUOTES include their
+// INITIAL surrounding delimiters allowing receiving functions to determine the
+// nature of the returned STRING
+// pre is the miniscanner the scanner starts in. Since this is only used for
+// the first section the scanner won't start in its INITIAL mode, as this
+// would needlessly complicate the formulation of the rules now in INITIAL
+// line is a small miniscanner reading the rest of the line as-is, presumably
+// holding a named pattern RE.
+
+%x pre line comment string
+
+%%
+
+<INITIAL,pre>{OPTBL}"//".*      // skip EOLN comment
+                                
+{BL}[^}|\n].*                  return block(); 
+
+{OPTBL}"|"{OPTBL}\n{OPTBL}      return Parser::ORNL;
+
+<INITIAL,pre>^"//include"[[:blank:]].*       maybeSwitchStream();
+
+<INITIAL,pre>{BL}               {   // skip white space unless in a block
+                                    if (d_inBlock)
+                                        return ' ';
+                                }
+                                
+<INITIAL,pre>{OPTBL}"/*"        push(StartCondition__::comment);
+<comment>{
+    .|\n                        // ignore
+    "*/"                        popSc();
+}
+
+
+<INITIAL,pre>\"                 {
+                                    more();
+                                    cout << "   ENTERING STRING\n";
+                                    push(StartCondition__::string);
+                                }
+<string>{
+    "\\".                       more();
+    \"                          return popSc(Parser::STRING);
+    .                           more();
+}
+
+{DECIMAL}                       return Parser::DECIMAL;
+
+<INITIAL,pre>{IDENTIFIER}       return Parser::IDENTIFIER;
+
+\\{OCTAL}{3}                    |
+\\x[[:xdigit:]]{2}              |
+\\.                             return Parser::ESCAPE_SEQUENCE;
+
+                    
+"{+}"                           return Parser::CC_PLUS;
+
+"{-}"                           return Parser::CC_MINUS;
+        
+"["                             |
+"[]"                            |   
+"[]["                           return Parser::CC_START;
+
+"[^"                            |
+"[^]"                           |
+"[^]["                          return Parser::CC_NEGATED;
+
+"[:"\^?"alnum:]"                |
+"[:"\^?"alpha:]"                |
+"[:"\^?"blank:]"                |
+"[:"\^?"cntrl:]"                |
+"[:"\^?"digit:]"                |
+"[:"\^?"graph:]"                |
+"[:"\^?"lower:]"                |
+"[:"\^?"print:]"                |
+"[:"\^?"punct:]"                |
+"[:"\^?"space:]"                |
+"[:"\^?"upper:]"                |
+"[:"\^?"xdigit:]"               return Parser::PREDEFINED_CLASS;
+
+"<<EOF>>"                       return Parser::EOF_PATTERN;
+
+\{{IDENTIFIER}\}                pushNameExpansion();
+
+<INITIAL,pre>\n{OPTBL}          return '\n';
+
+                                    // return special chars as themselves
+[][',^$=/|()*+?{}<>-]           return matched()[0];
+
+                                    // return other chars as CHAR
+.                               return Parser::CHAR;
+
+
+<pre>{
+    "%%"                        {
+                                    push(StartCondition__::INITIAL);
+                                    return Parser::SECTION_DELIMITER;
+                                }
+
+    %baseclass-header           return Parser::BASECLASSHEADER;
+    %class-header               return Parser::CLASSHEADER;
+    %class-name                 return Parser::CLASSNAME;
+    %debug                      return Parser::DEBUG;
+    %debug-steps                return Parser::DEBUG_STEPS;
+    %implementation-header      return Parser::IMPLEMENTATIONHEADER;
+    %input-implementation       return Parser::INPUTIMPLEMENTATION;
+    %input-interface            return Parser::INPUTINTERFACE;
+    %interactive                return Parser::INTERACTIVE;
+    %lex-function-name          return Parser::LEXFUNCTIONNAME;
+    %lex-source                 return Parser::LEXSOURCE;
+    %no-lines                   return Parser::NOLINES;
+    %namespace                  return Parser::NAMESPACE;
+    %skeleton-directory         return Parser::SKELETON_DIRECTORY;
+    "%s"                        return Parser::INCL_START_CONDITION;
+    "%x"                        return Parser::EXCL_START_CONDITION;
+
+    .                           return matched()[0];
+}
+
+<line>.*                        return Parser::STRING;
+<line>\n                        return popSc('\n');
+
+
+

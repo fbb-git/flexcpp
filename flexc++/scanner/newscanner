@@ -1,0 +1,4 @@
+#!/bin/bash
+
+flexc++-0.8.3 -S /usr/share/flexc++ --verbose lexer > out
+
