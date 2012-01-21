@@ -4,9 +4,10 @@
 
 semval          
 textval         semval
-statedata       semval
-decimal         semval
-startconditions textval
+// statedata       semval
+// decimal         semval
+startconditions    textval
+
 charrange       
 charclass       charrange   semval
 statestring     statedata
@@ -19,9 +20,9 @@ block
 scanner         textval     block
 rule            states      block
 rules           rule        startcondition
-dfarow          ranges      rules       tailcount
-dfa             dfarow
-dfas            dfa
+// dfarow          ranges      rules       tailcount
+// dfa             dfarow
+// dfas            dfa
 options         
 parser          rules  patternval  decimal  scanner options state
-generator       dfas        options
+// generator       dfas        options

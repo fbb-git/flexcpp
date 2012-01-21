@@ -19,12 +19,13 @@ class Scanner: public ScannerBase
     // SCStack d_scStack;
 
     public:
-        Scanner(std::string const &fname);
+        explicit Scanner(std::istream &in = std::cin, 
+                    std::ostream &out = std::cout);
+        
+        Scanner(std::string const &infile, std::string const &outfile);
 
         // $insert lexFunctionDecl
         int lex();
-        int pLex();     // calls/returns lex(), clears beginOfPattern
-
         void pushEOLN();            // next token to return: '\n'
         void newDefinition();       // new named regex, 'line' miniscanner
                                     
@@ -75,6 +76,11 @@ inline void Scanner::preCode()
 {
     // optionally replace by your own code
 }
+
+//inline Scanner::Scanner(std::string const &infile, std::string const &outfile)
+//:
+//    ScannerBase(infile, outfile)
+//{}
 
 // $insert inlineLexFunction
 inline int Scanner::lex()

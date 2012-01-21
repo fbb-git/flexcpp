@@ -1,0 +1,3 @@
+#!/bin/bash
+
+tmp/bin/binary $1 < input

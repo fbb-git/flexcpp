@@ -1,9 +1,11 @@
 #include "scanner.ih"
 
-Scanner::Scanner(std::istream &in, std::ostream &out)
+Scanner::Scanner(string const &fname)
 :
-    ScannerBase(in, out)
+    ScannerBase(fname, "-")
 {
+    setLineTags(fname);
     push(StartCondition__::pre);
 }
+
 

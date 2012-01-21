@@ -10,13 +10,7 @@
 #include <bobcat/arg>
 #include <bobcat/mstream>
 
-#include "../options/options.h"
-#include "../state/state.h"
-#include "../patternval/patternval.h"
-#include "../decimal/decimal.h"
-#include "../textval/textval.h"
-#include "../rules/rules.h"
-#include "../charclass/charclass.h"
+#include <iostream>
 
 using namespace std;
 using namespace FBB;

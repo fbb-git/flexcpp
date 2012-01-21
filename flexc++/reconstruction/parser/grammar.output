@@ -1,0 +1,1830 @@
+
+Production Rules
+(rule precedences determined from %prec or 1st terminal between parentheses):
+1: input ->  opt_directives section_delimiter rules
+2: section_delimiter (SECTION_DELIMITER) ->  SECTION_DELIMITER
+3: opt_directives ->  opt_directives directive_line
+4: opt_directives ->  <empty>
+5: directive_line ('\x0a') ->  directive '\x0a'
+6: directive ->  option
+7: directive ->  start_condition_directive
+8: directive ->  name_definition
+9: directive (_error_) ->  _error_
+10: directive ->  <empty>
+11: start_condition_directive ->  start_condition_type start_condition_names
+12: start_condition_type (INCL_START_CONDITION) ->  INCL_START_CONDITION start_condition_name_m
+13: start_condition_type (EXCL_START_CONDITION) ->  EXCL_START_CONDITION start_condition_name_m
+14: start_condition_names ->  start_condition_names identifier
+15: start_condition_names ->  identifier
+16: name_definition (STRING) ->  name_def STRING
+17: name_def ->  identifier
+18: option ('=') ->  inputinterface_m '=' stringOrIdent
+19: option ('=') ->  inputimplementation_m '=' stringOrIdent
+20: option ('=') ->  classname_m '=' stringOrIdent
+21: option ('=') ->  lexfunctionname_m '=' stringOrIdent
+22: option ('=') ->  baseclassheader_m '=' stringOrIdent
+23: option ('=') ->  classheader_m '=' stringOrIdent
+24: option ('=') ->  implementationheader_m '=' stringOrIdent
+25: option ('=') ->  lexsource_m '=' stringOrIdent
+26: option ('=') ->  skeleton_directory_m '=' stringOrIdent
+27: option ('=') ->  namespace_m '=' stringOrIdent
+28: option (INTERACTIVE) ->  INTERACTIVE
+29: option (DEBUG) ->  DEBUG opt_debugnamelist
+30: option (DEBUG_STEPS) ->  DEBUG_STEPS opt_steprange
+31: option (NOLINES) ->  NOLINES
+32: stringOrIdent (STRING) ->  STRING
+33: stringOrIdent (IDENTIFIER) ->  IDENTIFIER
+34: opt_debugnamelist ('=') ->  debugnamelist_m '=' debugnamelist
+35: opt_debugnamelist ->  <empty>
+36: debugnamelist ->  debugnamelist opt_comma debugname
+37: debugnamelist ->  debugname
+38: opt_comma (',') ->  ','
+39: opt_comma ->  <empty>
+40: debugname (IDENTIFIER) ->  IDENTIFIER
+41: opt_steprange ('=') ->  debugsteps_m '=' firststep opt_laststep
+42: opt_steprange ->  <empty>
+43: firststep (DECIMAL) ->  DECIMAL
+44: opt_laststep ->  <empty>
+45: opt_laststep (DECIMAL) ->  DECIMAL
+46: rules ->  rules rule
+47: rules ->  <empty>
+48: block (BLOCK) ->  BLOCK
+49: rule ('\x0a') ->  rule_def '\x0a'
+50: rule_def ->  <empty>
+51: rule_def (_error_) ->  _error_
+52: rule_def (ERR) ->  ERR _error_
+53: rule_def ->  regex_list
+54: rule_def ->  regex_list block
+55: rule_def ->  miniscanner_block
+56: rule_def (EOF_PATTERN) ->  EOF_PATTERN
+57: rule_def (EOF_PATTERN) ->  EOF_PATTERN block
+58: regex_list (ORNL) ->  regex_list ORNL regex_list
+59: regex_list ->  simple_regex
+60: simple_regex ->  miniscanner basic_regex
+61: simple_regex ->  basic_regex
+62: basic_regex_list (ORNL) ->  basic_regex_list ORNL basic_regex_list
+63: basic_regex_list ->  basic_regex
+64: basic_rules ->  basic_rules basic_rule
+65: basic_rules ->  <empty>
+66: basic_rule ('\x0a') ->  basic_rule_def '\x0a'
+67: basic_rule_def ->  <empty>
+68: basic_rule_def ->  basic_regex_list
+69: basic_rule_def ->  basic_regex_list block
+70: basic_rule_def (EOF_PATTERN) ->  EOF_PATTERN
+71: basic_rule_def (EOF_PATTERN) ->  EOF_PATTERN block
+72: miniscanner_block ('{') ->  miniscanner '{' basic_rules basic_rule_def '}'
+73: miniscanner ('<') ->  '<' miniscanner_specs '>'
+74: miniscanner_specs ('*') ->  '*'
+75: miniscanner_specs ->  miniscanner_list
+76: miniscanner_list (',') ->  miniscanner_list ',' identifier
+77: miniscanner_list ->  identifier
+78: identifier (IDENTIFIER) ->  IDENTIFIER
+79: basic_regex ->  p_regex
+80: basic_regex ('/') ->  p_regex '/' p_regex
+81: p_regex ->  regex
+82: regex ->  combi_chars
+83: regex (CHAR) ->  regex regex
+84: regex ('|') ->  regex '|' regex
+85: regex ('(') ->  '(' regex ')'
+86: regex ->  regex quantifier
+87: regex ->  characterclass
+88: quantifier ('*') ->  '*'
+89: quantifier ('+') ->  '+'
+90: quantifier ('?') ->  '?'
+91: quantifier ('{') ->  '{' interval '}'
+92: interval ->  decimal
+93: interval (',') ->  decimal ',' decimal
+94: interval (',') ->  decimal ','
+95: decimal (DECIMAL) ->  DECIMAL
+96: characterclass (CC_PLUS) ->  characterclass CC_PLUS characterclass
+97: characterclass (CC_MINUS) ->  characterclass CC_MINUS characterclass
+98: characterclass ->  cc_set
+99: cc_set ->  cc_start cc_contents cc_end
+100: cc_set ->  cc_negated cc_contents cc_end
+101: cc_start (CC_START) ->  CC_START cc_contents_m
+102: cc_negated (CC_NEGATED) ->  CC_NEGATED cc_contents_m
+103: cc_end (']') ->  ']' regex_block_m
+104: cc_contents ->  cc_contents cc_element
+105: cc_contents ->  cc_element
+106: cc_element ->  combi_chars
+107: cc_element (PREDEFINED_CLASS) ->  PREDEFINED_CLASS
+108: cc_element ->  cc_char
+109: cc_char ('/') ->  '/'
+110: cc_char ('|') ->  '|'
+111: cc_char ('(') ->  '('
+112: cc_char (')') ->  ')'
+113: cc_char ('*') ->  '*'
+114: cc_char ('+') ->  '+'
+115: cc_char ('?') ->  '?'
+116: cc_char ('{') ->  '{'
+117: cc_char ('}') ->  '}'
+118: cc_char ('<') ->  '<'
+119: cc_char ('>') ->  '>'
+120: cc_char ('[') ->  '['
+121: combi_chars (STRING) ->  STRING
+122: combi_chars ->  decimal
+123: combi_chars (ESCAPE_SEQUENCE) ->  ESCAPE_SEQUENCE
+124: combi_chars ->  identifier
+125: combi_chars (CHAR) ->  CHAR
+126: combi_chars ('.') ->  '.'
+127: combi_chars (',') ->  ','
+128: combi_chars ('^') ->  '^'
+129: combi_chars ('$') ->  '$'
+130: combi_chars ('=') ->  '='
+131: combi_chars ('-') ->  '-'
+132: combi_chars (''') ->  '''
+133: inputinterface_m (INPUTINTERFACE) ->  INPUTINTERFACE
+134: inputimplementation_m (INPUTIMPLEMENTATION) ->  INPUTIMPLEMENTATION
+135: classname_m (CLASSNAME) ->  CLASSNAME
+136: lexfunctionname_m (LEXFUNCTIONNAME) ->  LEXFUNCTIONNAME
+137: baseclassheader_m (BASECLASSHEADER) ->  BASECLASSHEADER
+138: classheader_m (CLASSHEADER) ->  CLASSHEADER
+139: implementationheader_m (IMPLEMENTATIONHEADER) ->  IMPLEMENTATIONHEADER
+140: lexsource_m (LEXSOURCE) ->  LEXSOURCE
+141: skeleton_directory_m (SKELETON_DIRECTORY) ->  SKELETON_DIRECTORY
+142: namespace_m (NAMESPACE) ->  NAMESPACE
+143: start_condition_name_m ->  <empty>
+144: cc_contents_m ->  <empty>
+145: regex_block_m ->  <empty>
+146: debugnamelist_m ->  <empty>
+147: debugsteps_m ->  <empty>
+148: input_$ ->  input
+
+
+Symbolic Terminal tokens:
+       error
+       EOF
+   257: EXCL_START_CONDITION
+   258: INCL_START_CONDITION
+   259: SECTION_DELIMITER
+   260: BASECLASSHEADER
+   261: CLASSHEADER
+   262: CLASSNAME
+   263: DEBUG
+   264: DEBUG_STEPS
+   265: IMPLEMENTATIONHEADER
+   266: INPUTIMPLEMENTATION
+   267: INPUTINTERFACE
+   268: INTERACTIVE
+   269: LEXFUNCTIONNAME
+   270: LEXSOURCE
+   271: NAMESPACE
+   272: NOLINES
+   273: SKELETON_DIRECTORY
+   274: ERR
+   275: BLOCK
+   276: IDENTIFIER
+   277: EOF_PATTERN
+   278: STRING
+   279: DECIMAL
+   280: ESCAPE_SEQUENCE
+   281: CC_START
+   282: CC_NEGATED
+   283: PREDEFINED_CLASS
+   284: ORNL
+    47: '/'
+   124: '|'
+   285: CHAR
+   286: CC_PLUS
+   287: CC_MINUS
+    10: '\x0a'
+    61: '='
+    44: ','
+   123: '{'
+   125: '}'
+    60: '<'
+    62: '>'
+    42: '*'
+    40: '('
+    41: ')'
+    43: '+'
+    63: '?'
+    93: ']'
+    91: '['
+    46: '.'
+    94: '^'
+    36: '$'
+    45: '-'
+    39: '''
+
+
+Grammar States: 
+State 0:
+148: input_$ ->  . input 
+  0:   On input to state 1
+  1:   On opt_directives to state 2
+  Reduce by 4: opt_directives ->  . 
+
+
+State 1:
+148: input_$ -> input  . 
+
+
+State 2:
+1: input -> opt_directives  . section_delimiter rules 
+3: opt_directives -> opt_directives  . directive_line 
+  0:   On section_delimiter to state 3
+  1:   On directive_line to state 4
+  2:   On SECTION_DELIMITER to state 5
+  3:   On directive to state 6
+  4:   On option to state 7
+  5:   On start_condition_directive to state 8
+  6:   On name_definition to state 9
+  7:   On _error_ to state 10
+  8:   On inputinterface_m to state 11
+  9:   On inputimplementation_m to state 12
+  10:   On classname_m to state 13
+  11:   On lexfunctionname_m to state 14
+  12:   On baseclassheader_m to state 15
+  13:   On classheader_m to state 16
+  14:   On implementationheader_m to state 17
+  15:   On lexsource_m to state 18
+  16:   On skeleton_directory_m to state 19
+  17:   On namespace_m to state 20
+  18:   On INTERACTIVE to state 21
+  19:   On DEBUG to state 22
+  20:   On DEBUG_STEPS to state 23
+  21:   On NOLINES to state 24
+  22:   On start_condition_type to state 25
+  23:   On name_def to state 26
+  24:   On INPUTINTERFACE to state 27
+  25:   On INPUTIMPLEMENTATION to state 28
+  26:   On CLASSNAME to state 29
+  27:   On LEXFUNCTIONNAME to state 30
+  28:   On BASECLASSHEADER to state 31
+  29:   On CLASSHEADER to state 32
+  30:   On IMPLEMENTATIONHEADER to state 33
+  31:   On LEXSOURCE to state 34
+  32:   On SKELETON_DIRECTORY to state 35
+  33:   On NAMESPACE to state 36
+  34:   On INCL_START_CONDITION to state 37
+  35:   On EXCL_START_CONDITION to state 38
+  36:   On identifier to state 39
+  37:   On IDENTIFIER to state 40
+  Reduce by 10: directive ->  . 
+
+
+State 3:
+1: input -> opt_directives section_delimiter  . rules 
+  0:   On rules to state 41
+  Reduce by 47: rules ->  . 
+
+
+State 4:
+3: opt_directives -> opt_directives directive_line  . 
+  Reduce by 3: opt_directives -> opt_directives directive_line  . 
+
+
+State 5:
+2: section_delimiter -> SECTION_DELIMITER  . 
+  Reduce by 2: section_delimiter -> SECTION_DELIMITER  . 
+
+
+State 6:
+5: directive_line -> directive  . '\x0a' 
+  0:   On '\x0a' to state 42
+
+
+State 7:
+6: directive -> option  . 
+  Reduce by 6: directive -> option  . 
+
+
+State 8:
+7: directive -> start_condition_directive  . 
+  Reduce by 7: directive -> start_condition_directive  . 
+
+
+State 9:
+8: directive -> name_definition  . 
+  Reduce by 8: directive -> name_definition  . 
+
+
+State 10:
+9: directive -> _error_  . 
+  Reduce by 9: directive -> _error_  . 
+
+
+State 11:
+18: option -> inputinterface_m  . '=' stringOrIdent 
+  0:   On '=' to state 43
+
+
+State 12:
+19: option -> inputimplementation_m  . '=' stringOrIdent 
+  0:   On '=' to state 44
+
+
+State 13:
+20: option -> classname_m  . '=' stringOrIdent 
+  0:   On '=' to state 45
+
+
+State 14:
+21: option -> lexfunctionname_m  . '=' stringOrIdent 
+  0:   On '=' to state 46
+
+
+State 15:
+22: option -> baseclassheader_m  . '=' stringOrIdent 
+  0:   On '=' to state 47
+
+
+State 16:
+23: option -> classheader_m  . '=' stringOrIdent 
+  0:   On '=' to state 48
+
+
+State 17:
+24: option -> implementationheader_m  . '=' stringOrIdent 
+  0:   On '=' to state 49
+
+
+State 18:
+25: option -> lexsource_m  . '=' stringOrIdent 
+  0:   On '=' to state 50
+
+
+State 19:
+26: option -> skeleton_directory_m  . '=' stringOrIdent 
+  0:   On '=' to state 51
+
+
+State 20:
+27: option -> namespace_m  . '=' stringOrIdent 
+  0:   On '=' to state 52
+
+
+State 21:
+28: option -> INTERACTIVE  . 
+  Reduce by 28: option -> INTERACTIVE  . 
+
+
+State 22:
+29: option -> DEBUG  . opt_debugnamelist 
+  0:   On opt_debugnamelist to state 53
+  1:   On debugnamelist_m to state 54
+  Reduce by 35: opt_debugnamelist ->  . 
+  Reduce by 146: debugnamelist_m ->  . 
+
+
+State 23:
+30: option -> DEBUG_STEPS  . opt_steprange 
+  0:   On opt_steprange to state 55
+  1:   On debugsteps_m to state 56
+  Reduce by 42: opt_steprange ->  . 
+  Reduce by 147: debugsteps_m ->  . 
+
+
+State 24:
+31: option -> NOLINES  . 
+  Reduce by 31: option -> NOLINES  . 
+
+
+State 25:
+11: start_condition_directive -> start_condition_type  . start_condition_names 
+  0:   On start_condition_names to state 57
+  1:   On identifier to state 58
+  2:   On IDENTIFIER to state 40
+
+
+State 26:
+16: name_definition -> name_def  . STRING 
+  0:   On STRING to state 59
+
+
+State 27:
+133: inputinterface_m -> INPUTINTERFACE  . 
+  Reduce by 133: inputinterface_m -> INPUTINTERFACE  . 
+
+
+State 28:
+134: inputimplementation_m -> INPUTIMPLEMENTATION  . 
+  Reduce by 134: inputimplementation_m -> INPUTIMPLEMENTATION  . 
+
+
+State 29:
+135: classname_m -> CLASSNAME  . 
+  Reduce by 135: classname_m -> CLASSNAME  . 
+
+
+State 30:
+136: lexfunctionname_m -> LEXFUNCTIONNAME  . 
+  Reduce by 136: lexfunctionname_m -> LEXFUNCTIONNAME  . 
+
+
+State 31:
+137: baseclassheader_m -> BASECLASSHEADER  . 
+  Reduce by 137: baseclassheader_m -> BASECLASSHEADER  . 
+
+
+State 32:
+138: classheader_m -> CLASSHEADER  . 
+  Reduce by 138: classheader_m -> CLASSHEADER  . 
+
+
+State 33:
+139: implementationheader_m -> IMPLEMENTATIONHEADER  . 
+  Reduce by 139: implementationheader_m -> IMPLEMENTATIONHEADER  . 
+
+
+State 34:
+140: lexsource_m -> LEXSOURCE  . 
+  Reduce by 140: lexsource_m -> LEXSOURCE  . 
+
+
+State 35:
+141: skeleton_directory_m -> SKELETON_DIRECTORY  . 
+  Reduce by 141: skeleton_directory_m -> SKELETON_DIRECTORY  . 
+
+
+State 36:
+142: namespace_m -> NAMESPACE  . 
+  Reduce by 142: namespace_m -> NAMESPACE  . 
+
+
+State 37:
+12: start_condition_type -> INCL_START_CONDITION  . start_condition_name_m 
+  0:   On start_condition_name_m to state 60
+  Reduce by 143: start_condition_name_m ->  . 
+
+
+State 38:
+13: start_condition_type -> EXCL_START_CONDITION  . start_condition_name_m 
+  0:   On start_condition_name_m to state 61
+  Reduce by 143: start_condition_name_m ->  . 
+
+
+State 39:
+17: name_def -> identifier  . 
+  Reduce by 17: name_def -> identifier  . 
+
+
+State 40:
+78: identifier -> IDENTIFIER  . 
+  Reduce by 78: identifier -> IDENTIFIER  . 
+
+
+State 41:
+1: input -> opt_directives section_delimiter rules  . 
+46: rules -> rules  . rule 
+  0:   On rule to state 62
+  1:   On rule_def to state 63
+  2:   On _error_ to state 64
+  3:   On ERR to state 65
+  4:   On regex_list to state 66
+  5:   On miniscanner_block to state 67
+  6:   On EOF_PATTERN to state 68
+  7:   On simple_regex to state 69
+  8:   On miniscanner to state 70
+  9:   On basic_regex to state 71
+  10:   On '<' to state 72
+  11:   On p_regex to state 73
+  12:   On regex to state 74
+  13:   On combi_chars to state 75
+  14:   On '(' to state 76
+  15:   On characterclass to state 77
+  16:   On STRING to state 78
+  17:   On decimal to state 79
+  18:   On ESCAPE_SEQUENCE to state 80
+  19:   On identifier to state 81
+  20:   On CHAR to state 82
+  21:   On '.' to state 83
+  22:   On ',' to state 84
+  23:   On '^' to state 85
+  24:   On '$' to state 86
+  25:   On '=' to state 87
+  26:   On '-' to state 88
+  27:   On ''' to state 89
+  28:   On cc_set to state 90
+  29:   On DECIMAL to state 91
+  30:   On IDENTIFIER to state 40
+  31:   On cc_start to state 92
+  32:   On cc_negated to state 93
+  33:   On CC_START to state 94
+  34:   On CC_NEGATED to state 95
+  Reduce by 1: input -> opt_directives section_delimiter rules  . 
+  Reduce by 50: rule_def ->  . 
+
+
+State 42:
+5: directive_line -> directive '\x0a'  . 
+  Reduce by 5: directive_line -> directive '\x0a'  . 
+
+
+State 43:
+18: option -> inputinterface_m '='  . stringOrIdent 
+  0:   On stringOrIdent to state 96
+  1:   On STRING to state 97
+  2:   On IDENTIFIER to state 98
+
+
+State 44:
+19: option -> inputimplementation_m '='  . stringOrIdent 
+  0:   On stringOrIdent to state 99
+  1:   On STRING to state 97
+  2:   On IDENTIFIER to state 98
+
+
+State 45:
+20: option -> classname_m '='  . stringOrIdent 
+  0:   On stringOrIdent to state 100
+  1:   On STRING to state 97
+  2:   On IDENTIFIER to state 98
+
+
+State 46:
+21: option -> lexfunctionname_m '='  . stringOrIdent 
+  0:   On stringOrIdent to state 101
+  1:   On STRING to state 97
+  2:   On IDENTIFIER to state 98
+
+
+State 47:
+22: option -> baseclassheader_m '='  . stringOrIdent 
+  0:   On stringOrIdent to state 102
+  1:   On STRING to state 97
+  2:   On IDENTIFIER to state 98
+
+
+State 48:
+23: option -> classheader_m '='  . stringOrIdent 
+  0:   On stringOrIdent to state 103
+  1:   On STRING to state 97
+  2:   On IDENTIFIER to state 98
+
+
+State 49:
+24: option -> implementationheader_m '='  . stringOrIdent 
+  0:   On stringOrIdent to state 104
+  1:   On STRING to state 97
+  2:   On IDENTIFIER to state 98
+
+
+State 50:
+25: option -> lexsource_m '='  . stringOrIdent 
+  0:   On stringOrIdent to state 105
+  1:   On STRING to state 97
+  2:   On IDENTIFIER to state 98
+
+
+State 51:
+26: option -> skeleton_directory_m '='  . stringOrIdent 
+  0:   On stringOrIdent to state 106
+  1:   On STRING to state 97
+  2:   On IDENTIFIER to state 98
+
+
+State 52:
+27: option -> namespace_m '='  . stringOrIdent 
+  0:   On stringOrIdent to state 107
+  1:   On STRING to state 97
+  2:   On IDENTIFIER to state 98
+
+
+State 53:
+29: option -> DEBUG opt_debugnamelist  . 
+  Reduce by 29: option -> DEBUG opt_debugnamelist  . 
+
+
+State 54:
+34: opt_debugnamelist -> debugnamelist_m  . '=' debugnamelist 
+  0:   On '=' to state 108
+
+
+State 55:
+30: option -> DEBUG_STEPS opt_steprange  . 
+  Reduce by 30: option -> DEBUG_STEPS opt_steprange  . 
+
+
+State 56:
+41: opt_steprange -> debugsteps_m  . '=' firststep opt_laststep 
+  0:   On '=' to state 109
+
+
+State 57:
+11: start_condition_directive -> start_condition_type start_condition_names  . 
+14: start_condition_names -> start_condition_names  . identifier 
+  0:   On identifier to state 110
+  1:   On IDENTIFIER to state 40
+  Reduce by 11: start_condition_directive -> start_condition_type start_condition_names  . 
+
+
+State 58:
+15: start_condition_names -> identifier  . 
+  Reduce by 15: start_condition_names -> identifier  . 
+
+
+State 59:
+16: name_definition -> name_def STRING  . 
+  Reduce by 16: name_definition -> name_def STRING  . 
+
+
+State 60:
+12: start_condition_type -> INCL_START_CONDITION start_condition_name_m  . 
+  Reduce by 12: start_condition_type -> INCL_START_CONDITION start_condition_name_m  . 
+
+
+State 61:
+13: start_condition_type -> EXCL_START_CONDITION start_condition_name_m  . 
+  Reduce by 13: start_condition_type -> EXCL_START_CONDITION start_condition_name_m  . 
+
+
+State 62:
+46: rules -> rules rule  . 
+  Reduce by 46: rules -> rules rule  . 
+
+
+State 63:
+49: rule -> rule_def  . '\x0a' 
+  0:   On '\x0a' to state 111
+
+
+State 64:
+51: rule_def -> _error_  . 
+  Reduce by 51: rule_def -> _error_  . 
+
+
+State 65:
+52: rule_def -> ERR  . _error_ 
+  0:   On _error_ to state 112
+
+
+State 66:
+53: rule_def -> regex_list  . 
+54: rule_def -> regex_list  . block 
+58: regex_list -> regex_list  . ORNL regex_list 
+  0:   On block to state 113
+  1:   On ORNL to state 114
+  2:   On BLOCK to state 115
+  Reduce by 53: rule_def -> regex_list  . 
+
+
+State 67:
+55: rule_def -> miniscanner_block  . 
+  Reduce by 55: rule_def -> miniscanner_block  . 
+
+
+State 68:
+56: rule_def -> EOF_PATTERN  . 
+57: rule_def -> EOF_PATTERN  . block 
+  0:   On block to state 116
+  1:   On BLOCK to state 115
+  Reduce by 56: rule_def -> EOF_PATTERN  . 
+
+
+State 69:
+59: regex_list -> simple_regex  . 
+  Reduce by 59: regex_list -> simple_regex  . 
+
+
+State 70:
+72: miniscanner_block -> miniscanner  . '{' basic_rules basic_rule_def '}' 
+60: simple_regex -> miniscanner  . basic_regex 
+  0:   On '{' to state 117
+  1:   On basic_regex to state 118
+  2:   On p_regex to state 73
+  3:   On regex to state 74
+  4:   On combi_chars to state 75
+  5:   On '(' to state 76
+  6:   On characterclass to state 77
+  7:   On STRING to state 78
+  8:   On decimal to state 79
+  9:   On ESCAPE_SEQUENCE to state 80
+  10:   On identifier to state 81
+  11:   On CHAR to state 82
+  12:   On '.' to state 83
+  13:   On ',' to state 84
+  14:   On '^' to state 85
+  15:   On '$' to state 86
+  16:   On '=' to state 87
+  17:   On '-' to state 88
+  18:   On ''' to state 89
+  19:   On cc_set to state 90
+  20:   On DECIMAL to state 91
+  21:   On IDENTIFIER to state 40
+  22:   On cc_start to state 92
+  23:   On cc_negated to state 93
+  24:   On CC_START to state 94
+  25:   On CC_NEGATED to state 95
+
+
+State 71:
+61: simple_regex -> basic_regex  . 
+  Reduce by 61: simple_regex -> basic_regex  . 
+
+
+State 72:
+73: miniscanner -> '<'  . miniscanner_specs '>' 
+  0:   On miniscanner_specs to state 119
+  1:   On '*' to state 120
+  2:   On miniscanner_list to state 121
+  3:   On identifier to state 122
+  4:   On IDENTIFIER to state 40
+
+
+State 73:
+79: basic_regex -> p_regex  . 
+80: basic_regex -> p_regex  . '/' p_regex 
+  0:   On '/' to state 123
+  Reduce by 79: basic_regex -> p_regex  . 
+
+
+State 74:
+81: p_regex -> regex  . 
+83: regex -> regex  . regex 
+84: regex -> regex  . '|' regex 
+86: regex -> regex  . quantifier 
+  0:   On regex to state 124
+  1:   On '|' to state 125
+  2:   On quantifier to state 126
+  3:   On combi_chars to state 75
+  4:   On '(' to state 76
+  5:   On characterclass to state 77
+  6:   On '*' to state 127
+  7:   On '+' to state 128
+  8:   On '?' to state 129
+  9:   On '{' to state 130
+  10:   On STRING to state 78
+  11:   On decimal to state 79
+  12:   On ESCAPE_SEQUENCE to state 80
+  13:   On identifier to state 81
+  14:   On CHAR to state 82
+  15:   On '.' to state 83
+  16:   On ',' to state 84
+  17:   On '^' to state 85
+  18:   On '$' to state 86
+  19:   On '=' to state 87
+  20:   On '-' to state 88
+  21:   On ''' to state 89
+  22:   On cc_set to state 90
+  23:   On DECIMAL to state 91
+  24:   On IDENTIFIER to state 40
+  25:   On cc_start to state 92
+  26:   On cc_negated to state 93
+  27:   On CC_START to state 94
+  28:   On CC_NEGATED to state 95
+  Reduce by 81: p_regex -> regex  . 
+
+
+State 75:
+82: regex -> combi_chars  . 
+  Reduce by 82: regex -> combi_chars  . 
+
+
+State 76:
+85: regex -> '('  . regex ')' 
+  0:   On regex to state 131
+  1:   On combi_chars to state 75
+  2:   On '(' to state 76
+  3:   On characterclass to state 77
+  4:   On STRING to state 78
+  5:   On decimal to state 79
+  6:   On ESCAPE_SEQUENCE to state 80
+  7:   On identifier to state 81
+  8:   On CHAR to state 82
+  9:   On '.' to state 83
+  10:   On ',' to state 84
+  11:   On '^' to state 85
+  12:   On '$' to state 86
+  13:   On '=' to state 87
+  14:   On '-' to state 88
+  15:   On ''' to state 89
+  16:   On cc_set to state 90
+  17:   On DECIMAL to state 91
+  18:   On IDENTIFIER to state 40
+  19:   On cc_start to state 92
+  20:   On cc_negated to state 93
+  21:   On CC_START to state 94
+  22:   On CC_NEGATED to state 95
+
+
+State 77:
+87: regex -> characterclass  . 
+96: characterclass -> characterclass  . CC_PLUS characterclass 
+97: characterclass -> characterclass  . CC_MINUS characterclass 
+  0:   On CC_PLUS to state 132
+  1:   On CC_MINUS to state 133
+  Reduce by 87: regex -> characterclass  . 
+
+
+State 78:
+121: combi_chars -> STRING  . 
+  Reduce by 121: combi_chars -> STRING  . 
+
+
+State 79:
+122: combi_chars -> decimal  . 
+  Reduce by 122: combi_chars -> decimal  . 
+
+
+State 80:
+123: combi_chars -> ESCAPE_SEQUENCE  . 
+  Reduce by 123: combi_chars -> ESCAPE_SEQUENCE  . 
+
+
+State 81:
+124: combi_chars -> identifier  . 
+  Reduce by 124: combi_chars -> identifier  . 
+
+
+State 82:
+125: combi_chars -> CHAR  . 
+  Reduce by 125: combi_chars -> CHAR  . 
+
+
+State 83:
+126: combi_chars -> '.'  . 
+  Reduce by 126: combi_chars -> '.'  . 
+
+
+State 84:
+127: combi_chars -> ','  . 
+  Reduce by 127: combi_chars -> ','  . 
+
+
+State 85:
+128: combi_chars -> '^'  . 
+  Reduce by 128: combi_chars -> '^'  . 
+
+
+State 86:
+129: combi_chars -> '$'  . 
+  Reduce by 129: combi_chars -> '$'  . 
+
+
+State 87:
+130: combi_chars -> '='  . 
+  Reduce by 130: combi_chars -> '='  . 
+
+
+State 88:
+131: combi_chars -> '-'  . 
+  Reduce by 131: combi_chars -> '-'  . 
+
+
+State 89:
+132: combi_chars -> '''  . 
+  Reduce by 132: combi_chars -> '''  . 
+
+
+State 90:
+98: characterclass -> cc_set  . 
+  Reduce by 98: characterclass -> cc_set  . 
+
+
+State 91:
+95: decimal -> DECIMAL  . 
+  Reduce by 95: decimal -> DECIMAL  . 
+
+
+State 92:
+99: cc_set -> cc_start  . cc_contents cc_end 
+  0:   On cc_contents to state 134
+  1:   On cc_element to state 135
+  2:   On combi_chars to state 136
+  3:   On PREDEFINED_CLASS to state 137
+  4:   On cc_char to state 138
+  5:   On STRING to state 78
+  6:   On decimal to state 79
+  7:   On ESCAPE_SEQUENCE to state 80
+  8:   On identifier to state 81
+  9:   On CHAR to state 82
+  10:   On '.' to state 83
+  11:   On ',' to state 84
+  12:   On '^' to state 85
+  13:   On '$' to state 86
+  14:   On '=' to state 87
+  15:   On '-' to state 88
+  16:   On ''' to state 89
+  17:   On '/' to state 139
+  18:   On '|' to state 140
+  19:   On '(' to state 141
+  20:   On ')' to state 142
+  21:   On '*' to state 143
+  22:   On '+' to state 144
+  23:   On '?' to state 145
+  24:   On '{' to state 146
+  25:   On '}' to state 147
+  26:   On '<' to state 148
+  27:   On '>' to state 149
+  28:   On '[' to state 150
+  29:   On DECIMAL to state 91
+  30:   On IDENTIFIER to state 40
+
+
+State 93:
+100: cc_set -> cc_negated  . cc_contents cc_end 
+  0:   On cc_contents to state 151
+  1:   On cc_element to state 135
+  2:   On combi_chars to state 136
+  3:   On PREDEFINED_CLASS to state 137
+  4:   On cc_char to state 138
+  5:   On STRING to state 78
+  6:   On decimal to state 79
+  7:   On ESCAPE_SEQUENCE to state 80
+  8:   On identifier to state 81
+  9:   On CHAR to state 82
+  10:   On '.' to state 83
+  11:   On ',' to state 84
+  12:   On '^' to state 85
+  13:   On '$' to state 86
+  14:   On '=' to state 87
+  15:   On '-' to state 88
+  16:   On ''' to state 89
+  17:   On '/' to state 139
+  18:   On '|' to state 140
+  19:   On '(' to state 141
+  20:   On ')' to state 142
+  21:   On '*' to state 143
+  22:   On '+' to state 144
+  23:   On '?' to state 145
+  24:   On '{' to state 146
+  25:   On '}' to state 147
+  26:   On '<' to state 148
+  27:   On '>' to state 149
+  28:   On '[' to state 150
+  29:   On DECIMAL to state 91
+  30:   On IDENTIFIER to state 40
+
+
+State 94:
+101: cc_start -> CC_START  . cc_contents_m 
+  0:   On cc_contents_m to state 152
+  Reduce by 144: cc_contents_m ->  . 
+
+
+State 95:
+102: cc_negated -> CC_NEGATED  . cc_contents_m 
+  0:   On cc_contents_m to state 153
+  Reduce by 144: cc_contents_m ->  . 
+
+
+State 96:
+18: option -> inputinterface_m '=' stringOrIdent  . 
+  Reduce by 18: option -> inputinterface_m '=' stringOrIdent  . 
+
+
+State 97:
+32: stringOrIdent -> STRING  . 
+  Reduce by 32: stringOrIdent -> STRING  . 
+
+
+State 98:
+33: stringOrIdent -> IDENTIFIER  . 
+  Reduce by 33: stringOrIdent -> IDENTIFIER  . 
+
+
+State 99:
+19: option -> inputimplementation_m '=' stringOrIdent  . 
+  Reduce by 19: option -> inputimplementation_m '=' stringOrIdent  . 
+
+
+State 100:
+20: option -> classname_m '=' stringOrIdent  . 
+  Reduce by 20: option -> classname_m '=' stringOrIdent  . 
+
+
+State 101:
+21: option -> lexfunctionname_m '=' stringOrIdent  . 
+  Reduce by 21: option -> lexfunctionname_m '=' stringOrIdent  . 
+
+
+State 102:
+22: option -> baseclassheader_m '=' stringOrIdent  . 
+  Reduce by 22: option -> baseclassheader_m '=' stringOrIdent  . 
+
+
+State 103:
+23: option -> classheader_m '=' stringOrIdent  . 
+  Reduce by 23: option -> classheader_m '=' stringOrIdent  . 
+
+
+State 104:
+24: option -> implementationheader_m '=' stringOrIdent  . 
+  Reduce by 24: option -> implementationheader_m '=' stringOrIdent  . 
+
+
+State 105:
+25: option -> lexsource_m '=' stringOrIdent  . 
+  Reduce by 25: option -> lexsource_m '=' stringOrIdent  . 
+
+
+State 106:
+26: option -> skeleton_directory_m '=' stringOrIdent  . 
+  Reduce by 26: option -> skeleton_directory_m '=' stringOrIdent  . 
+
+
+State 107:
+27: option -> namespace_m '=' stringOrIdent  . 
+  Reduce by 27: option -> namespace_m '=' stringOrIdent  . 
+
+
+State 108:
+34: opt_debugnamelist -> debugnamelist_m '='  . debugnamelist 
+  0:   On debugnamelist to state 154
+  1:   On debugname to state 155
+  2:   On IDENTIFIER to state 156
+
+
+State 109:
+41: opt_steprange -> debugsteps_m '='  . firststep opt_laststep 
+  0:   On firststep to state 157
+  1:   On DECIMAL to state 158
+
+
+State 110:
+14: start_condition_names -> start_condition_names identifier  . 
+  Reduce by 14: start_condition_names -> start_condition_names identifier  . 
+
+
+State 111:
+49: rule -> rule_def '\x0a'  . 
+  Reduce by 49: rule -> rule_def '\x0a'  . 
+
+
+State 112:
+52: rule_def -> ERR _error_  . 
+  Reduce by 52: rule_def -> ERR _error_  . 
+
+
+State 113:
+54: rule_def -> regex_list block  . 
+  Reduce by 54: rule_def -> regex_list block  . 
+
+
+State 114:
+58: regex_list -> regex_list ORNL  . regex_list 
+  0:   On regex_list to state 159
+  1:   On simple_regex to state 69
+  2:   On miniscanner to state 160
+  3:   On basic_regex to state 71
+  4:   On '<' to state 72
+  5:   On p_regex to state 73
+  6:   On regex to state 74
+  7:   On combi_chars to state 75
+  8:   On '(' to state 76
+  9:   On characterclass to state 77
+  10:   On STRING to state 78
+  11:   On decimal to state 79
+  12:   On ESCAPE_SEQUENCE to state 80
+  13:   On identifier to state 81
+  14:   On CHAR to state 82
+  15:   On '.' to state 83
+  16:   On ',' to state 84
+  17:   On '^' to state 85
+  18:   On '$' to state 86
+  19:   On '=' to state 87
+  20:   On '-' to state 88
+  21:   On ''' to state 89
+  22:   On cc_set to state 90
+  23:   On DECIMAL to state 91
+  24:   On IDENTIFIER to state 40
+  25:   On cc_start to state 92
+  26:   On cc_negated to state 93
+  27:   On CC_START to state 94
+  28:   On CC_NEGATED to state 95
+
+
+State 115:
+48: block -> BLOCK  . 
+  Reduce by 48: block -> BLOCK  . 
+
+
+State 116:
+57: rule_def -> EOF_PATTERN block  . 
+  Reduce by 57: rule_def -> EOF_PATTERN block  . 
+
+
+State 117:
+72: miniscanner_block -> miniscanner '{'  . basic_rules basic_rule_def '}' 
+  0:   On basic_rules to state 161
+  Reduce by 65: basic_rules ->  . 
+
+
+State 118:
+60: simple_regex -> miniscanner basic_regex  . 
+  Reduce by 60: simple_regex -> miniscanner basic_regex  . 
+
+
+State 119:
+73: miniscanner -> '<' miniscanner_specs  . '>' 
+  0:   On '>' to state 162
+
+
+State 120:
+74: miniscanner_specs -> '*'  . 
+  Reduce by 74: miniscanner_specs -> '*'  . 
+
+
+State 121:
+75: miniscanner_specs -> miniscanner_list  . 
+76: miniscanner_list -> miniscanner_list  . ',' identifier 
+  0:   On ',' to state 163
+  Reduce by 75: miniscanner_specs -> miniscanner_list  . 
+
+
+State 122:
+77: miniscanner_list -> identifier  . 
+  Reduce by 77: miniscanner_list -> identifier  . 
+
+
+State 123:
+80: basic_regex -> p_regex '/'  . p_regex 
+  0:   On p_regex to state 164
+  1:   On regex to state 74
+  2:   On combi_chars to state 75
+  3:   On '(' to state 76
+  4:   On characterclass to state 77
+  5:   On STRING to state 78
+  6:   On decimal to state 79
+  7:   On ESCAPE_SEQUENCE to state 80
+  8:   On identifier to state 81
+  9:   On CHAR to state 82
+  10:   On '.' to state 83
+  11:   On ',' to state 84
+  12:   On '^' to state 85
+  13:   On '$' to state 86
+  14:   On '=' to state 87
+  15:   On '-' to state 88
+  16:   On ''' to state 89
+  17:   On cc_set to state 90
+  18:   On DECIMAL to state 91
+  19:   On IDENTIFIER to state 40
+  20:   On cc_start to state 92
+  21:   On cc_negated to state 93
+  22:   On CC_START to state 94
+  23:   On CC_NEGATED to state 95
+
+
+State 124:
+83: regex -> regex regex  . 
+83: regex -> regex  . regex 
+84: regex -> regex  . '|' regex 
+86: regex -> regex  . quantifier 
+  0:   On regex to state 124
+  1 (removed by precedence):   On '|' to state 125
+  2:   On quantifier to state 126
+  3:   On combi_chars to state 75
+  4 (removed by precedence):   On '(' to state 76
+  5:   On characterclass to state 77
+  6 (removed by precedence):   On '*' to state 127
+  7 (removed by precedence):   On '+' to state 128
+  8 (removed by precedence):   On '?' to state 129
+  9 (removed by precedence):   On '{' to state 130
+  10 (removed by precedence):   On STRING to state 78
+  11:   On decimal to state 79
+  12 (removed by precedence):   On ESCAPE_SEQUENCE to state 80
+  13:   On identifier to state 81
+  14 (removed by precedence):   On CHAR to state 82
+  15 (removed by precedence):   On '.' to state 83
+  16 (removed by precedence):   On ',' to state 84
+  17 (removed by precedence):   On '^' to state 85
+  18 (removed by precedence):   On '$' to state 86
+  19 (removed by precedence):   On '=' to state 87
+  20 (removed by precedence):   On '-' to state 88
+  21 (removed by precedence):   On ''' to state 89
+  22:   On cc_set to state 90
+  23 (removed by precedence):   On DECIMAL to state 91
+  24 (removed by precedence):   On IDENTIFIER to state 40
+  25:   On cc_start to state 92
+  26:   On cc_negated to state 93
+  27 (removed by precedence):   On CC_START to state 94
+  28 (removed by precedence):   On CC_NEGATED to state 95
+  Reduce by 83: regex -> regex regex  . 
+
+
+State 125:
+84: regex -> regex '|'  . regex 
+  0:   On regex to state 165
+  1:   On combi_chars to state 75
+  2:   On '(' to state 76
+  3:   On characterclass to state 77
+  4:   On STRING to state 78
+  5:   On decimal to state 79
+  6:   On ESCAPE_SEQUENCE to state 80
+  7:   On identifier to state 81
+  8:   On CHAR to state 82
+  9:   On '.' to state 83
+  10:   On ',' to state 84
+  11:   On '^' to state 85
+  12:   On '$' to state 86
+  13:   On '=' to state 87
+  14:   On '-' to state 88
+  15:   On ''' to state 89
+  16:   On cc_set to state 90
+  17:   On DECIMAL to state 91
+  18:   On IDENTIFIER to state 40
+  19:   On cc_start to state 92
+  20:   On cc_negated to state 93
+  21:   On CC_START to state 94
+  22:   On CC_NEGATED to state 95
+
+
+State 126:
+86: regex -> regex quantifier  . 
+  Reduce by 86: regex -> regex quantifier  . 
+
+
+State 127:
+88: quantifier -> '*'  . 
+  Reduce by 88: quantifier -> '*'  . 
+
+
+State 128:
+89: quantifier -> '+'  . 
+  Reduce by 89: quantifier -> '+'  . 
+
+
+State 129:
+90: quantifier -> '?'  . 
+  Reduce by 90: quantifier -> '?'  . 
+
+
+State 130:
+91: quantifier -> '{'  . interval '}' 
+  0:   On interval to state 166
+  1:   On decimal to state 167
+  2:   On DECIMAL to state 91
+
+
+State 131:
+85: regex -> '(' regex  . ')' 
+83: regex -> regex  . regex 
+84: regex -> regex  . '|' regex 
+86: regex -> regex  . quantifier 
+  0:   On ')' to state 168
+  1:   On regex to state 124
+  2:   On '|' to state 125
+  3:   On quantifier to state 126
+  4:   On combi_chars to state 75
+  5:   On '(' to state 76
+  6:   On characterclass to state 77
+  7:   On '*' to state 127
+  8:   On '+' to state 128
+  9:   On '?' to state 129
+  10:   On '{' to state 130
+  11:   On STRING to state 78
+  12:   On decimal to state 79
+  13:   On ESCAPE_SEQUENCE to state 80
+  14:   On identifier to state 81
+  15:   On CHAR to state 82
+  16:   On '.' to state 83
+  17:   On ',' to state 84
+  18:   On '^' to state 85
+  19:   On '$' to state 86
+  20:   On '=' to state 87
+  21:   On '-' to state 88
+  22:   On ''' to state 89
+  23:   On cc_set to state 90
+  24:   On DECIMAL to state 91
+  25:   On IDENTIFIER to state 40
+  26:   On cc_start to state 92
+  27:   On cc_negated to state 93
+  28:   On CC_START to state 94
+  29:   On CC_NEGATED to state 95
+
+
+State 132:
+96: characterclass -> characterclass CC_PLUS  . characterclass 
+  0:   On characterclass to state 169
+  1:   On cc_set to state 90
+  2:   On cc_start to state 92
+  3:   On cc_negated to state 93
+  4:   On CC_START to state 94
+  5:   On CC_NEGATED to state 95
+
+
+State 133:
+97: characterclass -> characterclass CC_MINUS  . characterclass 
+  0:   On characterclass to state 170
+  1:   On cc_set to state 90
+  2:   On cc_start to state 92
+  3:   On cc_negated to state 93
+  4:   On CC_START to state 94
+  5:   On CC_NEGATED to state 95
+
+
+State 134:
+99: cc_set -> cc_start cc_contents  . cc_end 
+104: cc_contents -> cc_contents  . cc_element 
+  0:   On cc_end to state 171
+  1:   On cc_element to state 172
+  2:   On ']' to state 173
+  3:   On combi_chars to state 136
+  4:   On PREDEFINED_CLASS to state 137
+  5:   On cc_char to state 138
+  6:   On STRING to state 78
+  7:   On decimal to state 79
+  8:   On ESCAPE_SEQUENCE to state 80
+  9:   On identifier to state 81
+  10:   On CHAR to state 82
+  11:   On '.' to state 83
+  12:   On ',' to state 84
+  13:   On '^' to state 85
+  14:   On '$' to state 86
+  15:   On '=' to state 87
+  16:   On '-' to state 88
+  17:   On ''' to state 89
+  18:   On '/' to state 139
+  19:   On '|' to state 140
+  20:   On '(' to state 141
+  21:   On ')' to state 142
+  22:   On '*' to state 143
+  23:   On '+' to state 144
+  24:   On '?' to state 145
+  25:   On '{' to state 146
+  26:   On '}' to state 147
+  27:   On '<' to state 148
+  28:   On '>' to state 149
+  29:   On '[' to state 150
+  30:   On DECIMAL to state 91
+  31:   On IDENTIFIER to state 40
+
+
+State 135:
+105: cc_contents -> cc_element  . 
+  Reduce by 105: cc_contents -> cc_element  . 
+
+
+State 136:
+106: cc_element -> combi_chars  . 
+  Reduce by 106: cc_element -> combi_chars  . 
+
+
+State 137:
+107: cc_element -> PREDEFINED_CLASS  . 
+  Reduce by 107: cc_element -> PREDEFINED_CLASS  . 
+
+
+State 138:
+108: cc_element -> cc_char  . 
+  Reduce by 108: cc_element -> cc_char  . 
+
+
+State 139:
+109: cc_char -> '/'  . 
+  Reduce by 109: cc_char -> '/'  . 
+
+
+State 140:
+110: cc_char -> '|'  . 
+  Reduce by 110: cc_char -> '|'  . 
+
+
+State 141:
+111: cc_char -> '('  . 
+  Reduce by 111: cc_char -> '('  . 
+
+
+State 142:
+112: cc_char -> ')'  . 
+  Reduce by 112: cc_char -> ')'  . 
+
+
+State 143:
+113: cc_char -> '*'  . 
+  Reduce by 113: cc_char -> '*'  . 
+
+
+State 144:
+114: cc_char -> '+'  . 
+  Reduce by 114: cc_char -> '+'  . 
+
+
+State 145:
+115: cc_char -> '?'  . 
+  Reduce by 115: cc_char -> '?'  . 
+
+
+State 146:
+116: cc_char -> '{'  . 
+  Reduce by 116: cc_char -> '{'  . 
+
+
+State 147:
+117: cc_char -> '}'  . 
+  Reduce by 117: cc_char -> '}'  . 
+
+
+State 148:
+118: cc_char -> '<'  . 
+  Reduce by 118: cc_char -> '<'  . 
+
+
+State 149:
+119: cc_char -> '>'  . 
+  Reduce by 119: cc_char -> '>'  . 
+
+
+State 150:
+120: cc_char -> '['  . 
+  Reduce by 120: cc_char -> '['  . 
+
+
+State 151:
+100: cc_set -> cc_negated cc_contents  . cc_end 
+104: cc_contents -> cc_contents  . cc_element 
+  0:   On cc_end to state 174
+  1:   On cc_element to state 172
+  2:   On ']' to state 173
+  3:   On combi_chars to state 136
+  4:   On PREDEFINED_CLASS to state 137
+  5:   On cc_char to state 138
+  6:   On STRING to state 78
+  7:   On decimal to state 79
+  8:   On ESCAPE_SEQUENCE to state 80
+  9:   On identifier to state 81
+  10:   On CHAR to state 82
+  11:   On '.' to state 83
+  12:   On ',' to state 84
+  13:   On '^' to state 85
+  14:   On '$' to state 86
+  15:   On '=' to state 87
+  16:   On '-' to state 88
+  17:   On ''' to state 89
+  18:   On '/' to state 139
+  19:   On '|' to state 140
+  20:   On '(' to state 141
+  21:   On ')' to state 142
+  22:   On '*' to state 143
+  23:   On '+' to state 144
+  24:   On '?' to state 145
+  25:   On '{' to state 146
+  26:   On '}' to state 147
+  27:   On '<' to state 148
+  28:   On '>' to state 149
+  29:   On '[' to state 150
+  30:   On DECIMAL to state 91
+  31:   On IDENTIFIER to state 40
+
+
+State 152:
+101: cc_start -> CC_START cc_contents_m  . 
+  Reduce by 101: cc_start -> CC_START cc_contents_m  . 
+
+
+State 153:
+102: cc_negated -> CC_NEGATED cc_contents_m  . 
+  Reduce by 102: cc_negated -> CC_NEGATED cc_contents_m  . 
+
+
+State 154:
+34: opt_debugnamelist -> debugnamelist_m '=' debugnamelist  . 
+36: debugnamelist -> debugnamelist  . opt_comma debugname 
+  0:   On opt_comma to state 175
+  1:   On ',' to state 176
+  Reduce by 34: opt_debugnamelist -> debugnamelist_m '=' debugnamelist  . 
+  Reduce by 39: opt_comma ->  . 
+
+
+State 155:
+37: debugnamelist -> debugname  . 
+  Reduce by 37: debugnamelist -> debugname  . 
+
+
+State 156:
+40: debugname -> IDENTIFIER  . 
+  Reduce by 40: debugname -> IDENTIFIER  . 
+
+
+State 157:
+41: opt_steprange -> debugsteps_m '=' firststep  . opt_laststep 
+  0:   On opt_laststep to state 177
+  1:   On DECIMAL to state 178
+  Reduce by 44: opt_laststep ->  . 
+
+
+State 158:
+43: firststep -> DECIMAL  . 
+  Reduce by 43: firststep -> DECIMAL  . 
+
+
+State 159:
+58: regex_list -> regex_list ORNL regex_list  . 
+58: regex_list -> regex_list  . ORNL regex_list 
+  0 (removed by precedence):   On ORNL to state 114
+  Reduce by 58: regex_list -> regex_list ORNL regex_list  . 
+
+
+State 160:
+60: simple_regex -> miniscanner  . basic_regex 
+  0:   On basic_regex to state 118
+  1:   On p_regex to state 73
+  2:   On regex to state 74
+  3:   On combi_chars to state 75
+  4:   On '(' to state 76
+  5:   On characterclass to state 77
+  6:   On STRING to state 78
+  7:   On decimal to state 79
+  8:   On ESCAPE_SEQUENCE to state 80
+  9:   On identifier to state 81
+  10:   On CHAR to state 82
+  11:   On '.' to state 83
+  12:   On ',' to state 84
+  13:   On '^' to state 85
+  14:   On '$' to state 86
+  15:   On '=' to state 87
+  16:   On '-' to state 88
+  17:   On ''' to state 89
+  18:   On cc_set to state 90
+  19:   On DECIMAL to state 91
+  20:   On IDENTIFIER to state 40
+  21:   On cc_start to state 92
+  22:   On cc_negated to state 93
+  23:   On CC_START to state 94
+  24:   On CC_NEGATED to state 95
+
+
+State 161:
+72: miniscanner_block -> miniscanner '{' basic_rules  . basic_rule_def '}' 
+64: basic_rules -> basic_rules  . basic_rule 
+  0:   On basic_rule_def to state 179
+  1:   On basic_rule to state 180
+  2:   On basic_regex_list to state 181
+  3:   On EOF_PATTERN to state 182
+  4:   On basic_regex to state 183
+  5:   On p_regex to state 73
+  6:   On regex to state 74
+  7:   On combi_chars to state 75
+  8:   On '(' to state 76
+  9:   On characterclass to state 77
+  10:   On STRING to state 78
+  11:   On decimal to state 79
+  12:   On ESCAPE_SEQUENCE to state 80
+  13:   On identifier to state 81
+  14:   On CHAR to state 82
+  15:   On '.' to state 83
+  16:   On ',' to state 84
+  17:   On '^' to state 85
+  18:   On '$' to state 86
+  19:   On '=' to state 87
+  20:   On '-' to state 88
+  21:   On ''' to state 89
+  22:   On cc_set to state 90
+  23:   On DECIMAL to state 91
+  24:   On IDENTIFIER to state 40
+  25:   On cc_start to state 92
+  26:   On cc_negated to state 93
+  27:   On CC_START to state 94
+  28:   On CC_NEGATED to state 95
+  Reduce by 67: basic_rule_def ->  . 
+
+
+State 162:
+73: miniscanner -> '<' miniscanner_specs '>'  . 
+  Reduce by 73: miniscanner -> '<' miniscanner_specs '>'  . 
+
+
+State 163:
+76: miniscanner_list -> miniscanner_list ','  . identifier 
+  0:   On identifier to state 184
+  1:   On IDENTIFIER to state 40
+
+
+State 164:
+80: basic_regex -> p_regex '/' p_regex  . 
+  Reduce by 80: basic_regex -> p_regex '/' p_regex  . 
+
+
+State 165:
+84: regex -> regex '|' regex  . 
+83: regex -> regex  . regex 
+84: regex -> regex  . '|' regex 
+86: regex -> regex  . quantifier 
+  0:   On regex to state 124
+  1 (removed by precedence):   On '|' to state 125
+  2:   On quantifier to state 126
+  3:   On combi_chars to state 75
+  4 (removed by precedence):   On '(' to state 76
+  5:   On characterclass to state 77
+  6 (removed by precedence):   On '*' to state 127
+  7 (removed by precedence):   On '+' to state 128
+  8 (removed by precedence):   On '?' to state 129
+  9 (removed by precedence):   On '{' to state 130
+  10 (removed by precedence):   On STRING to state 78
+  11:   On decimal to state 79
+  12 (removed by precedence):   On ESCAPE_SEQUENCE to state 80
+  13:   On identifier to state 81
+  14:   On CHAR to state 82
+  15 (removed by precedence):   On '.' to state 83
+  16 (removed by precedence):   On ',' to state 84
+  17 (removed by precedence):   On '^' to state 85
+  18 (removed by precedence):   On '$' to state 86
+  19 (removed by precedence):   On '=' to state 87
+  20 (removed by precedence):   On '-' to state 88
+  21 (removed by precedence):   On ''' to state 89
+  22:   On cc_set to state 90
+  23 (removed by precedence):   On DECIMAL to state 91
+  24 (removed by precedence):   On IDENTIFIER to state 40
+  25:   On cc_start to state 92
+  26:   On cc_negated to state 93
+  27 (removed by precedence):   On CC_START to state 94
+  28 (removed by precedence):   On CC_NEGATED to state 95
+  Reduce by 84: regex -> regex '|' regex  . 
+
+
+State 166:
+91: quantifier -> '{' interval  . '}' 
+  0:   On '}' to state 185
+
+
+State 167:
+92: interval -> decimal  . 
+93: interval -> decimal  . ',' decimal 
+94: interval -> decimal  . ',' 
+  0:   On ',' to state 186
+  Reduce by 92: interval -> decimal  . 
+
+
+State 168:
+85: regex -> '(' regex ')'  . 
+  Reduce by 85: regex -> '(' regex ')'  . 
+
+
+State 169:
+96: characterclass -> characterclass CC_PLUS characterclass  . 
+96: characterclass -> characterclass  . CC_PLUS characterclass 
+97: characterclass -> characterclass  . CC_MINUS characterclass 
+  0 (removed by precedence):   On CC_PLUS to state 132
+  1 (removed by precedence):   On CC_MINUS to state 133
+  Reduce by 96: characterclass -> characterclass CC_PLUS characterclass  . 
+
+
+State 170:
+97: characterclass -> characterclass CC_MINUS characterclass  . 
+96: characterclass -> characterclass  . CC_PLUS characterclass 
+97: characterclass -> characterclass  . CC_MINUS characterclass 
+  0 (removed by precedence):   On CC_PLUS to state 132
+  1 (removed by precedence):   On CC_MINUS to state 133
+  Reduce by 97: characterclass -> characterclass CC_MINUS characterclass  . 
+
+
+State 171:
+99: cc_set -> cc_start cc_contents cc_end  . 
+  Reduce by 99: cc_set -> cc_start cc_contents cc_end  . 
+
+
+State 172:
+104: cc_contents -> cc_contents cc_element  . 
+  Reduce by 104: cc_contents -> cc_contents cc_element  . 
+
+
+State 173:
+103: cc_end -> ']'  . regex_block_m 
+  0:   On regex_block_m to state 187
+  Reduce by 145: regex_block_m ->  . 
+
+
+State 174:
+100: cc_set -> cc_negated cc_contents cc_end  . 
+  Reduce by 100: cc_set -> cc_negated cc_contents cc_end  . 
+
+
+State 175:
+36: debugnamelist -> debugnamelist opt_comma  . debugname 
+  0:   On debugname to state 188
+  1:   On IDENTIFIER to state 156
+
+
+State 176:
+38: opt_comma -> ','  . 
+  Reduce by 38: opt_comma -> ','  . 
+
+
+State 177:
+41: opt_steprange -> debugsteps_m '=' firststep opt_laststep  . 
+  Reduce by 41: opt_steprange -> debugsteps_m '=' firststep opt_laststep  . 
+
+
+State 178:
+45: opt_laststep -> DECIMAL  . 
+  Reduce by 45: opt_laststep -> DECIMAL  . 
+
+
+State 179:
+72: miniscanner_block -> miniscanner '{' basic_rules basic_rule_def  . '}' 
+66: basic_rule -> basic_rule_def  . '\x0a' 
+  0:   On '}' to state 189
+  1:   On '\x0a' to state 190
+
+
+State 180:
+64: basic_rules -> basic_rules basic_rule  . 
+  Reduce by 64: basic_rules -> basic_rules basic_rule  . 
+
+
+State 181:
+68: basic_rule_def -> basic_regex_list  . 
+69: basic_rule_def -> basic_regex_list  . block 
+62: basic_regex_list -> basic_regex_list  . ORNL basic_regex_list 
+  0:   On block to state 191
+  1:   On ORNL to state 192
+  2:   On BLOCK to state 115
+  Reduce by 68: basic_rule_def -> basic_regex_list  . 
+
+
+State 182:
+70: basic_rule_def -> EOF_PATTERN  . 
+71: basic_rule_def -> EOF_PATTERN  . block 
+  0:   On block to state 193
+  1:   On BLOCK to state 115
+  Reduce by 70: basic_rule_def -> EOF_PATTERN  . 
+
+
+State 183:
+63: basic_regex_list -> basic_regex  . 
+  Reduce by 63: basic_regex_list -> basic_regex  . 
+
+
+State 184:
+76: miniscanner_list -> miniscanner_list ',' identifier  . 
+  Reduce by 76: miniscanner_list -> miniscanner_list ',' identifier  . 
+
+
+State 185:
+91: quantifier -> '{' interval '}'  . 
+  Reduce by 91: quantifier -> '{' interval '}'  . 
+
+
+State 186:
+93: interval -> decimal ','  . decimal 
+94: interval -> decimal ','  . 
+  0:   On decimal to state 194
+  1:   On DECIMAL to state 91
+  Reduce by 94: interval -> decimal ','  . 
+
+
+State 187:
+103: cc_end -> ']' regex_block_m  . 
+  Reduce by 103: cc_end -> ']' regex_block_m  . 
+
+
+State 188:
+36: debugnamelist -> debugnamelist opt_comma debugname  . 
+  Reduce by 36: debugnamelist -> debugnamelist opt_comma debugname  . 
+
+
+State 189:
+72: miniscanner_block -> miniscanner '{' basic_rules basic_rule_def '}'  . 
+  Reduce by 72: miniscanner_block -> miniscanner '{' basic_rules basic_rule_def '}'  . 
+
+
+State 190:
+66: basic_rule -> basic_rule_def '\x0a'  . 
+  Reduce by 66: basic_rule -> basic_rule_def '\x0a'  . 
+
+
+State 191:
+69: basic_rule_def -> basic_regex_list block  . 
+  Reduce by 69: basic_rule_def -> basic_regex_list block  . 
+
+
+State 192:
+62: basic_regex_list -> basic_regex_list ORNL  . basic_regex_list 
+  0:   On basic_regex_list to state 195
+  1:   On basic_regex to state 183
+  2:   On p_regex to state 73
+  3:   On regex to state 74
+  4:   On combi_chars to state 75
+  5:   On '(' to state 76
+  6:   On characterclass to state 77
+  7:   On STRING to state 78
+  8:   On decimal to state 79
+  9:   On ESCAPE_SEQUENCE to state 80
+  10:   On identifier to state 81
+  11:   On CHAR to state 82
+  12:   On '.' to state 83
+  13:   On ',' to state 84
+  14:   On '^' to state 85
+  15:   On '$' to state 86
+  16:   On '=' to state 87
+  17:   On '-' to state 88
+  18:   On ''' to state 89
+  19:   On cc_set to state 90
+  20:   On DECIMAL to state 91
+  21:   On IDENTIFIER to state 40
+  22:   On cc_start to state 92
+  23:   On cc_negated to state 93
+  24:   On CC_START to state 94
+  25:   On CC_NEGATED to state 95
+
+
+State 193:
+71: basic_rule_def -> EOF_PATTERN block  . 
+  Reduce by 71: basic_rule_def -> EOF_PATTERN block  . 
+
+
+State 194:
+93: interval -> decimal ',' decimal  . 
+  Reduce by 93: interval -> decimal ',' decimal  . 
+
+
+State 195:
+62: basic_regex_list -> basic_regex_list ORNL basic_regex_list  . 
+62: basic_regex_list -> basic_regex_list  . ORNL basic_regex_list 
+  0 (removed by precedence):   On ORNL to state 192
+  Reduce by 62: basic_regex_list -> basic_regex_list ORNL basic_regex_list  . 
+
+
+

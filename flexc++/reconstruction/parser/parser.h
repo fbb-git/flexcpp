@@ -3,47 +3,30 @@
 #ifndef Parser_h_included
 #define Parser_h_included
 
-#include <vector>
-
-#include "../state/state.h"
 
 // $insert baseclass
 #include "parserbase.h"
 // $insert scanner.h
 #include "../scanner/scanner.h"
 
-namespace FBB
-{
-    class Arg;
-}
-
-class Options;
-class States;
-class Rules;
 
 #undef Parser
 class Parser: public ParserBase
 {
-    FBB::Arg &d_arg;
-
     // $insert scannerobject
     Scanner d_scanner;
-
-    Options &d_options;
-
+    bool d_print;
     std::string d_msg;
-    bool d_printTokens;
-    bool d_doError;                 // use the error() function at ERRORs
-
-    Rules &d_rules;
-    States &d_states;
-
-    static int s_ignoreToken;
-    static std::string s_lastMsg;
-
+    size_t d_nErrors = 0;
+        
     public:
-        Parser(Rules &rules, States &states);
+        Parser(bool doPrint);
         int parse();
+        void setScannerDebug(bool doDebug)
+        {
+            d_scanner.setDebug(doDebug);
+        }
+        size_t status() const;
 
     private:
         void block();
@@ -59,11 +42,39 @@ class Parser: public ParserBase
         void nextToken();
 };
 
+inline size_t Parser::status() const
+{
+    return d_nErrors;
+}
+
+#include <stdexcept>
+
+inline void Parser::error(char const *msg)
+{
+    ++d_nErrors;
+    throw std::runtime_error(msg);
+    std::cerr << msg << '\n';
+}
+
+// $insert lex
+inline int Parser::lex()
+{
+    print();
+    return d_scanner.lex();
+}
+
+// $insert print
+inline void Parser::print()
+{
+    enum { _UNDETERMINED_ = -2 };
+
+    if (d_print && d_token__ != _UNDETERMINED_ )
+    {
+        std::cout << "Token: " << symbol__(d_token__) <<
+                    ", text: `" <<  d_scanner.matched() << "'\n";
+    }
+}
+
 #endif
-
-
-
-
-
 
 

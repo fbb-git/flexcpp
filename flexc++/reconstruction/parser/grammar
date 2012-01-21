@@ -1,0 +1,85 @@
+%class-name Parser
+
+%filenames parser
+%parsefun-source parse.cc
+%scanner ../scanner/scanner.h
+%print                      d_scanner.matched()
+%scanner-token-function     d_scanner.lex()
+%debug
+
+%baseclass-preinclude preinclude.h
+
+%stype std::string
+
+// definition section
+%token  EXCL_START_CONDITION
+        INCL_START_CONDITION
+        SECTION_DELIMITER
+
+// options
+%token  BASECLASSHEADER
+        CLASSHEADER
+        CLASSNAME
+        DEBUG
+        DEBUG_STEPS
+        IMPLEMENTATIONHEADER
+        INPUTIMPLEMENTATION
+        INPUTINTERFACE
+        INTERACTIVE
+        LEXFUNCTIONNAME
+        LEXSOURCE
+        NAMESPACE
+        NOLINES
+        SKELETON_DIRECTORY
+ 
+// rules
+%token  ERR
+        BLOCK
+        IDENTIFIER      // a.k.a. NAME
+        EOF_PATTERN
+        STRING
+        DECIMAL
+        ESCAPE_SEQUENCE
+        CC_START
+        CC_NEGATED
+ 
+// character classes
+%token  PREDEFINED_CLASS
+ 
+// Operators:
+//  lowest precedence
+
+// operators in pattern: 
+%left       ORNL
+%nonassoc   '/'
+%left       '|'
+%left       CHAR 
+
+%left CC_PLUS CC_MINUS
+
+
+//%right      '*'  
+            // '+' '?' '{' '('
+// 
+// //  highest precedence
+
+%%
+
+input:
+    opt_directives          // directives. C(++) code now in a class
+    section_delimiter
+    rules
+;
+
+section_delimiter:
+    SECTION_DELIMITER
+    {
+        //sectionDelimiter();
+    }
+;
+
+%include inc/directives
+%include inc/options
+%include inc/rules
+%include inc/messages                 
+ 

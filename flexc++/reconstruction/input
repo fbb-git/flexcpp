@@ -1,7 +1,7 @@
 %class-name = "Scanner" 
 %lex-source = "lex.cc"
 %skeleton-directory = "../skeletons"
-// %debug
+%debug
 
 DECIMAL                 0|[1-9][[:digit:]]*
 OCTAL                   [0-7]
@@ -18,7 +18,7 @@ OPTBL                   [[:blank:]]*
 // line is a small miniscanner reading the rest of the line as-is, presumably
 // holding a named pattern RE.
 
-%x pre line comment string
+%x pre line comment string quote
 
 %%
 
@@ -51,6 +51,19 @@ OPTBL                   [[:blank:]]*
     "\\".                       more();
     \"                          return popSc(Parser::STRING);
     .                           more();
+}
+
+'                               {
+                                    more();
+                                    push(StartCondition__::quote);
+                                }
+<quote>{
+    '                           return popSc(Parser::STRING);
+
+    \\.                         |
+    .                           more(); 
+
+    \n                          return popSc(Parser::ERR);
 }
 
 {DECIMAL}                       return Parser::DECIMAL;
@@ -94,7 +107,7 @@ OPTBL                   [[:blank:]]*
 <INITIAL,pre>\n{OPTBL}          return '\n';
 
                                     // return special chars as themselves
-[][',^$=/|()*+?{}<>-]           return matched()[0];
+[]['.,^$=/|()*+?{}<>-]          return matched()[0];
 
                                     // return other chars as CHAR
 .                               return Parser::CHAR;
