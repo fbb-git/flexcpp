@@ -68,11 +68,6 @@ namespace_m:
     }
 ;
 
-start_condition_name_m:
-    {
-        d_msg = "list of start condition names";
-    }
-;
 
 cc_contents_m:
     {

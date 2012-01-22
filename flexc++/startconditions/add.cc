@@ -1,9 +1,7 @@
 #include "startconditions.ih"
 
-void StartConditions::add(SemVal const &nameVal)
+void StartConditions::add(string const &name)
 {
-    string const &name = strOf(nameVal);
-
     if (name == "INITIAL")      // Initial is defined by default by us.
         return;
 

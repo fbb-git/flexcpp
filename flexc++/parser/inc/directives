@@ -25,29 +25,35 @@ start_condition_directive:
     start_condition_names
 ;
 
+m_sc_name:
+    {
+        d_msg = "list of start condition names";
+    }
+;
+
 start_condition_type:
     INCL_START_CONDITION 
-    start_condition_name_m
+    m_sc_name
     {
-        //d_rules.setType(StartConditions::INCLUSIVE);
+        d_rules.setType(StartConditions::INCLUSIVE);
     }
 |
     EXCL_START_CONDITION 
-    start_condition_name_m
+    m_sc_name
     {
-        //d_rules.setType(StartConditions::EXCLUSIVE);
+        d_rules.setType(StartConditions::EXCLUSIVE);
     }
 ;
 
 start_condition_names:
     start_condition_names identifier
     {
-        //d_rules.addStartCondition(*$2);
+        d_rules.addStartCondition($2);
     }
 |
     identifier
     {
-        //d_rules.addStartCondition(*$1);
+        d_rules.addStartCondition($1);
     }
 ;
 

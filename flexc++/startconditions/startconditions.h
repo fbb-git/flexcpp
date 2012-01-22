@@ -76,7 +76,7 @@ class StartConditions
         };
 
         StartConditions();
-        void add(SemVal const &name);   // add a name to the active 
+        void add(std::string const &name);   // add a name to the set of SCs
         void add(size_t);
         void setType(Type type);
         void reset();

@@ -39,7 +39,7 @@ class Rules
 
         size_t ruleFromFinalState(size_t stateIdx) const;
         void setType(StartConditions::Type type);
-        void addStartCondition(SemVal const &name);
+        void addStartCondition(std::string const &name);
         void resetStartConditions();
         void useAll();
         void activateStartCondition(SemVal const &name);
@@ -112,7 +112,7 @@ inline void Rules::setType(StartConditions::Type type)
     d_startConditions.setType(type);
 }
 
-inline void Rules::addStartCondition(SemVal const &name)
+inline void Rules::addStartCondition(std::string const &name)
 {
     d_startConditions.add(name);
 }

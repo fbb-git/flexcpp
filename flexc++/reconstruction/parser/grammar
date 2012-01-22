@@ -35,7 +35,7 @@
 // rules
 %token  ERR
         BLOCK
-        IDENTIFIER      // a.k.a. NAME
+        IDENTIFIER
         EOF_PATTERN
         STRING
         DECIMAL
@@ -46,27 +46,20 @@
 // character classes
 %token  PREDEFINED_CLASS
  
-// Operators:
-//  lowest precedence
+// Pattern operators:
 
-// operators in pattern: 
+//  lowest precedence
 %left       ORNL
 %nonassoc   '/'
 %left       '|'
 %left       CHAR 
-
-%left CC_PLUS CC_MINUS
-
-
-//%right      '*'  
-            // '+' '?' '{' '('
-// 
-// //  highest precedence
+%left       CC_PLUS CC_MINUS
+//  highest precedence
 
 %%
 
 input:
-    opt_directives          // directives. C(++) code now in a class
+    opt_directives          // in inc/directives; options in inc/options
     section_delimiter
     rules
 ;
