@@ -221,6 +221,12 @@ _regex_list:
      _regex
 ;
 
+_eof_pattern:
+    EOF_PATTERN
+|
+    EOF_PATTERN _block
+;
+
 _msBlock_rule_def:
     // empty
 |
@@ -228,9 +234,7 @@ _msBlock_rule_def:
 |
     _regex_list _block    
 |
-    EOF_PATTERN
-|
-    EOF_PATTERN _block
+    _eof_pattern
 ;
 
 
@@ -246,7 +250,7 @@ _msBlock_rules:
     // empty
 ;
 
-_ms_block:
+_msBlock:
     _miniscanner '{' _msBlock_rules _msBlock_rule_def '}'
 ;
 
@@ -264,11 +268,9 @@ _rule_def:
     _optMs_regex_list _block    
         { cout << "BLOCK\n"; }
 |
-    _ms_block
+    _msBlock
 |
-    EOF_PATTERN
-|
-    EOF_PATTERN _block
+    _eof_pattern
 ;
 
     // each rule ends in a '\n'
