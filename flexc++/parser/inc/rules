@@ -1,223 +1,99 @@
-    // there may be no rules
-    // the scanner skips blanks, but returns '\n'
-rules:
-    rules rule
-|
-    // empty
-;
-
-block:
-    BLOCK
-    {
-        block();
-    }
-;
-
-    // each rule ends in a '\n'
-rule:                      
-    rule_def '\n'       
-;                               
-                                
-rule_def:
-    // only an empty line is OK
-|
-    // recovery from errors is OK: continue at the next line
-    error       
-|
-    // the scanner may return this token on incomplete tokens, like quotes
-    // missing the closing '
-    ERR error
-|
-        // just regular expressions, without an action block
-    regex_list 
-|
-        // the scanner returns a block if it encounters a non-blank character
-        // on a line after ws, unless the character is a '|'
-    regex_list block    
-        { cout << "BLOCK\n"; }
-|
-    miniscanner_block
-|
-    EOF_PATTERN
-|
-    EOF_PATTERN block
-;
-
-    // series of regexes, separated by '|' at the end of lines. E.g.,
-    // regex1   |
-    // regex2   |
-    // regex3
-    //
-    // ORNL is returned at '| ws \n'
-regex_list:
-    regex_list ORNL regex_list
-        {cout << "ORNL\n";}
-|
-    simple_regex
-;
-
-        // Regex in the form: <miniscanner>regex, The <miniscanner> is
-        // optional
-simple_regex:       
-    miniscanner basic_regex
-        {cout << "<MINI>RE\n";}
-|
-    basic_regex
-;
-
-basic_regex_list:
-     basic_regex_list ORNL basic_regex_list
-|
-     basic_regex
-;
-
-basic_rules:
-    basic_rules basic_rule
-|
-    // empty
-;
-
-    // each rule ends in a '\n'
-basic_rule:                      
-    basic_rule_def '\n'       
-;                               
-                                
-basic_rule_def:
-    // empty
-|
-    basic_regex_list 
-|
-    basic_regex_list block    
-|
-    EOF_PATTERN
-|
-    EOF_PATTERN block
-;
-
-miniscanner_block:
-    miniscanner '{' basic_rules basic_rule_def '}'
-;
-
-miniscanner:
-    '<' miniscanner_specs '>' 
-        {cout << "MINI\n";}
-;
-
-miniscanner_specs:
-    '*'
-|
-    miniscanner_list
-;
-
-miniscanner_list:
-    miniscanner_list ',' identifier
+_miniscanner_list:
+    _miniscanner_list ',' identifier
 |
     identifier
 ;
 
-    // a basic_regex is a regex, possibly with LA operator
-    // the handler must verify whether the regex contains ^ and $ symbols
-    // within the regex, for which a warning must be issue: ^, $ treated as
-    // normal characters
-basic_regex:
-    p_regex
+_miniscanner_specs:
+    '*'
 |
-    p_regex '/' p_regex 
-        {cout << "LA\n";}
+    _miniscanner_list
 ;
 
-    // the p_regex is a print-wrapper around regex
-p_regex:
-    regex
-        {cout << "RE\n";}
+_miniscanner:
+    '<' _miniscanner_specs '>' 
+        {cout << "MINI\n";}
 ;
 
-    // a regex is any regular expression, not having a LA operator
-    // It may have ^ and $ symbols
-regex:
-    combi_chars
+    // elements may need to be split between cc_element and regex
+    // if their handling turns out to be special
+_combi_chars:
+    STRING
 |
-    regex regex %prec CHAR
+    DECIMAL
 |
-    regex '|' regex
-        { cout << "OR\n"; }
+    ESCAPE_SEQUENCE
 |
-    '(' regex ')'
+    identifier
 |
-    regex quantifier
-        { cout << "QTY\n"; }
+    CHAR
 |
-    characterclass
-        { cout << "CLASS\n"; }
+    '.'
+|
+    ','
+|
+    '^'
+|
+    '$'
+|
+    '='
+|
+    '-'
+|
+    '\''
 ;
 
-quantifier:
+_decimal:
+    DECIMAL
+    {
+        $$ = d_matched;
+    }
+;
+
+_interval:
+    DECIMAL
+|
+    _decimal ',' DECIMAL
+|
+    _decimal ','
+;
+    
+
+_quantifier:
     '*'
 |
     '+'
 |
     '?'
 |
-    '{' interval '}'
+    '{' _interval '}'
 ;
 
-interval:
-    decimal
-|
-    decimal ',' decimal
-|
-    decimal ','
-;
-    
-decimal:
-    DECIMAL
+_m_contents:
+    {
+        d_msg = "character class";
+    }
 ;
 
-characterclass:
-    characterclass CC_PLUS characterclass
-|
-    characterclass CC_MINUS characterclass
-|
-    cc_set
-;
- 
-cc_set:
-    cc_start cc_contents cc_end
-|
-    cc_negated cc_contents cc_end
-;
-
-cc_start:
+_cc_start:
     CC_START
-    cc_contents_m
+    _m_contents
 ;
 
-cc_negated:
+_cc_negated:
     CC_NEGATED
-    cc_contents_m
+    _m_contents
 ;
 
-cc_end:
+_cc_end:
     ']'
-    regex_block_m
-;
-
-cc_contents:
-    cc_contents cc_element
-|
-    cc_element
-;
-
-cc_element:
-    combi_chars
-|
-    PREDEFINED_CLASS
-|
-    cc_char
+    {
+        d_msg = "pattern or action block";
+    }
 ;
 
     // characters handled identically within a character-set
-cc_char:
+_cc_char:
     '/'
 |
     '|'
@@ -243,32 +119,173 @@ cc_char:
     '['
 ;
 
-    // elements may need to be split between cc_element and regex
-    // if their handling turns out to be special
-combi_chars:
-    STRING
+_cc_element:
+    _combi_chars
 |
-    decimal
+    PREDEFINED_CLASS
 |
-    ESCAPE_SEQUENCE
-|
-    identifier
-|
-    CHAR
-|
-    '.'
-|
-    ','
-|
-    '^'
-|
-    '$'
-|
-    '='
-|
-    '-'
-|
-    '\''
+    _cc_char
 ;
 
+
+_cc_contents:
+    _cc_contents _cc_element
+|
+    _cc_element
+;
+
+
+_cc_set:
+    _cc_start _cc_contents _cc_end
+|
+    _cc_negated _cc_contents _cc_end
+;
+
+
+_characterclass:
+    _characterclass CC_PLUS _characterclass
+|
+    _characterclass CC_MINUS _characterclass
+|
+    _cc_set
+;
+ 
+
+    // a regex is any regular expression, not having a LA operator
+    // It may have ^ and $ symbols
+_basic_regex:
+    _combi_chars
+|
+    _basic_regex _basic_regex           %prec CHAR
+|
+    _basic_regex '|' _basic_regex
+        { cout << "OR\n"; }
+|
+    '(' _basic_regex ')'
+|
+    _basic_regex _quantifier
+        { cout << "QTY\n"; }
+|
+    _characterclass
+        { cout << "CLASS\n"; }
+;
+
+
+    // the p_regex is a print-wrapper around regex
+_p_regex:
+    _basic_regex
+        {cout << "RE\n";}
+;
+
+    // a _regex is a regex, possibly with LA operator
+    // the handler must verify whether the regex contains ^ and $ symbols
+    // within the regex, for which a warning must be issue: ^, $ treated as
+    // normal characters
+_ms_regex:
+    _p_regex
+|
+    _p_regex '/' _p_regex 
+        {cout << "LA\n";}
+;
+
+
+        // Regex in the form: <miniscanner>regex, The <miniscanner> is
+        // optional
+_opt_ms_regex:       
+    _miniscanner _ms_regex
+        {cout << "<MINI>RE\n";}
+|
+    _ms_regex
+;
+
+    // series of regexes, separated by '|' at the end of lines. E.g.,
+    // regex1   |
+    // regex2   |
+    // regex3
+    //
+    // ORNL is returned at '| ws \n'
+_regex_list:
+    _regex_list ORNL _regex_list
+        {cout << "ORNL\n";}
+|
+    _opt_ms_regex
+;
+
+_block:
+    BLOCK
+    {
+        block();
+    }
+;
+
+_ms_regex_list:
+     _ms_regex_list ORNL _ms_regex_list
+|
+     _ms_regex
+;
+
+_ms_rule_def:
+    // empty
+|
+    _ms_regex_list 
+|
+    _ms_regex_list _block    
+|
+    EOF_PATTERN
+|
+    EOF_PATTERN _block
+;
+
+
+    // each rule ends in a '\n'
+_ms_rule:                      
+    _ms_rule_def '\n'       
+;                               
+                                
+
+_ms_rules:
+    _ms_rules _ms_rule
+|
+    // empty
+;
+
+
+_miniscanner_block:
+    _miniscanner '{' _ms_rules _ms_rule_def '}'
+;
+
+
+_rule_def:
+    // only an empty line is OK
+|
+    // recovery from errors is OK: continue at the next line
+    error       
+|
+        // just regular expressions, without an action block
+    _regex_list 
+|
+        // the scanner returns a block if it encounters a non-blank character
+        // on a line after ws, unless the character is a '|'
+    _regex_list _block    
+        { cout << "BLOCK\n"; }
+|
+    _miniscanner_block
+|
+    EOF_PATTERN
+|
+    EOF_PATTERN _block
+;
+
+    // each rule ends in a '\n'
+_rule:                      
+    _rule_def '\n'       
+;                               
+                                
+    // there may be no rules
+    // the scanner skips blanks, but returns '\n'
+rules:
+    rules _rule
+|
+    // empty
+;
 
