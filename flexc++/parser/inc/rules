@@ -151,19 +151,19 @@ _characterclass:
 ;
  
 
-    // a regex is any regular expression, not having a LA operator
+    // a _simple_regex is a regular expression, not having a LA operator
     // It may have ^ and $ symbols
-_basic_regex:
+_simple_regex:
     _combi_chars
 |
-    _basic_regex _basic_regex           %prec CHAR
+    _simple_regex _simple_regex           %prec CHAR
 |
-    _basic_regex '|' _basic_regex
+    _simple_regex '|' _simple_regex
         { cout << "OR\n"; }
 |
-    '(' _basic_regex ')'
+    '(' _simple_regex ')'
 |
-    _basic_regex _quantifier
+    _simple_regex _quantifier
         { cout << "QTY\n"; }
 |
     _characterclass
@@ -173,7 +173,7 @@ _basic_regex:
 
     // the p_regex is a print-wrapper around regex
 _p_regex:
-    _basic_regex
+    _simple_regex
         {cout << "RE\n";}
 ;
 
@@ -181,34 +181,31 @@ _p_regex:
     // the handler must verify whether the regex contains ^ and $ symbols
     // within the regex, for which a warning must be issue: ^, $ treated as
     // normal characters
-_ms_regex:
+_regex:
     _p_regex
 |
     _p_regex '/' _p_regex 
         {cout << "LA\n";}
 ;
 
-
-        // Regex in the form: <miniscanner>regex, The <miniscanner> is
-        // optional
-_opt_ms_regex:       
-    _miniscanner _ms_regex
+        // regex in the form: <miniscanner>(opt) regex
+_optMs_regex:       
+    _miniscanner _regex
         {cout << "<MINI>RE\n";}
 |
-    _ms_regex
+    _regex
 ;
 
-    // series of regexes, separated by '|' at the end of lines. E.g.,
-    // regex1   |
-    // regex2   |
-    // regex3
-    //
-    // ORNL is returned at '| ws \n'
-_regex_list:
-    _regex_list ORNL _regex_list
+    // series of _optMs_regexes, separated by '|' at the end of lines. E.g.,
+    // _optMs_regex1   |
+    // _optMs_regex2   |
+    // _optMs_regex3
+    // (ORNL is returned at '| {OPTBL} \n')
+_optMs_regex_list:
+    _optMs_regex_list ORNL _optMs_regex_list
         {cout << "ORNL\n";}
 |
-    _opt_ms_regex
+    _optMs_regex
 ;
 
 _block:
@@ -218,18 +215,18 @@ _block:
     }
 ;
 
-_ms_regex_list:
-     _ms_regex_list ORNL _ms_regex_list
+_regex_list:
+     _regex_list ORNL _regex_list
 |
-     _ms_regex
+     _regex
 ;
 
-_ms_rule_def:
+_msBlock_rule_def:
     // empty
 |
-    _ms_regex_list 
+    _regex_list 
 |
-    _ms_regex_list _block    
+    _regex_list _block    
 |
     EOF_PATTERN
 |
@@ -238,22 +235,20 @@ _ms_rule_def:
 
 
     // each rule ends in a '\n'
-_ms_rule:                      
-    _ms_rule_def '\n'       
+_msBlock_rule:                      
+    _msBlock_rule_def '\n'       
 ;                               
                                 
 
-_ms_rules:
-    _ms_rules _ms_rule
+_msBlock_rules:
+    _msBlock_rules _msBlock_rule
 |
     // empty
 ;
 
-
-_miniscanner_block:
-    _miniscanner '{' _ms_rules _ms_rule_def '}'
+_ms_block:
+    _miniscanner '{' _msBlock_rules _msBlock_rule_def '}'
 ;
-
 
 _rule_def:
     // only an empty line is OK
@@ -262,14 +257,14 @@ _rule_def:
     error       
 |
         // just regular expressions, without an action block
-    _regex_list 
+    _optMs_regex_list 
 |
         // the scanner returns a block if it encounters a non-blank character
         // on a line after ws, unless the character is a '|'
-    _regex_list _block    
+    _optMs_regex_list _block    
         { cout << "BLOCK\n"; }
 |
-    _miniscanner_block
+    _ms_block
 |
     EOF_PATTERN
 |
