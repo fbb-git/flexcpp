@@ -9,7 +9,7 @@ void Parser::block()
     {
         int token = d_scanner.lex();
 
-cout << "       block lex() reveives: `" << d_scanner.matched() << "'\n";
+cout << "       block lex() reveives: `" << d_matched << "'\n";
 
         switch (token)
         {
@@ -50,7 +50,7 @@ cout << "       block lex() reveives: `" << d_scanner.matched() << "'\n";
             break;
                 
             default:
-                block += d_scanner.matched();
+                block += d_matched;
             break;
         }
     }

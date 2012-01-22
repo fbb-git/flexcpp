@@ -28,6 +28,7 @@ class Parser: public ParserBase
 
     // $insert scannerobject
     Scanner d_scanner;
+    std::string const &d_matched;   // text matched at the last lex() call.
 
     Options &d_options;
 
