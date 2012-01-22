@@ -8,34 +8,27 @@
 class Block
 {
     size_t  d_line;
-    std::string d_source;               // the source in which the block 
+    std::string d_filename;               // the filename in which the block 
                                         // was found. The block's text itself
                                         // is in the Block's base class
     int     d_level;
-    std::string d_block;
+    std::string d_str;
     
     public:
         Block();
 
         void clear();
                                         // clears the previous block contents
-        void open(size_t lineno, std::string const &source);
+        void open(size_t lineno, std::string const &filename);
         bool close();
-
-        void operator+=(int ch);
+        void indent();
         void operator+=(std::string const &text);
   
-        operator bool() const;          // return true if a block is active
-
-                                        // add text if a block is active,
-        bool operator()(std::string const &text); 
-        bool operator()(int ch);        // returning true if active
-
+//        operator bool() const;          // return true if a block is active
         size_t level() const;
         std::string const &str() const; // the block's contents
-
-        std::string const &source() const;
         size_t line() const;
+        std::string const &filename() const;
 };
 
 inline Block::Block()
@@ -43,29 +36,14 @@ inline Block::Block()
     d_level(0)
 {}
 
-inline void Block::operator+=(std::string const &text)
-{
-    d_block += text;
-}
-
-inline void Block::operator+=(int ch)
-{
-    d_block += static_cast<char>(ch);
-}
-
-inline Block::operator bool() const
-{
-    return d_level;
-}
-
 inline size_t Block::line() const
 {
     return d_line;
 }
 
-inline std::string const &Block::source() const
+inline std::string const &Block::filename() const
 {
-    return d_source;
+    return d_filename;
 }
 
 inline size_t Block::level() const
@@ -73,11 +51,24 @@ inline size_t Block::level() const
     return d_level;
 }
 
-inline std::string const &Block::str() const
+inline void Block::indent()
 {
-    return d_block;
+    d_str += std::string((d_level - 1) * 4, ' ');
 }
 
+inline std::string const &Block::str() const
+{
+    return d_str;
+}
+
+inline std::ostream &operator<<(std::ostream &out, Block const &block)
+{
+    return out << block.str();
+}
 
 #endif
+
+
+
+
 

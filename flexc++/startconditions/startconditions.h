@@ -81,7 +81,7 @@ class StartConditions
         void setType(Type type);
         void reset();
         void useAll();
-        void activate(SemVal const &name);
+        void activate(std::string const &name);
         void useInitialSC();
         const_iterator begin() const;
         const_iterator end() const;

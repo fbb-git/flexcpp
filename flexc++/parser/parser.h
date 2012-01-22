@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "../state/state.h"
+#include "../block/block.h"
 
 // $insert baseclass
 #include "parserbase.h"
@@ -29,6 +30,7 @@ class Parser: public ParserBase
     // $insert scannerobject
     Scanner d_scanner;
     std::string const &d_matched;   // text matched at the last lex() call.
+    Block   d_block;
 
     Options &d_options;
 

@@ -1,7 +1,7 @@
 %class-name = "Scanner" 
 %lex-source = "lex.cc"
 %skeleton-directory = "../skeletons"
-%debug
+// %debug
 
 DECIMAL                 0|[1-9][[:digit:]]*
 OCTAL                   [0-7]
@@ -24,7 +24,7 @@ OPTBL                   [[:blank:]]*
 
 <INITIAL,pre>{OPTBL}"//".*      // skip EOLN comment
                                 
-{BL}[^}|\n].*                  return block(); 
+{BL}[^}|\n].*                   return block(); 
 
 {OPTBL}"|"{OPTBL}\n{OPTBL}      return Parser::ORNL;
 
@@ -102,7 +102,7 @@ OPTBL                   [[:blank:]]*
 
 <pre>{
     "%%"                        {
-                                    push(StartCondition__::INITIAL);
+                                    switchToINITIAL();
                                     return Parser::SECTION_DELIMITER;
                                 }
 

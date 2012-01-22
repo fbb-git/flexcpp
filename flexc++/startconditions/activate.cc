@@ -1,8 +1,7 @@
 #include "startconditions.ih"
 
-void StartConditions::activate(SemVal const &nameVal)
+void StartConditions::activate(string const &name)
 {
-    string const &name = strOf(nameVal);
     auto iter = d_hash.find(name);
 
     if (name == "INITIAL")

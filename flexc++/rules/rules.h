@@ -42,7 +42,7 @@ class Rules
         void addStartCondition(std::string const &name);
         void resetStartConditions();
         void useAll();
-        void activateStartCondition(SemVal const &name);
+        void activateStartCondition(std::string const &name);
         std::vector<size_t> const &operator()   // vector of rule nrs
                                     (std::string const &startCondition) const;
         void useInitialSC();
@@ -127,7 +127,7 @@ inline void Rules::useAll()
     d_startConditions.useAll();
 }
 
-inline void Rules::activateStartCondition(SemVal const &name)
+inline void Rules::activateStartCondition(std::string const &name)
 {
     d_startConditions.activate(name);
 }

@@ -1,18 +1,27 @@
-_miniscanner_list:
-    _miniscanner_list ',' identifier
-|
+_ms_name:
     identifier
+    {
+        d_rules.activateStartCondition($1);
+    }
 ;
 
-_miniscanner_specs:
-    '*'
+_ms_list:
+    _ms_list ',' _ms_name
 |
-    _miniscanner_list
+    _ms_name
 ;
 
-_miniscanner:
-    '<' _miniscanner_specs '>' 
-        {cout << "MINI\n";}
+_ms_specs:
+    '*'
+    {   // following <*> all mini scanners apply
+        d_rules.useAll();
+    }    
+|
+    _ms_list
+;
+
+_ms:
+    '<' _ms_specs '>' 
 ;
 
     // elements may need to be split between cc_element and regex
@@ -190,8 +199,10 @@ _regex:
 
         // regex in the form: <miniscanner>(opt) regex
 _optMs_regex:       
-    _miniscanner _regex
-        {cout << "<MINI>RE\n";}
+    _ms _regex
+    {   // following a <ms>regex, reset the ms back to INITIAL
+        d_rules.resetStartConditions();
+    }
 |
     _regex
 ;
@@ -201,6 +212,7 @@ _optMs_regex:
     // _optMs_regex2   |
     // _optMs_regex3
     // (ORNL is returned at '| {OPTBL} \n')
+    // at ORNL any previously set ms-spec ends, and is back to INITIAL
 _optMs_regex_list:
     _optMs_regex_list ORNL _optMs_regex_list
         {cout << "ORNL\n";}
@@ -247,7 +259,10 @@ _msBlock_rules:
 ;
 
 _ms_block:
-    _miniscanner '{' _msBlock_rules _msBlock_rule_def '}'
+    _ms '{' _msBlock_rules _msBlock_rule_def '}'
+    {   // following a ms_block, reset the startconditions to 'INITIAL'
+        d_rules.resetStartConditions();
+    }
 ;
 
 _rule_def:

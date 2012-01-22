@@ -2,14 +2,13 @@
 
 void Parser::block()
 {
-    size_t nested = 0;
-    string block;
-    
+    d_block.open(d_scanner.lineNr(), d_scanner.filename());
+
+cout << "PARSER::BLOCK: STARTING A BLOCK\n"    ;
+
     while (true)
     {
         int token = d_scanner.lex();
-
-cout << "       block lex() reveives: `" << d_matched << "'\n";
 
         switch (token)
         {
@@ -17,40 +16,30 @@ cout << "       block lex() reveives: `" << d_matched << "'\n";
             return;
             
             case '{':
-                ++nested;
-                block += '{';
+                d_block.open(d_scanner.lineNr(), d_scanner.filename());
             break;
             
             case '}':
-            {
-                --nested;
-                size_t lastUsedPos = block.find_last_not_of(' ');
-                if (lastUsedPos + 4 <= block.length())
-                    block.resize(block.length() - 4);
-                block += '}';
-                if (nested == 0)
-                {
-                    d_scanner.blockEnds();
-                    cout << "    RETURNING BLOCK:\n" << block << "\n";
-                    return;
-                }
-            }
+                d_block.close();
             break;
     
             case '\n':
-                if (nested != 0)
-                    block += '\n' + string(4 * nested, ' ');
-                else
+                d_block += d_matched;
+
+                if (d_block.level() == 1)
                 {
-                    d_scanner.pushEOLN();   // redo the newline
+                    d_block.close();
+                    d_scanner.pushEOLN();
                     d_scanner.blockEnds();
-                    cout << "RETURNING BLOCK: " << block << "\n";
+                    cout << "RETURNING BLOCK:\n" << d_block << "\n";
                     return;
                 }
+
+                d_block.indent();
             break;
                 
             default:
-                block += d_matched;
+                d_block += d_matched;
             break;
         }
     }

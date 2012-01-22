@@ -34,6 +34,7 @@ class Scanner: public ScannerBase
         void blockEnds();
 
     private:
+        void switchToINITIAL();
         using ScannerBase::push;
 
         void push(StartCondition__ sc); // push and revert to sc

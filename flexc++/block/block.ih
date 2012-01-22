@@ -1,8 +1,9 @@
 #include "block.h"
 
-#include <ostream>
+#include <bobcat/string>
 
 using namespace std;
+using namespace FBB;
 
 
 
