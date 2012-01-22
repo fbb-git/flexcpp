@@ -1,52 +1,191 @@
+_inputinterface:
+    INPUTINTERFACE
+    {
+        //d_msg = "name of the file holding Input's interface";
+    }
+;
+
+_inputimplementation:
+    INPUTIMPLEMENTATION
+    {
+        //d_msg = "name of the file holding Input's implementations";
+    }
+;
+
+_classname:
+    CLASSNAME
+    {
+        //d_msg = "class name";
+    }
+;
+
+_lexfunctionname:
+    LEXFUNCTIONNAME
+    {
+        //d_msg = "name of the lex() function";
+    }
+;
+
+_baseclassheader:
+    BASECLASSHEADER
+    {
+        //d_msg = "scanner base class header file name";
+    }
+;
+
+_classheader:
+    CLASSHEADER
+    {
+        //d_msg = "scanner class header file name";
+    }
+;
+
+_implementationheader:
+    IMPLEMENTATIONHEADER
+    {
+        //d_msg = "implementation header file name";
+    }
+;
+
+_lexsource:
+    LEXSOURCE
+    {
+        //d_msg = "source file name of the lex function";
+    }
+;
+
+_skeleton_directory:
+    SKELETON_DIRECTORY
+    {
+        //d_msg = "directory name of the flexc++ skeleton files";
+    }
+;
+
+_namespace:
+    NAMESPACE
+    {
+        //d_msg = "name of the namespace to use";
+    }
+;
+
+_stringOrIdent:
+    STRING
+|
+    IDENTIFIER
+;
+
+_opt_comma:
+    ','
+|
+    // empty
+;
+
+_debugname:
+    IDENTIFIER
+    {
+        //d_options.setDebug(d_matched);
+    }
+;
+
+_debugnamelist:
+    _debugnamelist _opt_comma _debugname
+|
+    _debugname
+;
+
+_m_debugnamelist:
+    {
+        //d_msg = "debug identifiers";
+    }
+;
+
+_opt_debugnamelist:
+    _m_debugnamelist '=' _debugnamelist
+|
+    {
+        //d_options.setDebug();
+    }
+;
+
+_firststep:
+    DECIMAL
+    {
+        //d_options.setStepRange(d_matched);
+    }
+;
+
+_opt_laststep:
+    // empty
+|
+    DECIMAL
+    {
+        //d_options.setLastStep(d_matched);
+    }
+;
+
+_m_debugsteps:
+    {
+        //d_msg = "debug step range";
+    }
+;
+
+_opt_steprange:
+    _m_debugsteps '=' _firststep _opt_laststep
+|
+    {
+        //d_options.setStepRange();
+    }
+;
+
 option:
-    inputinterface_m '=' stringOrIdent
+    _inputinterface '=' _stringOrIdent
     {
-        //d_options.setInputInterfacePath(d_scanner.matched());
+        //d_options.setInputInterfacePath(d_matched);
     }
 |
-    inputimplementation_m '=' stringOrIdent
+    _inputimplementation '=' _stringOrIdent
     {
-        //d_options.setInputImplementationPath(d_scanner.matched());
+        //d_options.setInputImplementationPath(d_matched);
     }
 |
-    classname_m '=' stringOrIdent
+    _classname '=' _stringOrIdent
     {
-        //d_options.setClassName(d_scanner.matched());
+        //d_options.setClassName(d_matched);
     }
 |
-    lexfunctionname_m '=' stringOrIdent
+    _lexfunctionname '=' _stringOrIdent
     {
-        //d_options.setLexFunctionName(d_scanner.matched());
+        //d_options.setLexFunctionName(d_matched);
     }
 |
-    baseclassheader_m '=' stringOrIdent
+    _baseclassheader '=' _stringOrIdent
     {
-        //d_options.setBaseClassHeaderPath(d_scanner.matched());
+        //d_options.setBaseClassHeaderPath(d_matched);
     }
 |
-    classheader_m '=' stringOrIdent
+    _classheader '=' _stringOrIdent
     {
-        //d_options.setClassHeaderPath(d_scanner.matched());
+        //d_options.setClassHeaderPath(d_matched);
     }
 |
-    implementationheader_m '=' stringOrIdent
+    _implementationheader '=' _stringOrIdent
     {
-        //d_options.setImplementationHeaderPath(d_scanner.matched());
+        //d_options.setImplementationHeaderPath(d_matched);
     }
 |
-    lexsource_m '=' stringOrIdent
+    _lexsource '=' _stringOrIdent
     {
-        //d_options.setLexSourcePath(d_scanner.matched());
+        //d_options.setLexSourcePath(d_matched);
     }
 |
-    skeleton_directory_m '=' stringOrIdent
+    _skeleton_directory '=' _stringOrIdent
     {
-        //d_options.setSkeletonDirectory(d_scanner.matched());
+        //d_options.setSkeletonDirectory(d_matched);
     }
 |
-    namespace_m '=' stringOrIdent
+    _namespace '=' _stringOrIdent
     {
-        //d_options.setNameSpace(d_scanner.matched());
+        //d_options.setNameSpace(d_matched);
     }
 |
     INTERACTIVE
@@ -54,9 +193,9 @@ option:
         //d_options.setInteractive();
     }
 |
-    DEBUG opt_debugnamelist
+    DEBUG _opt_debugnamelist
 |
-    DEBUG_STEPS opt_steprange
+    DEBUG_STEPS _opt_steprange
 |
     NOLINES
     {
@@ -64,59 +203,3 @@ option:
     }
 ;
 
-stringOrIdent:
-    STRING
-|
-    IDENTIFIER
-;
-
-opt_debugnamelist:
-    debugnamelist_m '=' debugnamelist
-|
-    {
-        //d_options.setDebug();
-    }
-;
-
-debugnamelist:
-    debugnamelist opt_comma debugname
-|
-    debugname
-;
-
-opt_comma:
-    ','
-|
-    // empty
-;
-
-debugname:
-    IDENTIFIER
-    {
-        //d_options.setDebug(d_scanner.matched());
-    }
-;
-
-opt_steprange:
-    debugsteps_m '=' firststep opt_laststep
-|
-    {
-        //d_options.setStepRange();
-    }
-;
-
-firststep:
-    DECIMAL
-    {
-        //d_options.setStepRange(d_scanner.matched());
-    }
-;
-
-opt_laststep:
-    // empty
-|
-    DECIMAL
-    {
-        //d_options.setLastStep(d_scanner.matched());
-    }
-;

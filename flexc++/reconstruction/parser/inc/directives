@@ -1,69 +1,77 @@
-opt_directives:
-    opt_directives directive_line
+_sc_name:
+    {
+        //d_msg = "list of start condition names";
+    }
+;
+
+_start_condition_type:
+    INCL_START_CONDITION 
+    _sc_name
+    {
+        //d_rules.setType(StartConditions::INCLUSIVE);
+    }
 |
-    // empty
+    EXCL_START_CONDITION 
+    _sc_name
+    {
+        //d_rules.setType(StartConditions::EXCLUSIVE);
+    }
 ;
 
-directive_line:
-    directive '\n'
+_start_condition_names:
+    _start_condition_names identifier
+    {
+        //d_rules.addStartCondition($2);
+    }
+|
+    identifier
+    {
+        //d_rules.addStartCondition($1);
+    }
 ;
 
-directive:
+_start_condition_directive:
+    _start_condition_type
+    _start_condition_names
+;
+
+_name_def:
+    identifier
+    {
+        //d_scanner.newDefinition();  // briefly switches to 'line'
+    }
+;
+
+_name_definition:
+    _name_def STRING
+    {
+        //d_scanner.addDefinition($1, d_scanner.matched());
+    }
+;
+
+_directive:
     option
 |
-    start_condition_directive
+    _start_condition_directive
 |
-    name_definition
+    _name_definition
 |
     error
 |
     // empty
 ;
 
-start_condition_directive:
-    start_condition_type
-    start_condition_names
+_directive_line:
+    _directive '\n'
 ;
 
-start_condition_type:
-    INCL_START_CONDITION 
-    start_condition_name_m
-    {
-        //d_rules.setType(StartConditions::INCLUSIVE);
-    }
+opt_directives:
+    opt_directives _directive_line
 |
-    EXCL_START_CONDITION 
-    start_condition_name_m
-    {
-        //d_rules.setType(StartConditions::EXCLUSIVE);
-    }
+    // empty
 ;
 
-start_condition_names:
-    start_condition_names identifier
-    {
-        //d_rules.addStartCondition(*$2);
-    }
-|
-    identifier
-    {
-        //d_rules.addStartCondition(*$1);
-    }
-;
 
-name_definition:
-    name_def STRING
-    {
-        d_scanner.addDefinition($1, d_scanner.matched());
-    }
-;
-
-name_def:
-    identifier
-    {
-        d_scanner.newDefinition();  // briefly switches to 'line'
-    }
-;
 
 
 

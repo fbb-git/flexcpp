@@ -33,8 +33,7 @@
         SKELETON_DIRECTORY
  
 // rules
-%token  ERR
-        BLOCK
+%token  BLOCK
         IDENTIFIER
         EOF_PATTERN
         STRING
@@ -60,19 +59,18 @@
 
 input:
     opt_directives          // in inc/directives; options in inc/options
-    section_delimiter
+    SECTION_DELIMITER
     rules
 ;
 
-section_delimiter:
-    SECTION_DELIMITER
+identifier:
+    IDENTIFIER
     {
-        //sectionDelimiter();
+        $$ = d_scanner.matched();
     }
 ;
 
 %include inc/directives
 %include inc/options
 %include inc/rules
-%include inc/messages                 
  
