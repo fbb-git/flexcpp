@@ -1,74 +1,3 @@
-inputinterface_m:
-    INPUTINTERFACE
-    {
-        d_msg = "name of the file holding Input's interface";
-    }
-;
-
-inputimplementation_m:
-    INPUTIMPLEMENTATION
-    {
-        d_msg = "name of the file holding Input's implementations";
-    }
-;
-
-classname_m:
-    CLASSNAME
-    {
-        d_msg = "class name";
-    }
-;
-
-lexfunctionname_m:
-    LEXFUNCTIONNAME
-    {
-        d_msg = "name of the lex() function";
-    }
-;
-
-baseclassheader_m:
-    BASECLASSHEADER
-    {
-        d_msg = "scanner base class header file name";
-    }
-;
-
-classheader_m:
-    CLASSHEADER
-    {
-        d_msg = "scanner class header file name";
-    }
-;
-
-implementationheader_m:
-    IMPLEMENTATIONHEADER
-    {
-        d_msg = "implementation header file name";
-    }
-;
-
-lexsource_m:
-    LEXSOURCE
-    {
-        d_msg = "source file name of the lex function";
-    }
-;
-
-skeleton_directory_m:
-    SKELETON_DIRECTORY
-    {
-        d_msg = "directory name of the flexc++ skeleton files";
-    }
-;
-
-namespace_m:
-    NAMESPACE
-    {
-        d_msg = "name of the namespace to use";
-    }
-;
-
-
 cc_contents_m:
     {
         d_msg = "character class contents";
@@ -78,18 +7,6 @@ cc_contents_m:
 regex_block_m:
     {
         d_msg = "pattern or action block";
-    }
-;
-
-debugnamelist_m:
-    {
-        d_msg = "debug identifiers";
-    }
-;
-
-debugsteps_m:
-    {
-        d_msg = "debug step range";
     }
 ;
 

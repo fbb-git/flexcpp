@@ -71,6 +71,13 @@ section_delimiter:
     }
 ;
 
+identifier:
+    IDENTIFIER
+    {
+        $$ = d_scanner.matched();
+    }
+;
+
 %include inc/directives
 %include inc/options
 %include inc/rules

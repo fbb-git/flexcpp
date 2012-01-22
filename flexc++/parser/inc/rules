@@ -115,13 +115,6 @@ miniscanner_list:
     identifier
 ;
 
-identifier:
-    IDENTIFIER
-    {
-        $$ = d_scanner.matched();
-    }
-;
-
     // a basic_regex is a regex, possibly with LA operator
     // the handler must verify whether the regex contains ^ and $ symbols
     // within the regex, for which a warning must be issue: ^, $ treated as

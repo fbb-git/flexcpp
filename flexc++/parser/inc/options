@@ -1,122 +1,205 @@
-option:
-    inputinterface_m '=' stringOrIdent
+_inputinterface:
+    INPUTINTERFACE
     {
-        //d_options.setInputInterfacePath(d_scanner.matched());
-    }
-|
-    inputimplementation_m '=' stringOrIdent
-    {
-        //d_options.setInputImplementationPath(d_scanner.matched());
-    }
-|
-    classname_m '=' stringOrIdent
-    {
-        //d_options.setClassName(d_scanner.matched());
-    }
-|
-    lexfunctionname_m '=' stringOrIdent
-    {
-        //d_options.setLexFunctionName(d_scanner.matched());
-    }
-|
-    baseclassheader_m '=' stringOrIdent
-    {
-        //d_options.setBaseClassHeaderPath(d_scanner.matched());
-    }
-|
-    classheader_m '=' stringOrIdent
-    {
-        //d_options.setClassHeaderPath(d_scanner.matched());
-    }
-|
-    implementationheader_m '=' stringOrIdent
-    {
-        //d_options.setImplementationHeaderPath(d_scanner.matched());
-    }
-|
-    lexsource_m '=' stringOrIdent
-    {
-        //d_options.setLexSourcePath(d_scanner.matched());
-    }
-|
-    skeleton_directory_m '=' stringOrIdent
-    {
-        //d_options.setSkeletonDirectory(d_scanner.matched());
-    }
-|
-    namespace_m '=' stringOrIdent
-    {
-        //d_options.setNameSpace(d_scanner.matched());
-    }
-|
-    INTERACTIVE
-    {
-        //d_options.setInteractive();
-    }
-|
-    DEBUG opt_debugnamelist
-|
-    DEBUG_STEPS opt_steprange
-|
-    NOLINES
-    {
-        //d_options.setLines(false);
+        d_msg = "name of the file holding Input's interface";
     }
 ;
 
-stringOrIdent:
+_inputimplementation:
+    INPUTIMPLEMENTATION
+    {
+        d_msg = "name of the file holding Input's implementations";
+    }
+;
+
+_classname:
+    CLASSNAME
+    {
+        d_msg = "class name";
+    }
+;
+
+_lexfunctionname:
+    LEXFUNCTIONNAME
+    {
+        d_msg = "name of the lex() function";
+    }
+;
+
+_baseclassheader:
+    BASECLASSHEADER
+    {
+        d_msg = "scanner base class header file name";
+    }
+;
+
+_classheader:
+    CLASSHEADER
+    {
+        d_msg = "scanner class header file name";
+    }
+;
+
+_implementationheader:
+    IMPLEMENTATIONHEADER
+    {
+        d_msg = "implementation header file name";
+    }
+;
+
+_lexsource:
+    LEXSOURCE
+    {
+        d_msg = "source file name of the lex function";
+    }
+;
+
+_skeleton_directory:
+    SKELETON_DIRECTORY
+    {
+        d_msg = "directory name of the flexc++ skeleton files";
+    }
+;
+
+_namespace:
+    NAMESPACE
+    {
+        d_msg = "name of the namespace to use";
+    }
+;
+
+_stringOrIdent:
     STRING
 |
     IDENTIFIER
 ;
 
-opt_debugnamelist:
-    debugnamelist_m '=' debugnamelist
-|
-    {
-        //d_options.setDebug();
-    }
-;
-
-debugnamelist:
-    debugnamelist opt_comma debugname
-|
-    debugname
-;
-
-opt_comma:
+_opt_comma:
     ','
 |
     // empty
 ;
 
-debugname:
+_debugname:
     IDENTIFIER
     {
-        //d_options.setDebug(d_scanner.matched());
+        d_options.setDebug(d_matched);
     }
 ;
 
-opt_steprange:
-    debugsteps_m '=' firststep opt_laststep
+_debugnamelist:
+    _debugnamelist _opt_comma _debugname
+|
+    _debugname
+;
+
+_m_debugnamelist:
+    {
+        d_msg = "debug identifiers";
+    }
+;
+
+_opt_debugnamelist:
+    _m_debugnamelist '=' _debugnamelist
 |
     {
-        //d_options.setStepRange();
+        d_options.setDebug();
     }
 ;
 
-firststep:
+_firststep:
     DECIMAL
     {
-        //d_options.setStepRange(d_scanner.matched());
+        d_options.setStepRange(d_matched);
     }
 ;
 
-opt_laststep:
+_opt_laststep:
     // empty
 |
     DECIMAL
     {
-        //d_options.setLastStep(d_scanner.matched());
+        d_options.setLastStep(d_matched);
     }
 ;
+
+_m_debugsteps:
+    {
+        d_msg = "debug step range";
+    }
+;
+
+_opt_steprange:
+    _m_debugsteps '=' _firststep _opt_laststep
+|
+    {
+        d_options.setStepRange();
+    }
+;
+
+option:
+    _inputinterface '=' _stringOrIdent
+    {
+        d_options.setInputInterfacePath(d_matched);
+    }
+|
+    _inputimplementation '=' _stringOrIdent
+    {
+        d_options.setInputImplementationPath(d_matched);
+    }
+|
+    _classname '=' _stringOrIdent
+    {
+        d_options.setClassName(d_matched);
+    }
+|
+    _lexfunctionname '=' _stringOrIdent
+    {
+        d_options.setLexFunctionName(d_matched);
+    }
+|
+    _baseclassheader '=' _stringOrIdent
+    {
+        d_options.setBaseClassHeaderPath(d_matched);
+    }
+|
+    _classheader '=' _stringOrIdent
+    {
+        d_options.setClassHeaderPath(d_matched);
+    }
+|
+    _implementationheader '=' _stringOrIdent
+    {
+        d_options.setImplementationHeaderPath(d_matched);
+    }
+|
+    _lexsource '=' _stringOrIdent
+    {
+        d_options.setLexSourcePath(d_matched);
+    }
+|
+    _skeleton_directory '=' _stringOrIdent
+    {
+        d_options.setSkeletonDirectory(d_matched);
+    }
+|
+    _namespace '=' _stringOrIdent
+    {
+        d_options.setNameSpace(d_matched);
+    }
+|
+    INTERACTIVE
+    {
+        d_options.setInteractive();
+    }
+|
+    DEBUG _opt_debugnamelist
+|
+    DEBUG_STEPS _opt_steprange
+|
+    NOLINES
+    {
+        d_options.setLines(false);
+    }
+;
+

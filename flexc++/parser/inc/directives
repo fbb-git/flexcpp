@@ -1,52 +1,25 @@
-opt_directives:
-    opt_directives directive_line
-|
-    // empty
-;
-
-directive_line:
-    directive '\n'
-;
-
-directive:
-    option
-|
-    start_condition_directive
-|
-    name_definition
-|
-    error
-|
-    // empty
-;
-
-start_condition_directive:
-    start_condition_type
-    start_condition_names
-;
-
-m_sc_name:
+_sc_name:
     {
         d_msg = "list of start condition names";
     }
 ;
 
-start_condition_type:
+_start_condition_type:
     INCL_START_CONDITION 
-    m_sc_name
+    _sc_name
     {
         d_rules.setType(StartConditions::INCLUSIVE);
     }
 |
     EXCL_START_CONDITION 
-    m_sc_name
+    _sc_name
     {
         d_rules.setType(StartConditions::EXCLUSIVE);
     }
 ;
 
-start_condition_names:
-    start_condition_names identifier
+_start_condition_names:
+    _start_condition_names identifier
     {
         d_rules.addStartCondition($2);
     }
@@ -57,19 +30,48 @@ start_condition_names:
     }
 ;
 
-name_definition:
-    name_def STRING
-    {
-        d_scanner.addDefinition($1, d_scanner.matched());
-    }
+_start_condition_directive:
+    _start_condition_type
+    _start_condition_names
 ;
 
-name_def:
+_name_def:
     identifier
     {
         d_scanner.newDefinition();  // briefly switches to 'line'
     }
 ;
+
+_name_definition:
+    _name_def STRING
+    {
+        d_scanner.addDefinition($1, d_scanner.matched());
+    }
+;
+
+_directive:
+    option
+|
+    _start_condition_directive
+|
+    _name_definition
+|
+    error
+|
+    // empty
+;
+
+_directive_line:
+    _directive '\n'
+;
+
+opt_directives:
+    opt_directives _directive_line
+|
+    // empty
+;
+
+
 
 
 
