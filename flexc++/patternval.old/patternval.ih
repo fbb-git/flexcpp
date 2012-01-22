@@ -1,0 +1,13 @@
+#include "patternval.h"
+
+#include <climits>
+#include <string>
+#include <stdexcept>
+#include <algorithm>
+
+#include <bobcat/string>
+
+#include "../charclass/charclass.h"
+
+using namespace std;
+using namespace FBB;
