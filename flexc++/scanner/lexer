@@ -102,7 +102,7 @@ OPTBL                   [[:blank:]]*
 
 <pre>{
     "%%"                        {
-                                    push(StartCondition__::INITIAL);
+                                    d_scStack = SCStack();
                                     return Parser::SECTION_DELIMITER;
                                 }
 
