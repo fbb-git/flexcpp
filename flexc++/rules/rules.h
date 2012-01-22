@@ -6,7 +6,7 @@
 #include <string>
 #include <unordered_map>
 
-#include "../semval/semval.h"
+#include "../semunion/semunion.h"
 #include "../startconditions/startconditions.h"
 #include "../rule/rule.h"
 
@@ -31,18 +31,18 @@ class Rules
         typedef std::vector<Rule>::const_iterator rule_const_iterator;
 
         Rules(States &states);
-        void add(bool bol, spSemVal const &patternVal, Block const &block,
-                 std::string const &fileName, size_t lineNr);
+//        void add(bool bol, spSemVal const &patternVal, Block const &block,
+//                 std::string const &fileName, size_t lineNr);
 
         Rule const &operator[](size_t idx) const;
         Rule &operator[](size_t idx);
 
         size_t ruleFromFinalState(size_t stateIdx) const;
         void setType(StartConditions::Type type);
-        void addStartCondition(std::string const &name);
+        void addStartCondition(spSemUnion const &name);
         void resetStartConditions();
         void useAll();
-        void activateStartCondition(std::string const &name);
+        void activateStartCondition(spSemUnion const &name);
         std::vector<size_t> const &operator()   // vector of rule nrs
                                     (std::string const &startCondition) const;
         void useInitialSC();
@@ -112,9 +112,9 @@ inline void Rules::setType(StartConditions::Type type)
     d_startConditions.setType(type);
 }
 
-inline void Rules::addStartCondition(std::string const &name)
+inline void Rules::addStartCondition(spSemUnion const &name)
 {
-    d_startConditions.add(name);
+    d_startConditions.add(name->value<SemUnion::STRING>());
 }
 
 inline void Rules::resetStartConditions()
@@ -127,9 +127,9 @@ inline void Rules::useAll()
     d_startConditions.useAll();
 }
 
-inline void Rules::activateStartCondition(std::string const &name)
+inline void Rules::activateStartCondition(spSemUnion const &name)
 {
-    d_startConditions.activate(name);
+    d_startConditions.activate(name->value<SemUnion::STRING>());
 }
 
 inline void Rules::useInitialSC()

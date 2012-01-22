@@ -5,9 +5,9 @@
 #include <string>
 #include <set>
 
-#include "../semval/semval.h"
+#include "../semunion/semunion.h"
 
-class CharClass: public SemVal
+class CharClass
 {
     typedef std::vector<std::pair<char, bool>> Vector;
     Vector d_chars;
@@ -15,18 +15,18 @@ class CharClass: public SemVal
     public:
         std::string str() const;        // the chars in the set
 
-        static spSemVal plain(char ch);
-        static spSemVal escape(std::string const &match);
-        static spSemVal predefined(std::string const &range);
-                
-        static spSemVal &concatenate(spSemVal &lhs, SemVal const &rhs);
-        static spSemVal difference(SemVal const &lhs, SemVal const &rhs);
-        static spSemVal unite(spSemVal &lhs, SemVal const &rhs);
-        static spSemVal negate(spSemVal const &charClass);
-        static spSemVal negate(spSemVal &lhs, SemVal const &rhs);
+//        static spSemVal plain(char ch);
+//        static spSemVal escape(std::string const &match);
+//        static spSemVal predefined(std::string const &range);
+//                
+//        static spSemVal &concatenate(spSemVal &lhs, SemVal const &rhs);
+//        static spSemVal difference(SemVal const &lhs, SemVal const &rhs);
+//        static spSemVal unite(spSemVal &lhs, SemVal const &rhs);
+//        static spSemVal negate(spSemVal const &charClass);
+//        static spSemVal negate(spSemVal &lhs, SemVal const &rhs);
 
     private:
-static void display(Vector const &vect);
+        static void display(Vector const &vect);
 
 
         CharClass();

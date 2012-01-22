@@ -1,41 +1,41 @@
-opt_rules:
-    rules
-|
-    // empty
-;
-
-rules:
-    rules rule_line
-|
-    rule_line
-;
-
-rule_line:                      
-    rule_definition '\n' mode_pattern
-;                               
-                                
-rule_definition:
-    rule
-|
-    embedded_rule
-|
-    error
-|
-    // empty                    // allow empty lines between rule_definitions
-;
-
-opt_nl:
-    // empty
-|
-    opt_nl nls
-;
-
-nls:
-    '\n'
-|
-    WS
-;
-
+//opt_rules:
+//    rules
+//|
+//    // empty
+//;
+//
+//rules:
+//    rules rule_line
+//|
+//    rule_line
+//;
+//
+//rule_line:                      
+//    rule_definition '\n' mode_pattern
+//;                               
+//                                
+//rule_definition:
+//    rule
+//|
+//    embedded_rule
+//|
+//    error
+//|
+//    // empty                    // allow empty lines between rule_definitions
+//;
+//
+//opt_nl:
+//    // empty
+//|
+//    opt_nl nls
+//;
+//
+//nls:
+//    '\n'
+//|
+//    WS
+//;
+//
 //startcondition_scope:
 //    startcondition '{' regex_m opt_rules '}'
 //    {
@@ -47,34 +47,34 @@ nls:
 //        d_rules.resetStartConditions();
 //    }
 //;
-
-startcondition:
-    '<' start_condition_name_m mode_initial startcondition_spec 
-    '>' mode_pattern
-;
-
-startcondition_spec:
-    startcondition_list
-|
-    '*'
-    {
-        d_rules.useAll();
-    }
-;
-
-startcondition_list:
-    startcondition_list ',' miniscanner
-|
-    miniscanner
-;
-
-miniscanner:
-    name
-    {
-        d_rules.activateStartCondition(*$1);
-    }
-;
-
+//
+//startcondition:
+//    '<' start_condition_name_m mode_initial startcondition_spec 
+//    '>' mode_pattern
+//;
+//
+//startcondition_spec:
+//    startcondition_list
+//|
+//    '*'
+//    {
+//        d_rules.useAll();
+//    }
+//;
+//
+//startcondition_list:
+//    startcondition_list ',' miniscanner
+//|
+//    miniscanner
+//;
+//
+//miniscanner:
+//    name
+//    {
+//        d_rules.activateStartCondition(*$1);
+//    }
+//;
+//////////////////////////////////////////////////////////////////
 //rule:
 //    '^' pattern_ws BLOCK
 //    {

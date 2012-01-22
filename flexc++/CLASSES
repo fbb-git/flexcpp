@@ -2,7 +2,9 @@
 #   `touch classname/ALL' to recompile all class sources and sources of
 #   depending classes, using icmbuild
 
-semval          
+# semval          
+semunion
+
 textval         semval
 // statedata       semval
 // decimal         semval

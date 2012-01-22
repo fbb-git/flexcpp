@@ -35,8 +35,10 @@ class SemUnion
 
         ~SemUnion();
 
-        template <typename Type>
-        typename SemUnionNamespace::Result<Type>::type const &value() const;
+        template <int type>
+        typename SemUnionNamespace::Result<
+                    SemUnionNamespace::TypeStruct<type>>::type const &
+                    value() const;
 
     private:
         operator std::string const &() const;
@@ -84,11 +86,14 @@ inline SemUnion::operator PatternVal const &() const
     return d_patternVal.second;
 }
 
-template <typename Type>
-typename SemUnionNamespace::Result<Type>::type const &SemUnion::value() const
+template <int type>
+inline typename SemUnionNamespace::Result<
+            SemUnionNamespace::TypeStruct<type>>::type const &
+            SemUnion::value() const
 {
     return static_cast
-                <typename SemUnionNamespace::Result<Type>::type const &>
+                <typename SemUnionNamespace::Result<
+                        SemUnionNamespace::TypeStruct<type>>::type const &>
                 (*this);
 }
 

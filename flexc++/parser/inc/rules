@@ -55,7 +55,7 @@ _combi_chars:
 _decimal:
     DECIMAL
     {
-        $$ = d_matched;
+        $$.reset(new SemUnion(d_matched));
     }
 ;
 
@@ -236,6 +236,8 @@ _regex_list:
 _eof_pattern:
     EOF_PATTERN
     {
+        $$ = eofPattern();
+    }
         
 |
     EOF_PATTERN _block

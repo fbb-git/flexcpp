@@ -22,10 +22,11 @@ class PatternVal
         size_t end() const;
         States::Pair const &pair() const;
 
+        static PatternVal eof(States &states);
+
 //        static spSemVal charSet(States &states, SemVal const &charClass);
 //        static spSemVal concatenate(States &states, SemVal &lhs, SemVal &rhs);
 //        static spSemVal dot(States &states);
-//        static spSemVal eof(States &states);
 //        static spSemVal interval(States &states, SemVal &pat, size_t lower, 
 //                                                                size_t upper);
 //        static spSemVal opOr(States &states, SemVal &lhs, SemVal &rhs);

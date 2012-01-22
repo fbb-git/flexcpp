@@ -28,7 +28,7 @@ class Scanner: public ScannerBase
         void pushEOLN();            // next token to return: '\n'
         void newDefinition();       // new named regex, 'line' miniscanner
                                     
-        void addDefinition(std::string const &name, 
+        void addDefinition(spSemUnion const &spName, 
                            std::string const &definition);
 
         void blockEnds();

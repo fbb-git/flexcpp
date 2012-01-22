@@ -66,7 +66,7 @@ input:
 identifier:
     IDENTIFIER
     {
-        $$ = d_scanner.matched();
+        $$.reset(new SemUnion(d_matched));
     }
 ;
 

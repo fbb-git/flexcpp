@@ -8,6 +8,7 @@
 #include "../state/state.h"
 #include "../block/block.h"
 
+
 // $insert baseclass
 #include "parserbase.h"
 // $insert scanner.h
@@ -49,6 +50,8 @@ class Parser: public ParserBase
         int parse();
 
     private:
+        spSemUnion eofPattern();
+
         void block();
         void error(char const *msg);    // called on (syntax) errors
         int lex();                      // returns the next token from the
