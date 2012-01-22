@@ -232,7 +232,7 @@ void parser()
 
     chdir("parser");
 
-    pFiles = (list)"grammar" + makelist("rules/*");
+    pFiles = (list)"grammar" + makelist("inc/*");
     for (idx = sizeof(pFiles); idx--; )
     {
         if (pFiles[idx] younger "parse.cc")
