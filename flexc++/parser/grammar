@@ -60,15 +60,8 @@
 
 input:
     opt_directives          // in inc/directives; options in inc/options
-    section_delimiter
-    rules
-;
-
-section_delimiter:
     SECTION_DELIMITER
-    {
-        //sectionDelimiter();
-    }
+    rules
 ;
 
 identifier:
