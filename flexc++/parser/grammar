@@ -9,7 +9,7 @@
 
 %baseclass-preinclude preinclude.h
 
-%stype std::string
+%stype spSemUnion
 
 // definition section
 %token  EXCL_START_CONDITION

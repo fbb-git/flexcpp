@@ -3,9 +3,7 @@
 
 #include <cstddef>
 
-#include "../semval/semval.h"
-
-class StateData: public SemVal
+class StateData
 {
     size_t d_next1;         // 0: no next state(s)
     size_t d_next2;
