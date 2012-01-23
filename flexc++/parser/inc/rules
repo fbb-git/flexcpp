@@ -27,13 +27,7 @@ _ms:
     // elements may need to be split between _cc_element and _simple_regex
     // if their handling turns out to be special
 _combi_chars:
-    '.'
-|
     ','
-|
-    '^'
-|
-    '$'
 |
     '='
 |
@@ -129,6 +123,12 @@ _cc_element:
 |
     CHAR
 |
+    '.'
+|
+    '^'
+|
+    '$'
+|
     _combi_chars
 |
     PREDEFINED_CLASS
@@ -172,6 +172,16 @@ _raw_token:
 _simple_regex:
     _combi_chars
 |
+    '^'
+    {
+        $$ = spSemUnion(SemUnion(SemUnion::CARET));
+    }
+|
+    '$'
+    {
+        $$ = spSemUnion(SemUnion(SemUnion::DOLLAR));
+    }
+|
     STRING
     {                                                   
         $$ = str();
@@ -190,6 +200,11 @@ _simple_regex:
     ESCAPE_SEQUENCE
     {
         $$ = escape();
+    }
+|
+    '.'
+    {
+        $$ = dot();
     }
 |
     _simple_regex _simple_regex           %prec CHAR
