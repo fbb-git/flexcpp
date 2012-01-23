@@ -3,7 +3,7 @@
 #ifndef Parser_h_included
 #define Parser_h_included
 
-#include <vector>
+#include <string>
 
 #include "../state/state.h"
 #include "../block/block.h"
@@ -38,6 +38,12 @@ class Parser: public ParserBase
     std::string d_msg;
     bool d_printTokens;
     bool d_doError;                 // use the error() function at ERRORs
+    size_t d_warnCarets;            // #carets in a RE
+    bool d_warnDollars;             // #dollars in a RE
+    size_t d_tokenCount;
+    bool d_boln;                    // rule starts at boln
+    bool d_usesLOP;
+    size_t d_parentheses;
 
     Rules &d_rules;
     States &d_states;
@@ -50,7 +56,20 @@ class Parser: public ParserBase
         int parse();
 
     private:
+        spSemUnion head();  // accept the 1st char of IDENT or DECIMAL
+        spSemUnion boln();
+        spSemUnion dollar();
         spSemUnion eofPattern();
+        spSemUnion quotes();
+        spSemUnion concatenate(spSemUnion &lhs, spSemUnion &rhs);
+        spSemUnion alternatives(spSemUnion const &lhs, 
+                                spSemUnion const &rhs); // .ih
+        spSemUnion dot();                               // .ih
+        spSemUnion escape();                            // .ih
+        spSemUnion str();                               // .ih
+        spSemUnion rawText();                           // .ih
+        spSemUnion rawText(std::string const &str);     // .ih
+        spSemUnion quantifier(spSemUnion const &regex); // .ih
 
         void block();
         void error(char const *msg);    // called on (syntax) errors
@@ -64,6 +83,7 @@ class Parser: public ParserBase
         int lookup(bool recovery);
         void nextToken();
 };
+
 
 #endif
 

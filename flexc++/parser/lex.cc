@@ -3,7 +3,7 @@
 int Parser::lex()
 {
     print();
-//    ++d_patternTokenCount;
+    ++d_tokenCount;
     return d_scanner.pLex();
 }
 

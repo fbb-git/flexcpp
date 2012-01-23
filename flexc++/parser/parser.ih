@@ -9,16 +9,70 @@
     // required for the compilation of Parser's sources.
 #include <bobcat/arg>
 #include <bobcat/mstream>
+#include <bobcat/string>
 
 #include "../options/options.h"
 #include "../state/state.h"
 // #include "../patternval/patternval.h"
 // #include "../decimal/decimal.h"
-// #include "../textval/textval.h"
 
 #include "../rules/rules.h"
 // #include "../charclass/charclass.h"
 
 using namespace std;
 using namespace FBB;
+
+inline spSemUnion Parser::str()
+{
+    return rawText(String::unescape(
+                           d_matched.substr(1, d_scanner.length() - 2)));
+}
+
+inline spSemUnion Parser::escape()
+{
+    spSemUnion ret(PatternVal::escape(d_states, d_matched));
+    return ret;
+}
+
+inline spSemUnion Parser::rawText()
+{
+    spSemUnion ret(PatternVal::rawText(d_states, d_matched));
+    return ret;
+}
+
+inline spSemUnion Parser::rawText(string const &str)
+{
+    spSemUnion ret(PatternVal::rawText(d_states, str));
+    return ret;
+}
+
+inline spSemUnion Parser::dot()
+{
+    spSemUnion ret(PatternVal::dot(d_states));
+    return ret;
+}
+
+inline spSemUnion Parser::alternatives(spSemUnion const &lhs, 
+                                       spSemUnion const &rhs)
+{
+    return PatternVal::alternatives(
+                            d_states,
+                            lhs->value<SemUnion::PATTERNVAL>(),
+                            rhs->value<SemUnion::PATTERNVAL>());
+}
+    
+inline spSemUnion Parser::quantifier(spSemUnion const &regex)
+{
+    return PatternVal::quantifier(
+                            d_states, regex->value<SemUnion::PATTERNVAL>(),
+                            d_matched[0]);
+}
+    
+
+
+
+
+
+
+
 
