@@ -1,11 +1,8 @@
 #include "patternval.ih"
 
-spSemVal PatternVal::star(States &states, SemVal &semVal)
+PatternVal PatternVal::star(States &states, PatternVal const &pattern)
 {
     States::Pair pair = states.next2();     // create new Start/Final states
-
-         // get the pattern to work with
-    PatternVal &pattern = downCast<PatternVal>(semVal);
 
         // pattern's end connects to pattern begin and the new FINAL state.
     states[pattern.end()] =                 
@@ -15,7 +12,7 @@ spSemVal PatternVal::star(States &states, SemVal &semVal)
     states[pair.first] = State::factory(State::EMPTY, 
                                             pattern.begin(), pair.second);
 
-    spSemVal ret(new PatternVal(pair));
+    PatternVal ret(pair);
 
     return ret;
 }

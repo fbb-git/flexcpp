@@ -1,7 +1,7 @@
 #include "patternval.ih"
 
-spSemVal PatternVal::dot(States &states)
+PatternVal PatternVal::dot(States &states)
 {
-    spSemVal ret = charSet(states, *CharClass::predefined("."));
+    PatternVal ret; //  = charSet(states, *CharClass::predefined("."));
     return ret;
 }

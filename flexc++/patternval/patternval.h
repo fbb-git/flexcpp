@@ -7,6 +7,8 @@
 
 #include "../states/states.h"
 
+class CharClass;
+
 class PatternVal
 {
     typedef std::unordered_map<size_t, size_t> Map;
@@ -15,32 +17,38 @@ class PatternVal
     States::Pair d_pair;
 
     public:
-        PatternVal() = default;
-        PatternVal(States::Pair const &pair);
+        PatternVal(States::Pair const &pair = {0, 0});
+
+        PatternVal &operator=(PatternVal const &other) = default;
+        PatternVal &operator=(States::Pair const &pair);
 
         size_t begin() const;
         size_t end() const;
         States::Pair const &pair() const;
 
         static PatternVal eof(States &states);
+        static PatternVal escape(States &states, std::string const &ch);
+        static PatternVal rawText(States &states, std::string const &str);
+        static PatternVal dot(States &states);
+        static PatternVal concatenate(States &states, PatternVal const &lhs,
+                                                      PatternVal const &rhs);
+        static PatternVal alternatives(States &states, PatternVal const &lhs, 
+                                                       PatternVal const &rhs);
+        static PatternVal quantifier(States &states, PatternVal const &pat, 
+                                     size_t type);
 
-//        static spSemVal charSet(States &states, SemVal const &charClass);
-//        static spSemVal concatenate(States &states, SemVal &lhs, SemVal &rhs);
-//        static spSemVal dot(States &states);
-//        static spSemVal interval(States &states, SemVal &pat, size_t lower, 
-//                                                                size_t upper);
-//        static spSemVal opOr(States &states, SemVal &lhs, SemVal &rhs);
-//        static spSemVal plain(States &states, size_t ch);
-//        static spSemVal plain(States &states, std::string const &ch);
-//        static spSemVal quantifier(States &states, SemVal &pat, size_t type);
-//        static spSemVal str(States &states, std::string const &str);
+//        static PatternVal charSet(States &states, CharClass const &charClass);
+//        static PatternVal interval(States &states, PatternVal const &pat, 
+//                                                size_t lower, size_t upper);
+//        static PatternVal plain(States &states, size_t ch);
 
     private:
-//        static spSemVal star(States &states, SemVal &pattern);
-//        static spSemVal plus(States &states, SemVal &pattern);
-//        static spSemVal questionMark(States &states, SemVal &pattern);
-//
-//        static spSemVal copy(States &states, SemVal &semval, size_t lower, 
+        static PatternVal star(States &states, PatternVal const &pattern);
+        static PatternVal plus(States &states, PatternVal const &pattern);
+        static PatternVal questionMark(States &states, 
+                                       PatternVal const &pattern);
+
+//        static PatternVal copy(States &states, PatternVal const &semval, size_t lower, 
 //                                                        size_t upper);
 //        static void copyPattern(States &states, size_t count, PairVector &pv);
 //        static void copyPattern(States &states, size_t lower, size_t upper,
@@ -48,11 +56,11 @@ class PatternVal
 //
 //        static size_t dupPattern(Map &map, States &states, size_t idx);
 //
-//        static spSemVal optRepeatLastPattern(States &states, 
+//        static PatternVal optRepeatLastPattern(States &states, 
 //                                                PatternVal &pattern,
 //                                                size_t lower, 
 //                                                PairVector &beginEnd);
-//        static spSemVal optionalPatterns(States &states, PatternVal &pattern,
+//        static PatternVal optionalPatterns(States &states, PatternVal &pattern,
 //                                    size_t lower, size_t upper, 
 //                                    PairVector &beginEnd);
 //        static void jumpToEnd(States &states, PairVector &beginEnd, 
@@ -60,6 +68,12 @@ class PatternVal
 //        static void join(States &states, PatternVal &pattern, size_t upper,
 //                                                PairVector const &beginEnd);
 };
+
+inline PatternVal &PatternVal::operator=(States::Pair const &pair)
+{
+    d_pair = pair;
+    return *this;
+}
         
 inline size_t PatternVal::begin() const
 {

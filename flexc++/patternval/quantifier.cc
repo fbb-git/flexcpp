@@ -1,19 +1,24 @@
 #include "patternval.ih"
 
-spSemVal PatternVal::quantifier(States &states, SemVal &pat, size_t type)
+PatternVal PatternVal::quantifier(States &states, PatternVal const &pat, 
+                                                  size_t type)
 {
+    PatternVal ret;
+
     switch (type)
     {
         case '*':
-        return star(states, pat);
-    
+            ret = star(states, pat);
+        break;
+
         case '+':
-        return plus(states, pat);
-    
+            ret = plus(states, pat);
+        break;
+
         case '?':
-        return questionMark(states, pat);
-    
-        default:
-        throw logic_error("PatternVal::quantifier received unexpected type");
+            ret = questionMark(states, pat);
+        break;
     }
+
+    return ret;
 }
