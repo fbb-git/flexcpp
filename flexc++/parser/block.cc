@@ -29,7 +29,7 @@ cout << "PARSER::BLOCK: STARTING A BLOCK\n"    ;
                 if (d_block.level() == 1)
                 {
                     d_block.close();
-                    d_scanner.pushEOLN();
+                    d_scanner.accept(0);        // rescan the \n
                     d_scanner.blockEnds();
                     cout << "RETURNING BLOCK:\n" << d_block << "\n";
                     return;

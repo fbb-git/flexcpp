@@ -25,11 +25,11 @@ void Parser::error(char const *msg)
     {
         string const *txt = &d_matched;
         if (*txt == "\n")
-            txt = &eoln;
+            txt = &::eoln;
 
         if (s_lastMsg != d_msg)
         {
-            if (txt == &eoln)
+            if (txt == &::eoln)
                 emsg.setLineNr(d_scanner.lineNr() - 1);
             emsg << "at `" << *txt << "': " << d_msg << " expected." << endl;
 

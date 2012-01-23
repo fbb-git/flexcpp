@@ -158,28 +158,45 @@ _characterclass:
 |
     _cc_set
 ;
+
  
-_raw_token:
+_multi_char:
     DECIMAL
 |
     IDENTIFIER
-|
+;
+
+_single_char:
     CHAR
+|
+    _combi_chars
+;
+
+_open_paren:
+    '('
+    {
+        ++d_parentheses;
+    }
+;
+
+_close_paren:
+    ')'
+    {
+        --d_parentheses;
+    }
 ;
 
     // a _simple_regex is a regular expression, not having a LA operator
     // It may have ^ and $ symbols
 _simple_regex:
-    _combi_chars
-|
     '^'
     {
-        $$ = spSemUnion(SemUnion(SemUnion::CARET));
+        $$ = boln();
     }
 |
     '$'
     {
-        $$ = spSemUnion(SemUnion(SemUnion::DOLLAR));
+        $$ = dollar();
     }
 |
     STRING
@@ -192,7 +209,12 @@ _simple_regex:
         $$ = quotes();
     }
 |
-    _raw_token
+    _multi_char
+    {
+        $$ = head();
+    }
+|
+    _single_char
     {                                                   
         $$ = rawText();
     }
@@ -208,17 +230,29 @@ _simple_regex:
     }
 |
     _simple_regex _simple_regex           %prec CHAR
+    {
+        $$ = concatenate($1, $2);
+    }
 |
     _simple_regex '|' _simple_regex
-        { cout << "OR\n"; }
+    { 
+        $$ = alternatives($1, $2);
+    }
 |
-    '(' _simple_regex ')'
+    _open_paren _simple_regex _close_paren
+    {
+        $$ = $2;
+    }
 |
     _simple_regex _quantifier
-        { cout << "QTY\n"; }
+    {
+        $$ = quantifier($1);
+    }
 |
     _characterclass
-        { cout << "CLASS\n"; }
+    {
+        $$ = SemUnion(PatternVal());
+    }
 ;
 
 
@@ -236,7 +270,7 @@ _regex:
     _p_regex
 |
     _p_regex '/' _p_regex 
-        {cout << "LA\n";}
+    {cout << "LA\n";}
 ;
 
         // regex in the form: <miniscanner>(opt) regex
