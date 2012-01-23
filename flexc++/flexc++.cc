@@ -62,8 +62,11 @@ try
     Parser parser(rules, states);
         parser.parse();
 
-    if (Msg::errors())
+    if (int count = Msg::errors())
+    {
+        cout << "Error(s): " << count << '\n';
         return 1;
+    }
 
 //    Ranges ranges(states);
 //        ranges.determineSubsets();

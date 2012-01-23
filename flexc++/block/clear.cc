@@ -2,6 +2,6 @@
 
 void Block::clear()
 {
-    d_block.erase();
+    d_str.erase();
     d_level = 0;
 }
