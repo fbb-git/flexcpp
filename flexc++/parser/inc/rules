@@ -24,19 +24,9 @@ _ms:
     '<' _ms_specs '>' 
 ;
 
-    // elements may need to be split between cc_element and regex
+    // elements may need to be split between _cc_element and _simple_regex
     // if their handling turns out to be special
 _combi_chars:
-    STRING
-|
-    DECIMAL
-|
-    ESCAPE_SEQUENCE
-|
-    identifier
-|
-    CHAR
-|
     '.'
 |
     ','
@@ -129,6 +119,16 @@ _cc_char:
 ;
 
 _cc_element:
+    STRING
+|
+    DECIMAL
+|
+    ESCAPE_SEQUENCE
+|
+    identifier
+|
+    CHAR
+|
     _combi_chars
 |
     PREDEFINED_CLASS
@@ -159,11 +159,38 @@ _characterclass:
     _cc_set
 ;
  
+_raw_token:
+    DECIMAL
+|
+    IDENTIFIER
+|
+    CHAR
+;
 
     // a _simple_regex is a regular expression, not having a LA operator
     // It may have ^ and $ symbols
 _simple_regex:
     _combi_chars
+|
+    STRING
+    {                                                   
+        $$ = str();
+    }
+|
+    QUOTES
+    {                                                   
+        $$ = quotes();
+    }
+|
+    _raw_token
+    {                                                   
+        $$ = rawText();
+    }
+|
+    ESCAPE_SEQUENCE
+    {
+        $$ = escape();
+    }
 |
     _simple_regex _simple_regex           %prec CHAR
 |

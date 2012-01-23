@@ -37,6 +37,7 @@
         IDENTIFIER
         EOF_PATTERN
         STRING
+        QUOTES
         DECIMAL
         ESCAPE_SEQUENCE
         CC_START
@@ -66,7 +67,7 @@ input:
 identifier:
     IDENTIFIER
     {
-        $$.reset(new SemUnion(d_matched));
+        $$ = spSemUnion(d_matched);
     }
 ;
 
