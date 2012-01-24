@@ -148,6 +148,9 @@ _cc_element:
 
 _cc_contents:
     _cc_contents _cc_element
+    {
+        $$ = setConcatenate($1, $2);
+    }
 |
     _cc_element
 ;
