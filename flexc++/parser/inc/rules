@@ -158,6 +158,9 @@ _characterclass:
     }
 |
     _characterclass CC_MINUS _characterclass
+    {
+        $$ = difference($1, $3);
+    }
 |
     _cc_set
 ;
