@@ -39,7 +39,7 @@ _combi_chars:
 _decimal:
     DECIMAL
     {
-        $$.reset(new SemUnion(d_matched));
+        $$ = SemUnion(d_matched);   //.reset(new SemUnion(d_matched));
     }
 ;
 
@@ -71,11 +71,17 @@ _m_contents:
 _cc_start:
     CC_START
     _m_contents
+    {
+        $$ = setElements(1);   // skips the opening bracket
+    }
 ;
 
 _cc_negated:
     CC_NEGATED
     _m_contents
+    {
+        $$ = setElements(2);   // skips bracked and negation caret
+    }
 ;
 
 _cc_end:
@@ -146,6 +152,9 @@ _cc_contents:
 
 _cc_set:
     _cc_start _cc_contents _cc_end
+    {
+        $$ = setConcatenate($1, $2);
+    }
 |
     _cc_negated _cc_contents _cc_end
 ;

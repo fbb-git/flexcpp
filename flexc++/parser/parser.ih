@@ -82,6 +82,19 @@ inline spSemUnion Parser::difference(spSemUnion const &lhs,
                                  rhs->value<CHARCLASS>());
 }
     
+inline spSemUnion Parser::setElements(size_t skip)
+{
+    return CharClass::elements(d_matched, skip);
+}
+    
+inline spSemUnion Parser::setConcatenate(spSemUnion &lhs, 
+                                         spSemUnion const &rhs)
+{
+    return CharClass::concatenate(lhs->value<CHARCLASS>(), 
+                                  rhs->value<CHARCLASS>());
+}
+    
+
 
 
 

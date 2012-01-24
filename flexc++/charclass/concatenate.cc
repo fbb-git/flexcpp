@@ -1,9 +1,9 @@
 #include "charclass.ih"
 
-spSemVal &CharClass::concatenate(spSemVal &left, SemVal const &right)
+CharClass &CharClass::concatenate(CharClass &left, CharClass const &right)
 {
-    Vector &lhs = downCast<CharClass>(*left).d_chars;
-    Vector const &rhs = downCast<CharClass>(right).d_chars;
+    Vector &lhs = left.d_chars;
+    Vector const &rhs = right.d_chars;
 
 //    cout << "CONCAT: left = ";
 //    display(lhs);

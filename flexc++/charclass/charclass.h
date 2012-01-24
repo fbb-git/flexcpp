@@ -18,13 +18,14 @@ class CharClass
         static CharClass difference(CharClass const &lhs, 
                                     CharClass const &rhs);
 
-//        static spSemVal plain(char ch);
-//        static spSemVal escape(std::string const &match);
-//        static spSemVal predefined(std::string const &range);
+        static CharClass elements(std::string const &chars, size_t skip);
+        static CharClass &concatenate(CharClass &lhs, CharClass const &rhs);
+
+//        static CharClass escape(std::string const &match);
+//        static CharClass predefined(std::string const &range);
 //                
-//        static spSemVal &concatenate(spSemVal &lhs, SemVal const &rhs);
-//        static spSemVal negate(spSemVal const &charClass);
-//        static spSemVal negate(spSemVal &lhs, SemVal const &rhs);
+//        static CharClass negate(CharClass const &charClass);
+//        static CharClass negate(CharClass &lhs, SemVal const &rhs);
 
     private:
         static void display(Vector const &vect);
