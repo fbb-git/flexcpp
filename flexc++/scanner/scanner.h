@@ -9,7 +9,9 @@
 #include <stack>
 #include <unordered_map>
 
-class Scanner: public ScannerBase
+#include "../utility/utility.h"
+
+class Scanner: public ScannerBase, public DataType
 {
     bool d_inBlock = false;     // when in-block return ' ' on blanks
     std::string d_patternName;
@@ -25,7 +27,7 @@ class Scanner: public ScannerBase
         int lex();
         int pLex();     // calls/returns lex(), clears beginOfPattern
 
-        void pushEOLN();            // next token to return: '\n'
+        using ScannerBase::accept;
         void newDefinition();       // new named regex, 'line' miniscanner
                                     
         void addDefinition(spSemUnion const &spName, 
@@ -65,11 +67,6 @@ class Scanner: public ScannerBase
 inline void Scanner::blockEnds() 
 {
     d_inBlock = false;
-}
-
-inline void Scanner::pushEOLN() 
-{
-    push('\n');
 }
 
 inline void Scanner::preCode() 

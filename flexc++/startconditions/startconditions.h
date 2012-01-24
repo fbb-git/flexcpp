@@ -88,7 +88,7 @@ class StartConditions
         std::vector<size_t> const &operator()(std::string const &name) const;
 
     private:
-        static std::string const &strOf(SemVal const &nameVal);
+//        static std::string const &strOf(SemVal const &nameVal);
 };
 
 

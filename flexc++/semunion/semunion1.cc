@@ -4,13 +4,17 @@ SemUnion::SemUnion(SemUnion const &other)
 {
     switch (other.d_index.first)
     {
-        case STRING:
+        case DataType::TEXT:
             new (&d_str) std::pair<int, std::string>(other.d_str);
         break;
 
-        case PATTERNVAL:
+        case DataType::PATTERNVAL:
             new (&d_patternVal) 
                             std::pair<int, PatternVal>(other.d_patternVal);
+        break;
+
+        case DataType::CHARCLASS:
+            new (&d_charClass) std::pair<int, CharClass>(other.d_charClass);
         break;
 
         default:

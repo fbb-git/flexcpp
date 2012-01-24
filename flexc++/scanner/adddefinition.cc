@@ -2,7 +2,7 @@
 
 void Scanner::addDefinition(spSemUnion const &spName, string const &def)
 {
-    string const &name = spName->value<SemUnion::STRING>();
+    string const &name = spName->value<TEXT>();
 
     string namePattern = '{' + name + '}';
 

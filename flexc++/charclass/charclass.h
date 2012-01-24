@@ -5,15 +5,16 @@
 #include <string>
 #include <set>
 
-#include "../semunion/semunion.h"
-
 class CharClass
 {
     typedef std::vector<std::pair<char, bool>> Vector;
     Vector d_chars;
 
     public:
+        CharClass() = default;
         std::string str() const;        // the chars in the set
+
+        static CharClass unite(CharClass const &lhs, CharClass const &rhs);
 
 //        static spSemVal plain(char ch);
 //        static spSemVal escape(std::string const &match);
@@ -21,7 +22,6 @@ class CharClass
 //                
 //        static spSemVal &concatenate(spSemVal &lhs, SemVal const &rhs);
 //        static spSemVal difference(SemVal const &lhs, SemVal const &rhs);
-//        static spSemVal unite(spSemVal &lhs, SemVal const &rhs);
 //        static spSemVal negate(spSemVal const &charClass);
 //        static spSemVal negate(spSemVal &lhs, SemVal const &rhs);
 
@@ -29,7 +29,6 @@ class CharClass
         static void display(Vector const &vect);
 
 
-        CharClass();
         CharClass(char ch);
         CharClass(std::string const &str);
         CharClass(std::set<char> const &charSet);

@@ -5,6 +5,7 @@
 
 #include <string>
 
+#include "../utility/utility.h"
 #include "../state/state.h"
 #include "../block/block.h"
 
@@ -24,7 +25,7 @@ class States;
 class Rules;
 
 #undef Parser
-class Parser: public ParserBase
+class Parser: public ParserBase, public DataType
 {
     FBB::Arg &d_arg;
 
@@ -71,6 +72,9 @@ class Parser: public ParserBase
         spSemUnion rawText(std::string const &str);     // .ih
         spSemUnion quantifier(spSemUnion const &regex); // .ih
 
+        spSemUnion unite(spSemUnion const &lhs,         // .ih
+                         spSemUnion const &rhs);
+
         void block();
         void error(char const *msg);    // called on (syntax) errors
         int lex();                      // returns the next token from the
@@ -83,7 +87,6 @@ class Parser: public ParserBase
         int lookup(bool recovery);
         void nextToken();
 };
-
 
 #endif
 

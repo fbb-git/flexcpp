@@ -17,7 +17,7 @@ class PatternVal
     States::Pair d_pair;
 
     public:
-        PatternVal(States::Pair const &pair = {0, 0});
+        PatternVal(States::Pair const &pair = States::Pair{0, 0});
 
         PatternVal &operator=(PatternVal const &other) = default;
         PatternVal &operator=(States::Pair const &pair);

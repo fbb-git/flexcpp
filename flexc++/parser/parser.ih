@@ -13,11 +13,13 @@
 
 #include "../options/options.h"
 #include "../state/state.h"
-// #include "../patternval/patternval.h"
+#include "../patternval/patternval.h"
+#include "../charclass/charclass.h"
+#include "../semunion/semunion.h"
+
 // #include "../decimal/decimal.h"
 
 #include "../rules/rules.h"
-// #include "../charclass/charclass.h"
 
 using namespace std;
 using namespace FBB;
@@ -57,15 +59,20 @@ inline spSemUnion Parser::alternatives(spSemUnion const &lhs,
 {
     return PatternVal::alternatives(
                             d_states,
-                            lhs->value<SemUnion::PATTERNVAL>(),
-                            rhs->value<SemUnion::PATTERNVAL>());
+                            lhs->value<PATTERNVAL>(),
+                            rhs->value<PATTERNVAL>());
 }
     
 inline spSemUnion Parser::quantifier(spSemUnion const &regex)
 {
     return PatternVal::quantifier(
-                            d_states, regex->value<SemUnion::PATTERNVAL>(),
+                            d_states, regex->value<PATTERNVAL>(),
                             d_matched[0]);
+}
+    
+inline spSemUnion Parser::unite(spSemUnion const &lhs, spSemUnion const &rhs)
+{
+    return CharClass::unite(lhs->value<CHARCLASS>(), rhs->value<CHARCLASS>());
 }
     
 

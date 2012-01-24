@@ -9,7 +9,7 @@ IDENTIFIER              [A-Za-z_][-A-Za-z0-9_]*
 BL                      [[:blank:]]+
 OPTBL                   [[:blank:]]*
 
-// quotes are returned as STRINGS. STRINGS and QUOTES include their
+// STRINGS and QUOTES include their
 // INITIAL surrounding delimiters allowing receiving functions to determine the
 // nature of the returned STRING
 // pre is the miniscanner the scanner starts in. Since this is only used for
@@ -52,6 +52,9 @@ OPTBL                   [[:blank:]]*
     \"                          return popSc(Parser::STRING);
     .                           more();
 }
+
+"'"(\\.|[^\\'])+"'"             return Parser::QUOTES;
+
 
 {DECIMAL}                       return Parser::DECIMAL;
 

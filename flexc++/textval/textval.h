@@ -2,9 +2,8 @@
 #define INCLUDED_TEXTVAL_
 
 #include <string>
-#include "../semval/semval.h"
 
-class TextVal: public SemVal
+class TextVal
 {
     std::string d_text;
 
@@ -12,9 +11,8 @@ class TextVal: public SemVal
         TextVal(std::string str = "");
         std::string const &str() const;
 
-        static spSemVal trimmed(std::string const &str);
-        static spSemVal plain(std::string const &str);
-        static spSemVal &cat(spSemVal &lhs, spSemVal const &rhs);
+        static TextVal trimmed(std::string const &str);
+        static TextVal &cat(TextVal &lhs, TextVal const &rhs);
 };
 
 inline TextVal::TextVal(std::string str)
@@ -25,6 +23,11 @@ inline TextVal::TextVal(std::string str)
 inline std::string const &TextVal::str() const
 {
     return d_text;
+}
+
+inline TextVal TextVal::trimmed(string const &str)
+{
+    return TextVal(String::trim(str));
 }
 
 #endif

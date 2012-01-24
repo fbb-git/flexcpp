@@ -4,12 +4,16 @@ SemUnion::~SemUnion()
 {
     switch (d_index.first)
     {
-        case STRING:
+        case DataType::TEXT:
             d_str.second.~string();
         break;
 
-        case PATTERNVAL:
+        case DataType::PATTERNVAL:
             d_patternVal.second.~PatternVal();
+        break;
+
+        case DataType::CHARCLASS:
+            d_charClass.second.~CharClass();
         break;
 
         default:

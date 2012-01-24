@@ -6,13 +6,14 @@
 #include <string>
 #include <unordered_map>
 
-#include "../semunion/semunion.h"
+#include "../utility/utility.h"
+#include "../spsemunion/spsemunion.h"
 #include "../startconditions/startconditions.h"
 #include "../rule/rule.h"
 
 class States;
 
-class Rules
+class Rules: public DataType
 {
     friend std::ostream &operator<<(std::ostream &out, Rules const &rules);
 
@@ -31,8 +32,8 @@ class Rules
         typedef std::vector<Rule>::const_iterator rule_const_iterator;
 
         Rules(States &states);
-//        void add(bool bol, spSemVal const &patternVal, Block const &block,
-//                 std::string const &fileName, size_t lineNr);
+        void add(bool bol, spSemUnion const &patternVal, Block const &block,
+                 std::string const &fileName, size_t lineNr);
 
         Rule const &operator[](size_t idx) const;
         Rule &operator[](size_t idx);
@@ -114,7 +115,7 @@ inline void Rules::setType(StartConditions::Type type)
 
 inline void Rules::addStartCondition(spSemUnion const &name)
 {
-    d_startConditions.add(name->value<SemUnion::STRING>());
+    d_startConditions.add(name->value<TEXT>());
 }
 
 inline void Rules::resetStartConditions()
@@ -129,7 +130,7 @@ inline void Rules::useAll()
 
 inline void Rules::activateStartCondition(spSemUnion const &name)
 {
-    d_startConditions.activate(name->value<SemUnion::STRING>());
+    d_startConditions.activate(name->value<TEXT>());
 }
 
 inline void Rules::useInitialSC()
