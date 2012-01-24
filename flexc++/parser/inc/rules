@@ -92,7 +92,7 @@ _cc_end:
 ;
 
     // characters handled identically within a character-set
-_cc_char:
+_cc_literal:
     '/'
 |
     '|'
@@ -116,18 +116,6 @@ _cc_char:
     '>'
 |
     '['
-;
-
-_cc_element:
-    STRING
-|
-    DECIMAL
-|
-    ESCAPE_SEQUENCE
-|
-    identifier
-|
-    CHAR
 |
     '.'
 |
@@ -135,11 +123,26 @@ _cc_element:
 |
     '$'
 |
+    DECIMAL
+|
+    IDENTIFIER
+|
+    CHAR
+|
+    STRING
+|
     _combi_chars
+;
+
+_cc_element:
+    ESCAPE_SEQUENCE
 |
     PREDEFINED_CLASS
 |
-    _cc_char
+    _cc_literal
+    {
+        $$ = setElements();
+    }
 ;
 
 
