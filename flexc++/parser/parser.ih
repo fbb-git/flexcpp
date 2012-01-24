@@ -75,6 +75,13 @@ inline spSemUnion Parser::unite(spSemUnion const &lhs, spSemUnion const &rhs)
     return CharClass::unite(lhs->value<CHARCLASS>(), rhs->value<CHARCLASS>());
 }
     
+inline spSemUnion Parser::difference(spSemUnion const &lhs, 
+                                     spSemUnion const &rhs)
+{
+    return CharClass::difference(lhs->value<CHARCLASS>(), 
+                                 rhs->value<CHARCLASS>());
+}
+    
 
 
 

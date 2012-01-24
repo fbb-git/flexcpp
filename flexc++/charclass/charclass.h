@@ -15,13 +15,14 @@ class CharClass
         std::string str() const;        // the chars in the set
 
         static CharClass unite(CharClass const &lhs, CharClass const &rhs);
+        static CharClass difference(CharClass const &lhs, 
+                                    CharClass const &rhs);
 
 //        static spSemVal plain(char ch);
 //        static spSemVal escape(std::string const &match);
 //        static spSemVal predefined(std::string const &range);
 //                
 //        static spSemVal &concatenate(spSemVal &lhs, SemVal const &rhs);
-//        static spSemVal difference(SemVal const &lhs, SemVal const &rhs);
 //        static spSemVal negate(spSemVal const &charClass);
 //        static spSemVal negate(spSemVal &lhs, SemVal const &rhs);
 

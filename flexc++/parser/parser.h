@@ -74,6 +74,8 @@ class Parser: public ParserBase, public DataType
 
         spSemUnion unite(spSemUnion const &lhs,         // .ih
                          spSemUnion const &rhs);
+        spSemUnion difference(spSemUnion const &lhs,    // .ih
+                              spSemUnion const &rhs);
 
         void block();
         void error(char const *msg);    // called on (syntax) errors
