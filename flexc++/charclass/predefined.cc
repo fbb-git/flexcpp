@@ -1,8 +1,8 @@
 #include "charclass.ih"
 
-spSemVal CharClass::predefined(string const &predef)
+CharClass CharClass::predefined(string const &predef)
 {
-    spSemVal ret(new CharClass(CharRange::predefined(predef)));
+    CharClass ret(CharRange::predefined(predef));
 
 //        cout << "PREDEFINED: `" << predef << "'\n" <<
 //                            downCast<CharClass>(*ret).str() << '\n';

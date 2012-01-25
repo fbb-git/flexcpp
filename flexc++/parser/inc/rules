@@ -142,10 +142,16 @@ _cc_literal:
     _combi_chars
 ;
 
-_cc_element:                            // TODO
+_cc_element:
     ESCAPE_SEQUENCE
+    {
+        $$ = CharClass::escape(d_matched);
+    }
 |
     PREDEFINED_CLASS
+    {
+       $$ = CharClass::predefined(d_matched);
+    }
 |
     _cc_literal
     {

@@ -23,9 +23,9 @@ class CharClass
         static CharClass elements(std::string const &chars, size_t skip);
         static CharClass &concatenate(CharClass &lhs, CharClass const &rhs);
 
-//        static CharClass escape(std::string const &match);
-//        static CharClass predefined(std::string const &range);
-//                
+        static CharClass escape(std::string const &match);
+        static CharClass predefined(std::string const &range);
+                
 //        static CharClass negate(CharClass const &charClass);
 //        static CharClass negate(CharClass &lhs, SemVal const &rhs);
 

@@ -1,7 +1,7 @@
 #include "charclass.ih"
 
-spSemVal CharClass::escape(string const &match)
+CharClass CharClass::escape(string const &match)
 {
-    spSemVal ret(new CharClass(String::unescape(match)));
+    CharClass ret(String::unescape(match));
     return ret;
 }
