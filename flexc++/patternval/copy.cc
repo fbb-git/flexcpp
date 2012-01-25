@@ -19,23 +19,21 @@
 // Finally join all the patterns and return the begin-end states of the final
 // (merged) pattern.
 
-spSemVal PatternVal::copy(States &states, SemVal &semval, size_t lower, 
-                                                            size_t upper)
+PatternVal PatternVal::copy(States &states, 
+                            PatternVal &regex, size_t lower, size_t upper)
 {
-    PatternVal &pattern = downCast<PatternVal>(semval); // the pattern to copy
-
-    PairVector beginEnd(1, States::Pair{pattern.begin(), pattern.end()});   
+    PairVector beginEnd(1, States::Pair{regex.begin(), regex.end()});   
                                                         // begin/end indices
-                                                        // of all pattern
+                                                        // of the regex
 
     copyPattern(states, lower - 1, beginEnd);           // copy req'd patterns
 
     return
-        upper == UINT_MAX ?                 // no upper limit: optionally 
-            optRepeatLastPattern(states,    // repeat the last pattern. 
-                            pattern, lower, beginEnd)
-        :                                   // Otherwise add fixed nr
-            optionalPatterns(states, pattern,   // of optional patterns
+        upper == numeric_limits<size_t>::max() ?    // no upper limit: 
+            optRepeatLastPattern(states,            // optionally  repeat the 
+                            regex, lower, beginEnd) // last pattern. 
+        :                                       // Otherwise add fixed nr
+            optionalPatterns(states, regex,     // of optional patterns
                             lower, upper, beginEnd);
 }
 

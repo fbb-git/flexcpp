@@ -9,6 +9,7 @@
 #include "../utility/utility.h"
 
 class CharClass;
+class Interval;
 
 class PatternVal
 {
@@ -37,10 +38,10 @@ class PatternVal
                                                        PatternVal const &rhs);
         static PatternVal quantifier(States &states, PatternVal const &pat, 
                                      size_t type);
+        static PatternVal interval(States &states, PatternVal &regex, 
+                                                   Interval const &interval);
 
 //        static PatternVal charSet(States &states, CharClass const &charClass);
-//        static PatternVal interval(States &states, PatternVal const &pat, 
-//                                                size_t lower, size_t upper);
 //        static PatternVal plain(States &states, size_t ch);
 
     private:
@@ -49,25 +50,27 @@ class PatternVal
         static PatternVal questionMark(States &states, 
                                        PatternVal const &pattern);
 
-//        static PatternVal copy(States &states, PatternVal const &semval, size_t lower, 
-//                                                        size_t upper);
-//        static void copyPattern(States &states, size_t count, PairVector &pv);
-//        static void copyPattern(States &states, size_t lower, size_t upper,
-//                                                Map &eject, PairVector &pv);
-//
-//        static size_t dupPattern(Map &map, States &states, size_t idx);
-//
-//        static PatternVal optRepeatLastPattern(States &states, 
-//                                                PatternVal &pattern,
-//                                                size_t lower, 
-//                                                PairVector &beginEnd);
-//        static PatternVal optionalPatterns(States &states, PatternVal &pattern,
-//                                    size_t lower, size_t upper, 
-//                                    PairVector &beginEnd);
-//        static void jumpToEnd(States &states, PairVector &beginEnd, 
-//                                    size_t lower, size_t upper, Map &eject);
-//        static void join(States &states, PatternVal &pattern, size_t upper,
-//                                                PairVector const &beginEnd);
+        static PatternVal copy(States &states, 
+                                PatternVal &pattern, 
+                                size_t lower, size_t upper);
+
+        static void copyPattern(States &states, size_t count, PairVector &pv);
+        static void copyPattern(States &states, size_t lower, size_t upper,
+                                                Map &eject, PairVector &pv);
+
+        static size_t dupPattern(Map &map, States &states, size_t idx);
+
+        static PatternVal optRepeatLastPattern(States &states, 
+                                               PatternVal &regex,
+                                               size_t lower, 
+                                               PairVector &beginEnd);
+        static PatternVal optionalPatterns(States &states, PatternVal &pattern,
+                                           size_t lower, size_t upper, 
+                                           PairVector &beginEnd);
+        static void jumpToEnd(States &states, PairVector &beginEnd, 
+                              size_t lower, size_t upper, Map &eject);
+        static void join(States &states, PatternVal &pattern, size_t upper,
+                                         PairVector const &beginEnd);
 };
 
 template <>                                     // two specializations:

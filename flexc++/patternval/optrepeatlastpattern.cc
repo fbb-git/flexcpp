@@ -1,15 +1,14 @@
 #include "patternval.ih"
 
-spSemVal PatternVal::optRepeatLastPattern(States &states, PatternVal &pattern,
+PatternVal PatternVal::optRepeatLastPattern(States &states, 
+                        PatternVal &pattern,
                         size_t lower, PairVector &beginEnd)
 {
     PatternVal last(beginEnd.back());
 
         // change the last pattern to pattern+
-    spSemVal sp = plus(states, last);   
-
         // update the begin- and end-indices
-    beginEnd.back() = downCast<PatternVal>(*sp).d_pair;
+    beginEnd.back() = plus(states, last).d_pair;
 
     join(states, pattern, lower, beginEnd);
 
@@ -20,6 +19,6 @@ spSemVal PatternVal::optRepeatLastPattern(States &states, PatternVal &pattern,
 //cout << "POST {x,}:\n" <<
 //        states << '\n';
 
-    spSemVal ret(new PatternVal( {pattern.begin(), pattern.end()} ));
+    PatternVal ret( {pattern.begin(), pattern.end()} );
     return ret;
 }

@@ -64,13 +64,15 @@ class Parser: public ParserBase, public DataType
         spSemUnion quotes();
         spSemUnion concatenate(spSemUnion &lhs, spSemUnion &rhs);
         spSemUnion alternatives(spSemUnion const &lhs, 
-                                spSemUnion const &rhs); // .ih
-        spSemUnion dot();                               // .ih
-        spSemUnion escape();                            // .ih
-        spSemUnion str();                               // .ih
-        spSemUnion rawText();                           // .ih
-        spSemUnion rawText(std::string const &str);     // .ih
-        spSemUnion quantifier(spSemUnion const &regex); // .ih
+                                spSemUnion const &rhs);     // .ih
+        spSemUnion dot();                                   // .ih
+        spSemUnion escape();                                // .ih
+        spSemUnion str();                                   // .ih
+        spSemUnion rawText();                               // .ih
+        spSemUnion rawText(std::string const &str);         // .ih
+        spSemUnion quantifier(spSemUnion const &regex);     // .ih
+        spSemUnion interval(spSemUnion &regex,
+                            spSemUnion const &interval);    // .ih
 
         spSemUnion unite(spSemUnion const &lhs,         // .ih
                          spSemUnion const &rhs);

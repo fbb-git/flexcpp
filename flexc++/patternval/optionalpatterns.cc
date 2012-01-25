@@ -1,8 +1,8 @@
 #include "patternval.ih"
 
-spSemVal PatternVal::optionalPatterns(States &states, PatternVal &pattern,
-                                    size_t lower, size_t upper, 
-                                    PairVector &beginEnd)
+PatternVal PatternVal::optionalPatterns(States &states, PatternVal &pattern,
+                                        size_t lower, size_t upper, 
+                                        PairVector &beginEnd)
 {
         // dup the remaining patterns, allowing for intermediate ejects
     Map eject;
@@ -15,7 +15,7 @@ spSemVal PatternVal::optionalPatterns(States &states, PatternVal &pattern,
     join(states, pattern, upper, beginEnd);
 
         // begin/end must be updated to the final indices
-    spSemVal ret(new PatternVal( {pattern.begin(), pattern.end()} ));
+    PatternVal ret( {pattern.begin(), pattern.end()} );
 
     return ret;
 }

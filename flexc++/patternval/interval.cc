@@ -1,28 +1,31 @@
 #include "patternval.ih"
 
-spSemVal PatternVal::interval(States &states, SemVal &semval, size_t lower, 
-                                                              size_t upper)
+PatternVal PatternVal::interval(States &states, PatternVal &regex,
+                                Interval const &interval)
 {
-    spSemVal ret;
+    PatternVal ret;
 
-    if (lower == 0 && upper == UINT_MAX)
-        ret = star(states, semval);
+    size_t lower = interval.lower();
+    size_t upper = interval.upper();
+
+    if (lower == 0 && upper == numeric_limits<size_t>::max())
+        ret = star(states, regex);
 
     else if (lower == 0 && upper == 1)
-        ret = questionMark(states, semval);
+        ret = questionMark(states, regex);
 
-    else if (lower == 1 && upper == UINT_MAX)
-        ret = plus(states, semval);
+    else if (lower == 1 && upper == numeric_limits<size_t>::max())
+        ret = plus(states, regex);
 
     else if (lower <=  upper)
-        ret = copy(states, semval, lower, upper);
+        ret = copy(states, regex, lower, upper);
 
     else
     {
         States::Pair pair = states.next2();
         states[pair.first] = State::factory(State::EMPTY, pair.second, 0);
 
-        ret.reset(new PatternVal(pair));
+        ret = PatternVal(pair);
     }
 
     return ret;

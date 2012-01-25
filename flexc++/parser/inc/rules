@@ -44,14 +44,15 @@ _decimal:
 ;
 
 _interval:
-    DECIMAL
+    _decimal
     {
-        $$ = SemUnion(Interval::exact(d_matched));
+        $$ = SemUnion(Interval::exact($1->value<TEXT>()));
     }
 |
-    _decimal ',' DECIMAL
+    _decimal ',' _decimal
     {
-        $$ = SemUnion(Interval::range($1->value<TEXT>(), d_matched));
+        $$ = SemUnion(Interval::range($1->value<TEXT>(), 
+                                      $3->value<TEXT>()));
     }
 |
     _decimal ','
@@ -61,14 +62,12 @@ _interval:
 ;
     
 
-_quantifier:                            // TODO
+_quantifier:
     '*'
 |
     '+'
 |
     '?'
-|
-    '{' _interval '}'
 ;
 
 _m_contents:
@@ -274,9 +273,14 @@ _simple_regex:
         $$ = $2;
     }
 |
-    _simple_regex _quantifier               // TODO: $2 needed
+    _simple_regex _quantifier
     {
         $$ = quantifier($1);
+    }
+|
+    _simple_regex '{' _interval '}'
+    {
+        $$ = interval($1, $3);
     }
 |
     _characterclass
