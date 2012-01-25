@@ -11,8 +11,5 @@ int Scanner::popSc(int token)
                 d_scStack.top()
     );
 
-cout << "       POP-SC: RETURNING TO CONDITION " << 
-                (d_scStack.empty() ? 0 : (int)d_scStack.top()) << '\n';
-
     return token;
 }

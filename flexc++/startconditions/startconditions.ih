@@ -1,5 +1,7 @@
 #include "startconditions.h"
 
+
+#include <iostream>
 #include <algorithm>
 
 #include <bobcat/mstream>

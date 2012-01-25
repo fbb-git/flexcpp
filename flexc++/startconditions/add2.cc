@@ -2,7 +2,7 @@
 
 void StartConditions::add(size_t ruleIdx)
 {
-    for(auto sc: d_active)
+    for(auto &sc: d_active)
         sc->d_rules.push_back(ruleIdx);
 
     if (d_inclusive || d_active.empty())

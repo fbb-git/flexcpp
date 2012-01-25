@@ -60,8 +60,15 @@
 
 input:
     opt_directives          // in inc/directives; options in inc/options
-    SECTION_DELIMITER
+    section_delimiter
     rules
+;
+
+section_delimiter:
+    SECTION_DELIMITER
+    {
+        d_rules.useInitialSC();
+    }
 ;
 
 identifier:

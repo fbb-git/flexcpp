@@ -105,3 +105,15 @@ inline spSemUnion Parser::setNegate(spSemUnion &lhs, spSemUnion const &rhs)
                              rhs->value<CHARCLASS>());
 }
 
+inline void Parser::addRule(spSemUnion const &rule)
+{
+    d_rules.add(d_boln, rule->value<PATTERNVAL>(), Block(), 
+                d_scanner.filename(), d_scanner.lineNr());
+}
+
+inline void Parser::addBlockRule(spSemUnion const &rule)
+{
+    d_rules.add(d_boln, rule->value<PATTERNVAL>(), d_block,
+                d_scanner.filename(), d_scanner.lineNr());
+}
+

@@ -63,6 +63,8 @@ class Parser: public ParserBase, public DataType
         spSemUnion eofPattern();
         spSemUnion quotes();
         spSemUnion concatenate(spSemUnion &lhs, spSemUnion &rhs);
+        spSemUnion lookahead(spSemUnion &left, spSemUnion &right);
+
         spSemUnion alternatives(spSemUnion const &lhs, 
                                 spSemUnion const &rhs);     // .ih
         spSemUnion dot();                                   // .ih
@@ -83,6 +85,10 @@ class Parser: public ParserBase, public DataType
                                   spSemUnion const &rhs);
         spSemUnion setNegate(spSemUnion &lhs,               // .ih
                                   spSemUnion const &rhs);
+        void addRule(spSemUnion const &rule);               // .ih
+        void addBlockRule(spSemUnion const &rule);          // .ih
+
+        void setFlags(size_t idx, State::Flag flag);    // called fm lookahead
 
         void block();
         void error(char const *msg);    // called on (syntax) errors

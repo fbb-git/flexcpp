@@ -1,5 +1,7 @@
 #include "rules.h"
 
+#include <iostream>     // TMP
+
 #include <algorithm>
 #include <bobcat/mstream>
 

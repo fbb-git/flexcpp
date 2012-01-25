@@ -44,7 +44,6 @@ OPTBL                   [[:blank:]]*
 
 <INITIAL,pre>\"                 {
                                     more();
-                                    cout << "   ENTERING STRING\n";
                                     push(StartCondition__::string);
                                 }
 <string>{
