@@ -43,7 +43,7 @@ _decimal:
     }
 ;
 
-_interval:                              // TODO
+_interval:
     DECIMAL
     {
         $$ = SemUnion(Interval::exact(d_matched));
@@ -51,10 +51,13 @@ _interval:                              // TODO
 |
     _decimal ',' DECIMAL
     {
-        //$$ = SemUnion($1.value
+        $$ = SemUnion(Interval::range($1->value<TEXT>(), d_matched));
     }
 |
     _decimal ','
+    {
+        $$ = SemUnion(Interval::lowerBound($1->value<TEXT>()));
+    }
 ;
     
 
