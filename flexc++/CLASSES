@@ -6,6 +6,7 @@ utility
 semunion
 spsemunion      semunion
 
+interval        
 // textval         
 statedata       
 // decimal         
@@ -27,5 +28,7 @@ rules           rule        startcondition
 // dfa             dfarow
 // dfas            dfa
 options         
-parser          rules  patternval  decimal  scanner options state block
+parser          rules  patternval  interval  scanner options state block
 // generator       dfas        options
+
+

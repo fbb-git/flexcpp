@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "../states/states.h"
+#include "../utility/utility.h"
 
 class CharClass;
 
@@ -68,6 +69,19 @@ class PatternVal
 //        static void join(States &states, PatternVal &pattern, size_t upper,
 //                                                PairVector const &beginEnd);
 };
+
+template <>                                     // two specializations:
+struct Type<PatternVal>                         // defining 'DataType'
+{                                               // given PatternVal
+    enum { dataType = DataType::PATTERNVAL };
+};
+
+template <>                                     // defining 'PatternVal'
+struct Type<Int<DataType::PATTERNVAL>>          // given PATTERNVAL
+{
+    typedef PatternVal type;
+};
+
 
 inline PatternVal &PatternVal::operator=(States::Pair const &pair)
 {

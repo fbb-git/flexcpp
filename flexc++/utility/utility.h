@@ -1,8 +1,12 @@
 #ifndef INCLUDED_UTILITY_
 #define INCLUDED_UTILITY_
 
-template <int tp>
+template <int value>
 struct Int
+{};
+
+template <typename type>
+struct Type
 {};
 
 struct DataType         // data types used by semunion: these names are 
@@ -12,7 +16,8 @@ struct DataType         // data types used by semunion: these names are
         INT,
         TEXT,   
         PATTERNVAL,
-        CHARCLASS
+        CHARCLASS,
+        INTERVAL,
     };
 };
 

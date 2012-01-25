@@ -16,6 +16,8 @@ SemUnion::~SemUnion()
             d_charClass.second.~CharClass();
         break;
 
+        // Interval does not allocate memory. Destructor call not needed.
+
         default:
         break;
     }

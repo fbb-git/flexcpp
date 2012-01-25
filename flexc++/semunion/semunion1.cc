@@ -17,6 +17,10 @@ SemUnion::SemUnion(SemUnion const &other)
             new (&d_charClass) std::pair<int, CharClass>(other.d_charClass);
         break;
 
+        case DataType::INTERVAL:
+            new (&d_interval) std::pair<int, Interval>(other.d_interval);
+        break;
+
         default:
             d_index = other.d_index;
         break;

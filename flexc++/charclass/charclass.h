@@ -5,6 +5,8 @@
 #include <string>
 #include <set>
 
+#include "../utility/utility.h"
+
 class CharClass
 {
     typedef std::vector<std::pair<char, bool>> Vector;
@@ -45,6 +47,19 @@ class CharClass
         bool validRange(size_t idx) const;          // T if valid range,
                                                     // idx at '-'
 };
+
+template <>                                     // two specializations:
+struct Type<CharClass>                         // defining 'DataType'
+{                                               // given CharClass
+    enum { dataType = DataType::CHARCLASS };
+};
+
+template <>                                     // defining 'CharClass'
+struct Type<Int<DataType::CHARCLASS>>          // given CHARCLASS
+{
+    typedef CharClass type;
+};
+
 
 #endif
 

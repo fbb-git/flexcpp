@@ -39,20 +39,26 @@ _combi_chars:
 _decimal:
     DECIMAL
     {
-        $$ = SemUnion(d_matched);   //.reset(new SemUnion(d_matched));
+        $$ = SemUnion(d_matched);
     }
 ;
 
-_interval:
+_interval:                              // TODO
     DECIMAL
+    {
+        $$ = SemUnion(Interval::exact(d_matched));
+    }
 |
     _decimal ',' DECIMAL
+    {
+        //$$ = SemUnion($1.value
+    }
 |
     _decimal ','
 ;
     
 
-_quantifier:
+_quantifier:                            // TODO
     '*'
 |
     '+'
@@ -134,7 +140,7 @@ _cc_literal:
     _combi_chars
 ;
 
-_cc_element:
+_cc_element:                            // TODO
     ESCAPE_SEQUENCE
 |
     PREDEFINED_CLASS
@@ -162,7 +168,7 @@ _cc_set:
         $$ = setConcatenate($1, $2);
     }
 |
-    _cc_negated _cc_contents _cc_end
+    _cc_negated _cc_contents _cc_end        // TODO
 ;
 
 
@@ -265,7 +271,7 @@ _simple_regex:
         $$ = $2;
     }
 |
-    _simple_regex _quantifier
+    _simple_regex _quantifier               // TODO: $2 needed
     {
         $$ = quantifier($1);
     }
@@ -277,20 +283,14 @@ _simple_regex:
 ;
 
 
-    // the p_regex is a print-wrapper around regex
-_p_regex:
-    _simple_regex
-        {cout << "RE\n";}
-;
-
     // a _regex is a regex, possibly with LA operator
     // the handler must verify whether the regex contains ^ and $ symbols
     // within the regex, for which a warning must be issue: ^, $ treated as
     // normal characters
-_regex:
-    _p_regex
+_regex:                                     // TODO BELOW    
+    _simple_regex
 |
-    _p_regex '/' _p_regex 
+    _simple_regex '/' _simple_regex 
     {cout << "LA\n";}
 ;
 

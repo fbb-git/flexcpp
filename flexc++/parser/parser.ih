@@ -13,11 +13,8 @@
 
 #include "../options/options.h"
 #include "../state/state.h"
-#include "../patternval/patternval.h"
-#include "../charclass/charclass.h"
-#include "../semunion/semunion.h"
 
-// #include "../decimal/decimal.h"
+#include "../semunion/semunion.h"
 
 #include "../rules/rules.h"
 

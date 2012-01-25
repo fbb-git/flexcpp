@@ -5,44 +5,54 @@
 #include <utility>
 #include <string>
 
-#include "../utility/utility.h"
 #include "../patternval/patternval.h"
 #include "../charclass/charclass.h"
+#include "../interval/interval.h"
 
-template <int tp>
-struct TypeStruct;
+template <>
+struct Type<std::string>                        // define 'DataType'
+{                                               // given string
+    enum { dataType = DataType::TEXT };
+};
 
-template <typename Type>
-struct Result: public DataType
-{};
+template <>                                     // defining 'string'
+struct Type<Int<DataType::TEXT>>                // given TEXT
+{
+    typedef std::string type;
+};
 
+// To add a new union member:
+//      - add an enum value to utility.h for the new data type
+//      - the new member's class must define two Type specializations like
+//          the ones just given for TEXT 
+//      - add a field for the new type
+//      - add the field's destructor call to ~SemUnion
 union SemUnion
 {
     std::pair<int, int>         d_index;
     std::pair<int, std::string> d_str;
     std::pair<int, PatternVal>  d_patternVal;
     std::pair<int, CharClass>   d_charClass;
+    std::pair<int, Interval>    d_interval;
 
     public:
         SemUnion();
         SemUnion(SemUnion const &other);        // 1
-        SemUnion(std::string const &str);
-        SemUnion(PatternVal const &pval);
-        SemUnion(CharClass const &cval);
 
+        template <typename Type>
+        SemUnion(Type const &value);
+    
         ~SemUnion();
 
-        template <int type>
-        typename Result<TypeStruct<type>>::type const &value() const;
+        template <int dataType>
+        typename Type<Int<dataType>>::type const &value() const;
 
-        template <int type>
-        typename Result<TypeStruct<type>>::type &value();
+        template <int dataType>
+        typename Type<Int<dataType>>::type &value();
 
     private:
-        operator std::string &() const;
-        operator PatternVal &() const;
-        operator CharClass &() const;
-        
+        template <typename Type>
+        Type &conversion() const;
 };
 
 inline SemUnion::SemUnion()
@@ -50,67 +60,29 @@ inline SemUnion::SemUnion()
     new (this) std::pair<int, int>(DataType::INT, 0);
 }
 
-template <>
-struct Result<TypeStruct<DataType::TEXT>>
+template <typename Tp>
+inline SemUnion::SemUnion(Tp const &value)
 {
-    typedef std::string type;
-};
-
-inline SemUnion::SemUnion(std::string const &str)
-{
-    new (&d_str) std::pair<int, std::string>(DataType::TEXT, str);
+    new (this) std::pair<int, Tp>(Type<Tp>::dataType, value);
 }
 
-inline SemUnion::operator std::string &() const
+template <typename Type>
+inline Type &SemUnion::conversion() const
 {
-    return const_cast<std::string &>(d_str.second);
-}
-
-
-template <>
-struct Result<TypeStruct<DataType::PATTERNVAL>>
-{
-    typedef PatternVal type;
-};
-
-inline SemUnion::SemUnion(PatternVal const &pv)
-{
-    new (&d_patternVal) std::pair<int, PatternVal>(DataType::PATTERNVAL, pv);
-}
-
-inline SemUnion::operator PatternVal &() const
-{
-    return const_cast<PatternVal &>(d_patternVal.second);
-}
-
-
-template <>
-struct Result<TypeStruct<DataType::CHARCLASS>>
-{
-    typedef CharClass type;
-};
-
-inline SemUnion::SemUnion(CharClass const &cc)
-{
-    new (&d_charClass) std::pair<int, CharClass>(DataType::CHARCLASS, cc);
-}
-
-inline SemUnion::operator CharClass &() const
-{
-    return const_cast<CharClass &>(d_charClass.second);
-}
-
-
-template <int type>
-inline typename Result<TypeStruct<type>>::type const &SemUnion::value() const
-{
-    return *this;
+    int *ip = const_cast<int *>(&d_index.second);
+    return *reinterpret_cast<Type *>(ip);
 }
 
 template <int type>
-inline typename Result<TypeStruct<type>>::type &SemUnion::value()
+inline typename Type<Int<type>>::type const &SemUnion::value() const
 {
-    return *this;
+    return conversion<typename Type<Int<type>>::type>();
+}
+
+template <int dataType>
+inline typename Type<Int<dataType>>::type &SemUnion::value()
+{
+    return conversion<typename Type<Int<dataType>>::type>();
 }
         
 #endif
