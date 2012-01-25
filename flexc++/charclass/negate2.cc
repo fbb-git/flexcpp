@@ -1,9 +1,9 @@
 #include "charclass.ih"
 
-spSemVal CharClass::negate(spSemVal &left, SemVal const &right)
+CharClass CharClass::negate(CharClass &left, CharClass const &right)
 {
     concatenate(left, right);
-    spSemVal ret(negate(left));
+    CharClass ret(negate(left));
 
     return ret;
 }

@@ -26,8 +26,8 @@ class CharClass
         static CharClass escape(std::string const &match);
         static CharClass predefined(std::string const &range);
                 
-//        static CharClass negate(CharClass const &charClass);
-//        static CharClass negate(CharClass &lhs, SemVal const &rhs);
+        static CharClass negate(CharClass const &charClass);
+        static CharClass negate(CharClass &lhs, CharClass const &rhs);
 
     private:
         static void display(Vector const &vect);

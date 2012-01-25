@@ -1,13 +1,7 @@
 #include "charclass.ih"
 
-spSemVal CharClass::negate(spSemVal const &charClass)
+CharClass CharClass::negate(CharClass const &charClass)
 {
-    spSemVal ret(
-                    new CharClass(
-                        CharRange::negate(
-                            downCast<CharClass>(*charClass).set()
-                        )
-                    )
-                );
+    CharClass ret( CharRange::negate(charClass.set()) );
     return ret;
 }

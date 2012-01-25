@@ -98,3 +98,10 @@ inline spSemUnion Parser::setConcatenate(spSemUnion &lhs,
     return CharClass::concatenate(lhs->value<CHARCLASS>(), 
                                   rhs->value<CHARCLASS>());
 }
+
+inline spSemUnion Parser::setNegate(spSemUnion &lhs, spSemUnion const &rhs)
+{
+    return CharClass::negate(lhs->value<CHARCLASS>(), 
+                             rhs->value<CHARCLASS>());
+}
+

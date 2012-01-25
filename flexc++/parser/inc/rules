@@ -159,7 +159,6 @@ _cc_element:
     }
 ;
 
-
 _cc_contents:
     _cc_contents _cc_element
     {
@@ -169,16 +168,17 @@ _cc_contents:
     _cc_element
 ;
 
-
 _cc_set:
     _cc_start _cc_contents _cc_end
     {
         $$ = setConcatenate($1, $2);
     }
 |
-    _cc_negated _cc_contents _cc_end        // TODO
+    _cc_negated _cc_contents _cc_end
+    {
+        $$ = setNegate($1, $2);
+    }
 ;
-
 
 _characterclass:
     _characterclass CC_PLUS _characterclass

@@ -74,12 +74,14 @@ class Parser: public ParserBase, public DataType
         spSemUnion interval(spSemUnion &regex,
                             spSemUnion const &interval);    // .ih
 
-        spSemUnion unite(spSemUnion const &lhs,         // .ih
+        spSemUnion unite(spSemUnion const &lhs,             // .ih
                          spSemUnion const &rhs);
-        spSemUnion difference(spSemUnion const &lhs,    // .ih
+        spSemUnion difference(spSemUnion const &lhs,        // .ih
                               spSemUnion const &rhs);
-        spSemUnion setElements(size_t skip = 0);        // .ih
-        spSemUnion setConcatenate(spSemUnion &lhs,      // .ih
+        spSemUnion setElements(size_t skip = 0);            // .ih
+        spSemUnion setConcatenate(spSemUnion &lhs,          // .ih
+                                  spSemUnion const &rhs);
+        spSemUnion setNegate(spSemUnion &lhs,               // .ih
                                   spSemUnion const &rhs);
 
         void block();
