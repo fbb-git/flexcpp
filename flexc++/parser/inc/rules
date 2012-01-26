@@ -389,7 +389,7 @@ _msBlock_rule_def:
 
     // each rule ends in a '\n'
 _msBlock_rule:                      
-    _msBlock_rule_def '\n'       
+    _msBlock_rule_def '\n' _nl_reset
 ;                               
                                 
 
