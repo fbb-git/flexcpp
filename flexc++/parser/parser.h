@@ -39,8 +39,8 @@ class Parser: public ParserBase, public DataType
     std::string d_msg;
     bool d_printTokens;
     bool d_doError;                 // use the error() function at ERRORs
-    size_t d_warnCarets;            // #carets in a RE
-    bool d_warnDollars;             // #dollars in a RE
+    bool d_warnCarets;              // carets in a RE
+    bool d_warnDollars;             // dollars in a RE
     size_t d_tokenCount;
     bool d_boln;                    // rule starts at boln
     bool d_usesLOP;
@@ -57,6 +57,8 @@ class Parser: public ParserBase, public DataType
         int parse();
 
     private:
+        void nlReset();
+
         spSemUnion head();  // accept the 1st char of IDENT or DECIMAL
         spSemUnion boln();
         spSemUnion dollar();
