@@ -326,8 +326,8 @@ _optMs_regex:
     // (ORNL is returned at '| {OPTBL} \n')
     // at ORNL any previously set ms-spec ends, and is back to INITIAL
 _optMs_regex_list:
-    _optMs_regex_list ORNL _optMs_regex_list
-    {
+    _optMs_regex_list ORNL _optMs_regex_list // TODO: after ORNL begin parsing
+    {                                        // at a new line
         $$ = alternatives($1, $3);
     }
 |
@@ -342,8 +342,8 @@ _block:
 ;
 
 _regex_list:
-    _regex_list ORNL _regex_list
-    {
+    _regex_list ORNL _regex_list        // TODO: after ORNL begin parsing
+    {                                   // at a new line
         $$ = alternatives($1, $3);
     }
 |
@@ -425,7 +425,7 @@ _rule_def:
 
     // each rule ends in a '\n'
 _rule:                      
-    _rule_def '\n'       
+    _rule_def '\n'       // TODO: reset the parser to begin-of-rule
 ;                               
                                 
     // there may be no rules
