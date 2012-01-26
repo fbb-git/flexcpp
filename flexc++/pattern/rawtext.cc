@@ -1,11 +1,11 @@
-#include "patternval.ih"
+#include "pattern.ih"
 
     // text without (d)quotes, accepted as-is
-PatternVal PatternVal::rawText(States &states, std::string const &str)
+Pattern Pattern::rawText(States &states, std::string const &str)
 {
     size_t length = str.length();
 
-    PatternVal ret;
+    Pattern ret;
 
     if (length == 0)            // pathological case: string without contents
     {

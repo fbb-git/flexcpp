@@ -1,6 +1,6 @@
-#include "patternval.ih"
+#include "pattern.ih"
 
-PatternVal PatternVal::plus(States &states, PatternVal const &pattern)
+Pattern Pattern::plus(States &states, Pattern const &pattern)
 {
     States::Pair pair = states.next2();      // create new Start/Final states
 
@@ -11,7 +11,7 @@ PatternVal PatternVal::plus(States &states, PatternVal const &pattern)
         // Start state connects to the pattern's begin
     states[pair.first] = State::factory(State::EMPTY, pattern.begin(), 0);
     
-    PatternVal ret(pair);
+    Pattern ret(pair);
 
     return ret;
 }

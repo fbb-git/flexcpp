@@ -1,6 +1,6 @@
-#include "patternval.ih"
+#include "pattern.ih"
 
-void PatternVal::copyPattern(States &states, size_t lower, size_t upper, 
+void Pattern::copyPattern(States &states, size_t lower, size_t upper, 
                                              Map &eject, PairVector &beginEnd)
 {
     size_t begin = beginEnd[0].first;

@@ -5,7 +5,7 @@
 #include <utility>
 #include <string>
 
-#include "../patternval/patternval.h"
+#include "../pattern/pattern.h"
 #include "../charclass/charclass.h"
 #include "../interval/interval.h"
 
@@ -31,7 +31,7 @@ union SemUnion
 {
     std::pair<int, int>         d_index;
     std::pair<int, std::string> d_str;
-    std::pair<int, PatternVal>  d_patternVal;
+    std::pair<int, Pattern>  d_patternVal;
     std::pair<int, CharClass>   d_charClass;
     std::pair<int, Interval>    d_interval;
 

@@ -1,6 +1,6 @@
-#include "patternval.ih"
+#include "pattern.ih"
 
-void PatternVal::jumpToEnd(States &states, PairVector &beginEnd, 
+void Pattern::jumpToEnd(States &states, PairVector &beginEnd, 
                                 size_t lower, size_t upper, Map &eject)
 {
     size_t exitState = beginEnd.back().second;      // target state 

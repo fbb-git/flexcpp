@@ -2,33 +2,40 @@
 #   `touch classname/ALL' to recompile all class sources and sources of
 #   depending classes, using icmbuild
 
-utility
-semunion
-spsemunion      semunion
+utility         
 
-interval        
-// textval         
-statedata       
-// decimal         
-startconditions    
+interval                utility
+charclass               utility
+pattern                 utility
 
-charrange       
-charclass       charrange   
-statestring     statedata
-state           statestring
-states          state
-ranges          states
-tailcount       state
-patternval      charclass   states
-block           
-scanner         
-rule            states      block
-rules           rule        startcondition
-// dfarow          ranges      rules       tailcount
-// dfa             dfarow
-// dfas            dfa
+scanner                 utility
+
+semunion                pattern charclass interval
+spsemunion              semunion
+
 options         
-parser          rules  patternval  interval  scanner options state block
-// generator       dfas        options
+startconditions 
+charrange       
+ranges          
+
+statedata       
+statestring             statedata
+state                   statedata
+states                  state
+tailcount               state
+
+block           
+rule                    block 
+
+rules                   utility spsemunion startconditions rule
+
+// dfarow         ranges rules states tailcount
+// dfa            dfarow        
+// dfas           rules dfa  
+
+parser                  utility   state   block   scanner spsemunion states
+
+// generator      dfas    startconditions   
+
 
 

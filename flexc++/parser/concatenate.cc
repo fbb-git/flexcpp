@@ -4,10 +4,10 @@ spSemUnion Parser::concatenate(spSemUnion &lhs, spSemUnion &rhs)
 {
 
     spSemUnion ret(
-                PatternVal::concatenate(
+                Pattern::concatenate(
                     d_states,
-                    lhs->value<PATTERNVAL>(), 
-                    rhs->value<PATTERNVAL>()
+                    lhs->value<PATTERN>(), 
+                    rhs->value<PATTERN>()
                 )
        );
 

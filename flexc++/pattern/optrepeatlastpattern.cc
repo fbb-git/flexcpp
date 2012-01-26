@@ -1,10 +1,10 @@
-#include "patternval.ih"
+#include "pattern.ih"
 
-PatternVal PatternVal::optRepeatLastPattern(States &states, 
-                        PatternVal &pattern,
+Pattern Pattern::optRepeatLastPattern(States &states, 
+                        Pattern &pattern,
                         size_t lower, PairVector &beginEnd)
 {
-    PatternVal last(beginEnd.back());
+    Pattern last(beginEnd.back());
 
         // change the last pattern to pattern+
         // update the begin- and end-indices
@@ -19,6 +19,6 @@ PatternVal PatternVal::optRepeatLastPattern(States &states,
 //cout << "POST {x,}:\n" <<
 //        states << '\n';
 
-    PatternVal ret( {pattern.begin(), pattern.end()} );
+    Pattern ret( {pattern.begin(), pattern.end()} );
     return ret;
 }

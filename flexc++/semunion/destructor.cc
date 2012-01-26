@@ -8,8 +8,8 @@ SemUnion::~SemUnion()
             d_str.second.~string();
         break;
 
-        case DataType::PATTERNVAL:
-            d_patternVal.second.~PatternVal();
+        case DataType::PATTERN:
+            d_patternVal.second.~Pattern();
         break;
 
         case DataType::CHARCLASS:

@@ -15,7 +15,7 @@ struct DataType         // data types used by semunion: these names are
     {
         INT,
         TEXT,   
-        PATTERNVAL,
+        PATTERN,
         CHARCLASS,
         INTERVAL,
     };

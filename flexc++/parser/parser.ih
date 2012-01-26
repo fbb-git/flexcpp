@@ -29,49 +29,49 @@ inline spSemUnion Parser::str()
 
 inline spSemUnion Parser::escape()
 {
-    spSemUnion ret(PatternVal::escape(d_states, d_matched));
+    spSemUnion ret(Pattern::escape(d_states, d_matched));
     return ret;
 }
 
 inline spSemUnion Parser::rawText()
 {
-    spSemUnion ret(PatternVal::rawText(d_states, d_matched));
+    spSemUnion ret(Pattern::rawText(d_states, d_matched));
     return ret;
 }
 
 inline spSemUnion Parser::rawText(string const &str)
 {
-    spSemUnion ret(PatternVal::rawText(d_states, str));
+    spSemUnion ret(Pattern::rawText(d_states, str));
     return ret;
 }
 
 inline spSemUnion Parser::dot()
 {
-    spSemUnion ret(PatternVal::dot(d_states));
+    spSemUnion ret(Pattern::dot(d_states));
     return ret;
 }
 
 inline spSemUnion Parser::alternatives(spSemUnion const &lhs, 
                                        spSemUnion const &rhs)
 {
-    return PatternVal::alternatives(
+    return Pattern::alternatives(
                             d_states,
-                            lhs->value<PATTERNVAL>(),
-                            rhs->value<PATTERNVAL>());
+                            lhs->value<PATTERN>(),
+                            rhs->value<PATTERN>());
 }
     
 inline spSemUnion Parser::quantifier(spSemUnion const &regex)
 {
-    return PatternVal::quantifier(d_states, 
-                            regex->value<PATTERNVAL>(),
+    return Pattern::quantifier(d_states, 
+                            regex->value<PATTERN>(),
                             d_matched[0]);
 }
     
 inline spSemUnion Parser::interval(spSemUnion &regex, 
                                    spSemUnion const &interval)
 {
-    return PatternVal::interval(d_states, 
-                            regex->value<PATTERNVAL>(),
+    return Pattern::interval(d_states, 
+                            regex->value<PATTERN>(),
                             interval->value<INTERVAL>());
 }
     
@@ -107,13 +107,13 @@ inline spSemUnion Parser::setNegate(spSemUnion &lhs, spSemUnion const &rhs)
 
 inline void Parser::addRule(spSemUnion const &rule)
 {
-    d_rules.add(d_boln, rule->value<PATTERNVAL>(), Block(), 
+    d_rules.add(d_boln, rule->value<PATTERN>(), Block(), 
                 d_scanner.filename(), d_scanner.lineNr());
 }
 
 inline void Parser::addBlockRule(spSemUnion const &rule)
 {
-    d_rules.add(d_boln, rule->value<PATTERNVAL>(), d_block,
+    d_rules.add(d_boln, rule->value<PATTERN>(), d_block,
                 d_scanner.filename(), d_scanner.lineNr());
 }
 

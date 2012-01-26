@@ -1,9 +1,9 @@
-#include "patternval.ih"
+#include "pattern.ih"
 
-void PatternVal::join(States &states, PatternVal &pattern, size_t upper,
+void Pattern::join(States &states, Pattern &pattern, size_t upper,
                         PairVector const &beginEnd)
 {
-    PatternVal next;
+    Pattern next;
 
     for (size_t idx = 1; idx != upper; ++idx)
     {

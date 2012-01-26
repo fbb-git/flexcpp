@@ -1,9 +1,9 @@
-#include "patternval.ih"
+#include "pattern.ih"
 
-PatternVal PatternVal::interval(States &states, PatternVal &regex,
+Pattern Pattern::interval(States &states, Pattern &regex,
                                 Interval const &interval)
 {
-    PatternVal ret;
+    Pattern ret;
 
     size_t lower = interval.lower();
     size_t upper = interval.upper();
@@ -25,7 +25,7 @@ PatternVal PatternVal::interval(States &states, PatternVal &regex,
         States::Pair pair = states.next2();
         states[pair.first] = State::factory(State::EMPTY, pair.second, 0);
 
-        ret = PatternVal(pair);
+        ret = Pattern(pair);
     }
 
     return ret;

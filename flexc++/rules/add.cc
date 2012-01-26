@@ -6,7 +6,7 @@
 void Rules::add(bool bol, spSemUnion const &patternVal, Block const &block,
                 string const &fileName, size_t lineNr)
 {
-    Pair const &pair = patternVal->value<PATTERNVAL>().pair();
+    Pair const &pair = patternVal->value<PATTERN>().pair();
 
     d_rules.push_back( { d_states, bol, pair, block, fileName, lineNr - 1 } );
 

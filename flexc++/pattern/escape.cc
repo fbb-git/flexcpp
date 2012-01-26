@@ -1,6 +1,6 @@
-#include "patternval.ih"
+#include "pattern.ih"
 
-PatternVal PatternVal::escape(States &states, std::string const &ch)
+Pattern Pattern::escape(States &states, std::string const &ch)
 {
     States::Pair pair = states.next2();
 
@@ -10,6 +10,6 @@ PatternVal PatternVal::escape(States &states, std::string const &ch)
             pair.second
         );
 
-    PatternVal ret(pair);
+    Pattern ret(pair);
     return ret;
 }

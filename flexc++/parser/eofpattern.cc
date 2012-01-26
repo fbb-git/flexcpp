@@ -2,7 +2,7 @@
 
 spSemUnion Parser::eofPattern()
 {
-    spSemUnion ret(PatternVal::eof(d_states));
+    spSemUnion ret(Pattern::eof(d_states));
 
     return ret;
 }

@@ -8,9 +8,9 @@ SemUnion::SemUnion(SemUnion const &other)
             new (&d_str) std::pair<int, std::string>(other.d_str);
         break;
 
-        case DataType::PATTERNVAL:
+        case DataType::PATTERN:
             new (&d_patternVal) 
-                            std::pair<int, PatternVal>(other.d_patternVal);
+                            std::pair<int, Pattern>(other.d_patternVal);
         break;
 
         case DataType::CHARCLASS:

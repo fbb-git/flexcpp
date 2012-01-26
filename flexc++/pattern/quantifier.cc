@@ -1,9 +1,9 @@
-#include "patternval.ih"
+#include "pattern.ih"
 
-PatternVal PatternVal::quantifier(States &states, PatternVal const &pat, 
+Pattern Pattern::quantifier(States &states, Pattern const &pat, 
                                                   size_t type)
 {
-    PatternVal ret;
+    Pattern ret;
 
     switch (type)
     {

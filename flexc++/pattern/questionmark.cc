@@ -1,6 +1,6 @@
-#include "patternval.ih"
+#include "pattern.ih"
 
-PatternVal PatternVal::questionMark(States &states, PatternVal const &pattern)
+Pattern Pattern::questionMark(States &states, Pattern const &pattern)
 {
     size_t idx = states.next();     // new start state
 
@@ -8,7 +8,7 @@ PatternVal PatternVal::questionMark(States &states, PatternVal const &pattern)
     states[idx] = State::factory(State::EMPTY, 
                                     pattern.begin(), pattern.end());
 
-    PatternVal ret({idx, pattern.end()});
+    Pattern ret({idx, pattern.end()});
 
     return ret;
 }

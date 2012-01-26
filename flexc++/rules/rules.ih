@@ -6,7 +6,7 @@
 #include <bobcat/mstream>
 
 #include "../states/states.h"
-#include "../patternval/patternval.ih"
+#include "../pattern/pattern.ih"
 
 using namespace std;
 using namespace FBB;

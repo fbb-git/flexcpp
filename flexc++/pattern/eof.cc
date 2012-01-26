@@ -1,11 +1,11 @@
-#include "patternval.ih"
+#include "pattern.ih"
 
-PatternVal PatternVal::eof(States &states)
+Pattern Pattern::eof(States &states)
 {
     States::Pair pair = states.next2();
 
     states[pair.first] = State::factory(State::EOF__, pair.second, 0);
 
-    PatternVal ret(pair);
+    Pattern ret(pair);
     return ret;
 }

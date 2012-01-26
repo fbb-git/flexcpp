@@ -1,4 +1,4 @@
-#include "patternval.ih"
+#include "pattern.ih"
 
 // States:
 //          B1 -> E1  and B2 -> E2
@@ -6,13 +6,13 @@
 //          B1 -> E1 -> E2, where B2 is assigned to E1
 // B2 is returned to the State's free store.
 
-PatternVal PatternVal::concatenate(States &states, PatternVal const &lhs,
-                                                   PatternVal const &rhs)
+Pattern Pattern::concatenate(States &states, Pattern const &lhs,
+                                                   Pattern const &rhs)
 {
     states[lhs.end()] = states[rhs.begin()];
     states.collect(rhs.begin());
 
-    PatternVal ret({lhs.begin(), rhs.end()} );
+    Pattern ret({lhs.begin(), rhs.end()} );
 
     return ret;
 }

@@ -1,4 +1,4 @@
-#include "patternval.ih"
+#include "pattern.ih"
 
 // Data:   pattern: the initial pattern
 //         begin, end: the begin/end state indices of the initial pattern
@@ -19,8 +19,8 @@
 // Finally join all the patterns and return the begin-end states of the final
 // (merged) pattern.
 
-PatternVal PatternVal::copy(States &states, 
-                            PatternVal &regex, size_t lower, size_t upper)
+Pattern Pattern::copy(States &states, 
+                            Pattern &regex, size_t lower, size_t upper)
 {
     PairVector beginEnd(1, States::Pair{regex.begin(), regex.end()});   
                                                         // begin/end indices

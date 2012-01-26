@@ -67,10 +67,10 @@ pattern:
     {
         $$ = interval(*$1, *$4);
     }
-//|
-//    pattern '/' pattern         // handles $ through scanner intelligence
-//    {
-//        $$ = lookahead(*$1, *$3);
-//    }
+|
+    pattern '/' pattern         // handles $ through scanner intelligence
+    {
+        $$ = lookahead(*$1, *$3);
+    }
 ;
 

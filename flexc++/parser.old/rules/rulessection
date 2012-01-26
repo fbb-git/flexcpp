@@ -1,193 +1,93 @@
-//opt_rules:
-//    rules
-//|
-//    // empty
-//;
-//
-//rules:
-//    rules rule_line
-//|
-//    rule_line
-//;
-//
-//rule_line:                      
-//    rule_definition '\n' mode_pattern
-//;                               
-//                                
-//rule_definition:
-//    rule
-//|
-//    embedded_rule
-//|
-//    error
-//|
-//    // empty                    // allow empty lines between rule_definitions
-//;
-//
-//opt_nl:
-//    // empty
-//|
-//    opt_nl nls
-//;
-//
-//nls:
-//    '\n'
-//|
-//    WS
-//;
-//
-//startcondition_scope:
-//    startcondition '{' regex_m opt_rules '}'
-//    {
-//        d_rules.resetStartConditions();
-//    }
-//|
-//    startcondition rule
-//    {
-//        d_rules.resetStartConditions();
-//    }
-//;
-//
-//startcondition:
-//    '<' start_condition_name_m mode_initial startcondition_spec 
-//    '>' mode_pattern
-//;
-//
-//startcondition_spec:
-//    startcondition_list
-//|
-//    '*'
-//    {
-//        d_rules.useAll();
-//    }
-//;
-//
-//startcondition_list:
-//    startcondition_list ',' miniscanner
-//|
-//    miniscanner
-//;
-//
-//miniscanner:
-//    name
-//    {
-//        d_rules.activateStartCondition(*$1);
-//    }
-//;
-//////////////////////////////////////////////////////////////////
-//rule:
-//    '^' pattern_ws BLOCK
-//    {
-//        d_rules.add(true, $2, d_scanner.block(), 
-//                    d_scanner.filename(), d_scanner.lineNr());
-//    }
-//|
-//    '^' pattern_ws
-//    {
-//        d_rules.add(true, $2, Block(), 
-//                    d_scanner.filename(), d_scanner.lineNr());
-//    }
-//|
-//    pattern_ws BLOCK
-//    {
-//        d_rules.add(false, $1, d_scanner.block(), 
-//                    d_scanner.filename(), d_scanner.lineNr());
-//    }
-//|
-//    pattern_ws
-//    {
-//        d_rules.add(false, $1, Block(), 
-//                    d_scanner.filename(), d_scanner.lineNr());
-//    }
-//;
+opt_rules:
+    rules
+|
+    // empty
+;
+
+rules:
+    rules rule_line
+|
+    rule_line
+;
+
+rule_line:                      
+    rule_definition '\n' mode_pattern
+;                               
+                                
+
+rule_definition:
+    rule
+|
+    startcondition_scope
+|
+    error
+|
+    // empty                    // allow empty lines between rule_definitions
+;
+
+startcondition_scope:
+    startcondition '{' regex_m opt_rules '}'
+    {
+        d_rules.resetStartConditions();
+    }
+|
+    startcondition rule
+    {
+        d_rules.resetStartConditions();
+    }
+;
+
+startcondition:
+    '<' start_condition_name_m mode_initial startcondition_spec 
+    '>' mode_pattern
+;
+
+startcondition_spec:
+    startcondition_list
+|
+    '*'
+    {
+        d_rules.useAll();
+    }
+;
+
+startcondition_list:
+    startcondition_list ',' miniscanner
+|
+    miniscanner
+;
+
+miniscanner:
+    name
+    {
+        d_rules.activateStartCondition(*$1);
+    }
+;
 
 rule:
-    block_rule_ws BLOCK
-    {   cout << "saw rule: block_rule_ws BLOCK\n"; }
+    '^' pattern_ws BLOCK
+    {
+        d_rules.add(true, $2, d_scanner.block(), 
+                    d_scanner.filename(), d_scanner.lineNr());
+    }
 |
-    block_rule_ws
-    {   cout << "saw rule: block_rule_ws\n"; }
-;
-
-embedded_rule:
-    startcondition '{' opt_nl mode_pattern embedded_rules opt_nl '}' opt_ws
-;
-
-embedded_rules:
-    embedded_rules embedded_block
+    '^' pattern_ws
+    {
+        d_rules.add(true, $2, Block(), 
+                    d_scanner.filename(), d_scanner.lineNr());
+    }
 |
-    embedded_block
-;
-
-embedded_block:
-    embedded_block_rule_ws BLOCK
+    pattern_ws BLOCK
+    {
+        d_rules.add(false, $1, d_scanner.block(), 
+                    d_scanner.filename(), d_scanner.lineNr());
+    }
 |
-    embedded_block_rule_ws
-;
-
-
-block_rule_ws:
-    block_rule opt_ws mode_block
-    {   cout << "saw block_rule_ws\n"; }
-;
-
-embedded_block_rule_ws:
-    embedded_block_rule opt_ws mode_block
-;
-
-block_rule:
-    lookahead_rule
-    {   cout << "saw block_rule: lookahead_rule\n"; }
-|
-    multi_line_rule
-    {   cout << "saw block_rule: multi_line_rule\n"; }
-;
-
-embedded_block_rule:
-    embedded_lookahead
-|
-    embedded_multi_line_rules
-;
-
-lookahead_rule:
-    bol_rule '/' pattern
-    {   cout << "saw lookahead_rule\n"; }
-;
-
-embedded_lookahead:
-    embedded_bol_rule '/' pattern
-;
-
-
-multi_line_rule:
-    multi_line_rule OR mode_pattern multi_line_rule
-    {   cout << "saw multi_line__rule: multi_line__rule OR multi_line__rule\n"; }
-|
-    bol_rule
-    {   cout << "saw multi_line__rule: bol__rule\n"; }
-;
-
-embedded_multi_line_rules:
-    embedded_multi_line_rules OR mode_pattern embedded_multi_line_rules
-|
-    embedded_bol_rule
-;
-
-bol_rule:
-    startcondition
-    embedded_bol_rule
-    {   cout << "saw bol__rule: startcon embedded_bol\n"; }
-|
-    embedded_bol_rule
-    {   cout << "saw bol__rule: embedded_bol\n"; }
-;
-
-embedded_bol_rule:
-    '^' pattern
-    {   cout << "saw embedded_bol__rule: ^ pattern\n"; }
-|
-    pattern
-    {   cout << "saw embedded_bol__rule: pattern\n"; }
+    pattern_ws
+    {
+        d_rules.add(false, $1, Block(), 
+                    d_scanner.filename(), d_scanner.lineNr());
+    }
 ;
 
 

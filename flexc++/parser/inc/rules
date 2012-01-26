@@ -291,7 +291,7 @@ _simple_regex:
 |
     _characterclass
     {
-        $$ = SemUnion(PatternVal());
+        $$ = SemUnion(Pattern());
     }
 ;
 
