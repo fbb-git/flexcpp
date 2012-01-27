@@ -94,8 +94,6 @@ _cc_literal:
 |
     DECIMAL
 |
-    IDENTIFIER
-|
     CHAR
 |
     STRING
