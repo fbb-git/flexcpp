@@ -85,7 +85,7 @@ identifier:
 %include inc/characterclass
 %include inc/regex
 %include inc/eofpattern
-//%include inc/nlreset
+%include inc/nlreset
 //%include inc/mscompound
 %include inc/rules
  
