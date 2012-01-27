@@ -33,7 +33,7 @@ _quantifier:
 
 _m_contents:
     {
-        d_msg = "character class";
+        d_expect = "character class";
     }
 ;
 
@@ -56,7 +56,7 @@ _cc_negated:
 _cc_end:
     ']'
     {
-        d_msg = "pattern or action block";
+        d_expect = "pattern or action block";
     }
 ;
 

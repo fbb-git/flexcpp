@@ -14,7 +14,7 @@ void Parser::error(char const *msg)
         return;
     }
         
-    if (d_msg.empty())
+    if (d_expect.empty())
     {
         if (not repeated)
             emsg << "unrecognized input (`" << d_matched << 
@@ -27,15 +27,15 @@ void Parser::error(char const *msg)
         if (*txt == "\n")
             txt = &::eoln;
 
-        if (s_lastMsg != d_msg)
+        if (s_lastMsg != d_expect)
         {
             if (txt == &::eoln)
                 emsg.setLineNr(d_scanner.lineNr() - 1);
-            emsg << "at `" << *txt << "': " << d_msg << " expected." << endl;
+            emsg << "at `" << *txt << "': " << d_expect << " expected." << endl;
 
             repeated = false;
         }
     }
 
-    s_lastMsg = d_msg;
+    s_lastMsg = d_expect;
 }

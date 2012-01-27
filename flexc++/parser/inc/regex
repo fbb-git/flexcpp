@@ -26,6 +26,7 @@ _close_paren:
 
     // a _simple_regex is a regular expression, not having a LA operator
     // It may have ^ and $ symbols
+    // _simple_regex returns a Pattern, embedded in a spSemUnion
 _simple_regex:
     '^'
     {
@@ -93,13 +94,16 @@ _simple_regex:
     }
 |
     characterclass
+    {
+        $$ = characterClass($1);
+    }
 ;
-
 
     // a regex is a regex, possibly with LA operator
     // the handler must verify whether the regex contains ^ and $ symbols
     // within the regex, for which a warning must be issue: ^, $ treated as
     // normal characters
+    // regex returns a Pattern, embedded in a spSemUnion
 regex:
     _simple_regex
 |

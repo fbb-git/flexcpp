@@ -1,18 +1,18 @@
 // action_m:
 //     {
-//         d_msg = "action statement/block (C++ code)";
+//         d_expect = "action statement/block (C++ code)";
 //     }
 // ;
 // 
 // start_interval_m:
 //     {
-//         d_msg = "repetition interval";
+//         d_expect = "repetition interval";
 //     }
 // ;
 // 
 // regex_m:
 //     {
-//         d_msg = "regular expression";
+//         d_expect = "regular expression";
 //     }
 // ;
 

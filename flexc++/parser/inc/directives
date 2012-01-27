@@ -1,6 +1,6 @@
 _sc_name:
     {
-        d_msg = "list of start condition names";
+        d_expect = "list of start condition names";
     }
 ;
 

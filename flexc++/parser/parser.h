@@ -36,7 +36,7 @@ class Parser: public ParserBase, public DataType
 
     Options &d_options;
 
-    std::string d_msg;
+    std::string d_expect;
     bool d_printTokens;
     bool d_doError;                 // use the error() function at ERRORs
     bool d_warnCarets;              // carets in a RE

@@ -1,70 +1,70 @@
 _inputinterface:
     INPUTINTERFACE
     {
-        d_msg = "name of the file holding Input's interface";
+        d_expect = "name of the file holding Input's interface";
     }
 ;
 
 _inputimplementation:
     INPUTIMPLEMENTATION
     {
-        d_msg = "name of the file holding Input's implementations";
+        d_expect = "name of the file holding Input's implementations";
     }
 ;
 
 _classname:
     CLASSNAME
     {
-        d_msg = "class name";
+        d_expect = "class name";
     }
 ;
 
 _lexfunctionname:
     LEXFUNCTIONNAME
     {
-        d_msg = "name of the lex() function";
+        d_expect = "name of the lex() function";
     }
 ;
 
 _baseclassheader:
     BASECLASSHEADER
     {
-        d_msg = "scanner base class header file name";
+        d_expect = "scanner base class header file name";
     }
 ;
 
 _classheader:
     CLASSHEADER
     {
-        d_msg = "scanner class header file name";
+        d_expect = "scanner class header file name";
     }
 ;
 
 _implementationheader:
     IMPLEMENTATIONHEADER
     {
-        d_msg = "implementation header file name";
+        d_expect = "implementation header file name";
     }
 ;
 
 _lexsource:
     LEXSOURCE
     {
-        d_msg = "source file name of the lex function";
+        d_expect = "source file name of the lex function";
     }
 ;
 
 _skeleton_directory:
     SKELETON_DIRECTORY
     {
-        d_msg = "directory name of the flexc++ skeleton files";
+        d_expect = "directory name of the flexc++ skeleton files";
     }
 ;
 
 _namespace:
     NAMESPACE
     {
-        d_msg = "name of the namespace to use";
+        d_expect = "name of the namespace to use";
     }
 ;
 
@@ -95,7 +95,7 @@ _debugnamelist:
 
 _m_debugnamelist:
     {
-        d_msg = "debug identifiers";
+        d_expect = "debug identifiers";
     }
 ;
 
@@ -125,7 +125,7 @@ _opt_laststep:
 
 _m_debugsteps:
     {
-        d_msg = "debug step range";
+        d_expect = "debug step range";
     }
 ;
 
