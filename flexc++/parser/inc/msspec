@@ -1,0 +1,26 @@
+_ms_name:
+    identifier
+    {
+        d_rules.activateStartCondition($1);
+    }
+;
+
+_ms_name_list:
+    _ms_name_list ',' _ms_name
+|
+    _ms_name
+;
+
+_ms_specs:
+    '*'
+    {   // following <*> all mini scanners apply
+        d_rules.useAll();
+    }    
+|
+    _ms_name_list
+;
+
+ms_spec:
+    '<' _ms_specs '>' 
+;
+

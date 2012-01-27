@@ -80,6 +80,8 @@ identifier:
 
 %include inc/directives
 %include inc/options
+%include inc/msspec
 %include inc/eofpattern
+%include inc/regex
 %include inc/rules
  
