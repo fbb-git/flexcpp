@@ -4,6 +4,12 @@ _single_char:
     combi_chars
 ;
 
+_multi_char:
+    DECIMAL
+|
+    IDENTIFIER
+;
+
 _open_paren:
     '('
     {
@@ -42,10 +48,10 @@ _simple_regex:
         $$ = quotes();
     }
 |
-    DECIMAL
+    _multi_char
     {
-        $$ = head();    // return each of the DECIMAL characters in turn
-    }                   // so that constructions like 12+ are handled OK
+        $$ = head();
+    }
 |
     _single_char
     {                                                   
@@ -69,7 +75,7 @@ _simple_regex:
 |
     _simple_regex '|' _simple_regex
     { 
-        $$ = alternatives($1, $2);
+        $$ = alternatives($1, $3);
     }
 |
     _open_paren _simple_regex _close_paren

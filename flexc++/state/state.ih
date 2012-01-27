@@ -1,5 +1,6 @@
 #include "state.h"
 
+#include <iostream>
 #include <string>
 
 #include "../statestring/statestring.h"

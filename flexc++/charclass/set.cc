@@ -9,7 +9,7 @@ set<char> CharClass::set() const
     {
         size_t idx = findRange(start);  // at idx-1: 'a-b' (beyond 'start')
 
-//    cout << "SET findRange returns " << idx << endl;
+//    cout << "CharClass::set:  findRange returns " << idx << endl;
 
         if (idx == 0)                           // no 'a-b' range found
             break;

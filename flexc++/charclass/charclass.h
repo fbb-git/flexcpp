@@ -4,11 +4,14 @@
 #include <vector>
 #include <string>
 #include <set>
+#include <ostream>
 
 #include "../utility/utility.h"
 
 class CharClass
 {
+    friend std::ostream &operator<<(std::ostream &out, CharClass const &cc);
+
     typedef std::vector<std::pair<char, bool>> Vector;
     Vector d_chars;
 
@@ -30,9 +33,6 @@ class CharClass
         static CharClass negate(CharClass &lhs, CharClass const &rhs);
 
     private:
-        static void display(Vector const &vect);
-
-
         CharClass(char ch);
         CharClass(std::string const &str);
         CharClass(std::set<char> const &charSet);

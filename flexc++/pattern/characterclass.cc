@@ -7,15 +7,17 @@ Pattern Pattern::characterClass(States &states, CharClass const &charClass)
     states[pair.first] = State::factory(State::CHARSET, 
                                         charClass.str(), pair.second);
 
-//    cout << "SET: ";
-//    string const &str =  downCast<CharClass>(charClass).str();
-//    for (auto iter = str.begin(); iter != str.end(); ++iter)
-//        if (isprint(*iter)) 
-//            cout << *iter;
+//    cout << "Pattern::characterClass: ";
+//    for (auto ch: charClass.str())
+//    {
+//        if (isprint(ch)) 
+//            cout << ch;
 //        else
-//            cout << ' ' << (int)*iter << ' ';
-//    cout << '\n';
-    
+//            cout << ' ' << (int)ch << ' ';
+//    }
+//    cout << "\n"
+//            "States: " << pair.first << " .. " << pair.second << '\n';
+
     Pattern ret(pair);
     return ret;
 }

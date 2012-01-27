@@ -25,7 +25,7 @@ class StateData
         void set(std::string const &str);
         
     private:    
-        void v_set(std::string const &str);
+        virtual void v_set(std::string const &str);
         virtual StateData *v_clone() const;
         virtual std::string const &v_str() const;
 };
@@ -42,8 +42,7 @@ inline std::string const &StateData::str() const
 
 inline std::string const &StateData::v_str() const
 {
-    static std::string ret;
-    return ret;
+    throw std::logic_error("StateData::str() attempt on plain StateData");
 }
 
 inline void StateData::set(std::string const &str)
@@ -52,7 +51,10 @@ inline void StateData::set(std::string const &str)
 }
 
 inline void StateData::v_set(std::string const &str)
-{}
+{
+    throw std::logic_error(
+                "StateData::set(string) attempt on plain StateData");
+}
 
 inline size_t StateData::next1() const
 {

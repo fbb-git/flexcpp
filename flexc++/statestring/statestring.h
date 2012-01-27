@@ -11,8 +11,8 @@ class StateString: public StateData
         StateString(std::string const &str, size_t next1, size_t next2);
 
     private:
-        void v_set(std::string const &str);
-        std::string const &v_str() const;
+        virtual void v_set(std::string const &str);
+        virtual std::string const &v_str() const;
         virtual StateData *v_clone() const;
 };
 

@@ -57,7 +57,7 @@ OPTBL                   [[:blank:]]*
 
 {DECIMAL}                       return Parser::DECIMAL;
 
-<pre>{IDENTIFIER}               return Parser::IDENTIFIER;
+<INITIAL,pre>{IDENTIFIER}       return Parser::IDENTIFIER;
 
 \\{OCTAL}{3}                    |
 \\x[[:xdigit:]]{2}              |

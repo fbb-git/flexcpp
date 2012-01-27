@@ -2,8 +2,7 @@
 
 string CharClass::str() const
 {
-//    cout << "CHARCLASS: str.cc RAW: ";
-//    display(d_chars);
+//    cout << "CHARCLASS: str.cc RAW: " << *this << '\n';
         
     std::set<char> const &tmp = set();
 
