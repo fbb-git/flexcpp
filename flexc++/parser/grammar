@@ -80,9 +80,12 @@ identifier:
 
 %include inc/directives
 %include inc/options
-%include inc/msspec
-%include inc/eofpattern
 %include inc/combichars
+%include inc/msspec
+%include inc/characterclass
 %include inc/regex
+%include inc/eofpattern
+//%include inc/nlreset
+//%include inc/mscompound
 %include inc/rules
  

@@ -92,7 +92,7 @@ _simple_regex:
         $$ = interval($1, $3);
     }
 |
-    _characterclass
+    characterclass
     {
         $$ = SemUnion(Pattern());
     }
