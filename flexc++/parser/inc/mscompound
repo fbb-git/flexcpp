@@ -16,12 +16,12 @@ _msCompound_rule:
 |
     _msCompound_regex_list 
     {
-        // addRule($1);
+        addRule($1);
     }        
 |
     _msCompound_regex_list block    
     {
-        // addBlockRule($1);
+        addBlockRule($1);
     }
 |
     eof_pattern
@@ -39,7 +39,7 @@ _opt_msCompound_nl_rules:
 
 msCompound:
     ms_spec '{' _opt_msCompound_nl_rules '}'
-    {   // following an ms_block, reset the startconditions to 'INITIAL'
+    {   // following an msCompound, reset the startconditions to 'INITIAL'
         d_rules.resetStartConditions();
     }
 ;

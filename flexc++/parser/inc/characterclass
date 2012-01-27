@@ -153,4 +153,7 @@ characterclass:
     }
 |
     _cc_set
+    {
+        $$ = rawText();
+    }
 ;

@@ -93,9 +93,6 @@ _simple_regex:
     }
 |
     characterclass
-    {
-        $$ = SemUnion(Pattern());
-    }
 ;
 
 
