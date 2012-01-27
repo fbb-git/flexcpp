@@ -37,15 +37,15 @@ ostream &operator<<(ostream &out, State const &state)
 
     out  << " -> " << state.next1() << ", " << state.next2();
 
-//    if (type == State::CHARSET)
-//    {
-//        string const &str = SemVal::downCast<StateString>(state.data()).str();
-//        out << " [ ";
-//        for (auto &iter: str)
-//            out << 
-//                static_cast<size_t>(static_cast<unsigned char>(*iter)) << ' ';
-//        out << ']';
-//    }
+    if (type == State::CHARSET)
+    {
+        string const &str = state.data().str();
+        out << " [ ";
+        for (auto &ch: str)
+            out << 
+                static_cast<size_t>(static_cast<unsigned char>(ch)) << ' ';
+        out << ']';
+    }
 
     return out;
 }

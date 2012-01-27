@@ -7,7 +7,6 @@ void Ranges::inspectState(State const &state)
     if (type < State::UNDETERMINED__)
         add(type);
     else if (type == State::CHARSET)
-        ; 
-        // WIP add(SemVal::downCast<StateString>(state.data()).str());
+        add(state.data().str());
 }
 

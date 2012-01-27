@@ -1,7 +1,9 @@
 #ifndef INCLUDED_STATEDATA_
 #define INCLUDED_STATEDATA_
 
+#include <string>
 #include <cstddef>
+#include <stdexcept>
 
 class StateData
 {
@@ -10,14 +12,47 @@ class StateData
 
     public:
         StateData(size_t next1, size_t next2);
+        virtual ~StateData();
 
-        virtual StateData *clone(size_t next1, size_t next2) const;
+        StateData *dup() const;
+        std::string const &str() const;
 
         size_t next1() const;
         size_t next2() const;
         void set(size_t next1, size_t next2 = 0);
         void set2nd(size_t next2);
+
+        void set(std::string const &str);
+        
+    private:    
+        void v_set(std::string const &str);
+        virtual StateData *v_clone() const;
+        virtual std::string const &v_str() const;
 };
+
+inline StateData *StateData::dup() const
+{
+    return v_clone();
+}
+
+inline std::string const &StateData::str() const
+{
+    return v_str();
+}
+
+inline std::string const &StateData::v_str() const
+{
+    static std::string ret;
+    return ret;
+}
+
+inline void StateData::set(std::string const &str)
+{
+    v_set(str);
+}
+
+inline void StateData::v_set(std::string const &str)
+{}
 
 inline size_t StateData::next1() const
 {

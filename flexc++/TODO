@@ -13,12 +13,12 @@ ADD OPTION TO DISPLAY THE MATCHED RULE  TO EXECUTE
 
 
 WIP: 
-    Ranges::
-        inspectstate.cc
-        charsettoranges.cc
+    //Ranges::
+    //    inspectstate.cc
+    //    charsettoranges.cc
     State:
-        operatorinsert.cc
-        contains.cc
+    //    operatorinsert.cc
+    //    contains.cc
     StartConditions:
         startconditions.ih / .h
     PatternVal:
