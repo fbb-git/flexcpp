@@ -24,7 +24,6 @@ class Block
         void indent();
         void operator+=(std::string const &text);
   
-//        operator bool() const;          // return true if a block is active
         size_t level() const;
         std::string const &str() const; // the block's contents
         size_t line() const;

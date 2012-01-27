@@ -12,7 +12,7 @@ void Generator::ruleAction(Rule const &rule, ostream &out, size_t &idx,
             "        {\n";
 
         if (lineDirectives)
-            out <<  "#line " << block.line()  << " \"" << block.source() << 
+            out <<  "#line " << block.line()  << " \"" << block.filename() << 
                                                                     "\"\n";
         out << 
             "            " << block.str() << "\n"

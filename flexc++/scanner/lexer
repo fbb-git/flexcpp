@@ -24,7 +24,7 @@ OPTBL                   [[:blank:]]*
 
 <INITIAL,pre>{OPTBL}"//".*      // skip EOLN comment
                                 
-{BL}[^}|\n].*                   return block(); 
+{BL}[^[:blank:]}|\n].*          return block(); 
 
 {OPTBL}"|"{OPTBL}\n{OPTBL}      return Parser::ORNL;
 

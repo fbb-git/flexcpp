@@ -375,12 +375,12 @@ _msBlock_rule_def:
 |
     _regex_list 
     {
-        addRule($1);
+        //addRule($1);
     }        
 |
     _regex_list _block    
     {
-        addBlockRule($1);
+        //addBlockRule($1);
     }
 |
     _eof_pattern
@@ -415,14 +415,14 @@ _rule_def:
         // just regular expressions, without an action block
     _optMs_regex_list 
     {
-        addRule($1);
+        //addRule($1);
     }
 |
         // the scanner returns a block if it encounters a non-blank character
         // on a line after ws, unless the character is a '|'
     _optMs_regex_list _block    
     {
-        addBlockRule($1);
+        //addBlockRule($1);
     }
 |
     _ms_block

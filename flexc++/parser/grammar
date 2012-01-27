@@ -65,7 +65,7 @@ input:
 ;
 
 section_delimiter:
-    SECTION_DELIMITER
+    SECTION_DELIMITER   '\n'
     {
         d_rules.useInitialSC();
     }

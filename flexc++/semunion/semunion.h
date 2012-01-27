@@ -50,6 +50,8 @@ union SemUnion
         template <int dataType>
         typename Type<Int<dataType>>::type &value();
 
+        int index() const;
+
     private:
         template <typename Type>
         Type &conversion() const;
@@ -58,6 +60,11 @@ union SemUnion
 inline SemUnion::SemUnion()
 {
     new (this) std::pair<int, int>(DataType::INT, 0);
+}
+
+inline int SemUnion::index() const
+{
+    return d_index.first;
 }
 
 template <typename Tp>

@@ -29,13 +29,13 @@ rule                    block
 
 rules                   utility spsemunion startconditions rule
 
-// dfarow         ranges rules states tailcount
-// dfa            dfarow        
-// dfas           rules dfa  
+dfarow                  ranges rules states tailcount
+dfa                     dfarow        
+dfas                    rules dfa  
 
 parser                  utility   state   block   scanner spsemunion states
 
-// generator      dfas    startconditions   
+generator               dfas    startconditions   
 
 
 

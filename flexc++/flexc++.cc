@@ -68,31 +68,31 @@ try
         return 1;
     }
 
-//    Ranges ranges(states);
-//        ranges.determineSubsets();
-//        ranges.finalizeStates();
-//
-//    if (arg.option('V'))
-//        cout << 
-//            "RULES:\n"      <<
-//            rules << "\n"
-//            "RANGES:\n"     << 
-//            ranges << "\n"
-//            "STATES:\n"     <<
-//            states << '\n';
-//
-//    DFAs dfas(rules, states, ranges);
-//        dfas.build();
-//
-//        rules.warnNonViable();
-//
-//    Generator generator(rules, ranges, dfas);
-//        generator.construction(states);
-//        generator.lexSource();
-//        generator.baseclassHeader();
-//        generator.classHeader();
-//        generator.implementationHeader();
-//        generator.showFilenames();
+    Ranges ranges(states);
+        ranges.determineSubsets();
+        ranges.finalizeStates();
+
+    if (arg.option('V'))
+        cout << 
+            "RULES:\n"      <<
+            rules << "\n"
+            "RANGES:\n"     << 
+            ranges << "\n"
+            "STATES:\n"     <<
+            states << '\n';
+
+    DFAs dfas(rules, states, ranges);
+        dfas.build();
+
+        rules.warnNonViable();
+
+    Generator generator(rules, ranges, dfas);
+        generator.construction(states);
+        generator.lexSource();
+        generator.baseclassHeader();
+        generator.classHeader();
+        generator.implementationHeader();
+        generator.showFilenames();
 }
 catch (int x)
 {
