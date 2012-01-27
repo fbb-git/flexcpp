@@ -87,8 +87,9 @@ class Parser: public ParserBase, public DataType
                                   spSemUnion const &rhs);
         spSemUnion setNegate(spSemUnion &lhs,               // .ih
                                   spSemUnion const &rhs);
-        void addRule(spSemUnion const &rule);               // .ih
-        void addBlockRule(spSemUnion const &rule);          // .ih
+
+        void addRule(spSemUnion const &rule, bool resetMs = false);
+        void addBlockRule(spSemUnion const &rule, bool resetMs = false);
 
         void setFlags(size_t idx, State::Flag flag);    // called fm lookahead
 

@@ -1,8 +1,8 @@
         // regex in the form: <miniscanner>(opt) regex
 _optMs_regex:       
     ms_spec regex
-    {   // following a <ms>regex, reset the ms back to INITIAL
-        d_rules.resetStartConditions();
+    {
+        $$ = $2;
     }
 |
     regex
@@ -15,12 +15,27 @@ _optMs_regex:
     // (ORNL is returned at '| {OPTBL} \n')
     // at ORNL any previously set ms-spec ends, and is back to INITIAL
 
-optMs_rule:                             // after ORNL continue parsing
-    optMs_rule ORNL nl_reset optMs_rule // at a new line
+_optMs_rule:                             // after ORNL continue parsing
+    _optMs_rule ORNL nl_reset _optMs_rule // at a new line
     {                                              
         $$ = alternatives($1, $3);
     }
 |
     _optMs_regex
+;
+
+optMs_rule:
+        // just regular expressions, without an action block
+    _optMs_rule 
+    {
+        addRule($1, true);  // true: reset the miniscanner spec to INITIAL
+    }
+|
+        // the scanner returns a block if it encounters a non-blank character
+        // on a line after ws, unless the character is a '|'
+    _optMs_rule block    
+    {
+        addBlockRule($1, true);
+    }
 ;
 

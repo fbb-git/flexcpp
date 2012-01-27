@@ -4,18 +4,7 @@ _rule_def:
     // recovery from errors is OK: continue at the next line
     error       
 |
-        // just regular expressions, without an action block
-    optMs_rule 
-    {
-        //addRule($1);
-    }
-|
-        // the scanner returns a block if it encounters a non-blank character
-        // on a line after ws, unless the character is a '|'
-    optMs_rule block    
-    {
-        //addBlockRule($1);
-    }
+    optMs_rule
 |
     msCompound
 |
