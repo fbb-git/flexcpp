@@ -1,0 +1,7 @@
+block:
+    BLOCK
+    {
+        block();    // do not embed this elsewhere, as block() eats tokens
+    }
+;
+

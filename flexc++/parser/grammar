@@ -84,6 +84,7 @@ identifier:
 %include inc/msspec
 %include inc/characterclass
 %include inc/regex
+%include inc/block
 %include inc/eofpattern
 %include inc/nlreset
 %include inc/mscompound

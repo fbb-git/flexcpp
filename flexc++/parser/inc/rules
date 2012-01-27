@@ -24,13 +24,6 @@ _optMs_regex_list:                              // after ORNL continue parsing
     _optMs_regex
 ;
 
-_block:
-    BLOCK
-    {
-        block();
-    }
-;
-
 _rule_def:
     // only an empty line is OK
 |
@@ -45,7 +38,7 @@ _rule_def:
 |
         // the scanner returns a block if it encounters a non-blank character
         // on a line after ws, unless the character is a '|'
-    _optMs_regex_list _block    
+    _optMs_regex_list block    
     {
         //addBlockRule($1);
     }

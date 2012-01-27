@@ -19,7 +19,7 @@ _msCompound_rule:
         // addRule($1);
     }        
 |
-    _msCompound_regex_list _block    
+    _msCompound_regex_list block    
     {
         // addBlockRule($1);
     }

@@ -5,7 +5,7 @@ eof_pattern:
     }
         
 |
-    EOF_PATTERN _block
+    EOF_PATTERN block
     {
         addBlockRule(eofPattern());
     }
