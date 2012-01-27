@@ -31,51 +31,6 @@ _block:
     }
 ;
 
-_regex_list:
-    _regex_list ORNL nl_reset _regex_list  // after ORNL continue parsing
-    {                                       // at a new line
-        $$ = alternatives($1, $3);
-    }
-|
-    regex
-;
-
-_msBlock_rule_def:
-    // empty
-|
-    _regex_list 
-    {
-        //addRule($1);
-    }        
-|
-    _regex_list _block    
-    {
-        //addBlockRule($1);
-    }
-|
-    eof_pattern
-;
-
-
-    // each rule ends in a '\n'
-_msBlock_rule:                      
-    _msBlock_rule_def '\n' nl_reset
-;                               
-                                
-
-_msBlock_rules:
-    _msBlock_rules _msBlock_rule
-|
-    // empty
-;
-
-_ms_block:
-    ms_spec '{' _msBlock_rules _msBlock_rule_def '}'
-    {   // following a ms_block, reset the startconditions to 'INITIAL'
-        d_rules.resetStartConditions();
-    }
-;
-
 _rule_def:
     // only an empty line is OK
 |
@@ -95,7 +50,7 @@ _rule_def:
         //addBlockRule($1);
     }
 |
-    _ms_block
+    msCompound
 |
     eof_pattern
 ;

@@ -86,6 +86,6 @@ identifier:
 %include inc/regex
 %include inc/eofpattern
 %include inc/nlreset
-//%include inc/mscompound
+%include inc/mscompound
 %include inc/rules
  

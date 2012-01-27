@@ -1,0 +1,45 @@
+    // following ORNL continue parsing  at the next line, with a new regex
+    // which again may start with a ^
+_msCompound_regex_list:
+    _msCompound_regex_list ORNL nl_reset _msCompound_regex_list  
+    {            
+        $$ = alternatives($1, $3);
+    }
+|
+    regex
+;
+
+    // _msCompound_rule: rules specified within a <ms_spec>{ ms-rules } 
+    //      compound. These rules may not themselves specify miniscanners
+_msCompound_rule:
+    // empty
+|
+    _msCompound_regex_list 
+    {
+        // addRule($1);
+    }        
+|
+    _msCompound_regex_list _block    
+    {
+        // addBlockRule($1);
+    }
+|
+    eof_pattern
+;
+
+_msCompound_nl_rule:
+    _msCompound_rule '\n' nl_reset
+;
+
+_opt_msCompound_nl_rules:
+    // empty
+|
+    _opt_msCompound_nl_rules _msCompound_nl_rule
+;
+
+msCompound:
+    ms_spec '{' _opt_msCompound_nl_rules '}'
+    {   // following an ms_block, reset the startconditions to 'INITIAL'
+        d_rules.resetStartConditions();
+    }
+;
