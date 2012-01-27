@@ -69,6 +69,7 @@ class Parser: public ParserBase, public DataType
 
         spSemUnion alternatives(spSemUnion const &lhs, 
                                 spSemUnion const &rhs);     // .ih
+        spSemUnion characterClass(spSemUnion &charClass);   // .ih
         spSemUnion dot();                                   // .ih
         spSemUnion escape();                                // .ih
         spSemUnion str();                                   // .ih

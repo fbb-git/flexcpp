@@ -105,3 +105,8 @@ inline spSemUnion Parser::setNegate(spSemUnion &lhs, spSemUnion const &rhs)
                              rhs->value<CHARCLASS>());
 }
 
+inline spSemUnion Parser::characterClass(spSemUnion &charClass)
+{
+    return Pattern::characterClass(d_states, charClass->value<CHARCLASS>());
+}
+

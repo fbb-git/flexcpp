@@ -40,8 +40,9 @@ class Pattern
                                      size_t type);
         static Pattern interval(States &states, Pattern &regex, 
                                                    Interval const &interval);
+        static Pattern characterClass(States &states, 
+                                      CharClass const &charClass);
 
-//        static Pattern charSet(States &states, CharClass const &charClass);
 //        static Pattern plain(States &states, size_t ch);
 
     private:
