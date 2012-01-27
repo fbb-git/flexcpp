@@ -1,0 +1,30 @@
+patternval/duppattern: zet verkeerde datatypes. Kopieren van SemVal's is een
+kludge???
+
+
+./ignore/scanner/lexer      | assumes continuation of miniscanner
+./trimmed/scanner/lexer         idem
+
+./numbers/scanner/lexer     . can never be matched
+
+final %% should be recognized by the scanner as its end-line
+
+ADD OPTION TO DISPLAY THE MATCHED RULE  TO EXECUTE
+
+
+WIP: 
+    Ranges::
+        inspectstate.cc
+        charsettoranges.cc
+    State:
+        operatorinsert.cc
+        contains.cc
+    StartConditions:
+        startconditions.ih / .h
+    PatternVal:
+        dot.cc
+
+CLASSES
+README.class-setup
+TODO
+
