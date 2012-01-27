@@ -1,15 +1,3 @@
-    // elements may need to be split between _cc_element and _simple_regex
-    // if their handling turns out to be special
-_combi_chars:
-    ','
-|
-    '='
-|
-    '-'
-|
-    '\''
-;
-
 _decimal:
     DECIMAL
     {
@@ -113,7 +101,7 @@ _cc_literal:
 |
     STRING
 |
-    _combi_chars
+    combi_chars
 ;
 
 _cc_element:

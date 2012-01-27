@@ -1,7 +1,7 @@
 _single_char:
     CHAR
 |
-    _combi_chars
+    combi_chars
 ;
 
 _multi_char:
