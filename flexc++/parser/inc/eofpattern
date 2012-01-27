@@ -1,0 +1,13 @@
+eof_pattern:
+    EOF_PATTERN
+    {
+        addRule(eofPattern());
+    }
+        
+|
+    EOF_PATTERN _block
+    {
+        addBlockRule(eofPattern());
+    }
+;
+

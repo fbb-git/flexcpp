@@ -80,5 +80,6 @@ identifier:
 
 %include inc/directives
 %include inc/options
+%include inc/eofpattern
 %include inc/rules
  

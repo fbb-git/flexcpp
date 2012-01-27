@@ -357,19 +357,6 @@ _regex_list:
     _regex
 ;
 
-_eof_pattern:
-    EOF_PATTERN
-    {
-        addRule(eofPattern());
-    }
-        
-|
-    EOF_PATTERN _block
-    {
-        addBlockRule(eofPattern());
-    }
-;
-
 _msBlock_rule_def:
     // empty
 |
@@ -383,7 +370,7 @@ _msBlock_rule_def:
         //addBlockRule($1);
     }
 |
-    _eof_pattern
+    eof_pattern
 ;
 
 
@@ -427,7 +414,7 @@ _rule_def:
 |
     _ms_block
 |
-    _eof_pattern
+    eof_pattern
 ;
 
     // each rule ends in a '\n'
