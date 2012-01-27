@@ -1,0 +1,14 @@
+#include "pattern.h"
+
+#include <limits>
+#include <string>
+#include <stdexcept>
+#include <algorithm>
+
+#include <bobcat/string>
+
+#include "../interval/interval.h"
+#include "../charclass/charclass.h"
+
+using namespace std;
+using namespace FBB;
