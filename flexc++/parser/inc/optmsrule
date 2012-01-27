@@ -1,0 +1,26 @@
+        // regex in the form: <miniscanner>(opt) regex
+_optMs_regex:       
+    ms_spec regex
+    {   // following a <ms>regex, reset the ms back to INITIAL
+        d_rules.resetStartConditions();
+    }
+|
+    regex
+;
+
+    // series of _optMs_regexes, separated by '|' at the end of lines. E.g.,
+    // _optMs_regex1   |
+    // _optMs_regex2   |
+    // _optMs_regex3
+    // (ORNL is returned at '| {OPTBL} \n')
+    // at ORNL any previously set ms-spec ends, and is back to INITIAL
+
+optMs_rule:                             // after ORNL continue parsing
+    optMs_rule ORNL nl_reset optMs_rule // at a new line
+    {                                              
+        $$ = alternatives($1, $3);
+    }
+|
+    _optMs_regex
+;
+

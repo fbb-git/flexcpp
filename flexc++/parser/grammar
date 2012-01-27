@@ -80,6 +80,7 @@ identifier:
 
 %include inc/directives
 %include inc/options
+
 %include inc/combichars
 %include inc/msspec
 %include inc/characterclass
@@ -88,5 +89,6 @@ identifier:
 %include inc/eofpattern
 %include inc/nlreset
 %include inc/mscompound
+%include inc/optmsrule
 %include inc/rules
  
