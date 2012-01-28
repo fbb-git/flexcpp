@@ -2,6 +2,6 @@
 
 Pattern Pattern::dot(States &states)
 {
-    Pattern ret; //  = charSet(states, *CharClass::predefined("."));
+    Pattern ret = characterClass(states, CharClass::predefined("."));
     return ret;
 }

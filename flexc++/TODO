@@ -22,7 +22,7 @@ WIP:
     StartConditions:
         startconditions.ih / .h
     PatternVal:
-        dot.cc
+    // dot.cc
 
 CLASSES
 README.class-setup
