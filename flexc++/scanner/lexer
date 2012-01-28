@@ -23,34 +23,44 @@ OPTBL                   [[:blank:]]*
 
 %%
 
-<INITIAL,pre>{OPTBL}"//".*      // skip EOLN comment
-                                
 {BL}[^[:blank:]}|\n].*          return block(); 
 
 {OPTBL}"|"{OPTBL}\n{OPTBL}      return Parser::ORNL;
 
-<INITIAL,pre>^"//include"[[:blank:]].*       maybeSwitchStream();
+<INITIAL,pre>{
+    {OPTBL}"//".*               // skip EOLN comment
 
-<INITIAL,pre>{BL}               {   // skip white space unless in a block
+    ^"//include"[[:blank:]].*   maybeSwitchStream();
+
+    {BL}                        {   // skip white space unless in a block
                                     if (d_inBlock)
                                         return ' ';
                                 }
-                                
-<INITIAL,pre>{OPTBL}"/*"        push(StartCondition__::comment);
+
+    {OPTBL}"/*"                 push(StartCondition__::comment);
+
+    \"                          {
+                                    more();
+                                    push(StartCondition__::string);
+                                }
+
+    {IDENTIFIER}                return Parser::IDENTIFIER;
+
+    \n{OPTBL}                   return '\n';
+
+}
+
 <comment>{
     .|\n                        // ignore
     "*/"                        popSc();
 }
 
-<INITIAL,pre>\"                 {
-                                    more();
-                                    push(StartCondition__::string);
-                                }
 <string>{
     "\\".                       more();
     \"                          return popSc(Parser::STRING);
     .                           more();
 }
+
     // A quote is 
     //      1. a single quote followed by 
     //      2. either an escape sequence or a single character not being 
@@ -61,9 +71,7 @@ OPTBL                   [[:blank:]]*
 
 {DECIMAL}                       return Parser::DECIMAL;
 
-<INITIAL,pre>{IDENTIFIER}       return Parser::IDENTIFIER;
-
-{ESCAPE_SEQUENCE}                             return Parser::ESCAPE_SEQUENCE;
+{ESCAPE_SEQUENCE}               return Parser::ESCAPE_SEQUENCE;
 
 "{+}"                           return Parser::CC_PLUS;
 
@@ -94,14 +102,11 @@ OPTBL                   [[:blank:]]*
 
 \{{IDENTIFIER}\}                pushNameExpansion();
 
-<INITIAL,pre>\n{OPTBL}          return '\n';
-
                                     // return special chars as themselves
 [][',^$=/|()*+?{}<>-]           return matched()[0];
 
                                     // return other chars as CHAR
 .                               return Parser::CHAR;
-
 
 <pre>{
     "%%"                        {
