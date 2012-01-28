@@ -25,13 +25,9 @@ class Rule
     bool d_viable;              // this rule is viable, i.e., it can be
                                 // matched
 
-    std::string d_source;       // context of the rule: source and lineNr
-    size_t      d_lineNr;
-
     public:
         Rule() = default;               // for vector operations by Rules
-        Rule(States const &states, bool bol, Pair fstfin, Block const &block,
-             std::string const &source, size_t lineNr);
+        Rule(States const &states, bool bol, Pair fstfin, Block const &block);
 
         size_t startState() const;
         size_t finalState() const;
@@ -45,6 +41,11 @@ class Rule
 
         std::string const &source() const;
         size_t lineNr() const;
+
+        bool orAction() const;
+        void setOrAction();
+        void assignBlock(Block const &block);
+        void noAction();
         
     private:
         void setStates(std::vector<size_t> &prePostA, 
@@ -55,12 +56,12 @@ class Rule
 
 inline std::string const &Rule::source() const
 {
-    return d_source;
+    return d_block.filename();
 }
 
 inline size_t Rule::lineNr() const
 {
-    return d_lineNr;
+    return d_block.lineNr();
 }
 
 
@@ -99,18 +100,24 @@ inline Block const &Rule::block() const
     return d_block;
 }
 
+inline void Rule::assignBlock(Block const &block)
+{
+    d_block = block;    
+}
+
+inline bool Rule::orAction() const
+{
+    return d_block.orAction();
+}
+
+inline void Rule::setOrAction()
+{
+    return d_block.setOrAction();
+}
+
+inline void Rule::noAction()
+{
+    d_block.clear();
+}
+
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-

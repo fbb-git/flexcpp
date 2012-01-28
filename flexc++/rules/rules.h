@@ -1,6 +1,8 @@
 #ifndef INCLUDED_RULES_
 #define INCLUDED_RULES_
 
+#include <iostream>     // TMP
+
 #include <iosfwd>
 #include <vector>
 #include <string>
@@ -12,6 +14,7 @@
 #include "../rule/rule.h"
 
 class States;
+class Block;
 
 class Rules: public DataType
 {
@@ -32,8 +35,7 @@ class Rules: public DataType
         typedef std::vector<Rule>::const_iterator rule_const_iterator;
 
         Rules(States &states);
-        void add(bool bol, spSemUnion const &patternVal, Block const &block,
-                 std::string const &fileName, size_t lineNr);
+        void add(bool bol, spSemUnion const &patternVal, Block const &block);
 
         Rule const &operator[](size_t idx) const;
         Rule &operator[](size_t idx);
@@ -57,11 +59,20 @@ class Rules: public DataType
         size_t size() const;
 
         void warnNonViable() const;
-
+        void setOrAction();         // set the previous rule's action to '|'
+        void assignBlock(Block const &block);   // assign 'block' to the last
+                                                // rule
+        void noActions();                       // clear previous actions's
+                                                // 'orAction' states
     private:
         void setRule(size_t state, size_t index);
         static bool nonViable(Rule const &rule);
 };
+
+inline void Rules::setOrAction()
+{
+    d_rules[d_rules.size() - 2].setOrAction();
+}
 
 inline bool Rules::nonViable(Rule const &rule)
 {
@@ -142,6 +153,11 @@ inline std::vector<size_t> const &Rules::operator()
                                     (std::string const &startCondition) const
 {
     return d_startConditions(startCondition);
+}
+
+inline void Rules::assignBlock(Block const &block)
+{
+    d_rules.back().assignBlock(block);    
 }
 
 #endif

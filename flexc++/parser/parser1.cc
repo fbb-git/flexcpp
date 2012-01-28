@@ -5,6 +5,7 @@ Parser::Parser(Rules &rules, States &states)
     d_arg(Arg::instance()),
     d_scanner(d_arg[0]),
     d_matched(d_scanner.matched()),
+    d_block(0, ""),
     d_options(Options::instance()),
     d_printTokens(d_arg.option('t')),
     d_doError(true),
@@ -20,6 +21,4 @@ Parser::Parser(Rules &rules, States &states)
     s_ignoreToken = d_token__;
     setDebug(d_arg.option('d'));
 }
-
-//    d_parentheses(0),
 

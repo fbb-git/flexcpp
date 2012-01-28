@@ -17,25 +17,28 @@ _optMs_regex:
 
 _optMs_rule:                             // after ORNL continue parsing
     _optMs_rule ORNL nl_reset _optMs_rule // at a new line
-    {                                              
-        $$ = alternatives($1, $3);
+    {
+        d_rules.setOrAction();
     }
 |
     _optMs_regex
+    {
+        addRule($1, true);  // true: reset the miniscanner spec to INITIAL
+    }
 ;
 
 optMs_rule:
         // just regular expressions, without an action block
     _optMs_rule 
     {
-        addRule($1, true);  // true: reset the miniscanner spec to INITIAL
+        noActions();
     }
 |
         // the scanner returns a block if it encounters a non-blank character
         // on a line after ws, unless the character is a '|'
     _optMs_rule block    
     {
-        addBlockRule($1, true);
+        assignBlock();
     }
 ;
 

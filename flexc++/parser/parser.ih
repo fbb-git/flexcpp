@@ -110,3 +110,20 @@ inline spSemUnion Parser::characterClass(spSemUnion &charClass)
     return Pattern::characterClass(d_states, charClass->value<CHARCLASS>());
 }
 
+inline void Parser::assignBlock()
+{
+    d_rules.assignBlock(d_block);
+}
+
+inline void Parser::noActions()
+{
+    d_rules.noActions();
+}
+
+inline void Parser::addBlockRule(spSemUnion const &rule)
+{
+    d_rules.add(false, rule->value<PATTERN>(), d_block);
+}
+
+
+

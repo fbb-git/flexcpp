@@ -6,6 +6,7 @@
 #include <bobcat/arg>
 #include <bobcat/stat>
 #include <bobcat/indent>
+#include <bobcat/ranger>
 
 #include <iterator>
 #include <climits>

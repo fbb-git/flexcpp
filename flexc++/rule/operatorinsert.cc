@@ -6,7 +6,7 @@
 
 ostream &operator<<(ostream &out, Rule const &rule)
 {
-    out << " (" << rule.d_source << " " << rule.d_lineNr << 
+    out << " (" << rule.source() << " " << rule.lineNr() << 
                 "). Startstate " << setw(2) << rule.startState();
 
     return out;

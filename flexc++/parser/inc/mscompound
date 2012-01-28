@@ -2,11 +2,14 @@
     // which again may start with a ^
 _msCompound_regex_list:
     _msCompound_regex_list ORNL nl_reset _msCompound_regex_list  
-    {            
-        $$ = alternatives($1, $3);
+    {
+        d_rules.setOrAction();
     }
 |
     regex
+    {
+        addRule($1);
+    }
 ;
 
     // _msCompound_rule: rules specified within a <ms_spec>{ ms-rules } 
@@ -16,12 +19,12 @@ _msCompound_rule:
 |
     _msCompound_regex_list 
     {
-        addRule($1);
-    }        
+        noActions();
+    }
 |
     _msCompound_regex_list block    
     {
-        addBlockRule($1);
+        assignBlock();
     }
 |
     eof_pattern

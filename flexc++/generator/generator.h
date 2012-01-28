@@ -13,6 +13,7 @@
 class Ranges;
 class Options;
 class States;
+class Block;
 
 namespace FBB
 {
@@ -145,8 +146,8 @@ class Generator
                              std::vector<RuleFlagCount> &rfc);
 
         static void outStartState(std::string const &name, std::ostream &out);
-        static void ruleAction(Rule const &rule, std::ostream &out, 
-                               size_t &idx, bool lineDirectives);
+        void ruleAction(Block const &block, std::ostream &out, size_t &idx)
+                                                                    const;
 };
 
 #endif

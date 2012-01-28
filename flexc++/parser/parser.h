@@ -67,6 +67,8 @@ class Parser: public ParserBase, public DataType
         spSemUnion concatenate(spSemUnion &lhs, spSemUnion &rhs);
         spSemUnion lookahead(spSemUnion &left, spSemUnion &right);
 
+        void assignBlock();                                 // .ih
+        void noActions();                                   // .ih
         spSemUnion alternatives(spSemUnion const &lhs, 
                                 spSemUnion const &rhs);     // .ih
         spSemUnion characterClass(spSemUnion &charClass);   // .ih
@@ -90,7 +92,7 @@ class Parser: public ParserBase, public DataType
                                   spSemUnion const &rhs);
 
         void addRule(spSemUnion const &rule, bool resetMs = false);
-        void addBlockRule(spSemUnion const &rule, bool resetMs = false);
+        void addBlockRule(spSemUnion const &rule);
 
         void setFlags(size_t idx, State::Flag flag);    // called fm lookahead
 

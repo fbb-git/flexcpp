@@ -4,6 +4,7 @@
 #include <iosfwd>
 #include <vector>
 #include <string>
+#include <limits>
 
 class Block
 {
@@ -15,9 +16,15 @@ class Block
     std::string d_str;
     
     public:
-        Block();
-
+//        Block();
+        Block(size_t lineno, std::string const &filename);
+        
         void clear();
+    
+        void setOrAction();
+        bool orAction() const;          // if true, Generator uses this
+                                        // to let cases fall through
+
                                         // clears the previous block contents
         void open(size_t lineno, std::string const &filename);
         bool close();
@@ -26,16 +33,33 @@ class Block
   
         size_t level() const;
         std::string const &str() const; // the block's contents
-        size_t line() const;
+        size_t lineNr() const;
         std::string const &filename() const;
 };
 
-inline Block::Block()
+//inline Block::Block()
+//:
+//    d_level(0)
+//{}
+
+inline Block::Block(size_t lineno, std::string const &filename)
 :
+    d_line(lineno),
+    d_filename(filename),
     d_level(0)
 {}
 
-inline size_t Block::line() const
+inline void Block::setOrAction()
+{
+    d_level = std::numeric_limits<int>::max();
+}
+
+inline bool Block::orAction() const
+{
+    return d_level == std::numeric_limits<int>::max();
+}
+
+inline size_t Block::lineNr() const
 {
     return d_line;
 }

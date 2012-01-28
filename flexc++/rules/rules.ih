@@ -1,9 +1,8 @@
 #include "rules.h"
 
-#include <iostream>     // TMP
-
 #include <algorithm>
 #include <bobcat/mstream>
+#include <bobcat/ranger>
 
 #include "../states/states.h"
 #include "../pattern/pattern.ih"

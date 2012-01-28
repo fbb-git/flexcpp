@@ -6,11 +6,6 @@ void Generator::actions(ostream &out) const
 
     size_t idx = 0;
 
-    for_each(
-        d_rules.ruleBegin(), d_rules.ruleEnd(),
-        [&](Rule const &rule)
-        {
-            ruleAction(rule, out, idx, d_lineDirectives);
-        }
-    );
+    for (auto &rule: ranger(d_rules.ruleBegin(), d_rules.ruleEnd()))
+        ruleAction(rule.block(), out, idx);
 }

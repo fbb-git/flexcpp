@@ -1,19 +1,19 @@
 #include "generator.ih"
 
-void Generator::ruleAction(Rule const &rule, ostream &out, size_t &idx,
-                                                        bool lineDirectives)
+void Generator::ruleAction(Block const &block, ostream &out, size_t &idx) 
+                                                                        const
 {
-    Block const &block = rule.block();
-
-    if (block.str().length())
+    if (block.orAction())
+        out << "        case " << idx << ":\n";
+    else if (block.str().length())
     {
         out << 
             "        case " << idx << ":\n"
             "        {\n";
 
-        if (lineDirectives)
-            out <<  "#line " << block.line()  << " \"" << block.filename() << 
-                                                                    "\"\n";
+        if (d_lineDirectives)
+            out << "#line " << block.lineNr()  << 
+                               " \"" << block.filename() << "\"\n";
         out << 
             "            " << block.str() << "\n"
             "        }\n"
