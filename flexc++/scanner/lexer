@@ -5,6 +5,7 @@
 
 DECIMAL                 0|[1-9][[:digit:]]*
 OCTAL                   [0-7]
+ESCAPE_SEQUENCE         \\{OCTAL}{3}|\\x[[:xdigit:]]{2}|\\.
 IDENTIFIER              [A-Za-z_][-A-Za-z0-9_]*
 BL                      [[:blank:]]+
 OPTBL                   [[:blank:]]*
@@ -41,7 +42,6 @@ OPTBL                   [[:blank:]]*
     "*/"                        popSc();
 }
 
-
 <INITIAL,pre>\"                 {
                                     more();
                                     push(StartCondition__::string);
@@ -51,19 +51,20 @@ OPTBL                   [[:blank:]]*
     \"                          return popSc(Parser::STRING);
     .                           more();
 }
-
-"'"(\\.|[^\\'])+"'"             return Parser::QUOTES;
-
+    // A quote is 
+    //      1. a single quote followed by 
+    //      2. either an escape sequence or a single character not being 
+    //          a newline, quote, or backslash
+    //      3. a single quote
+    // In all other cases a quote is returned as a literal quote.
+\'({ESCAPE_SEQUENCE}|[^\n'\\])\'    return Parser::QUOTES;
 
 {DECIMAL}                       return Parser::DECIMAL;
 
 <INITIAL,pre>{IDENTIFIER}       return Parser::IDENTIFIER;
 
-\\{OCTAL}{3}                    |
-\\x[[:xdigit:]]{2}              |
-\\.                             return Parser::ESCAPE_SEQUENCE;
+{ESCAPE_SEQUENCE}                             return Parser::ESCAPE_SEQUENCE;
 
-                    
 "{+}"                           return Parser::CC_PLUS;
 
 "{-}"                           return Parser::CC_MINUS;

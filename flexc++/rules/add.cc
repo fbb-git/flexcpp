@@ -8,8 +8,6 @@ void Rules::add(bool bol, spSemUnion const &patternVal, Block const &block)
 
     size_t ruleIdx = d_rules.size() - 1;
 
-cout << "Defining rule index " << ruleIdx << '\n';
-
     d_finalToRule[pair.second] = ruleIdx;
 
     setRule(pair.first, ruleIdx);
