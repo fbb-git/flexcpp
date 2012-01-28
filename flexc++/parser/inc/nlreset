@@ -1,6 +1,0 @@
-nl_reset:
-    {
-        nlReset();
-    }
-;
-

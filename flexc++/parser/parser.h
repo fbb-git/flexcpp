@@ -57,7 +57,8 @@ class Parser: public ParserBase, public DataType
         int parse();
 
     private:
-        void nlReset();
+        void reset();       // prepare the parser for a new regex 
+                            // (resetting tokencount and warning flags)
 
         spSemUnion head();  // accept the 1st char of IDENT or DECIMAL
         spSemUnion boln();

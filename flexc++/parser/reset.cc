@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-void Parser::nlReset()
+void Parser::reset()
 {
     s_lastMsg.clear();
     d_parentheses = 0;

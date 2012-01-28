@@ -21,6 +21,6 @@ _ms_specs:
 ;
 
 ms_spec:
-    '<' _ms_specs '>' 
+    '<' _ms_specs '>' reset
 ;
 

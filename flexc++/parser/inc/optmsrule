@@ -16,7 +16,7 @@ _optMs_regex:
     // at ORNL any previously set ms-spec ends, and is back to INITIAL
 
 _optMs_rule:                             // after ORNL continue parsing
-    _optMs_rule ORNL nl_reset _optMs_rule // at a new line
+    _optMs_rule ORNL reset _optMs_rule // at a new line
     {
         d_rules.setOrAction();
     }

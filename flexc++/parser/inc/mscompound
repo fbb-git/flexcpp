@@ -1,7 +1,7 @@
     // following ORNL continue parsing  at the next line, with a new regex
     // which again may start with a ^
 _msCompound_regex_list:
-    _msCompound_regex_list ORNL nl_reset _msCompound_regex_list  
+    _msCompound_regex_list ORNL reset _msCompound_regex_list  
     {
         d_rules.setOrAction();
     }
@@ -31,7 +31,7 @@ _msCompound_rule:
 ;
 
 _msCompound_nl_rule:
-    _msCompound_rule '\n' nl_reset
+    _msCompound_rule '\n' reset
 ;
 
 _opt_msCompound_nl_rules:
@@ -41,7 +41,7 @@ _opt_msCompound_nl_rules:
 ;
 
 msCompound:
-    ms_spec '{' _opt_msCompound_nl_rules '}'
+    ms_spec '{' reset _opt_msCompound_nl_rules '}'
     {   // following an msCompound, reset the startconditions to 'INITIAL'
         d_rules.resetStartConditions();
     }
