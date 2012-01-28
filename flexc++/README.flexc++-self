@@ -1,0 +1,29 @@
+After constructing a new lexical scanner specification for flexc++ follow
+these steps to implement it in flexc++ itself:
+
+0. Always first backup the old scanner specification files (lexer, inc/*,
+    lex.cc scannerbase.h)
+
+1. Copy the new lexer, and inc/* files to a separate working directory, e.g.,
+    self, directly under the directory containing flexc++.cc
+
+2. In that working directory run
+        ../tmp/bin/flexc++ -S ../skeletons lexer
+
+3. Copy the just generated scannerbase.h and lex.cc to ../scanner/
+
+4. cd .. to the directory containing flexc++.cc
+
+5. Touch scanner/a
+
+6. Icmbuild
+
+7. Perform step 2 again
+
+8. In the directory self: 
+        diff lex.cc ../scanner
+    and
+        diff scannerbase.h ../scanner
+
+    should only differ in their time stamps.
+
