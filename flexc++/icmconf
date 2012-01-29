@@ -29,7 +29,7 @@
     // built it will be linked against the library rather than the individual
     // object modules). Change the lib's name at you own digression (don't use
     // lib or an extension like .a)
-#define LIBRARY           "libflexc++"
+#define LIBRARY           "flexc++"
 
     // Uncomment to construct a shared library 
 //#define SHARED

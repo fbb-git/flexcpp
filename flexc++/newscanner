@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd scanner
+./newscanner
+cd ..
+icmbuild

@@ -8,7 +8,6 @@ void Parser::addRule(spSemUnion const &rule, bool reset)
     d_rules.add(d_boln, rule->value<PATTERN>(), 
                     Block(d_scanner.lineNr(), d_scanner.filename())
                 );
-
     if (reset)
         d_rules.resetStartConditions();
 }

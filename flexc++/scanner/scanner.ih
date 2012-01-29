@@ -1,3 +1,4 @@
+#include "scanner.h"
 #include "../parser/parser.h"
 
 #include <iostream>

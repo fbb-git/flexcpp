@@ -137,53 +137,59 @@ _opt_steprange:
     }
 ;
 
+_opt_is:
+    // empty
+|
+    '='
+;
+
 option:
-    _inputinterface '=' _stringOrIdent
+    _inputinterface _opt_is _stringOrIdent
     {
         d_options.setInputInterfacePath(d_matched);
     }
 |
-    _inputimplementation '=' _stringOrIdent
+    _inputimplementation _opt_is _stringOrIdent
     {
         d_options.setInputImplementationPath(d_matched);
     }
 |
-    _classname '=' _stringOrIdent
+    _classname _opt_is _stringOrIdent
     {
         d_options.setClassName(d_matched);
     }
 |
-    _lexfunctionname '=' _stringOrIdent
+    _lexfunctionname _opt_is _stringOrIdent
     {
         d_options.setLexFunctionName(d_matched);
     }
 |
-    _baseclassheader '=' _stringOrIdent
+    _baseclassheader _opt_is _stringOrIdent
     {
         d_options.setBaseClassHeaderPath(d_matched);
     }
 |
-    _classheader '=' _stringOrIdent
+    _classheader _opt_is _stringOrIdent
     {
         d_options.setClassHeaderPath(d_matched);
     }
 |
-    _implementationheader '=' _stringOrIdent
+    _implementationheader _opt_is _stringOrIdent
     {
         d_options.setImplementationHeaderPath(d_matched);
     }
 |
-    _lexsource '=' _stringOrIdent
+    _lexsource _opt_is _stringOrIdent
     {
         d_options.setLexSourcePath(d_matched);
     }
 |
-    _skeleton_directory '=' _stringOrIdent
+    _skeleton_directory _opt_is _stringOrIdent
     {
         d_options.setSkeletonDirectory(d_matched);
     }
 |
-    _namespace '=' _stringOrIdent
+    _namespace _opt_is _stringOrIdent
     {
         d_options.setNameSpace(d_matched);
     }

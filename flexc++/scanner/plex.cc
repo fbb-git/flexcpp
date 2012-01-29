@@ -7,7 +7,6 @@ int Scanner::pLex()
     emsg.setLineNr(lineNr());
     wmsg.setLineNr(lineNr());
 
-//    d_beginOfPattern = false;
     return ret;
 }
 

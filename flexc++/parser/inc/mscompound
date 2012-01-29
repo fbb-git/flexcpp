@@ -1,9 +1,9 @@
     // following ORNL continue parsing  at the next line, with a new regex
     // which again may start with a ^
 _msCompound_regex_list:
-    _msCompound_regex_list ORNL reset _msCompound_regex_list  
+    _msCompound_regex_list ORNL '\n' reset _msCompound_regex_list  
     {
-        d_rules.setOrAction();
+        orAction();
     }
 |
     regex

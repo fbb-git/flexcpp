@@ -29,7 +29,7 @@ void Parser::block()
                     d_block.close();
                     d_scanner.accept(0);        // rescan the \n
                     d_scanner.blockEnds();
-//cout << "RETURNING BLOCK:\n" << d_block << "\n";
+    // cout << "\nRETURNING BLOCK:\n" << d_block << "\n";
                     return;
                 }
 

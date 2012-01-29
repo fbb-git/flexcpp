@@ -39,7 +39,7 @@ _simple_regex:
     }
 |
     STRING
-    {                                                   
+    {
         $$ = str();
     }
 |

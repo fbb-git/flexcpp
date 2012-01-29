@@ -42,14 +42,8 @@ _name_def:
     }
 ;
 
-_opt_is:
-    // empty
-|
-    '='
-;
-
 _name_definition:
-    _name_def _opt_is STRING
+    _name_def STRING
     {
         d_scanner.addDefinition($1, d_scanner.matched());
     }

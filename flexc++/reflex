@@ -24,5 +24,5 @@ prompt "    3." Copy the generated scannerbase.h and lex.cc to ./scanner
 cp ./self/lex.cc ./self/scannerbase.h ./scanner
 
 prompt "    4-6." Touch ./scanner/a and "'icmbuild'"
-# touch ./scanner/a
+touch ./scanner/a
 icmbuild || exit 1

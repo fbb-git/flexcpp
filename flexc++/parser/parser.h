@@ -57,6 +57,7 @@ class Parser: public ParserBase, public DataType
         int parse();
 
     private:
+        void orAction();
         void reset();       // prepare the parser for a new regex 
                             // (resetting tokencount and warning flags)
 

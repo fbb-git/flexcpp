@@ -16,9 +16,9 @@ _optMs_regex:
     // at ORNL any previously set ms-spec ends, and is back to INITIAL
 
 _optMs_rule:                             // after ORNL continue parsing
-    _optMs_rule ORNL reset _optMs_rule // at a new line
+    _optMs_rule ORNL '\n' reset _optMs_rule // at a new line
     {
-        d_rules.setOrAction();
+        orAction();
     }
 |
     _optMs_regex
@@ -30,9 +30,6 @@ _optMs_rule:                             // after ORNL continue parsing
 optMs_rule:
         // just regular expressions, without an action block
     _optMs_rule 
-    {
-        noActions();
-    }
 |
         // the scanner returns a block if it encounters a non-blank character
         // on a line after ws, unless the character is a '|'
@@ -41,4 +38,8 @@ optMs_rule:
         assignBlock();
     }
 ;
+
+
+
+
 

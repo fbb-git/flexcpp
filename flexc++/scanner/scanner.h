@@ -11,10 +11,11 @@
 
 #include "../utility/utility.h"
 
+class spSemUnion;
+
 class Scanner: public ScannerBase, public DataType
 {
     bool d_inBlock = false;     // when in-block return ' ' on blanks
-    std::string d_patternName;
     std::unordered_map<std::string, std::string> d_nameExpansion;
 
     // declared below:
@@ -50,7 +51,7 @@ class Scanner: public ScannerBase, public DataType
             friend int Scanner::popSc(int token);
         } d_scStack;
     
-        int block();        // recognize a block-begin, returning BLOCK
+        int inspectBlock();
         void maybeSwitchStream();
         bool popStream();           // hides ScannerBase::popStream from
                                     // lex.cc 
