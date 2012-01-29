@@ -42,9 +42,6 @@ class Pattern
                                                    Interval const &interval);
         static Pattern characterClass(States &states, 
                                       CharClass const &charClass);
-
-//        static Pattern plain(States &states, size_t ch);
-
     private:
         static Pattern star(States &states, Pattern const &pattern);
         static Pattern plus(States &states, Pattern const &pattern);

@@ -125,3 +125,7 @@ inline void Parser::noActions()
     d_rules.noActions();
 }
 
+inline void Parser::orAction()
+{
+    d_rules.setOrAction();
+}

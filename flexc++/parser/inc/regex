@@ -38,6 +38,11 @@ _simple_regex:
         $$ = dollar();
     }
 |
+    DOLLAR
+    {
+        $$ = eolnDollar();
+    }
+|
     STRING
     {
         $$ = str();

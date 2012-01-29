@@ -110,8 +110,15 @@ OPTBL                   [[:blank:]]*
 
 \{{IDENTIFIER}\}                pushNameExpansion();
 
+    // A $ followed by a non-space always is a literal dollar
+    // Otherwise, it is handled by the parser as a Parser::DOLLAR
+    // or block, but in the context of a regex 
+\$/[^[:space:]]                 return '$';
+
+\$                              return Parser::DOLLAR;  // push("/\\n");
+
                                     // return special chars as themselves
-[]['.,^$/|()*+?{}<>-]           return matched()[0];
+[]['.,^/|()*+?{}<>-]            return matched()[0];
 
                                     // return other chars as CHAR
 .                               return Parser::CHAR;
@@ -146,6 +153,3 @@ OPTBL                   [[:blank:]]*
 
 <line>.*                        return Parser::STRING;
 <line>\n                        return popSc('\n');
-
-
-

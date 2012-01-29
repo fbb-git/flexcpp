@@ -35,10 +35,12 @@ class Scanner: public ScannerBase, public DataType
                            std::string const &definition);
 
         void blockEnds();
+        void eolnDollar();
 
     private:
-        void switchToINITIAL();
         using ScannerBase::push;
+
+        void switchToINITIAL();
 
         void push(StartCondition__ sc); // push and revert to sc
         int popSc(int token = 0);   // revert to the pushed StartCondition,
@@ -68,6 +70,11 @@ class Scanner: public ScannerBase, public DataType
 inline void Scanner::blockEnds() 
 {
     d_inBlock = false;
+}
+
+inline void Scanner::eolnDollar() 
+{
+    push("/\\n");
 }
 
 inline void Scanner::preCode() 

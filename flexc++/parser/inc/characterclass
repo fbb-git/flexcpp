@@ -92,6 +92,8 @@ _cc_literal:
 |
     '$'
 |
+    DOLLAR
+|
     DECIMAL
 |
     IDENTIFIER

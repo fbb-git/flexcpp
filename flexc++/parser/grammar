@@ -39,6 +39,7 @@
         STRING
         QUOTES
         DECIMAL
+        DOLLAR
         ESCAPE_SEQUENCE
         CC_START
         CC_NEGATED
