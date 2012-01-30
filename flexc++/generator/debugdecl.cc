@@ -2,7 +2,7 @@
 
 void Generator::debugDecl(std::ostream &out) const
 {
-    if (!d_debug && !d_options.hasNames() && !d_debugStep)
+    if (!d_debug && !d_options.hasNames())
         return;
 
     key(out);

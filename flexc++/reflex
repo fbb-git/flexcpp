@@ -12,7 +12,7 @@ echo
 prompt "    0. Cleaning" up ./self ...
 rm -rf self/*
 
-prompt "    1. Copying" lexer, inc/\* to self...
+prompt "    1. Copying" lexer to self...
 cp  scanner/lexer self
 [ -e scanner/inc ] && cp -r scanner/inc self
 
@@ -26,3 +26,21 @@ cp ./self/lex.cc ./self/scannerbase.h ./scanner
 prompt "    4-6." Touch ./scanner/a and "'icmbuild'"
 touch ./scanner/a
 icmbuild || exit 1
+
+prompt "    7." Again: run '../tmp/bin/flexc++' on lexer
+cd self && ../tmp/bin/flexc++ -S ../skeletons lexer
+cd ..
+
+prompt "    8." Diffs: should show differences in timestamps only:
+for file in scannerbase.h lex.cc
+do
+    prompt "       RUN:" diff self/$file scanner ...
+    diff self/$file scanner
+    echo
+done
+
+
+
+
+
+

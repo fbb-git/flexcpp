@@ -135,7 +135,6 @@ OPTBL                   [[:blank:]]*
     %class-header               return Parser::CLASSHEADER;
     %class-name                 return Parser::CLASSNAME;
     %debug                      return Parser::DEBUG;
-    %debug-steps                return Parser::DEBUG_STEPS;
     %implementation-header      return Parser::IMPLEMENTATIONHEADER;
     %input-implementation       return Parser::INPUTIMPLEMENTATION;
     %input-interface            return Parser::INPUTINTERFACE;

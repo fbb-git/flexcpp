@@ -46,7 +46,6 @@ $insert inputImplementation
     d_sawEOF(false),
     d_atBOL(true),
 $insert tailCount
-$insert debugInit
     d_input(new std::istream(in.rdbuf())),
     d_dfaBase__(s_dfa__)
 {}
@@ -63,7 +62,6 @@ $insert debugInit
     d_sawEOF(false),
     d_atBOL(true),
 $insert tailCount
-$insert debugInit
     d_input(new std::ifstream(infilename)),
     d_dfaBase__(s_dfa__)
 {}
@@ -333,8 +331,6 @@ int \@::lex__()
     {
         size_t ch = get__();                // fetch next char
         size_t range = getRange__(ch);      // determine the range
-
-$insert 8 debugStep
 
         inspectRFCs__();                    // update d_tailCount values
 

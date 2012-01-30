@@ -29,8 +29,6 @@ class Options
     std::string d_implementationSkeleton;
 
     // debug data
-    size_t d_beginStep;
-    size_t d_endStep;
     bool d_debugAll;
     std::set<std::string> d_debugNames;
 
@@ -65,9 +63,6 @@ class Options
 
         void setDebug();
         void setDebug(std::string const &name);
-        void setStepRange();
-        void setStepRange(std::string const &name);
-        void setLastStep(std::string const &name);
         
         std::string const &baseclassSkeleton() const;
         std::string const &classSkeleton() const;
@@ -91,8 +86,7 @@ class Options
         std::string const &nameSpace() const;
 
         bool debug() const;
-        size_t beginStep() const;
-        size_t endStep() const;
+
         bool has(std::string const &field) const;
         bool hasNames() const;
 
@@ -223,21 +217,6 @@ inline void Options::setDebug(std::string const &name)
     d_debugNames.insert(name);
 }
 
-inline void Options::setStepRange()
-{
-    d_beginStep = 0;
-}
-
-inline void Options::setStepRange(std::string const &name)
-{
-    d_beginStep = FBB::A2x(name);
-}
-
-inline void Options::setLastStep(std::string const &name)
-{
-    d_endStep = 1 + FBB::A2x(name).to<size_t>();
-}
-
 inline bool Options::interactive() const
 {   
     return d_interactive;
@@ -261,16 +240,6 @@ inline bool Options::has(std::string const &field) const
 inline bool Options::hasNames() const
 {
     return d_debugNames.size();
-}
-
-inline size_t Options::beginStep() const
-{
-    return d_beginStep;
-}
-
-inline size_t Options::endStep() const
-{
-    return d_endStep;
 }
 
 #endif

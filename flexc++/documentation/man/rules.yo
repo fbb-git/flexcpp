@@ -99,11 +99,6 @@ the definition of a directive:
             but its activity may be controlled using the tt(setDebug(bool
             on-off)) member. Note that no tt(#ifdef DEBUG) macros are used in
             the generated code. 
-    it() bf(%debug-steps) tt(= first [last]) nl() 
-           Provide tt(lex) and its support functions with debugging code,
-            tt(first) and (optional) tt(last) are decimal numbers. Debugging
-            information is only generated for the indicated step-range. If
-            tt(last) is omitted, all steps are shown starting at tt(first).
     it() bf(%implementation-header) tt(= "header") nl()
            Defines the pathname of the file to contain the implementation
             header.  Corresponding command-line option:

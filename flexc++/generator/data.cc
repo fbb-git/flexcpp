@@ -17,8 +17,6 @@ Generator::Map Generator::s_insert =
     {"debug",                   &Generator::debug},
     {"debugDecl",               &Generator::debugDecl},
     {"debugFunctions",          &Generator::debugFunctions},
-    {"debugInit",               &Generator::debugInit},
-    {"debugStep",               &Generator::debugStep},
     {"declarations",            &Generator::declarations},
     {"inlineLexFunction",       &Generator::inlineLexFunction},
     {"interactiveLex",          &Generator::interactiveLex},

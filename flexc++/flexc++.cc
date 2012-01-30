@@ -38,7 +38,6 @@ namespace
         {"version",                     'v'},
 
         {"debug",                       'd'},
-        {"debug-steps",                 's'},
         {"construction",                'K'},
         {"print-tokens",                't'},
         {"show-filenames",              'F'},
@@ -52,7 +51,7 @@ namespace
 int main(int argc, char **argv)
 try
 {
-    Arg &arg = Arg::initialize("b:B:c:C:dFhi:I:Kl:L:n:s::S:tvV",
+    Arg &arg = Arg::initialize("b:B:c:C:dFhi:I:Kl:L:n:S:tvV",
                     longOptions, longEnd, argc, argv);
     arg.versionHelp(usage, version, 1);
 

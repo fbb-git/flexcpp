@@ -68,7 +68,7 @@ manpagesection(PUBLIC MEMBER FUNCTIONS)
     itb(void setDebug(bool onOff))
        Switches on/off  debugging output by providing the argument tt(true)
         or tt(false). Switching on debugging output only has visible effects
-        if the tt(debug) or tt(debug-steps) option was specified.
+        if the tt(debug) option was specified.
     itb(void switchStreams(std::istream &in,
                                       std::ostream &out = std::cout))
        The currently processed input and output streams are closed, and
@@ -322,12 +322,6 @@ private:
     bool            d_more;             // set to true by more()
 
 protected:
-    size_t d_beginStep__;
-    size_t d_endStep__;
-    size_t d_step__;
-
-
-
     int     const (*d_dfaBase__)[79];
 
     static int     const s_dfa__[][79];

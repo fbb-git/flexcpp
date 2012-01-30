@@ -60,7 +60,6 @@ class Generator
 
     bool d_lineDirectives;
     bool d_debug;
-    bool d_debugStep;
 
     mutable std::vector<std::string> d_startStates;
     mutable std::string d_key;          // extracted at $insert statements
@@ -106,8 +105,6 @@ class Generator
         void debug(std::ostream &out) const;
         void debugDecl(std::ostream &out) const;
         void debugFunctions(std::ostream &out) const;
-        void debugInit(std::ostream &out) const;
-        void debugStep(std::ostream &out) const;
         void declarations(std::ostream &out) const;
         void dfas(std::ostream &out) const;
         void filter(std::istream &in, std::ostream &out) const;

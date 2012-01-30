@@ -107,36 +107,6 @@ _opt_debugnamelist:
     }
 ;
 
-_firststep:
-    DECIMAL
-    {
-        d_options.setStepRange(d_matched);
-    }
-;
-
-_opt_laststep:
-    // empty
-|
-    DECIMAL
-    {
-        d_options.setLastStep(d_matched);
-    }
-;
-
-_m_debugsteps:
-    {
-        d_expect = "debug step range";
-    }
-;
-
-_opt_steprange:
-    _m_debugsteps '=' _firststep _opt_laststep
-|
-    {
-        d_options.setStepRange();
-    }
-;
-
 _opt_is:
     // empty
 |
@@ -200,8 +170,6 @@ option:
     }
 |
     DEBUG _opt_debugnamelist
-|
-    DEBUG_STEPS _opt_steprange
 |
     NOLINES
     {

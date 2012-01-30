@@ -52,28 +52,4 @@ void Options::setAccessorVariables()
         d_lines = true;                     // --no-lines
     else if (arg.option(0, "no-lines"))
         d_lines = false;
-
-    string range;
-    if (arg.option(&range, 's'))
-    {
-        if (range.empty())
-        {
-            d_beginStep = 0;
-            d_endStep = ~0U;
-        }
-        else
-        {
-            size_t value;
-            istringstream in(range);
-            if (in >> value)
-            {
-                d_beginStep = value;
-                in.ignore(1);
-                if (in >> value)
-                    d_endStep = value + 1;
-            }
-            else
-                wmsg << "Option -s" << range << " ignored." << endl;
-        }
-    }
 }

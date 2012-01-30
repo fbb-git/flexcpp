@@ -289,12 +289,10 @@ arguments if their associated long options require arguments as well.
             showing the actual parsing process on the standard output
             stream. When included, the debugging output is active by default,
             but its activity may be controlled using the tt(setDebug(bool
-            on-off)) member. Note that no tt(#ifdef DEBUG) macros are used
+            on-off)) member. Note that tt(#ifdef DEBUG) macros are not used
             anymore. By rerunning flc() without the bf(--debug) option an
             equivalent scanner is generated not containing the debugging
             code. 
-    it() loption(debug-steps) (soption(s))nl() 
-           To do
     it() loption(force-class-header)nl()
            By default the generated class header is not overwritten once it
             has been created. This option can be used to force the
