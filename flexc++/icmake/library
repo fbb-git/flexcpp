@@ -14,20 +14,17 @@ string                  // contain options for
     g_sources,          // sources to be used
     g_binary;           // the name of the program to create
 int
+    g_base,
     g_nClasses;         // number of classes/subdirectories
 list
     g_classes,          // list of classes/directories
     g_classLines,       // list of all lines in CLASSES
-    g_depHaystack;      // list names of classes to inspect
+    g_inspected;        // list of classes whose dependencies have been 
+                        // inspected (used with USE_ALL)
 
 /*
-    if a class has an ALL file, then that file is removed and all dependent
-    classes are determined:
-
-    dependent(string class)
-        all files in class are touched
-        from the current line in g_dependencies: if it contains class
-        then dependent(headelement) is called from that the current line
+    if a class has an a file, then that file is removed and all 
+    classes depending on that class are determined and compiled
 */
 
 string setOpt(string install_im, string envvar)
@@ -45,7 +42,6 @@ string setOpt(string install_im, string envvar)
     return ret;
 }
 
-
 int find(string needle, list haystack)
 {
     int idx;
@@ -57,104 +53,64 @@ int find(string needle, list haystack)
     return idx;
 }
 
-void dependent(int idx)
+void touch(string dir)
 {
-    list dependencies;
-    string target;
+    echo(OFF);
+    if (!exists(dir + "/a"))
+        system("touch " + dir + "/a");
+    echo(ON);
+}
+            
+    //  g_classes[idx] has 'a' set. 
+    //  find all classes that depend on g_classes[idx], 
+    //  if those classes haven't been inspected yet, then set their 'a'
+    //  file and inspect their dependencies.
+void dependendenciesOf(string thisClass)
+{
     int ret;
-    int depIdx;
+    int idx;
+    string classLine;
+    string hit;
 
-    target = g_classes[idx];
-    g_depHaystack += (list)target;
+    if (find(thisClass, g_inspected) != -1) // this class already inspected
+        return;                             // then done with this class
 
-    printf("RECOMPILE: ", target, "\n");
-    system("touch " + target + "/*.cc");
+    g_base = 1;                             // recompile the base's files
 
-    for (depIdx = idx + 1; depIdx != g_nClasses; ++depIdx)
+    printf("RECOMPILE: ", thisClass, "\n");
+    g_inspected += (list)thisClass;         // now inspected
+
+        // find all classes depending on thisClass
+    for (idx = 0; idx != g_nClasses; ++idx)
     {
-        dependencies = strtok(g_classLines[depIdx], " \t\n");
-        if 
-        (
-            find(target, dependencies) != -1 
-            && 
-            find(dependencies[0], g_depHaystack) == -1
-        )
-            dependent(depIdx);
-    }
-}            
+        classLine = g_classLines[idx];
 
+        if (strfind(classLine, thisClass) > 0)
+        {
+            hit = strtok(classLine, " \t")[0];
+            touch(hit);
+            dependendenciesOf(hit);
+        }
+    }
+}               
+    
 void checkALL()
 {
     int idx;
-    int base;
     string all;
 
-    base = 0;
     for (idx = 0; idx != g_nClasses; ++idx)
     {
         all = g_classes[idx] + "/a";
 
         if (exists(all))
-        {
-            dependent(idx);
-            base = 1;
-        }
+            dependendenciesOf(g_classes[idx]);
     }
-    if (base)
-    {
-        system("rm -f */a");
-        system("touch *.cc");
-    }
+
+    if (g_base)
+        touch(".");
 }
-
-/*
-void childrenOf(int parentIdx)
-{
-    list parents;
-    int childIdx;
-    string parent;
-    string child;
-    string all;
-
-    parent = g_classes[parentIdx];      // starting class name (with ALL)
-
-    for (childIdx = g_nClasses; childIdx--; ) // visit all CLASS entries
-    {
-        child = g_classes[childIdx];
-        parents = strtok(g_classLines[childIdx], " \t\n");
-
-        if (find(parent, parents) != -1)      // found a depending class
-        {
-            all = child + "/ALL";
-
-            if (!exists(all))
-            {
-//                echo(OFF);
-                system("touch " + all);
-//                echo(USE_ECHO);
-
-                childrenOf(childIdx);
-            }
-        }
-    }
-}            
-
-void checkALL()
-{
-    int idx;
-    string all;
-
-    for (idx = 0; idx != g_nClasses; ++idx)
-    {
-        all = g_classes[idx] + "/ALL";
-
-        if (exists(all))                    // if the ALL file exists
-            childrenOf(idx);                // activate all its children
-    }
-}
-
-*/
-        
+    
 void setClasses()
 {
     list candidate;
@@ -179,7 +135,7 @@ void static_lib(string ofiles, string library)
 {
     if (sizeof(makelist(ofiles)))
     {
-        run("ar cru " + library + " " + ofiles);
+        run("ar cru tmp/" + library + " " + ofiles);
         run("ranlib " + library);
         run("rm -f " + ofiles);
     }
@@ -321,14 +277,12 @@ void std_cpp(int prefix, string srcDir, string library)
     chdir(srcDir);
 
                                                     // make list of all files
-    files = inspect(find(srcDir, g_depHaystack), prefix, makelist(g_sources), 
+    files = inspect(find(srcDir, g_inspected), prefix, makelist(g_sources), 
                                                         library);
     chdir(g_cwd);
 
     if (sizeof(files))
         c_compile(prefix, srcDir, files);           // compile files
-
-//    g_depHaystack -= (list)srcDir;                  // then rm from haystack
 }
 
 void cpp_make(string mainfile, string library, int lib_only)
@@ -336,16 +290,13 @@ void cpp_make(string mainfile, string library, int lib_only)
     int idx;
     string class;
     string fullLibname;
-    int compileMain;
-
-    compileMain = sizeof(g_depHaystack);
 
     fullLibname = "lib" + library + ".a";
 
     for (idx = g_nClasses; idx--; )
         std_cpp(idx, g_classes[idx], "../" + fullLibname);
 
-    if (compileMain)
+    if (g_base)
         c_compile(g_nClasses, ".", (list)mainfile);
 
     if (!lib_only)                          // compile all files in current dir
@@ -360,19 +311,19 @@ void cpp_make(string mainfile, string library, int lib_only)
 
 void setlibs()
 {
-        int n;
-        int index;
-        list cut;
+    int n;
+    int index;
+    list cut;
 
-        cut = strtok(LIBS, " ");        // cut op libraries
-        n = sizeof(cut);
-        for (index = 0; index < n; index++)
-            libs += " -l" + element(index, cut);
+    cut = strtok(LIBS, " ");        // cut op libraries
+    n = sizeof(cut);
+    for (index = 0; index < n; index++)
+        libs += " -l" + element(index, cut);
 
-        cut = strtok(LIBPATH, " ");     // cut up the paths
-        n = sizeof(cut);
-        for (index = 0; index < n; index++)
-            libpath += " -L" + element(index, cut);
+    cut = strtok(LIBPATH, " ");     // cut up the paths
+    n = sizeof(cut);
+    for (index = 0; index < n; index++)
+        libpath += " -L" + element(index, cut);
 }
 
 void library(int lib_only)
@@ -396,5 +347,9 @@ void library(int lib_only)
     if (lib_only)
         exit(0);
 }
+
+
+
+
 
 

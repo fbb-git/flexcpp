@@ -2,6 +2,26 @@
 
 #include "INSTALL.im"
 
+#define BINARY              "flexc++" 
+#define COMPILER            "g++ -Wall --std=c++0x "
+#define LIBRARY             "flexc++"       // NO lib, NO .a
+#define LIBS                "-lbobcat"      // -l required
+#define MAIN                "flexc++.cc"
+#define SOURCES             "*.cc"
+#define TMP_DIR             "tmp"
+
+list    g_classes;          // all class-directories
+int     g_nClasses;         // number of class-directories
+int     g_compiled;         // any source compiled (but main)?
+list    g_classLines;       // list of all lines in CLASSES
+list    g_inspected;        // list of classes whose dependencies have been 
+                            // inspected (used with USE_ALL)
+int     g_base;             // compile the sources in the base directory
+int     g_chdir;            // display chdirs to directories without sources
+                            // to compile
+string  g_compiler;
+string  g_cwd = chdir("");  // initial working directory
+
 #include "icmake/run"
 #include "icmake/md"
 #include "icmake/getenv"
@@ -9,11 +29,14 @@
 #include "icmake/clean"
 #include "icmake/manpage"
 #include "icmake/manual"
-#include "icmake/library"
+#include "icmake/library2"
 #include "icmake/program"
-#include "icmake/rebuild"
+
+// #include "icmake/rebuild"
+
 #include "icmake/install"
-#include "icmake/test"
+
+// #include "icmake/test"
 
 void main(int argc, list argv, list envp)
 {
@@ -22,7 +45,6 @@ void main(int argc, list argv, list envp)
     string strip;
 
     g_env = envp;
-    g_binary = "tmp/bin/flexc++" EXTENSION;
 
     setLocations();     // from INSTALL.im
 
@@ -54,24 +76,27 @@ void main(int argc, list argv, list envp)
         manual();
 
     if (option == "library")
-        library(1);
-
-    if (option == "program")
-        program(strip, 1);
-
-    if (option == "rebuild")
-        rebuild(strip);
-
-    if (option == "lexer")
     {
-        chdir("scanner");
-        system("./buildlexer");
-        system("flexc++ lexer");
+        build_library();
         exit(0);
     }
 
-    if (option == "test")
-        test(option2);
+    if (option == "program")
+        program(strip);
+
+//    if (option == "rebuild")
+//        rebuild(strip);
+//
+//    if (option == "lexer")
+//    {
+//        chdir("scanner");
+//        system("./buildlexer");
+//        system("flexc++ lexer");
+//        exit(0);
+//    }
+//
+//    if (option == "test")
+//        test(option2);
 
     printf("Usage: build [-p] what\n"
         "Where `what' is one of:\n"

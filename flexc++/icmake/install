@@ -7,7 +7,7 @@ void install(string where, int all)
 
     printf("  installing the executable\n");
     md(where + BIN);
-    run("cp " + g_binary + " " + where + BIN);
+    run("cp " + TMP_DIR "/bin/" BINARY + " " + where + BIN);
 
     printf("  installing the skeleton files\n");
     md(where + SKEL);

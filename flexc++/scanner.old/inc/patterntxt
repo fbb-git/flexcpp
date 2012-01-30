@@ -1,4 +1,0 @@
-<patterntxt>{
-    .*                  return Parser::STRING;
-    \n                  return '\n';
-}
