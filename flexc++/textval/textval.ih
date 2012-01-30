@@ -1,7 +1,0 @@
-#include "textval.h"
-
-#include <bobcat/string>
-
-using namespace std;
-using namespace FBB;
-

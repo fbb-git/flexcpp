@@ -1,5 +1,0 @@
-#include "decimal.ih"
-
-Decimal::
-{
-}

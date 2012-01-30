@@ -1,9 +1,0 @@
-#include "fstreaminfo.h"
-
-#include <sstream>
-
-#include <bobcat/mstream>
-
-using namespace std;
-using namespace FBB;
-
