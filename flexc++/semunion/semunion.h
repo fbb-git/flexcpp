@@ -54,7 +54,7 @@ union SemUnion
 
     private:
         template <typename Type>
-        Type &conversion() const;
+        Type const &conversion() const;
 };
 
 inline SemUnion::SemUnion()
@@ -73,12 +73,42 @@ inline SemUnion::SemUnion(Tp const &value)
     new (this) std::pair<int, Tp>(Type<Tp>::dataType, value);
 }
 
-template <typename Type>
-inline Type &SemUnion::conversion() const
+template <>
+inline SemUnion::SemUnion(Pattern const &value)
 {
-    int *ip = const_cast<int *>(&d_index.second);
-    return *reinterpret_cast<Type *>(ip);
+    new (this) std::pair<int, Pattern>(DataType::PATTERN, value);
 }
+
+template <>
+inline int const &SemUnion::conversion<int>() const
+{
+    return d_index.second;
+}
+
+template <>
+inline std::string const &SemUnion::conversion<std::string>() const
+{
+    return d_str.second;
+}
+
+template <>
+inline Pattern const &SemUnion::conversion<Pattern>() const
+{
+    return d_patternVal.second;
+}
+
+template <>
+inline CharClass const &SemUnion::conversion<CharClass>() const
+{
+    return d_charClass.second;
+}
+
+template <>
+inline Interval const &SemUnion::conversion<Interval>() const
+{
+    return d_interval.second;
+}
+
 
 template <int type>
 inline typename Type<Int<type>>::type const &SemUnion::value() const
@@ -86,10 +116,12 @@ inline typename Type<Int<type>>::type const &SemUnion::value() const
     return conversion<typename Type<Int<type>>::type>();
 }
 
+
 template <int dataType>
 inline typename Type<Int<dataType>>::type &SemUnion::value()
 {
-    return conversion<typename Type<Int<dataType>>::type>();
+    return const_cast<typename Type<Int<dataType>>::type &>(
+                conversion<typename Type<Int<dataType>>::type>());
 }
         
 #endif
