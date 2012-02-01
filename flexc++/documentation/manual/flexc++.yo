@@ -3,7 +3,8 @@ includefile(preamble)
 
 affiliation(url(Rijksuniversiteit Groningen)(http://www.rug.nl/))
 report(Flexc++ (Version _CurVers_) User Guide)
-        (Richard Berendsen+and() Frank B. Brokken+land() Jean-Paul van Oosten)
+        (Frank B. Brokken+land(), Jean-Paul van Oosten, and (until 0.5.3)
+        Richard Berendsen) 
        (_CurYrs_)
 
 lsect(introduction)(Introduction)
@@ -14,7 +15,7 @@ lsect(simpleexamples)(Some simple examples)
     lsubsect(lexermain)(A simple lexer file and main function)
     includefile(simpleexamples.yo)
 
-lsect(differences)(Differences with flex/flex++)
+lsect(differences)(Differences between flex and flexc++)
 includefile(differences.yo)
 
     lsubsect(code_blocks)(Format of the input file)

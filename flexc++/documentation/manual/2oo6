@@ -1,5 +1,6 @@
 #!/bin/bash
 
+(cd ../..; build manual)
 yodl2html --live-data=ok flexc++ || exit 1
 
 scp *.html oosix:/var/www/icce.rug/gitman/
