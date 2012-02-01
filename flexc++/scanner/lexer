@@ -23,7 +23,12 @@ OPTBL                   [[:blank:]]*
 
 %%
 
-{BL}\|                          return Parser::ORNL;
+{BL}\|                          {
+                                    return d_inCharClass ?
+                                            Parser::IDENTIFIER
+                                        :
+                                            Parser::ORNL;
+                                }
 
 {BL}[^[:space:]]                {
                                     if (int token = inspectBlock())
@@ -31,7 +36,7 @@ OPTBL                   [[:blank:]]*
                                 }
 
 {BL}                            {   // skip white space unless in a block
-                                    if (d_inBlock)
+                                    if (d_inBlock || d_inCharClass)
                                         return ' ';
                                 }
 

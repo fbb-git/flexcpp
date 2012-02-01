@@ -15,7 +15,10 @@ class spSemUnion;
 
 class Scanner: public ScannerBase, public DataType
 {
-    bool d_inBlock = false;     // when in-block return ' ' on blanks
+    bool d_inBlock;             // when in-block return ' ' on blanks
+    bool d_inCharClass;         // in a char-class return sequences as
+                                //  IDENTIFIERS, and multiple blanks as ' '
+
     std::unordered_map<std::string, std::string> d_nameExpansion;
 
     // declared below:
