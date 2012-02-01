@@ -24,10 +24,7 @@ _close_paren:
     }
 ;
 
-    // a _simple_regex is a regular expression, not having a LA operator
-    // It may have ^ and $ symbols
-    // _simple_regex returns a Pattern, embedded in a spSemUnion
-_simple_regex:
+_unit_regex:
     '^'
     {
         $$ = boln();
@@ -59,7 +56,7 @@ _simple_regex:
     }
 |
     _single_char
-    {                                                   
+    {
         $$ = rawText();
     }
 |
@@ -73,10 +70,32 @@ _simple_regex:
         $$ = dot();
     }
 |
-    _simple_regex _simple_regex           %prec CHAR
+    _unit_regex _unit_regex           %prec CHAR
     {
         $$ = concatenate($1, $2);
     }
+|
+    _unit_regex _quantifier
+    {
+        $$ = quantifier($1);
+    }
+|
+    _unit_regex '{' _interval '}'
+    {
+        $$ = interval($1, $3);
+    }
+|
+    characterclass
+    {
+        $$ = characterClass($1);
+    }
+;
+
+    // a _simple_regex is a regular expression, not having a LA operator
+    // It may have ^ and $ symbols
+    // _simple_regex returns a Pattern, embedded in a spSemUnion
+_simple_regex:
+    _unit_regex
 |
     _simple_regex '|' _simple_regex
     { 
@@ -86,21 +105,6 @@ _simple_regex:
     _open_paren _simple_regex _close_paren
     {
         $$ = $2;
-    }
-|
-    _simple_regex _quantifier
-    {
-        $$ = quantifier($1);
-    }
-|
-    _simple_regex '{' _interval '}'
-    {
-        $$ = interval($1, $3);
-    }
-|
-    characterclass
-    {
-        $$ = characterClass($1);
     }
 ;
 
