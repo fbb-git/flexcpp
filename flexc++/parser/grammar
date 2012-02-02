@@ -52,10 +52,13 @@
 
 //  lowest precedence
 %left       ORNL
-//%nonassoc   '/'
-//%left       '|'
+%nonassoc   '/'
+%left       '|'
+
 //%left       CHAR 
+
 %left       CC_PLUS CC_MINUS
+
 //%right      '*' '+' '?' '{' 
 //  highest precedence
 
