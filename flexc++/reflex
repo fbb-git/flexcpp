@@ -10,6 +10,7 @@ echo Press enter to execute commands ending in ...
 echo
 
 prompt "    0. Cleaning" up ./self ...
+mkdir -p self | exit 1
 rm -rf self/*
 
 prompt "    1. Copying" lexer to self...
@@ -23,9 +24,9 @@ cd ..
 prompt "    3." Copy the generated scannerbase.h and lex.cc to ./scanner
 cp ./self/lex.cc ./self/scannerbase.h ./scanner
 
-prompt "    4-6." Touch ./scanner/a and "'icmbuild'"
+prompt "    4-6." Touch ./scanner/a and "'build program'"
 touch ./scanner/a
-icmbuild || exit 1
+build program || exit 1
 
 prompt "    7." Again: run '../tmp/bin/flexc++' on lexer
 cd self && ../tmp/bin/flexc++ -S ../skeletons lexer

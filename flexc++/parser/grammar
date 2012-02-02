@@ -48,13 +48,15 @@
  
 // Pattern operators:
 
+%token CHAR
+
 //  lowest precedence
 %left       ORNL
-%nonassoc   '/'
-%left       '|'
-%left       CHAR 
+//%nonassoc   '/'
+//%left       '|'
+//%left       CHAR 
 %left       CC_PLUS CC_MINUS
-%right      '*' '+' '?' '{' 
+//%right      '*' '+' '?' '{' 
 //  highest precedence
 
 %%
