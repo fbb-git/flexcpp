@@ -74,6 +74,7 @@ section_delimiter:
     SECTION_DELIMITER   '\n'
     {
         d_rules.useInitialSC();
+        reset();
     }
 ;
 

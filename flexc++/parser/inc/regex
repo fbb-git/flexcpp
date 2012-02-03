@@ -28,12 +28,6 @@ _single_char:
     combi_chars
 ;
 
-_multi_char:
-    DECIMAL
-|
-    IDENTIFIER
-;
-
 _open_paren:
     '('
     {
@@ -74,7 +68,7 @@ _unit:
         $$ = quotes();
     }
 |
-    _multi_char
+    DECIMAL
     {
         $$ = head();
     }
