@@ -46,7 +46,10 @@ OPTBL                   [[:blank:]]*
 
     ^"//include"[[:blank:]].*   maybeSwitchStream();
 
-    {OPTBL}"/*"                 push(StartCondition__::comment);
+    {OPTBL}"/*"                 {   // in a charclass: return blanks + /*
+                                    if (handleStdComment())
+                                        return Parser::IDENTIFIER;
+                                }
 
     \"                          {
                                     more();
