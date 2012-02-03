@@ -56,7 +56,7 @@ class Scanner: public ScannerBase, public DataType
         bool handleStdComment();
         bool handleDquote();
         int handleOpenBracket();
-        int handleDecimal();
+
         int handleIdentifier();
 
         void switchToINITIAL();

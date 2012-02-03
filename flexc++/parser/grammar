@@ -45,17 +45,21 @@
  
 // character classes
 %token  PREDEFINED_CLASS
-
+ 
 // Pattern operators:
+
+%token CHAR
 
 //  lowest precedence
 %left       ORNL
 %nonassoc   '/'
 %left       '|'
-%left       CHAR 
-%nonassoc   '{'
+
+//%left       CHAR 
+
 %left       CC_PLUS CC_MINUS
- 
+
+//%right      '*' '+' '?' '{' 
 //  highest precedence
 
 %%
@@ -70,6 +74,7 @@ section_delimiter:
     SECTION_DELIMITER   '\n'
     {
         d_rules.useInitialSC();
+        reset();
     }
 ;
 
