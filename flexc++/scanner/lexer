@@ -23,12 +23,7 @@ OPTBL                   [[:blank:]]*
 
 %%
 
-{BL}\|                          {
-                                    return d_inCharClass ?
-                                            Parser::IDENTIFIER
-                                        :
-                                            Parser::ORNL;
-                                }
+{BL}\|                          return handle(Parser::ORNL);
 
 {BL}[^[:space:]]                {
                                     if (int token = inspectBlock())
