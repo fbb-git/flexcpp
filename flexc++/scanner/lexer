@@ -26,7 +26,7 @@ OPTBL                   [[:blank:]]*
 {BL}\|                          return handle(Parser::ORNL);
 
 {BL}[^[:space:]]                {
-                                    if (int token = inspectBlock())
+                                    if (int token = handleCharAfterBlanks())
                                         return token;
                                 }
 
