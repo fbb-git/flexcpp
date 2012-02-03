@@ -37,7 +37,10 @@ OPTBL                   [[:blank:]]*
                                 }
 
 <INITIAL,pre>{
-    {OPTBL}"//".*               // skip EOLN comment
+    {OPTBL}"//".*               {   // in a charclass: return blanks + //
+                                    if (handleEOLNcomment())
+                                        return Parser::IDENTIFIER;
+                                }
 
     ^"//include"[[:blank:]].*   maybeSwitchStream();
 
