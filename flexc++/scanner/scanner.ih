@@ -12,6 +12,7 @@ using namespace FBB;
 
 inline int Scanner::handle(int token) const
 {
+    return token;
     return d_inCharClass ? Parser::IDENTIFIER : token;
 }
 

@@ -2,8 +2,8 @@
 
 bool Scanner::handleDquote()
 {
-    if (d_inCharClass)
-        return true;
+//    if (d_inCharClass)
+//        return true;
 
     more();
     push(StartCondition__::string);

@@ -91,7 +91,8 @@ void main(int argc, list argv, list envp)
     {
         chdir("scanner");
         system("./newscanner");
-        exit(0);
+        chdir("..");
+        program(strip);
     }
 
 //    if (option == "test")
@@ -106,7 +107,7 @@ void main(int argc, list argv, list envp)
         "   manual             - build the manual (requires Yodl)\n"
         "   program [strip]    - build flexc++ (optionally strip the\n"
         "                        executable)\n"
-        "   scanner            - build new scanner\n"
+        "   scanner [strip]    - build new scanner, then 'build program'\n"
         "   test [what]        - run the test-suite\n"
         "                        `what' can be the name of a specific test\n"
         "                        to run. If omitted, all tests are run.\n"

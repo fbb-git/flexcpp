@@ -23,11 +23,15 @@ OPTBL                   [[:blank:]]*
 
 %%
 
-{BL}\|                          return handle(Parser::ORNL);
-
+{BL}\|                          {
+                                    return d_inCharClass ?
+                                            Parser::IDENTIFIER
+                                        :
+                                            Parser::ORNL;
+                                }
 
 {BL}[^[:space:]]                {
-                                    if (int token = handleCharAfterBlanks())
+                                    if (int token = inspectBlock())
                                         return token;
                                 }
 
@@ -37,33 +41,29 @@ OPTBL                   [[:blank:]]*
                                 }
 
 <INITIAL,pre>{
-    {OPTBL}"//".*               {   // in a charclass: return blanks + //
-                                    if (handleEOLNcomment())
-                                        return Parser::IDENTIFIER;
-                                }
+    {OPTBL}"//".*               // skip EOLN comment
 
     ^"//include"[[:blank:]].*   maybeSwitchStream();
 
-    {OPTBL}"/*"                 {   // in a charclass: return blanks + /*
-                                    if (handleStdComment())
-                                        return Parser::IDENTIFIER;
-                                }
+    {OPTBL}"/*"                 push(StartCondition__::comment);
 
-    \"                          {   // in a charclass: return "
-                                    if (handleDquote())
-                                        return Parser::CHAR;
+    \"                          {
+                                    more();
+                                    push(StartCondition__::string);
                                 }
 
     {IDENTIFIER}                return Parser::IDENTIFIER;
 
 
-    \n{OPTBL}                   return '\n';
+    \n{OPTBL}                   return closeCC('\n');
 
     =                           return '=';
 }
 
 <comment>{
-    .|\n                        // ignore
+    .                           // ignore
+    \n                          closeCC();
+
     "*/"                        {
                                     popSc();
                                     push(' ');
@@ -91,8 +91,10 @@ OPTBL                   [[:blank:]]*
 "{+}"                           return Parser::CC_PLUS;
 
 "{-}"                           return Parser::CC_MINUS;
+
+"["                             return handleOpenBracket();
+']'                             return closeCC(']');
         
-"["                             |
 "[]"                            |   
 "[]["                           return Parser::CC_START;
 
@@ -125,7 +127,7 @@ OPTBL                   [[:blank:]]*
 \$                              return Parser::DOLLAR;  // push("/\\n");
 
                                     // return special chars as themselves
-[]['.,^/|()*+?{}<>-]            return matched()[0];
+['.,^/|()*+?{}<>-]              return matched()[0];
 
                                     // return other chars as CHAR
 .                               return Parser::CHAR;

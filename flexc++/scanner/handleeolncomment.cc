@@ -2,7 +2,7 @@
 
 bool Scanner::handleEOLNcomment()
 {
-    if (not d_inCharClass)
+//    if (not d_inCharClass)
         return false;
 
     accept(matched().find("//") + 1);   // in char class: accept blanks + //

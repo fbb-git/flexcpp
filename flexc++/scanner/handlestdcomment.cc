@@ -2,8 +2,8 @@
 
 bool Scanner::handleStdComment()
 {
-    if (d_inCharClass)
-        return true;
+//    if (d_inCharClass)
+//        return true;
 
     push(StartCondition__::comment);        
     return false;
