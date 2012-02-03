@@ -9,4 +9,5 @@ void Parser::reset()
     d_warnCarets = false;
     d_warnDollars = false;
     d_tokenCount = 0;
+    d_scanner.identifierAsChar();
 }

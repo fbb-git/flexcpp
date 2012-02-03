@@ -28,12 +28,6 @@ _single_char:
     combi_chars
 ;
 
-_multi_char:
-    DECIMAL
-|
-    IDENTIFIER
-;
-
 _open_paren:
     '('
     {
@@ -48,7 +42,13 @@ _close_paren:
     }
 ;
 
+
 _unit:
+    _single_char
+    {
+        $$ = rawText();
+    }
+|
     '^'
     {
         $$ = boln();
@@ -74,16 +74,6 @@ _unit:
         $$ = quotes();
     }
 |
-    _multi_char
-    {
-        $$ = head();
-    }
-|
-    _single_char
-    {
-        $$ = rawText();
-    }
-|
     ESCAPE_SEQUENCE
     {
         $$ = escape();
@@ -94,43 +84,34 @@ _unit:
         $$ = dot();
     }
 |
-    _unit _quantifier
-    {
-        $$ = quantifier($1);
-    }
-|
-    _unit '{' _interval '}'
-    {
-        $$ = interval($1, $3);
-    }
-|
     characterclass
     {
         $$ = characterClass($1);
     }
-|
-    _open_paren regex _close_paren
-    {
-        $$ = $2;
-    }
 ;
-
-_or:
-    _unit
-|
-    _or _unit
-    {
-        $$ = concatenate($1, $2);
-    }
-;
-
+    
     // a regex is a regex, possibly with LA operator
     // the handler must verify whether the regex contains ^ and $ symbols
     // within the regex, for which a warning must be issue: ^, $ treated as
     // normal characters
     // regex returns a Pattern, embedded in a spSemUnion
 regex:
-    _or
+    _unit                   %prec CHAR
+|
+    regex regex             %prec CHAR
+    {
+        $$ = concatenate($1, $2);
+    }
+|
+    regex _quantifier       %prec '{'
+    {
+        $$ = quantifier($1);
+    }
+|
+    regex '{' _interval '}'
+    {
+        $$ = interval($1, $3);
+    }
 |
     regex '|' regex
     { 
@@ -140,6 +121,11 @@ regex:
     regex '/' regex
     {
         $$ = lookahead($1, $3);
+    }
+|
+    _open_paren regex _close_paren
+    {
+        $$ = $2;
     }
 ;
 

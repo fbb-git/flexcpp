@@ -51,7 +51,9 @@ OPTBL                   [[:blank:]]*
                                     if (handleDquote())
                                         return Parser::CHAR;
                                 }
-    {IDENTIFIER}                return Parser::IDENTIFIER;
+
+    {IDENTIFIER}                return handleIdentifier();
+
 
     \n{OPTBL}                   return closeCC('\n');
 
@@ -81,7 +83,7 @@ OPTBL                   [[:blank:]]*
     // In all other cases a quote is returned as a literal quote.
 \'({ESCAPE_SEQUENCE}|[^\n'\\])\'    return Parser::QUOTES;
 
-{DECIMAL}                       return Parser::DECIMAL;
+{DECIMAL}                       return handleDecimal();
 
 {ESCAPE_SEQUENCE}               return Parser::ESCAPE_SEQUENCE;
 

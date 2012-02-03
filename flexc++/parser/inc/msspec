@@ -20,7 +20,14 @@ _ms_specs:
     _ms_name_list
 ;
 
+_ms_angular:
+    '<'
+    {
+        d_scanner.acceptIdentifier();
+    }
+;
+
 ms_spec:
-    '<' _ms_specs '>' reset
+    _ms_angular _ms_specs '>' reset
 ;
 
