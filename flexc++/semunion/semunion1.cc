@@ -2,27 +2,25 @@
 
 SemUnion::SemUnion(SemUnion const &other)
 {
-    switch (other.d_index.first)
+    switch (d_index = other.d_index)
     {
-        case DataType::TEXT:
-            new (&d_str) std::pair<int, std::string>(other.d_str);
+        case TEXT:
+            new (&d_str) std::string(other.d_str);
         break;
 
-        case DataType::PATTERN:
-            new (&d_patternVal) 
-                            std::pair<int, Pattern>(other.d_patternVal);
+        case PATTERN:
+            new (&d_pattern) Pattern(other.d_pattern);
         break;
 
-        case DataType::CHARCLASS:
-            new (&d_charClass) std::pair<int, CharClass>(other.d_charClass);
+        case CHARCLASS:
+            new (&d_charClass) CharClass(other.d_charClass);
         break;
 
-        case DataType::INTERVAL:
-            new (&d_interval) std::pair<int, Interval>(other.d_interval);
+        case INTERVAL:
+            new (&d_interval) Interval(other.d_interval);
         break;
 
         default:
-            d_index = other.d_index;
         break;
     }
 }

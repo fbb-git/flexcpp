@@ -27,13 +27,17 @@ struct Type<Int<DataType::TEXT>>                // given TEXT
 //          the ones just given for TEXT 
 //      - add a field for the new type
 //      - add the field's destructor call to ~SemUnion
-union SemUnion
+class SemUnion: public DataType
 {
-    std::pair<int, int>         d_index;
-    std::pair<int, std::string> d_str;
-    std::pair<int, Pattern>  d_patternVal;
-    std::pair<int, CharClass>   d_charClass;
-    std::pair<int, Interval>    d_interval;
+    Symbol d_index;
+
+    union
+    {
+        std::string d_str;
+        Pattern     d_pattern;
+        CharClass   d_charClass;
+        Interval    d_interval;
+    };
 
     public:
         SemUnion();
@@ -44,83 +48,44 @@ union SemUnion
     
         ~SemUnion();
 
-        template <int dataType>
-        typename Type<Int<dataType>>::type const &value() const;
-
-        template <int dataType>
+        template <Symbol dataType>
         typename Type<Int<dataType>>::type &value();
 
-        int index() const;
+        Symbol index() const;
 
     private:
         template <typename Type>
-        Type const &conversion() const;
+        Type const *conversion() const;
 };
 
 inline SemUnion::SemUnion()
-{
-    new (this) std::pair<int, int>(DataType::INT, 0);
-}
+:
+    d_index(INT)
+{}
 
-inline int SemUnion::index() const
+inline DataType::Symbol SemUnion::index() const
 {
-    return d_index.first;
+    return d_index;
 }
 
 template <typename Tp>
 inline SemUnion::SemUnion(Tp const &value)
+:
+    d_index(static_cast<Symbol>(Type<Tp>::dataType))
 {
-    new (this) std::pair<int, Tp>(Type<Tp>::dataType, value);
+    new (&d_str) Tp(value);
 }
 
-template <>
-inline SemUnion::SemUnion(Pattern const &value)
+template <typename Type>
+inline Type const *SemUnion::conversion() const
 {
-    new (this) std::pair<int, Pattern>(DataType::PATTERN, value);
+    return reinterpret_cast<Type const *>(&d_str);
 }
 
-template <>
-inline int const &SemUnion::conversion<int>() const
-{
-    return d_index.second;
-}
-
-template <>
-inline std::string const &SemUnion::conversion<std::string>() const
-{
-    return d_str.second;
-}
-
-template <>
-inline Pattern const &SemUnion::conversion<Pattern>() const
-{
-    return d_patternVal.second;
-}
-
-template <>
-inline CharClass const &SemUnion::conversion<CharClass>() const
-{
-    return d_charClass.second;
-}
-
-template <>
-inline Interval const &SemUnion::conversion<Interval>() const
-{
-    return d_interval.second;
-}
-
-
-template <int type>
-inline typename Type<Int<type>>::type const &SemUnion::value() const
-{
-    return conversion<typename Type<Int<type>>::type>();
-}
-
-
-template <int dataType>
+template <DataType::Symbol dataType>
 inline typename Type<Int<dataType>>::type &SemUnion::value()
 {
-    return const_cast<typename Type<Int<dataType>>::type &>(
+    return *const_cast<typename Type<Int<dataType>>::type *>(
                 conversion<typename Type<Int<dataType>>::type>());
 }
         

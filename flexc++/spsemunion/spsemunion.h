@@ -28,6 +28,3 @@ inline spSemUnion::spSemUnion(Type const &obj)
 {}
 
 #endif
-
-
-

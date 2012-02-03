@@ -1,3 +1,27 @@
+_decimal:
+    DECIMAL
+    {
+        $$ = SemUnion(d_matched);
+    }
+;
+
+_interval:
+    _decimal
+    {
+        $$ = SemUnion(Interval::exact($1->value<TEXT>()));
+    }
+|
+    _decimal ',' _decimal
+    {
+        $$ = SemUnion(Interval::range($1->value<TEXT>(), $3->value<TEXT>()));
+    }
+|
+    _decimal ','
+    {
+        $$ = SemUnion(Interval::lowerBound($1->value<TEXT>()));
+    }
+;
+
 _single_char:
     CHAR
 |

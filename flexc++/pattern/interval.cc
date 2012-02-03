@@ -27,7 +27,6 @@ Pattern Pattern::interval(States &states, Pattern &regex,
 
         ret = Pattern(pair);
     }
-
     return ret;
 }
 

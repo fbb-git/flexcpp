@@ -2,21 +2,23 @@
 
 SemUnion::~SemUnion()
 {
-    switch (d_index.first)
+    switch (d_index)
     {
-        case DataType::TEXT:
-            d_str.second.~string();
+        case TEXT:
+            d_str.~string();
         break;
 
-        case DataType::PATTERN:
-            d_patternVal.second.~Pattern();
+        case PATTERN:
+            d_pattern.~Pattern();
         break;
 
-        case DataType::CHARCLASS:
-            d_charClass.second.~CharClass();
+        case CHARCLASS:
+            d_charClass.~CharClass();
         break;
 
-        // Interval does not allocate memory. Destructor call not needed.
+        case INTERVAL:
+            d_interval.~Interval();
+        break;
 
         default:
         break;

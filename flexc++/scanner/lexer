@@ -32,32 +32,26 @@ OPTBL                   [[:blank:]]*
                                     if (int token = handleCharAfterBlanks())
                                         return token;
                                 }
-
 {BL}                            {   // skip white space unless in a block
                                     if (d_inBlock || d_inCharClass)
                                         return ' ';
                                 }
-
 <INITIAL,pre>{
     {OPTBL}"//".*               {   // in a charclass: return blanks + //
                                     if (handleEOLNcomment())
                                         return Parser::IDENTIFIER;
                                 }
-
     ^"//include"[[:blank:]].*   maybeSwitchStream();
 
     {OPTBL}"/*"                 {   // in a charclass: return blanks + /*
                                     if (handleStdComment())
                                         return Parser::IDENTIFIER;
                                 }
-
     \"                          {   // in a charclass: return "
                                     if (handleDquote())
                                         return Parser::CHAR;
                                 }
-
     {IDENTIFIER}                return Parser::IDENTIFIER;
-
 
     \n{OPTBL}                   return closeCC('\n');
 
@@ -67,7 +61,6 @@ OPTBL                   [[:blank:]]*
 <comment>{
     .                           // ignore
     \n                          closeCC();
-
     "*/"                        {
                                     popSc();
                                     push(' ');
@@ -92,9 +85,9 @@ OPTBL                   [[:blank:]]*
 
 {ESCAPE_SEQUENCE}               return Parser::ESCAPE_SEQUENCE;
 
-"{+}"                           return Parser::CC_PLUS;
+"{+}"                           return handle(Parser::CC_PLUS);
 
-"{-}"                           return Parser::CC_MINUS;
+"{-}"                           return handle(Parser::CC_MINUS);
 
 "["                             return handleOpenBracket();
 ']'                             return closeCC(']');

@@ -11,7 +11,7 @@ struct Type
 
 struct DataType         // data types used by semunion: these names are 
 {                       // directly available from within classes inheriting
-    enum                // from DataType
+    enum Symbol         // from DataType
     {
         INT,
         TEXT,   
