@@ -27,7 +27,7 @@ OPTBL                   [[:blank:]]*
 
 
 {BL}[^[:space:]]                {
-                                    if (int token = inspectBlock())
+                                    if (int token = handleCharAfterBlanks())
                                         return token;
                                 }
 
