@@ -10,3 +10,20 @@
 using namespace std;
 using namespace FBB;
 
+inline int Scanner::handle(int token) const
+{
+    return d_inCharClass ? Parser::IDENTIFIER : token;
+}
+
+inline int Scanner::openCC(int token)
+{
+    d_inCharClass = true;
+    return token;
+}
+
+inline int Scanner::closeCC(int token)
+{
+    d_inCharClass = false;
+    return token;
+}
+

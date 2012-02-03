@@ -4,6 +4,8 @@ prompt()
 {
     echo "$*"
     read A
+    [ "$A" == "y" ] && return 1
+    return 0
 }
 
 echo Press enter to execute commands ending in ...
@@ -24,8 +26,10 @@ cd ..
 prompt "    3." Copy the generated scannerbase.h and lex.cc to ./scanner
 cp ./self/lex.cc ./self/scannerbase.h ./scanner
 
-prompt "    4-6." Touch ./scanner/a and "'build program'"
-touch ./scanner/a
+prompt "    4. Touch ./scanner/a (Enter y to touch, just Enter to skip)"
+[ $? -eq 1 ] && touch ./scanner/a
+
+prompt "    5-6. 'build program'"
 build program || exit 1
 
 prompt "    7." Again: run '../tmp/bin/flexc++' on lexer

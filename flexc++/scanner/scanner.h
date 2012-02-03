@@ -41,6 +41,18 @@ class Scanner: public ScannerBase, public DataType
         void eolnDollar();
 
     private:
+        int openCC(int token);
+        int closeCC(int token = 0);
+
+        int handle(int token) const;
+
+        int handleCharAfterBlanks();
+        bool handleEOLNcomment();
+        bool handleStdComment();
+        bool handleDquote();
+        int handleOpenBracket();
+
+
         using ScannerBase::push;
 
         void switchToINITIAL();

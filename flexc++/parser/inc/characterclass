@@ -105,8 +105,14 @@ _cc_literal:
     combi_chars
 ;
 
-_cc_element:
+_cc_escape:
     ESCAPE_SEQUENCE
+|
+    QUOTES
+;
+
+_cc_element:
+    _cc_escape
     {
         $$ = CharClass::escape(d_matched);
     }

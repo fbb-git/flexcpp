@@ -86,15 +86,14 @@ void main(int argc, list argv, list envp)
 
 //    if (option == "rebuild")
 //        rebuild(strip);
-//
-//    if (option == "lexer")
-//    {
-//        chdir("scanner");
-//        system("./buildlexer");
-//        system("flexc++ lexer");
-//        exit(0);
-//    }
-//
+
+    if (option == "scanner")
+    {
+        chdir("scanner");
+        system("./newscanner");
+        exit(0);
+    }
+
 //    if (option == "test")
 //        test(option2);
 
@@ -102,12 +101,12 @@ void main(int argc, list argv, list envp)
         "Where `what' is one of:\n"
         "   clean              - clean up remnants of previous compilations\n"
         "   distclean          - clean + fully remove tmp/\n"
-        "   lexer              - build new lexer and run `flexc++ lexer'\n"
         "   library            - build flexc++'s library\n"
         "   man                - build the man-page (requires Yodl)\n"
         "   manual             - build the manual (requires Yodl)\n"
         "   program [strip]    - build flexc++ (optionally strip the\n"
         "                        executable)\n"
+        "   scanner            - build new scanner\n"
         "   test [what]        - run the test-suite\n"
         "                        `what' can be the name of a specific test\n"
         "                        to run. If omitted, all tests are run.\n"
