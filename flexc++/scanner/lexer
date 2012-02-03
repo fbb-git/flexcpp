@@ -21,6 +21,9 @@ OPTBL                   [[:blank:]]*
 
 %x pre line comment string
 
+// IDENTIFIER is also used in character classes to represent any series of
+// characters (in matched()) that should enter the character set
+
 %%
 
 {BL}\|                          return handle(Parser::ORNL);
@@ -91,11 +94,11 @@ OPTBL                   [[:blank:]]*
 ']'                             return closeCC(']');
         
 "[]"                            |   
-"[]["                           return Parser::CC_START;
+"[]["                           return openCC(Parser::CC_START);
 
 "[^"                            |
 "[^]"                           |
-"[^]["                          return Parser::CC_NEGATED;
+"[^]["                          return openCC(Parser::CC_NEGATED);
 
 "[:"\^?"alnum:]"                |
 "[:"\^?"alpha:]"                |
