@@ -3,8 +3,8 @@ includefile(preamble)
 
 affiliation(url(Rijksuniversiteit Groningen)(http://www.rug.nl/))
 report(Flexc++ (Version _CurVers_) User Guide)
-        (Frank B. Brokken+land(), Jean-Paul van Oosten, and (until 0.5.3)
-        Richard Berendsen) 
+        (Frank B. Brokken, Jean-Paul van Oosten, and
+        (until 0.5.3) Richard Berendsen) 
        (_CurYrs_)
 
 lsect(introduction)(Introduction)
