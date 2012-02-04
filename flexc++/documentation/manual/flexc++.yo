@@ -7,173 +7,175 @@ report(Flexc++ (Version _CurVers_) User Guide)
         (until 0.5.3) Richard Berendsen) 
        (_CurYrs_)
 
-lsect(introduction)(Introduction)
-includefile(introduction.yo)
+lchapter(Introduction)(Introduction)
 
-lsect(simpleexamples)(Some simple examples)
+    includefile(introduction.yo)
+    
+    lsect(simpleexamples)(Some simple examples)
+    
+        lsubsect(lexermain)(A simple lexer file and main function)
+        includefile(simpleexamples.yo)
+    
 
-    lsubsect(lexermain)(A simple lexer file and main function)
-    includefile(simpleexamples.yo)
+lchapter(differences)(Differences between flex and flexc++)
 
-lsect(differences)(Differences between flex and flexc++)
-includefile(differences.yo)
-
-    lsubsect(code_blocks)(Format of the input file)
+    includefile(differences.yo)
+    
+    lsect(code_blocks)(Format of the input file)
     includefile(codeblocks.yo)
-
-        lsubsubsect(diffdef)(Definition section)
+    
+        lsubsect(diffdef)(Definition section)
         includefile(definitions.yo)
-
-        lsubsubsect(diffrules)(Rules section)
+    
+        lsubsect(diffrules)(Rules section)
         includefile(rules.yo)
-
-        lsubsubsect(diffusercode)(User code section)
+    
+        lsubsect(diffusercode)(User code section)
         includefile(usercode.yo)
-
-    lsubsect(diffpatterns)(Patterns)
+    
+    lsect(diffpatterns)(Patterns)
     includefile(diffpatterns)
-
-    lsubsect(files)(Generated files)
+    
+    lsect(files)(Generated files)
     includefile(files)
-
-    subsect(Comment)
+    
+    sect(Comment)
     includefile(comment)
-
-    lsubsect(functions)(Functions and macros)
+    
+    lsect(functions)(Functions and macros)
     includefile(functions)
-
-    subsect(Multiple input streams)
+    
+    sect(Multiple input streams)
     includefile(multiinput)
 
-lsect(fileformat)(Format of the input file)
+lchapter(fileformat)(Format of the input file)
 includefile(fileformat.yo)
 
-    lsubsect(definitionsection)(Definition section)
+    lsect(definitionsection)(Definition section)
     includefile(defs)
 
-    lsubsect(rulessection)(Rules section)
+    lsect(rulessection)(Rules section)
     includefile(rulesect)
 
-    lsubsect(comments)(Comment)
+    lsect(comments)(Comment)
     includefile(comments)
 
-lsect(patterns)(Patterns)
-includefile(patterns.yo)
+    lsect(patterns)(Patterns)
+    includefile(patterns.yo)
+    
+    lsect(actions)(Actions)
+    includefile(actions.yo)
+    
+    lsect(startconditions)(Startconditions (Miniscanners))
+    includefile(startconditions.yo)
+    
+        subsect(Notation details)
+        includefile(notation)
 
-lsect(actions)(Actions)
-includefile(actions.yo)
-
-lsect(startconditions)(Startconditions (Miniscanners))
-includefile(startconditions.yo)
-
-    subsect(Notation details)
-    includefile(notation)
-
-lsect(generated-files)(Generated files)
+lchapter(generated-files)(Generated files)
 includefile(generatedfiles.yo)
 
-lsect(multiplestreams)(Multiple input streams)
-includefile(multiplestreams.yo)
+    lsect(multiplestreams)(Multiple input streams)
+    includefile(multiplestreams.yo)
+    
+        subsect(Switching streams with switchStream)
 
-    subsect(Switching streams with switchStream)
 
-sect(Technical documentation (PIPETHROUGH(date -R)()))
+chapter(Technical documentation (PIPETHROUGH(date -R)()))
 
-    subsect(flexc++)
+    sect(flexc++)
     includefile(technical/flexcpp)
-
-    lsubsect(NOTATION)(Notation, Terminology)
+    
+    lsect(NOTATION)(Notation, Terminology)
     includefile(technical/notations)
-
-COMMENT(
-        lsubsubsect(FINACALGO)(The FinAc computing algorithm)
-        includefile(technical/finacalgo)
-END)
-
-    lsubsect(PARSER)(The parser)
+    
+    COMMENT(
+            lsubsect(FINACALGO)(The FinAc computing algorithm)
+            includefile(technical/finacalgo)
+    END)
+    
+    lsect(PARSER)(The parser)
     includefile(technical/parser)
     
-    lsubsect(BLOCKS)(Code (action)  blocks)
+    lsect(BLOCKS)(Code (action)  blocks)
     includefile(technical/blocks)
     
-    lsubsect(STATE)(The class State)
+    lsect(STATE)(The class State)
     includefile(technical/state)
     
-    lsubsect(STATES)(States)
+    lsect(STATES)(States)
     includefile(technical/states)
     
-    lsubsect(RULES)(Rules and the class Rule)
+    lsect(RULES)(Rules and the class Rule)
     includefile(technical/rules)
     
-    lsubsect(PATTERNS)(Patterns)
+    lsect(PATTERNS)(Patterns)
     includefile(technical/pattern)
-
-    lsubsect(PATTERNVAL)(The class PatternVal)
+    
+    lsect(PATTERNVAL)(The class PatternVal)
     includefile(technical/patternval)    
     
-    lsubsect(RANGES)(Ranges)
+    lsect(RANGES)(Ranges)
     includefile(technical/ranges)
-
-    subsect(The class TailCount)
+    
+    sect(The class TailCount)
     includefile(technical/tailcount)
     
-    subsect(The class DFAs)
+    sect(The class DFAs)
     includefile(technical/dfas)
-
-
-    lsubsect(DFA)(The DFA)
+    
+    
+    lsect(DFA)(The DFA)
     includefile(technical/dfa)
-
-        lsubsubsect(TAILLOGIC)(The logic used in 'setTailCount')
+    
+        lsubsect(TAILLOGIC)(The logic used in 'setTailCount')
         includefile(technical/taillogic)
-
-    lsubsect(DFAROW)(The rows of the DFA: DFAROW)
+    
+    lsect(DFAROW)(The rows of the DFA: DFAROW)
     includefile(technical/dfarow)
-
-    lsubsect(LOOKAHEAD)(Patterns using the lookahead operator (LOP))
-
-        subsubsect(The LOP handling algorithm)
+    
+    lsect(LOOKAHEAD)(Patterns using the lookahead operator (LOP))
+    
+        subsect(The LOP handling algorithm)
         includefile(technical/lopalgo)
-
-        subsubsect(LOP handling: a more extensive example)
+    
+        subsect(LOP handling: a more extensive example)
         includefile(technical/abbaabba)
-
-        lsubsubsect(LOPPROBLEM)(LOP handling: a problem case)
+    
+        lsubsect(LOPPROBLEM)(LOP handling: a problem case)
         includefile(technical/lopproblem)
-
-        subsubsect(The steps of the LOP handling algorithm)
+    
+        subsect(The steps of the LOP handling algorithm)
         includefile(technical/lopalgosteps)
-
-        subsubsect(Implementation)
+    
+        subsect(Implementation)
         includefile(technical/lookahead)
-
-    lsubsect(FINALSTATE)(Final states and ^xyz vs. xyz patterns)
+    
+    lsect(FINALSTATE)(Final states and ^xyz vs. xyz patterns)
     includefile(technical/bolrules)
-
-    subsect(Generating Code)
+    
+    sect(Generating Code)
     includefile(technical/gencode)
-
-        subsubsect(The range-table)
+    
+        subsect(The range-table)
         includefile(technical/rangetable)
-
-        subsubsect(The DFAs)
+    
+        subsect(The DFAs)
         includefile(technical/gendfas)
-
-        lsubsubsect(SFINACINFO)(The Final-Accept info array)
+    
+        lsubsect(SFINACINFO)(The Final-Accept info array)
         includefile(technical/finac)
-
-    lsubsect(RUNTIME)(Run-time operations)
+    
+    lsect(RUNTIME)(Run-time operations)
     includefile(technical/runtime)
-
-    subsect(Code generation)
+    
+    sect(Code generation)
     includefile(technical/codegeneration)
-
-    subsect(Handling input your own way)
+    
+    sect(Handling input your own way)
     includefile(technical/input)
-
-    subsect(Refreshing flexc++)
+    
+    sect(Reflex: refreshing flexc++)
     includefile(technical/refreshing)
-
-COMMENT(includefile(developernotes))
-
-
+    
+    COMMENT(includefile(developernotes))

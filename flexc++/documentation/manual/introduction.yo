@@ -4,10 +4,10 @@ combination with parsers, which in turn can be generated, by
 url(bisonc++)(http://bisoncpp.sourceforge.net) for example.
 
 Flc() reads a lexer file, containing rules: pairs of regular expressions and
-Cpp() code. A number of files are then generated, defining a class
-(tt(Scanner) by default). The member function tt(lex()) is used to analyse
-input for occurrences of the regular expressions. Whenever it finds one, it
-executes the corresponding Cpp() code.
+Cpp() code. Flc() then generates several files, defining a class (tt(Scanner)
+by default). The member function tt(lex) is used to analyze input for
+occurrences of the regular expressions. Whenever it finds a match, it executes
+the corresponding Cpp() code.
 
 Flc() is highly comparable to the programs flex and flex++, written by Vern
 Paxson. The goal was to create a similar program, but to completely implement
@@ -18,7 +18,7 @@ flex++)(differences)).
 This edition of the manual documents version _CurVers_ and provides detailed
 information on how to use flc() and how flc() works. Some texts are adapted
 from the url(flex manual)(http://flex.sourceforge.net/manual/index.html).
-The manual page em(flexc++(1)) offers a quick overview of the command line
+The manual page bf(flexc++)(1) offers a quick overview of the command line
 options and option directives.
 
 The most recent version of both this manual and flc() itself can be found on
@@ -26,5 +26,10 @@ our website url(http://flexcpp.org/)(http://flexcpp.org). If you find a bug
 in flc() or mistakes in the documentation, please report it using our url(bug
 tracker)(http://code.flexcpp.org/projects/flexcpp/).
 
-Flc() was built by Richard Berendsen, Frank B. Brokken and Jean-Paul van
-Oosten.
+Flc() was designed and written by Frank B. Brokken, Jean-Paul van Oosten, and
+(until version 0.5.3) Richard Berendsen.
+
+
+
+
+
