@@ -4,7 +4,7 @@ COMMENT(manpage, section, releasedate, archive, short name)
 manpage(rules)(3flexc++)(_CurYrs_)(flexc++__CurVers_-x.tar.gz)
                     (Flexc++ input file)
 
-manpagename(Rules)(Input file for flexc++ (`tt(lexer)')
+manpagename(Rules)(Input file for flexc++ (`tt(lexer)'))
 
 manpagesynopsis()
        flc() [OPTIONS] tt(rules-file)
@@ -326,36 +326,21 @@ considered tt(CHAR) elements. Multiple tt(CHAR) elements can be combined by
 enclosing them in parentheses (e.g., tt((abc)+) indicates sequences of tt(abc)
 characters, like tt(abcabcabc));
         itt(*, ?, +, {): multipliers:nl()
-            tt(?): zero or one occurrence  of the previous element;
-            tt(+): one or more repetitions of the previous element;
-            tt(*): zero or more repetitions of the previous element;
-
-
-'Those grouped together
-have equal precedence. For example,
-        verb(
-    foo|bar*
-        )
-    is identical to
-        verb(
-    (foo)|(ba(r*))
-        )
-    as the tt(*) operator has higher precedence than concatenation, and
-concatenation higher than alternation (tt(|)). This pattern therefore matches
-either the string `foo' or the string `ba' followed by zero-or-more `r's. To
-match `foo' or zero-or-more repetitions of the string `bar', use:
-        verb(
-    foo|(bar)*
-        )
-    and to match a sequence of zero or more repetitions of `foo' and `bar'
-use: 
-        verb(
-    (foo|bar)*
+            tt(?): zero or one occurrence  of the previous element;nl()
+            tt(+): one or more repetitions of the previous element;nl()
+            tt(*): zero or more repetitions of the previous element;nl()
+            tt({...}): interval specification: a specified number of
+                repetitions of the previous element (see above for specific
+                forms of the interval specification)
+        itt({+}, {-}): set operators (tt({+}) computing the union of two sets,
+                tt({-}) computing the difference of the left-hand side set
+                minus the elements in the right-hand side set);
         )
 
-Concatenation has a higher precedence than the interval expression.
-This is different from many other regular expression engines. It conforms,
-however, to the lex standard.
+The lex standard defines concatenation as having a higher precedence than the
+interval expression. This is different from many other regular expression
+engines, and flc() follows these latter engines, giving all `multiplication
+operators' equal priority.
 
 Name expansion has the same precedence as grouping (using parentheses to
 influence the precedence of the other operators in the regular expression).
@@ -444,7 +429,7 @@ NAME    [[:alpha:]][_[:alnum:]]*
 ^a              return 1;
 a               return 2;
 a$              return 3;
-${NAME}         return 4;
+{NAME}          return 4;
 
 .|\n            // ignore
         )
@@ -452,12 +437,18 @@ ${NAME}         return 4;
 
 manpageseealso()
 
-    bf(flexc++)(1), bf(input)(3flexc++),  bf(scanner)(3flexc++),  
-    bf(scannerbase)(3flexc++), 
+    bf(flexc++)(1), bf(input)(3flexc++),  bf(scanner.h)(3flexc++),  
+    bf(scannerbase.h)(3flexc++), 
 
 manpagebugs()
-    All tt(INITIAL) rules apply to inclusive mini scanners, also those
+    itemization(
+    it() The priority of interval expressions (tt({...})) equals the priority
+of other multiplicative operators (like tt(*)).
+    it() All tt(INITIAL) rules apply to inclusive mini scanners, also those
 tt(INITIAL) rules that were explicitly associated with the tt(INITIAL) mini
-scanner. 
+scanner.
+    )
 
 includefile(include/trailer)nl()
+
+

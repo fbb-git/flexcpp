@@ -138,8 +138,8 @@ the default implementation of the class tt(Input) is found below the line
 
 manpageseealso()
 
-    bf(flexc++)(1), bf(rules)(3flexc++), bf(scanner)(3flexc++),  
-    bf(scannerbase)(3flexc++), 
+    bf(flexc++)(1), bf(rules)(3flexc++), bf(scanner.h)(3flexc++),  
+    bf(scannerbase.h)(3flexc++), 
 
 manpagebugs()
     None Reported.

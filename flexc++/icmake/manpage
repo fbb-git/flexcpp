@@ -11,7 +11,7 @@ void manpage()
     string name;
     string manpage;
 
-    pages = "flexc++ input rules scanner scannerbase";
+    pages = "flexc++ input rules scanner.h scannerbase.h";
     pagelist = strtok(pages, " ");
 
     man =  ".1 .3flexc++ .3flexc++ .3flexc++ .3flexc++";

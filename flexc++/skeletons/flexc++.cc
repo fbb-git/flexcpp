@@ -243,7 +243,7 @@ $insert 4 debug.action "CONTINUE, NEXT STATE: " << d_nextState
 void \@Base::echoCh__(size_t ch)
 {
 $insert 4 debug.action "ECHO_CH" 
-    std::cerr << static_cast<char>(ch);
+    *d_out << static_cast<char>(ch);
     d_atBOL = ch == '\n';
 }
 
