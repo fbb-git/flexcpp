@@ -67,14 +67,6 @@ inline spSemUnion Parser::quantifier(spSemUnion const &regex)
                             d_matched[0]);
 }
     
-inline spSemUnion Parser::interval(spSemUnion &regex, 
-                                   spSemUnion const &interval)
-{
-    return Pattern::interval(d_states, 
-                            regex->value<PATTERN>(),
-                            interval->value<INTERVAL>());
-}
-    
 inline spSemUnion Parser::unite(spSemUnion const &lhs, spSemUnion const &rhs)
 {
     return CharClass::unite(lhs->value<CHARCLASS>(), rhs->value<CHARCLASS>());

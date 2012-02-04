@@ -45,7 +45,7 @@ _close_paren:
 _open_curly:
     '{'
     {
-        d_scanner.acceptIdentifier();
+        d_scanner.acceptMulti();
     }
 ;
 
@@ -114,7 +114,6 @@ regex:
 |
     regex _open_curly _interval '}'
     {
-        d_scanner.identifierAsChar();
         $$ = interval($1, $3);
     }
 |

@@ -62,13 +62,14 @@ class Parser: public ParserBase, public DataType
         void reset();       // prepare the parser for a new regex 
                             // (resetting tokencount and warning flags)
 
-        spSemUnion head();  // accept the 1st char of IDENT or DECIMAL
         spSemUnion boln();
         spSemUnion dollar();
         spSemUnion eofPattern();
         spSemUnion quotes();
         spSemUnion concatenate(spSemUnion &lhs, spSemUnion &rhs);
         spSemUnion lookahead(spSemUnion &left, spSemUnion &right);
+        spSemUnion interval(spSemUnion &regex, spSemUnion const &interval);
+
 
         void assignBlock();                                 // .ih
         void noActions();                                   // .ih
@@ -81,9 +82,6 @@ class Parser: public ParserBase, public DataType
         spSemUnion rawText();                               // .ih
         spSemUnion rawText(std::string const &str);         // .ih
         spSemUnion quantifier(spSemUnion const &regex);     // .ih
-        spSemUnion interval(spSemUnion &regex,
-                            spSemUnion const &interval);    // .ih
-
         spSemUnion unite(spSemUnion const &lhs,             // .ih
                          spSemUnion const &rhs);
         spSemUnion difference(spSemUnion const &lhs,        // .ih

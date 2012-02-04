@@ -23,7 +23,7 @@ _ms_specs:
 _ms_angular:
     '<'
     {
-        d_scanner.acceptIdentifier();
+        d_scanner.acceptMulti();
     }
 ;
 

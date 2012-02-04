@@ -18,9 +18,9 @@ class Scanner: public ScannerBase, public DataType
     bool d_inBlock;             // when in-block return ' ' on blanks
     bool d_inCharClass;         // in a char-class return sequences as
                                 //  IDENTIFIERS, and multiple blanks as ' '
-    bool d_acceptIdentifier;    // in pre and in ms specifications: return
-                                // IDENT as IDENT, otherwise accept the first
-                                // char as CHAR
+    bool d_acceptMulti;         // in pre, block and multi specs: return
+                                // IDENTIFIER and DECIMAL as themselves,
+                                // otherwise accept their first chars as CHAR
 
     std::unordered_map<std::string, std::string> d_nameExpansion;
 
@@ -42,8 +42,8 @@ class Scanner: public ScannerBase, public DataType
 
         void blockEnds();
         void eolnDollar();
-        void acceptIdentifier();
-        void identifierAsChar();
+        void acceptMulti();
+        void multiAsChar();
 
     private:
         int openCC(int token);
@@ -57,8 +57,7 @@ class Scanner: public ScannerBase, public DataType
         bool handleDquote();
         int handleOpenBracket();
 
-        int handleIdentifier();
-        int handleDecimal();
+        int handleMulti(int token);
 
         void switchToINITIAL();
 
@@ -89,14 +88,14 @@ class Scanner: public ScannerBase, public DataType
                             // be exec'ed before the patternmatching starts
 };
 
-inline void Scanner::acceptIdentifier()
+inline void Scanner::acceptMulti()
 {
-    d_acceptIdentifier = true;
+    d_acceptMulti = true;
 }
 
-inline void Scanner::identifierAsChar()
+inline void Scanner::multiAsChar()
 {
-    d_acceptIdentifier = false;
+    d_acceptMulti = false;
 }
 
 inline void Scanner::blockEnds() 
