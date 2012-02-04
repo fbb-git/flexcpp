@@ -90,7 +90,8 @@ OPTBL                   [[:blank:]]*
 
 "{-}"                           return handle(Parser::CC_MINUS);
 
-"["                             return handleOpenBracket();
+'['                             return handleOpenBracket();
+
 ']'                             return closeCC(']');
         
 "[]"                            |   

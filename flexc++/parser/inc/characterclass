@@ -1,11 +1,3 @@
-_quantifier:
-    '*'
-|
-    '+'
-|
-    '?'
-;
-
 _m_contents:
     {
         d_expect = "character class";

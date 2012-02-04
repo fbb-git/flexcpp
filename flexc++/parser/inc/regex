@@ -1,7 +1,6 @@
 _decimal:
     DECIMAL
     {
-        cout << "IN _decimal\n";
         $$ = SemUnion(d_matched);
     }
 ;
@@ -46,23 +45,11 @@ _close_paren:
 _open_curly:
     '{'
     {
-        cout << "OPEN CURLY\n";
         d_scanner.acceptIdentifier();
     }
 ;
 
-_interUnit:
-    _unit _open_curly _interval '}' 
-    {
-        cout << "CLOSE CURLY\n";
-        d_scanner.identifierAsChar();
-        $$ = interval($1, $3);
-    }
-;
-
 _unit:
-    _interUnit
-|
     '^'
     {
         $$ = boln();
@@ -88,11 +75,6 @@ _unit:
         $$ = quotes();
     }
 |
-    _single_char
-    {
-        $$ = rawText();
-    }
-|
     ESCAPE_SEQUENCE
     {
         $$ = escape();
@@ -103,29 +85,23 @@ _unit:
         $$ = dot();
     }
 |
-    _unit _quantifier
+    _single_char
     {
-        $$ = quantifier($1);
+        $$ = rawText();
     }
 |
     characterclass
     {
         $$ = characterClass($1);
     }
-|
-    _open_paren regex _close_paren
-    {
-        $$ = $2;
-    }
 ;
 
-_or:
-    _unit
+_quantifier:
+    '*'
 |
-    _or _unit
-    {
-        $$ = concatenate($1, $2);
-    }
+    '+'
+|
+    '?'
 ;
 
     // a regex is a regex, possibly with LA operator
@@ -134,7 +110,28 @@ _or:
     // normal characters
     // regex returns a Pattern, embedded in a spSemUnion
 regex:
-    _or
+    _unit
+|
+    regex _open_curly _interval '}'
+    {
+        d_scanner.identifierAsChar();
+        $$ = interval($1, $3);
+    }
+|
+    regex _quantifier
+    {
+        $$ = quantifier($1);
+    }
+|
+    _open_paren regex _close_paren
+    {
+        $$ = $2;
+    }
+|
+    regex regex                     %prec CHAR
+    {
+        $$ = concatenate($1, $2);
+    }
 |
     regex '|' regex
     { 
@@ -146,10 +143,3 @@ regex:
         $$ = lookahead($1, $3);
     }
 ;
-
-
-
-
-
-
-

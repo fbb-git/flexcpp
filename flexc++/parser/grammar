@@ -46,20 +46,17 @@
 // character classes
 %token  PREDEFINED_CLASS
  
-// Pattern operators:
-
-%token CHAR
+// rule operators:
 
 //  lowest precedence
+
 %left       ORNL
-%nonassoc   '/'
+%left       '/'
 %left       '|'
-
-//%left       CHAR 
-
+%left       CHAR 
+%left       '*' '?' '+' '{' 
 %left       CC_PLUS CC_MINUS
 
-//%nonassoc      '{' 
 //  highest precedence
 
 %%
