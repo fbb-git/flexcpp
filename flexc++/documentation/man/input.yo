@@ -1,7 +1,7 @@
 includefile(include/header)
 
 COMMENT(manpage, section, releasedate, archive, short name)
-manpage(input)(3flexc++)(_CurYrs_)(libbobcat1-dev__CurVers_-x.tar.gz)
+manpage(input)(3flexc++)(_CurYrs_)(flexc++__CurVers_-x.tar.gz)
                     (Input class interface)
 
 manpagename(input)(Interface of the Input class in ScannerBase)
@@ -13,7 +13,7 @@ manpagesynopsis()
 
 manpagedescription()
 
-    Flc generates a file tt(scannerbase.h) defining the scanner class's base
+    Flc() generates a file tt(scannerbase.h) defining the scanner class's base
 class, by default named tt(ScannerBase) (which is the name used in this
 man-page). The base class tt(ScannerBase) contains a nested class tt(Input)
 whose interface looks like this:
@@ -76,15 +76,14 @@ tt(Input) object is in a valid state and can be destroyed. It serves no
 further purpose. tt(Input) objects, however, must support the default (or
 overloaded) assignment operator.
     itb(Input(std::istream *iStream))
-        This constructor receives a pointer to a 
-dynamically allocated tt(istream) object. The tt(Input) constructor should
-preserve this pointer when the tt(Input) object is pushed on and popped off
-the stack. A tt(shared_ptr) probably comes in handy here. The tt(Input) object
-becomes the owner of the tt(istream)
-object, albeit that its destructor is em(not) supposed to destroy the
-tt(istream) object. Destruction remains the responsibility of the
-tt(ScannerBase) object, which will call the tt(Input::close) member (see
-below) when it's time to destroy (close) the stream.
+        This constructor receives a pointer to a dynamically allocated
+tt(istream) object. The tt(Input) constructor should preserve this pointer
+when the tt(Input) object is pushed on and popped off the stack. A
+tt(shared_ptr) probably comes in handy here. The tt(Input) object becomes the
+owner of the tt(istream) object, albeit that its destructor is em(not)
+supposed to destroy the tt(istream) object. Destruction remains the
+responsibility of the tt(ScannerBase) object, which calls the tt(Input::close)
+member (see below) when it's time to destroy (close) the stream.
     )
 
 manpagesection(REQUIRED PUBLIC MEMBER FUNCTIONS)
@@ -100,7 +99,7 @@ reached.
     itb(size_t lineNr() const) 
         should return the (1-based) number of the tt(istream) object passed to
 the tt(Input) object. At construction time the tt(istream) has just been
-opened and so at that point tt(lineNr) would normally return 1.
+opened and so at that point tt(lineNr) should return 1.
     itb(void reRead(size_t ch))
         if provided with a value smaller than 0x100 tt(ch) should be pushed
 back onto the tt(istream), where it becomes the character next to be
