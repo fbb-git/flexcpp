@@ -3,7 +3,9 @@ includefile(preamble)
 
 affiliation(url(Rijksuniversiteit Groningen)(http://www.rug.nl/))
 report(Flexc++ (Version _CurVers_) User Guide)
-        (Frank B. Brokken, Jean-Paul van Oosten, and
+        (
+        url(Frank B. Brokken)(mailto:f.b.brokken@rug.nl), 
+        url(Jean-Paul van Oosten)(mailto:j.p.van.oosten@rug.nl), and
         (until 0.5.3) Richard Berendsen) 
        (_CurYrs_)
 
@@ -41,12 +43,14 @@ lchapter(differences)(Differences between flex and flexc++)
     
     sect(Comment)
     includefile(comment)
-    
+
     lsect(functions)(Functions and macros)
     includefile(functions)
     
     sect(Multiple input streams)
     includefile(multiinput)
+
+COMMENT()
 
 lchapter(fileformat)(Format of the input file)
 includefile(fileformat.yo)
@@ -77,9 +81,18 @@ includefile(generatedfiles.yo)
 
     lsect(multiplestreams)(Multiple input streams)
     includefile(multiplestreams.yo)
-    
+
+        subsect(Option directives)
+
+        WIP: this section needs rewriting
+
+        subsect(Examples)
+
+        WIP: this section needs rewriting
+
         subsect(Switching streams with switchStream)
 
+        WIP: this section needs rewriting
 
 chapter(Technical documentation (PIPETHROUGH(date -R)()))
 

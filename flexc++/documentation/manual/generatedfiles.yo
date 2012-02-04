@@ -47,10 +47,10 @@ by flc() (unless explicitly specified). tt(scanner.h) contains the final
 tt(Scanner) class, which the user is encouraged to modify. Additional members
 can be added here.
 
-One can adjust the behaviour of tt(lex()) and tt(executeAction()) (this last
+One can adjust the behavior of tt(lex()) and tt(executeAction()) (this last
 function is a private function which is called whenever an action is to be
 executed). This allows the user to execute some extra code before or after the
-default behaviour of tt(lex()) and tt(executeAction()).
+default behavior of tt(lex()) and tt(executeAction()).
 
 Also, extra constructors, or extra functionality to the default constructors
 can be added in tt(scanner.h).

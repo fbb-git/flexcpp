@@ -1,3 +1,3 @@
-Flc() is a bit more flexible in taking comments, for more information see
-section ref(comments). Also, besides multiline comments, end of line
-comments are also supported.
+Flc() supports traditional bf(C) and bf(C++) style end-of-line comment. Flc()
+handles comment more flexible than tt(flex). Cf. section  ref(comments) for
+further details.

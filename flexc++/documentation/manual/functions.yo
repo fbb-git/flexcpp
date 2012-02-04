@@ -13,40 +13,42 @@ table(3)(lll)(
         cell(tt(lex()))
     )
     row(cell(tt(YYText()))
-        cell(tt(text()))
-        cell(tt(match()))
+        cell(tt(matched()))
     )
     row(cell(tt(YYLeng()))
-        cell(tt(leng()))
+        cell(tt(length()))
     )
     row(cell(tt(ECHO))
-        cell(tt(ECHO()))
+        cell(tt(echo()))
     )
     row(cell(tt(yymore()))
         cell(tt(more()))
     )
     row(cell(tt(yyless()))
-        cell(tt(less()))
+        cell(tt(accept()))
+        cell(tt(redo()))
     )
     row(cell(tt(BEGIN startcondition))
         cell(tt(begin(startcondition)))
     )
     row(cell(tt(YY_AT_BOL))
-        cell(tt(atBol()))
+        cell(n.a.)
     )
     row(cell(tt(yy_set_bol(at_bol)))
-        cell(tt(setBol(bool atBol)))
+        cell(n.a.)
     )
 )
 
 The member functions in the flc() column above are either members of
-tt(Scanner) or one of it's base classes. Also note that flc() no longer uses
-macros and all member functions can be used from either actions or other
+tt(Scanner) or of its base class. Also note that flc() no longer uses
+macros. All member functions can be used from within actions or by other
 member functions.
 
-Flex also offers macros that flc() no longer supports. We list them here,
-along with their purpose and suggestions for alternative solutions with flc().
+Flc() does not use or define macros. Macros defined by tt(flex) are not 
+available  in flc()'s input files.
 
+COMMENT(
+Flex offers macros that are not supported by flc(). They are:
 itemization(
     nosupport(tt(YY_USER_ACTION) and tt(yy_act))
         (run before exuting an action, yy_act contains rule number)
@@ -74,3 +76,4 @@ itemization(
             such warnings with tt(g++ -pedantic). We would be glad to hear if
             you experience problems.)
 )
+END COMMENT)

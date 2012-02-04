@@ -1,10 +1,9 @@
 Flc() generates more files than flex does. While flex only generates a
-tt(lex.yy.cc), flc() generates a number of header files and a source file:
-tt(scanner.h), tt(scanner.ih), tt(scannerbase.h), and tt(lex.cc). Both
-tt(scannerbase.h) and tt(lex.cc) are overwritten when prog() is invoked.
+tt(lex.yy.cc), flc() generates several header files and a source file: by
+default tt(Scanner.h), tt(Scanner.ih), tt(Scannerbase.h), and tt(lex.cc). Both
+tt(Scannerbase.h) and tt(lex.cc) are overwritten when flc() is invoked.
 
-The other two files (tt(scanner.h) and tt(scanner.ih)) are only generated the
-first time prog() is called. These files can be used to add additional code
-to. If you want to use a namespace for your actions, for instance, a tt(using
-namespace) directive can be added to tt(scanner.ih).
+tt(Scanner.h) and tt(Scanner.ih) are only generated the first time flc() is
+called. These files can thereafter be modified by the user (e.g., to add
+members to the tt(Scanner) class). 
 

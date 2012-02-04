@@ -1,3 +1,2 @@
-Flc() differs completely from flex in how it handles multiple input streams.
-The method for stream switching is described in full in
-section ref(multiplestreams).
+Multiple input files can easily be handled by flc(). See section
+ref(multiplestreams) for details.

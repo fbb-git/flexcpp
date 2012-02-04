@@ -21,10 +21,13 @@ from the url(flex manual)(http://flex.sourceforge.net/manual/index.html).
 The manual page bf(flexc++)(1) offers a quick overview of the command line
 options and option directives.
 
-The most recent version of both this manual and flc() itself can be found on
+The most recent version of both this manual and flc() itself can be found at
 our website url(http://flexcpp.org/)(http://flexcpp.org). If you find a bug
-in flc() or mistakes in the documentation, please report it using our url(bug
+in flc() or mistakes in the documentation, please report it.
+    COMMENT(
+using our url(bug
 tracker)(http://code.flexcpp.org/projects/flexcpp/).
+    )
 
 Flc() was designed and written by Frank B. Brokken, Jean-Paul van Oosten, and
 (until version 0.5.3) Richard Berendsen.
