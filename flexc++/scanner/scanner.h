@@ -58,6 +58,7 @@ class Scanner: public ScannerBase, public DataType
         int handleOpenBracket();
 
         int handleIdentifier();
+        int handleDecimal();
 
         void switchToINITIAL();
 

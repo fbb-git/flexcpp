@@ -2,7 +2,7 @@
 
 int Scanner::handleIdentifier()
 {
-    if (d_inCharClass || d_acceptIdentifier)
+    if (d_inBlock || d_inCharClass || d_acceptIdentifier)
         return Parser::IDENTIFIER;
 
     accept(1);

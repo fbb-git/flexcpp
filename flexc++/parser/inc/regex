@@ -1,6 +1,7 @@
 _decimal:
     DECIMAL
     {
+        cout << "IN _decimal\n";
         $$ = SemUnion(d_matched);
     }
 ;
@@ -42,7 +43,26 @@ _close_paren:
     }
 ;
 
+_open_curly:
+    '{'
+    {
+        cout << "OPEN CURLY\n";
+        d_scanner.acceptIdentifier();
+    }
+;
+
+_interUnit:
+    _unit _open_curly _interval '}' 
+    {
+        cout << "CLOSE CURLY\n";
+        d_scanner.identifierAsChar();
+        $$ = interval($1, $3);
+    }
+;
+
 _unit:
+    _interUnit
+|
     '^'
     {
         $$ = boln();
@@ -68,11 +88,6 @@ _unit:
         $$ = quotes();
     }
 |
-    DECIMAL
-    {
-        $$ = head();
-    }
-|
     _single_char
     {
         $$ = rawText();
@@ -91,11 +106,6 @@ _unit:
     _unit _quantifier
     {
         $$ = quantifier($1);
-    }
-|
-    _unit '{' _interval '}'
-    {
-        $$ = interval($1, $3);
     }
 |
     characterclass

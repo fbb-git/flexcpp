@@ -59,7 +59,7 @@
 
 %left       CC_PLUS CC_MINUS
 
-//%right      '*' '+' '?' '{' 
+//%nonassoc      '{' 
 //  highest precedence
 
 %%
