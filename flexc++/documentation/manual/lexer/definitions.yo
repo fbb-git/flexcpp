@@ -1,6 +1,5 @@
 All flc() options are specified either on the command line or in the
-definitions section. For more information on options, see section
-ref(options).
+definitions section. Options are covered in the next section (ref(OPTIONS)).
 
 The definitions section contains declarations of simple name definitions to
 simplify scanner specification. A name definition looks like this:

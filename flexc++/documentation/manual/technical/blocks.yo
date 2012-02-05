@@ -1,5 +1,10 @@
 The block of bf(C++) code is simply parsed from the first tt({) until the
 final matching tt(}), acknowledging comment, strings and character constants.
-Blocks are recognized by the scanner. Once a block has been recognized the
-scanner returns a tt(BLOCK) terminal symbol, and the text of the block is
-retrieved using tt(d_scanner.block()).
+
+The scanner merely recognizes the beginning of an action (block), returning
+tt(Parser::BLOCK) from its tt(handleCharAfterBlanks) member. Then,
+tt(Parser::block) calls tt(Scanner::lex()) until it observes the end of the
+action statement or block. 
+
+The parser stores the block's content in its tt(d_block) member for later
+processing by tt(Rules::add).

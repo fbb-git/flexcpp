@@ -56,6 +56,9 @@ includefile(lexer/intro)
     lsect(definitionsection)(Definitions section)
     includefile(lexer/definitions)
 
+        lsubsect(OPTIONS)(Options and directives)
+        TODO
+
     lsect(rulessection)(Rules section)
     includefile(lexer/rules)
 
@@ -85,15 +88,11 @@ includefile(files/intro)
     lsect(multiplestreams)(Multiple input streams)
     includefile(files/multiple)
 
-        subsect(Option directives)
+        subsect(Switching stream using pushStream)
 
         WIP: this section needs rewriting
 
-        subsect(Examples)
-
-        WIP: this section needs rewriting
-
-        subsect(Switching streams with switchStream)
+        subsect(Switching streams using switchStream)
 
         WIP: this section needs rewriting
 
@@ -112,11 +111,25 @@ chapter(Technical documentation (PIPETHROUGH(date -R)()))
     lsect(PARSER)(The parser)
     includefile(technical/parser)
 
-COMMENT()
+    lsect(SEMVAL)(Semantic Data, struct DataType and the class SemUnion)
+    TODO
+
+        lsubsect(PATTERNVAL)(The class Pattern)
+        includefile(technical/patternval)    
+    
+        lsubsect(CHARCLASS)(The class CharClass)
+        TODO
+    
+        lsubsect(INTERVAL)(The class Interval)
+        TODO
+    
+    
+    lsect(STARTCOND)(Start Conditions and the class StartConditions)
+    TODO
     
     lsect(BLOCKS)(Code (action)  blocks)
     includefile(technical/blocks)
-    
+
     lsect(STATE)(The class State)
     includefile(technical/state)
     
@@ -129,20 +142,16 @@ COMMENT()
     lsect(PATTERNS)(Patterns)
     includefile(technical/pattern)
     
-    lsect(PATTERNVAL)(The class PatternVal)
-    includefile(technical/patternval)    
-    
     lsect(RANGES)(Ranges)
     includefile(technical/ranges)
     
-    sect(The class TailCount)
+    lsect(TAILCOUNT)(The class TailCount)
     includefile(technical/tailcount)
     
     sect(The class DFAs)
     includefile(technical/dfas)
     
-    
-    lsect(DFA)(The DFA)
+        lsect(DFA)(The DFA)
     includefile(technical/dfa)
     
         lsubsect(TAILLOGIC)(The logic used in 'setTailCount')
@@ -174,7 +183,7 @@ COMMENT()
     sect(Generating Code)
     includefile(technical/gencode)
     
-        subsect(The range-table)
+        lsubsect(RANGETAB)(The range-table)
         includefile(technical/rangetable)
     
         subsect(The DFAs)
@@ -186,7 +195,7 @@ COMMENT()
     lsect(RUNTIME)(Run-time operations)
     includefile(technical/runtime)
     
-    sect(Code generation)
+    sect(Generating code)
     includefile(technical/codegeneration)
     
     sect(Handling input your own way)

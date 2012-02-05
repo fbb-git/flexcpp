@@ -5,7 +5,6 @@ index back to its rule number (see figure ref(RULESFIG))
 
             figure(images/rules)(The Rules class)(RULESFIG)
 
-
 When the parser has detected a rule it calls tt(Rules::add). A tt(Rule) object
 is added to tt(d_rules), storing begin and end state indices, a flag
 indicating whether or not this rule's RE started at BOL and a em(viable) flag,
@@ -16,7 +15,10 @@ action block that's associated with it (empty if there are no actions), see
 also section ref(BLOCKS).
 
 tt(Rules::add) also stores the association between the rule's final state and
-rule index in its tt(unordered_map d_finalToRule).
+rule index in its tt(unordered_map d_finalToRule). Furthermore, it calls
+tt(d_startConditions.add(ruleIdx)) to store the rule index at the currently
+active start conditions. See section ref(STARTCOND) for the class
+tt(StartConditions). 
 
 States of rules using the LOP need access to the rule to which they
 belong. For those rules tt(Rules::setRuleIndices) is called to assign the

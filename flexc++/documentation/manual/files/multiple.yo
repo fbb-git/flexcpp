@@ -1,25 +1,50 @@
 Some scanners (such as those which support `include' files) require reading
-from several input streams. Usually, one switches streams when a directive
-like tt(#include) is encountered. Flc() offers two ways of switching streams:
+from several input streams. Usually, a directive like tt(#include) is defined
+controlling stack-wise stream switching. Alternatively, direct switches to
+other streams can be requested.  Flc() offers both ways to switch streams.
 
-itemization(
-    it() First, a directive like tt(#include) may be defined. In this case,
-    processing the current file is suspended and processing continues at the
-    file mentioned in the directive. When finished processing this included
-    file, the scanner switches back to the suspended input stream. In this
-    case streams are pushed on a stack when encountering a stream switching
-    directive and popped off the stack once the current file has completely
-    been processed.
+    itemization(
+    it() For stack-wise stream switching, a directive like tt(#include) is
+usually defined. When encountered, processing of the current stream is
+suspended and the scanning process continues at the stream whose name is
+specified at the tt(#include) directive. When reaching a stream's end-of-file
+the scanner switches back to the suspended input stream. In this case streams
+are pushed on a stack when encountering a stream switching directive and
+popped off the stack once the current file has completely been processed.
     it() Second, the user may request the scanner to switch to another stream.
-    Optionally, the user may request to switch back. In this case, the user is
-    completely responsible for all stream-related bookkeeping. The scanner
-    merely provides a means to switch from one stream to another.
-)
+Optionally, the user may request to switch back. In this case, the user is
+completely responsible for all stream-related bookkeeping. The scanner merely
+provides a means to switch from one stream to another.  
+    )
 
-Users may want to store information related to a certain stream, beside the
-information strictly required by flc() (an tt(istream) pointer and tt(size_t)
-for the line numbering). For example, a user may want to use the name of the
-file that is currently being processed. 
+    The members tt(void pushStream(std::istream &curStream)) and tt(void
+pushStream(std::string const &curName)) are provided for stack-wise stream
+switching. By default, at a stream's end-of-file the member tt(bool
+popStream()) is automatically called by flc(), closing the currently processed
+input stream and continuing the processing of the most recently stacked input
+stream (removing it from the stack of streams). If this switch was
+successfully performed tt(true) is returned, otherwise (e.g., when the stream
+stack is empty) tt(false) is returned. 
 
-WIP: this section needs rewriting
+    Returning to the previously stacked stream is handled automatically and
+does not require the use of a tt(<<EOF>>) rule. If an tt(<<EOF>>) rule is
+defined, however, previously pushed streams are em(not) automatically
+re-activated. In that case, returning to previously pushed streams is the
+responsibility of the programmer.
+
+    When switching to another stream the line number counter and file name are
+reset to, respectively, 1 and the new file's name. When returning to a
+previously suspended (stacked) stream that stream's line number and file name
+are restored. 
+
+    Direct, non-stack based stream switching can be realized by the tt(void
+switchStreams(std::string const &infilename), void switchStreams(std::string
+const &infilename, std::string const &outfilename)) and tt(void
+switchStreams(std::istream &in, std::ostream &out)) members. Processing of the
+current input file ends, and continues at the file or stream specified as
+tt(switchStream)'s first argument.
+
+
+
+
 

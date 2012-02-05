@@ -1,8 +1,6 @@
 #ifndef INCLUDED_RULES_
 #define INCLUDED_RULES_
 
-#include <iostream>     // TMP
-
 #include <iosfwd>
 #include <vector>
 #include <string>

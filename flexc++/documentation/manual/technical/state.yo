@@ -24,5 +24,3 @@ therefore be reached by visiting  the indices stored in
 tt(StateData). 
 
     figure(images/state)(The State class)(STATEFIG)
-
-
