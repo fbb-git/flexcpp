@@ -33,7 +33,7 @@ optMs_rule:
 |
         // the scanner returns a block if it encounters a non-blank character
         // on a line after ws, unless the character is a '|'
-    _optMs_rule block    
+    _optMs_rule action
     {
         assignBlock();
     }

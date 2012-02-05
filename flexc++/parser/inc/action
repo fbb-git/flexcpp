@@ -1,0 +1,10 @@
+        // the scanner returns BLOCK if it encounters a non-blank character
+        // on a line after ws, unless the character is a '|'
+        // the block() member then processes the action block's tokens
+action:
+    BLOCK
+    {
+        block();    // do not embed this elsewhere, as block() eats tokens
+    }
+;
+

@@ -22,7 +22,7 @@ _msCompound_rule:
         noActions();
     }
 |
-    _msCompound_regex_list block    
+    _msCompound_regex_list action
     {
         assignBlock();
     }

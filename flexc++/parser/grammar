@@ -89,7 +89,7 @@ identifier:
 %include inc/msspec
 %include inc/characterclass
 %include inc/regex
-%include inc/block
+%include inc/action
 %include inc/reset
 %include inc/mscompound
 %include inc/optmsrule
