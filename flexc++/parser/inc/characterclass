@@ -108,6 +108,9 @@ _cc_set:
     _cc_start _cc_end
 |
     _cc_negated _cc_end
+    {
+        $$ = setNegate($1);
+    }
 |    
     _cc_start _cc_contents _cc_end
     {

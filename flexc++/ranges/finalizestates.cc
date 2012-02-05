@@ -11,7 +11,8 @@
 
 void Ranges::finalizeStates()
 {
-    d_eof = d_subsets++;                    // always use the <<EOF>> range
+                                    // always use the <<EOF>> range
+    d_eof = d_subsets == 0 ? ++d_subsets : d_subsets++;
 
     for(auto &state: d_states)
         finalizeState(state);
