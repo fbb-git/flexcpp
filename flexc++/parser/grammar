@@ -90,7 +90,6 @@ identifier:
 %include inc/characterclass
 %include inc/regex
 %include inc/block
-%include inc/eofpattern
 %include inc/reset
 %include inc/mscompound
 %include inc/optmsrule

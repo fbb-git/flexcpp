@@ -7,8 +7,6 @@ _rule_def:
     optMs_rule
 |
     msCompound
-|
-    eof_pattern
 ;
 
     // each rule ends in a '\n'
@@ -23,3 +21,4 @@ rules:
 |
     // empty
 ;
+

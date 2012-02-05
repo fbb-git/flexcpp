@@ -74,11 +74,6 @@ inline void Rules::setOrAction()
     d_rules[d_rules.size() - 2].setOrAction();
 }
 
-inline bool Rules::nonViable(Rule const &rule)
-{
-    return not rule.viable();
-}
-
 inline size_t Rules::size() const
 {
     return d_rules.size();

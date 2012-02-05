@@ -9,3 +9,9 @@
 
 using namespace std;
 using namespace FBB;
+
+inline bool Rules::nonViable(Rule const &rule)
+{
+    return not rule.viable();
+}
+

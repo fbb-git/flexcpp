@@ -109,36 +109,48 @@ _quantifier:
     // within the regex, for which a warning must be issue: ^, $ treated as
     // normal characters
     // regex returns a Pattern, embedded in a spSemUnion
-regex:
+_regex:
     _unit
 |
-    regex _open_curly _interval '}'
+    _regex _open_curly _interval '}'
     {
         $$ = interval($1, $3);
     }
 |
-    regex _quantifier
+    _regex _quantifier
     {
         $$ = quantifier($1);
     }
 |
-    _open_paren regex _close_paren
+    _open_paren _regex _close_paren
     {
         $$ = $2;
     }
 |
-    regex regex                     %prec CHAR
+    _regex _regex                     %prec CHAR
     {
         $$ = concatenate($1, $2);
     }
 |
-    regex '|' regex
+    _regex '|' _regex
     { 
         $$ = alternatives($1, $3);
     }
 |
-    regex '/' regex
+    _regex '/' _regex
     {
         $$ = lookahead($1, $3);
     }
 ;
+
+regexOrEOF:
+    _regex
+|
+    EOF_PATTERN
+    {
+        $$ = eofPattern();
+    }
+;
+
+
+

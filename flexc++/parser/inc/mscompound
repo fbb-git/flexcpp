@@ -6,7 +6,7 @@ _msCompound_regex_list:
         orAction();
     }
 |
-    regex
+    regexOrEOF
     {
         addRule($1);
     }
@@ -26,8 +26,6 @@ _msCompound_rule:
     {
         assignBlock();
     }
-|
-    eof_pattern
 ;
 
 _msCompound_nl_rule:

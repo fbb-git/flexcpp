@@ -12,3 +12,4 @@ void Parser::addRule(spSemUnion const &rule, bool reset)
         d_rules.resetStartConditions();
 }
 
+

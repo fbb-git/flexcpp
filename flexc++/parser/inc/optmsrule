@@ -1,11 +1,11 @@
         // regex in the form: <miniscanner>(opt) regex
 _optMs_regex:       
-    ms_spec regex
+    ms_spec regexOrEOF
     {
         $$ = $2;
     }
 |
-    regex
+    regexOrEOF
 ;
 
     // series of _optMs_regexes, separated by '|' at the end of lines. E.g.,
