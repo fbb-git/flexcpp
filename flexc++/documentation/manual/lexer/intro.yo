@@ -1,6 +1,14 @@
-The flc() input file consists of two (not three!) sections, separated by a line containing `tt(%%)'.
+The flc() input file consists of two sections, separated by a line containing
+`tt(%%)'. The section above tt(%%) contains option specifications and
+definitions; the section below tt(%%) contains the regular expressions (and
+their (optional) actions). The general layout of flc()'s input file,
+therefore, looks like this:
 
-verb(definitions
+    verb(
+definitions
 %%
-rules)
+rules
+    )
+
+Below, these sections are described in more detail.
 

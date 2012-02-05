@@ -50,10 +50,8 @@ lchapter(differences)(Differences between flex and flexc++)
     sect(Multiple input streams)
     includefile(differences/multiple)
 
-COMMENT()
-
 lchapter(fileformat)(Format of the input file)
-includefile(lexer/intro.yo)
+includefile(lexer/intro)
 
     lsect(definitionsection)(Definitions section)
     includefile(lexer/definitions)
@@ -65,16 +63,21 @@ includefile(lexer/intro.yo)
     includefile(lexer/comment)
 
     lsect(patterns)(Patterns)
-    includefile(lexer/patterns.yo)
+    includefile(lexer/patterns)
     
     lsect(actions)(Actions)
-    includefile(lexer/actions.yo)
+    includefile(lexer/actions)
     
     lsect(startconditions)(Startconditions (Miniscanners))
-    includefile(lexer/startconditions.yo)
+    includefile(lexer/startconditions)
     
         subsect(Notation details)
         includefile(lexer/notation)
+
+    sect(Members)
+    includefile(lexer/members)
+    
+COMMENT()
 
 lchapter(generated-files)(Generated files)
 includefile(files/intro)
@@ -108,6 +111,8 @@ chapter(Technical documentation (PIPETHROUGH(date -R)()))
     
     lsect(PARSER)(The parser)
     includefile(technical/parser)
+
+COMMENT()
     
     lsect(BLOCKS)(Code (action)  blocks)
     includefile(technical/blocks)

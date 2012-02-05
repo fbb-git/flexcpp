@@ -1,17 +1,20 @@
 All flc() options are specified either on the command line or in the
-definition section. For more information on options, see ref(options)
+definitions section. For more information on options, see section
+ref(options).
 
-Furthermore, the definition section contains declarations of simple name
-definitions to simplify scanner specification. A name definition looks like:
+The definitions section contains declarations of simple name definitions to
+simplify scanner specification. A name definition looks like this:
 
 verb(name   pattern)
 
-where tt(name) is is a word beginning with a letter or an underscore (`_')
-followed by zero or more letters, digits, `_', or `-' (dash). tt(pattern)
-is a pattern, see lref(Patterns)(patterns).
+Here, tt(name) is is an identfier, that may also contain the hyphen (tt(-)).
+The `tt(pattern)' is a regular expression, see section ref(patterns). Patterns
+start at the first non-blank character following the name, and end at the
+line's last non-blank character. Consequently, a name definition itself cannot
+contain comment.
 
-Finally, in the definition section we can declare lref(start
-conditions)(startconditions).  Miniscanners are a kind of startcondition, and
-they are very useful for scanning small `sublanguages' in the language you
-want to scan. An example is scanning a C-string in a C-program.
-
+The definitions section is also used to declare em(mini-scanners) (a.k.a.
+em(start conditions)), cf. section ref(startconditions).  Mini-scanners are
+very useful for scanning small `sub-languages' in the language you want to
+scan. A commonly encountered example is the mini-scanner recognizing 
+bf(C) style multi-line comment.

@@ -99,6 +99,18 @@ is an example of the definition of a directive:
             but its activity may be controlled using the tt(setDebug(bool
             on-off)) member. Note that no tt(#ifdef DEBUG) macros are used in
             the generated code. 
+COMMENT(
+            The tt(%debug) option allows for a  fine-grained control over what
+            debug information is provided. This is realized by appending tt(=
+            debug-list) to tt(%debug), where tt(debug-list) is a
+            comma-separated list of the following keywords:nl()
+
+            table(2)(ll)(
+            row(cell(tt(action))cell(show decisions made while matching rules,
+                and the numbers of rules that were matched))
+            )
+END)    
+            
     it() bf(%implementation-header) tt(= "header") nl()
            Defines the pathname of the file to contain the implementation
             header.  Corresponding command-line option:

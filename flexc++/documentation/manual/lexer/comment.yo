@@ -1,6 +1,12 @@
-Flc() allows one to place comments anywhere in the document, indented or not.
-Both multiline comments (tt(/* ... */)) and end of line comments (tt(// ...))
-are supported.
+Comment may be used almost everywhere in flc()'s input file. 
+Both traditional bf(C)-style multi-line comment (i.e., tt(/* ... */)) and 
+bf(C++) style end-of-line comment (i.e., tt(// ...)) can be used. Indentation
+is optional.
 
-When a multiline comment is encountered outside an action, flc() discards the
-comment, while all comments in actions will be copied verbatim to the source.
+When comment is encountered outside of an action, flc() discards the comment,
+while all comment provided in the contect of actions are copied verbatim to
+the generated source file. 
+
+Comment cannot be used when defining named regular expressions in the
+definitions section.
+

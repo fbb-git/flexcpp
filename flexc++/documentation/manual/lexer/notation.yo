@@ -1,33 +1,20 @@
-It is also possible to write the pattern right after the start condition tag
-in the rules section:
-
+Instead of using a mini scanner compound statement, it is also 
+possible to provide rules with explicit mini-scanner specifications
+(cf. section ref(patterns). Here is the tt(string) mini scanner once again,
+now using explicit mini-scanner specifications:
     verb(
+%x string
+    
 %%
-<cstring>\"     begin(INITIAL);
-<cstring>\/\"   more();
-...
+
+\"              {
+                    more();
+                    begin(StartCondition__::string);
+                }
+<string>\"      {
+                    begin(StartCondition__::INITIAL);
+                    return Token::STRING;
+                }
+<string>\\.|.   more();
+}
     )
-
-A rule can be added to multiple startconditions:
-
-verb(
-%%
-<cstring, character>{
-    \\n         return ESCAPED_CHARACTER;
-}
-)
-
-Or:
-
-verb(
-%%
-<cstring>{
-    <character>\\n      return ESCAPED_CHARACTER;
-}
-)
-
-which has the same effect. The last example shows that startconditions may be
-nested.  Note that the actions above return something we have not yet seen
-before. We shouldn't.  It assumes that in the Scanner class, or somewhere
-else, an tt(enum) was defined that has a value ESCAPED_CHARACTER. In this way,
-flc() can be used with a parser such as bf(bisonc++)(1).

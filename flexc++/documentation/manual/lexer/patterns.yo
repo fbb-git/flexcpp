@@ -1,227 +1,256 @@
 The patterns in the input (see lref(Rules Section)(rulessection)) are
 written using an extended set of regular expressions. These are:
 
-description(
-dit(tt(x))
-    match the character `x'
-dit(tt(.))
-    any character (byte) except newline
-dit(tt([xyz]))
+itemization(
+itt(x)quote(
+    match the character `x')
+
+itt(.)quote(
+    any character except newline)
+
+itt([xyz])quote(
     a character class; in this case, the pattern matches either an `x', a `y',
-    or a `z'
-dit(tt([abj-oZ]))
+    or a `z'. The characters in a character class may be any (escaped)
+character, except for the tt(]) character, which must be specified
+immmediately following the open-bracket, as follows: tt([]) or tt([^]). In all
+other specifications the closing bracket ends the character set specification.)
+
+itt([xyz])quote(
+    a character class; in this case, the pattern matches either an `x', a `y',
+    or a `z')
+
+itt([abj-oZ])quote(
     a ``character class'' with a range in it; matches an `a', a `b', any
-    letter from `j' through `o', or a `Z'
-dit(tt([^A-Z]))
+    letter from `j' through `o', or a `Z')
+
+itt([^A-Z])quote(
     a ``negated character class'', i.e., any character but those in the class.
-    In this case, any character EXCEPT an uppercase letter.
-dit(tt([^A-Z\n]))
-    any character EXCEPT an uppercase letter or a newline
-dit(tt("[xyz]\"foo"))
-    the literal string: `[xyz]"foo'
-dit(tt(\X))
+    In this case, any character EXCEPT an uppercase letter.)
+
+itt([^A-Z\n])quote(
+    any character EXCEPT an uppercase letter or a newline)
+
+itt([:predef:])quote(
+    a em(predefined) set of characters. See below for an overview. When used,
+it is interpreted as an element in a character class. Consequently, it is
+always embedded in a set of square brackets defining the character class
+(e.g., tt([[:alnum:]])).) 
+
+itt(s1{+}s2)quote(
+    If tt(s1) and tt(s2) are character classes: the union of the characters in
+tt(s1) and tt(s2))
+
+itt(s1{-}s2)quote(
+    If tt(s1) and tt(s2) are character classes: the set-difference of the
+characters in tt(s1) minus the characters in tt(s2)) 
+
+itt("[xyz]\"foo")quote(
+    the literal string: `[xyz]"foo')
+
+itt(\X)quote(
     if X is `a', `b', `f', `n', `r', `t', or `v', then the ANSI-C
     interpretation of `\x'. Otherwise, a literal `X' (used to escape operators
-    such as `*')
-dit(tt(\0))
-    a NUL character (ASCII code 0)
-dit(tt(\123))
-    the character with octal value 123
-dit(tt(\x2a))
-    the character with hexadecimal value 2a
+    such as `*'))
 
-dit(tt((r)))
-    match an `r'; parentheses are used to override precedence (see below)
-dit(tt({name}))
-    the expansion of the `name' definition (see lref(format of the input
-    file)(fileformat)).
+itt(\0)quote(
+    a NUL character (ASCII code 0))
 
-dit(tt(r*))
-    zero or more r's, where r is any regular expression. Note that this will
-    also match the empty string!
-dit(tt(r+))
-    one or more r's
-dit(tt(r?))
-    zero or one r's (that is, ``an optional r'') (This will also match the
-    empty string!).
+itt(\123)quote(
+    the character with octal value 123 (i.e., decimal 83))
 
-dit(tt(rs))
-    the regular expression `r' followed by the regular expression `s'; called
-    concatenation
+itt(\x2a)quote(
+    the character with hexadecimal value 2a (i.e, decimal 42))
 
-dit(tt(r{m, n}))
+itt((r))quote(
+    a regular expression tt(r) by itself. It is used to override precedence
+(see below)) 
+
+itt({name})quote(
+    the expansion of the `name' definition (see also section
+ref(fileformat)).) 
+
+itt(r*)quote(
+    zero or more tt(r)s, where r is any regular expression.)
+
+itt(r+)quote(
+    one or more tt(r)s.)
+
+itt(r?)quote(
+    zero or one tt(r)s (that is, an optional r).)
+
+itt(rs)quote(
+    the regular expression `r' followed by the regular expression `s'. This is
+called concatenation.)
+
+itt(r{m, n})quote(
     where tt(1 <= m <= n): match `r' at least m, but at most n times; called
-    interval expression.
-dit(tt(r{m,}))
-    where tt(1 <= m): match `r' m or more times.
-dit(tt(r{m}))
-    where tt(1 <= m): match `r' exactly m times.
+    interval expression.)
 
-dit(tt(r|s))
-    either an `r' or an `s'
+itt(r{m,})quote(
+    where tt(1 <= m): match `r' m or more times.)
 
-dit(tt(r/s))
+itt(r{m})quote(
+    where tt(1 <= m): match `r' exactly m times.)
+
+itt(r|s)quote(
+    either an `r' or an `s'.)
+
+itt(r/s)quote(
     an `r' but only if it is followed by an `s'. The text matched by `s' is
     included when determining whether this rule is the longest match, but is
     then returned to the input before the action is executed. So the action
     only sees the text matched by `r'. This type of pattern is called trailing
-    context. COMMENT(There are some combinations of `r/s' that flc() cannot match
-    correctly. See Limitations, regarding dangerous trailing context.)
-dit(tt(^r))
+    context. The tt(/)-character is commonly referred to as the em(lookahead
+    operator). )
+
+itt(^r)quote(
     an `r', but only at the beginning of a line (i.e., when just starting to
-    scan, or right after a newline has been scanned).  
-dit(tt(r$))
+    scan, or right after a newline has been scanned). When appearing
+elsewhere, the tt(^)-character is interpreted as a plain tt(^)-character.)
+
+itt(r$)quote(
     an `r', but only at the end of a line (i.e., just before a newline).
-    Equivalent to `r/\n'.
+    Equivalent to `r/\n'. When appearing elsewhere, the tt($)-character is
+interpreted as a plain tt($)-character.) 
 
-dit(tt(<s>r))
-    an `r', but only in start condition s (see lref(Start
-    Conditions)(startconditions) for discussion of start conditions).
-dit(tt(<s1,s2,s3>r))
-    same, but in any of start conditions s1, s2, or s3.
+itt(<s>r)quote(
+    an `r', but only in start condition s (cf. section ref(startconditions)).)
 
-dit(tt(<)tt(<EOF>)tt(>))
-    an end-of-file.
-dit(tt(<s1,s2><)tt(<EOF>)tt(>))
-    an end-of-file when in start condition s1 or s2 
-)
+itt(<s1,s2,s3>r)quote(
+    same, but in any of start conditions s1, s2, or s3.)
 
-Note that inside of a character class, all regular expression operators lose
-their special meaning except escape (tt(\)) and the character class operators,
-tt(-), tt(]]), and, at the beginning of the class, tt(^).
+itt(<*>r)quote(
+    same, but tt(r) is used in any start condition.)
 
-The regular expressions listed above are grouped according to precedence, from
-highest precedence at the top to lowest at the bottom. Those grouped together
-have equal precedence. For example,
-     
-verb(foo|bar*)
+itt(<sc-list>{compound rules})quote(
+    all rules defined in em(compound rules) are active in the set of start
+conditions specified at em(sc-list). Rules defined in em(compound rules)
+cannot themselves specify start conditions. em(Compound rules) may contain
+empty lines.)
 
-is the same as
+itt(<<EOF>>)quote(
+    matches `end-of-file'.)
 
-verb((foo)|(ba(r*)))
+itt(<sc-list><<EOF>>)quote(
+    an end-of-file when in the start conditions specified at em(sc-list).)
+    )
 
-since the tt(*) operator has higher precedence than concatenation, and
-concatenation higher than alternation (tt(|)). This pattern therefore matches
-either the string `foo' or the string `ba' followed by zero-or-more `r's. To
-match `foo' or zero-or-more repetitions of the string `bar', use:
+Inside of a character class all regular expression operators lose
+their special meaning except escape (tt(\)), the character class operator
+tt(-), and, at the beginning of the class, tt(^). To use a closing bracket in
+a character class either start the character class as  tt([]) or as tt([^]).
 
-verb(foo|(bar)*)
+The operators used in specifying regular expressions have the following
+priorities (listed from lowest to highest):
+    itemization(
+    itt(|), when used to separate patterns sharing the second pattern's
+actions;
 
-And to match a sequence of zero or more repetitions of `foo' and `bar':
-     
-verb((foo|bar)*)
+    itt(^r) and tt(r$), for tt(^): 
+            at the beginning of a regular expression tt(r): tt(r) only matches
+when encountered at the beginning of a line; for tt($): at the end of a
+regular expression tt(r): tt(r) only matches when encountered at the end of a
+line;
 
-Note that concatenation has a higher precedence than the interval expression.
-This is different from many other regular expression engines. It conforms,
-however, to the lex standard.
+    itt(/), the look ahead operator;
 
-Also, note that the name expansion has about the same precedence as grouping
-(using parentheses to influence the precedence of the other operators in the
-regular expression).  Since the name expansion is treated as a group in flc(),
-it is not allowed to use the lookahead operator in a name definition (a named
-pattern, defined in the definition section). That is because only one lookahead
-operator is allowed in a regular expression. In flex, it was possible to use
-the lookahead operator and the `^' operator (the begin anchor) in a name
-definition, so pay attention to the difference.
+    itt(|), the alternatives (`or') operator;
+
+    itt(rs), concatenation of regular expressions tt(r) and tt(s);
+
+    itt(multipliers): tt(*, +, ?) and the interval specification (i.e.,
+tt({...})) 
+
+    itt({+}, {-}) (in character classes): the set union and set difference
+operators. 
+
+    itt((r)), parentheses. Here, r may be any regular expression (not
+containing the look-ahead operator)
+    )
+
+Different from the lex-standard, but in line with most other regular
+expressino engines the interval operator is given higher precedence than
+concatenation. To require two repetitions of the word tt(hello) use
+tt((hello){2}) rather than tt(hello{2}), which to flc() is identical to the
+regular expression tt(helloo).
+
+Named regular expressions have the same precedence as parenthesized regular
+expressions. So after
+        verb(
+    WORD  xyz[a-zA-Z]
+    %%
+    {WORD}{2}
+        )
+    the input tt(xyzaxyzb) is matched, whereas tt(xyzab) isn't.
 
 In addition to characters and ranges of characters, character classes can also
-contain character class expressions. These are expressions enclosed inside
-tt([:) and tt(:]) delimiters (which themselves must appear between the tt([)
-and tt(]) of the character class. Other elements may occur inside the
-character class, too). The valid expressions are:
-
+contain predefined character sets. These consist of certain names between
+tt([:) and tt(:]) delimiters. The predefined character sets are:
 verb(     
          [:alnum:] [:alpha:] [:blank:]
          [:cntrl:] [:digit:] [:graph:]
          [:lower:] [:print:] [:punct:]
          [:space:] [:upper:] [:xdigit:]
 )
+    These predefined sets designate sets of characters equivalent to the
+corresponding standard bf(C) tt(isXXX) function. For example, tt([:alnum:])
+defines all  characters for which tt(isalnum) returns true.
 
-These expressions all designate a set of characters equivalent to the
-corresponding standard C isXXX function. For example, tt([:alnum:]) designates
-those characters for which tt(isalnum()) returns true - i.e., any alphabetic
-or numeric character.
-
-For example, the following character classes are all equivalent:
-
-verb( 
+As an illustration, the following character classes are equivalent:
+    verb( 
          [[:alnum:]]
          [[:alpha:][:digit:]]
          [[:alpha:][0-9]]
          [a-zA-Z0-9]
-)
+    )
 
-COMMENT( -- I believe this is no longer true!
-A word of caution. Character classes are expanded immediately when seen in the
-flc() input. This means the character classes are sensitive to the locale in
-which flc() is executed, and the resulting scanner will not be sensitive to
-the runtime locale. This may or may not be desirable.
-)
-
-A negated character class such as the example tt([^A-Z]) above will match a
-newline unless tt(\n) (or an equivalent escape sequence) is one of the
-characters explicitly present in the negated character class (e.g.,
-tt([^A-Z\n])). This is unlike how many other regular expression tools treat
-negated character classes, but unfortunately the inconsistency is historically
-entrenched. Matching newlines means that a pattern like tt([^"]*) can match
-the entire input unless there's another quote in the input.  
+Note that a negated character class like tt([^A-Z]) matches a newline unless
+tt(\n) (or an equivalent escape sequence) is one of the characters explicitly
+present in the negated character class (e.g., tt([^A-Z\n])). This differs from
+the way many other regular expression engines treat negated character classes.
+Matching newlines means that a pattern like tt([^"]*) can match the entire
+input unless there's another quote in the input.
 
 Flc() allows negation of character class expressions by prepending tt(^) to
-the POSIX character class name.
-
-verb(                
+the name of a predefined character set. Here are the negated predefined
+character sets:
+    verb(                
          [:^alnum:] [:^alpha:] [:^blank:]
          [:^cntrl:] [:^digit:] [:^graph:]
          [:^lower:] [:^print:] [:^punct:]
          [:^space:] [:^upper:] [:^xdigit:]
-)      
+    )      
 
-The '{-}' operator computes the difference of two character classes. For
-example, '[a-c]{-}[b-z]' represents all the characters in the class '[a-c]'
-that are not in the class '[b-z]' (which in this case, is just the single
-character 'a'). The '{-}' operator is left associative, so '[abc]{-}[b]{-}[c]'
-is the same as '[a]'. Be careful not to accidentally create an empty set, which
-will never match.
+The `tt({+})' operator computes the union of two character classes. For
+example, tt([a-z]{+}[0-9]) is the same as tt([a-z0-9]).
 
-The '{+}' operator computes the union of two character classes. For example,
-'[a-z]{+}[0-9]' is the same as '[a-z0-9]'. This operator is useful when
-preceded by the result of a difference operation, as in,
-'[[:alpha:]]{-}[[:lower:]]{+}[q]', which is equivalent to '[A-Zq]' in the "C"
-locale.
+The `tt({-})' operator computes the difference of two character classes. For
+example, tt([a-c]{-}[b-z]) represents all the characters in the class
+tt([a-c]) that are not in the class tt([b-z]) (which in this case, is just the
+single character `tt(a)'). 
+
 
 A rule can have at most one instance of trailing context (the tt(/) operator
-or the tt($) operator). The start condition, tt(^), and tt(<)tt(<EOF>)tt(>)
+or the tt($) operator). The start condition, tt(^), and tt(<<EOF>>)
 patterns can only occur at the beginning of a pattern, and, as well as with
 tt(/) and tt($), cannot be grouped inside parentheses. A tt(^) which does not
 occur at the beginning of a rule or a tt($) which does not occur at the end of
 a rule loses its special properties and is treated as a normal character.
 
 The following are invalid:
-
-verb(                
+    verb(                
          foo/bar$
          <sc1>foo<sc2>bar
-)     
-
-Note that the first of these can be written `foo/bar\n'.
-
-The following will result in tt($) or tt(^) being treated as a normal
-character:
-
-verb( 
-         foo|(bar$)
-         foo|^bar
-)
+    )     
+Note that the first of these can be rewritten `foo/bar\n'.
 
 If the desired meaning is a `foo' or a `bar'-followed-by-a-newline, the
-following could be used (the special | action is explained below, see Actions):
+following could be used (the special | action is explained below, see section
+ref(actions)):
 
-           
-
-verb(                
+    verb(                
          foo      |
          bar$     /* action goes here */
-)      
-
-A similar trick will work for matching a `foo' or a
+    )      
+    A comparable definition can be used to  match a `foo' or a
 `bar'-at-the-beginning-of-a-line.

@@ -30,6 +30,10 @@ DEFINEMACRO(itt)(1)(\
     it()tt(ARG1)\
 )
 
+DEFINEMACRO(itb)(1)(\
+    it()bf(ARG1)\
+)
+
 DEFINEMACRO(flc)(0)(bf(flexc++))
 DEFINEMACRO(Flc)(0)(bf(Flexc++))
 DEFINEMACRO(prog)(0)(tt(flexc++))
