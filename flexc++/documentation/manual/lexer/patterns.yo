@@ -67,7 +67,7 @@ itt((r))quote(
 
 itt({name})quote(
     the expansion of the `name' definition (see also section
-ref(fileformat)).) 
+ref(FILEFORMAT)).) 
 
 itt(r*)quote(
     zero or more tt(r)s, where r is any regular expression.)
@@ -114,7 +114,7 @@ itt(r$)quote(
 interpreted as a plain tt($)-character.) 
 
 itt(<s>r)quote(
-    an `r', but only in start condition s (cf. section ref(startconditions)).)
+    an `r', but only in start condition s (cf. section ref(STARTCONDITIONS)).)
 
 itt(<s1,s2,s3>r)quote(
     same, but in any of start conditions s1, s2, or s3.)

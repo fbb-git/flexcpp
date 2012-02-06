@@ -3,5 +3,9 @@
 (cd ../..; build manual)
 yodl2html --live-data=ok flexc++ || exit 1
 
+[ $# -eq 0 ] || exit 0
+
+cp flexc++.html index.html
+
 scp *.html oosix:/var/www/icce.rug/gitman/
 scp images/*.jpg oosix:/var/www/icce.rug/gitman/images/

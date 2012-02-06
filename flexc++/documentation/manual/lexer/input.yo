@@ -1,18 +1,21 @@
 Assuming that the scanner class is called `Scanner' the class Input is nested
-within the class `ScannerBase'. In early implementations of tt(flexc++) we
-already considered making tt(Input) configurable, by using static
-polymorphism. Currently we've left that position as tt(flexc++) can simply
-generate code including tt(Input)'s implementation from an external source.
+within the class `ScannerBase'. The stream from which flc() retrieves
+characters is completely decoupled from the pattern-matching algorithm
+implemented in the tt(ScannerBase) class. the pattern-matching algorithm
+retrieves the next character from a class tt(Input), nested under
+tt(ScannerBase). This class will usually provide all the required
+functionality, but users of flc() may optionally provide their own tt(Input)
+class. 
 
 In situations where the default tt(Input) implementation doesn't suffice
-simply `roll your own' implementing the following interface and use the
-tt(%option input-interface) and tt(%option input-implementation) options to
-include, respectively, your own class tt(Input) interface in the generated
-tt(scannerbase.h) file and tt(Input) member function implementations in the
-generated tt(lex.cc) file.
+simply `roll your own', implementing the following interface and use the
+tt(%option input-interface) and tt(%option input-implementation) options in
+the tt(lexer) file to include, respectively, your own class tt(Input)
+interface in the generated tt(scannerbase.h) file and tt(Input) member
+function implementations in the generated tt(lex.cc) file.
 
-When implementing your own class tt(Input), make sure it offers the following
-public interface:
+When implementing your own class tt(Input), the following public interface
+must at least be provided:
         verb(
     class Input
     {
@@ -28,8 +31,8 @@ public interface:
             void close();                 // delete dynamically allocated
     };
         )
-    Of course augmenting this interface with additional members is OK, but the
-shown interface is used by tt(ScannerBase). tt(Flexc++) puts tt(Input) in
+    This interface may be augmented with additional members, but the
+shown interface is used by tt(ScannerBase). Flc() places tt(Input) in
 tt(ScannerBase)'s private interface and all communication with tt(Input) is
 handled by tt(ScannerBase). tt(Input)'s members must perform the following
 tasks:
@@ -37,10 +40,12 @@ tasks:
     itt(Input()): the default constructor performs no special tasks, it
 ensures that an tt(Input) object is in a valid state, in particular allowing
 tt(close) to do its job.
+
     it() The copy constructor must be available. When necessary it can be
 added to tt(Input)'s interface. The default implementation uses tt(Input)'s
 default copy constructor so there was no need to add it explicitly to the
 interface.
+
     itt(Input(std::istream *iStream)): information is read from the tt(istream)
 which is passed to tt(Input). The tt(istream iStream) points was dynamically
 allocated, is open and is ready for reading. Stream switching is not an act
@@ -55,19 +60,24 @@ tt(Input)'s data members, and is simply copied when tt(Input)'s copy
 constructor or assignment operator is called, and ignored by its default
 destructor. Externally provided implementations may handle the pointer
 comparably. 
+
     itt(size_t get()): this member must return the next character as an
 tt(unsigned char). At end-of-file is must return the value (predefined by
 tt(ScannerBase)) tt(AT_EOF).
+
     itt(size_t lineNr() const): the line number of the currently processed
 line should be returned. By convention these are numbers, so while processing
 the first line tt(lineNr) should return 1.
+
     itt(void reRead(size_t ch)): the character stored in tt(ch) is pushed back
 into the tt(Input) object. The call should be ignored if tt(ch) exceeds the
 value tt(0xff).
+
     itt(void reRead(std::string const &str, size_t fmIdx)): the characters in
 tt(str) are pushed back into the tt(Input) object in reverse order from
 tt(str)'s final character down to (and including) the character at offset
 tt(fmIdx).
+
     itt(void close()): this member must delete the memory to which tt(iStream)
 points, em(en passant) closing the stream. It is called by
 tt(ScannerBase::popStream) at end-of-file.

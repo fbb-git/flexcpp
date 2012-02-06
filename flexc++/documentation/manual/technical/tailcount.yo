@@ -10,14 +10,16 @@ A tt(TailCount) object has three data members:
         tt(TailCount) object refers.
     itt(d_type): this is a tt(TailCount::Type) (a public accessible type). Its
         values are bit-flagged values, and the values PRE, ACCEPT, and POST
-        may be combined with the values COUNT and INCREMENTING.nl()
-            The values PRE, ACCEPT, and POST indicate that the DFA row
-        containing the tt(TailCount) object represents NFA states before
-        (PRE), at (ACCEPT) or beyond (POST) the LOP.nl()
-            The flag COUNT is set when the tt(TailCount)'s tt(d_tailCount)
-        value is a fixed value and the flag tt(INCREMENTING) is set when
-        the current length of the tail must be incremented (cf. section
-        ref(LOOKAHEAD)). 
+        may be combined with the values COUNT and INCREMENTING.nl() The values
+        PRE, ACCEPT, and POST indicate that the DFA row containing the
+        tt(TailCount) object represents NFA states before (PRE), at (ACCEPT)
+        or beyond (POST) the LOP.nl() The flag COUNT is set when the
+        tt(TailCount)'s tt(d_tailCount) value is a fixed value and the flag
+        tt(INCREMENTING) is set when the current length of the tail must be
+        incremented (cf. section ref(LOOKAHEAD)). The flag tt(PROCESSED) is
+        set by members of the class tt(DFA) (cf. sections ref(DFA) and
+        ref(TAILLOGIC)) when a tt(DFA) row's tail count has been
+        determined or is otherwise known.
     itt(d_tailCount): the tail length (so far) of a matched text. Its value is
         only valid if the COUNT flag is also set in tt(d_type).
     )

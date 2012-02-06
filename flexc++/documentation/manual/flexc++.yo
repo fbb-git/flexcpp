@@ -1,7 +1,7 @@
 NOUSERMACRO(lex setDebug main)
 includefile(preamble)
 
-affiliation(url(Rijksuniversiteit Groningen)(http://www.rug.nl/))
+affiliation(url(University of Groningen)(http://www.rug.nl/))
 report(Flexc++ (Version _CurVers_) User Guide)
         (
         url(Frank B. Brokken)(mailto:f.b.brokken@rug.nl), 
@@ -13,11 +13,19 @@ lchapter(Introduction)(Introduction)
 
     includefile(intro/intro.yo)
     
+    sect(Running Flexc++)
+    includefile(intro/flexc++)
+
+        lsubsect(OPTIONS)(Flexc++ options)
+        includefile(intro/options)    
+
     lsect(simpleexamples)(Some simple examples)
     
         lsubsect(lexermain)(A simple lexer file and main function)
         includefile(intro/simple.yo)
-    
+
+        subsect(An interactive scanner supporting command-line editing)
+        includefile(intro/interactive.yo)
 
 lchapter(differences)(Differences between flex and flexc++)
 
@@ -50,14 +58,14 @@ lchapter(differences)(Differences between flex and flexc++)
     sect(Multiple input streams)
     includefile(differences/multiple)
 
-lchapter(fileformat)(Format of the input file)
+lchapter(FILEFORMAT)(Format of the input file)
 includefile(lexer/intro)
 
     lsect(definitionsection)(Definitions section)
     includefile(lexer/definitions)
 
-        lsubsect(OPTIONS)(Options and directives)
-        TODO
+        lsubsect(DIRECTIVES)(Directives)
+        includefile(lexer/directives)
 
     lsect(rulessection)(Rules section)
     includefile(lexer/rules)
@@ -71,7 +79,7 @@ includefile(lexer/intro)
     lsect(actions)(Actions)
     includefile(lexer/actions)
     
-    lsect(startconditions)(Startconditions (Miniscanners))
+    lsect(STARTCONDITIONS)(Startconditions (Miniscanners))
     includefile(lexer/startconditions)
     
         subsect(Notation details)
@@ -79,22 +87,16 @@ includefile(lexer/intro)
 
     sect(Members)
     includefile(lexer/members)
-    
-COMMENT()
 
+    sect(Handling input your own way)
+    includefile(lexer/input)
+    
+    
 lchapter(generated-files)(Generated files)
 includefile(files/intro)
 
     lsect(multiplestreams)(Multiple input streams)
     includefile(files/multiple)
-
-        subsect(Switching stream using pushStream)
-
-        WIP: this section needs rewriting
-
-        subsect(Switching streams using switchStream)
-
-        WIP: this section needs rewriting
 
 chapter(Technical documentation (PIPETHROUGH(date -R)()))
 
@@ -174,8 +176,10 @@ chapter(Technical documentation (PIPETHROUGH(date -R)()))
         subsect(The steps of the LOP handling algorithm)
         includefile(technical/lopalgosteps)
     
+COMMENT(
         subsect(Implementation)
         includefile(technical/lookahead)
+END)
     
     lsect(FINALSTATE)(Final states and ^xyz vs. xyz patterns)
     includefile(technical/bolrules)
@@ -198,10 +202,7 @@ chapter(Technical documentation (PIPETHROUGH(date -R)()))
     sect(Generating code)
     includefile(technical/codegeneration)
     
-    sect(Handling input your own way)
-    includefile(technical/input)
-    
     sect(Reflex: refreshing flexc++)
-    includefile(technical/refreshing)
+    includefile(technical/reflex)
     
     COMMENT(includefile(technical/developernotes))

@@ -1,0 +1,76 @@
+The bf(flexc++)(1) manual page contains an example of an interactive
+scanner. Let's add command-line editing and command-line history to that
+scanner. 
+
+Command-line editing and history is provided by the Gnu readline library. The
+bobcat library offers a class tt(FBB::ReadLineStream) encapsulating Gnu's
+readline library's facilities, and this class is used to implement the
+requested features. 
+
+The lexical scanner is a simple one. It recognizes bf(C++) identifiers and
+tt(\n) characters, and ignores all other characters. Here is its
+specification:
+    verb(
+%class-name Scanner
+%interactive
+%%
+[[:alpha:]_][[:alnum:]_]*   return 1;
+\n                          return '\n';
+.
+    )
+    Create the lexical scanner from this specification file:
+        verb(
+    flexc++ lexer
+        )
+
+    Assuming that the directory containing the specification file also
+contains the file tt(main.cc) whose implementation is shown below, then
+execute the following command to create the interactive scanner program:
+        verb(
+    g++ --std=c++0x *.cc -lbobcat
+        )
+    This completes the construction of the interactive scanner. Here is
+tt(main.cc)'s source:
+        verb(
+#include <iostream>
+#include <bobcat/readlinestream>
+
+#include "scanner.h"
+
+using namespace std;
+using namespace FBB;
+
+int main()
+{
+    ReadLineStream rls("? ");       // create the ReadLineStream, using "? "
+                                    // as a prompt before each line
+                                    
+    Scanner scanner(rls);           // pass `rls' to the interactive scanner
+
+                                    // process all the line's tokens
+                                    // (the prompt is provided by `rls')
+    while (int token = scanner.lex())
+    {                                   
+        if (token == '\n')          // end of line: new prompt
+            continue;
+                                    // process other tokens
+        cout << scanner.matched() << '\n';
+        if (scanner.matched()[0] == 'q')
+            return 0;
+    }
+}
+    )
+    Here is an example of some interaction with the program. End-of-line
+comment is not entered, but was added by us for documentary purposes:
+        verb(   
+    $ a.out
+    ? hello world               // enter some words
+    hello 
+    world                       // echoed after pressing Enter
+    ? hello world               // this is shown after pressing up-arrow
+    ? hello world^H^H^Hman      // do some editing and press Enter
+    hello                       // the tokens as edited are returned 
+    woman
+    ? q                         // end the program
+    $
+        )
