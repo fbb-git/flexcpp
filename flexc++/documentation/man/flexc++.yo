@@ -1,6 +1,6 @@
 NOUSERMACRO(lex setDebug)
 
-includefile(../../../release.yo)
+includefile(../../release.yo)
 
 htmlbodyopt(text)(#27408B)
 htmlbodyopt(bgcolor)(#FFFAF0)

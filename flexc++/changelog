@@ -1,3 +1,11 @@
+flexc++ (0.09.51)
+
+  * Rebased release.yo in flexc++'s main directory, and no longer in its
+    parent, where it would contaminate  Debian's area outside of flexc++'s
+    build-area. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 06 Feb 2012 21:11:42 +0100
+
 flexc++ (0.09.50)
 
   * At the beginning of its Debian life-cycle, flexc++'s changelog is
