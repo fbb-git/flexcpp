@@ -1,3 +1,14 @@
+flexc++ (0.09.50)
+
+  * At the beginning of its Debian life-cycle, flexc++'s changelog is
+    maintained again. This changelog does not reflect changes beyond version
+    0.08.04 and before 0.09.50. Logs for those versions can be obtained using
+    git. Currently (and until further notice) the primary git archive location
+    is http://www.icce.rug.nl/git/flexc++.git. Flexc++'s official web location
+    is http://www.flexcpp.org (badly in need of an update, though).
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 06 Feb 2012 16:55:18 +0100
+
 flexc++ (0.08.04)
 
   * Implemented the %interactive option and --interactive flag to generate an

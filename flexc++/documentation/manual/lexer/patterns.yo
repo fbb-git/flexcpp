@@ -15,10 +15,6 @@ character, except for the tt(]) character, which must be specified
 immmediately following the open-bracket, as follows: tt([]) or tt([^]). In all
 other specifications the closing bracket ends the character set specification.)
 
-itt([xyz])quote(
-    a character class; in this case, the pattern matches either an `x', a `y',
-    or a `z')
-
 itt([abj-oZ])quote(
     a ``character class'' with a range in it; matches an `a', a `b', any
     letter from `j' through `o', or a `Z')
@@ -103,15 +99,22 @@ itt(r/s)quote(
     context. The tt(/)-character is commonly referred to as the em(lookahead
     operator). )
 
-itt(^r)quote(
-    an `r', but only at the beginning of a line (i.e., when just starting to
-    scan, or right after a newline has been scanned). When appearing
-elsewhere, the tt(^)-character is interpreted as a plain tt(^)-character.)
+itt(^r)quote( 
+   an `r', if it appears at the beginning of a line (i.e., when just starting
+    to scan, or right after a newline has been read). When tt(r) appears
+    elsewhere on a line it isn't matched by this rule; if the tt(^)-character
+    is not the first character of a regular expression it is interpreted as a
+    plain tt(^)-character.)
 
 itt(r$)quote(
-    an `r', but only at the end of a line (i.e., just before a newline).
-    Equivalent to `r/\n'. When appearing elsewhere, the tt($)-character is
-interpreted as a plain tt($)-character.) 
+   an `r', if it appears at the end of a line (i.e., the next character on the
+    input stream is a newline character). The expression tt(r$) is equivalent
+    to the expression `tt(r/\n)'. When tt(r) appears
+    elsewhere on a line it isn't matched by this rule; if the tt($)-character
+    is not the last character of a regular expression it is interpreted as a
+    plain tt($)-character. A dollar-terminated regular expression, however,
+    may be followed by an action or vertical bar indicating that the regular
+    expression uses the same action as the next rule.)
 
 itt(<s>r)quote(
     an `r', but only in start condition s (cf. section ref(STARTCONDITIONS)).)
@@ -169,7 +172,7 @@ containing the look-ahead operator)
     )
 
 Different from the lex-standard, but in line with most other regular
-expressino engines the interval operator is given higher precedence than
+expression engines the interval operator is given higher precedence than
 concatenation. To require two repetitions of the word tt(hello) use
 tt((hello){2}) rather than tt(hello{2}), which to flc() is identical to the
 regular expression tt(helloo).

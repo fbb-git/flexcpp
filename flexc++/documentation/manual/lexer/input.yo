@@ -46,20 +46,20 @@ added to tt(Input)'s interface. The default implementation uses tt(Input)'s
 default copy constructor so there was no need to add it explicitly to the
 interface.
 
-    itt(Input(std::istream *iStream)): information is read from the tt(istream)
-which is passed to tt(Input). The tt(istream iStream) points was dynamically
-allocated, is open and is ready for reading. Stream switching is not an act
-performed by tt(Input), but by tt(ScannerBase). Also the names of streams
-currently being read (e.g., when using tt(//include) directives in
+    itt(Input(std::istream *iStream)): information is read from the
+tt(istream) which is passed to tt(Input). The tt(istream iStream) points was
+dynamically allocated, is open and is ready for reading. Stream switching is
+not an act performed by tt(Input), but by tt(ScannerBase). Also the names of
+streams currently being read (e.g., when using tt(//include) directives in
 specification files) are administered and maintained by
 tt(ScannerBase). Although tt(iStream) points to a dynamically allocated piece
-of memory tt(Input) should treat the pointer as POD. em(No) copy constructor,
-overloaded assignment operator or destructor is required to process the
-pointer. In the default implementation tt(iStream) is assigned to one of
-tt(Input)'s data members, and is simply copied when tt(Input)'s copy
+of memory tt(Input) should treat the pointer as plain old data (POD). em(No)
+copy constructor, overloaded assignment operator or destructor is required to
+process the pointer. In the default implementation tt(iStream) is assigned to
+one of tt(Input)'s data members, and is simply copied when tt(Input)'s copy
 constructor or assignment operator is called, and ignored by its default
 destructor. Externally provided implementations may handle the pointer
-comparably. 
+comparably.
 
     itt(size_t get()): this member must return the next character as an
 tt(unsigned char). At end-of-file is must return the value (predefined by

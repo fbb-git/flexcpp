@@ -71,7 +71,7 @@ END)
            Defines the name of the scanner class's member to perform the
             lexical scanning. If this directive is omitted the default name
             (tt(lex)) is used. Corresponding command-line option:
-            tt(--lex-source).
+            tt(--lex-function-name).
     it() bf(%lex-source) tt(= "source") nl()
            Defines the pathname of the file to contain the scanner member
             tt(lex). Corresponding command-line option: tt(--lex-source).
