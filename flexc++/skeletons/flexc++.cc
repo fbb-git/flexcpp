@@ -55,10 +55,9 @@ $insert tailCount
     d_filename(infilename),
     d_startCondition(StartCondition__::INITIAL),
     d_state(0),
-    d_out(outfilename == "-" ? 
-                new std::ostream(std::cout.rdbuf())
-            :
-                new std::ofstream(outfilename)),
+    d_out(outfilename == "-"    ? new std::ostream(std::cout.rdbuf()) :
+          outfilename == ""     ? new std::ostream(std::cerr.rdbuf()) :
+                                  new std::ofstream(outfilename)),
     d_sawEOF(false),
     d_atBOL(true),
 $insert tailCount
@@ -102,8 +101,10 @@ void \@Base::switchStreams(std::string const &infilename,
                            std::string const &outfilename)
 {
     *d_out << std::flush;
-    d_out.reset(new std::ofstream(outfilename));
-
+    d_out.reset(
+            outfilename == "-"    ? new std::ostream(std::cout.rdbuf()) :
+            outfilename == ""     ? new std::ostream(std::cerr.rdbuf()) :
+                                    new std::ofstream(outfilename));
     switchStreams(infilename);
 }
 

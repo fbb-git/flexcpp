@@ -60,8 +60,10 @@ tt(Scanner) object goes out of scope the input and output files are closed.
         This constructor opens the input and output streams whose file names
 were specified. When the tt(Scanner) object goes out of scope the input and
 output files are closed. If tt(outfile == "-") then the standard output stream
-will be used as the scanner's output medium. bf(This constructor is not
-defined by interactive scanners.)
+is used as the scanner's output medium; if tt(outfile == "") then the
+standard error stream is used as the scanner's output medium. 
+
+    bf(This constructor is not defined by interactive scanners.)
     )
     
 manpagesection(PUBLIC MEMBER FUNCTION)

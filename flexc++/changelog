@@ -1,3 +1,12 @@
+flexc++ (0.09.52)
+
+  * The Scannner(std::string infile, std::string outfile) and 
+    switchStreams(std::string infile, std::string outfile) members now also 
+    accept outfile == "", in which case std::cerr is used as the scanner's
+    output stream.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 08 Feb 2012 11:48:28 +0100
+
 flexc++ (0.09.51)
 
   * Rebased release.yo in flexc++'s main directory, and no longer in its
