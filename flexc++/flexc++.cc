@@ -11,7 +11,7 @@ namespace
         {"class-header",                'c'},
         {"implementation-header",       'i'},
         {"lex-source",                  'l'},
-        {"target-dir",                  Arg::None},
+        {"target-directory",            Arg::Required},
                                         
         // skeleton options             
         {"skeleton-directory",          'S'},

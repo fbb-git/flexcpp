@@ -4,10 +4,13 @@ flexc++ (0.91.00)
     ending in '\n'. Caused by Input's d_in == 0 after an earlier EOF
     detection, and then calling d_in->get(). Repaired by testing for d_in == 0
 
-  * Added --target-dir option (and directive) to define where the generated
-    files should be written if not at the default (lexer) location.
+  * Added --target-directory option (and directive) to define where the
+    generated files should be written if not at the default (lexer) location.
 
-  * The earlier minor versions should have been .9 rather than .09
+  * The earlier minor versions should have been .9 rather than .09. Same for
+    the 0.08 series of changes. Version now (properly) set to 0.9x.yy.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 11 Feb 2012 13:44:10 +0100
 
 flexc++ (0.09.52)
 

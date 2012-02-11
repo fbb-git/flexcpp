@@ -13,6 +13,7 @@ void Generator::showFilenames() const
         imsg <<                               
         "Construction details:                " << 
                                     d_constructionFilename << endl;
+
     imsg <<                                   
         "\n"
         "Baseclass header skeleton file:      " << 
@@ -33,3 +34,9 @@ void Generator::showFilenames() const
         "Lex function source file:            " << 
                                     d_options.lexSourcePath() << endl;
 }
+
+
+
+
+
+

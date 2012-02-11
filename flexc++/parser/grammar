@@ -30,6 +30,7 @@
         NAMESPACE
         NOLINES
         SKELETON_DIRECTORY
+        TARGET_DIRECTORY
  
 // rules
 %token  BLOCK

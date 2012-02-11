@@ -103,6 +103,9 @@ class Options
 
         std::string undelimit(std::string const &str);
         void setPath(std::string *target, std::string const &name);
+        void setPath(std::string *dest, int optChar, bool targetDirOption, 
+                      char const *optionName, std::string const &className, 
+                      char const *suffix);
 };
 
 inline std::string const &Options::inputInterface() const

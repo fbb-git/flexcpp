@@ -98,6 +98,8 @@ END)
     it() bf(%target-directory) tt(= "path") nl()
            Generate files in tt(path) rather than in flc()'s input file's
             directory.
+            The tt(%target-directory) option does not affect files that were 
+            explicitly named (either as option or as directive).
     it() bf(%x) tt(namelist) nl()
            The tt(%x) directive is followed by a list of one or more
             identifiers, separated by blanks. Each identifier is the name of

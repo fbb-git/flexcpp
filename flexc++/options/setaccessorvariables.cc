@@ -28,21 +28,6 @@ void Options::setAccessorVariables()
     if (!arg.option(&d_lexSkeleton, 'L'))
         d_lexSkeleton            = d_skeletonDirectory + FLEXCPP_CC;
 
-    // Paths
-    if (!arg.option(&d_baseClassHeaderPath, 'b')
-            && d_baseClassHeaderPath.empty())
-        d_baseClassHeaderPath = String::lc(d_className) + "base.h";
-
-    if (!arg.option(&d_classHeaderPath, 'c') && d_classHeaderPath.empty())
-        d_classHeaderPath = String::lc(d_className) + ".h";
-
-    if (!arg.option(&d_implementationHeaderPath, 'i')
-            && d_implementationHeaderPath.empty())
-        d_implementationHeaderPath = String::lc(d_className) + ".ih";
-
-    if (!arg.option(&d_lexSourcePath, 'l') && d_lexSourcePath.empty())
-        d_lexSourcePath = String::lc(d_lexFunctionName) + ".cc";
-
     if (arg.option(0, "interactive")) // does not overwrite %option when no
         d_interactive = true;         // --interactive is supplied
 
@@ -52,4 +37,29 @@ void Options::setAccessorVariables()
         d_lines = true;                     // --no-lines
     else if (arg.option(0, "no-lines"))
         d_lines = false;
+
+    // Paths
+
+    bool targetDirOption = arg.option(&d_targetDirectory, "target-directory");
+
+    if (d_targetDirectory.length() && *d_targetDirectory.rbegin() != '/')
+        d_targetDirectory += '/';
+
+    string className = String::lc(d_className);
+
+    if (!targetDirOption && d_targetDirectory.empty())
+        d_targetDirectory = s_defaultTargetDirectory;
+
+    setPath(&d_classHeaderPath, 'c', targetDirOption, "class-header", 
+            className, ".h");
+
+    setPath(&d_baseClassHeaderPath, 'b', targetDirOption, "base-class-header", 
+            className, "base.h");
+
+    setPath(&d_implementationHeaderPath, 'i', targetDirOption, 
+            "implementation-header", className, ".ih");
+
+    setPath(&d_lexSourcePath, 'l', targetDirOption, 
+            "lex-source", String::lc(d_lexFunctionName), ".cc");
+
 }

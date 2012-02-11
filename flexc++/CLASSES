@@ -33,9 +33,9 @@ dfarow                  ranges rules states tailcount
 dfa                     dfarow        
 dfas                    rules dfa  
 
-parser                  utility   state   block   scanner spsemunion states
+parser             utility   state   block   scanner spsemunion states options
 
-generator               dfas    startconditions   
+generator          dfas    startconditions   options
 
 
 
