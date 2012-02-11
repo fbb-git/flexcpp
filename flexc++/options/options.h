@@ -18,6 +18,7 @@ class Options
     std::string d_nameSpace;
     std::string d_inputImplementation;
     std::string d_inputInterface;
+    std::string d_targetDirectory;
 
     bool d_interactive;
     bool d_lines;
@@ -37,6 +38,7 @@ class Options
     static char s_defaultSkeletonDirectory[];
     static char s_defaultClassName[];
     static char s_defaultLexfunSource[];
+    static char s_defaultTargetDirectory[];
 
     static Options s_options;
 
@@ -55,6 +57,7 @@ class Options
 
         void setClassName(std::string const &name);
         void setSkeletonDirectory(std::string const &name);
+        void setTargetDirectory(std::string const &name);
         void setLexFunctionName(std::string const &name);
         void setNameSpace(std::string const &name);
 

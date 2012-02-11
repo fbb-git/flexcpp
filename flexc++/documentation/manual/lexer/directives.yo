@@ -95,6 +95,9 @@ END)
            Use tt(path) rather than the default (e.g., tt(/usr/share/flexc++))
             path when looking for flc()'s skeleton files. Corresponding
             command-line option: tt(--skeleton-directory).
+    it() bf(%target-directory) tt(= "path") nl()
+           Generate files in tt(path) rather than in flc()'s input file's
+            directory.
     it() bf(%x) tt(namelist) nl()
            The tt(%x) directive is followed by a list of one or more
             identifiers, separated by blanks. Each identifier is the name of

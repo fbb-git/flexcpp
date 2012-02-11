@@ -3,7 +3,7 @@
 void Options::setNameSpace(string const &name)
 {
     if (d_nameSpace.size())
-        cerr << "%option namespace multiply specified\n";
+        cerr << "%namespace multiply specified\n";
     else
         d_nameSpace = undelimit(name);
 }

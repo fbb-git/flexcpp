@@ -151,6 +151,8 @@ OPTBL                   [[:blank:]]*
     %no-lines                   return Parser::NOLINES;
     %namespace                  return Parser::NAMESPACE;
     %skeleton-directory         return Parser::SKELETON_DIRECTORY;
+    %target-dir                 return Parser::TARGET_DIR;
+
     "%s"                        return Parser::INCL_START_CONDITION;
     "%x"                        return Parser::EXCL_START_CONDITION;
 

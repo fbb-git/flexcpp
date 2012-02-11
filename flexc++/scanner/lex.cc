@@ -1548,13 +1548,17 @@ size_t ScannerBase::Input::next()
 
     if (d_deque.empty())                    // deque empty: next char fm d_in
     {
+        if (d_in == 0)
+            return AT_EOF;
+
         ch = d_in->get();
+
         return *d_in ? ch : AT_EOF;
     }
 
     ch = d_deque.front();
     d_deque.pop_front();
-
+    
     return ch;
 }
 
@@ -2250,6 +2254,7 @@ int Scanner::lex__()
     while (true)
     {
         size_t ch = get__();                // fetch next char
+
         size_t range = getRange__(ch);      // determine the range
 
         inspectRFCs__();                    // update d_tailCount values

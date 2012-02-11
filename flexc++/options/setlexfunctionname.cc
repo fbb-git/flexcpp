@@ -3,8 +3,8 @@
 void Options::setLexFunctionName(string const &name)
 {
     if (d_lexFunctionName.size())
-        cerr << "%option lexfunctionname (--lexfunctionname) specified "
-                                                    "multiple times\n";
+        cerr << "%lex-function-name (--lex-function-name) "
+                                                    "multiply specified\n";
     else
         d_lexFunctionName = undelimit(name);
 }

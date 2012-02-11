@@ -61,6 +61,13 @@ _skeleton_directory:
     }
 ;
 
+_target_directory:
+    TARGET_DIRECTORY
+    {
+        d_expect = "target directory name for generated files";
+    }
+;
+
 _namespace:
     NAMESPACE
     {
@@ -157,6 +164,11 @@ option:
     _skeleton_directory _opt_is _stringOrIdent
     {
         d_options.setSkeletonDirectory(d_matched);
+    }
+|
+    _target_directory _opt_is _stringOrIdent
+    {
+        d_options.setTargetDirectory(d_matched);
     }
 |
     _namespace _opt_is _stringOrIdent
