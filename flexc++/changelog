@@ -1,3 +1,9 @@
+flexc++ (0.91.00)
+
+  * Jurjen Bolkma found a segfault in action blocks at the end of files not
+    ending in '\n'. Caused by Input's d_in == 0 after an earlier EOF
+    detection, and then calling d_in->get(). Repaired by testing for d_in == 0
+
 flexc++ (0.09.52)
 
   * The Scannner(std::string infile, std::string outfile) and 

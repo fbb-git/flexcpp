@@ -70,6 +70,8 @@ void Generator::inputImplementation(ostream &out) const
         "\n"
         "    if (d_deque.empty())                    // deque empty: next char fm d_in\n"
         "    {\n"
+        "        if (d_in == 0)\n"
+        "            return AT_EOF;\n"
         "        ch = d_in->get();\n"
         "        return *d_in ? ch : AT_EOF;\n"
         "    }\n"

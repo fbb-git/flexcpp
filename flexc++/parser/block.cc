@@ -2,6 +2,8 @@
 
 void Parser::block()
 {
+    bool warnMissingEoln = false;
+
     d_block.open(d_scanner.lineNr(), d_scanner.filename());
 
     while (true)
@@ -11,6 +13,16 @@ void Parser::block()
         switch (token)
         {
             case 0:
+                if (not warnMissingEoln)
+                {
+                    warnMissingEoln = true;
+                    wmsg << "missing newline: improperly ending action" <<
+                            endl; 
+                }
+                while (d_block.close()) 
+                    ;                       // append lacking closing braces
+                d_block += "\n";
+                d_scanner.blockEnds();
             return;
             
             case '{':
