@@ -133,6 +133,12 @@ void \@Base::pushStream(std::string const &name)
     pushStream(name, streamPtr);
 }
 
+void \@Base::pushStream(std::istream  &istr)
+{
+    std::istream *streamPtr = new std::istream(istr.rdbuf());
+    pushStream("(istream)", streamPtr);
+}
+
 $ignoreInteractive END      ignored from generator/filter.cc
 
 bool \@Base::popStream()
