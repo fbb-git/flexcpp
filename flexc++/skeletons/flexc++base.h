@@ -38,6 +38,9 @@ class \@Base
         AT_EOF = -1
     };
 
+    enum Leaving
+    {};
+
 protected:
     enum class ActionType__
     {
@@ -131,6 +134,7 @@ protected:
     std::ostream   &out();
     void            begin(StartCondition__ startCondition);
     void            echo() const;
+    void            leaving(int retValue);
 
 //    `accept(n)' returns all but the first `n' characters of the current
 // token back to the input stream, where they will be rescanned when the
@@ -229,6 +233,11 @@ inline void \@Base::echo() const
 inline size_t \@Base::length() const
 {
     return d_matched.size();
+}
+
+inline void \@Base::leaving(int retValue) const
+{
+    throw static_cast<Leaving>(retValue);
 }
 
 inline size_t \@Base::lineNr() const

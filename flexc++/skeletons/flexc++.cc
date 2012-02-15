@@ -312,6 +312,7 @@ void \@Base::reset__()
 }
 
 int \@::executeAction__(size_t ruleIdx)
+try
 {
 $insert 4 debug.action  "Executing actions of rule " << ruleIdx
     switch (ruleIdx)
@@ -321,6 +322,10 @@ $insert 8 actions
 $insert 4 debug.action "Rule " << ruleIdx << " did not do 'return'"
     noReturn__();
     return 0;
+}
+catch (Leaving value)
+{
+    return static_cast<int>(value);
 }
 
 int \@::lex__()

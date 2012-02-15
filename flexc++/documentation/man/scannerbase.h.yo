@@ -127,16 +127,14 @@ manpagesection(PROTECTED MEMBER FUNCTIONS)
         can safely be called by members of the generated tt(Scanner) class:
 
     itemization(
-    itb(StartCondition__  startCondition() const)
-       returns the currently active start condition (mini scanner);
-    itb(bool popStream())
-       closes the currently processed input stream and continues to process
-        the most recently stacked input stream (removing it from the stack of
-        streams). If this switch was successfully performed tt(true) is
-        returned, otherwise (e.g., when the stream stack is empty) tt(false)
-        is returned;
-    itb(std::ostream &out())
-       returns a reference to the scanner's output stream;
+    itb(void accept(size_t nChars = 0))
+       tt(accept(n)) returns all but the first `nChars' characters of the
+        current token back to the input stream, where they will be rescanned
+        when the scanner looks for the next match.  So, it matches `nChars' of
+        the characters in the input buffer, rescanning the rest. This function
+        effectively sets tt(length)'s return value to tt(nChars) (note: with
+        bf(flex++) this function was called tt(less));
+
     itb(void begin(StartCondition__ startCondition))
        activate the regular expression rules associated with
         tt(StartCondition__ startCondition). As this enumeration is a strongly
@@ -145,28 +143,73 @@ manpagesection(PROTECTED MEMBER FUNCTIONS)
             verb(
         begin(StartCondition__::INITIAL);
             )
+
     itb(void echo() const) 
        The currently matched text (i.e., the text returned by the member
         tt(matched)) is inserted into the scanner object's output stream;
-    itb(void accept(size_t nChars = 0))
-       tt(accept(n)) returns all but the first `nChars' characters of the
-        current token back to the input stream, where they will be rescanned
-        when the scanner looks for the next match.  So, it matches `nChars' of
-        the characters in the input buffer, rescanning the rest. This function
-        effectively sets tt(length)'s return value to tt(nChars) (note: with
-        bf(flex++) this function was called tt(less));
-    itb(void redo(size_t nChars = 0))
-       this member acts like tt(accept) but its argument counts backward from
-        the end of the matched text. All but these tt(nChars) characters are
-        kept and the last tt(nChar) characters are rescanned. This function
-        effectively reduces tt(length)'s return value by tt(nChars);
+
+    itb(void leaving(int retValue))
+       actions defined in the lexical scanner specification file may or may
+        not return. This frequently results in complicated or overlong
+        compound statements, blurring the readability of the specification
+        file. By encapsulating the actions in a member function readability is
+        enhanced. However, frequently a compound statement is still required,
+        as in:
+            verb(
+    regex-to-match  {
+                        if (int ret = memberFunction())
+                            return ret;
+                    }
+            )
+        The member tt(leaving) removes the need for constructions like the
+        above. The member tt(leaving) can be called from within member
+        functions encapsulating actions performed when a regular expression
+        has been matched. It ends tt(lex), returning tt(retValue) to its
+        caller. The above rule can now be written like this:
+            verb(
+    regex-to-match  memberFunction();
+            )
+        and tt(memberFunction) could be implemented as follows:
+            verb(
+    void memberFunction()
+    {
+        if (someCondition())
+        {                           // any action, e.g., 
+                                    // switch mini-scanner
+            begin(StartCondition__::INITIAL);
+
+            leaving(Parser::TOKENVALUE);    // lex returns TOKENVALUE
+            // this point is never reached
+        }
+    
+        pushStream(d_matched);      // switch to the next stream
+                                    // lex continues
+    }
+            )
+       The member tt(leaving) should only (indirectly) be called 
+        (usually nested) from actions defined in the scanner's specification
+        file(s); calling tt(leaving) outside of this context results in
+        undefined behavior.
+
     itb(void more())
        the matched text is kept and will be prefixed to the text that is
         matched at the next lexical scan;
+
+    itb(std::ostream &out())
+       returns a reference to the scanner's output stream;
+
+    itb(bool popStream())
+       closes the currently processed input stream and continues to process
+        the most recently stacked input stream (removing it from the stack of
+        streams). If this switch was successfully performed tt(true) is
+        returned, otherwise (e.g., when the stream stack is empty) tt(false)
+        is returned;
+
     itb(void push(size_t ch))
        character tt(ch) is pushed back onto the input stream. I.e., it will be
         the character that is retrieved at the next attempt to obtain a
         character from the input stream;
+
     itb(void push(std::string const &txt))
        the characters in the string tt(txt) are pushed back onto the input
         stream. I.e., they will be the characters that are retrieved at the
@@ -174,19 +217,33 @@ manpagesection(PROTECTED MEMBER FUNCTIONS)
         characters in tt(txt) are retrieved from the first character to the
         last. So if tt(txt == "hello") then the tt('h') will be the character
         that's retrieved next, followed by tt('e'), etc, until tt('o');
+
     itb(void pushStream(std::istream &curStream))
         this function pushes tt(curStream) on the stream stack;
         bf(This member is not available with interactive scanners.)
+
     itb(void pushStream(std::string const &curName))
        same, but the stream tt(curName) is opened first, and the resulting
         tt(istream) is pushed on the stream stack;
         bf(This member is not available with interactive scanners.)
+
+    itb(void redo(size_t nChars = 0))
+       this member acts like tt(accept) but its argument counts backward from
+        the end of the matched text. All but these tt(nChars) characters are
+        kept and the last tt(nChar) characters are rescanned. This function
+        effectively reduces tt(length)'s return value by tt(nChars);
+
     itb(void setFilename(std::string const &name))
        this function sets the name of the stream returned by tt(filename) to
         tt(name);
+
     itb(void setMatched(std::string const &text))
        this function stores tt(text) in the matched text buffer. Following a
         call to this function tt(matched) returns tt(text).
+
+    itb(StartCondition__  startCondition() const)
+       returns the currently active start condition (mini scanner);
+
     )
 
 manpagesection(PROTECTED DATA MEMBERS)
