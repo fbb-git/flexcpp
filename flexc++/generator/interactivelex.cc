@@ -19,7 +19,7 @@ void Generator::interactiveLex(ostream &out) const
         "\n"
         "    std::string line;\n"
         "\n"
-        "    if (not std::getline(*d_in__, line))\n"
+        "    if (d_in == 0 || not std::getline(*d_in__, line))\n"
         "        return 0;\n"
         "\n"
         "    line += '\\n';\n"
