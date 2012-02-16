@@ -76,12 +76,6 @@ arguments if their associated long options require arguments as well.
     it() lsoption(lex-source)(l)(source)nl()
            Define tt(source) as the name of the source file containing the
             scanner member function tt(lex). Defaults to tt(lex.cc).
-    it() loption(lines) nl() 
-           Put tt(#line) preprocessor directives in the file containing the
-            scanner's tt(lex) function. By including this option the
-            compiler and debuggers will associate errors with lines in your
-            grammar specification file, rather than with the source file
-            containing the tt(lex) function itself.
     it() lsoption(namespace)(n)(namespace)nl()
            Define the scanner base class, the paser class and the scanner
             implentations in the namespace tt(namespace). By default
@@ -95,9 +89,12 @@ arguments if their associated long options require arguments as well.
             called.
     it() loption(no-lines)nl() 
            Do not put bf(#line) preprocessor directives in the file containing
-            the scanner's tt(lex) function. This option is primarily useful
-            in combination with the bf(%lines) directive, to suppress that
-            directive. It also overrides option bf(--lines), though.
+            the scanner's tt(lex) function. By default tt(#line) directives
+            are entered at the beginning of the action statements in the
+            generated tt(lex.cc) file, allowing the compiler and debuggers
+            to associate errors with lines in your grammar specification
+            file, rather than with the source file containing the tt(lex)
+            function itself.
     it() loption(no-lex-source)nl()
            Do not write the file containing the scanner's predefined scanner
             member functions, even if that file doesn't yet exist. By default

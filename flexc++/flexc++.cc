@@ -28,7 +28,6 @@ namespace
 
         {"class-name",                  Arg::Required},
         {"lex-function-name",           Arg::Required},
-        {"lines",                       Arg::None},
         {"no-lines",                    Arg::None},
 
         {"namespace",                   'n'},
