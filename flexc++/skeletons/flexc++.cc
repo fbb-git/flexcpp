@@ -37,7 +37,7 @@ size_t \@Base::s_istreamNr = 0;
 
 $insert inputImplementation
 
-\@Base::\@Base(std::istream &in, std::ostream &out)
+\@Base::\@Base(std::istream &in, std::ostream &out, std::istream *ip)
 :
     d_filename("-"),
     d_startCondition(StartCondition__::INITIAL),
@@ -47,8 +47,20 @@ $insert inputImplementation
     d_atBOL(true),
 $insert tailCount
     d_input(new std::istream(in.rdbuf())),
+    d_in__(ip),
     d_dfaBase__(s_dfa__)
 {}
+
+void \@Base::switchStream__(std::istream &in)
+{
+    d_input.close();
+    d_state = 0;
+    d_input = Input(new std::istream(in.rdbuf()));
+    d_sawEOF = false;
+    d_atBOL = true;
+}
+
+$ignoreInteractive BEGIN    this section is ignored by generator/filter.cc
 
 \@Base::\@Base(std::string const &infilename, std::string const &outfilename)
 :
@@ -65,6 +77,21 @@ $insert tailCount
     d_dfaBase__(s_dfa__)
 {}
 
+inline void \@Base::switchStreams(std::istream &in, std::ostream &out)
+{
+    switchStream__(in);
+    switchOstream(out);
+}
+
+$ignoreInteractive END      end ignored section by generator/filter.cc
+
+void \@Base::switchOstream(std::ostream &out)
+{
+    *d_out << std::flush;
+    d_out.reset(new std::ostream(out.rdbuf()));
+    d_filename = "-";
+}
+
 $insert debugFunctions
 
 void \@Base::redo(size_t nChars)
@@ -74,21 +101,18 @@ void \@Base::redo(size_t nChars)
     d_matched.resize(from);
 }
 
-void \@Base::switchStreams(std::istream &in, std::ostream &out)
+void \@Base::switchOstream(std::string const &outfilename)
 {
-    d_input.close();
-    d_state = 0;
     *d_out << std::flush;
-    d_out.reset(new std::ostream(out.rdbuf()));
-    d_filename = "-";
-    d_input = Input(new std::istream(in.rdbuf()));
-    d_sawEOF = false;
-    d_atBOL = true;
+    d_out.reset(
+            outfilename == "-"    ? new std::ostream(std::cout.rdbuf()) :
+            outfilename == ""     ? new std::ostream(std::cerr.rdbuf()) :
+                                    new std::ofstream(outfilename));
 }
 
-$ignoreInteractive BEGIN    ignored from generator/filter.cc
+$ignoreInteractive BEGIN    this section is ignored by generator/filter.cc
 
-void \@Base::switchStreams(std::string const &infilename)
+void \@Base::switchIstream(std::string const &infilename)
 {
     d_input.close();
     d_filename = infilename;
@@ -100,15 +124,30 @@ void \@Base::switchStreams(std::string const &infilename)
 void \@Base::switchStreams(std::string const &infilename,
                            std::string const &outfilename)
 {
-    *d_out << std::flush;
-    d_out.reset(
-            outfilename == "-"    ? new std::ostream(std::cout.rdbuf()) :
-            outfilename == ""     ? new std::ostream(std::cerr.rdbuf()) :
-                                    new std::ofstream(outfilename));
-    switchStreams(infilename);
+    switchOstream(outfilename);
+    switchIstream(infilename);
 }
 
-void \@Base::pushStream(std::string const &name, std::istream *streamPtr)
+void \@Base::pushStream(std::istream  &istr)
+{
+    std::istream *streamPtr = new std::istream(istr.rdbuf());
+    p_pushStream("(istream)", streamPtr);
+}
+
+void \@Base::pushStream(std::string const &name)
+{
+    std::istream *streamPtr = new std::ifstream(name);
+    if (!*streamPtr)
+    {
+        delete streamPtr;
+        throw std::runtime_error("Cannot read " + name);
+    }
+    p_pushStream(name, streamPtr);
+}
+
+$ignoreInteractive END      end ignored section by generator/filter.cc
+
+void \@Base::p_pushStream(std::string const &name, std::istream *streamPtr)
 {
     if (d_streamStack.size() == s_maxSizeofStreamStack__)
     {
@@ -120,26 +159,9 @@ void \@Base::pushStream(std::string const &name, std::istream *streamPtr)
     d_filename = name;
     d_input = Input(streamPtr);
     d_sawEOF = false;
+    d_atBOL = true;
 }
 
-void \@Base::pushStream(std::string const &name)
-{
-    std::istream *streamPtr = new std::ifstream(name);
-    if (!*streamPtr)
-    {
-        delete streamPtr;
-        throw std::runtime_error("Cannot read " + name);
-    }
-    pushStream(name, streamPtr);
-}
-
-void \@Base::pushStream(std::istream  &istr)
-{
-    std::istream *streamPtr = new std::istream(istr.rdbuf());
-    pushStream("(istream)", streamPtr);
-}
-
-$ignoreInteractive END      ignored from generator/filter.cc
 
 bool \@Base::popStream()
 {
@@ -329,7 +351,7 @@ $insert 4 debug.action "Rule " << ruleIdx << " did not do 'return'"
     noReturn__();
     return 0;
 }
-catch (Leaving value)
+catch (Leave__ value)
 {
     return static_cast<int>(value);
 }

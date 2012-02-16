@@ -114,7 +114,6 @@ class Generator
         void insert(std::ostream &out) const;
         void insertSstream(std::ostream &out) const;
         void interactiveLex(std::ostream &out) const;
-        void interactiveProtected(std::ostream &out) const;
         void key(std::ostream &out) const;
         void lexFunctionDecl(std::ostream &out) const;
         void namespaceClose(std::ostream &out) const;

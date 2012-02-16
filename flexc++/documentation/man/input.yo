@@ -1,17 +1,5 @@
-includefile(include/header)
 
-COMMENT(manpage, section, releasedate, archive, short name)
-manpage(input)(3flexc++)(_CurYrs_)(flexc++__CurVers_-x.tar.gz)
-                    (Input class interface)
-
-manpagename(input)(Interface of the Input class in ScannerBase)
-
-manpagesynopsis()
-       bf(%input-implementation = "sourcefile")nl()
-       bf(%input-interface = "interface")
-
-
-manpagedescription()
+manpagesection(8.1 THE CLASS INPUT)
 
     Flc() generates a file tt(scannerbase.h) defining the scanner class's base
 class, by default named tt(ScannerBase) (which is the name used in this
@@ -66,7 +54,7 @@ stream continues. This implies that tt(Input) objects must be
 `stack-able'. The required interface is designed to satisfy this requirement.
 
 
-manpagesection(CONSTRUCTORS)
+manpagesection(8.2. CONSTRUCTORS)
 
     itemization(
     itb(Input())
@@ -86,7 +74,7 @@ responsibility of the tt(ScannerBase) object, which calls the tt(Input::close)
 member (see below) when it's time to destroy (close) the stream.
     )
 
-manpagesection(REQUIRED PUBLIC MEMBER FUNCTIONS)
+manpagesection(8.3. REQUIRED PUBLIC MEMBER FUNCTIONS)
 
     itemization(
     itb(size_t get())
@@ -120,28 +108,3 @@ tt(Input)'s destructor should em(not) destroy the tt(Input)'s tt(istream)
 object.
     )
     
-manpagesection(EXAMPLE)
-
-    Following a flc()-run a tt(scannerbase.h) is generated containing the
-default class tt(Input) interface and a tt(lex.cc) source file is generated
-containing the calss tt(Input) implementation.
-
-    In tt(scannerbase.h) look for the line 
-        verb(
-// $insert inputInterface
-        )
-    below which the default class tt(Input) is shown. Likewise, in tt(lex.cc)
-the default implementation of the class tt(Input) is found below the line
-        verb(
-// $insert inputImplementation
-        )
-
-manpageseealso()
-
-    bf(flexc++)(1), bf(rules)(3flexc++), bf(scanner.h)(3flexc++),  
-    bf(scannerbase.h)(3flexc++), 
-
-manpagebugs()
-    None Reported.
-
-includefile(include/trailer)

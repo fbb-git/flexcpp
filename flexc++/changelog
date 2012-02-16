@@ -1,6 +1,20 @@
+flexc++ (0.92.00)
+
+  * Added 'leave(int retValue)' member that can be called from members called
+    from the scanner specification's actions to end the action, returning
+    'retValue' from 'lex()'
+
+  * Sanitized switch- and pushStream members for interactive and
+    non-interactive scanners
+
+  * Jurjen Bokma observed that pushStream did not set d_atBOL to
+    true. Repaired. 
+
+  * All man-pages combined into one man-page: flexc++(1).
+
 flexc++ (0.91.00)
 
-  * Jurjen Bolkma found a segfault in action blocks at the end of files not
+  * Jurjen Bokma found a segfault in action blocks at the end of files not
     ending in '\n'. Caused by Input's d_in == 0 after an earlier EOF
     detection, and then calling d_in->get(). Repaired by testing for d_in == 0
 

@@ -15,10 +15,6 @@ void Generator::classHead(ostream &out) const
     out << "public " << name << "Base\n"
         "{\n";
 
-    if (interactive)
-        out << "    std::istream *d_in__;\n"
-               "\n";
-
     out <<
         "    public:\n"
         "        explicit " << name << "(std::istream &in = std::cin,\n"

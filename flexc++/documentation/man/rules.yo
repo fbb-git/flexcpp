@@ -1,15 +1,4 @@
-includefile(include/header)
-
-COMMENT(manpage, section, releasedate, archive, short name)
-manpage(rules)(3flexc++)(_CurYrs_)(flexc++__CurVers_-x.tar.gz)
-                    (Flexc++ input file)
-
-manpagename(Rules)(Input file for flexc++ (`tt(lexer)'))
-
-manpagesynopsis()
-       flc() [OPTIONS] tt(rules-file)
-
-manpagedescription()
+manpagesection(5. SPECIFICATION FILE(S))
 
     Flc() expects an input file containing directives and the regular
 expressions that should be recognized by objects of the scanner class
@@ -32,7 +21,7 @@ comment text, followed by tt(*/), and it may be bf(C++) end-of-line comment:
 two consecutive slashes (tt(//)) start the comment, which continues up to
 the next newline character.
 
-manpagesection(FILE SWITCHING)
+manpagesection(5.1. FILE SWITCHING)
 
 Flc()'s input file may be split into multiple files. This allows for the
 definition of logically separate elements of the specifications in different
@@ -53,7 +42,7 @@ the tt(//include) directive of the previously scanned file. The end-of-file of
 the file that was initially specified when flc() was called indicates the end
 of flc()'s rules specification.
 
-manpagesection(DIRECTIVES)
+manpagesection(5.2. DIRECTIVES)
 
     The first section of flc()'s input file consists of directives. In
 addition it may associate regular expressions with symbolic names, allowing
@@ -63,7 +52,7 @@ command line options.
 
     includefile(../manual/lexer/directives.yo)
 
-manpagesection(MINI SCANNERS)
+manpagesection(5.3. MINI SCANNERS)
 
     Mini scanners come in two flavors: inclusive mini scanners and exclusive
 mini scanners. The rules that apply to an inclusive mini scanner are the mini
@@ -86,7 +75,7 @@ scanner (see below) will only be used when that mini scanner is active.
     A flc() input file may contain multiple tt(%s) and tt(%x)
 specifications.
 
-manpagesection(DEFINITIONS)
+manpagesection(5.4. DEFINITIONS)
 
     Definitions are of the form
         verb(
@@ -104,14 +93,14 @@ FIRST                   [A-Za-z_]
 NAME                    {FIRST}[-A-Za-z0-9_]*
         )
 
-manpagesection(%% SEPARATOR)
+manpagesection(5.5. %% SEPARATOR)
 
 Following directives and definitions a line merely containing two consecutive
 tt(%) characters is expected. Following this line the rules are defined. Rules
 consist of regular expressions which should be recognized, possibly followed
 by actions to be executed once a rule's regular expression has been matched.
 
-manpagesection(REGULAR EXPRESSIONS)
+manpagesection(5.6. REGULAR EXPRESSIONS)
 
 The regular expressions defined in flc()'s rules files are matched against 
 the information passed to the scanner's tt(lex) function. 
@@ -319,7 +308,7 @@ parentheses. The characters tt(^) and tt($) only have their special properties
 at, respectively, the beginning and end of regular expressions. In all other
 cases they are treated as a normal characters.
 
-manpagesection(EXAMPLE)
+manpagesection(5.7. SPECIFICATION EXAMPLE)
 
     verb(
 %option debug
@@ -345,21 +334,4 @@ a$              return 3;
 .|\n            // ignore
         )
 
-
-manpageseealso()
-
-    bf(flexc++)(1), bf(input)(3flexc++),  bf(scanner.h)(3flexc++),  
-    bf(scannerbase.h)(3flexc++), 
-
-manpagebugs()
-    itemization(
-    it() The priority of interval expressions (tt({...})) equals the priority
-of other multiplicative operators (like tt(*)).
-    it() All tt(INITIAL) rules apply to inclusive mini scanners, also those
-tt(INITIAL) rules that were explicitly associated with the tt(INITIAL) mini
-scanner.
     )
-
-includefile(include/trailer)nl()
-
-

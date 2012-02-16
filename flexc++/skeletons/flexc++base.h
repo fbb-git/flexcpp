@@ -38,10 +38,10 @@ class \@Base
         AT_EOF = -1
     };
 
-    enum Leaving
+protected:
+    enum Leave__
     {};
 
-protected:
     enum class ActionType__
     {
         CONTINUE,               // transition succeeded, go on
@@ -101,6 +101,7 @@ $insert inputInterface
     bool            d_more;                 // set to true by more()
 
 protected:
+    std::istream   *d_in__;
 $insert 4 debugDecl
 
 $insert 4 declarations
@@ -119,22 +120,33 @@ public:
     size_t              lineNr()    const;
 
     void                setDebug(bool onOff);
-    void                switchStreams(std::string const &infilename);
+
+    void                switchOstream(std::ostream &out);
+    void                switchOstream(std::string const &outfilename);
+
+$ignoreInteractive BEGIN    this section is ignored by generator/filter.cc
+
+    void                switchStreams(std::istream &in,
+                                      std::ostream &out = std::cout);
+
+    void                switchIstream(std::string const &infilename);
     void                switchStreams(std::string const &infilename,
                                       std::string const &outfilename);
-$insert interactiveProtected
-    void                switchStreams(std::istream &in, 
-                                        std::ostream &out = std::cout);
+
+$ignoreInteractive END      end ignored section by generator/filter.cc
+
 protected:
-    \@Base(std::istream &in, std::ostream &out);
+    \@Base(std::istream &in, std::ostream &out, std::istream *ip);
+$ignoreInteractive BEGIN    this section is ignored by generator/filter.cc
     \@Base(std::string const &infilename, std::string const &outfilename);
+$ignoreInteractive END      end ignored section by generator/filter.cc
 
     StartCondition__  startCondition() const;   // current start condition
     bool            popStream();
     std::ostream   &out();
     void            begin(StartCondition__ startCondition);
     void            echo() const;
-    void            leaving(int retValue);
+    void            leave(int retValue) const;
 
 //    `accept(n)' returns all but the first `n' characters of the current
 // token back to the input stream, where they will be rescanned when the
@@ -149,8 +161,13 @@ protected:
     void            push(size_t ch);                // push char to Input
     void            push(std::string const &txt);   // same: chars
 
+$ignoreInteractive BEGIN    this section is ignored by generator/filter.cc
+
     void            pushStream(std::istream &curStream);
     void            pushStream(std::string const &curName);
+
+$ignoreInteractive END      end ignored section by generator/filter.cc
+
     void            setFilename(std::string const &name);
     void            setMatched(std::string const &text);
 
@@ -172,9 +189,10 @@ protected:
     void            noReturn__();               // d_return to false
     void            pushFront__(size_t ch);     // return char to Input
     void            reset__();                  // prepare for new cycle
+    void            switchStream__(std::istream &in);   // next input stream
 
 private:
-    void pushStream(std::string const &name, std::istream *streamPtr);
+    void p_pushStream(std::string const &name, std::istream *streamPtr);
     void determineMatchedSize(FinData const &final);
     bool atFinalState();
 };
@@ -235,9 +253,9 @@ inline size_t \@Base::length() const
     return d_matched.size();
 }
 
-inline void \@Base::leaving(int retValue) const
+inline void \@Base::leave(int retValue) const
 {
-    throw static_cast<Leaving>(retValue);
+    throw static_cast<Leave__>(retValue);
 }
 
 inline size_t \@Base::lineNr() const

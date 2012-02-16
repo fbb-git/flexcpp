@@ -20,7 +20,6 @@ Generator::Map Generator::s_insert =
     {"declarations",            &Generator::declarations},
     {"inlineLexFunction",       &Generator::inlineLexFunction},
     {"interactiveLex",          &Generator::interactiveLex},
-    {"interactiveProtected",    &Generator::interactiveProtected},
     {"lexFunctionDecl",         &Generator::lexFunctionDecl},
     {"namespace-close",         &Generator::namespaceClose},    
     {"namespace-open",          &Generator::namespaceOpen},

@@ -11,10 +11,10 @@ void manpage()
     string name;
     string manpage;
 
-    pages = "flexc++ input rules scanner.h scannerbase.h";
+    pages = "flexc++";
     pagelist = strtok(pages, " ");
 
-    man =  ".1 .3flexc++ .3flexc++ .3flexc++ .3flexc++";
+    man =  ".1";
     manlist = strtok(man, " ");
 
     md("tmp/man tmp/manhtml");
