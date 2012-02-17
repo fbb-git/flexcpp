@@ -84,6 +84,8 @@ class Scanner: public ScannerBase, public DataType
         int lex__();
         int executeAction__(size_t ruleNr);
 
+        void print();
+
         void preCode();     // re-implement this function for code that must 
                             // be exec'ed before the patternmatching starts
 };
@@ -119,6 +121,10 @@ inline int Scanner::lex()
     return lex__();
 }
 
+inline void Scanner::print()
+{
+    print__();
+}
 
 #endif // Scanner_H_INCLUDED_
 

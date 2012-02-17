@@ -1,6 +1,9 @@
 %class-name = "Scanner" 
 %lex-source = "lex.cc"
 %skeleton-directory = "../skeletons"
+
+%filenames scanner
+
 // %debug
 
 DECIMAL                 0|[1-9][[:digit:]]*
