@@ -3,7 +3,7 @@
 void Options::setClassName(string const &name)
 {
     if (d_className.size())
-        cerr << "%class-name (--class-name) multiply specified\n";
+        emsg << "%class-name multiply specified" << endl;
     else
         d_className = undelimit(name);
 }

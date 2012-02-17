@@ -12,6 +12,7 @@ namespace
         {"implementation-header",       'i'},
         {"lex-source",                  'l'},
         {"target-directory",            Arg::Required},
+        {"filenames", 'f'},
                                         
         // skeleton options             
         {"skeleton-directory",          'S'},
@@ -40,6 +41,7 @@ namespace
         {"debug",                       'd'},
         {"construction",                'K'},
         {"print-tokens",                't'},
+        {"own-tokens",                  'T'},
         {"show-filenames",              'F'},
         {"verbose",                     'V'},
     };
@@ -51,7 +53,7 @@ namespace
 int main(int argc, char **argv)
 try
 {
-    Arg &arg = Arg::initialize("b:B:c:C:dFhi:I:Kl:L:n:S:tvV",
+    Arg &arg = Arg::initialize("b:B:c:C:df:Fhi:I:Kl:L:n:S:TtvV",
                     longOptions, longEnd, argc, argv);
     arg.versionHelp(usage, version, 1);
 

@@ -4,7 +4,7 @@ void Generator::debugFunctions(std::ostream &out) const
 {
     key(out);
 
-    if (!d_debug && !d_options.hasNames())
+    if (!d_debug)
     {
         out << 
             "void " << d_baseclassScope << "setDebug(bool onOff)\n"

@@ -142,6 +142,7 @@ OPTBL                   [[:blank:]]*
     %class-header               return Parser::CLASSHEADER;
     %class-name                 return Parser::CLASSNAME;
     %debug                      return Parser::DEBUG;
+    %filenames                  return Parser::FILENAMES;
     %implementation-header      return Parser::IMPLEMENTATIONHEADER;
     %input-implementation       return Parser::INPUTIMPLEMENTATION;
     %input-interface            return Parser::INPUTINTERFACE;
@@ -150,6 +151,7 @@ OPTBL                   [[:blank:]]*
     %lex-source                 return Parser::LEXSOURCE;
     %no-lines                   return Parser::NOLINES;
     %namespace                  return Parser::NAMESPACE;
+    %print-tokens               return Parser::PRINT;
     %skeleton-directory         return Parser::SKELETON_DIRECTORY;
     %target-directory           return Parser::TARGET_DIRECTORY;
 

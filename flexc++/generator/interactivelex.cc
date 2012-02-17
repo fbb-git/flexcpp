@@ -12,10 +12,8 @@ void Generator::interactiveLex(ostream &out) const
     out << 
         "int " << name << "::" << d_options.lexFunctionName() << "()\n"
         "{\n"
-        "    int token = lex__();\n"
-        "\n"
-        "    if (token != 0)\n"
-        "        return token;\n"
+        "    if (lex__() != 0)\n"
+        "        return d_token__;\n"
         "\n"
         "    std::string line;\n"
         "\n"

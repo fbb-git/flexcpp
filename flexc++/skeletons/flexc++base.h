@@ -102,6 +102,8 @@ $insert inputInterface
 
 protected:
     std::istream   *d_in__;
+    int d_token__;                          // returned by lex__
+
 $insert 4 debugDecl
 
 $insert 4 declarations
@@ -187,6 +189,7 @@ $ignoreInteractive END      end ignored section by generator/filter.cc
     void            echoFirst__(size_t ch);     // handles unknown input
     void            inspectRFCs__();            // update d_tailCount
     void            noReturn__();               // d_return to false
+    void            print__() const;            // optionally print token
     void            pushFront__(size_t ch);     // return char to Input
     void            reset__();                  // prepare for new cycle
     void            switchStream__(std::istream &in);   // next input stream

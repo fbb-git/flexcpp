@@ -87,6 +87,19 @@ END)
             namespace) declaration for the requested namespace.  This
             directive is overridden by the tt(--namespace) command-line
             option.
+    it() bf(%print-tokens) nl() 
+           This option results in the tokens as well as the matched text to be
+            displayed on the standard output stream, just before returning the
+            token to tt(lex)'s caller. Displaying is suppressed again when the
+            tt(lex.cc) file is generated without using this directive. The
+            function showing the tokens (tt(ScannerBase::print__)) is called
+            from tt(Scanner::print()), which is defined in-line in
+            tt(scanner.h). Calling tt(ScannerBase::print__), therefore, can
+            also easily be controlled by an option controlled by the program
+            using the scanner object.
+           This option does em(not) show the tokens returned and text matched
+            by flc() itself when reading its input file(s). If that is what
+            you want, use the tt(--own-tokens) option.
     it() bf(%s) tt(namelist) nl()
            The tt(%s) directive is followed by a list of one or more
             identifiers, separated by blanks. Each identifier is the name of

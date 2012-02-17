@@ -31,11 +31,9 @@ void Options::setAccessorVariables()
     if (arg.option(0, "interactive")) // does not overwrite %option when no
         d_interactive = true;         // --interactive is supplied
 
-    d_debugAll |= arg.option('d');         // debug facility requested
+    d_debug |= arg.option('d');         // debug facility requested
 
-    if (arg.option(0, "lines"))             // --lines overrules 
-        d_lines = true;                     // --no-lines
-    else if (arg.option(0, "no-lines"))
+    if (arg.option(0, "no-lines"))
         d_lines = false;
 
     // Paths
@@ -45,19 +43,23 @@ void Options::setAccessorVariables()
     if (d_targetDirectory.length() && *d_targetDirectory.rbegin() != '/')
         d_targetDirectory += '/';
 
-    string className = String::lc(d_className);
+    arg.option(&d_filenames, 'f');  // -f overrules %filenames spec in lexer
+
+    string filenames = d_filenames;
+    if (filenames.empty())
+        filenames = d_className;
 
     if (!targetDirOption && d_targetDirectory.empty())
         d_targetDirectory = s_defaultTargetDirectory;
 
     setPath(&d_classHeaderPath, 'c', targetDirOption, "class-header", 
-            className, ".h");
+            filenames, ".h");
 
     setPath(&d_baseClassHeaderPath, 'b', targetDirOption, "base-class-header", 
-            className, "base.h");
+            filenames, "base.h");
 
     setPath(&d_implementationHeaderPath, 'i', targetDirOption, 
-            "implementation-header", className, ".ih");
+            "implementation-header", filenames, ".ih");
 
     setPath(&d_lexSourcePath, 'l', targetDirOption, 
             "lex-source", String::lc(d_lexFunctionName), ".cc");

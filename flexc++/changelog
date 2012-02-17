@@ -7,10 +7,15 @@ flexc++ (0.92.00)
   * Sanitized switch- and pushStream members for interactive and
     non-interactive scanners
 
-  * Jurjen Bokma observed that pushStream did not set d_atBOL to
-    true. Repaired. 
+  * Added missing d_atBOL = true assignment in pushStream, detected by Jurjen
+    Bokma.
 
   * All man-pages combined into one man-page: flexc++(1).
+
+  * Implemented --filenames, --print-tokens and --own-tokens
+    options/directives 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 17 Feb 2012 14:10:27 +0100
 
 flexc++ (0.91.00)
 

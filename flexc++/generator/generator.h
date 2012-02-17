@@ -119,6 +119,7 @@ class Generator
         void namespaceClose(std::ostream &out) const;
         void namespaceOpen(std::ostream &out) const;
         void namespaceUse(std::ostream &out) const;
+        void print(std::ostream &out) const;
         void ranges(std::ostream &out) const;
         void scannerConstructors(std::ostream &out) const;
         void startCondNames(std::ostream &out) const;

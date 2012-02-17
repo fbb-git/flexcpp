@@ -376,9 +376,12 @@ int \@::lex__()
 
             case ActionType__::MATCH:
             {
-                int ret = executeAction__(matched__(ch));
+                d_token__ = executeAction__(matched__(ch));
                 if (return__())
-                    return ret;
+                {
+                    print();
+                    return d_token__;
+                }
                 break;
             }
 
@@ -400,6 +403,11 @@ $insert 16 debug.action  "EOF_REACHED"
         reset__();
         preCode();
     } // while
+}
+
+void \@Base::print__() const
+{
+$insert 4 print
 }
 
 $insert interactiveLex

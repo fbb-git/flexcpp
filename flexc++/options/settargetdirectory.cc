@@ -3,7 +3,7 @@
 void Options::setTargetDirectory(string const &name)
 {
     if (d_targetDirectory.size())
-        cerr << "%target-directory specified multiple times\n";
+        emsg << "%target-directory multiply specified" << endl;
     else
         setPath(&d_targetDirectory, name);
 }

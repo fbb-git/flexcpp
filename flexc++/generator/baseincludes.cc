@@ -10,7 +10,7 @@ void Generator::baseIncludes(ostream &out) const
         out << "#include <sstream>\n";
     }
 
-    if (!d_debug && !d_options.hasNames())
+    if (!d_debug)
         return;
 
     if (!interactive)

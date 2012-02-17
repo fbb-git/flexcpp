@@ -12,9 +12,6 @@ void Generator::inputImplementation(ostream &out) const
         return;
     }
 
-
-    bool hasInput = d_debug || d_options.has("input");
-
     out <<  
         d_baseclassScope << "Input::Input()\n"
         ":\n"
@@ -46,7 +43,7 @@ void Generator::inputImplementation(ostream &out) const
         "\n"
         "        default:\n";
 
-    if (hasInput)
+    if (d_debug)
         out <<
         "            if (s_debug__)\n"
         "            {\n"
@@ -87,7 +84,7 @@ void Generator::inputImplementation(ostream &out) const
         "    if (ch < 0x100)\n"
         "    {\n";
 
-    if (hasInput)
+    if (d_debug)
         out <<
         "            if (s_debug__)\n"
         "                s_out__ << \"Input::reRead(\" << ch << \")\\n\" <<\n"

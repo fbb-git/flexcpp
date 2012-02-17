@@ -32,6 +32,11 @@ arguments if their associated long options require arguments as well.
             anymore. By rerunning flc() without the bf(--debug) option an
             equivalent scanner is generated not containing the debugging
             code. 
+    it() lsoption(filenames)(f)(genericName)nl()
+           Generic name of generated files (header files, not the
+            tt(lex)-function source file, see the tt(--lex-source) option for
+            that). By default the header file names will be equal to the name
+            of the generated class.
     it() loption(force-class-header)nl()
            By default the generated class header is not overwritten once it
             has been created. This option can be used to force the
@@ -103,8 +108,28 @@ arguments if their associated long options require arguments as well.
             should normally be avoided, as this file contains parsing
             tables which are altered whenever the grammar definition is
             modified. 
+    it() loption(own-tokens) (soption(T))nl() 
+           The tokens returned as well as the text matched when flc() reads
+            its input files(s) are shown when this option is used.
+
+           This option does em(not) result in the generated program displaying
+            returned tokens and matched text. If that is what you want, use
+            the tt(--print-tokens) option.
     it() loption(print-tokens) (soption(t))nl() 
-           To do
+           The tokens returned as well as the text matched by the generated
+            tt(lex) function are displayed on the standard output stream, just
+            before returning the token to tt(lex)'s caller. Displaying tokens
+            and matched text is suppressed again when the tt(lex.cc) file is
+            generated without using this option. The function showing the
+            tokens (tt(ScannerBase::print__)) is called from
+            tt(Scanner::printTokens), which is defined in-line in
+            tt(scanner.h). Calling tt(ScannerBase::print__), therefore, can
+            also easily be controlled by an option controlled by the program
+            using the scanner object.
+
+           This option does em(not) show the tokens returned and text matched
+            by flc() itself when reading its input file(s). If that is what
+            you want, use the tt(--own-tokens) option.
     it() loption(show-filenames) (soption(F))nl() 
            Write the names of the files that are generated to the 
             standard error stream.

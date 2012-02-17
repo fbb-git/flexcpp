@@ -2,7 +2,7 @@
 
 void Generator::debug(ostream &out) const
 {
-    if (!d_debug && !d_options.has(d_field))
+    if (!d_debug)
         return;
 
     key(out);

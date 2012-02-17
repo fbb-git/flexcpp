@@ -24,6 +24,7 @@ Generator::Map Generator::s_insert =
     {"namespace-close",         &Generator::namespaceClose},    
     {"namespace-open",          &Generator::namespaceOpen},
     {"namespace-use",           &Generator::namespaceUse},
+    {"print",                   &Generator::print},
     {"ranges",                  &Generator::ranges},
     {"scannerConstructors",     &Generator::scannerConstructors},
     {"startCondNames",          &Generator::startCondNames},

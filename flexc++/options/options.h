@@ -2,36 +2,33 @@
 #define INCLUDED_OPTIONS_
 
 #include <string>
-#include <set>
 #include <bobcat/a2x>
 
 class Options
 {
     std::string d_baseClassHeaderPath;
     std::string d_classHeaderPath;
-    std::string d_implementationHeaderPath;
-    std::string d_lexSourcePath;
-
-    std::string d_skeletonDirectory;
     std::string d_className;
-    std::string d_lexFunctionName;
-    std::string d_nameSpace;
+    std::string d_filenames;
+    std::string d_implementationHeaderPath;
     std::string d_inputImplementation;
     std::string d_inputInterface;
+    std::string d_lexFunctionName;
+    std::string d_lexSourcePath;
+    std::string d_nameSpace;
+    std::string d_skeletonDirectory;
     std::string d_targetDirectory;
 
     bool d_interactive;
     bool d_lines;
+    bool d_print;
+    bool d_debug;
 
     // skeletons
     std::string d_baseClassSkeleton;
     std::string d_classSkeleton;
     std::string d_lexSkeleton;
     std::string d_implementationSkeleton;
-
-    // debug data
-    bool d_debugAll;
-    std::set<std::string> d_debugNames;
 
             // strings containing default file and other names
     static char s_defaultLexFunctionName[];
@@ -47,56 +44,46 @@ class Options
 
         Options(Options const &other) = delete;
 
-        void setInputInterfacePath(std::string const &name);
-        void setInputImplementationPath(std::string const &name);
-
-        void setBaseClassHeaderPath(std::string const &name);
-        void setClassHeaderPath(std::string const &name);
-        void setImplementationHeaderPath(std::string const &name);
-        void setLexSourcePath(std::string const &name);
-
-        void setClassName(std::string const &name);
-        void setSkeletonDirectory(std::string const &name);
-        void setTargetDirectory(std::string const &name);
-        void setLexFunctionName(std::string const &name);
-        void setNameSpace(std::string const &name);
-
-        void setInteractive();
-        void setLines(bool yesNo);
-
-        void setDebug();
-        void setDebug(std::string const &name);
-        
-        std::string const &baseclassSkeleton() const;
-        std::string const &classSkeleton() const;
-        std::string const &implementationSkeleton() const;
-        std::string const &lexSkeleton() const;
-
-        std::string const &baseclassHeaderPath() const;
-        std::string const &classHeaderPath() const;
-        std::string const &implementationHeaderPath() const;
-        std::string const &lexSourcePath() const;
-
-        std::string baseclassHeaderName() const;
-        std::string classHeaderName() const;
-        std::string implementationHeaderName() const;
-
-        std::string const &inputInterface() const;
-        std::string const &inputImplementation() const;
-
-        std::string const &className() const;
-        std::string const &lexFunctionName() const;
-        std::string const &nameSpace() const;
-
         bool debug() const;
-
-        bool has(std::string const &field) const;
-        bool hasNames() const;
-
-        void setAccessorVariables();
-
         bool interactive() const;
         bool lines() const;
+        bool print() const;
+        std::string baseclassHeaderName() const;
+        std::string classHeaderName() const;
+        std::string const &baseclassHeaderPath() const;
+        std::string const &baseclassSkeleton() const;
+        std::string const &classHeaderPath() const;
+        std::string const &className() const;
+        std::string const &classSkeleton() const;
+        std::string const &filenames() const;
+        std::string const &implementationHeaderPath() const;
+        std::string const &implementationSkeleton() const;
+        std::string const &inputImplementation() const;
+        std::string const &inputInterface() const;
+        std::string const &lexFunctionName() const;
+        std::string const &lexSkeleton() const;
+        std::string const &lexSourcePath() const;
+        std::string const &nameSpace() const;
+        std::string implementationHeaderName() const;
+        void setBaseClassHeaderPath(std::string const &name);
+        void setClassHeaderPath(std::string const &name);
+        void setClassName(std::string const &name);
+        void setDebug();
+        void setFilenames(std::string const &name);
+        void setImplementationHeaderPath(std::string const &name);
+        void setInputImplementationPath(std::string const &name);
+        void setInputInterfacePath(std::string const &name);
+        void setInteractive();
+        void setLexFunctionName(std::string const &name);
+        void setLexSourcePath(std::string const &name);
+        void setLines(bool yesNo);
+        void setNameSpace(std::string const &name);
+        void setPrint();
+        void setSkeletonDirectory(std::string const &name);
+        void setTargetDirectory(std::string const &name);
+
+
+        void setAccessorVariables();
 
     private:
         Options();
@@ -111,6 +98,11 @@ class Options
 inline std::string const &Options::inputInterface() const
 {
     return d_inputInterface;
+}
+
+inline std::string const &Options::filenames() const
+{
+    return d_filenames;
 }
 
 inline std::string const &Options::inputImplementation() const
@@ -215,17 +207,22 @@ inline void Options::setLines(bool yesNo)
 
 inline void Options::setDebug()
 {
-    d_debugAll = true;
+    d_debug = true;
 }
 
-inline void Options::setDebug(std::string const &name)
+inline void Options::setPrint()
 {
-    d_debugNames.insert(name);
+    d_print = true;
 }
 
 inline bool Options::interactive() const
 {   
     return d_interactive;
+}
+
+inline bool Options::print() const
+{   
+    return d_print;
 }
 
 inline bool Options::lines() const
@@ -235,17 +232,7 @@ inline bool Options::lines() const
 
 inline bool Options::debug() const
 {
-    return d_debugAll;
-}
-
-inline bool Options::has(std::string const &field) const
-{
-    return d_debugNames.find(field) != d_debugNames.end();
-}
-
-inline bool Options::hasNames() const
-{
-    return d_debugNames.size();
+    return d_debug;
 }
 
 #endif

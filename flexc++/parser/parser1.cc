@@ -7,7 +7,7 @@ Parser::Parser(Rules &rules, States &states)
     d_matched(d_scanner.matched()),
     d_block(0, ""),
     d_options(Options::instance()),
-    d_printTokens(d_arg.option('t')),
+    d_printTokens(d_arg.option('T')),
     d_doError(true),
     d_warnCarets(false),
     d_warnDollars(false),

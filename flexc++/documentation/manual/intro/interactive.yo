@@ -74,3 +74,11 @@ comment is not entered, but was added by us for documentary purposes:
     ? q                         // end the program
     $
         )
+    The interactive scanner only supports one constructor, by default using
+tt(std::cin) to read from and tt(std::cout) to write to:
+        verb(
+    explicit Scanner(std::istream &in = std::cin,
+                     std::ostream &out = std::cout);
+        )
+    Furthmore, interactive scanners only support switching output streams
+(through tt(switchOstream) members).
