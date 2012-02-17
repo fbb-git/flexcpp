@@ -138,7 +138,7 @@ $ignoreInteractive BEGIN    this section is ignored by generator/filter.cc
 $ignoreInteractive END      end ignored section by generator/filter.cc
 
 protected:
-    \@Base(std::istream &in, std::ostream &out, std::istream *ip);
+    \@Base(std::istream &in, std::ostream &out, std::istream *ip = 0);
 $ignoreInteractive BEGIN    this section is ignored by generator/filter.cc
     \@Base(std::string const &infilename, std::string const &outfilename);
 $ignoreInteractive END      end ignored section by generator/filter.cc
