@@ -15,7 +15,9 @@ flexc++ (0.92.00)
   * Implemented --filenames, --print-tokens and --own-tokens
     options/directives 
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 17 Feb 2012 14:10:27 +0100
+  * Manual and man-pages updated
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 17 Feb 2012 14:13:27 +0100
 
 flexc++ (0.91.00)
 
