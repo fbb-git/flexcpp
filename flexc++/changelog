@@ -1,3 +1,11 @@
+flexc++ (0.93.00)
+
+  * Redesigned the interactive scanner: no additional protected data members,
+    an additional member (interactiveLine__) now handles the line-refresh from
+    the input stream.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 20 Feb 2012 09:58:34 +0100
+
 flexc++ (0.92.00)
 
   * Added 'leave(int retValue)' member that can be called from members called

@@ -59,7 +59,7 @@ manpagesection(6.3. PUBLIC MEMBER FUNCTIONS)
     itb(int lex())
         The tt(lex) function performs the lexical scanning of the input file
 specified at construction time (but also see bf(scannerbase.h)(3flexc++) for
-information about intermediate stream-switching facilities). It returns and
+information about intermediate stream-switching facilities). It returns an
 tt(int) representing the em(token) associated with the matched regular
 expression. The returned value 0 indicates end-of-file. Considering its
 default implementation, it could be redefined by the user. tt(Lex)'s default
@@ -70,8 +70,15 @@ inline int Scanner::lex()
     return lex__();
 }
         )
-        With interactive scanners the tt(lex) function is defined in the
-generated tt(lex.cc) file. See the bf(flexc++)(1) man page for details.
+
+    bf(Caveat): with interactive scanners the tt(lex) function is defined in
+the generated tt(lex.cc) file. Once flc() has generated the scanner class
+header file this scanner class header file isn't automatically rewritten by
+flc(). If, at some later stage, an interactive scanner must be generated, then
+the inline tt(lex) implementation must be removed `by hand' from the scanner
+class header file. Likewise, a tt(lex) member implementation (like the above)
+must be provided `by hand' if a non-interactive scanner is required after
+first having generated files implementing an interactive scanner.
     )
 
 manpagesection(6.4. PRIVATE MEMBER FUNCTIONS)

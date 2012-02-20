@@ -37,7 +37,7 @@ size_t \@Base::s_istreamNr = 0;
 
 $insert inputImplementation
 
-\@Base::\@Base(std::istream &in, std::ostream &out, std::istream *ip)
+\@Base::\@Base(std::istream &in, std::ostream &out)
 :
     d_filename("-"),
     d_startCondition(StartCondition__::INITIAL),
@@ -46,8 +46,7 @@ $insert inputImplementation
     d_sawEOF(false),
     d_atBOL(true),
 $insert tailCount
-    d_input(new std::istream(in.rdbuf())),
-    d_in__(ip),
+$insert interactiveInit
     d_dfaBase__(s_dfa__)
 {}
 

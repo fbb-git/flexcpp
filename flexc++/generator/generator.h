@@ -113,6 +113,7 @@ class Generator
         void inputInterface(std::ostream &out) const;
         void insert(std::ostream &out) const;
         void insertSstream(std::ostream &out) const;
+        void interactiveInit(std::ostream &out) const;
         void interactiveLex(std::ostream &out) const;
         void key(std::ostream &out) const;
         void lexFunctionDecl(std::ostream &out) const;

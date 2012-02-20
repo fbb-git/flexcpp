@@ -118,12 +118,9 @@ manpagesection(7.6. PROTECTED CONSTRUCTORS)
 
         bf(This member is not available for interactive scanners.)
 
-    itb(ScannerBase(std::istream &in, std::ostream &out, std::istream *ip = 0))
-       The tt(in) and tt(out) parameters are,
-        respectively, the derived class constructor's input stream and output
-        streams. With interactive scanners, the thirst parameter points to the
-        derived class's tt(std::istringstream) base class; with
-        non-interactive scanners its default value should be used.
+    itb(ScannerBase(std::istream &in, std::ostream &out))
+       The tt(in) and tt(out) parameters are, respectively, the derived class
+        constructor's input stream and output streams.
     )
 
 manpagesection(7.7. PROTECTED MEMBER FUNCTIONS)
@@ -132,8 +129,8 @@ manpagesection(7.7. PROTECTED MEMBER FUNCTIONS)
         use only and should not be called by user-defined members of the
         tt(Scanner) class. 
 
-    The following members, however, 
-        can safely be called by members of the generated tt(Scanner) class:
+    The following members, however, can safely be called by members of the
+        generated tt(Scanner) class:
 
     itemization(
     itb(void accept(size_t nChars = 0))

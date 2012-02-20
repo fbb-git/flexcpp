@@ -27,6 +27,7 @@ DEFINEMACRO(prot)(0)(tt((prot)))
 DELETEMACRO(tt)
 DEFINEMACRO(tt)(1)(em(ARG1))
 DEFINEMACRO(itt)(1)(it() tt(ARG1))
+DEFINEMACRO(itb)(1)(it() bf(ARG1))
 
 COMMENT( man-request, section, date, distribution file, general name)
 manpage(flexc++)(1)(_CurYrs_)(flexc++._CurVers_.tar.gz)

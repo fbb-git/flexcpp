@@ -95,6 +95,11 @@ $insert inputInterface
     bool            d_atBOL;                // the matched text starts at BOL
     std::vector<size_t> d_tailCount;         
     Final d_final;                          // 1st for BOL rules
+                                            
+                                            // only used interactively:
+    std::istream *d_in;                     // points to the input stream
+    std::shared_ptr<std::istringstream> d_line; // holds line fm d_in
+    
     Input           d_input;
     std::string     d_matched;              // matched characters
     bool            d_return;               // return after a rule's action 
@@ -138,7 +143,7 @@ $ignoreInteractive BEGIN    this section is ignored by generator/filter.cc
 $ignoreInteractive END      end ignored section by generator/filter.cc
 
 protected:
-    \@Base(std::istream &in, std::ostream &out, std::istream *ip = 0);
+    \@Base(std::istream &in, std::ostream &out);
 $ignoreInteractive BEGIN    this section is ignored by generator/filter.cc
     \@Base(std::string const &infilename, std::string const &outfilename);
 $ignoreInteractive END      end ignored section by generator/filter.cc
@@ -179,6 +184,7 @@ $ignoreInteractive END      end ignored section by generator/filter.cc
         // otherwise.
 
     ActionType__    actionType__(size_t range); // next action
+    bool            interactiveLine__();        // refresh an interactive line
     bool            return__();                 // 'return' from codeblock
     size_t          matched__(size_t ch);       // handles a matched rule
     size_t          getRange__(int ch);         // convert char to range
