@@ -4,8 +4,7 @@ flexc++ (0.93.00)
     an additional member (interactiveLine__) now handles the line-refresh from
     the input stream.
 
-  * In interactive mode, lineNr() increments at each next interave line.
-
+  * In interactive mode, lineNr() increments at each next interactive line.
 
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 20 Feb 2012 09:58:34 +0100
 
