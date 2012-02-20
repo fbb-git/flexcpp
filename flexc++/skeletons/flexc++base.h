@@ -198,7 +198,8 @@ $ignoreInteractive END      end ignored section by generator/filter.cc
     void            print__() const;            // optionally print token
     void            pushFront__(size_t ch);     // return char to Input
     void            reset__();                  // prepare for new cycle
-    void            switchStream__(std::istream &in);   // next input stream
+                                                // next input stream:
+    void            switchStream__(std::istream &in, size_t lineNr);   
 
 private:
     void p_pushStream(std::string const &name, std::istream *streamPtr);

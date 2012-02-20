@@ -20,7 +20,7 @@ void Generator::interactiveLex(ostream &out) const
         "    line += '\\n';\n"
         "    d_line->clear();\n"
         "    d_line->str(line);\n"
-        "    switchStream__(*d_line);\n"
+        "    switchStream__(*d_line, lineNr());\n"
         "\n"
         "    return true;\n"
         "}\n"

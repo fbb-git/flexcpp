@@ -21,10 +21,11 @@ void Generator::inputImplementation(ostream &out) const
     out << "\n"        
         "{}\n"
         "\n" <<
-        d_baseclassScope << "Input::Input(std::istream *iStream)\n"
+        d_baseclassScope << 
+                    "Input::Input(std::istream *iStream, size_t lineNr)\n"
         ":\n"
         "    d_in(iStream),\n"
-        "    d_lineNr(1)";
+        "    d_lineNr(lineNr)";
 
     out << "\n"        
         "{}\n"

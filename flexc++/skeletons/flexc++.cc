@@ -50,11 +50,11 @@ $insert interactiveInit
     d_dfaBase__(s_dfa__)
 {}
 
-void \@Base::switchStream__(std::istream &in)
+void \@Base::switchStream__(std::istream &in, size_t lineNr)
 {
     d_input.close();
     d_state = 0;
-    d_input = Input(new std::istream(in.rdbuf()));
+    d_input = Input(new std::istream(in.rdbuf()), lineNr);
     d_sawEOF = false;
     d_atBOL = true;
 }
@@ -78,7 +78,7 @@ $insert tailCount
 
 inline void \@Base::switchStreams(std::istream &in, std::ostream &out)
 {
-    switchStream__(in);
+    switchStream__(in, 1);
     switchOstream(out);
 }
 
