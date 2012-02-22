@@ -28,6 +28,7 @@
         INTERACTIVE
         LEXFUNCTIONNAME
         LEXSOURCE
+        MAXDEPTH
         NAMESPACE
         NOLINES
         PRINT

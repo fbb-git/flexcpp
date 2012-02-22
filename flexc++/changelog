@@ -1,3 +1,9 @@
+flexc++ (0.93.50)
+
+  * Added the --max-depth option defining the maximum lexical scanner
+    specification file depth (and %max-depth directive).
+
+
 flexc++ (0.93.00)
 
   * Redesigned the interactive scanner: no additional protected data members,

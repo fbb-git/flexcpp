@@ -40,6 +40,7 @@ namespace
 
         {"debug",                       'd'},
         {"construction",                'K'},
+        {"max-depth",                   'm'},
         {"print-tokens",                't'},
         {"own-tokens",                  'T'},
         {"show-filenames",              'F'},
@@ -53,7 +54,7 @@ namespace
 int main(int argc, char **argv)
 try
 {
-    Arg &arg = Arg::initialize("b:B:c:C:df:Fhi:I:Kl:L:n:S:TtvV",
+    Arg &arg = Arg::initialize("b:B:c:C:df:Fhi:I:Kl:L:m:n:S:TtvV",
                     longOptions, longEnd, argc, argv);
     arg.versionHelp(usage, version, 1);
 

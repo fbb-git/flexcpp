@@ -48,6 +48,8 @@ void usage(string const &program_name)
     "            filename for the lex function's source.\n"
     "   --lines:\n"
     "            add #line preprocessor directives to the lex function.\n"
+    "   --max-depth=<maxDepth> (-m):\n"
+    "            set the max. scanner specification file inclusion depth.\n"
     "   --namespace=<namespace> (-n):\n"
     "            define a namespace.\n"
     "   --no-baseclass-header:\n"

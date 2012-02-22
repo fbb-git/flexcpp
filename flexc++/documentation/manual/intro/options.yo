@@ -64,10 +64,6 @@ arguments if their associated long options require arguments as well.
            Use tt(skeleton) as the pathname of the file containing the
             skeleton of the implementation header. Its filename defaults to
             tt(flexc++.ih).
-    it() lsoption(lex-skeleton)(L)(skeleton)nl()
-           Use tt(skeleton) as the pathname of the file containing the
-            tt(lex()) member function's skeleton. Its filename defaults to
-            tt(flexc++.cc).
     it() loption(interactive)nl()
            Generate an interactive scanner. An interactive scanner reads lines
             from the input stream, and then returns the tokens encountered on
@@ -75,12 +71,22 @@ arguments if their associated long options require arguments as well.
             predefines the tt(Scanner(std::istream &in, std::ostream &out))
             constructor, by default assuming that input is read from
             tt(std::cin). 
+    it() lsoption(lex-skeleton)(L)(skeleton)nl()
+           Use tt(skeleton) as the pathname of the file containing the
+            tt(lex()) member function's skeleton. Its filename defaults to
+            tt(flexc++.cc).
     it() laoption(lex-function-name)(funname)nl()
            Use tt(funname) rather than tt(lex) as the name of the member
             function performing the lexical scanning.
     it() lsoption(lex-source)(l)(source)nl()
            Define tt(source) as the name of the source file containing the
             scanner member function tt(lex). Defaults to tt(lex.cc).
+    it() lsoption(max-depth)(m)(depth)nl()
+           Set the maximum inclusion depth of the lexical scanner's
+            specification files to tt(depth). By default the maximum depth is
+            set to 10. When more than tt(depth) specification files are used
+            the scanner throws a tt(Max stream stack size exceeded)
+            tt(std::length_error) exception. 
     it() lsoption(namespace)(n)(namespace)nl()
            Define the scanner base class, the paser class and the scanner
             implentations in the namespace tt(namespace). By default

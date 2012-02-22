@@ -7,13 +7,17 @@
 class Options
 {
     std::string d_baseClassHeaderPath;
+    std::string d_baseClassSkeleton;
     std::string d_classHeaderPath;
     std::string d_className;
+    std::string d_classSkeleton;
     std::string d_filenames;
     std::string d_implementationHeaderPath;
+    std::string d_implementationSkeleton;
     std::string d_inputImplementation;
     std::string d_inputInterface;
     std::string d_lexFunctionName;
+    std::string d_lexSkeleton;
     std::string d_lexSourcePath;
     std::string d_nameSpace;
     std::string d_skeletonDirectory;
@@ -24,11 +28,7 @@ class Options
     bool d_print;
     bool d_debug;
 
-    // skeletons
-    std::string d_baseClassSkeleton;
-    std::string d_classSkeleton;
-    std::string d_lexSkeleton;
-    std::string d_implementationSkeleton;
+    size_t d_maxDepth;
 
             // strings containing default file and other names
     static char s_defaultLexFunctionName[];
@@ -48,6 +48,7 @@ class Options
         bool interactive() const;
         bool lines() const;
         bool print() const;
+        std::size_t maxDepth() const;
         std::string baseclassHeaderName() const;
         std::string classHeaderName() const;
         std::string const &baseclassHeaderPath() const;
@@ -77,6 +78,7 @@ class Options
         void setLexFunctionName(std::string const &name);
         void setLexSourcePath(std::string const &name);
         void setLines(bool yesNo);
+        void setMaxDepth(size_t depth);
         void setNameSpace(std::string const &name);
         void setPrint();
         void setSkeletonDirectory(std::string const &name);
@@ -94,6 +96,11 @@ class Options
                       char const *optionName, std::string const &className, 
                       char const *suffix);
 };
+
+inline size_t Options::maxDepth() const
+{
+    return d_maxDepth;
+}
 
 inline std::string const &Options::inputInterface() const
 {
@@ -203,6 +210,11 @@ inline void Options::setInteractive()
 inline void Options::setLines(bool yesNo)
 {   
     d_lines = yesNo;
+}
+
+inline void Options::setMaxDepth(size_t maxDepth)
+{   
+    d_maxDepth = maxDepth;
 }
 
 inline void Options::setDebug()

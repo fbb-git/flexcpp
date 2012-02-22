@@ -61,6 +61,13 @@ _lexsource:
     }
 ;
 
+_max_depth:
+    MAXDEPTH
+    {
+        d_expect = "max. spec. file inclusion depth";
+    }
+;
+
 _namespace:
     NAMESPACE
     {
@@ -148,6 +155,11 @@ option:
     _target_directory _opt_is _stringOrIdent
     {
         d_options.setTargetDirectory(d_matched);
+    }
+|
+    _max_depth opt_is NUMBER
+    {
+        d_options.setMaxDepth(A2x(d_matched));
     }
 |
     _namespace _opt_is _stringOrIdent

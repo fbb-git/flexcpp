@@ -152,6 +152,7 @@ OPTBL                   [[:blank:]]*
     %interactive                return Parser::INTERACTIVE;
     %lex-function-name          return Parser::LEXFUNCTIONNAME;
     %lex-source                 return Parser::LEXSOURCE;
+    %max-depth                  return Parser::MAXDEPTH;
     %no-lines                   return Parser::NOLINES;
     %namespace                  return Parser::NAMESPACE;
     %print-tokens               return Parser::PRINT;
@@ -161,8 +162,12 @@ OPTBL                   [[:blank:]]*
     "%s"                        return Parser::INCL_START_CONDITION;
     "%x"                        return Parser::EXCL_START_CONDITION;
 
+    {DECIMAL}                   return Parser::DECIMAL;
+
     .                           return matched()[0];
 }
 
 <line>.*                        return Parser::STRING;
 <line>\n                        return popSc('\n');
+
+

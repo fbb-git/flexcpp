@@ -16,7 +16,7 @@ void Generator::declarations(ostream &out) const
                                                                         ",\n"
         "        s_finacIdx__             = " << dfaCols() - 2 << ",\n"
         "        s_nRules__               = " << d_rules.size() << ",\n"
-        "        s_maxSizeofStreamStack__ = 10\n"
+        "        s_maxSizeofStreamStack__ = " << d_options.maxDepth() << "\n"
         "    };\n"
         ;
 }
