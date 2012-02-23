@@ -3,8 +3,7 @@
 %filenames parser
 %parsefun-source parse.cc
 %scanner ../scanner/scanner.h
-%print                      d_scanner.matched()
-%scanner-token-function     d_scanner.lex()
+%print-tokens
 %debug
 
 %baseclass-preinclude preinclude.h
@@ -98,4 +97,3 @@ identifier:
 %include inc/mscompound
 %include inc/optmsrule
 %include inc/rules
- 

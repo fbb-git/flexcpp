@@ -4,7 +4,6 @@
 #include <climits>
 #include <iostream>
 #include <deque>
-#include <stack>
 #include <string>
 #include <vector>
 #include <memory>
@@ -74,13 +73,17 @@ private:
         // Its member get() returns the next input character
 $insert inputInterface
 
+protected:
+
     struct StreamStruct
     {
         std::string pushedName;
         Input pushedInput;
     };
 
-    std::stack<StreamStruct>    d_streamStack;
+private:
+
+    std::vector<StreamStruct>    d_streamStack;
 
     std::string     d_filename;             // name of the currently processed
     static size_t   s_istreamNr;            // file. With istreams it receives
@@ -169,6 +172,8 @@ $ignoreInteractive END      end ignored section by generator/filter.cc
     void            push(std::string const &txt);   // same: chars
 
 $ignoreInteractive BEGIN    this section is ignored by generator/filter.cc
+
+    std::vector<StreamStruct> const &streamStack() const;
 
     void            pushStream(std::istream &curStream);
     void            pushStream(std::string const &curName);

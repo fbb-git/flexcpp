@@ -9,6 +9,7 @@
 #include "../state/state.h"
 #include "../block/block.h"
 
+#include <bobcat/arg>
 
 // $insert baseclass
 #include "parserbase.h"
@@ -102,16 +103,24 @@ class Parser: public ParserBase, public DataType
         void error(char const *msg);    // called on (syntax) errors
         int lex();                      // returns the next token from the
                                         // lexical scanner. 
-        void print();                   // use, e.g., d_token, d_loc
+        void print();  
 
     // support functions for parse():
         void executeAction(int ruleNr);
         void errorRecovery();
         int lookup(bool recovery);
         void nextToken();
+        void print__();
 };
 
+inline void Parser::print()
+{
+    if (d_arg.option('T'))
+        print__();
+}
+
 #endif
+
 
 
 

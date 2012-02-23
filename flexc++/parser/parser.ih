@@ -7,7 +7,6 @@
 
     // Add below here any includes etc. that are only 
     // required for the compilation of Parser's sources.
-#include <bobcat/arg>
 #include <bobcat/mstream>
 #include <bobcat/string>
 #include <bobcat/a2x>

@@ -154,7 +154,7 @@ void \@Base::p_pushStream(std::string const &name, std::istream *streamPtr)
         throw std::length_error("Max stream stack size exceeded");
     }
 
-    d_streamStack.push(StreamStruct{d_filename, d_input});
+    d_streamStack.push_back(StreamStruct{d_filename, d_input});
     d_filename = name;
     d_input = Input(streamPtr);
     d_sawEOF = false;
@@ -169,11 +169,11 @@ bool \@Base::popStream()
     if (d_streamStack.empty())
         return false;
 
-    StreamStruct &top = d_streamStack.top();
+    StreamStruct &top = d_streamStack.back();
 
     d_input =   top.pushedInput;
     d_filename = top.pushedName;
-    d_streamStack.pop();
+    d_streamStack.pop_back();
     d_sawEOF = false;
 
     return true;

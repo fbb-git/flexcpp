@@ -1,8 +1,13 @@
-flexc++ (0.93.50)
+flexc++ (0.94.00)
 
   * Added the --max-depth option defining the maximum lexical scanner
     specification file depth (and %max-depth directive).
 
+  * Using a vector rather than a a stack to store stacked streams, to allow
+    the Scanner class (read) access to the number of stacked files and their
+    names. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 23 Feb 2012 11:53:06 +0100
 
 flexc++ (0.93.00)
 

@@ -252,6 +252,18 @@ manpagesection(7.7. PROTECTED MEMBER FUNCTIONS)
     itb(StartCondition__  startCondition() const)
        returns the currently active start condition (mini scanner);
 
+    itb(std::vector<StreamStruct> const &streamStack() const)
+       returns the vector of currently stacked input streams. The vector's
+        size equals 0 unless tt(pushStream) has been used. So flc()'s input
+        file is not counted here. The tt(StreamStruct) is a tt(struct) only
+        having one accessible member: tt(std::string const &pushedName), which
+        holds the name of the pushed stream. The vector is used internally 
+        as a stack: the stream that was first pushed is found at index
+        position 0, the most recently pushed stream is found at
+        tt(streamStack().back()). 
+
+        bf(This member is not available with interactive scanners.)
+
     )
 
 manpagesection(7.8. PROTECTED DATA MEMBERS)

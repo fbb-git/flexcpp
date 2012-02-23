@@ -9,20 +9,10 @@ void link(string maino, string strip)
     compiler = COMPILER " -o bin/" + binary + " " + maino +
                         " -L. -l" LIBRARY " " LIBS;
 
-//    if 
-//    (
-//        maino younger "bin/" + binary
-//        || 
-//        "lib" LIBRARY ".a" younger "bin/" + binary
-//        ||
-//        g_compiled
-//    )
-    {
-        showCd(TMP_DIR);
-        md("bin");
-        printf("LINKING:\n");
-        system(compiler + " " + strip + setOpt(LDFLAGS, "LDFLAGS"));
-    }
+    showCd(TMP_DIR);
+    md("bin");
+    printf("LINKING:\n");
+    system(compiler + " " + strip + setOpt(LDFLAGS, "LDFLAGS"));
 
     chdir("");
 }

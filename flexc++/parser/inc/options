@@ -157,7 +157,7 @@ option:
         d_options.setTargetDirectory(d_matched);
     }
 |
-    _max_depth opt_is NUMBER
+    _max_depth _opt_is DECIMAL
     {
         d_options.setMaxDepth(A2x(d_matched));
     }
