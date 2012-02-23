@@ -113,12 +113,6 @@ class Parser: public ParserBase, public DataType
         void print__();
 };
 
-inline void Parser::print()
-{
-    if (d_arg.option('T'))
-        print__();
-}
-
 #endif
 
 

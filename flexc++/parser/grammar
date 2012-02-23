@@ -3,7 +3,6 @@
 %filenames parser
 %parsefun-source parse.cc
 %scanner ../scanner/scanner.h
-%print-tokens
 %debug
 
 %baseclass-preinclude preinclude.h
