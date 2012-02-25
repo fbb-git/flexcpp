@@ -1,3 +1,9 @@
+flexc++ (0.94.10)
+
+  * Removed %max-depth again: should only be an option, not a directive 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 25 Feb 2012 16:07:12 +0100
+
 flexc++ (0.94.00)
 
   * Added the --max-depth option defining the maximum lexical scanner

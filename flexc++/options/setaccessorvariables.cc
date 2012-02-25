@@ -12,6 +12,12 @@ void Options::setAccessorVariables()
 
     arg.option(&d_nameSpace, 'n');  // -n overrules %namespace spec in lexer
 
+    string value;
+    d_maxDepth = arg.option(&value, 'm') ? 
+                    A2x(value).to<size_t>() 
+                : 
+                    MAX_DEPTH;
+        
     // Skeletons
     if (!arg.option(&d_skeletonDirectory, 'S') && d_skeletonDirectory.empty())
         d_skeletonDirectory = s_defaultSkeletonDirectory;

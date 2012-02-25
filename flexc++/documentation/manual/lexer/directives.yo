@@ -75,12 +75,6 @@ END)
     it() bf(%lex-source) tt(= "source") nl()
            Defines the pathname of the file to contain the scanner member
             tt(lex). Corresponding command-line option: tt(--lex-source).
-    it() bf(%max-depth) tt(= depth) nl()
-           Set the maximum inclusion depth of the lexical scanner's
-            specification files to tt(depth). By default the maximum depth is
-            set to 10. When more than tt(depth) specification files are used
-            the scanner throws a tt(Max stream stack size exceeded)
-            tt(std::length_error) exception. 
     it() bf(%no-lines) nl() 
            Do not put tt(#line) preprocessor directives in the file containing
             the scanner's tt(lex) function. If omitted tt(#line) directives

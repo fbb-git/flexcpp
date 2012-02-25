@@ -28,6 +28,10 @@ class Options
     bool d_print;
     bool d_debug;
 
+    enum 
+    {
+        MAX_DEPTH = 10 
+    };
     size_t d_maxDepth;
 
             // strings containing default file and other names
@@ -78,7 +82,6 @@ class Options
         void setLexFunctionName(std::string const &name);
         void setLexSourcePath(std::string const &name);
         void setLines(bool yesNo);
-        void setMaxDepth(size_t depth);
         void setNameSpace(std::string const &name);
         void setPrint();
         void setSkeletonDirectory(std::string const &name);
@@ -210,11 +213,6 @@ inline void Options::setInteractive()
 inline void Options::setLines(bool yesNo)
 {   
     d_lines = yesNo;
-}
-
-inline void Options::setMaxDepth(size_t maxDepth)
-{   
-    d_maxDepth = maxDepth;
 }
 
 inline void Options::setDebug()
