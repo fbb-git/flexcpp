@@ -1,8 +1,12 @@
-flexc++ (0.94.10)
+flexc++ (0.95.00)
 
   * Removed %max-depth again: should only be an option, not a directive 
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 25 Feb 2012 16:07:12 +0100
+  * Starting this release all release tags (using names that are identical to
+    the version number, so for this release the tag is 0.95.00) are signed to
+    allow authentication.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 27 Feb 2012 13:28:44 +0100
 
 flexc++ (0.94.00)
 

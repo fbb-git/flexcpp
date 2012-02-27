@@ -4,6 +4,13 @@ void Options::setAccessorVariables()
 {
     Arg &arg = Arg::instance();
 
+    d_debug = d_debug || arg.option('d');   // debug facility requested
+
+    if (arg.option(0, "no-lines"))
+        d_lines = false;
+
+    d_print = d_print || arg.option('t');
+
     if (d_className.empty())
         d_className = s_defaultClassName;
 
@@ -36,11 +43,6 @@ void Options::setAccessorVariables()
 
     if (arg.option(0, "interactive")) // does not overwrite %option when no
         d_interactive = true;         // --interactive is supplied
-
-    d_debug |= arg.option('d');         // debug facility requested
-
-    if (arg.option(0, "no-lines"))
-        d_lines = false;
 
     // Paths
 
