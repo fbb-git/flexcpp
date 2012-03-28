@@ -2,9 +2,8 @@
 
 StartConditions::StartConditions()
 :
-    d_type(EXCLUSIVE),
-    d_inclusive(false)
+    d_type(EXCLUSIVE)
 {
-    d_hash["INITIAL"] = {EXCLUSIVE};
+    d_hash["INITIAL"] = {INCLUSIVE};
 }
 

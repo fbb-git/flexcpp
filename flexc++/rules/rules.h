@@ -62,10 +62,18 @@ class Rules: public DataType
                                                 // rule
         void noActions();                       // clear previous actions's
                                                 // 'orAction' states
+
+        StartConditions const &startConditions() const;
+
     private:
         void setRule(size_t state, size_t index);
         static bool nonViable(Rule const &rule);
 };
+
+inline StartConditions const &Rules::startConditions() const
+{
+    return d_startConditions;
+}
 
 inline void Rules::setOrAction()
 {

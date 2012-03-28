@@ -1,6 +1,7 @@
 #ifndef INCLUDED_STARTCONDITIONS_
 #define INCLUDED_STARTCONDITIONS_
 
+#include <iosfwd>
 #include <unordered_map>
 #include <vector>
 #include <string>
@@ -10,6 +11,9 @@ class SemVal;
 
 class StartConditions
 {
+    friend std::ostream &operator<<(std::ostream &out, 
+                                    StartConditions const &startConditions);
+
     public:
         enum Type
         {
@@ -33,7 +37,6 @@ class StartConditions
         Hash d_hash;
 
         std::vector<StartCondition *> d_active;
-        bool d_inclusive;
         StartCondition *d_initialSC;
 
     public:
@@ -106,7 +109,6 @@ inline void StartConditions::setType(Type type)
 inline void StartConditions::reset()
 {
     d_active.clear();
-    d_inclusive = false;
 }
 
 inline std::vector<size_t> const &StartConditions::operator()

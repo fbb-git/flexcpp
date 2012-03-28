@@ -1,3 +1,17 @@
+flexc++ (0.96.00)
+
+  * Harold Bruintje noticed that rules explicitly assigned to the INITIAL mini
+    scanner are also used by other %s (inclusive) mini scanners. This is in
+    violation of the description given in 
+        http://pubs.opengroup.org/onlinepubs/7908799/xcu/lex.html
+    stating
+        `When the generated scanner is in a %s state, patterns with no state
+        specified will be also active' 
+    which excludes <INTIAL>regeg rules.
+    This release implements %s mini scanner handling as described in lex.html.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 28 Mar 2012 15:26:10 +0200
+
 flexc++ (0.95.00)
 
   * Removed %max-depth again: should only be an option, not a directive 
