@@ -95,6 +95,15 @@ void main(int argc, list argv, list envp)
         program(strip);
     }
 
+    if (option == "parser")
+    {
+        system ("touch parser/inc/a");
+        parser();           // in icmake/libary2
+        system ("rm parser/inc/a");
+        
+        program(strip);
+    }
+
 //    if (option == "test")
 //        test(option2);
 
@@ -107,6 +116,7 @@ void main(int argc, list argv, list envp)
         "   manual             - build the manual (requires Yodl)\n"
         "   program [strip]    - build flexc++ (optionally strip the\n"
         "                        executable)\n"
+        "   parser [strip]     - build new parser, then 'build program'\n"
         "   scanner [strip]    - build new scanner, then 'build program'\n"
         "   test [what]        - run the test-suite\n"
         "                        `what' can be the name of a specific test\n"

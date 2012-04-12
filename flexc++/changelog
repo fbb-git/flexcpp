@@ -7,6 +7,10 @@ flexc++ (0.97.00)
     constants by 'numeric_limits<...>::max()' calls. Also in the flexc++
     skeletons. 
 
+  * The files parser/parserbase.h and parser/parse.cc were removed from
+    'build program' to remove the program's build process dependency on
+    bisonc++. To recreate the program for a new parser use 'build parser'.
+
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 12 Apr 2012 10:45:10 +0200
 
 flexc++ (0.96.00)
@@ -22,7 +26,7 @@ flexc++ (0.96.00)
         `When the generated scanner is in a %s state, patterns with no state
         specified will be also active' 
 
-    which excludes <INTIAL>regeg rules.
+    which excludes <INTIAL> regex rules.
 
     This release implements %s mini scanner handling as described in lex.html.
 

@@ -295,8 +295,6 @@ void build_library()
 
     staticLib = g_cwd + TMP_DIR "/lib" LIBRARY ".a";
 
-    parser();
-
     g_compiled = 0;
 
     if (exists("version.cc") && "VERSION" younger "version.cc")
