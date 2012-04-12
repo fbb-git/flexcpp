@@ -64,10 +64,9 @@
                 INTERVAL:   Interval;
 
 %type <STRING>      identifier _name_def _decimal
-%type <CHARCLASS>   characterclass _cc_set _cc_start _cc_contents _cc_negated
-                        _cc_element
+%type <CHARCLASS>   _cc_set _cc_start _cc_contents _cc_negated _cc_element
 %type <INTERVAL>    _interval
-%type <PATTERN>     _unit _regex _optMs_regex regexOrEOF
+%type <PATTERN>     characterclass _unit _regex _optMs_regex regexOrEOF
 
 %%
 
