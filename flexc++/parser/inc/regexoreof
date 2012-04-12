@@ -92,9 +92,7 @@ _unit:
 |
     characterclass
     {
-        cerr << "PARSER: CHARACTERCLASS\n";
         $$ = characterClass($1);
-        cerr << "PARSER: CHARACTERCLASS\n";
     }
 ;
 
@@ -115,6 +113,7 @@ _regex:
     _unit
     {
         Options::regexCall("unit");
+        $$ = $1;
     }
 |
     _regex _open_curly _interval '}'
@@ -134,9 +133,7 @@ _regex:
 |
     _regex _regex                     %prec CHAR
     {
-        cerr << "PARSER: REGEX_ CAT\n";
         $$ = concatenate($1, $2);
-        cerr << "PARSER: REGEX_ CAT\n";
     }
 |
     _regex '|' _regex

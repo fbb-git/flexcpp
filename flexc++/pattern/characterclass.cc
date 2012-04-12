@@ -19,5 +19,6 @@ Pattern Pattern::characterClass(States &states, CharClass const &charClass)
 //            "States: " << pair.first << " .. " << pair.second << '\n';
 
     Pattern ret(pair);
+
     return ret;
 }
