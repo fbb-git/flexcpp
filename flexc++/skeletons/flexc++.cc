@@ -215,7 +215,7 @@ void \@Base::accept(size_t nChars)          // old name: less
 void \@Base::determineMatchedSize(FinData const &final)
 {
     size_t length = final.matchLen;
-    if (final.tailCount != UINT_MAX)
+    if (final.tailCount != numeric_limits<size_t>::max())
         length -= final.tailCount;
 
     d_input.reRead(d_matched, length);      // reread the tail section
@@ -232,9 +232,9 @@ $insert 4 debug.action "MATCH"
     d_input.reRead(ch);
 
     if (!d_atBOL)
-        d_final.atBOL.rule = UINT_MAX;
+        d_final.atBOL.rule = numeric_limits<size_t>::max();
 
-    FinData &final = d_final.atBOL.rule == UINT_MAX ? 
+    FinData &final = d_final.atBOL.rule == numeric_limits<size_t>::max() ? 
                             d_final.notAtBOL
                         :
                             d_final.atBOL;
@@ -293,7 +293,7 @@ $insert 4 debug.action "ECHO_FIRST"
     //  If the s_rfc__ element has its COUNT flag set then set the 
     // d_tailCount[rule] value to the element's tailCount value, if it has its 
     // INCREMENT flag set then increment d_tailCount[rule]
-    //  If neither was set set the d_tailCount[rule] to UINT_MAX
+    //  If neither was set set the d_tailCount[rule] to numeric_limits<size_t>::max()
     // 
     // If the s_rfc__ element has its FINAL flag set then store the rule number
     // in d_final.second. If it has its FINAL + BOL flags set then store the
@@ -315,7 +315,7 @@ void \@Base::inspectRFCs__()
         if (flag & INCREMENT)
             ++d_tailCount[rule];
         else 
-            d_tailCount[rule] = (flag & COUNT) ? rfc[ACCCOUNT] : UINT_MAX;
+            d_tailCount[rule] = (flag & COUNT) ? rfc[ACCCOUNT] : numeric_limits<size_t>::max();
 
         if (flag & FINAL)
         {
@@ -327,8 +327,8 @@ void \@Base::inspectRFCs__()
 
 void \@Base::reset__()
 {
-    d_final = Final { {UINT_MAX, UINT_MAX, UINT_MAX }, 
-                      {UINT_MAX, UINT_MAX, UINT_MAX } };
+    d_final = Final { {numeric_limits<size_t>::max(), numeric_limits<size_t>::max(), numeric_limits<size_t>::max() }, 
+                      {numeric_limits<size_t>::max(), numeric_limits<size_t>::max(), numeric_limits<size_t>::max() } };
     d_state = 0;
     d_return = true;
 

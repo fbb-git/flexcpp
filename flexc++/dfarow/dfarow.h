@@ -77,7 +77,7 @@ class DFARow
                                                         // rules? the 1st
                                                         // index is a BOL rule
                                                         // the 2nd not (or
-                                                        // UINT_MAX)
+                                                        // std::numeric_limits<size_t>::max())
         std::vector<TailCount> &tailCounts();
 
         std::vector<TailCount> const &tailCounts() const;

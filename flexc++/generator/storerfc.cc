@@ -19,13 +19,13 @@ void Generator::storeRFC(TailCount const &tailCount,
 
     if (final.first == rule)
     {
-        final.first = UINT_MAX;
+        final.first = numeric_limits<size_t>::max();
         rfc.d_flag |= FINAL | BOL;
     }
 
     if (final.second == rule)
     {
-        final.second = UINT_MAX;
+        final.second = numeric_limits<size_t>::max();
         rfc.d_flag |= FINAL;
     }
 

@@ -1,6 +1,6 @@
 #include "dfarow.h"
 
-#include <climits>
+#include <limits>
 #include <sstream>
 #include <iterator>
 #include <sstream>

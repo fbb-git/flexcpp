@@ -9,7 +9,7 @@
 #include <bobcat/ranger>
 
 #include <iterator>
-#include <climits>
+#include <limits>
 #include <iomanip>
 
 #include "../ranges/ranges.h"

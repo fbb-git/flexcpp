@@ -7,7 +7,7 @@
 set<char> CharRange::negate(set<char> const &cSet)
 {
     AllChars begin(0);
-    AllChars end(UCHAR_MAX);
+    AllChars end(numeric_limits<unsigned char>::max());
 
 //std::cerr << "IN-SET: ";
 //copy(cSet.begin(), cSet.end(), ostream_iterator<int>(std::cerr, ", "));

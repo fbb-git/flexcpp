@@ -1,7 +1,7 @@
 #ifndef \@BASE_H_INCLUDED
 #define \@BASE_H_INCLUDED
 
-#include <climits>
+#include <limits>
 #include <iostream>
 #include <deque>
 #include <string>
@@ -229,8 +229,8 @@ inline void \@Base::push(std::string const &str)
 
 inline bool \@Base::atFinalState()
 {
-    return d_final.notAtBOL.rule != UINT_MAX || 
-            (d_atBOL && d_final.atBOL.rule != UINT_MAX);
+    return d_final.notAtBOL.rule != std::numeric_limits<size_t>::max() || 
+            (d_atBOL && d_final.atBOL.rule != std::numeric_limits<size_t>::max());
 }
 
 inline void \@Base::setFilename(std::string const &name)

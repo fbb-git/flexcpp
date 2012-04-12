@@ -5,7 +5,7 @@ void DFARow::updateViable(size_t &destIdx, size_t ruleIdx)
     if (destIdx <= ruleIdx)             // keep the lowest rule index
         return;
 
-    if (destIdx != UINT_MAX)            // unset the viable state of the 
+    if (destIdx != numeric_limits<size_t>::max())            // unset the viable state of the 
         (*d_rules)[destIdx].setViable(false);   // previously set rule
 
     (*d_rules)[ruleIdx].setViable(true);        // new rule now viable

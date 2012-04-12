@@ -2,7 +2,7 @@
 
 set<char> const &CharRange::predefined(std::string const &setName)
 {
-    size_t const beyond = UCHAR_MAX + 1;
+    size_t const beyond = numeric_limits<unsigned char>::max() + 1;
 
     auto &chSet = s_hash[setName];
 

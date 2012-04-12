@@ -2,7 +2,7 @@
 
 #include <iostream>     // TMP
 
-#include <climits>
+#include <limits>
 #include <cctype>
 #include <iterator>
 #include <algorithm>

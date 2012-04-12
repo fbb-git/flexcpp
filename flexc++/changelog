@@ -3,6 +3,12 @@ flexc++ (0.97.00)
   * Added the --regex-calls option showing the order in which elements from
     regular expressions are processed.
 
+  * Replaced '#include <climits>' by '#include <limits>' and '..._MAX'
+    constants by 'numeric_limits<...>::max()' calls. Also in the flexc++
+    skeletons. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 12 Apr 2012 10:45:10 +0200
+
 flexc++ (0.96.00)
 
   * Harold Bruintje noticed that rules explicitly assigned to the INITIAL mini
