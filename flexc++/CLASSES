@@ -5,20 +5,13 @@
 utility         
 
 interval                utility
-charclass               utility
-
-options         
-
-pattern                 utility options
-
 scanner                 utility
 
-# semunion                pattern charclass interval
-# spsemunion              semunion
+options         
+pattern                 utility options
 
-startconditions 
 charrange       
-ranges          
+charclass               utility charrange
 
 statedata       
 statestring             statedata
@@ -26,20 +19,19 @@ state                   statedata
 states                  state
 tailcount               state
 
+startconditions 
 block           
 rule                    block 
-
-# rules                   utility spsemunion startconditions rule
 rules                   utility startconditions rule
 
+ranges
 dfarow                  ranges rules states tailcount
 dfa                     dfarow        
 dfas                    rules dfa  
 
-# parser           utility   state   block   scanner spsemunion states options
-parser             utility   state   block   scanner states options
+parser                  utility state block scanner states options
 
-generator          dfas    startconditions   options
+generator               dfas startconditions options
 
 
 

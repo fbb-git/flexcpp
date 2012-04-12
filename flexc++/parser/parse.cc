@@ -3028,7 +3028,6 @@ void Parser::executeAction(int production)
         case 127:
 #line 135 "inc/regexoreof"
         {
-         d_vsp__[-1];
          d_val__.get<Tag__::PATTERN>() = concatenate(d_vsp__[-1].data<Tag__::PATTERN>(), d_vsp__[0].data<Tag__::PATTERN>());
          }
         break;
