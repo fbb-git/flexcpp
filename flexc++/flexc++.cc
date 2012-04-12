@@ -45,6 +45,7 @@ namespace
         {"own-tokens",                  'T'},
         {"show-filenames",              'F'},
         {"verbose",                     'V'},
+        {"regex-calls",                 Arg::None},
     };
 
     auto longEnd = longOptions +
@@ -57,6 +58,9 @@ try
     Arg &arg = Arg::initialize("b:B:c:C:df:Fhi:I:Kl:L:m:n:S:TtvV",
                     longOptions, longEnd, argc, argv);
     arg.versionHelp(usage, version, 1);
+
+    if (arg.option(0, "regex-calls"))
+        Options::showRegexCalls();
 
     States states;
     Rules rules(states);

@@ -1,11 +1,13 @@
 #include "options.h"
 
-#include <iostream>
 #include <bobcat/arg>
 #include <bobcat/string>
 #include <bobcat/mstream>
 
 #include "SKEL"
+
+inline void Options::nop(char const *)
+{}
 
 using namespace std;
 using namespace FBB;

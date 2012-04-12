@@ -5,6 +5,7 @@
 #include <bobcat/errno>
 #include <bobcat/msg>
 
+#include "options/options.h"
 #include "states/states.h"
 #include "rules/rules.h"
 #include "parser/parser.h"

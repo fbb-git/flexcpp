@@ -3,6 +3,8 @@
 Pattern Pattern::quantifier(States &states, Pattern const &pat, 
                                                   size_t type)
 {
+    Options::regexCall("quantifier");
+
     Pattern ret;
 
     switch (type)

@@ -4,6 +4,8 @@ Pattern Pattern::alternatives(States &states,
                                     Pattern const &lhs, 
                                     Pattern const &rhs)
 {
+    Options::regexCall("alternatives");
+
     States::Pair pair = states.next2();
     states[pair.first] = State::factory(State::EMPTY, lhs.begin(), 
                                                       rhs.begin());

@@ -65,6 +65,8 @@ void usage(string const &program_name)
     "   --print-tokens (-t):\n"
     "           the print() member of the generated parser class displays\n"
     "           the tokens and their corresponding matched text.\n"
+    "   --regex-calls:\n"
+    "           show function call order when parsing regexes\n"
     "   --show-filenames (-F):\n"
     "            display the names of generated files.\n"
     "   --skeleton-directory=<path> (-S):\n"

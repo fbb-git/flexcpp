@@ -6,14 +6,16 @@ utility
 
 interval                utility
 charclass               utility
-pattern                 utility
+
+options         
+
+pattern                 utility options
 
 scanner                 utility
 
 semunion                pattern charclass interval
 spsemunion              semunion
 
-options         
 startconditions 
 charrange       
 ranges          

@@ -1,6 +1,6 @@
 #include "pattern.h"
 
-#include <iostream>         // TMP
+// #include <iostream>         // TMP
 
 #include <limits>
 #include <string>
@@ -11,6 +11,7 @@
 
 #include "../interval/interval.h"
 #include "../charclass/charclass.h"
+#include "../options/options.h"
 
 using namespace std;
 using namespace FBB;

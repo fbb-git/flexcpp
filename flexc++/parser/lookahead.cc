@@ -2,6 +2,8 @@
 
 spSemUnion Parser::lookahead(spSemUnion &left, spSemUnion &right)
 {
+    Options::regexCall("lookahead");
+
     d_doError = false;
 
     if (d_usesLOP)

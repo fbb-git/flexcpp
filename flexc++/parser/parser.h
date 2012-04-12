@@ -37,15 +37,15 @@ class Parser: public ParserBase, public DataType
 
     Options &d_options;
 
-    std::string d_expect;
-    bool d_printTokens;
+    bool d_boln;                    // rule starts at boln
     bool d_doError;                 // use the error() function at ERRORs
+    bool d_printTokens;
+    bool d_usesLOP;
     bool d_warnCarets;              // carets in a RE
     bool d_warnDollars;             // dollars in a RE
-    size_t d_tokenCount;
-    bool d_boln;                    // rule starts at boln
-    bool d_usesLOP;
     size_t d_parentheses;
+    size_t d_tokenCount;
+    std::string d_expect;
 
     Rules &d_rules;
     States &d_states;

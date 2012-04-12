@@ -2,6 +2,7 @@
 
 spSemUnion Parser::interval(spSemUnion &regex, spSemUnion const &interval)
 {
+    Options::regexCall("interval");
     d_scanner.multiAsChar();
     return Pattern::interval(d_states, 
                             regex->value<PATTERN>(),

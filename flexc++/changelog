@@ -1,3 +1,8 @@
+flexc++ (0.97.00)
+
+  * Added the --regex-calls option showing the order in which elements from
+    regular expressions are processed.
+
 flexc++ (0.96.00)
 
   * Harold Bruintje noticed that rules explicitly assigned to the INITIAL mini

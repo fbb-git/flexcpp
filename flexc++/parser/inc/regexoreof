@@ -111,6 +111,9 @@ _quantifier:
     // regex returns a Pattern, embedded in a spSemUnion
 _regex:
     _unit
+    {
+        Options::regexCall("unit");
+    }
 |
     _regex _open_curly _interval '}'
     {

@@ -2,6 +2,7 @@
 
 spSemUnion Parser::concatenate(spSemUnion &lhs, spSemUnion &rhs)
 {
+    Options::regexCall("concatenate");
     spSemUnion ret(
                 Pattern::concatenate(
                     d_states,

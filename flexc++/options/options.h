@@ -1,6 +1,7 @@
 #ifndef INCLUDED_OPTIONS_
 #define INCLUDED_OPTIONS_
 
+#include <iostream>
 #include <string>
 #include <bobcat/a2x>
 
@@ -42,6 +43,7 @@ class Options
     static char s_defaultTargetDirectory[];
 
     static Options s_options;
+    static void (*s_regexCall)(char const *funName);
 
     public:
         static Options &instance();
@@ -87,6 +89,8 @@ class Options
         void setSkeletonDirectory(std::string const &name);
         void setTargetDirectory(std::string const &name);
 
+        static void regexCall(char const *funname);
+        static void showRegexCalls();
 
         void setAccessorVariables();
 
@@ -98,7 +102,26 @@ class Options
         void setPath(std::string *dest, int optChar, bool targetDirOption, 
                       char const *optionName, std::string const &className, 
                       char const *suffix);
+
+        static void nop(char const *funName);
+        static void show(char const *funName);
+
 };
+
+inline void Options::show(char const *funName)
+{
+    std::cout << '\t' << funName << '\n';
+}
+
+inline void Options::showRegexCalls()
+{
+    s_regexCall = show;
+}
+
+inline void Options::regexCall(char const *funName)
+{
+    (*s_regexCall)(funName);
+}
 
 inline size_t Options::maxDepth() const
 {
