@@ -1,24 +1,24 @@
 _decimal:
     DECIMAL
     {
-        $$ = SemUnion(d_matched);
+        $$ = d_matched;
     }
 ;
 
 _interval:
     _decimal
     {
-        $$ = SemUnion(Interval::exact($1->value<TEXT>()));
+        $$ = Interval::exact($1);
     }
 |
     _decimal ',' _decimal
     {
-        $$ = SemUnion(Interval::range($1->value<TEXT>(), $3->value<TEXT>()));
+        $$ = Interval::range($1, $3);
     }
 |
     _decimal ','
     {
-        $$ = SemUnion(Interval::lowerBound($1->value<TEXT>()));
+        $$ = Interval::lowerBound($1);
     }
 ;
 

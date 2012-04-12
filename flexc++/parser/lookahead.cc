@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-spSemUnion Parser::lookahead(spSemUnion &left, spSemUnion &right)
+Pattern Parser::lookahead(Pattern const &left, Pattern const &right)
 {
     Options::regexCall("lookahead");
 
@@ -22,13 +22,10 @@ spSemUnion Parser::lookahead(spSemUnion &left, spSemUnion &right)
     d_doError = true;
     d_usesLOP = true;
 
-    Pattern &lval = left->value<PATTERN>();
-    setFlags(lval.begin(), State::PRE);
+    setFlags(left.begin(), State::PRE);
+    setFlags(right.begin(), State::POST);
 
-    Pattern &rval = right->value<PATTERN>();
-    setFlags(rval.begin(), State::POST);
-
-    d_states[rval.begin()].setFlag(State::ACCEPT);
+    d_states[right.begin()].setFlag(State::ACCEPT);
 
     return concatenate(left, right);
 }

@@ -58,44 +58,44 @@ class Parser: public ParserBase, public DataType
         int parse();
 
     private:
-        spSemUnion eolnDollar();
+        Pattern eolnDollar();
         void orAction();
         void reset();       // prepare the parser for a new regex 
                             // (resetting tokencount and warning flags)
 
-        spSemUnion boln();
-        spSemUnion dollar();
-        spSemUnion eofPattern();
-        spSemUnion quotes();
-        spSemUnion concatenate(spSemUnion &lhs, spSemUnion &rhs);
-        spSemUnion lookahead(spSemUnion &left, spSemUnion &right);
-        spSemUnion interval(spSemUnion &regex, spSemUnion const &interval);
+        Pattern boln();
+        Pattern dollar();
+        Pattern eofPattern();                               // .ih
+        Pattern quotes();
+        Pattern concatenate(Pattern const &lhs, Pattern const &rhs); // .ih
+        Pattern lookahead(Pattern const &left, Pattern const &right);
+        Pattern interval(Pattern const &regex, Interval const &interval);
 
 
         void assignBlock();                                 // .ih
         void noActions();                                   // .ih
-        spSemUnion alternatives(spSemUnion const &lhs, 
-                                spSemUnion const &rhs);     // .ih
-        spSemUnion characterClass(spSemUnion &charClass);   // .ih
-        spSemUnion dot();                                   // .ih
-        spSemUnion escape();                                // .ih
-        spSemUnion str();                                   // .ih
-        spSemUnion rawText();                               // .ih
-        spSemUnion rawText(std::string const &str);         // .ih
-        spSemUnion quantifier(spSemUnion const &regex);     // .ih
-        spSemUnion unite(spSemUnion const &lhs,             // .ih
-                         spSemUnion const &rhs);
-        spSemUnion difference(spSemUnion const &lhs,        // .ih
-                              spSemUnion const &rhs);
-        spSemUnion setElements(size_t skip = 0);            // .ih
-        spSemUnion setConcatenate(spSemUnion &lhs,          // .ih
-                                  spSemUnion const &rhs);
-        spSemUnion setNegate(spSemUnion &lhs);              // .ih
-        spSemUnion setNegate(spSemUnion &lhs,               // .ih
-                                  spSemUnion const &rhs);
+        Pattern alternatives(Pattern const &lhs, 
+                                Pattern const &rhs);     // .ih
+        Pattern characterClass(CharClass const &charClass);   // .ih
+        Pattern dot();                                   // .ih
+        Pattern escape();                                // .ih
+        Pattern str();                                   // .ih
+        Pattern rawText();                               // .ih
+        Pattern rawText(std::string const &str);         // .ih
+        Pattern quantifier(Pattern const &regex);     // .ih
+        CharClass unite(CharClass const &lhs, CharClass const &rhs);    // .ih
+        CharClass difference(CharClass const &lhs, 
+                             CharClass const &rhs);                     // .ih
+                             
+        CharClass setElements(size_t skip = 0);           // .ih
+        CharClass setConcatenate(CharClass const &lhs,         // .ih
+                                  CharClass const &rhs);
+        CharClass setNegate(CharClass const &lhs);              // .ih
+        CharClass setNegate(CharClass const &lhs,               // .ih
+                                  CharClass const &rhs);
 
-        void addRule(spSemUnion const &rule, bool resetMs = false);
-        void addBlockRule(spSemUnion const &rule);
+        void addRule(Pattern const &rule, bool resetMs = false);
+        void addBlockRule(Pattern const &rule);
 
         void setFlags(size_t idx, State::Flag flag);    // called fm lookahead
 

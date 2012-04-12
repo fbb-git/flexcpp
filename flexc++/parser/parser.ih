@@ -14,97 +14,95 @@
 #include "../options/options.h"
 #include "../state/state.h"
 
-#include "../semunion/semunion.h"
+// #include "../semunion/semunion.h"
 
 #include "../rules/rules.h"
 
 using namespace std;
 using namespace FBB;
 
-inline spSemUnion Parser::str()
+inline Pattern Parser::rawText()
+{
+    return Pattern::rawText(d_states, d_matched);
+}
+
+inline Pattern Parser::rawText(string const &str)
+{
+    return Pattern::rawText(d_states, str);
+}
+
+
+inline Pattern Parser::eofPattern()
+{
+    return Pattern::eof(d_states);
+}
+
+inline Pattern Parser::str()
 {
     return rawText(String::unescape(
                            d_matched.substr(1, d_scanner.length() - 2)));
 }
 
-inline spSemUnion Parser::escape()
+inline Pattern Parser::escape()
 {
-    spSemUnion ret(Pattern::escape(d_states, d_matched));
-    return ret;
+    return Pattern::escape(d_states, d_matched);
 }
 
-inline spSemUnion Parser::rawText()
+inline Pattern Parser::dot()
 {
-    spSemUnion ret(Pattern::rawText(d_states, d_matched));
-    return ret;
+    return Pattern::dot(d_states);
 }
 
-inline spSemUnion Parser::rawText(string const &str)
+inline Pattern Parser::alternatives(Pattern const &lhs, Pattern const &rhs)
 {
-    spSemUnion ret(Pattern::rawText(d_states, str));
-    return ret;
-}
-
-inline spSemUnion Parser::dot()
-{
-    spSemUnion ret(Pattern::dot(d_states));
-    return ret;
-}
-
-inline spSemUnion Parser::alternatives(spSemUnion const &lhs, 
-                                       spSemUnion const &rhs)
-{
-    return Pattern::alternatives(
-                            d_states,
-                            lhs->value<PATTERN>(),
-                            rhs->value<PATTERN>());
+    return Pattern::alternatives(d_states, lhs, rhs);
 }
     
-inline spSemUnion Parser::quantifier(spSemUnion const &regex)
+inline Pattern Parser::quantifier(Pattern const &regex)
 {
-    return Pattern::quantifier(d_states, 
-                            regex->value<PATTERN>(),
-                            d_matched[0]);
+    return Pattern::quantifier(d_states, regex, d_matched[0]);
 }
     
-inline spSemUnion Parser::unite(spSemUnion const &lhs, spSemUnion const &rhs)
+inline CharClass Parser::unite(CharClass const &lhs, CharClass const &rhs)
 {
-    return CharClass::unite(lhs->value<CHARCLASS>(), rhs->value<CHARCLASS>());
+    return CharClass::unite(lhs, rhs);
 }
     
-inline spSemUnion Parser::difference(spSemUnion const &lhs, 
-                                     spSemUnion const &rhs)
+inline CharClass Parser::difference(CharClass const &lhs, 
+                                    CharClass const &rhs)
 {
-    return CharClass::difference(lhs->value<CHARCLASS>(), 
-                                 rhs->value<CHARCLASS>());
+    return CharClass::difference(lhs, rhs);
 }
     
-inline spSemUnion Parser::setElements(size_t skip)
+inline CharClass Parser::setElements(size_t skip)
 {
     return CharClass::elements(d_matched, skip);
 }
     
-inline spSemUnion Parser::setConcatenate(spSemUnion &lhs, 
-                                         spSemUnion const &rhs)
+inline CharClass Parser::setConcatenate(CharClass const &lhs, 
+                                         CharClass const &rhs)
 {
-    return CharClass::concatenate(lhs->value<CHARCLASS>(), 
-                                  rhs->value<CHARCLASS>());
+    return CharClass::concatenate(lhs, rhs);
 }
 
-inline spSemUnion Parser::setNegate(spSemUnion &lhs, spSemUnion const &rhs)
+inline Pattern Parser::concatenate(Pattern const &lhs, Pattern const &rhs)
 {
-    return CharClass::negate(lhs->value<CHARCLASS>(), 
-                             rhs->value<CHARCLASS>());
+    return Pattern::concatenate(d_states, lhs, rhs);
 }
 
-inline spSemUnion Parser::setNegate(spSemUnion &lhs)
+inline CharClass Parser::setNegate(CharClass const &lhs, CharClass const &rhs)
 {
-    return CharClass::negate(lhs->value<CHARCLASS>(), CharClass());
+    return CharClass::negate(lhs, rhs);
 }
 
-inline spSemUnion Parser::characterClass(spSemUnion &charClass)
+inline CharClass Parser::setNegate(CharClass const &lhs)
 {
-    return Pattern::characterClass(d_states, charClass->value<CHARCLASS>());
+    return CharClass::negate(lhs, CharClass());
+}
+
+inline Pattern Parser::characterClass(CharClass const &charClass)
+{
+    return Pattern::characterClass(d_states, charClass);
 }
 
 inline void Parser::assignBlock()
@@ -112,9 +110,9 @@ inline void Parser::assignBlock()
     d_rules.assignBlock(d_block);
 }
 
-inline void Parser::addBlockRule(spSemUnion const &rule)
+inline void Parser::addBlockRule(Pattern const &rule)
 {
-    d_rules.add(false, rule->value<PATTERN>(), d_block);
+    d_rules.add(false, rule, d_block);
 }
 
 inline void Parser::noActions()

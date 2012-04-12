@@ -1,9 +1,7 @@
 #include "scanner.ih"
 
-void Scanner::addDefinition(spSemUnion const &spName, string const &def)
+void Scanner::addDefinition(string const &name, string const &def)
 {
-    string const &name = spName->value<TEXT>();
-
     string namePattern = '{' + name + '}';
 
     if (d_nameExpansion.find(namePattern) != d_nameExpansion.end())

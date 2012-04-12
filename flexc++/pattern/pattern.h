@@ -62,9 +62,10 @@ class Pattern
                                                Pattern &regex,
                                                size_t lower, 
                                                PairVector &beginEnd);
-        static Pattern optionalPatterns(States &states, Pattern &pattern,
-                                           size_t lower, size_t upper, 
-                                           PairVector &beginEnd);
+        static Pattern optionalPatterns(States &states, 
+                            Pattern &pattern, 
+                            size_t lower, size_t upper, 
+                            PairVector &beginEnd);
         static void jumpToEnd(States &states, PairVector &beginEnd, 
                               size_t lower, size_t upper, Map &eject);
         static void join(States &states, Pattern &pattern, size_t upper,

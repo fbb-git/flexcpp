@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-spSemUnion Parser::quotes()
+Pattern Parser::quotes()
 {
     std::string &&str = String::unescape(
                         d_matched.substr(1, d_scanner.length() - 2));

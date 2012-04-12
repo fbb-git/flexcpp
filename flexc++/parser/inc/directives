@@ -39,6 +39,7 @@ _name_def:
     identifier
     {
         d_scanner.newDefinition();  // briefly switches to 'line'
+        $$ = $1;
     }
 ;
 

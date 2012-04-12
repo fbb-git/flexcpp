@@ -24,13 +24,14 @@ class CharClass
                                     CharClass const &rhs);
 
         static CharClass elements(std::string const &chars, size_t skip);
-        static CharClass &concatenate(CharClass &lhs, CharClass const &rhs);
+        static CharClass concatenate(CharClass const &lhs, 
+                                     CharClass const &rhs);
 
         static CharClass escape(std::string const &match);
         static CharClass predefined(std::string const &range);
                 
         static CharClass negate(CharClass const &charClass);
-        static CharClass negate(CharClass &lhs, CharClass const &rhs);
+        static CharClass negate(CharClass const &lhs, CharClass const &rhs);
 
     private:
         CharClass(char ch);
@@ -47,6 +48,12 @@ class CharClass
         bool validRange(size_t idx) const;          // T if valid range,
                                                     // idx at '-'
 };
+
+inline CharClass CharClass::negate(CharClass const &left, 
+                                   CharClass const &right)
+{
+    return negate(concatenate(left, right));
+}
 
 template <>                                     // two specializations:
 struct Type<CharClass>                         // defining 'DataType'

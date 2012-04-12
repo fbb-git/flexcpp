@@ -9,6 +9,8 @@
 Pattern Pattern::concatenate(States &states, Pattern const &lhs,
                                                    Pattern const &rhs)
 {
+    Options::regexCall("concatenate");
+
     states[lhs.end()] = states[rhs.begin()];
     states.collect(rhs.begin());
 

@@ -7,12 +7,12 @@
 #include <unordered_map>
 
 #include "../utility/utility.h"
-#include "../spsemunion/spsemunion.h"
 #include "../startconditions/startconditions.h"
 #include "../rule/rule.h"
 
 class States;
 class Block;
+class Pattern;
 
 class Rules: public DataType
 {
@@ -33,17 +33,17 @@ class Rules: public DataType
         typedef std::vector<Rule>::const_iterator rule_const_iterator;
 
         Rules(States &states);
-        void add(bool bol, spSemUnion const &patternVal, Block const &block);
+        void add(bool bol, Pattern const &pattern, Block const &block);
 
         Rule const &operator[](size_t idx) const;
         Rule &operator[](size_t idx);
 
         size_t ruleFromFinalState(size_t stateIdx) const;
         void setType(StartConditions::Type type);
-        void addStartCondition(spSemUnion const &name);
+        void addStartCondition(std::string const &name);
         void resetStartConditions();
         void useAll();
-        void activateStartCondition(spSemUnion const &name);
+        void activateStartCondition(std::string const &name);
         std::vector<size_t> const &operator()   // vector of rule nrs
                                     (std::string const &startCondition) const;
         void useInitialSC();
@@ -125,9 +125,9 @@ inline void Rules::setType(StartConditions::Type type)
     d_startConditions.setType(type);
 }
 
-inline void Rules::addStartCondition(spSemUnion const &name)
+inline void Rules::addStartCondition(std::string const &name)
 {
-    d_startConditions.add(name->value<TEXT>());
+    d_startConditions.add(name);
 }
 
 inline void Rules::resetStartConditions()
@@ -140,9 +140,9 @@ inline void Rules::useAll()
     d_startConditions.useAll();
 }
 
-inline void Rules::activateStartCondition(spSemUnion const &name)
+inline void Rules::activateStartCondition(std::string const &name)
 {
-    d_startConditions.activate(name->value<TEXT>());
+    d_startConditions.activate(name);
 }
 
 inline void Rules::useInitialSC()

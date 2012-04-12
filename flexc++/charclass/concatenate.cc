@@ -1,8 +1,12 @@
 #include "charclass.ih"
 
-CharClass &CharClass::concatenate(CharClass &left, CharClass const &right)
+CharClass CharClass::concatenate(CharClass const &left, 
+                                  CharClass const &right)
 {
-    Vector &lhs = left.d_chars;
+    CharClass ret(left);
+
+    Vector &lhs = ret.d_chars;
+
     Vector const &rhs = right.d_chars;
 
 //    cout << "CONCAT: left = ";
@@ -19,7 +23,7 @@ CharClass &CharClass::concatenate(CharClass &left, CharClass const &right)
 
 //    lhs += rhs;
 
-    return left;    
+    return ret;    
 }
 
 

@@ -1,8 +1,8 @@
 #include "rules.ih"
 
-void Rules::add(bool bol, spSemUnion const &patternVal, Block const &block)
+void Rules::add(bool bol, Pattern const &patternVal, Block const &block)
 {
-    Pair const &pair = patternVal->value<PATTERN>().pair();
+    Pair const &pair = patternVal.pair();
 
     d_rules.push_back( { d_states, bol, pair, block } );
 

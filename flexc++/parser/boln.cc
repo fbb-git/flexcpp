@@ -1,6 +1,6 @@
 #include "parser.ih"
 
-spSemUnion Parser::boln()
+Pattern Parser::boln()
 {
     if (d_tokenCount == 1)      
         d_boln = true;
@@ -11,7 +11,5 @@ spSemUnion Parser::boln()
         d_warnCarets = true;
     }        
 
-    spSemUnion ret(rawText(d_warnCarets ? "^" : ""));
-
-    return ret;
+    return rawText(d_warnCarets ? "^" : "");
 }

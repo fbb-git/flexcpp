@@ -11,8 +11,6 @@
 
 #include "../utility/utility.h"
 
-class spSemUnion;
-
 class Scanner: public ScannerBase, public DataType
 {
     bool d_inBlock;             // when in-block return ' ' on blanks
@@ -37,7 +35,7 @@ class Scanner: public ScannerBase, public DataType
         using ScannerBase::accept;
         void newDefinition();       // new named regex, 'line' miniscanner
                                     
-        void addDefinition(spSemUnion const &spName, 
+        void addDefinition(std::string const &spName, 
                            std::string const &definition);
 
         void blockEnds();

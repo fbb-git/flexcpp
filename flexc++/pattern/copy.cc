@@ -20,7 +20,7 @@
 // (merged) pattern.
 
 Pattern Pattern::copy(States &states, 
-                            Pattern &regex, size_t lower, size_t upper)
+                      Pattern &regex, size_t lower, size_t upper)
 {
     PairVector beginEnd(1, States::Pair{regex.begin(), regex.end()});   
                                                         // begin/end indices

@@ -13,8 +13,8 @@ pattern                 utility options
 
 scanner                 utility
 
-semunion                pattern charclass interval
-spsemunion              semunion
+# semunion                pattern charclass interval
+# spsemunion              semunion
 
 startconditions 
 charrange       
@@ -29,13 +29,15 @@ tailcount               state
 block           
 rule                    block 
 
-rules                   utility spsemunion startconditions rule
+# rules                   utility spsemunion startconditions rule
+rules                   utility startconditions rule
 
 dfarow                  ranges rules states tailcount
 dfa                     dfarow        
 dfas                    rules dfa  
 
-parser             utility   state   block   scanner spsemunion states options
+# parser           utility   state   block   scanner spsemunion states options
+parser             utility   state   block   scanner states options
 
 generator          dfas    startconditions   options
 

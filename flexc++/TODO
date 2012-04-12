@@ -11,20 +11,5 @@ final %% should be recognized by the scanner as its end-line
 
 ADD OPTION TO DISPLAY THE MATCHED RULE  TO EXECUTE
 
-
-WIP: 
-    //Ranges::
-    //    inspectstate.cc
-    //    charsettoranges.cc
-    State:
-    //    operatorinsert.cc
-    //    contains.cc
-    StartConditions:
-        startconditions.ih / .h
-    PatternVal:
-    // dot.cc
-
-CLASSES
-README.class-setup
-TODO
-
+Descending Pattern::interval: rm the need for the const-cast in
+parser/interval.cc 

@@ -7,8 +7,6 @@
 
 %baseclass-preinclude preinclude.h
 
-%stype spSemUnion
-
 // definition section
 %token  EXCL_START_CONDITION
         INCL_START_CONDITION
@@ -60,6 +58,17 @@
 
 //  highest precedence
 
+%polymorphic    STRING:     std::string;
+                PATTERN:    Pattern;
+                CHARCLASS:  CharClass;
+                INTERVAL:   Interval;
+
+%type <STRING>      identifier _name_def _decimal
+%type <CHARCLASS>   characterclass _cc_set _cc_start _cc_contents _cc_negated
+                        _cc_element
+%type <INTERVAL>    _interval
+%type <PATTERN>     _unit _regex _optMs_regex regexOrEOF
+
 %%
 
 input:
@@ -79,7 +88,7 @@ section_delimiter:
 identifier:
     IDENTIFIER
     {
-        $$ = spSemUnion(d_matched);
+        $$ = d_matched;
     }
 ;
 

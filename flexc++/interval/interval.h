@@ -10,6 +10,8 @@ class Interval: private std::pair<size_t, size_t>
     size_t d_upper;
 
     public:
+        Interval() = default;
+
         static Interval exact(std::string const &str);
         static Interval range(std::string const &lower, 
                               std::string const &upper);
