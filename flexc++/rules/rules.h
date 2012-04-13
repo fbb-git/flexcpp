@@ -13,7 +13,7 @@ class States;
 class Block;
 class Pattern;
 
-class Rules: public DataType
+class Rules
 {
     friend std::ostream &operator<<(std::ostream &out, Rules const &rules);
 

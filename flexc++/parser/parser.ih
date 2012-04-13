@@ -14,8 +14,6 @@
 #include "../options/options.h"
 #include "../state/state.h"
 
-// #include "../semunion/semunion.h"
-
 #include "../rules/rules.h"
 
 using namespace std;
@@ -32,11 +30,6 @@ inline Pattern Parser::rawText(string const &str)
 }
 
 
-inline Pattern Parser::eofPattern()
-{
-    return Pattern::eof(d_states);
-}
-
 inline Pattern Parser::str()
 {
     return rawText(String::unescape(
@@ -46,31 +39,6 @@ inline Pattern Parser::str()
 inline Pattern Parser::escape()
 {
     return Pattern::escape(d_states, d_matched);
-}
-
-inline Pattern Parser::dot()
-{
-    return Pattern::dot(d_states);
-}
-
-inline Pattern Parser::alternatives(Pattern const &lhs, Pattern const &rhs)
-{
-    return Pattern::alternatives(d_states, lhs, rhs);
-}
-    
-inline Pattern Parser::quantifier(Pattern const &regex)
-{
-    return Pattern::quantifier(d_states, regex, d_matched[0]);
-}
-    
-inline Pattern Parser::concatenate(Pattern const &lhs, Pattern const &rhs)
-{
-    return Pattern::concatenate(d_states, lhs, rhs);
-}
-
-inline Pattern Parser::characterClass(CharClass const &charClass)
-{
-    return Pattern::characterClass(d_states, charClass);
 }
 
 inline void Parser::assignBlock()

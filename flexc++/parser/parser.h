@@ -64,24 +64,18 @@ class Parser: public ParserBase
 
         Pattern boln();
         Pattern dollar();
-        Pattern eofPattern();                               // .ih
         Pattern quotes();
-        Pattern concatenate(Pattern const &lhs, Pattern const &rhs); // .ih
         Pattern lookahead(Pattern const &left, Pattern const &right);
         Pattern interval(Pattern const &regex, Interval const &interval);
 
 
         void assignBlock();                                 // .ih
         void noActions();                                   // .ih
-        Pattern alternatives(Pattern const &lhs, 
-                                Pattern const &rhs);     // .ih
-        Pattern characterClass(CharClass const &charClass);   // .ih
-        Pattern dot();                                   // .ih
+
         Pattern escape();                                // .ih
         Pattern str();                                   // .ih
         Pattern rawText();                               // .ih
         Pattern rawText(std::string const &str);         // .ih
-        Pattern quantifier(Pattern const &regex);     // .ih
 
         void addRule(Pattern const &rule, bool resetMs = false);
         void addBlockRule(Pattern const &rule);

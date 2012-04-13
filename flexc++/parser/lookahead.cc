@@ -27,7 +27,7 @@ Pattern Parser::lookahead(Pattern const &left, Pattern const &right)
 
     d_states[right.begin()].setFlag(State::ACCEPT);
 
-    return concatenate(left, right);
+    return Pattern::concatenate(d_states, left, right);
 }
 
 
