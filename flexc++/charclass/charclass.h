@@ -24,14 +24,13 @@ class CharClass
                                     CharClass const &rhs);
 
         static CharClass elements(std::string const &chars, size_t skip);
-        static CharClass concatenate(CharClass const &lhs, 
-                                     CharClass const &rhs);
+        CharClass &concatenate(CharClass const &rhs);
 
         static CharClass escape(std::string const &match);
         static CharClass predefined(std::string const &range);
                 
         static CharClass negate(CharClass const &charClass);
-        static CharClass negate(CharClass const &lhs, CharClass const &rhs);
+        static CharClass negate(CharClass &lhs, CharClass const &rhs);
 
     private:
         CharClass(char ch);
@@ -49,10 +48,10 @@ class CharClass
                                                     // idx at '-'
 };
 
-inline CharClass CharClass::negate(CharClass const &left, 
+inline CharClass CharClass::negate(CharClass &left, 
                                    CharClass const &right)
 {
-    return negate(concatenate(left, right));
+    return negate(left.concatenate(right));
 }
 
 template <>                                     // two specializations:

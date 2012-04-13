@@ -79,23 +79,17 @@ inline CharClass Parser::setElements(size_t skip)
     return CharClass::elements(d_matched, skip);
 }
     
-inline CharClass Parser::setConcatenate(CharClass const &lhs, 
-                                         CharClass const &rhs)
-{
-    return CharClass::concatenate(lhs, rhs);
-}
-
 inline Pattern Parser::concatenate(Pattern const &lhs, Pattern const &rhs)
 {
     return Pattern::concatenate(d_states, lhs, rhs);
 }
 
-inline CharClass Parser::setNegate(CharClass const &lhs, CharClass const &rhs)
+inline CharClass Parser::setNegate(CharClass &lhs, CharClass const &rhs)
 {
     return CharClass::negate(lhs, rhs);
 }
 
-inline CharClass Parser::setNegate(CharClass const &lhs)
+inline CharClass Parser::setNegate(CharClass &lhs)
 {
     return CharClass::negate(lhs, CharClass());
 }

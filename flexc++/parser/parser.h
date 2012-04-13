@@ -88,10 +88,8 @@ class Parser: public ParserBase, public DataType
                              CharClass const &rhs);                     // .ih
                              
         CharClass setElements(size_t skip = 0);           // .ih
-        CharClass setConcatenate(CharClass const &lhs,         // .ih
-                                  CharClass const &rhs);
-        CharClass setNegate(CharClass const &lhs);              // .ih
-        CharClass setNegate(CharClass const &lhs,               // .ih
+        CharClass setNegate(CharClass &lhs);              // .ih
+        CharClass setNegate(CharClass &lhs,               // .ih
                                   CharClass const &rhs);
 
         void addRule(Pattern const &rule, bool resetMs = false);
