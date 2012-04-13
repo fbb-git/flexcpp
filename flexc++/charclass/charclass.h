@@ -30,7 +30,7 @@ class CharClass
         static CharClass predefined(std::string const &range);
                 
         CharClass negate() const;
-        static CharClass negate(CharClass &lhs, CharClass const &rhs);
+        CharClass negate(CharClass const &rhs);
 
     private:
         CharClass(char ch);
@@ -48,10 +48,9 @@ class CharClass
                                                     // idx at '-'
 };
 
-inline CharClass CharClass::negate(CharClass &left, 
-                                   CharClass const &right)
+inline CharClass CharClass::negate(CharClass const &right)
 {
-    return left.concatenate(right).negate();
+    return concatenate(right).negate();
 }
 
 template <>                                     // two specializations:
