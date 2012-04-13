@@ -1,5 +1,4 @@
 o
-2oo6
 f.tgz
 rawtest
 regression
@@ -10,6 +9,7 @@ README.lookahead
 README.options
 newscanner
 reconstruction
+grammar.output
 reflex
 README.flexc++-self
 self
