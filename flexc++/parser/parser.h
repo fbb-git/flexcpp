@@ -83,14 +83,6 @@ class Parser: public ParserBase, public DataType
         Pattern rawText();                               // .ih
         Pattern rawText(std::string const &str);         // .ih
         Pattern quantifier(Pattern const &regex);     // .ih
-        CharClass unite(CharClass const &lhs, CharClass const &rhs);    // .ih
-        CharClass difference(CharClass const &lhs, 
-                             CharClass const &rhs);                     // .ih
-                             
-        CharClass setElements(size_t skip = 0);           // .ih
-        CharClass setNegate(CharClass &lhs);              // .ih
-        CharClass setNegate(CharClass &lhs,               // .ih
-                                  CharClass const &rhs);
 
         void addRule(Pattern const &rule, bool resetMs = false);
         void addBlockRule(Pattern const &rule);

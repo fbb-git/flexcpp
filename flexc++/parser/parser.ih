@@ -63,35 +63,9 @@ inline Pattern Parser::quantifier(Pattern const &regex)
     return Pattern::quantifier(d_states, regex, d_matched[0]);
 }
     
-inline CharClass Parser::unite(CharClass const &lhs, CharClass const &rhs)
-{
-    return CharClass::unite(lhs, rhs);
-}
-    
-inline CharClass Parser::difference(CharClass const &lhs, 
-                                    CharClass const &rhs)
-{
-    return CharClass::difference(lhs, rhs);
-}
-    
-inline CharClass Parser::setElements(size_t skip)
-{
-    return CharClass::elements(d_matched, skip);
-}
-    
 inline Pattern Parser::concatenate(Pattern const &lhs, Pattern const &rhs)
 {
     return Pattern::concatenate(d_states, lhs, rhs);
-}
-
-inline CharClass Parser::setNegate(CharClass &lhs, CharClass const &rhs)
-{
-    return CharClass::negate(lhs, rhs);
-}
-
-inline CharClass Parser::setNegate(CharClass &lhs)
-{
-    return CharClass::negate(lhs, CharClass());
 }
 
 inline Pattern Parser::characterClass(CharClass const &charClass)
