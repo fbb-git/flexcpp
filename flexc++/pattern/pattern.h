@@ -6,7 +6,6 @@
 #include <vector>
 
 #include "../states/states.h"
-#include "../utility/utility.h"
 
 class CharClass;
 class Interval;
@@ -72,19 +71,6 @@ class Pattern
                                          PairVector const &beginEnd);
 };
 
-template <>                                     // two specializations:
-struct Type<Pattern>                         // defining 'DataType'
-{                                               // given Pattern
-    enum { dataType = DataType::PATTERN };
-};
-
-template <>                                     // defining 'Pattern'
-struct Type<Int<DataType::PATTERN>>          // given PATTERN
-{
-    typedef Pattern type;
-};
-
-
 inline Pattern &Pattern::operator=(States::Pair const &pair)
 {
     d_pair = pair;
@@ -107,7 +93,3 @@ inline States::Pair const &Pattern::pair() const
 }
 
 #endif
-
-
-
-

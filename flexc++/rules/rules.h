@@ -6,7 +6,6 @@
 #include <string>
 #include <unordered_map>
 
-#include "../utility/utility.h"
 #include "../startconditions/startconditions.h"
 #include "../rule/rule.h"
 

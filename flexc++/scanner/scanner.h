@@ -9,9 +9,7 @@
 #include <stack>
 #include <unordered_map>
 
-#include "../utility/utility.h"
-
-class Scanner: public ScannerBase, public DataType
+class Scanner: public ScannerBase
 {
     bool d_inBlock;             // when in-block return ' ' on blanks
     bool d_inCharClass;         // in a char-class return sequences as

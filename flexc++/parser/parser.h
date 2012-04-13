@@ -5,7 +5,6 @@
 
 #include <string>
 
-#include "../utility/utility.h"
 #include "../state/state.h"
 #include "../block/block.h"
 
@@ -26,7 +25,7 @@ class States;
 class Rules;
 
 #undef Parser
-class Parser: public ParserBase, public DataType
+class Parser: public ParserBase
 {
     FBB::Arg &d_arg;
 

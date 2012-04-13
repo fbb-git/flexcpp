@@ -6,8 +6,6 @@
 #include <set>
 #include <ostream>
 
-#include "../utility/utility.h"
-
 class CharClass
 {
     friend std::ostream &operator<<(std::ostream &out, CharClass const &cc);
@@ -52,19 +50,6 @@ inline CharClass CharClass::negate(CharClass const &right)
 {
     return concatenate(right).negate();
 }
-
-template <>                                     // two specializations:
-struct Type<CharClass>                         // defining 'DataType'
-{                                               // given CharClass
-    enum { dataType = DataType::CHARCLASS };
-};
-
-template <>                                     // defining 'CharClass'
-struct Type<Int<DataType::CHARCLASS>>          // given CHARCLASS
-{
-    typedef CharClass type;
-};
-
 
 #endif
 

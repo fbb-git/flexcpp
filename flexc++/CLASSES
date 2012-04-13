@@ -2,16 +2,14 @@
 #   `touch classname/ALL' to recompile all class sources and sources of
 #   depending classes, using icmbuild
 
-utility         
-
-interval                utility
-scanner                 utility
-
+interval
+scanner
 options         
-pattern                 utility options
+
+pattern                 options
 
 charrange       
-charclass               utility charrange
+charclass               charrange
 
 statedata       
 statestring             statedata
@@ -22,14 +20,14 @@ tailcount               state
 startconditions 
 block           
 rule                    block 
-rules                   utility startconditions rule
+rules                   startconditions rule
 
 ranges
 dfarow                  ranges rules states tailcount
 dfa                     dfarow        
 dfas                    rules dfa  
 
-parser                  utility state block scanner states options
+parser                  state block scanner states options
 
 generator               dfas startconditions options
 
