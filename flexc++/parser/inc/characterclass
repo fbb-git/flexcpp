@@ -109,7 +109,7 @@ _cc_set:
 |
     _cc_negated _cc_end
     {
-        $$ = CharClass::negate($1, CharClass());
+        $<CHARCLASS>1.negate();
     }
 |    
     _cc_start _cc_contents _cc_end

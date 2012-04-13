@@ -29,7 +29,7 @@ class CharClass
         static CharClass escape(std::string const &match);
         static CharClass predefined(std::string const &range);
                 
-        static CharClass negate(CharClass const &charClass);
+        CharClass negate() const;
         static CharClass negate(CharClass &lhs, CharClass const &rhs);
 
     private:
@@ -51,7 +51,7 @@ class CharClass
 inline CharClass CharClass::negate(CharClass &left, 
                                    CharClass const &right)
 {
-    return negate(left.concatenate(right));
+    return left.concatenate(right).negate();
 }
 
 template <>                                     // two specializations:
