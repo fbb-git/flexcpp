@@ -1,6 +1,3 @@
 final %% should be recognized by the scanner as its end-line
 
 ADD OPTION TO DISPLAY THE MATCHED RULE  TO EXECUTE
-
-Descending Pattern::interval: rm the need for the const-cast in
-parser/interval.cc 

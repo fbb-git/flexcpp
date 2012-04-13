@@ -66,16 +66,15 @@ class Parser: public ParserBase
         Pattern dollar();
         Pattern quotes();
         Pattern lookahead(Pattern const &left, Pattern const &right);
-        Pattern interval(Pattern const &regex, Interval const &interval);
+        Pattern interval(Pattern &regex, Interval const &interval);
 
+        Pattern escape();                                   // .ih
+        Pattern str();                                      // .ih
+        Pattern rawText();                                  // .ih
+        Pattern rawText(std::string const &str);            // .ih
 
         void assignBlock();                                 // .ih
         void noActions();                                   // .ih
-
-        Pattern escape();                                // .ih
-        Pattern str();                                   // .ih
-        Pattern rawText();                               // .ih
-        Pattern rawText(std::string const &str);         // .ih
 
         void addRule(Pattern const &rule, bool resetMs = false);
         void addBlockRule(Pattern const &rule);

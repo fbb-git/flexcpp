@@ -92,7 +92,7 @@ _unit:
 |
     characterclass
     {
-        $$ = Pattern::characterClass(d_states, $1);     // FBB
+        $$ = Pattern::characterClass(d_states, $1);
     }
 ;
 
@@ -122,7 +122,7 @@ _regex:
 |
     _regex _quantifier
     {
-        $$ = Pattern::quantifier(d_states, $1, d_matched[0]); // FBB
+        $$ = Pattern::quantifier(d_states, $1, d_matched[0]);
     }
 |
     _open_paren _regex _close_paren
@@ -132,7 +132,7 @@ _regex:
 |
     _regex _regex                     %prec CHAR
     {
-        $$ = Pattern::concatenate(d_states, $1, $2);        // FBB
+        $$ = Pattern::concatenate(d_states, $1, $2);
     }
 |
     _regex '|' _regex
