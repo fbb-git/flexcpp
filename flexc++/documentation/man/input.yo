@@ -1,5 +1,5 @@
 
-manpagesection(8.1 THE CLASS INPUT)
+manpagesection(9.1 THE CLASS INPUT)
 
     Flc() generates a file tt(scannerbase.h) defining the scanner class's base
 class, by default named tt(ScannerBase) (which is the name used in this
@@ -54,7 +54,7 @@ stream continues. This implies that tt(Input) objects must be
 `stack-able'. The required interface is designed to satisfy this requirement.
 
 
-manpagesection(8.2. CONSTRUCTORS)
+manpagesection(9.2. CONSTRUCTORS)
 
     itemization(
     itb(Input())
@@ -77,7 +77,7 @@ member (see below) when it's time to destroy (close) the stream.
 1. 
     )
 
-manpagesection(8.3. REQUIRED PUBLIC MEMBER FUNCTIONS)
+manpagesection(9.3. REQUIRED PUBLIC MEMBER FUNCTIONS)
 
     itemization(
     itb(size_t get())

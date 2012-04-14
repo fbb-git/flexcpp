@@ -195,11 +195,11 @@ interface is never rewritten by flc() unless flc() is explicitly ordered to do
 so (see also bf(implementationheader)(3flexc++)). 
     )
 
-manpageoptions()
+manpagesection(4. OPTIONS)
 
     includefile(../manual/intro/options)
 
-manpagesection(4. INTERACTIVE SCANNERS)
+manpagesection(5. INTERACTIVE SCANNERS)
 
 An interactive scanner is characterized by the fact that scanning is postponed
 until an end-of-line character has been received, followed by reading all

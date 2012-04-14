@@ -23,6 +23,11 @@ arguments if their associated long options require arguments as well.
            Use tt(skeleton) as the pathname of the file containing the
             skeleton of the scanner class. Its filename defaults to
             tt(flexc++.h). 
+    it() loption(construction) (soption(K))nl()
+           Write details about the lexical scanner to the file
+            tt(`rules-file'.output). Details cover the used character ranges,
+            information about the regexes, the raw NFA states, and the final
+            DFAs.
     it() loption(debug) (soption(d))nl() 
            Provide tt(lex) and its support functions with debugging code,
             showing the actual parsing process on the standard output
@@ -81,6 +86,13 @@ arguments if their associated long options require arguments as well.
     it() lsoption(lex-source)(l)(source)nl()
            Define tt(source) as the name of the source file containing the
             scanner member function tt(lex). Defaults to tt(lex.cc).
+    it() loption(matched-rules) (soption('R'))nl()
+           The generated scanner will write the numbers of matched rules to 
+            the standard output. It is implied by the tt(--debug) option.
+            Displaying the matched rules can be suppressed by calling the
+            generated  scanner's member tt(setDebug(false)) (or, of course, by
+            re-generating the scanner without using specifying 
+            tt(--matched-rules).
     it() lsoption(max-depth)(m)(depth)nl()
            Set the maximum inclusion depth of the lexical scanner's
             specification files to tt(depth). By default the maximum depth is
@@ -152,10 +164,9 @@ arguments if their associated long options require arguments as well.
             Write basic usage information to the standard output stream and
             terminate. 
     it() loption(verbose)(soption(V))nl() 
-           The verbose option generates on the standard output stream an
-            overview of the rules (plus their filenames and line numbers); of
-            the character ranges used by the scanner; of the states of the
-            NFA; of the states defining the DFA(s); and the generated DFA(s).
+           The verbose option generates on the standard output stream various
+            pieces of additional information, not covered by the
+            tt(--construction) and tt(--show-filenames) options.
      it() loption(version) (soption(v))nl()
             Display flc()'s version number and terminate.
     )
