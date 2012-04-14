@@ -92,7 +92,7 @@ arguments if their associated long options require arguments as well.
             Displaying the matched rules can be suppressed by calling the
             generated  scanner's member tt(setDebug(false)) (or, of course, by
             re-generating the scanner without using specifying 
-            tt(--matched-rules).
+            tt(--matched-rules)).
     it() lsoption(max-depth)(m)(depth)nl()
            Set the maximum inclusion depth of the lexical scanner's
             specification files to tt(depth). By default the maximum depth is
