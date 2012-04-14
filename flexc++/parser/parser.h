@@ -7,34 +7,25 @@
 
 #include "../state/state.h"
 #include "../block/block.h"
-
-#include <bobcat/arg>
+#include "../options/options.h"
 
 // $insert baseclass
 #include "parserbase.h"
 // $insert scanner.h
 #include "../scanner/scanner.h"
 
-namespace FBB
-{
-    class Arg;
-}
-
-class Options;
 class States;
 class Rules;
 
 #undef Parser
 class Parser: public ParserBase
 {
-    FBB::Arg &d_arg;
+    Options &d_options;
 
     // $insert scannerobject
     Scanner d_scanner;
     std::string const &d_matched;   // text matched at the last lex() call.
     Block   d_block;
-
-    Options &d_options;
 
     bool d_boln;                    // rule starts at boln
     bool d_doError;                 // use the error() function at ERRORs

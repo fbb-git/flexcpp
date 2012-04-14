@@ -39,7 +39,8 @@ namespace
         {"version",                     'v'},
 
         {"debug",                       'd'},
-        {"construction",                'K'},
+        {"construction",                'K'}, 
+        {"matched-rules",               'R'},
         {"max-depth",                   'm'},
         {"print-tokens",                't'},
         {"own-tokens",                  'T'},
@@ -55,14 +56,14 @@ namespace
 int main(int argc, char **argv)
 try
 {
-    Arg &arg = Arg::initialize("b:B:c:C:df:Fhi:I:Kl:L:m:n:S:TtvV",
+    Arg &arg = Arg::initialize("b:B:c:C:df:Fhi:I:Kl:L:m:n:RS:TtvV",
                     longOptions, longEnd, argc, argv);
     arg.versionHelp(usage, version, 1);
 
-    if (arg.option(0, "regex-calls"))
-        Options::showRegexCalls();
+    Options::init(arg);
 
     States states;
+
     Rules rules(states);
 
     Parser parser(rules, states);
@@ -78,19 +79,10 @@ try
         ranges.determineSubsets();
         ranges.finalizeStates();
 
-    if (arg.option('V'))
-        cout << 
-            "RULES:\n"      <<
-            rules << "\n"
-            "RANGES:\n"     << 
-            ranges << "\n"
-            "STATES:\n"     <<
-            states << '\n';
-
     DFAs dfas(rules, states, ranges);
         dfas.build();
 
-        rules.warnNonViable();
+    rules.warnNonViable();
 
     Generator generator(rules, ranges, dfas);
         generator.construction(states);

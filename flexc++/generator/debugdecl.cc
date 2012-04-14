@@ -2,7 +2,7 @@
 
 void Generator::debugDecl(std::ostream &out) const
 {
-    if (!d_debug)
+    if (not debugCodeRequired())
         return;
 
     key(out);

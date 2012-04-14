@@ -12,7 +12,7 @@ void Generator::classHeader() const
     (
         Stat(d_options.classHeaderPath())
         &&
-        not d_arg.option(0, "force-class-header")
+        not d_options("force-class-header")
     )
         return;
 

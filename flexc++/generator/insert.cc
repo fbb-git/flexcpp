@@ -17,6 +17,13 @@ void Generator::insert(ostream &out) const
 
     istr >> d_key;     // extract the insertion target
 
+        // fields are used to specify subcases for the lhs-request.
+        // e.g., for debug the subcase '.R' indicates that the
+        // statement must be performed for either debug or for (in this case)
+        // d_options.option('R') is active. When defining new fields,
+        // debugCodeRequired() in generator.ih and debug.cc must 
+        // check for the new field.
+
     size_t pos = d_key.find('.');   // find the field
     if (pos == string::npos)        // no field
         d_field.clear();

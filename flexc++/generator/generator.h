@@ -15,11 +15,6 @@ class Options;
 class States;
 class Block;
 
-namespace FBB
-{
-    class Arg;
-}
-
 class Generator
 {
     enum
@@ -51,7 +46,6 @@ class Generator
     typedef std::vector<Pair> PVector;
 
     Options &d_options;
-    FBB::Arg &d_arg;
     Rules const &d_rules;
     Ranges const &d_ranges;
     DFAs const &d_dfas;
@@ -102,6 +96,7 @@ class Generator
         void classH(std::ostream &out) const;
         void classHead(std::ostream &out) const;
         void classIH(std::ostream &out) const;
+        bool debugCodeRequired() const;
         void debug(std::ostream &out) const;
         void debugDecl(std::ostream &out) const;
         void debugFunctions(std::ostream &out) const;

@@ -10,4 +10,4 @@ char Options::s_defaultClassName[]              = "Scanner";
 
 void (*Options::s_regexCall)(char const *funName) = Options::nop;
 
-Options Options::s_options;
+Options *Options::s_options = 0;

@@ -15,7 +15,7 @@ void Generator::implementationHeader() const
     (
         Stat(d_options.implementationHeaderPath())
         &&
-        not d_arg.option(0, "force-implementation-header")
+        not d_options("force-implementation-header")
     )
         return;
 
@@ -24,10 +24,6 @@ void Generator::implementationHeader() const
 
     Errno::open(in,  d_options.implementationSkeleton()); 
     Errno::open(out, d_options.implementationHeaderPath()); 
-
-    if (d_arg.option('V'))
-        cout << "Implementation header file: " << 
-                                  d_options.implementationHeaderPath() << '\n';
 
     filter(in, out);    
 }

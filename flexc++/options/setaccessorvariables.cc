@@ -6,8 +6,8 @@ void Options::setAccessorVariables()
 
     d_debug = d_debug || arg.option('d');   // debug facility requested
 
-    if (arg.option(0, "no-lines"))
-        d_lines = false;
+    if (d_debug)
+        d_matchedRules = false;             // as debug implies -R
 
     d_print = d_print || arg.option('t');
 
@@ -60,6 +60,9 @@ void Options::setAccessorVariables()
     if (!targetDirOption && d_targetDirectory.empty())
         d_targetDirectory = s_defaultTargetDirectory;
 
+    if (d_arg.option('K'))
+        d_constructionPath = d_targetDirectory + d_arg[0] + ".output";
+
     setPath(&d_classHeaderPath, 'c', targetDirOption, "class-header", 
             filenames, ".h");
 
@@ -71,5 +74,4 @@ void Options::setAccessorVariables()
 
     setPath(&d_lexSourcePath, 'l', targetDirOption, 
             "lex-source", String::lc(d_lexFunctionName), ".cc");
-
 }

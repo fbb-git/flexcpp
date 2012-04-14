@@ -32,3 +32,7 @@ inline void Generator::outStartState(string const &name, ostream &out)
     out << "        " << name << ",\n";
 }
 
+inline bool Generator::debugCodeRequired() const    // see also insert.cc
+{
+    return d_debug || d_options('R');
+}

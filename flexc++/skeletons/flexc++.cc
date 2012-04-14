@@ -228,7 +228,7 @@ void \@Base::determineMatchedSize(FinData const &final)
   // d_atBOL is updated. Finally the rule index is returned.
 size_t \@Base::matched__(size_t ch)
 {
-$insert 4 debug.action "MATCH"
+$insert 4 debug "MATCH"
     d_input.reRead(ch);
 
     if (!d_atBOL)
@@ -243,7 +243,7 @@ $insert 4 debug.action "MATCH"
 
     d_atBOL = *d_matched.rbegin() == '\n';
 
-$insert 4 debug.action "match buffer contains `" << d_matched << "'"
+$insert 4 debug "match buffer contains `" << d_matched << "'"
 
     return final.rule;
 }
@@ -261,7 +261,7 @@ size_t \@Base::getRange__(int ch)       // using int to prevent casts
   // are updated.
 void \@Base::continue__(int ch)
 {
-$insert 4 debug.action "CONTINUE, NEXT STATE: " << d_nextState
+$insert 4 debug "CONTINUE, NEXT STATE: " << d_nextState
     d_state = d_nextState;
 
     if (ch != AT_EOF)
@@ -270,7 +270,7 @@ $insert 4 debug.action "CONTINUE, NEXT STATE: " << d_nextState
 
 void \@Base::echoCh__(size_t ch)
 {
-$insert 4 debug.action "ECHO_CH" 
+$insert 4 debug "ECHO_CH" 
     *d_out << static_cast<char>(ch);
     d_atBOL = ch == '\n';
 }
@@ -283,7 +283,7 @@ $insert 4 debug.action "ECHO_CH"
    // rules and that char is then echoed
 void \@Base::echoFirst__(size_t ch)
 {
-$insert 4 debug.action "ECHO_FIRST"
+$insert 4 debug "ECHO_FIRST"
     d_input.reRead(ch);
     d_input.reRead(d_matched, 1);
     echoCh__(d_matched[0]);
@@ -341,12 +341,12 @@ void \@Base::reset__()
 int \@::executeAction__(size_t ruleIdx)
 try
 {
-$insert 4 debug.action  "Executing actions of rule " << ruleIdx
+$insert 4 debug.R  "Executing actions of rule " << ruleIdx
     switch (ruleIdx)
     {
 $insert 8 actions
     }
-$insert 4 debug.action "Rule " << ruleIdx << " did not do 'return'"
+$insert 4 debug "Rule " << ruleIdx << " did not do 'return'"
     noReturn__();
     return 0;
 }
@@ -393,7 +393,7 @@ int \@::lex__()
             break;
 
             case ActionType__::RETURN:
-$insert 16 debug.action  "EOF_REACHED"
+$insert 16 debug  "EOF_REACHED"
                 if (!popStream())
                     return 0;
             continue;

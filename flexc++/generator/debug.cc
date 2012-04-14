@@ -1,8 +1,18 @@
 #include "generator.ih"
 
+    // see also: insert.cc
+
 void Generator::debug(ostream &out) const
 {
-    if (!d_debug)
+    if 
+    (
+        not
+        (
+            d_debug 
+            || 
+            (d_field == "R" && d_options('R'))
+        )
+    )
         return;
 
     key(out);

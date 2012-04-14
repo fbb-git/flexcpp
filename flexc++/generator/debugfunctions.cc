@@ -4,7 +4,7 @@ void Generator::debugFunctions(std::ostream &out) const
 {
     key(out);
 
-    if (!d_debug)
+    if (not debugCodeRequired())
     {
         out << 
             "void " << d_baseclassScope << "setDebug(bool onOff)\n"

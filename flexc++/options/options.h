@@ -3,15 +3,21 @@
 
 #include <iostream>
 #include <string>
-#include <bobcat/a2x>
+
+namespace FBB
+{
+    class Arg;
+}
 
 class Options
 {
+    FBB::Arg const &d_arg;
     std::string d_baseClassHeaderPath;
     std::string d_baseClassSkeleton;
     std::string d_classHeaderPath;
     std::string d_className;
     std::string d_classSkeleton;
+    std::string d_constructionPath;
     std::string d_filenames;
     std::string d_implementationHeaderPath;
     std::string d_implementationSkeleton;
@@ -23,11 +29,14 @@ class Options
     std::string d_nameSpace;
     std::string d_skeletonDirectory;
     std::string d_targetDirectory;
+    std::string d_infile;
 
     bool d_interactive;
     bool d_lines;
     bool d_print;
     bool d_debug;
+    bool d_matchedRules;
+    bool d_verbose;
 
     enum 
     {
@@ -42,10 +51,11 @@ class Options
     static char s_defaultLexfunSource[];
     static char s_defaultTargetDirectory[];
 
-    static Options s_options;
+    static Options *s_options;
     static void (*s_regexCall)(char const *funName);
 
     public:
+        static Options &init(FBB::Arg const &arg);
         static Options &instance();
 
         Options(Options const &other) = delete;
@@ -54,7 +64,12 @@ class Options
         bool interactive() const;
         bool lines() const;
         bool print() const;
+        bool verbose() const;
+        bool operator()(int opt) const;
+        bool operator()(char const *opt) const;
+
         std::size_t maxDepth() const;
+
         std::string baseclassHeaderName() const;
         std::string classHeaderName() const;
         std::string const &baseclassHeaderPath() const;
@@ -71,6 +86,8 @@ class Options
         std::string const &lexSkeleton() const;
         std::string const &lexSourcePath() const;
         std::string const &nameSpace() const;
+        std::string const &infile() const;
+        std::string const &constructionPath() const;
         std::string implementationHeaderName() const;
         void setBaseClassHeaderPath(std::string const &name);
         void setClassHeaderPath(std::string const &name);
@@ -90,12 +107,11 @@ class Options
         void setTargetDirectory(std::string const &name);
 
         static void regexCall(char const *funname);
-        static void showRegexCalls();
 
         void setAccessorVariables();
 
     private:
-        Options();
+        Options(FBB::Arg const &arg);
 
         std::string undelimit(std::string const &str);
         void setPath(std::string *target, std::string const &name);
@@ -108,14 +124,14 @@ class Options
 
 };
 
+inline Options &Options::instance()
+{
+    return *s_options;
+}
+
 inline void Options::show(char const *funName)
 {
     std::cout << '\t' << funName << '\n';
-}
-
-inline void Options::showRegexCalls()
-{
-    s_regexCall = show;
 }
 
 inline void Options::regexCall(char const *funName)
@@ -126,6 +142,11 @@ inline void Options::regexCall(char const *funName)
 inline size_t Options::maxDepth() const
 {
     return d_maxDepth;
+}
+
+inline std::string const &Options::constructionPath() const
+{
+    return d_constructionPath;
 }
 
 inline std::string const &Options::inputInterface() const
@@ -198,6 +219,11 @@ inline std::string const &Options::nameSpace() const
     return d_nameSpace;
 }
 
+inline std::string const &Options::infile() const
+{
+    return d_infile;
+}
+
 inline void Options::setInputImplementationPath(std::string const &name)
 {
     setPath(&d_inputImplementation, name);
@@ -253,6 +279,12 @@ inline bool Options::interactive() const
     return d_interactive;
 }
 
+
+inline bool Options::verbose() const
+{   
+    return d_verbose;
+}
+
 inline bool Options::print() const
 {   
     return d_print;
@@ -269,6 +301,7 @@ inline bool Options::debug() const
 }
 
 #endif
+
 
 
 

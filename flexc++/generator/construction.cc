@@ -2,19 +2,14 @@
 
 void Generator::construction(States const &states)
 {
-    if (not d_arg.option('K'))      // construction not requested
+    if (not d_options('K')) 
         return;
 
-    d_constructionFilename = d_arg[0];
-    size_t pos = d_constructionFilename.rfind('.');
-    if (pos != string::npos)
-        d_constructionFilename.resize(pos);
-    d_constructionFilename += ".output";
-
     ofstream out;
-    Errno::open(out, d_constructionFilename);
 
-    out << "RANGES:\n" << 
+    Errno::open(out, d_options.constructionPath());
+    
+    out <<  "RANGES:\n" << 
             d_ranges << "\n"
             "\n"
             "RULES:\n" << 

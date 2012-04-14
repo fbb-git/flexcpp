@@ -6,5 +6,5 @@ DFA::DFA(Ranges &ranges, Rules &rules, States &states)
     d_rules(&rules),
     d_states(&states),
     d_stateSet(1),
-    d_verbose(Arg::instance().option('V'))
+    d_verbose(Options::instance().verbose())
 {}

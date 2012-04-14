@@ -2,18 +2,17 @@
 
 void Generator::showFilenames() const
 {
-    if (not d_arg.option('F'))
+    if (not d_options('F'))
         return;
 
     imsg << 
         "Input file name:                     " << 
-                                    d_arg[0] << endl;
+                                    d_options.infile() << endl;
                                               
-    if (d_constructionFilename.length())      
+    if (d_options('K'))      
         imsg <<                               
         "Construction details:                " << 
-                                    d_constructionFilename << endl;
-
+                                    d_options.constructionPath() << endl;
     imsg <<                                   
         "\n"
         "Baseclass header skeleton file:      " << 

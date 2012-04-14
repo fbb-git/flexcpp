@@ -3,15 +3,29 @@ flexc++ (0.97.00)
   * Added the --regex-calls option showing the order in which elements from
     regular expressions are processed.
 
-  * Replaced '#include <climits>' by '#include <limits>' and '..._MAX'
-    constants by 'numeric_limits<...>::max()' calls. Also in the flexc++
-    skeletons. 
+  * Added the --matched-rules option showing the number of matched rules, just
+    before their actions are executed.
 
-  * The files parser/parserbase.h and parser/parse.cc were removed from
-    'build program' to remove the program's build process dependency on
+  * Replaced '#include <climits>' by '#include <limits>' and '..._MAX'
+    constants by 'numeric_limits<...>::max()' calls. The same holds true for
+    flexc++'s skeletons. 
+
+  * The files parser/parserbase.h and parser/parse.cc were added to the
+    archive, and the check for changes in the parser's grammar was removed
+    from 'build program' to remove the program's build process dependency on
     bisonc++. To recreate the program for a new parser use 'build parser'.
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 12 Apr 2012 10:45:10 +0200
+  * Skeletons can use fields (again) at $insert directives to specifiy
+    subcases. This is documented in generator/insert.cc, and used to generate
+    option specific code for --matched-rules (see skeletons/flexc++.cc at
+    debug.R). 
+
+  * Flexc++ itself now uses a parser defining and using polymorphic semantic
+    values. To recreate the parser (but note that this is *not* required when
+    compiling flexc++ from the source archive), bisonc++ > 4.00.00 is
+    required. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 14 Apr 2012 13:44:00 +0200
 
 flexc++ (0.96.00)
 

@@ -11,7 +11,6 @@
 #include <bobcat/string>
 #include <bobcat/a2x>
 
-#include "../options/options.h"
 #include "../state/state.h"
 
 #include "../rules/rules.h"

@@ -8,12 +8,12 @@
 #include <bobcat/tablelines>
 #include <bobcat/align>
 #include <bobcat/table>
-#include <bobcat/arg>
 #include <bobcat/mstream>
 
 #include "../rules/rules.h"
 #include "../states/states.h"
 #include "../ranges/ranges.h"
+#include "../options/options.h"
 
 using namespace std;
 using namespace FBB;
