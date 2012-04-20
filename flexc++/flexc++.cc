@@ -66,10 +66,11 @@ try
 
     Rules rules(states);
 
+
     Parser parser(rules, states);
         parser.parse();
 
-    if (int count = Msg::errors())
+    if (int count = emsg.count())
     {
         cout << "Error(s): " << count << '\n';
         return 1;

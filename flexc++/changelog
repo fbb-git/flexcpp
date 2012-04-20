@@ -1,3 +1,10 @@
+flexc++ (0.97.20)
+
+  * George Danchev noticed that flexc++ created files even though parsing
+    failed. This flaw's repaired in this release
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 20 Apr 2012 16:33:01 +0200
+
 flexc++ (0.97.10)
 
   * Added missing std:: prefixes to numeric_limits calls in skeletons/flexc++
