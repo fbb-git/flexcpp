@@ -1,3 +1,10 @@
+flexc++ (0.97.10)
+
+  * Added missing std:: prefixes to numeric_limits calls in skeletons/flexc++
+    and generator/tailcount.cc.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 20 Apr 2012 14:04:55 +0200
+
 flexc++ (0.97.00)
 
   * Added the --regex-calls option showing the order in which elements from

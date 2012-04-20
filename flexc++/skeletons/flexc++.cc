@@ -215,7 +215,7 @@ void \@Base::accept(size_t nChars)          // old name: less
 void \@Base::determineMatchedSize(FinData const &final)
 {
     size_t length = final.matchLen;
-    if (final.tailCount != numeric_limits<size_t>::max())
+    if (final.tailCount != std::numeric_limits<size_t>::max())
         length -= final.tailCount;
 
     d_input.reRead(d_matched, length);      // reread the tail section
@@ -232,9 +232,9 @@ $insert 4 debug "MATCH"
     d_input.reRead(ch);
 
     if (!d_atBOL)
-        d_final.atBOL.rule = numeric_limits<size_t>::max();
+        d_final.atBOL.rule = std::numeric_limits<size_t>::max();
 
-    FinData &final = d_final.atBOL.rule == numeric_limits<size_t>::max() ? 
+    FinData &final = d_final.atBOL.rule == std::numeric_limits<size_t>::max() ? 
                             d_final.notAtBOL
                         :
                             d_final.atBOL;
@@ -315,7 +315,7 @@ void \@Base::inspectRFCs__()
         if (flag & INCREMENT)
             ++d_tailCount[rule];
         else 
-            d_tailCount[rule] = (flag & COUNT) ? rfc[ACCCOUNT] : numeric_limits<size_t>::max();
+            d_tailCount[rule] = (flag & COUNT) ? rfc[ACCCOUNT] : std::numeric_limits<size_t>::max();
 
         if (flag & FINAL)
         {
@@ -327,8 +327,8 @@ void \@Base::inspectRFCs__()
 
 void \@Base::reset__()
 {
-    d_final = Final { {numeric_limits<size_t>::max(), numeric_limits<size_t>::max(), numeric_limits<size_t>::max() }, 
-                      {numeric_limits<size_t>::max(), numeric_limits<size_t>::max(), numeric_limits<size_t>::max() } };
+    d_final = Final { {std::numeric_limits<size_t>::max(), std::numeric_limits<size_t>::max(), std::numeric_limits<size_t>::max() }, 
+                      {std::numeric_limits<size_t>::max(), std::numeric_limits<size_t>::max(), std::numeric_limits<size_t>::max() } };
     d_state = 0;
     d_return = true;
 
