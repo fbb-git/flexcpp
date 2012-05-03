@@ -1,3 +1,9 @@
+flexc++ (0.97.30)
+
+  * This version depends on Bobcat >= 3.00.00
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 03 May 2012 21:35:05 +0200
+
 flexc++ (0.97.20)
 
   * George Danchev noticed that flexc++ created files even though parsing
