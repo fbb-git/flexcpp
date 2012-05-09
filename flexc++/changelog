@@ -1,3 +1,9 @@
+flexc++ (0.97.21)
+
+  * Added missing header file
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 09 May 2012 14:34:27 +0200
+
 flexc++ (0.97.20)
 
   * George Danchev noticed that flexc++ created files even though parsing
