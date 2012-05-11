@@ -142,6 +142,7 @@ OPTBL                   [[:blank:]]*
                                 }
 
     %baseclass-header           return Parser::BASECLASSHEADER;
+    %case-insensitive           return Parser::CASEINSENSITIVE;
     %class-header               return Parser::CLASSHEADER;
     %class-name                 return Parser::CLASSNAME;
     %debug                      return Parser::DEBUG;

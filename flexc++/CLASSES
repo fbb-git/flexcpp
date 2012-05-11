@@ -3,8 +3,9 @@
 #   depending classes, using icmbuild
 
 interval
-scanner
 options         
+
+scanner                 options
 
 pattern                 options
 

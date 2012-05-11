@@ -10,6 +10,33 @@ arguments if their associated long options require arguments as well.
            Use tt(skeleton) as the pathname of the file containing the
             skeleton of the scanner class's base class. Its filename defaults
             to tt(flexc++base.h).
+    it() loption(case-insensitive)nl()
+           Use this option to generate a scanner em(case insensitively)
+            matching regular expressions. All regular expressions specified in
+            flc()'s input file are interpreted case insensitively and the
+            resulting scanner object will case insensitively interpret its
+            input. 
+
+           When this option is specified the resulting scanner does not
+            distinguish between the following rules:
+           verb(
+        First       // initial F is transformed to f
+        first
+        FIRST       // all capitals are transformed to lower case chars
+                )
+           With a case-insensitive scanner only the first rule can be matched,
+            and flc() will issue warnings for the second and third rule about
+            rules that cannot be matched.
+
+           Input processed by a case-insensitive scanner is also handled case
+            insensitively. The above mentioned tt(First) rule is matched for
+            all of the following input words: tt(first First FIRST firST). 
+
+           Although the matching process proceeds case insensitively, the
+            matched text (as returned by the scanner's tt(matched()) member)
+            always contains the original, unmodified text. So, with the above
+            input tt(matched()) returns, respectively tt(first, First, FIRST)
+            and tt(firST), while matching the rule tt(First).
     it() lsoption(class-header)(c)(header)nl()
            Use tt(header) as the pathname of the file containing the scanner
             class. Defaults to the name of the scanner class plus the suffix

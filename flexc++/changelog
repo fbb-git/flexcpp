@@ -1,3 +1,12 @@
+flexc++ (0.98.00)
+
+  * Implemented the --case-insensitive option (and directive), generating a
+    scanner ignoring letter casing.
+
+  * Several cosmetic changes were implemented
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 11 May 2012 13:59:54 +0200
+
 flexc++ (0.97.30)
 
   * This version depends on Bobcat >= 3.00.00

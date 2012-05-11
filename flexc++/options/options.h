@@ -37,6 +37,7 @@ class Options
     bool d_debug;
     bool d_matchedRules;
     bool d_verbose;
+    bool d_caseSensitive;
 
     enum 
     {
@@ -60,6 +61,7 @@ class Options
 
         Options(Options const &other) = delete;
 
+        bool caseSensitive() const;
         bool debug() const;
         bool interactive() const;
         bool lines() const;
@@ -92,6 +94,7 @@ class Options
         void setBaseClassHeaderPath(std::string const &name);
         void setClassHeaderPath(std::string const &name);
         void setClassName(std::string const &name);
+        void setCaseInsensitive();
         void setDebug();
         void setFilenames(std::string const &name);
         void setImplementationHeaderPath(std::string const &name);
@@ -142,6 +145,11 @@ inline void Options::regexCall(char const *funName)
 inline size_t Options::maxDepth() const
 {
     return d_maxDepth;
+}
+
+inline bool Options::caseSensitive() const
+{
+    return d_caseSensitive;
 }
 
 inline std::string const &Options::constructionPath() const
@@ -257,6 +265,11 @@ inline void Options::setLexSourcePath(std::string const &name)
 inline void Options::setInteractive()
 {   
     d_interactive = true;
+}
+
+inline void Options::setCaseInsensitive()
+{   
+    d_caseSensitive = false;
 }
 
 inline void Options::setLines(bool yesNo)

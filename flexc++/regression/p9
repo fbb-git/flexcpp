@@ -1,0 +1,8 @@
+// case insensitive scanner
+%case-insensitive
+%%
+aap             return 1;
+Noot            return 2;
+//Aap           // this rule can never be matched
+
+.|\n            // ignore
