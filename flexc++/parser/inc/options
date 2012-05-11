@@ -155,6 +155,11 @@ option:
         d_options.setNameSpace(d_matched);
     }
 |
+    CASEINSENSITIVE
+    {
+        d_options.setCaseInsensitive();
+    }
+|
     INTERACTIVE
     {
         d_options.setInteractive();

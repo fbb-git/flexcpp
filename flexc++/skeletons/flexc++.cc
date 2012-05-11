@@ -253,6 +253,7 @@ size_t \@Base::getRange__(int ch)       // using int to prevent casts
     if (ch != AT_EOF)
         d_sawEOF = false;
 
+$insert caseCheck
     return ch == AT_EOF ? static_cast<size_t>(s_rangeOfEOF__) : s_ranges__[ch];
 }
 

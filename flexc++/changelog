@@ -1,8 +1,11 @@
-flexc++ (0.97.30)
+flexc++ (0.98.00)
 
-  * Cosmetic changes
+  * Implemented the --case-insensitive option (and directive), generating a
+    scanner ignoring letter casing.
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 10 May 2012 16:05:29 +0200
+  * Several cosmetic changes were implemented
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 11 May 2012 13:59:54 +0200
 
 flexc++ (0.97.20)
 

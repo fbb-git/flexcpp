@@ -38,6 +38,7 @@ namespace
         {"usage",                       'h'},
         {"version",                     'v'},
 
+        {"case-insensitive",            Arg::None},
         {"debug",                       'd'},
         {"construction",                'K'}, 
         {"matched-rules",               'R'},

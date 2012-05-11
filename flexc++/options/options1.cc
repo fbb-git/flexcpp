@@ -10,6 +10,7 @@ Options::Options(Arg const &arg)
     d_debug(false),
     d_matchedRules(arg.option('R')),
     d_verbose(arg.option('V')),
+    d_caseSensitive(not arg.option(0, "case-insensitive")),
     d_maxDepth(10)
 {
     if (arg.option(0, "regex-calls"))

@@ -9,6 +9,7 @@ Generator::Map Generator::s_insert =
     {"actions",                 &Generator::actions},
     {"baseclass_h",             &Generator::baseClassH},
     {"baseIncludes",            &Generator::baseIncludes},
+    {"caseCheck",               &Generator::caseCheck},
     {"classHead",               &Generator::classHead},
     {"class_h",                 &Generator::classH},
     {"class_ih",                &Generator::classIH},

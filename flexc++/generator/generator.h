@@ -90,9 +90,9 @@ class Generator
                                       size_t offset);
 
         void actions(std::ostream &out) const;
-        void tailCount(std::ostream &out) const;
         void baseClassH(std::ostream &out) const;
         void baseIncludes(std::ostream &out) const;
+        void caseCheck(std::ostream &out) const;
         void classH(std::ostream &out) const;
         void classHead(std::ostream &out) const;
         void classIH(std::ostream &out) const;
@@ -119,6 +119,7 @@ class Generator
         void ranges(std::ostream &out) const;
         void scannerConstructors(std::ostream &out) const;
         void startCondNames(std::ostream &out) const;
+        void tailCount(std::ostream &out) const;
 
         size_t dfaCols() const;
 

@@ -1,0 +1,8 @@
+// BOL patterns
+%%
+a\n/b           return 1;
+b               return 3;
+^b              return 2;
+
+.               return 3;
+\n              return 4;
