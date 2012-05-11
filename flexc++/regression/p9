@@ -1,8 +1,13 @@
 // case insensitive scanner
 %case-insensitive
+
 %%
+<INITIAL>{
 aap             return 1;
-Noot            return 2;
+}
+<INITIAL>Noot   return 2;
 //Aap           // this rule can never be matched
+
+mies            return 3;
 
 .|\n            // ignore

@@ -2,7 +2,7 @@ _rule_def:
     // only an empty line is OK
 |
     // recovery from errors is OK: continue at the next line
-    error       
+    error
 |
     optMs_rule
 |

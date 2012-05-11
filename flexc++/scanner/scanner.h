@@ -18,6 +18,8 @@ class Scanner: public ScannerBase
                                 // IDENTIFIER and DECIMAL as themselves,
                                 // otherwise accept their first chars as CHAR
 
+    bool d_caseSensitive;
+
     std::unordered_map<std::string, std::string> d_nameExpansion;
 
     // declared below:
@@ -40,6 +42,9 @@ class Scanner: public ScannerBase
         void eolnDollar();
         void acceptMulti();
         void multiAsChar();
+
+        void forceCaseSensitive();
+        void setCaseSensitive();
 
     private:
         int openCC(int token);
@@ -85,6 +90,11 @@ class Scanner: public ScannerBase
         void preCode();     // re-implement this function for code that must 
                             // be exec'ed before the patternmatching starts
 };
+
+inline void Scanner::forceCaseSensitive()
+{
+    d_caseSensitive = true;
+}
 
 inline void Scanner::acceptMulti()
 {

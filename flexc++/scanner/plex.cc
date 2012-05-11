@@ -4,7 +4,7 @@ int Scanner::pLex()
 {
     int ret = lex();
 
-    if (not Options::instance().caseSensitive())
+    if (not d_caseSensitive)
         setMatched(String::lc(matched()));
 
     emsg.setLineNr(lineNr());

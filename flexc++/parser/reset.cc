@@ -10,4 +10,5 @@ void Parser::reset()
     d_warnDollars = false;
     d_tokenCount = 0;
     d_scanner.multiAsChar();
+    d_scanner.setCaseSensitive();
 }

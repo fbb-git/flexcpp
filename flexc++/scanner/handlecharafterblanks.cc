@@ -11,5 +11,6 @@ int Scanner::handleCharAfterBlanks()
         return ' ';
 
     d_inBlock = true;
+    d_caseSensitive = true;
     return Parser::BLOCK;
 }

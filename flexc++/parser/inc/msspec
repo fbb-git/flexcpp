@@ -24,6 +24,7 @@ _ms_angular:
     '<'
     {
         d_scanner.acceptMulti();
+        d_scanner.forceCaseSensitive();
     }
 ;
 
