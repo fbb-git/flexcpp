@@ -1,3 +1,16 @@
+flexc++ (0.98.01)
+
+  * The following #defines in INSTALL.im can be overruled by defining
+    identically named environment variables: 
+        CXX      defines the name of the compiler to use. By default `g++'
+        CXXFLAGS the options passed to the compiler. 
+                 By default `-Wall --std=c++0x -O2 -g'
+        LDFLAGS  the options passed to the linker. By default no options are
+                 passed to the linker.
+        SKEL     the directory where the skeletons are stored
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 17 Jul 2012 10:06:21 +0200
+
 flexc++ (0.98.00)
 
   * Implemented the --case-insensitive option (and directive), generating a

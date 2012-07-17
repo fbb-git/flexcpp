@@ -1,30 +1,39 @@
-#define STAMP     "manual-stamp"
-#define HTMLDEST    "../../tmp/manual"
-
 void manual()
 {
     list files;
     string file;
     string cwd;
     int idx;
+    string compiler;
+
+    compiler = setOpt(CXX, "CXX");
 
     cwd = chdir(".");
 
     md("tmp/manual");
 
-    special();
+    chdir("documentation");
 
-    chdir("documentation/manual");
+//    if (!exists("usage/usage"))
+//    {
+//        chdir("usage");
+//        run(compiler + " -o usage usage.cc");
+//        run("./usage > ../manual/invoking/usage.txt");
+//        chdir("..");
+//    }
+
+    chdir("manual");
 
     files = makelist("*.yo") + makelist("*/*.yo");
     for (idx = sizeof(files); idx--; )
     {
         file = element(idx, files);
-        if (file younger STAMP)
+        if (file younger "manual-stamp")
         {
-            run("yodl2html -l3 flexc++.yo");
-            run("touch " STAMP);
-            run("mv *.html " HTMLDEST);
+            run("yodl2html -l3 " PROGRAM ".yo");
+            run("touch manual-stamp");
+            run("mv *.html ../../tmp/manual");
+
             break;
         }
     }

@@ -1,48 +1,44 @@
-#define EXTENSION ""
-    // EXTENSION should be changed to ".exe" when compiling Bisonc++ for 
-    // Cygwin environments. Don't forget the initial dot (.)
-    // See also README.CYGWIN
+    // Specify the name of the program created by this project:
+#define PROGRAM             "flexc++"
 
-string BASE;
+    // When defined, these overrule COMPILER and COMPILER_OPTIONS
+    // COMPILER and COMPILER_OPTIONS are now obsolete
+    // Instead of CXX and CXXFLAGS, CC and CFLAGS can be used.
+    // Their #define values are overruled by identically named environment
+    // variables. 
 
-    // BASE=is the directory below which ALL flexc++ files will be stored.
+#define CXX                 "g++"
+    // the compiler to use. 
 
-    // For an operational non-Debian installation, you probably must be
-    // `root', and BASE "/usr" or BASE "/usr/local" is suggested (see
-    // below). `BASE' itself is not used outside of this file, so feel free to
-    // define BIN, SKEL, MAN and DOC (below) in any which way you like.
+#define CXXFLAGS            "--std=c++0x -Wall -O2 -g"
+    // the compiler options to use.
 
-string BIN;
-    // the directory in which flexc++ will be stored
+#define LDFLAGS             ""
+    // flags passed to the linker
 
-string SKEL;
-    // SKEL is the directory below BASE in which the skeleton files will be
-    // stored
+#define SKEL    "/usr/share/" ${PROGRAM}
+    // the directory where the skeleton files are installed
 
-string MAN;
-    // MAN is the base directory of the man pages
+// =========================================================================
+// The following locations are overruled by `build install' arguments
 
-string DOC;
-    // DOC is the directory in which all other documentation will be stored
+#define BINARY     "/usr/bin/"${PROGRAM}
+    // the full path of the final program
 
-#define CXXFLAGS    "-O2 -g"
-    // Specify compiler options that should be used. Overruled by the CXXFLAGS
-    // environment variables. 
-    // The options "-Wall --std=c++0x" are always used.
-    // For profiling use the  -pg flags, and don't strip
+#define MAN     "/usr/share/man/man1"
+    // the directory whre the manual page is stored
 
-#define LDFLAGS     ""
-    // Specify linker options. None by default. Do not specify -s (strip) here
-    // as strip is handled by adding a command to the build call.
+#define MANUAL   "/usr/share/doc/"${PROGRAM}"/manual"
+    // the directory whre the manual page is stored
 
-void setLocations()
-{
-    BASE  = "/usr/local";
-    BIN  = BASE + "/bin";
-    SKEL = BASE + "/share/flexc++";
-    MAN  = BASE + "/share/man";
-    DOC  = BASE + "/share/doc/flexc++";
-}
+#define STD     "/usr/share/doc/"${PROGRAM}
+    // the directory where the standard documentation is stored 
+
+#define EXTRA   "/usr/share/doc/"${PROGRAM}
+    // the directory where the extra documentation is stored 
+
+
+
 
 
 

@@ -1,35 +1,29 @@
-string remove1;
-string remove2;
-string remove3;
-
-void setRemovals()
-{
-    // always:
-        remove1 = 
-            "build-stamp configure-stamp options/SKEL "
-            "tmp/flexc++ o */o release.yo tmp/libflexc++.a "    
-            ;
-
-    // dist:
-        remove2 =
-            "tmp";
-
-    // in ./documentation:
-        remove3 = "man/*.1 man/*.3flexc++ man/*.html manual/manual-stamp "
-                  "manual/*.html manual/invoking/usage flexc++ usage/usage";
-}
-
 void clean(int dist)
 {
-    setRemovals();
+    run("rm -rf "
+            "build-stamp configure-stamp "
+            "options/SKEL "
+            "tmp/*.o" + 
+            " o */o release.yo tmp/lib*.a "    
+            "parser/grammar.output"
+    );
 
-    run("rm -rf " + remove1);
 
     if (dist)
-        run("rm -rf " + remove2);
+        run("rm -rf tmp");
 
     chdir("documentation");
-    run("rm -rf " + remove3);
+
+    run("rm -rf "
+            "man/*.1 "
+            "man/*.3* "
+            "man/*.html "
+            "manual/manual-stamp "
+            "manual/*.html "
+            "manual/invoking/usage "
+            "manual/invoking/usage.txt "
+            "usage/usage "
+    );
 
     exit(0);
 }
