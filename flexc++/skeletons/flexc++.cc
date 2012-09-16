@@ -88,7 +88,6 @@ void \@Base::switchOstream(std::ostream &out)
 {
     *d_out << std::flush;
     d_out.reset(new std::ostream(out.rdbuf()));
-    d_filename = "-";
 }
 
 $insert debugFunctions

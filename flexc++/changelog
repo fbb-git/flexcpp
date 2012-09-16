@@ -1,4 +1,4 @@
-flexc++ (0.98.01)
+flexc++ (1.00.00)
 
   * The following #defines in INSTALL.im can be overruled by defining
     identically named environment variables: 
@@ -9,7 +9,25 @@ flexc++ (0.98.01)
                  passed to the linker.
         SKEL     the directory where the skeletons are stored
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 17 Jul 2012 10:06:21 +0200
+  * Klaas Winter detected a bug in the skeletons/flexc++.cc file:
+    switchOstream incorrectly changed the name of the *input* file to "-". 
+    The assignment to d_filename was removed from the skeleton file.
+
+  * Klaas Winter detected a bug in CharRange::predefined causing a setfault
+    when requesting a negated set of characters (like [:^space:]. The bug was
+    caused by removing from the set name all characters from ^ to the end of
+    the set name, instead of removing just the ^. Consequently, no character
+    selecting function (for [:) could of course be found.
+
+  * By now we're well beyond the 1 year beta testing period, which included
+    using flexc++ in bisonc++ and flexc++ itself, as well as the scanner
+    generating tool of choice for Frank's C++ course. Considering this
+    Jean-Paul and I decided to bump flexc++'s version from version 0.98.00 to
+    1.00.00. Removed 
+        d_filename = "-"; 
+    from the skeleton file's implementation of switchOstream.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 16 Sep 2012 18:55:53 +0200
 
 flexc++ (0.98.00)
 
