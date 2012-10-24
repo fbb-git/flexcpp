@@ -31,8 +31,8 @@ verbinclude(examples/simpleoutputtinglexer)
 Note how a compound statement may be used instead of a one line
 statement at the end of the line. The opening bracket must appear
 on the same line as the pattern, however. Also note that inside
-an action, we can use members of Scanner. tt(match()) contains
-the token that was last matched.
+an action, we can use members of Scanner. tt(matched()) contains
+the text of the token that was last matched.
 And below is a main() function that is used with the generated scanner.
 
 verbinclude(examples/mainforoutputtinglexer.cc)

@@ -1,9 +1,7 @@
-#include "scanner.h"
+#include "Scanner.h"
 
 int main()
 {
 	Scanner scanner;
 	scanner.lex();
-
-	return 0;
 }
