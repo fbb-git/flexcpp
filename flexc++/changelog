@@ -5,8 +5,10 @@ flexc++ (1.00.01)
   * Added the file 'build-depends' listing specific softwar and versions that
     are used during flexc++'s compilation and by the final program.
 
+  * Several inconsistencies in the initial sections of flexc++'s user guide
+    were repaired.
 
-
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 27 Oct 2012 14:49:47 +0200
 
 flexc++ (1.00.00)
 
