@@ -76,7 +76,7 @@ $insert tailCount
     d_dfaBase__(s_dfa__)
 {}
 
-inline void \@Base::switchStreams(std::istream &in, std::ostream &out)
+void \@Base::switchStreams(std::istream &in, std::ostream &out)
 {
     switchStream__(in, 1);
     switchOstream(out);

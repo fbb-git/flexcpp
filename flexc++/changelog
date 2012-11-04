@@ -1,3 +1,12 @@
+flexc++ (1.01.00)
+
+  * Removed 'inline' from skeletons/flexc++.cc
+
+  * Man-page and manual updated
+
+  * The --interactive option was removed (the %interactive directive remains)
+
+
 flexc++ (1.00.01)
 
   * Adapted the INSTALL file to flexc++

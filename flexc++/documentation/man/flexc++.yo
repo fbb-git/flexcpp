@@ -115,7 +115,7 @@ of the features offered by that language.
     it() bf(8.9. FLEX++ TO FLEXC++ MEMBERS): a short overview of frequently
         used bf(flex)(1) members that received different names in flc().
 
-    it() bf(9.1 THE CLASS INPUT): the scanner's job is completely decoupled
+    it() bf(9.1. THE CLASS INPUT): the scanner's job is completely decoupled
         from the actual input stream. The class tt(Input), nested within the
         scanner base class handles the communication with the input
         streams. The  class tt(Input), is described in this section.
@@ -137,13 +137,13 @@ manpagefiles()
     Flc()'s default skeleton files are in tt(/usr/share/flexc++).nl()
     By default, flc() generates the following files:
         itemization(
-        itt(scanner.h): the header file containing the scanner class's
+        itt(Scanner.h): the header file containing the scanner class's
             interface. 
-        itt(scannerbase.h): the header file containing the interface of the 
+        itt(Scannerbase.h): the header file containing the interface of the 
             scanner class's base class.
-        itt(scanner.ih): the internal header file that is meant to be included
+        itt(Scanner.ih): the internal header file that is meant to be included
             by the scanner class's source files (e.g., it is included by
-            tt(lex.cc), see the next file), and that should contain all
+            tt(lex.cc), see the next item's file), and that should contain all
             declarations required for compiling the scanner class's sources.
         itt(lex.cc): the source file implementing the scanner class member
             function tt(lex) (and support functions), performing the lexical
@@ -162,6 +162,8 @@ of other multiplicative operators (like tt(*)).
     it() All tt(INITIAL) rules apply to inclusive mini scanners, also those
 tt(INITIAL) rules that were explicitly associated with the tt(INITIAL) mini
 scanner.
+    it() Generating interactive and non-interactive scanners (see section
+        5. INTERACTIVE SCANNERS) cannot be mixed.
     )
 
 manpagesection(ABOUT flexc++)

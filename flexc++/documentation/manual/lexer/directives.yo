@@ -86,16 +86,17 @@ END)
             user-defined tt(Input) class. 
     it() bf(%input-interface) tt(= "interface") nl()
            Defines the pathname of the file containing the interface of a
-            user-defined tt(Input) class. See bf(input)(3flexc++) for
-            additional information about user-defined tt(Input) classes.
+            user-defined tt(Input) class. See section bf(9.1. THE CLASS INPUT)
+            in the bf(flexc++)(1) manual page for additional information about
+            user-defined tt(Input) classes.
     it() bf(%interactive)nl()
            Generate an interactive scanner. An interactive scanner reads lines
             from the input stream, and then returns the tokens encountered on
             that line. The interactive scanner implemented by flc() only
             predefines the tt(Scanner(std::istream &in, std::ostream &out))
             constructor, by default assuming that input is read from
-            tt(std::cin). See also the tt(INTERACTIVE SCANNER) section in
-            bf(flexc++)(1). 
+            tt(std::cin). See also section tt(5. INTERACTIVE SCANNER) section
+            in the bf(flexc++)(1) manual page.
     it() bf(%lex-function-name) tt(= "funname") nl()
            Defines the name of the scanner class's member to perform the
             lexical scanning. If this directive is omitted the default name

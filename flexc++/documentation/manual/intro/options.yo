@@ -96,6 +96,7 @@ arguments if their associated long options require arguments as well.
            Use tt(skeleton) as the pathname of the file containing the
             skeleton of the implementation header. Its filename defaults to
             tt(flexc++.ih).
+COMMENT(
     it() loption(interactive)nl()
            Generate an interactive scanner. An interactive scanner reads lines
             from the input stream, and then returns the tokens encountered on
@@ -103,6 +104,7 @@ arguments if their associated long options require arguments as well.
             predefines the tt(Scanner(std::istream &in, std::ostream &out))
             constructor, by default assuming that input is read from
             tt(std::cin). 
+END)
     it() lsoption(lex-skeleton)(L)(skeleton)nl()
            Use tt(skeleton) as the pathname of the file containing the
             tt(lex()) member function's skeleton. Its filename defaults to
