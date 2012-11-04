@@ -31,10 +31,10 @@ class Options
     std::string d_targetDirectory;
     std::string d_infile;
 
-    bool d_interactive;
+    bool d_interactive = false;
     bool d_lines;
-    bool d_print;
-    bool d_debug;
+    bool d_print = false;
+    bool d_debug = false;
     bool d_matchedRules;
     bool d_verbose;
     bool d_caseSensitive;
@@ -43,7 +43,7 @@ class Options
     {
         MAX_DEPTH = 10 
     };
-    size_t d_maxDepth;
+    size_t d_maxDepth = MAX_DEPTH;
 
             // strings containing default file and other names
     static char s_defaultLexFunctionName[];

@@ -41,8 +41,8 @@ void Options::setAccessorVariables()
     if (!arg.option(&d_lexSkeleton, 'L'))
         d_lexSkeleton            = d_skeletonDirectory + FLEXCPP_CC;
 
-    if (arg.option(0, "interactive")) // does not overwrite %option when no
-        d_interactive = true;         // --interactive is supplied
+//    if (arg.option(0, "interactive")) // does not overwrite %option when no
+//        d_interactive = true;         // --interactive is supplied
 
     // Paths
 
