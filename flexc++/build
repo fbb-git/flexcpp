@@ -14,6 +14,17 @@
 
 string  g_cwd = chdir("");  // initial working directory
 
+void ignoreBisoncppWarning()
+{
+    printf(
+        "\n"
+        "   NOTE: Bisonc++'s warning about the token INTERACTIVE not being "
+                                                                    "used\n"
+        "         can safely be ignored\n"
+        "\n"
+    );
+}
+
 void main(int argc, list argv)
 {
     string option;
@@ -44,6 +55,7 @@ void main(int argc, list argv)
 
     if (option == "library")
     {
+        ignoreBisoncppWarning();
         system("icmbuild library");
         exit(0);
     }
@@ -53,6 +65,7 @@ void main(int argc, list argv)
     
     if (option == "program")
     {
+        ignoreBisoncppWarning();
         system("icmbuild program " + strip);
         exit(0);
     }
