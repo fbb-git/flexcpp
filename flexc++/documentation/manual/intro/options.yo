@@ -96,15 +96,6 @@ arguments if their associated long options require arguments as well.
            Use tt(skeleton) as the pathname of the file containing the
             skeleton of the implementation header. Its filename defaults to
             tt(flexc++.ih).
-COMMENT(
-    it() loption(interactive)nl()
-           Generate an interactive scanner. An interactive scanner reads lines
-            from the input stream, and then returns the tokens encountered on
-            that line. The interactive scanner implemented by flc() only
-            predefines the tt(Scanner(std::istream &in, std::ostream &out))
-            constructor, by default assuming that input is read from
-            tt(std::cin). 
-END)
     it() lsoption(lex-skeleton)(L)(skeleton)nl()
            Use tt(skeleton) as the pathname of the file containing the
             tt(lex()) member function's skeleton. Its filename defaults to
@@ -170,13 +161,18 @@ END)
             generated without using this option. The function showing the
             tokens (tt(ScannerBase::print__)) is called from
             tt(Scanner::printTokens), which is defined in-line in
-            tt(scanner.h). Calling tt(ScannerBase::print__), therefore, can
+            tt(Scanner.h). Calling tt(ScannerBase::print__), therefore, can
             also easily be controlled by an option controlled by the program
             using the scanner object.
 
            This option does em(not) show the tokens returned and text matched
             by flc() itself when reading its input file(s). If that is what
             you want, use the tt(--own-tokens) option.
+    it() loption(regex-calls)nl() 
+           Show the function call order when parsing regular expressions (this
+            option is normally not required. Its main purpose is to help
+            developers understand what happens when regular expressions are
+            parsed).
     it() loption(show-filenames) (soption(F))nl() 
            Write the names of the files that are generated to the 
             standard error stream.

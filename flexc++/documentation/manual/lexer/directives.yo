@@ -77,6 +77,16 @@ COMMENT(
             )
 END)    
             
+    it() bf(%filenames) tt(= "basename") nl()
+           Defines the basename of the tt(Scanner.h, Scanner.ih,) and
+            tt(Scannerbase.h) files. E.g., when using the directive
+                verb(
+    %filenames = "scanner"
+                )
+           the names of the generated files are, respectively, tt(scanner.h,
+            scanner.ih,) and tt(scannerbase.h).  Corresponding command-line
+            option: tt(--filenames). The name of the source file (by default
+            tt(lex.cc)) is controlled by the tt(%lex-source) directive.
     it() bf(%implementation-header) tt(= "header") nl()
            Defines the pathname of the file to contain the implementation
             header.  Corresponding command-line option:
@@ -124,7 +134,7 @@ END)
             tt(lex.cc) file is generated without using this directive. The
             function showing the tokens (tt(ScannerBase::print__)) is called
             from tt(Scanner::print()), which is defined in-line in
-            tt(scanner.h). Calling tt(ScannerBase::print__), therefore, can
+            tt(Scanner.h). Calling tt(ScannerBase::print__), therefore, can
             also easily be controlled by an option controlled by the program
             using the scanner object.
            This option does em(not) show the tokens returned and text matched

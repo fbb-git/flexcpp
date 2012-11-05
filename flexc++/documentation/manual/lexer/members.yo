@@ -49,7 +49,7 @@ itemization(
         is returned;
     itb(void preCode())
         By default this function has an empty, inline implementation in
-tt(scanner.h). It can safely be replaced by a user-defined
+tt(Scanner.h). It can safely be replaced by a user-defined
 implementation. This function is called by tt(lex__), just before it starts to
 match input characters against its rules: tt(preCode) is called by tt(lex__)
 when tt(lex__) is called and also after having executed the actions of a rule

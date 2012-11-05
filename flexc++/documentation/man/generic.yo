@@ -89,7 +89,7 @@ sub-directories tt(scanner) and tt(parser), then a simple grammar
 specification that can be used with the scanner developed in the previous
 section is, e.g., write the file tt(parser/grammar):
         verb(
-%scanner                ../scanner/scanner.h
+%scanner                ../scanner/Scanner.h
 %scanner-token-function d_scanner.lex()
 
 %token IDENTIFIER NUMBER CHAR
@@ -133,7 +133,7 @@ parser.
     verb(
 #include "../parser/Parserbase.h"
     )
-    to the file tt(scanner/scanner.ih)
+    to the file tt(scanner/Scanner.ih)
 
     it() Write a simple tt(main) function in the file tt(main.cc). E.g.,
     verb(

@@ -42,16 +42,12 @@ void usage(string const &program_name)
     "           filename for the implementation header.\n"
     "   --implementation-skeleton=<path> (-I):\n"
     "            location of the implementation header skeleton.\n"
-//    "   --interactive:\n"
-//    "           generates an interactive scanner\n"
     "   --lex-function-name=<path>:\n"
     "            name of the public lex-function.\n"
     "   --lex-skeleton=<path> (-P):\n"
     "            location of the lex function's skeleton.\n"
     "   --lex-source=<filename> (-l):\n"
     "            filename for the lex function's source.\n"
-    "   --lines:\n"
-    "            add #line preprocessor directives to the lex function.\n"
     "   --matched-rules (-R):\n"
     "            show the numbers of matched rules on stdout\n"
     "            (implied by --debug)\n"
@@ -80,6 +76,8 @@ void usage(string const &program_name)
     "            location of the skeleton directory.\n"
     "   --target-directory=<path>:\n"
     "            target directory for generated files.\n"
+    "   --usage (-h):\n"
+    "           display this help-message.\n"
     "   --verbose (-V):\n"
     "           provide additional info on stdout\n"
     "   --version (-v):\n"
@@ -89,3 +87,6 @@ void usage(string const &program_name)
 
     << '\n';
 }
+
+
+

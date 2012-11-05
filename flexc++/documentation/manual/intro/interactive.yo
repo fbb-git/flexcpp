@@ -35,7 +35,7 @@ tt(main.cc)'s source:
 #include <iostream>
 #include <bobcat/readlinestream>
 
-#include "scanner.h"
+#include "Scanner.h"
 
 using namespace std;
 using namespace FBB;

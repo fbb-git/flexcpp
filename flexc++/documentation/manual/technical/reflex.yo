@@ -16,7 +16,7 @@ The tt(reflex) script then performs the following steps:
 tt(./self). 
 
     it() It copies tt(scanner/lexer) to tt(./self), allowing flc() to create a
-separate tt(lex.cc) and tt(scannerbase.h).
+separate tt(lex.cc) and tt(Scannerbase.h).
 
     it() In tt(./self) it executes 
         verb(
@@ -27,9 +27,9 @@ specification file.nl()
         At this point realize that the new flc() program still uses a
 tt(lex()) function that was created by an older scanner generator.
         
-    it() Before taking this step em(make sure that the original lex.cc and
-scannerbase.h files were properly backed up).nl()
-    The files tt(lex.cc) and tt(scannerbase.h), created in the previous step
+    it() Before taking this step em(make sure that the original tt(lex.cc) and
+tt(scannerbase.h) files were properly backed up).nl()
+    The files tt(lex.cc) and tt(Scannerbase.h), created in the previous step
 are now copied to the tt(./scanner) directory.
     
     it() All of the sources of the tt(Scanner) and tt(Parser) classes as well
@@ -49,7 +49,7 @@ specification file, now using its own generated implementation of the
 tt(lex()) function in tt(lex.cc).
 
     it() If tt(diff ./scanner/lex.cc self/) only shows different time
-stamps and if tt(diff ./scanner/scannerbase.h self/) also 
+stamps and if tt(diff ./scanner/Scannerbase.h self/) also 
 only shows different time stamps, then flc() could recreate its own matching
 function and a stable new release has been created.
     )

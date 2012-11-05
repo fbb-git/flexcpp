@@ -11,7 +11,7 @@ In situations where the default tt(Input) implementation doesn't suffice
 simply `roll your own', implementing the following interface and use the
 tt(%option input-interface) and tt(%option input-implementation) options in
 the tt(lexer) file to include, respectively, your own class tt(Input)
-interface in the generated tt(scannerbase.h) file and tt(Input) member
+interface in the generated tt(Scannerbase.h) file and tt(Input) member
 function implementations in the generated tt(lex.cc) file.
 
 When implementing your own class tt(Input), the following public interface

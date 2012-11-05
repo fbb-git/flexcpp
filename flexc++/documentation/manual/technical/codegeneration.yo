@@ -3,10 +3,10 @@ The generator generates the following files (using default names, all defaults
 can be overruled by directives and options):
 
 itemization(
-itt(scannerbase.h.) This file defines the scanner's base class. It is always
+itt(Scannerbase.h.) This file defines the scanner's base class. It is always
 rewritten and declares data members used by the scanner.
 
-itt(scanner.h.) This file represents the generated scanner's interface. It
+itt(Scanner.h.) This file represents the generated scanner's interface. It
 inherits from tt(ScannerBase) and is written only if not existing. 
 
 itt(lex.cc) This file contains the implementation of the scanner function and
@@ -24,7 +24,7 @@ be embedded in the anonymous namespace;
 
 it() The em(actions) are inserted into the generated tt(lex.cc) as well.
 
-it() The em(declarations) are inserted into the generated tt(scannerbase.h)
+it() The em(declarations) are inserted into the generated tt(Scannerbase.h)
 file. 
 )
 
@@ -34,5 +34,5 @@ inserting appropriate elements into the generated file.
 
 Other generating members act similarly:
 
-The member tt(genBase) generates the scanner base file tt(scannerbase.h), the
-member tt(genScanner) generates tt(scanner.h).
+The member tt(genBase) generates the scanner base file tt(Scannerbase.h), the
+member tt(genScanner) generates tt(Scanner.h).

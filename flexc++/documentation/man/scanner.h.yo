@@ -91,7 +91,7 @@ be used.
 be used.
     itb(void preCode())
         By default this function has an empty, inline implementation in
-tt(scanner.h). It can safely be replaced by a user-defined
+tt(Scanner.h). It can safely be replaced by a user-defined
 implementation. This function is called by tt(lex__), just before it starts to
 match input characters against its rules: tt(preCode) is called by tt(lex__)
 when tt(lex__) is called and also after having executed the actions of a rule
@@ -125,7 +125,7 @@ int Scanner::lex__()
            Displaying is suppressed when the tt(lex.cc) file is (re)generated
             without using this directive. The function actually showing the
             tokens (tt(ScannerBase::print__)) is called from tt(print), which
-            is defined in-line in tt(scanner.h). Calling
+            is defined in-line in tt(Scanner.h). Calling
             tt(ScannerBase::print__), therefore, can also easily be controlled
             by an option controlled by the program using the scanner object.
      )
