@@ -1,7 +1,3 @@
-// The INTERACTIVE token is returned by the scanner's lex() member. It is not
-// used in the parser itself, and so bisonc++ warns about an unused token.
-// this warning can safely be ignored
-
 %class-name Parser
 
 %filenames parser
@@ -16,7 +12,7 @@
         INCL_START_CONDITION
         SECTION_DELIMITER
 
-// options
+// directives
 %token  BASECLASSHEADER
         CASEINSENSITIVE
         CLASSHEADER

@@ -6,6 +6,7 @@ flexc++ (1.01.00)
 
   * The --interactive option was removed (the %interactive directive remains)
 
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 05 Nov 2012 09:46:14 +0100
 
 flexc++ (1.00.01)
 

@@ -32,6 +32,8 @@ void usage(string const &program_name)
     "           'infile'.output\n"
     "   --debug (-d):\n"
     "           generates debug output statements in the lex function\n"
+    "   --filenames=<basename> (-f):\n"
+    "           use 'basename' instead of 'Scanner' for generated files\n"
     "   --force-class-header:\n"
     "           overwrite an existing class header file.\n"
     "   --force-implementation-header:\n"

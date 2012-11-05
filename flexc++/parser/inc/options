@@ -160,6 +160,11 @@ option:
         d_options.setCaseInsensitive();
     }
 |
+    INTERACTIVE
+    {
+        d_options.setInteractive();
+    }
+|
     PRINT
     {
         d_options.setPrint();
