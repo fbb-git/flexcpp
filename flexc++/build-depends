@@ -1,5 +1,5 @@
 Build-Depends: 
-    libbobcat-dev (>= 3.00.01),
+    libbobcat-dev (>= 3.01.00),
     icmake (>= 7.19.0), 
     g++ (>= 4.7.1),
     yodl (>= 3.00.0)
