@@ -1,7 +1,7 @@
 oxref by Frank B. Brokken (f.b.brokken@rug.nl)
-oxref V0.90.10 2012
+oxref V0.90.11 2012
 
-CREATED Tue, 17 Jul 2012 08:03:35 +0000
+CREATED Mon, 05 Nov 2012 09:58:39 +0000
 CROSS REFERENCE FOR: -fxs tmp/libmodules.a 
 ----------------------------------------------------------------------
 
@@ -944,16 +944,16 @@ popSc(int)
     lex.cc: Scanner::executeAction__(unsigned int)
 
 popStream()
-  Full name: ScannerBase::popStream()
-  Source:    lex.cc 
-  Used By:
-    popstream.cc: Scanner::popStream()
-
-popStream()
   Full name: Scanner::popStream()
   Source:    popstream.cc 
   Used By:
     lex.cc: Scanner::lex__()
+
+popStream()
+  Full name: ScannerBase::popStream()
+  Source:    lex.cc 
+  Used By:
+    popstream.cc: Scanner::popStream()
 
 predefined(std::string const&)
   Full name: CharClass::predefined(std::string const&)
@@ -1523,12 +1523,6 @@ useAll()
     parse.cc: Parser::executeAction(int)
 
 v_clone() const
-  Full name: StateData::v_clone() const
-  Source:    vclone.cc 
-  Used By:
-    destructor.cc: StateData::~StateData()
-
-v_clone() const
   Full name: StateString::v_clone() const
   Source:    vclone.cc 
   Used By:
@@ -1565,6 +1559,12 @@ v_clone() const
     subsetcount.cc: Ranges::subsetCount()
     update.cc: Ranges::update(std::string const&, unsigned int const*)
     statestring1.cc: StateString::StateString(std::string const&, unsigned int, unsigned int)
+
+v_clone() const
+  Full name: StateData::v_clone() const
+  Source:    vclone.cc 
+  Used By:
+    destructor.cc: StateData::~StateData()
 
 validRange(unsigned int) const
   Full name: CharClass::validRange(unsigned int) const
