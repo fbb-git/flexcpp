@@ -64,7 +64,7 @@ void usage(string const &program_name)
     "   --no-lines:\n"
     "            do not add #line preprocessor directives to the lex "
                                                             "function.\n"
-    "   --own-tokens (-t):\n"
+    "   --own-tokens (-T):\n"
     "           flexc++ displays the tokens and their corresponding\n"
     "           matched text it received from its own lexcial scanner.\n"
     "   --print-tokens (-t):\n"
