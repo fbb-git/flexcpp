@@ -62,6 +62,8 @@ OPTBL                   [[:blank:]]*
     =                           return '=';
 }
 
+    // this is used by parser/inc/msspec to skip all ws following the > of a
+    // mini scanner specification
 <optws>[[:space:]]*             popSc();
 
 <comment>{
