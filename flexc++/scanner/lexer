@@ -22,7 +22,7 @@ OPTBL                   [[:blank:]]*
 // line is a small miniscanner reading the rest of the line as-is, presumably
 // holding a named pattern RE.
 
-%x pre line comment string
+%x pre line comment string optws
 
 // IDENTIFIER is also used in character classes to represent any series of
 // characters (in matched()) that should enter the character set
@@ -61,6 +61,8 @@ OPTBL                   [[:blank:]]*
 
     =                           return '=';
 }
+
+<optws>[[:space:]]*             popSc();
 
 <comment>{
     .                           // ignore

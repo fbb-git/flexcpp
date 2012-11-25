@@ -46,6 +46,8 @@ class Scanner: public ScannerBase
         void forceCaseSensitive();
         void setCaseSensitive();
 
+        void ignoreWS();
+
     private:
         int openCC(int token);
         int closeCC(int token = 0);
@@ -132,5 +134,10 @@ inline void Scanner::print()
     print__();
 }
 
+inline void Scanner::ignoreWS()
+{
+    push(StartCondition__::optws);
+}
+    
 #endif // Scanner_H_INCLUDED_
 

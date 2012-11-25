@@ -1,3 +1,15 @@
+flexc++ (1.02.00)
+
+  * White space may now follow a rule's mini-scanner specification. E.g.,
+    <comment>
+    {
+        rules for the comment mini scanner
+    }
+
+  * Usage info now correctly mentions -T as option character with --own-tokens
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 25 Nov 2012 11:04:34 +0100
+
 flexc++ (1.01.00)
 
   * Removed 'inline' from skeletons/flexc++.cc

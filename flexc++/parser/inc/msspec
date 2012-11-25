@@ -29,6 +29,8 @@ _ms_angular:
 ;
 
 ms_spec:
-    _ms_angular _ms_specs '>' reset
+    _ms_angular _ms_specs '>' 
+    {
+        d_scanner.ignoreWS();
+    }
 ;
-

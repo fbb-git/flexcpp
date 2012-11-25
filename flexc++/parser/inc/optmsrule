@@ -1,8 +1,8 @@
         // regex in the form: <miniscanner>(opt) regex
 _optMs_regex:       
-    ms_spec regexOrEOF
+    ms_spec reset regexOrEOF
     {
-        $$ = $2;
+        $$ = $3;
     }
 |
     regexOrEOF
@@ -38,3 +38,9 @@ optMs_rule:
         assignBlock();
     }
 ;
+
+
+
+
+
+
