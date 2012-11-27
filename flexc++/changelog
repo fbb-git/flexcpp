@@ -1,3 +1,9 @@
+flexc++ (1.03.00)
+
+  * flexc++ returns 0 when called with the -h or -v flags 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 27 Nov 2012 21:06:08 +0100
+
 flexc++ (1.02.00)
 
   * White space may now follow a rule's mini-scanner specification. E.g.,
