@@ -95,20 +95,15 @@ try
 }
 catch (int x)
 {
-    return Arg::instance().option("hv")) ? 0 : x;
-}
-catch (Errno const &error)
-{
-    cerr << error.what() << '\n';
-    return error.which();
+    return Arg::instance().option("hv") ? 0 : x;
 }
 catch(std::exception const &exc)
 {
-    cerr << "std exception: " << exc.what() << '\n';
+    cerr << exc.what() << '\n';
     return 1;
 }
 catch (...)
 {
-    cerr << "[Panic] Unexpected exception raised." << '\n';
+    cerr << "[Panic] Unknown exception thrown." << '\n';
     return 1;
 }

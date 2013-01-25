@@ -1,3 +1,10 @@
+flexc++ (1.03.01)
+
+  * Catching FBB::Errno exceptions is replaced by catching std::exception 
+    exceptions
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Thu, 24 Jan 2013 21:09:23 +0100
+
 flexc++ (1.03.00)
 
   * flexc++ returns 0 when called with the -h or -v flags 

@@ -53,11 +53,11 @@ int main()
         string const &text = scanner.matched();
         switch (token)
         {
-            case IDENTIFIER:
+            case Scanner::IDENTIFIER:
                 cout << "identifier: " << text << '\n';
             break;
 
-            case NUMBER:
+            case Scanner::NUMBER:
                 cout << "number: " << text << '\n';
             break;
 
@@ -70,7 +70,7 @@ int main()
         )
     it() Compile all tt(.cc) files:
         verb(
-    g++ --std=c++0x *.cc
+    g++ --std=c++11 *.cc
         )
     
     it() To `tokenize' tt(main.cc), execute:
