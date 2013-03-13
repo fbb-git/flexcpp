@@ -1,3 +1,14 @@
+flexc++ (1.03.02)   ISN
+
+  * Added a static cast to generator/inputimplementation.cc (line 74) to get
+    rid of a compiler warning.
+
+  * Added %filenames to the directives in the man-page
+
+
+
+
+
 flexc++ (1.03.01)
 
   * Catching FBB::Errno exceptions is replaced by catching std::exception 

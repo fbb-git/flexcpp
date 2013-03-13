@@ -71,7 +71,7 @@ void Generator::inputImplementation(ostream &out) const
         "        if (d_in == 0)\n"
         "            return AT_EOF;\n"
         "        ch = d_in->get();\n"
-        "        return *d_in ? ch : AT_EOF;\n"
+        "        return *d_in ? ch : static_cast<size_t>(AT_EOF);\n"
         "    }\n"
         "\n"
         "    ch = d_deque.front();\n"
