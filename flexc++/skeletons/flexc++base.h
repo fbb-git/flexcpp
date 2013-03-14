@@ -145,6 +145,9 @@ $ignoreInteractive BEGIN    this section is ignored by generator/filter.cc
 
 $ignoreInteractive END      end ignored section by generator/filter.cc
 
+$insert interactiveDecl
+    bool                interactiveLine();
+
 protected:
     \@Base(std::istream &in, std::ostream &out);
 $ignoreInteractive BEGIN    this section is ignored by generator/filter.cc
@@ -189,7 +192,6 @@ $ignoreInteractive END      end ignored section by generator/filter.cc
         // otherwise.
 
     ActionType__    actionType__(size_t range); // next action
-    bool            interactiveLine__();        // refresh an interactive line
     bool            return__();                 // 'return' from codeblock
     size_t          matched__(size_t ch);       // handles a matched rule
     size_t          getRange__(int ch);         // convert char to range

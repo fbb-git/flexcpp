@@ -5,7 +5,9 @@ flexc++ (1.03.02)   ISN
 
   * Added %filenames to the directives in the man-page
 
-
+  * Added a public member 'interactiveLine()' to the scannerbase's interface
+    to refresh the current interactive line buffer with the contents of the
+    next interactive line.
 
 
 

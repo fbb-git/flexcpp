@@ -10,7 +10,7 @@ void Generator::interactiveLex(ostream &out) const
     std::string const &name = d_options.className();
 
     out << 
-        "bool " << d_baseclassScope << "interactiveLine__()\n"
+        "bool " << d_baseclassScope << "interactiveLine()\n"
         "{\n"
         "    std::string line;\n"
         "\n"
@@ -28,7 +28,7 @@ void Generator::interactiveLex(ostream &out) const
         "int " << name << "::" << d_options.lexFunctionName() << "()\n"
         "{\n"
         "    return lex__() != 0        ? d_token__ :\n"
-        "           interactiveLine__() ? lex__()   :\n"
+        "           interactiveLine() ?   lex__()   :\n"
         "                                 0;\n"
         "}\n";
 }

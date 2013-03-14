@@ -44,6 +44,17 @@ manpagesection(8.5. PUBLIC MEMBER FUNCTIONS)
     itb(bool debug() const)
        returns tt(true) if tt(--debug) or tt(%debug) was specified, otherwise
         tt(false).
+
+    itb(bool interactiveLine())
+       this member is only available with interactive scanners. All remaining
+        contents of the current interactive line buffer is discarded, and the
+        interactive line buffer is filled with the contents of the next input
+        line. This member can be used when a condition is encountered which
+        invalidates the remaining contents of a line. Following a call to
+        tt(interactiveLine) the next token that is returned by the lexical
+        scanner will be the first token on the next line. This member returns
+        tt(true) if the next line is available and tt(false) otherwise.
+
     itb(std::string const  &filename()  const)
        returns the name of the file currently processed by the scanner object.
     itb(size_t              length()    const)
