@@ -11,7 +11,7 @@
 #include <bobcat/stat>
 #include <bobcat/indent>
 #include <bobcat/ranger>
-#include <bobcat/errno>
+#include <bobcat/exception>
 
 #include "../ranges/ranges.h"
 #include "../states/states.h"

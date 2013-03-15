@@ -27,14 +27,17 @@ class Parser: public ParserBase
     std::string const &d_matched;   // text matched at the last lex() call.
     Block   d_block;
 
-    bool d_boln;                    // rule starts at boln
-    bool d_doError;                 // use the error() function at ERRORs
+    bool d_boln             = false;    // rule starts at boln
+    bool d_doError          = true;     // use the error() function at ERRORs
+    bool d_usesLOP          = false;
+    bool d_warnCarets       = false;    // carets in a RE
+    bool d_warnDollars      = false;    // dollars in a RE
+
     bool d_printTokens;
-    bool d_usesLOP;
-    bool d_warnCarets;              // carets in a RE
-    bool d_warnDollars;             // dollars in a RE
-    size_t d_parentheses;
-    size_t d_tokenCount;
+
+    size_t d_parentheses = 0;
+    size_t d_tokenCount = 0;
+
     std::string d_expect;
 
     Rules &d_rules;

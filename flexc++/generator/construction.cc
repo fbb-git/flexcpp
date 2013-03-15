@@ -7,7 +7,7 @@ void Generator::construction(States const &states)
 
     ofstream out;
 
-    Errno::open(out, d_options.constructionPath());
+    Exception::open(out, d_options.constructionPath());
     
     out <<  "RANGES:\n" << 
             d_ranges << "\n"

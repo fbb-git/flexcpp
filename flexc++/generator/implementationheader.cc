@@ -22,8 +22,8 @@ void Generator::implementationHeader() const
     ofstream out;
     ifstream in;
 
-    Errno::open(in,  d_options.implementationSkeleton()); 
-    Errno::open(out, d_options.implementationHeaderPath()); 
+    Exception::open(in,  d_options.implementationSkeleton()); 
+    Exception::open(out, d_options.implementationHeaderPath()); 
 
     filter(in, out);    
 }

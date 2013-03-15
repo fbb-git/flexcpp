@@ -1,15 +1,24 @@
-flexc++ (1.03.02)   ISN
+flexc++ (1.04.00)
+
+  * FBB::Errno calls are replaced by FBB::Exception calls.
 
   * Added a static cast to generator/inputimplementation.cc (line 74) to get
     rid of a compiler warning.
 
-  * Added %filenames to the directives in the man-page
+  * Added %filenames to the directives in the man-page.
 
   * Added a public member 'interactiveLine()' to the scannerbase's interface
     to refresh the current interactive line buffer with the contents of the
     next interactive line.
 
+  * Repaired erroneous ``^' inside regex loses its special meaning' warnings
+    occurring with single line min-scanner REs like this: 
+        <mini>^regex
 
+  * ScannerBase::d_more is initialized to false (removes a (harmless) valgrind
+    warning).
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 15 Mar 2013 14:26:35 +0100
 
 flexc++ (1.03.01)
 

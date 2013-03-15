@@ -2,7 +2,7 @@
 
 Pattern Parser::boln()
 {
-    if (d_tokenCount == 1)      
+    if (d_tokenCount <= 1)      
         d_boln = true;
     else
     { 

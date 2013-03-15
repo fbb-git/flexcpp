@@ -19,8 +19,8 @@ void Generator::classHeader() const
     ofstream out;
     ifstream in;
 
-    Errno::open(in,  d_options.classSkeleton()); 
-    Errno::open(out, d_options.classHeaderPath()); 
+    Exception::open(in,  d_options.classSkeleton()); 
+    Exception::open(out, d_options.classHeaderPath()); 
 
     filter(in, out);    
 }

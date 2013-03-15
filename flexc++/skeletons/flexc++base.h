@@ -106,7 +106,7 @@ private:
     Input           d_input;
     std::string     d_matched;              // matched characters
     bool            d_return;               // return after a rule's action 
-    bool            d_more;                 // set to true by more()
+    bool            d_more = false;         // set to true by more()
 
 protected:
     std::istream   *d_in__;
