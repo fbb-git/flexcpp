@@ -146,7 +146,6 @@ $ignoreInteractive BEGIN    this section is ignored by generator/filter.cc
 $ignoreInteractive END      end ignored section by generator/filter.cc
 
 $insert interactiveDecl
-    bool                interactiveLine();
 
 protected:
     \@Base(std::istream &in, std::ostream &out);
