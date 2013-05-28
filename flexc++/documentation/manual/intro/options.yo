@@ -1,15 +1,19 @@
-    If available, single letter options are listed between parentheses
+    Where available, single letter options are listed between parentheses
 following their associated long-option variants. Single letter options require
-arguments if their associated long options require arguments as well.
+arguments if their associated long options require arguments as well.  Options
+affecting the class header or implementation header file are ignored if these
+files already exist. Options accepting a `filename' do not accept path names,
+i.e., they cannot contain directory separators (tt(/)); options accepting a
+'pathname' may contain directory separators.
     itemization(
-    it() lsoption(baseclass-header)(b)(header)nl()
-           Use tt(header) as the pathname of the file containing the scanner
+    it() lsoption(baseclass-header)(b)(filename)nl()
+          Use tt(filename) as the name of the file to contain the scanner
            class's base class. Defaults to the name of the scanner class plus
            tt(base.h)
-    it() lsoption(baseclass-skeleton)(C)(skeleton)nl() 
-           Use tt(skeleton) as the pathname of the file containing the
-            skeleton of the scanner class's base class. Its filename defaults
-            to tt(flexc++base.h).
+    it() lsoption(baseclass-skeleton)(C)(pathname)nl() 
+           Use tt(pathname) as the path to the file containing the skeleton of
+            the scanner class's base class. Its filename defaults to
+            tt(flexc++base.h).
     it() loption(case-insensitive)nl()
            Use this option to generate a scanner em(case insensitively)
             matching regular expressions. All regular expressions specified in
@@ -37,8 +41,8 @@ arguments if their associated long options require arguments as well.
             always contains the original, unmodified text. So, with the above
             input tt(matched()) returns, respectively tt(first, First, FIRST)
             and tt(firST), while matching the rule tt(First).
-    it() lsoption(class-header)(c)(header)nl()
-           Use tt(header) as the pathname of the file containing the scanner
+    it() lsoption(class-header)(c)(filename)nl()
+           Use tt(filename) as the name of the file to contain the scanner
             class. Defaults to the name of the scanner class plus the suffix
             tt(.h)
     it() laoption(class-name)(class)nl()
@@ -46,10 +50,9 @@ arguments if their associated long options require arguments as well.
             class. Unless overridden by other options generated files will be
             given the (transformed to lower case) tt(class*) name instead of
             tt(scanner)*.
-    it() lsoption(class-skeleton)(C)(skeleton)nl()
-           Use tt(skeleton) as the pathname of the file containing the
-            skeleton of the scanner class. Its filename defaults to
-            tt(flexc++.h). 
+    it() lsoption(class-skeleton)(C)(pathname)nl()
+           Use tt(pathname) as the path to the file containing the skeleton of
+            the scanner class. Its filename defaults to tt(flexc++.h).
     it() loption(construction) (soption(K))nl()
            Write details about the lexical scanner to the file
             tt(`rules-file'.output). Details cover the used character ranges,
@@ -80,31 +83,31 @@ arguments if their associated long options require arguments as well.
     it() loption(help) (soption(h))nl()
             Write basic usage information to the standard output stream and
             terminate. 
-    it() lsoption(implementation-header)(i)(header)nl()
-           Use tt(header) as the pathname of the file containing the
+    it() lsoption(implementation-header)(i)(filename)nl() 
+           Use tt(filename) as the name of the file to contain the
             implementation header. Defaults to the name of the generated
             scanner class plus the suffix tt(.ih). The implementation header
             should contain all directives and declarations em(only) used by
             the implementations of the scanner's member functions. It is the
             only header file that is included by the source file containing
-            bf(lex())'s implementation . User defined implementation of
-            other class members may use the same convention, thus
-            concentrating all directives and declarations that are required
-            for the compilation of other source files belonging to the scanner
-            class in one header file.
-    it() lsoption(implementation-skeleton)(I)(skeleton)nl()
-           Use tt(skeleton) as the pathname of the file containing the
-            skeleton of the implementation header. Its filename defaults to
+            bf(lex())'s implementation.  User defined implementation of other
+            class members may use the same convention, thus concentrating all
+            directives and declarations that are required for the compilation
+            of other source files belonging to the scanner class in one header
+            file.
+    it() lsoption(implementation-skeleton)(I)(pathname)nl()
+           Use tt(pathname) as the path to the file containing the skeleton of
+            the implementation header. Its filename defaults to
             tt(flexc++.ih).
-    it() lsoption(lex-skeleton)(L)(skeleton)nl()
-           Use tt(skeleton) as the pathname of the file containing the
+    it() lsoption(lex-skeleton)(L)(pathname)nl()
+           Use tt(pathname) as the path to the file containing the
             tt(lex()) member function's skeleton. Its filename defaults to
             tt(flexc++.cc).
     it() laoption(lex-function-name)(funname)nl()
            Use tt(funname) rather than tt(lex) as the name of the member
             function performing the lexical scanning.
-    it() lsoption(lex-source)(l)(source)nl()
-           Define tt(source) as the name of the source file containing the
+    it() lsoption(lex-source)(l)(filename)nl()
+           Define tt(filename) as the name of the source file to contain the
             scanner member function tt(lex). Defaults to tt(lex.cc).
     it() loption(matched-rules) (soption('R'))nl()
            The generated scanner will write the numbers of matched rules to 
@@ -176,15 +179,13 @@ arguments if their associated long options require arguments as well.
     it() loption(show-filenames) (soption(F))nl() 
            Write the names of the files that are generated to the 
             standard error stream.
-    it() lsoption(skeleton-directory)(S)(directory)nl() 
-           Specifies the directory containing the skeleton files to use. This
-            option can be overridden by the specific skeleton-specifying
-            options (tt(-B -C, -H,) and tt(-I)).
-    it() laoption(target-directory)(directory) nl() 
+    it() lsoption(skeleton-directory)(S)(pathname)nl() 
+           Defines the directory containing the skeleton files. This option
+            can be overridden by the specific skeleton-specifying options
+            (tt(-B -C, -H,) and tt(-I)).
+    it() laoption(target-directory)(pathname) nl() 
            Specifies the directory where generated files should be written.
-            By default this is the directory of flc()'s input file.
-            The tt(--target-directory) option does not affect files that were 
-            explicitly named (either as option or as directive).
+            By default this is the directory where flc() is called.
     it() loption(usage) (soption(h))nl()
             Write basic usage information to the standard output stream and
             terminate. 

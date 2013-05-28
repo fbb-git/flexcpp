@@ -50,7 +50,6 @@ class Options
     static char s_defaultSkeletonDirectory[];
     static char s_defaultClassName[];
     static char s_defaultLexfunSource[];
-    static char s_defaultTargetDirectory[];
 
     static Options *s_options;
     static void (*s_regexCall)(char const *funName);
@@ -59,6 +58,11 @@ class Options
         static Options &init(FBB::Arg const &arg);
         static Options &instance();
 
+        static char const *classHeader();
+        static char const *baseclassHeader();
+        static char const *implementationHeader();
+        static char const *lexSource();
+        
         Options(Options const &other) = delete;
 
         bool caseSensitive() const;
@@ -91,6 +95,7 @@ class Options
         std::string const &infile() const;
         std::string const &constructionPath() const;
         std::string implementationHeaderName() const;
+
         void setBaseClassHeaderPath(std::string const &name);
         void setClassHeaderPath(std::string const &name);
         void setClassName(std::string const &name);
@@ -116,16 +121,38 @@ class Options
     private:
         Options(FBB::Arg const &arg);
 
-        std::string undelimit(std::string const &str);
-        void setPath(std::string *target, std::string const &name);
-        void setPath(std::string *dest, int optChar, bool targetDirOption, 
-                      char const *optionName, std::string const &className, 
-                      char const *suffix);
+        static std::string undelimit(std::string const &str);
+        static void setPath(std::string *target, std::string const &name);
+        void setPath(std::string *dest, int optChar, 
+                            std::string const &defaultFile, 
+                            char const *defaultSuffix,
+                            char const *optionName);
 
         static void nop(char const *funName);
         static void show(char const *funName);
 
 };
+
+inline char const *Options::classHeader()
+{
+    return "class-header";
+}
+
+inline char const *Options::baseclassHeader()
+{
+    return "baseclass-header";
+}
+
+inline char const *Options::implementationHeader()
+{
+    return "implementation-header";
+}
+
+inline char const *Options::lexSource()
+{
+    return "lex-source";
+}
+
 
 inline Options &Options::instance()
 {

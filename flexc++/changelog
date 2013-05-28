@@ -1,3 +1,14 @@
+flexc++ (1.05.00)
+
+  * Removed the possibility to specify path names for the --baseclass-header,
+    --class-header, --implementation-header, and --lex-source options
+    (and corresponding directives). Alternative path names for generated files
+    should be specified using the target-directory option or directive.
+
+  * The man-page and manual have been updated accordingly.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 28 May 2013 15:43:33 +0200
+
 flexc++ (1.04.00)
 
   * FBB::Errno calls are replaced by FBB::Exception calls.

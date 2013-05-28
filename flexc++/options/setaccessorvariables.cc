@@ -43,7 +43,7 @@ void Options::setAccessorVariables()
 
     // Paths
 
-    bool targetDirOption = arg.option(&d_targetDirectory, "target-directory");
+    arg.option(&d_targetDirectory, "target-directory");
 
     if (d_targetDirectory.length() && *d_targetDirectory.rbegin() != '/')
         d_targetDirectory += '/';
@@ -54,21 +54,23 @@ void Options::setAccessorVariables()
     if (filenames.empty())
         filenames = d_className;
 
-    if (!targetDirOption && d_targetDirectory.empty())
-        d_targetDirectory = s_defaultTargetDirectory;
-
     if (d_arg.option('K'))
         d_constructionPath = d_targetDirectory + d_arg[0] + ".output";
 
-    setPath(&d_classHeaderPath, 'c', targetDirOption, "class-header", 
-            filenames, ".h");
+    setPath(&d_classHeaderPath, 'c', filenames, ".h", classHeader());
 
-    setPath(&d_baseClassHeaderPath, 'b', targetDirOption, "base-class-header", 
-            filenames, "base.h");
+    setPath(&d_baseClassHeaderPath, 'b', filenames, "base.h", 
+            baseclassHeader());
 
-    setPath(&d_implementationHeaderPath, 'i', targetDirOption, 
-            "implementation-header", filenames, ".ih");
+    setPath(&d_implementationHeaderPath, 'i', filenames, ".ih",
+                                                    implementationHeader());
 
-    setPath(&d_lexSourcePath, 'l', targetDirOption, 
-            "lex-source", String::lc(d_lexFunctionName), ".cc");
+    setPath(&d_lexSourcePath, 'l', String::lc(d_lexFunctionName), ".cc",
+                                                    lexSource());
 }
+
+
+
+
+
+

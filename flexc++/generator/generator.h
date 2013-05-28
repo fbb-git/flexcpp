@@ -85,6 +85,8 @@ class Generator
         void declarations();
 
     private:
+        static std::string filename(std::string const &path);
+
         void DFAbases(std::ostream &out) const;
         static std::string outDFAbase(std::string const &startState,
                                       size_t offset);

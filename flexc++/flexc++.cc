@@ -6,11 +6,11 @@ namespace
     {
         // options to set filenames
 
-        // options to set filenames
-        {"baseclass-header",            'b'},
-        {"class-header",                'c'},
-        {"implementation-header",       'i'},
-        {"lex-source",                  'l'},
+        // options setting filenames
+        {Options::baseclassHeader(),        'b'},
+        {Options::classHeader(),            'c'},
+        {Options::implementationHeader(),   'i'},
+        {Options::lexSource(),              'l'},
         {"target-directory",            Arg::Required},
         {"filenames", 'f'},
                                         
