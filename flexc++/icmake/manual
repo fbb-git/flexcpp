@@ -10,7 +10,7 @@ void manual()
 
     cwd = chdir(".");
 
-    md("tmp/manual");
+    md("tmp/manual/images");
 
     chdir("documentation");
 
@@ -33,6 +33,7 @@ void manual()
             run("yodl2html -l3 " PROGRAM ".yo");
             run("touch manual-stamp");
             run("mv *.html ../../tmp/manual");
+            run("cp -r images/*.jpg ../../tmp/manual/images");
 
             break;
         }
@@ -40,5 +41,10 @@ void manual()
 
     exit(0);
 }
+
+
+
+
+
 
 

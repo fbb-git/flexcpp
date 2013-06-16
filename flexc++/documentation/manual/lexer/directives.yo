@@ -124,9 +124,9 @@ END)
            Define the scanner class in the namespace tt(namespace). By default
             no namespace is used. If this options is used the
             implementation header is provided with a commented out tt(using
-            namespace) declaration for the requested namespace.  This
-            directive is overridden by the tt(--namespace) command-line
-            option.
+            namespace) declaration for the requested namespace.  In addition,
+            the scanner and scanner base class header files also use the 
+            specified namespace to define their include guard directives.
     it() bf(%print-tokens) nl() 
            This option results in the tokens as well as the matched text to be
             displayed on the standard output stream, just before returning the

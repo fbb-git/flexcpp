@@ -31,8 +31,6 @@ namespace
         {"lex-function-name",           Arg::Required},
         {"no-lines",                    Arg::None},
 
-        {"namespace",                   'n'},
-
         {"help",                        'h'},
         {"usage",                       'h'},
         {"version",                     'v'},
@@ -56,7 +54,7 @@ namespace
 int main(int argc, char **argv)
 try
 {
-    Arg &arg = Arg::initialize("b:B:c:C:df:Fhi:I:Kl:L:m:n:RS:TtvV",
+    Arg &arg = Arg::initialize("b:B:c:C:df:Fhi:I:Kl:L:m:RS:TtvV",
                     longOptions, longEnd, argc, argv);
     arg.versionHelp(usage, version, 1);
 

@@ -122,12 +122,6 @@ i.e., they cannot contain directory separators (tt(/)); options accepting a
             set to 10. When more than tt(depth) specification files are used
             the scanner throws a tt(Max stream stack size exceeded)
             tt(std::length_error) exception. 
-    it() lsoption(namespace)(n)(namespace)nl()
-           Define the scanner base class, the paser class and the scanner
-            implentations in the namespace tt(namespace). By default
-            no namespace is defined. If this options is used the
-            implementation header will contain a commented out tt(using
-            namespace) declaration for the requested namespace. 
     it() loption(no-baseclass-header)nl()
            Do not write the file containing the scanner's base class interface
             even if it doesn't yet exist. By default the file containing the

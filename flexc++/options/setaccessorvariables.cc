@@ -17,8 +17,6 @@ void Options::setAccessorVariables()
     if (d_lexFunctionName.empty())
         d_lexFunctionName = s_defaultLexFunctionName;
 
-    arg.option(&d_nameSpace, 'n');  // -n overrules %namespace spec in lexer
-
     string value;
     d_maxDepth = arg.option(&value, 'm') ? 
                     A2x(value).to<size_t>() 

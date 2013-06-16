@@ -55,8 +55,6 @@ void usage(string const &program_name)
     "            (implied by --debug)\n"
     "   --max-depth=<maxDepth> (-m):\n"
     "            set the max. scanner specification file inclusion depth.\n"
-    "   --namespace=<namespace> (-n):\n"
-    "            define a namespace.\n"
     "   --no-baseclass-header:\n"
     "            the baseclass header is not rewritten.\n"
     "   --no-lex-source:\n"
