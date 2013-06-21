@@ -9,6 +9,12 @@ void DFA::determineTailCount(TailCount &tailCount, size_t thisRow,
 //cout << "   initialize tailCount in row " << thisRow << ", coming from " <<
 //fmRow << ", previous TailCount (pointer) value: " << fmTailCount << '\n';
 
+if (fmRow == 0)
+{
+//    cout << "RESETTING d_sawACCEPT\n";
+    d_sawACCEPT = false;
+}
+
     if (not setTailCount(tailCount, thisRow, fmTailCount, fmRow))
 {
 //cout << "No action for this tailCount: done here\n";
