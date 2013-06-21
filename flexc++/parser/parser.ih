@@ -59,3 +59,12 @@ inline void Parser::orAction()
 {
     d_rules.setOrAction();
 }
+inline void Parser::exceptionHandler__(std::exception const &exc)         
+{
+    throw;
+}
+
+
+
+
+

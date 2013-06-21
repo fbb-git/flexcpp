@@ -5,6 +5,10 @@ flexc++ (1.06.00)
   * Removed the --namespace option. Namespaces now only available as
     directive. 
 
+  * Namespaces are also used to define the include guards of generated .h
+    files.
+    Note that flexc++ usually leaves already generated scanner.h header files
+    as-is, and so these files won't show namespaces in their include guards.
 
 
 
