@@ -1,4 +1,4 @@
-flexc++ (1.06.00)
+flexc++ (1.06.00)   ISN
 
   * Added images to the constructed manual 
 
@@ -10,7 +10,9 @@ flexc++ (1.06.00)
     Note that flexc++ usually leaves already generated scanner.h header files
     as-is, and so these files won't show namespaces in their include guards.
 
-
+  * This version repairs the `joren-bug' (Reported by Joren Heit on June 7,
+    2013). Joren discovered that in some situations rules using the
+    LA-operator failed to re-scan the tail part of a RE using the LA-operator.
 
 flexc++ (1.05.00)
 
