@@ -1,5 +1,5 @@
-#ifndef \@BASE_H_INCLUDED
-#define \@BASE_H_INCLUDED
+#ifndef \@$BASE_H_INCLUDED
+#define \@$BASE_H_INCLUDED
 
 #include <limits>
 #include <iostream>

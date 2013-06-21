@@ -36,9 +36,15 @@ void Generator::filter(istream &in, ostream &out) const
         while (true)
         {
             size_t pos = d_line.rfind(s_baseFlag);
+
             if (pos == string::npos)
                 break;
-            d_line.replace(pos, s_baseFlagSize, className);
+
+            if (d_line.find(s_namespaceBaseFlag) == pos)
+                d_line.replace(pos, s_namespaceBaseFlagSize, 
+                               d_options.nameSpace() + className);
+            else 
+                d_line.replace(pos, s_baseFlagSize, className);
         }
 
         out << d_line << '\n';

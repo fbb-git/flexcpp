@@ -38,6 +38,9 @@ Generator::Map Generator::s_insert =
 char const *Generator::s_baseFlag = "\\@";
 size_t const Generator::s_baseFlagSize = 2; // backslash and @
 
+char const *Generator::s_namespaceBaseFlag = "\\@$";
+size_t const Generator::s_namespaceBaseFlagSize = 3; // backslash, $ and @
+
 string Generator::s_matchedTextFunction = "d_scanner.YYText()";
 string Generator::s_scannerTokenFunction = "d_scanner.yylex()";
 

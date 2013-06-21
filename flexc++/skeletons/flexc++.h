@@ -1,5 +1,5 @@
-#ifndef \@_H_INCLUDED_
-#define \@_H_INCLUDED_
+#ifndef \@$_H_INCLUDED_
+#define \@$_H_INCLUDED_
 
 $insert baseclass_h
 
