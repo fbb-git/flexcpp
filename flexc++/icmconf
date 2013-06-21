@@ -59,7 +59,7 @@
     // Class dependencies are indicated by the class name (as the first
     // word on a line) optionally followed by additional class names, which
     // are the classes directly depending on the line's first class name.
-//#define USE_ALL             "a"
+#define USE_ALL             "a"
 
     // define the pattern to locate sources in a directory:
 #define SOURCES             "*.cc"
