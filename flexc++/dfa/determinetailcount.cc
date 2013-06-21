@@ -9,6 +9,20 @@ void DFA::determineTailCount(TailCount &tailCount, size_t thisRow,
 //cout << "   initialize tailCount in row " << thisRow << ", coming from " <<
 //fmRow << ", previous TailCount (pointer) value: " << fmTailCount << '\n';
 
+//    if (d_transitSet[fmRow].find(thisRow) == d_transitSet[fmRow].end())
+//        return;
+//        // cout << "Already visited transition from " << fmRow << " to " <<
+//        //         thisRow << " for rule " << d_rule << '\n';
+//
+//    d_transitSet[fmRow].insert(thisRow);
+
+if (fmRow == 0)
+{
+//    cout << "RESETTING d_sawACCEPT\n";
+    d_sawACCEPT = false;
+}
+
+
     if (not setTailCount(tailCount, thisRow, fmTailCount, fmRow))
 {
 //cout << "No action for this tailCount: done here\n";

@@ -11,7 +11,7 @@ void DFA::build(std::string const &name, vector<size_t> const &active)
         // At this point: note which rules are LA rules and put these in the
         // rule-startset
 
-    StateSet &start = d_stateSet[0];
+    Size_tSet &start = d_stateSet[0];
 
     for (auto idx: active)
         start.insert((*d_rules)[idx].startState());
