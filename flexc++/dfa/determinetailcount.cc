@@ -15,6 +15,13 @@ if (fmRow == 0)
     d_sawACCEPT = false;
 }
 
+    if (d_transitSet[fmRow].find(thisRow) == d_transitSet[fmRow].end())
+        return;
+        // cout << "Already visited transition from " << fmRow << " to " <<
+        //         thisRow << " for rule " << d_rule << '\n';
+
+    d_transitSet[fmRow].insert(thisRow);
+
     if (not setTailCount(tailCount, thisRow, fmTailCount, fmRow))
 {
 //cout << "No action for this tailCount: done here\n";
