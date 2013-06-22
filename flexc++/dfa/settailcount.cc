@@ -14,6 +14,9 @@ bool DFA::setTailCount(TailCount &thisTailCount, size_t thisRow,
     
 //cout << "setTailCount: fromRow = " << fmRow << ", this row = " << thisRow <<
 //", this TailCount = " << thisTailCount  << '\n';
+
+    if (type & TailCount::PROCESSED)            // moved to here rather than
+        return false;                           // at the end since 1.06.00
  
     // States: 1 9
     if (not (type & (TailCount::PRE | TailCount::ACCEPT)))    // only POST st.
@@ -36,8 +39,8 @@ bool DFA::setTailCount(TailCount &thisTailCount, size_t thisRow,
                                       *fmTailCount, fmRow))
             return false;
     }
-    else if (type & TailCount::PROCESSED)
-        return false;
+//    else if (type & TailCount::PROCESSED)
+//        return false;
 
     // States: 0       4       8   10    12    14
     thisTailCount.addFlag(TailCount::PROCESSED);
