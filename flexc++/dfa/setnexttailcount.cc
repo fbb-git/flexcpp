@@ -14,23 +14,20 @@ bool DFA::setNextTailCount(TailCount::Type type,
         thisTailCount.setTailCount(nextCount);
         thisTailCount.addFlag(TailCount::PROCESSED | TailCount::COUNT);
     }
-    else
+    else if (fmRow < thisRow)            // jumping forward
     {
         size_t thisCount = thisTailCount.tailCount(); 
 
-        if (fmRow < thisRow)            // jumping forward
+                                    // counts differ: reset count to 0
+        if (thisCount != 0 && thisCount != nextCount) 
         {
-                                        // counts differ: reset count to 0
-            if (thisCount != 0 && thisCount != nextCount) 
-            {
-                wmsg << "Rule " << thisTailCount.rule() << 
-                        ": conflicting counts for " << thisRow << " (" << 
-                        thisCount << ", " << nextCount << ") reset to 0" << 
-                        endl;
+            wmsg << "Rule " << thisTailCount.rule() << 
+                    ": conflicting counts for " << thisRow << " (" << 
+                    thisCount << ", " << nextCount << ") reset to 0" << 
+                    endl;
 
-                thisTailCount.setTailCount(0);
-            }
-        }                               // jumping backward:
+            thisTailCount.setTailCount(0);
+        }
     }
 
 //cout << "Fm " << fmRow << " to " << thisRow << ": count = " <<
