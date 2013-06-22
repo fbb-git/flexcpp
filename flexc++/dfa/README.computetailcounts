@@ -1,0 +1,69 @@
+computeTailCounts:
+
+    for each tailcount of row[0]: visitTailcount
+
+visitTailCount:
+
+    set current rule, call determineTailCount
+
+determineTailCount:
+
+    d_sawAccept set to zero if fmRow = 0: start with clean sawAccept for each
+        new transition from row 0.
+
+    setTailCount: the tailcount is set for the current row, using the
+                    tailCount of the previous row. 
+                    Done if this returns false (see setTailCount's
+                    description)
+
+    Next, for each of the input-ranges that are used for this row, 
+        transitTailCount        - transit from this row to the row matching
+                                    the input ranges
+
+setTailCount:
+    See the tech manual (The logic used in 'setTailCount').
+    That table shows all possible flag/sawAccept combinations and describes
+    the action to perform on each combination
+
+    if the PROCESSED flag has already been set, then nothing happens
+    (this is NEW in 1.06, until 1.05 the set functions were called, and at the
+     end PROCESSED was tested)
+
+    calls:
+        * setIncTailCount   for POST states  
+        * setInitTailCount  for 1st time ACCEPT states
+        * setNextTailCount  for PRE/ACCEPT and POST states
+
+    raises the flag PROCESSED at the end
+
+transitTailCount:
+    
+    determineTailCount defines (TailCount &tailCount, size_t thisRow, 
+                                TailCount *fmTailCount, size_t fmRow)    
+
+    it calls transitTailCount with a value of the map of range-row
+        transitions, its own tailcount and its own row index.
+
+    The map's 2nd value defines the to-row, and if the to-row has tailcounts
+    for the current rule (d_rule) then determineTailCount is called for the
+    toRow, passing it the toRow's tailCount and index, as well as tailCount
+    and thisRow, which become transitTailCount's fmTailCount and fmRow.
+
+setIncTailCount:    
+    Only one statement, adding TailCount::INCREMENTING to the current
+    tailCount flags.
+    
+setInitTailCount:
+    Initializes the current tailcount value to 0, raises the 
+    TailCount::COUNT flag, sets sawAccept to true.
+    
+setNextTailCount:
+    if the current TailCount didn't already show the COUNT flag,
+    then COUNT | PROCESSED is set.
+    else, if transiting from an earlier row nothing is changed; if transiting
+    from a later row and the expected and actual next counts differ, a warning
+    message is issued and the tailcount of the current row is reset to 0.
+
+
+
+
