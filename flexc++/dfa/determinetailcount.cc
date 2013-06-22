@@ -6,15 +6,20 @@ void DFA::determineTailCount(TailCount &tailCount, size_t thisRow,
     if (d_rule != tailCount.rule())
         return;
 
-//cout << "   initialize tailCount in row " << thisRow << ", coming from " <<
-//fmRow << ", previous TailCount (pointer) value: " << fmTailCount << '\n';
+//cout << "   initialize tailCount of row " << thisRow << ", coming from " <<
+//fmRow << '\n';
+// << ", previous TailCount (pointer) value: " << fmTailCount << '\n';
 
-//    if (d_transitSet[fmRow].find(thisRow) == d_transitSet[fmRow].end())
-//        return;
-//        // cout << "Already visited transition from " << fmRow << " to " <<
-//        //         thisRow << " for rule " << d_rule << '\n';
+    if (d_transitSet[fmRow].find(thisRow) != d_transitSet[fmRow].end())
+    {
+//         cout << "Already visited transition from " << fmRow << " to " <<
+//                 thisRow << " for rule " << d_rule << '\n';
+        return;
+    }
 //
-//    d_transitSet[fmRow].insert(thisRow);
+    d_transitSet[fmRow].insert(thisRow);
+
+
 
 if (fmRow == 0)
 {
