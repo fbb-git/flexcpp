@@ -17,7 +17,7 @@
     
 void DFA::visitTailCount(TailCount &tailCount)
 {
-    d_sawACCEPT = false;
+//    d_sawACCEPT = false;
     d_rule = tailCount.rule();
 
                             // (re)initialize for this rule
