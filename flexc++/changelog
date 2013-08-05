@@ -2,10 +2,6 @@ flexc++ (1.06.00)
 
   * Added images to the constructed manual 
 
-REMOVE THIS CHANGELOG ITEM: namespace remains available as an option:
-  * Removed the --namespace option. Namespaces now only available as
-    directive. 
-
   * When the `namespace' option/directive is used then the namespace
     identifier is also used to define the include guards of generated .h
     files.
