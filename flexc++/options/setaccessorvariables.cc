@@ -1,5 +1,7 @@
 #include "options.ih"
 
+// called by the generator, possibly overruling directives by options
+
 void Options::setAccessorVariables()
 {
     Arg &arg = Arg::instance();
@@ -19,10 +21,13 @@ void Options::setAccessorVariables()
 
     string value;
     d_maxDepth = arg.option(&value, 'm') ? 
-                    A2x(value).to<size_t>() 
+                    stoul(value)
                 : 
                     MAX_DEPTH;
-        
+
+    if (arg.option(&d_nameSpace, 'n'))
+        s_warnOptions.insert("namespace");
+
     // Skeletons
     if (!arg.option(&d_skeletonDirectory, 'S') && d_skeletonDirectory.empty())
         d_skeletonDirectory = s_defaultSkeletonDirectory;

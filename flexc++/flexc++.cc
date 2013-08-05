@@ -7,12 +7,12 @@ namespace
         // options to set filenames
 
         // options setting filenames
-        {Options::baseclassHeader(),        'b'},
-        {Options::classHeader(),            'c'},
-        {Options::implementationHeader(),   'i'},
+        {Options::baseclassHeader(),        'b'},   // Options members also
+        {Options::classHeader(),            'c'},   // used by Options::
+        {Options::implementationHeader(),   'i'},   // setAccessorVariables()
         {Options::lexSource(),              'l'},
-        {"target-directory",            Arg::Required},
-        {"filenames", 'f'},
+        {"target-directory",                Arg::Required},
+        {"filenames",                       'f'},
                                         
         // skeleton options             
         {"skeleton-directory",          'S'},
@@ -27,7 +27,7 @@ namespace
         {"no-baseclass-header",         Arg::None},
         {"no-lex-source",               Arg::None},
 
-        {"namespace", 'n'},
+        {"namespace",                   'n'},
 
         {"class-name",                  Arg::Required},
         {"lex-function-name",           Arg::Required},
@@ -61,7 +61,6 @@ try
     arg.versionHelp(usage, version, 1);
 
     DFA::setVerbose(arg.option('V'));
-//    Options::init(arg);
 
     States states;
 

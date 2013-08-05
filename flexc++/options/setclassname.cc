@@ -6,4 +6,7 @@ void Options::setClassName(string const &name)
         emsg << "%class-name multiply specified" << endl;
     else
         d_className = undelimit(name);
+
+    s_warnOptions.insert("class-name");
 }
+

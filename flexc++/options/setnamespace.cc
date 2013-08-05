@@ -6,4 +6,6 @@ void Options::setNameSpace(string const &name)
         emsg << "%namespace multiply specified" << endl;
     else
         d_nameSpace = undelimit(name);
+
+    s_warnOptions.insert("namespace");
 }

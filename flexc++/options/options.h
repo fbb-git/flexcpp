@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <set>
 
 namespace FBB
 {
@@ -12,6 +13,7 @@ namespace FBB
 class Options
 {
     FBB::Arg const &d_arg;
+
     std::string d_baseClassHeaderPath;
     std::string d_baseClassSkeleton;
     std::string d_classHeaderPath;
@@ -39,6 +41,14 @@ class Options
     bool d_verbose;
     bool d_caseSensitive;
 
+    static std::set<std::string> s_warnOptions;    
+                                            // contains the names of used
+                                            // options/directives.
+                                            // Generator may warn if specified
+                                            // for already existing .h or 
+                                            // .ih files
+
+
     enum 
     {
         MAX_DEPTH = 10 
@@ -55,15 +65,15 @@ class Options
     static void (*s_regexCall)(char const *funName);
 
     public:
-//        static Options &init(FBB::Arg const &arg);
         static Options &instance();
+
+        Options(Options const &other) = delete;
 
         static char const *classHeader();
         static char const *baseclassHeader();
         static char const *implementationHeader();
         static char const *lexSource();
         
-        Options(Options const &other) = delete;
 
         bool caseSensitive() const;
         bool debug() const;
@@ -123,6 +133,8 @@ class Options
 
         static std::string undelimit(std::string const &str);
         static void setPath(std::string *target, std::string const &name);
+        static void setPath(std::string *target, std::string const &name,
+                            char const *warnOption);
         void setPath(std::string *dest, int optChar, 
                             std::string const &defaultFile, 
                             char const *defaultSuffix,
@@ -152,12 +164,6 @@ inline char const *Options::lexSource()
 {
     return "lex-source";
 }
-
-
-//inline Options &Options::instance()
-//{
-//    return *s_options;
-//}
 
 inline void Options::show(char const *funName)
 {
@@ -271,7 +277,7 @@ inline void Options::setInputInterfacePath(std::string const &name)
    
 inline void Options::setBaseClassHeaderPath(std::string const &name)
 {
-    setPath(&d_baseClassHeaderPath, name);
+    setPath(&d_baseClassHeaderPath, name, "baseclass-header");
 }
    
 inline void Options::setClassHeaderPath(std::string const &name)
