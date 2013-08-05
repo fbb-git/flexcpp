@@ -12,6 +12,7 @@
 #include <bobcat/indent>
 #include <bobcat/ranger>
 #include <bobcat/exception>
+#include <bobcat/pattern>
 
 #include "../ranges/ranges.h"
 #include "../states/states.h"

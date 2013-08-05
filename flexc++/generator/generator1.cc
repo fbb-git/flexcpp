@@ -13,4 +13,6 @@ Generator::Generator(Rules const &rules, Ranges const &ranges,
     d_baseclassScope = d_options.className() + "Base::";
     d_lineDirectives = d_options.lines();
     d_debug          = d_options.debug();
+
+    wmsg.noLineNr();
 }

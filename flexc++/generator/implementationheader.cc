@@ -11,19 +11,26 @@
 
 void Generator::implementationHeader() const
 {
+    string const &implementationHeader = d_options.implementationHeaderPath();
+
     if 
     (
-        Stat(d_options.implementationHeaderPath())
+        Stat(implementationHeader)
         &&
         not d_options("force-implementation-header")
     )
+    {
+        warnExisting(implementationHeader, d_options.classHeader(), 
+                        d_options.classHeaderName(),
+                        "^#include \"" + d_options.classHeaderName() + '"');
         return;
+    }
 
     ofstream out;
     ifstream in;
 
     Exception::open(in,  d_options.implementationSkeleton()); 
-    Exception::open(out, d_options.implementationHeaderPath()); 
+    Exception::open(out, implementationHeader); 
 
     filter(in, out);    
 }

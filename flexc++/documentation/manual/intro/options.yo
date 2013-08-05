@@ -5,6 +5,14 @@ affecting the class header or implementation header file are ignored if these
 files already exist. Options accepting a `filename' do not accept path names,
 i.e., they cannot contain directory separators (tt(/)); options accepting a
 'pathname' may contain directory separators.
+
+COMMENT(
+    class header:           warn for class-name mismatch
+                            warn for namespace mismatch
+                            warn for not including baseclass-header
+    implementation header:  warn for not including the class header
+END)
+
     itemization(
     it() lsoption(baseclass-header)(b)(filename)nl()
           Use tt(filename) as the name of the file to contain the scanner
@@ -12,9 +20,9 @@ i.e., they cannot contain directory separators (tt(/)); options accepting a
            tt(base.h)
 
            A warning is issued if this option is used and an already
-            existing implementation header file does not contain tt(#include
-            "filename").
-
+            existing scanner-class header file does not include
+            tt(`filename'). 
+        
     it() lsoption(baseclass-skeleton)(C)(pathname)nl() 
            Use tt(pathname) as the path to the file containing the skeleton of
             the scanner class's base class. Its filename defaults to
@@ -58,8 +66,7 @@ i.e., they cannot contain directory separators (tt(/)); options accepting a
 
            A warning is issued if this option is used and an already
             existing scanner-class header file does not define tt(class
-            `className') and/or if an already existing implementation header
-            file does not define members of the class tt(`className').
+            `className')
 
     it() lsoption(class-skeleton)(C)(pathname)nl()
            Use tt(pathname) as the path to the file containing the skeleton of
@@ -106,6 +113,11 @@ i.e., they cannot contain directory separators (tt(/)); options accepting a
             directives and declarations that are required for the compilation
             of other source files belonging to the scanner class in one header
             file.
+
+           A warning is issued if this option is used and an already existing
+            tt('filename') file does not include the scanner class header
+            file.
+
     it() lsoption(implementation-skeleton)(I)(pathname)nl()
            Use tt(pathname) as the path to the file containing the skeleton of
             the implementation header. Its filename defaults to
@@ -142,8 +154,8 @@ i.e., they cannot contain directory separators (tt(/)); options accepting a
             specified namespace to define their include guard directives.
 
            A warning is issued if this option is used and an already existing
-            scanner-class header file or implementation header file does not
-            define tt(namespace identifier).
+            scanner-class header file does not define tt(namespace
+            identifier). 
 
     it() loption(no-baseclass-header)nl()
            Do not write the file containing the scanner's base class interface

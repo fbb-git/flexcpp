@@ -95,6 +95,14 @@ class Generator
         static std::string outDFAbase(std::string const &startState,
                                       size_t offset);
 
+        void warnExisting(std::string const &fileName, 
+                          std::string const &option,
+                          std::string const &expectedOptionValue,
+                          std::string const &regex) const;
+
+        bool grep(std::string const &fileName, std::string const &regex) 
+                                                                        const;
+
         void actions(std::ostream &out) const;
         void baseClassH(std::ostream &out) const;
         void baseIncludes(std::ostream &out) const;

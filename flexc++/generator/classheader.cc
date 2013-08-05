@@ -8,19 +8,34 @@
 
 void Generator::classHeader() const
 {
+    string const &classHeaderPath = d_options.classHeaderPath();
+    
     if 
     (
-        Stat(d_options.classHeaderPath())
+        Stat(classHeaderPath)
         &&
         not d_options("force-class-header")
     )
+    {
+        warnExisting(classHeaderPath, "class-name", d_options.className(),
+                                "^class " + d_options.className() + "\\b");
+
+        if (not d_options.nameSpace().empty())
+            warnExisting(classHeaderPath, "namespace", d_options.nameSpace(),
+                            "^namespace " + d_options.nameSpace() + "\\b");
+
+        warnExisting(classHeaderPath, Options::baseclassHeader(), 
+                    d_options.baseclassHeaderName(), 
+                    "^#include \"" + d_options.baseclassHeaderName() + '"');
+
         return;
+    }
 
     ofstream out;
     ifstream in;
 
     Exception::open(in,  d_options.classSkeleton()); 
-    Exception::open(out, d_options.classHeaderPath()); 
+    Exception::open(out, classHeaderPath); 
 
     filter(in, out);    
 }

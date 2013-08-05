@@ -41,13 +41,16 @@ class Options
     bool d_verbose;
     bool d_caseSensitive;
 
-    static std::set<std::string> s_warnOptions;    
-                                            // contains the names of used
-                                            // options/directives.
-                                            // Generator may warn if specified
-                                            // for already existing .h or 
-                                            // .ih files
+        // contains the names of used options/directives.  
+        // Generator may warn if specified for already existing .h or .ih
+        // files 
+        // Warnings are issued for:
+        //  class header:           class-name mismatch
+        //                          namespace mismatch
+        //                          not including the baseclass-header
+        // implementation header:   not including the class header
 
+    static std::set<std::string> s_warnOptions;    
 
     enum 
     {
