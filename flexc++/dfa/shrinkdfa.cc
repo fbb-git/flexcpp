@@ -2,8 +2,7 @@
 
 void DFA::shrinkDFA(vector<size_t> &unique)
 {
-    if (d_verbose)
-        cout << "DFA ROWS: " << d_row.size() << '\n';
+    s_verbose << "DFA ROWS: " << d_row.size() << '\n';
 
     size_t to = 0;
     for (size_t from = 0, end = d_row.size(); from != end; ++from)
@@ -16,8 +15,7 @@ void DFA::shrinkDFA(vector<size_t> &unique)
         if (unique[from] < to)
             continue;
 
-        if (d_verbose)
-            cout << "Move row " << from << " to row " << to << '\n';
+        s_verbose << "Move row " << from << " to row " << to << '\n';
 
         d_row[to] = d_row[from];
         d_stateSet[to] = d_stateSet[from];
@@ -27,19 +25,21 @@ void DFA::shrinkDFA(vector<size_t> &unique)
 
     d_row.resize(to);
 
-    if (!d_verbose)
+    if (not s_verbose.isActive())
         return;
 
-    cout << "NEW # OF ROWS: " << to << ", states per row:\n";
+    s_verbose << "NEW # OF ROWS: " << to << ", states per row:\n";
 
     for (size_t idx = 0; idx != to; ++idx)        
     {
-        cout << "Row " << idx << ": ";
-        copy(d_stateSet[idx].begin(), d_stateSet[idx].end(),
-            ostream_iterator<decltype(*d_stateSet[0].begin())>(cout, ","));
-        cout << '\n';
+        s_verbose << "Row " << idx << ": ";
+        copy(
+            d_stateSet[idx].begin(), d_stateSet[idx].end(),
+            ostream_iterator<decltype(*d_stateSet[0].begin())>(s_verbose, ",")
+        );
+        s_verbose << '\n';
     }
-    cout << '\n';
+    s_verbose << '\n';
 }
 
 

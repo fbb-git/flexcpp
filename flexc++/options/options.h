@@ -55,7 +55,7 @@ class Options
     static void (*s_regexCall)(char const *funName);
 
     public:
-        static Options &init(FBB::Arg const &arg);
+//        static Options &init(FBB::Arg const &arg);
         static Options &instance();
 
         static char const *classHeader();
@@ -119,7 +119,7 @@ class Options
         void setAccessorVariables();
 
     private:
-        Options(FBB::Arg const &arg);
+        Options();  // FBB::Arg const &arg);
 
         static std::string undelimit(std::string const &str);
         static void setPath(std::string *target, std::string const &name);
@@ -154,10 +154,10 @@ inline char const *Options::lexSource()
 }
 
 
-inline Options &Options::instance()
-{
-    return *s_options;
-}
+//inline Options &Options::instance()
+//{
+//    return *s_options;
+//}
 
 inline void Options::show(char const *funName)
 {

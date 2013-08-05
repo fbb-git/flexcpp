@@ -9,13 +9,11 @@ void DFA::keepUniqueRows()
     if (unique.back() == unique.size() - 1)
         return;
 
-    if (d_verbose)
-    {
-        cout << "UNIQUE: ";
+    s_verbose << "UNIQUE: ";
+    if (s_verbose.isActive())
         copy(unique.begin(), unique.end(), 
-                                    ostream_iterator<size_t>(cout, ","));
-        cout << '\n';
-    }
+                                    ostream_iterator<size_t>(s_verbose, ","));
+    s_verbose << '\n';
 
     for (auto &row: d_row)
         row.uniqueMap(unique);

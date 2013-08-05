@@ -9,6 +9,8 @@
 class Rules;
 class States;
 
+#include <bobcat/mstream>
+
 #include "../dfarow/dfarow.h"
 
 class DFA
@@ -25,10 +27,12 @@ class DFA
     std::vector<Size_tSet> d_stateSet;      // states belonging to a DFA row
     std::vector<Size_tSet> d_transitSet;    // DFArows already visited by 
                                             //  determineTailCount
-    bool d_verbose;
+    //bool d_verbose;
     bool d_sawACCEPT;           // used by visitTailCount
 
     size_t d_rule;              // used when computing TailCount values 
+
+    static FBB::Mstream s_verbose;  // writes to cout if verbose was set
 
     public:
         DFA() = default;        // only used for vector-resizing operations
@@ -42,6 +46,8 @@ class DFA
         std::vector<DFARow>::const_iterator end() const;
 
         size_t size() const;
+
+        static void setVerbose(bool on);
 
     private:
         void keepViableTailCounts();

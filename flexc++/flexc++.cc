@@ -27,6 +27,8 @@ namespace
         {"no-baseclass-header",         Arg::None},
         {"no-lex-source",               Arg::None},
 
+        {"namespace", 'n'},
+
         {"class-name",                  Arg::Required},
         {"lex-function-name",           Arg::Required},
         {"no-lines",                    Arg::None},
@@ -54,11 +56,12 @@ namespace
 int main(int argc, char **argv)
 try
 {
-    Arg &arg = Arg::initialize("b:B:c:C:df:Fhi:I:Kl:L:m:RS:TtvV",
+    Arg &arg = Arg::initialize("b:B:c:C:df:Fhi:I:Kl:L:m:n:RS:TtvV",
                     longOptions, longEnd, argc, argv);
     arg.versionHelp(usage, version, 1);
 
-    Options::init(arg);
+    DFA::setVerbose(arg.option('V'));
+//    Options::init(arg);
 
     States states;
 

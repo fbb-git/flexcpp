@@ -1,14 +1,14 @@
 #include "options.ih"
 
-Options::Options(Arg const &arg)
+Options::Options()  // Arg const &arg)
 :
-    d_arg(arg),
-    d_infile(arg[0]),
-    d_lines(not arg.option(0, "no-lines")),
-    d_matchedRules(arg.option('R')),
-    d_verbose(arg.option('V')),
-    d_caseSensitive(not arg.option(0, "case-insensitive"))
+    d_arg(Arg::instance()),     // arg),
+    d_infile(d_arg[0]),
+    d_lines(not d_arg.option(0, "no-lines")),
+    d_matchedRules(d_arg.option('R')),
+    d_verbose(d_arg.option('V')),
+    d_caseSensitive(not d_arg.option(0, "case-insensitive"))
 {
-    if (arg.option(0, "regex-calls"))
+    if (d_arg.option(0, "regex-calls"))
         s_regexCall = show;
 }
