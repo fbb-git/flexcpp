@@ -8,8 +8,8 @@ void manpage()
 
     if (PROGRAM ".yo" younger MANPAGE || "release.yo" younger MANPAGE)
     {
-        run("yodl2man  --no-warnings -o " MANPAGE " "  PROGRAM);
-        run("yodl2html  --no-warnings "
+        run("yodl2man  -o " MANPAGE " "  PROGRAM);
+        run("yodl2html  "
                 "-o ../../tmp/manhtml/" PROGRAM "man.html " PROGRAM);
     }
     exit(0);

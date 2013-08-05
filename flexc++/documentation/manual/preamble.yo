@@ -97,3 +97,8 @@ DEFINEMACRO(nosupport)(3)(\
     )\
 )
 
+NOUSERMACRO( accept begin debug echo filename files length lineNr matched more
+    out popStream preCode push pushStream redo rule setFilename setMatched
+    startCondition state switchStreams )
+ 
+
