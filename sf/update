@@ -12,6 +12,14 @@ yodl2html index.yo || exit 1
 scp ../flexc++/tmp/man*/*.html index.html \
     fbb,flexcpp@web.sourceforge.net:htdocs/
 
+echo -n "update the images as well [y/n] ? "
+read yesno
+
+if [ "$yesno" == "y" ] ; then
+    scp -r ../flexc++/tmp/manual/images \
+    fbb,flexcpp@web.sourceforge.net:htdocs/
+fi
+
 rm index.html
 
 cd ../flexc++ 
