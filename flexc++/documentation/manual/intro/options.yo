@@ -13,6 +13,12 @@ COMMENT(
     implementation header:  warn for not including the class header
 END)
 
+Some options may generate warnings. This happens when an option conflicts with
+the contents of a file which flc() cannot modify (e.g., a scanner
+class header file exists, but doesn't define a name space, but a
+tt(--namespace) option was provided). In those cases the option is
+ignored, and hand-editing may then be required to effectuate the option.
+
     itemization(
     it() lsoption(baseclass-header)(b)(filename)nl()
           Use tt(filename) as the name of the file to contain the scanner
@@ -22,7 +28,6 @@ END)
            A warning is issued if this option is used and an already
             existing scanner-class header file does not include
             tt(`filename'). 
-        
     it() lsoption(baseclass-skeleton)(C)(pathname)nl() 
            Use tt(pathname) as the path to the file containing the skeleton of
             the scanner class's base class. Its filename defaults to
@@ -67,7 +72,6 @@ END)
            A warning is issued if this option is used and an already
             existing scanner-class header file does not define tt(class
             `className')
-
     it() lsoption(class-skeleton)(C)(pathname)nl()
            Use tt(pathname) as the path to the file containing the skeleton of
             the scanner class. Its filename defaults to tt(flexc++.h).
@@ -117,7 +121,6 @@ END)
            A warning is issued if this option is used and an already existing
             tt('filename') file does not include the scanner class header
             file.
-
     it() lsoption(implementation-skeleton)(I)(pathname)nl()
            Use tt(pathname) as the path to the file containing the skeleton of
             the implementation header. Its filename defaults to
@@ -156,7 +159,6 @@ END)
            A warning is issued if this option is used and an already existing
             scanner-class header file does not define tt(namespace
             identifier). 
-
     it() loption(no-baseclass-header)nl()
            Do not write the file containing the scanner's base class interface
             even if it doesn't yet exist. By default the file containing the

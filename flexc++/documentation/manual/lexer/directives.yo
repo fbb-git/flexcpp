@@ -13,16 +13,23 @@ is an example of the definition of a directive:
 cannot contain directory separators (tt(/)); options accepting a 'pathname'
 may contain directory separators. A 'pathname' using blank characters should
 be surrounded by double quotes.
+
+
+Some directives may generate warnings. This happens when a directive
+conflicts with the contents of a file which flc() cannot modify (e.g., a
+scanner class header file exists, but doesn't define a name space, but a
+tt(%namespace) directive was provided). In those cases the directive is
+ignored, and hand-editing may then be required to effectuate the directive.
+
     itemization(
     it() bf(%baseclass-header) tt(= "filename") nl()
            Defines the name of the file to contain the scanner class's base
             class interface. Corresponding command-line option:
             tt(--baseclass-header).
 
-           A warning is issued if this directive is used and an already
-            existing implementation header file does not contain tt(#include
-            "filename").
-
+           A warning is issued if this option is used and an already
+            existing scanner-class header file does not include
+            tt(`filename'). 
     it() bf(%case-insensitive)nl()
            Generates a scanner em(case insensitively) matching regular
             expressions. All regular expressions specified in flc()'s input
@@ -67,9 +74,7 @@ be surrounded by double quotes.
 
            A warning is issued if this option is used and an already
             existing scanner-class header file does not define tt(class
-            `className') and/or if an already existing implementation header
-            file does not define members of the class tt(`className').
-
+            `className').
     it() bf(%debug) nl() 
            Provide tt(lex) and its support functions with debugging code,
             showing the actual parsing process on the standard output
@@ -102,6 +107,10 @@ END)
     it() bf(%implementation-header) tt(= "filename") nl()
            Defines the name of the file to contain the implementation header.
             Corresponding command-line option: tt(--implementation-header).
+
+           A warning is issued if this option is used and an already existing
+            tt('filename') file does not include the scanner class header
+            file.
     it() bf(%input-implementation) tt(= "sourcefile") nl()
            Defines the pathname of the file containing the implementation of a
             user-defined tt(Input) class. 
@@ -140,9 +149,8 @@ END)
             specified namespace to define their include guard directives.
 
           A warning is issued if this option is used and an already existing
-            scanner-class header file or implementation header file does not
-            define tt(namespace identifier).
-
+            scanner-class header file does not define tt(namespace
+            identifier).
     it() bf(%print-tokens) nl() 
            This option results in the tokens as well as the matched text to be
             displayed on the standard output stream, just before returning the
