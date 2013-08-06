@@ -30,7 +30,7 @@ void DFA::build(std::string const &name, vector<size_t> const &active)
         d_row.back().transitions();
         
         s_verbose << "Row " << d_row.size()-1 << ": ";
-        if (s_verbose.isActive())
+        if (s_verbose)
             copy (d_stateSet[d_row.size()-1].begin(), 
                   d_stateSet[d_row.size()-1].end(),
                   ostream_iterator<decltype(*d_stateSet[0].begin())>(

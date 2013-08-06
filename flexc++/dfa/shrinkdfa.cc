@@ -25,7 +25,7 @@ void DFA::shrinkDFA(vector<size_t> &unique)
 
     d_row.resize(to);
 
-    if (not s_verbose.isActive())
+    if (not s_verbose)
         return;
 
     s_verbose << "NEW # OF ROWS: " << to << ", states per row:\n";

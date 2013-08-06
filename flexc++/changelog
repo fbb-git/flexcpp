@@ -7,14 +7,17 @@ flexc++ (1.06.00)
     files.
 
   * Warnings are issued when options or directives are specified wchich are
-    ignored because the target file (e.g., scanner.h, scanner.ih) already
-    exists. These warnings are not issued for lex.cc and scannerbase.h, which
-    are by default rewritten at each flexc++ run. These warnings are issued
-    for the `class-header', `class-name', and `namespace'options/directives.
+    ignored because of an already existing target file (e.g., scanner.h,
+    scanner.ih). These warnings are not issued for lex.cc and scannerbase.h,
+    which are by default rewritten at each flexc++ run. These warnings are
+    issued for the `baseclass-header', `class-name', `implementation-header',
+    and `namespace'options/directives.
 
   * This version repairs the `joren-bug' (Reported by Joren Heit on June 7,
     2013). Joren discovered that in some situations rules using the
     LA-operator failed to re-scan the tail part of a RE using the LA-operator.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 06 Aug 2013 10:48:33 +0200
 
 flexc++ (1.05.00)
 

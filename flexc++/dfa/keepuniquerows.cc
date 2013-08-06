@@ -10,7 +10,7 @@ void DFA::keepUniqueRows()
         return;
 
     s_verbose << "UNIQUE: ";
-    if (s_verbose.isActive())
+    if (s_verbose)
         copy(unique.begin(), unique.end(), 
                                     ostream_iterator<size_t>(s_verbose, ","));
     s_verbose << '\n';
