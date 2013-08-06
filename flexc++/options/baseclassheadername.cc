@@ -2,9 +2,9 @@
 
 std::string Options::baseclassHeaderName() const
 {
-    size_t pos = d_baseClassHeaderPath.rfind('/');
+    size_t pos = d_baseClassHeader.rfind('/');
     return pos == string::npos ? 
-                        d_baseClassHeaderPath 
+                        d_baseClassHeader
                     :
-                        d_baseClassHeaderPath.substr(pos + 1);
+                        d_baseClassHeader.substr(pos + 1);
 }

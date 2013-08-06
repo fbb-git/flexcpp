@@ -12,22 +12,36 @@ namespace FBB
 
 class Options
 {
+    enum PathType
+    {
+        FILENAME,
+        PATHNAME
+    };
+
     FBB::Arg const &d_arg;
 
-    std::string d_baseClassHeaderPath;
+    std::string const *d_matched = 0;   // text matched by the scanner,
+                                        // initialized by the Parser
+
+        // The next four variables cannot have path-specifications with their
+        // option/directive values. After their values have been obtained,
+        // the setPathStrings member, called from Parser::cleanup, prefixes 
+        // their values with the target directory's value
+    std::string d_baseClassHeader;      // these options/directives cannot 
+    std::string d_classHeader;          // have path names. See 
+    std::string d_implementationHeader; // setPathStrings and assign/accept
+    std::string d_lexSource;
+
     std::string d_baseClassSkeleton;
-    std::string d_classHeaderPath;
     std::string d_className;
     std::string d_classSkeleton;
     std::string d_constructionPath;
     std::string d_filenames;
-    std::string d_implementationHeaderPath;
     std::string d_implementationSkeleton;
     std::string d_inputImplementation;
-    std::string d_inputInterface;
+    std::string d_inputInterfacePath;
     std::string d_lexFunctionName;
     std::string d_lexSkeleton;
-    std::string d_lexSourcePath;
     std::string d_nameSpace;
     std::string d_skeletonDirectory;
     std::string d_targetDirectory;
@@ -72,11 +86,11 @@ class Options
 
         Options(Options const &other) = delete;
 
-        static char const *classHeader();
-        static char const *baseclassHeader();
-        static char const *implementationHeader();
-        static char const *lexSource();
-        
+        void setMatched(std::string const &matched);
+
+        void setAccessorVariables();
+        void showFilenames() const;
+        void setPathStrings();
 
         bool caseSensitive() const;
         bool debug() const;
@@ -89,81 +103,94 @@ class Options
 
         std::size_t maxDepth() const;
 
-        std::string baseclassHeaderName() const;
-        std::string classHeaderName() const;
-        std::string const &baseclassHeaderPath() const;
-        std::string const &baseclassSkeleton() const;
         std::string const &classHeaderPath() const;
-        std::string const &className() const;
-        std::string const &classSkeleton() const;
-        std::string const &filenames() const;
+        std::string classHeaderName() const;
+
+        std::string const &baseclassHeaderPath() const;
+        std::string baseclassHeaderName() const;
+
         std::string const &implementationHeaderPath() const;
+
+        std::string const &lexSourcePath() const;
+
+        std::string const &baseclassSkeleton() const;
+        std::string const &classSkeleton() const;
+        std::string const &className() const;
+        std::string const &filenames() const;
         std::string const &implementationSkeleton() const;
         std::string const &inputImplementation() const;
         std::string const &inputInterface() const;
         std::string const &lexFunctionName() const;
         std::string const &lexSkeleton() const;
-        std::string const &lexSourcePath() const;
         std::string const &nameSpace() const;
         std::string const &infile() const;
         std::string const &constructionPath() const;
         std::string implementationHeaderName() const;
 
-        void setBaseClassHeaderPath(std::string const &name);
-        void setClassHeaderPath(std::string const &name);
-        void setClassName(std::string const &name);
+        void setBaseClassHeader();
+        void setClassHeader();
+        void setClassName();
         void setCaseInsensitive();
         void setDebug();
-        void setFilenames(std::string const &name);
-        void setImplementationHeaderPath(std::string const &name);
-        void setInputImplementationPath(std::string const &name);
-        void setInputInterfacePath(std::string const &name);
+        void setFilenames();
+        void setImplementationHeader();
+        void setInputImplementationPath();
+        void setInputInterfacePath();
         void setInteractive();
-        void setLexFunctionName(std::string const &name);
-        void setLexSourcePath(std::string const &name);
+        void setLexFunctionName();
+        void setLexSource();
         void setLines(bool yesNo);
-        void setNameSpace(std::string const &name);
+        void setNameSpace();
         void setPrint();
-        void setSkeletonDirectory(std::string const &name);
-        void setTargetDirectory(std::string const &name);
+        void setSkeletonDirectory();
+        void setTargetDirectory();
 
         static void regexCall(char const *funname);
 
-        void setAccessorVariables();
-
+        static char const *classHeaderSpec();       // long option/directive 
+        static char const *baseclassHeaderSpec();   // specs. used repeatedly
+        static char const *implementationHeaderSpec();
+        static char const *lexSourceSpec();
+        
     private:
         Options();  // FBB::Arg const &arg);
 
         static std::string undelimit(std::string const &str);
-        static void setPath(std::string *target, std::string const &name);
-        static void setPath(std::string *target, std::string const &name,
-                            char const *warnOption);
-        void setPath(std::string *dest, int optChar, 
-                            std::string const &defaultFile, 
-                            char const *defaultSuffix,
-                            char const *optionName);
+
+        void assign(std::string *target, PathType pathType, 
+                                          char const *declTxt);
+        std::string const &accept(PathType pathType, char const *declTxt);
+
+
+//        static void setPath(std::string *target, std::string const &name);
+//        static void setPath(std::string *target, std::string const &name,
+//                            char const *warnOption);
+        void setOptionPath(std::string *dest, int optChar, 
+                           std::string const &defaultFile, 
+                           char const *defaultSuffix,
+                           char const *optionName);
 
         static void nop(char const *funName);
         static void show(char const *funName);
 
 };
 
-inline char const *Options::classHeader()
+inline char const *Options::classHeaderSpec()
 {
     return "class-header";
 }
 
-inline char const *Options::baseclassHeader()
+inline char const *Options::baseclassHeaderSpec()
 {
     return "baseclass-header";
 }
 
-inline char const *Options::implementationHeader()
+inline char const *Options::implementationHeaderSpec()
 {
     return "implementation-header";
 }
 
-inline char const *Options::lexSource()
+inline char const *Options::lexSourceSpec()
 {
     return "lex-source";
 }
@@ -195,7 +222,7 @@ inline std::string const &Options::constructionPath() const
 
 inline std::string const &Options::inputInterface() const
 {
-    return d_inputInterface;
+    return d_inputInterfacePath;
 }
 
 inline std::string const &Options::filenames() const
@@ -230,22 +257,22 @@ inline std::string const &Options::lexSkeleton() const
 
 inline std::string const &Options::baseclassHeaderPath() const
 {
-    return d_baseClassHeaderPath;
+    return d_baseClassHeader;
 }
 
 inline std::string const &Options::classHeaderPath() const
 {
-    return d_classHeaderPath;
+    return d_classHeader;
 }
 
 inline std::string const &Options::implementationHeaderPath() const
 {
-    return d_implementationHeaderPath;
+    return d_implementationHeader;
 }
 
 inline std::string const &Options::lexSourcePath() const
 {
-    return d_lexSourcePath;
+    return d_lexSource;
 }
 
 inline std::string const &Options::lexFunctionName() const
@@ -268,34 +295,50 @@ inline std::string const &Options::infile() const
     return d_infile;
 }
 
-inline void Options::setInputImplementationPath(std::string const &name)
+inline void Options::setSkeletonDirectory()
 {
-    setPath(&d_inputImplementation, name);
+    assign(&d_skeletonDirectory, PATHNAME, "skeleton-directory");
+}
+
+inline void Options::setTargetDirectory()
+{
+    assign(&d_targetDirectory, PATHNAME, "target-directory");
+}
+
+inline void Options::setNameSpace()
+{
+    assign(&d_nameSpace, FILENAME, "namespace");
+}
+
+
+inline void Options::setInputImplementationPath()
+{
+    assign(&d_inputImplementation, PATHNAME, "input-implementation");
 }
    
-inline void Options::setInputInterfacePath(std::string const &name)
+inline void Options::setInputInterfacePath()
 {
-    setPath(&d_inputInterface, name);
+    assign(&d_inputInterfacePath, PATHNAME, "input-interface");
 }
    
-inline void Options::setBaseClassHeaderPath(std::string const &name)
+inline void Options::setBaseClassHeader()
 {
-    setPath(&d_baseClassHeaderPath, name, "baseclass-header");
+    assign(&d_baseClassHeader, FILENAME, baseclassHeaderSpec());
 }
    
-inline void Options::setClassHeaderPath(std::string const &name)
+inline void Options::setClassHeader()
 {
-    setPath(&d_classHeaderPath, name);
+    assign(&d_classHeader, FILENAME, classHeaderSpec());
 }
    
-inline void Options::setImplementationHeaderPath(std::string const &name)
+inline void Options::setImplementationHeader()
 {
-    setPath(&d_implementationHeaderPath, name);
+    assign(&d_implementationHeader, FILENAME, implementationHeaderSpec());
 }
    
-inline void Options::setLexSourcePath(std::string const &name)
+inline void Options::setLexSource()
 {
-    setPath(&d_lexSourcePath, name);
+    assign(&d_lexSource, FILENAME, "lex-source");
 }
    
 inline void Options::setInteractive()
@@ -347,6 +390,11 @@ inline bool Options::lines() const
 inline bool Options::debug() const
 {
     return d_debug;
+}
+
+inline void Options::setMatched(std::string const &matched)
+{
+    d_matched = &matched;
 }
 
 #endif

@@ -49,7 +49,8 @@ class Parser: public ParserBase
     public:
         Parser(Rules &rules, States &states);
         int parse();
-
+        void cleanup();     // prepare Mstream tags, define accessor variables
+                            // and show filenames
     private:
         Pattern eolnDollar();
         void orAction();

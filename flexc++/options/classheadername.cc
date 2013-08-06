@@ -2,10 +2,10 @@
 
 std::string Options::classHeaderName() const
 {
-    size_t pos = d_classHeaderPath.rfind('/');
+    size_t pos = d_classHeader.rfind('/');
 
     return pos == string::npos ? 
-                        d_classHeaderPath 
+                        d_classHeader 
                     :
-                        d_classHeaderPath.substr(pos + 1);
+                        d_classHeader.substr(pos + 1);
 }

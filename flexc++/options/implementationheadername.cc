@@ -2,10 +2,10 @@
 
 std::string Options::implementationHeaderName() const
 {
-    size_t pos = d_implementationHeaderPath.rfind('/');
+    size_t pos = d_implementationHeader.rfind('/');
 
     return pos == string::npos ? 
-                        d_implementationHeaderPath 
+                        d_implementationHeader
                     :
-                        d_implementationHeaderPath.substr(pos + 1);
+                        d_implementationHeader.substr(pos + 1);
 }

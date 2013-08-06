@@ -97,62 +97,62 @@ _opt_is:
 option:
     _inputinterface _opt_is _stringOrIdent
     {
-        d_options.setInputInterfacePath(d_matched);
+        d_options.setInputInterfacePath();
     }
 |
     _inputimplementation _opt_is _stringOrIdent
     {
-        d_options.setInputImplementationPath(d_matched);
+        d_options.setInputImplementationPath();
     }
 |
     _classname _opt_is _stringOrIdent
     {
-        d_options.setClassName(d_matched);
+        d_options.setClassName();
     }
 |
     _filenames _opt_is _stringOrIdent
     {
-        d_options.setFilenames(d_matched);
+        d_options.setFilenames();
     }
 |
     _lexfunctionname _opt_is _stringOrIdent
     {
-        d_options.setLexFunctionName(d_matched);
+        d_options.setLexFunctionName();
     }
 |
     _baseclassheader _opt_is _stringOrIdent
     {
-        d_options.setBaseClassHeaderPath(d_matched);
+        d_options.setBaseClassHeader();
     }
 |
     _classheader _opt_is _stringOrIdent
     {
-        d_options.setClassHeaderPath(d_matched);
+        d_options.setClassHeader();
     }
 |
     _implementationheader _opt_is _stringOrIdent
     {
-        d_options.setImplementationHeaderPath(d_matched);
+        d_options.setImplementationHeader();
     }
 |
     _lexsource _opt_is _stringOrIdent
     {
-        d_options.setLexSourcePath(d_matched);
+        d_options.setLexSource();
     }
 |
     _skeleton_directory _opt_is _stringOrIdent
     {
-        d_options.setSkeletonDirectory(d_matched);
+        d_options.setSkeletonDirectory();
     }
 |
     _target_directory _opt_is _stringOrIdent
     {
-        d_options.setTargetDirectory(d_matched);
+        d_options.setTargetDirectory();
     }
 |
     _namespace _opt_is _stringOrIdent
     {
-        d_options.setNameSpace(d_matched);
+        d_options.setNameSpace();
     }
 |
     CASEINSENSITIVE

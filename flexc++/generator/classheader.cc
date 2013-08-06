@@ -24,7 +24,7 @@ void Generator::classHeader() const
             warnExisting(classHeaderPath, "namespace", d_options.nameSpace(),
                             "^namespace " + d_options.nameSpace() + "\\b");
 
-        warnExisting(classHeaderPath, Options::baseclassHeader(), 
+        warnExisting(classHeaderPath, Options::baseclassHeaderSpec(), 
                     d_options.baseclassHeaderName(), 
                     "^#include \"" + d_options.baseclassHeaderName() + '"');
 

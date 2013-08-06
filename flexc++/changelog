@@ -13,11 +13,14 @@ flexc++ (1.06.00)
     issued for the `baseclass-header', `class-name', `implementation-header',
     and `namespace'options/directives.
 
+  * Changed the implementation of 'class Options': it now mimics the
+    implementation used by bisonc++
+
   * This version repairs the `joren-bug' (Reported by Joren Heit on June 7,
     2013). Joren discovered that in some situations rules using the
     LA-operator failed to re-scan the tail part of a RE using the LA-operator.
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 06 Aug 2013 10:48:33 +0200
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 06 Aug 2013 13:46:47 +0200
 
 flexc++ (1.05.00)
 

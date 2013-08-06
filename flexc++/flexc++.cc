@@ -7,12 +7,12 @@ namespace
         // options to set filenames
 
         // options setting filenames
-        {Options::baseclassHeader(),        'b'},   // Options members also
-        {Options::classHeader(),            'c'},   // used by Options::
-        {Options::implementationHeader(),   'i'},   // setAccessorVariables()
-        {Options::lexSource(),              'l'},
-        {"target-directory",                Arg::Required},
-        {"filenames",                       'f'},
+        {Options::baseclassHeaderSpec(),      'b'}, // Options members also
+        {Options::classHeaderSpec(),          'c'}, // used by Options::
+        {Options::implementationHeaderSpec(), 'i'}, // setAccessorVariables()
+        {Options::lexSourceSpec(),            'l'},
+        {"target-directory",                  Arg::Required},
+        {"filenames",                         'f'},
                                         
         // skeleton options             
         {"skeleton-directory",          'S'},
@@ -69,12 +69,7 @@ try
 
     Parser parser(rules, states);
         parser.parse();
-
-    if (int count = emsg.count())
-    {
-        cout << "Error(s): " << count << '\n';
-        return 1;
-    }
+        parser.cleanup();
 
     Ranges ranges(states);
         ranges.determineSubsets();
@@ -91,7 +86,6 @@ try
         generator.baseclassHeader();
         generator.classHeader();
         generator.implementationHeader();
-        generator.showFilenames();
 }
 catch (int x)
 {

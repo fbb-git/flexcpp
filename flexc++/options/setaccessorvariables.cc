@@ -51,25 +51,8 @@ void Options::setAccessorVariables()
     if (d_targetDirectory.length() && *d_targetDirectory.rbegin() != '/')
         d_targetDirectory += '/';
 
-    arg.option(&d_filenames, 'f');  // -f overrules %filenames spec in lexer
-
-    string filenames = d_filenames;
-    if (filenames.empty())
-        filenames = d_className;
-
     if (d_arg.option('K'))
         d_constructionPath = d_targetDirectory + d_arg[0] + ".output";
-
-    setPath(&d_classHeaderPath, 'c', filenames, ".h", classHeader());
-
-    setPath(&d_baseClassHeaderPath, 'b', filenames, "base.h", 
-            baseclassHeader());
-
-    setPath(&d_implementationHeaderPath, 'i', filenames, ".ih",
-                                                    implementationHeader());
-
-    setPath(&d_lexSourcePath, 'l', String::lc(d_lexFunctionName), ".cc",
-                                                    lexSource());
 }
 
 

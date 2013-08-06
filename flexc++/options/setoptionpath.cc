@@ -22,16 +22,15 @@
 // -------------------------------------------------------
 
 
-void Options::setPath(string *dest, int optChar, 
-                      string const &defaultFilename,
-                      char const *defaultSuffix, 
-                      char const *optionName)
+void Options::setOptionPath(string *dest, int optChar, 
+                            string const &defaultFilename,
+                            char const *defaultSuffix, 
+                            char const *optionName)
 {
     Arg::instance().option(dest, optChar);  // try to get the option
 
     if (dest->find('/') != string::npos)
-        emsg << '`' << optionName << "' option/directive: no path names" << 
-                                                                        endl;
+        emsg << '`' << optionName << "' option: no path names" << endl;
     else 
     {
         if (dest->empty())                  // no value in dest: use a default
