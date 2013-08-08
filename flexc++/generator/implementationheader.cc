@@ -20,7 +20,7 @@ void Generator::implementationHeader() const
         not d_options("force-implementation-header")
     )
     {
-        warnExisting(implementationHeader, d_options.classHeaderPath(), 
+        warnExisting(implementationHeader, d_options.classHeaderSpec(), 
                         d_options.classHeaderName(),
                         "^#include \"" + d_options.classHeaderName() + '"');
         return;
