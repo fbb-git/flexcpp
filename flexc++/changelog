@@ -1,3 +1,9 @@
+flexc++ (1.07.00)
+
+  * --force-* options removed. Use 'rm ...' to remove files if necessary.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 11 Aug 2013 11:11:11 +0200
+
 flexc++ (1.06.00)
 
   * Added images to the constructed manual 

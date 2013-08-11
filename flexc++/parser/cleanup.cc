@@ -2,10 +2,10 @@
 
 void Parser::cleanup()
 {
-    emsg.noLineNr();
-    emsg.setLineTag("");
+    emsg.setTag("error");
+
+    wmsg.setTag("Warning");
     wmsg.noLineNr();
-    wmsg.setLineTag("");
 
     d_options.setAccessorVariables();
 

@@ -21,9 +21,7 @@ namespace
         {"implementation-skeleton",     'I'},
         {"lex-skeleton",                'L'},
 
-        // options forcing overwriting
-        {"force-class-header",          Arg::None},
-        {"force-implementation-header", Arg::None},
+        // options preventing overwriting
         {"no-baseclass-header",         Arg::None},
         {"no-lex-source",               Arg::None},
 

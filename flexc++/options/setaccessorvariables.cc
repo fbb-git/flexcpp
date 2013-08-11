@@ -13,6 +13,9 @@ void Options::setAccessorVariables()
 
     d_print = d_print || arg.option('t');
 
+    if (d_arg.option(&d_className, "class-name"))
+        s_warnOptions.insert("class-name");
+
     if (d_className.empty())
         d_className = s_defaultClassName;
 

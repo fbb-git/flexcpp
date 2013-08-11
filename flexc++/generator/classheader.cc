@@ -10,12 +10,7 @@ void Generator::classHeader() const
 {
     string const &classHeaderPath = d_options.classHeaderPath();
     
-    if 
-    (
-        Stat(classHeaderPath)
-        &&
-        not d_options("force-class-header")
-    )
+    if (Stat(classHeaderPath))
     {
         warnExisting(classHeaderPath, "class-name", d_options.className(),
                                 "^class " + d_options.className() + "\\b");

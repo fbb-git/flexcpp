@@ -1,9 +1,15 @@
 oxref by Frank B. Brokken (f.b.brokken@rug.nl)
-oxref V0.90.11 2012
+oxref V0.91.00 2012-2013
 
-CREATED Mon, 05 Nov 2012 09:58:39 +0000
+CREATED Sun, 11 Aug 2013 08:19:16 +0000
 CROSS REFERENCE FOR: -fxs tmp/libmodules.a 
 ----------------------------------------------------------------------
+
+accept(Options::PathType, char const*)
+  Full name: Options::accept(Options::PathType, char const*)
+  Source:    accept.cc 
+  Used By:
+    assign.cc: Options::assign(std::string*, Options::PathType, char const*)
 
 accept(unsigned int)
   Full name: ScannerBase::accept(unsigned int)
@@ -32,17 +38,17 @@ add(bool, Pattern const&, Block const&)
     addrule.cc: Parser::addRule(Pattern const&, bool)
 
 add(std::string const&)
+  Full name: StartConditions::add(std::string const&)
+  Source:    add.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+
+add(std::string const&)
   Full name: Ranges::add(std::string const&)
   Source:    add.cc 
   Used By:
     add3.cc: Ranges::add(unsigned int)
     inspectstate.cc: Ranges::inspectState(State const&)
-
-add(std::string const&)
-  Full name: StartConditions::add(std::string const&)
-  Source:    add.cc 
-  Used By:
-    parse.cc: Parser::executeAction(int)
 
 add(unsigned int)
   Full name: StartConditions::add(unsigned int)
@@ -92,6 +98,12 @@ alternatives(States&, Pattern const&, Pattern const&)
   Used By:
     parse.cc: Parser::executeAction(int)
 
+assign(std::string*, Options::PathType, char const*)
+  Full name: Options::assign(std::string*, Options::PathType, char const*)
+  Source:    assign.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+
 baseClassH(std::ostream&) const
   Full name: Generator::baseClassH(std::ostream&) const
   Source:    baseclassh.cc 
@@ -103,6 +115,7 @@ baseclassHeaderName() const
   Source:    baseclassheadername.cc 
   Used By:
     baseclassh.cc: Generator::baseClassH(std::ostream&) const
+    classheader.cc: Generator::classHeader() const
 
 baseIncludes(std::ostream&) const
   Full name: Generator::baseIncludes(std::ostream&) const
@@ -170,6 +183,7 @@ classHeaderName() const
   Source:    classheadername.cc 
   Used By:
     classh.cc: Generator::classH(std::ostream&) const
+    implementationheader.cc: Generator::implementationHeader() const
 
 classIH(std::ostream&) const
   Full name: Generator::classIH(std::ostream&) const
@@ -453,6 +467,14 @@ factory(unsigned int, unsigned int, unsigned int)
     rawtext.cc: Pattern::rawText(States&, std::string const&)
     star.cc: Pattern::star(States&, Pattern const&)
 
+filename(std::string const&)
+  Full name: Generator::filename(std::string const&)
+  Source:    filename.cc 
+  Used By:
+    baseclassh.cc: Generator::baseClassH(std::ostream&) const
+    classh.cc: Generator::classH(std::ostream&) const
+    classih.cc: Generator::classIH(std::ostream&) const
+
 filter(std::istream&, std::ostream&) const
   Full name: Generator::filter(std::istream&, std::ostream&) const
   Source:    filter.cc 
@@ -479,6 +501,12 @@ findRange(unsigned int) const
   Source:    findrange.cc 
   Used By:
     set.cc: CharClass::set() const
+
+grep(std::string const&, std::string const&) const
+  Full name: Generator::grep(std::string const&, std::string const&) const
+  Source:    grep.cc 
+  Used By:
+    warnexisting.cc: Generator::warnExisting(std::string const&, std::string const&, std::string const&, std::string const&) const
 
 handleCharAfterBlanks()
   Full name: Scanner::handleCharAfterBlanks()
@@ -564,6 +592,21 @@ inspectState(State const&)
   Used By:
     determinesubsets.cc: Ranges::determineSubsets()
 
+instance()
+  Full name: Options::instance()
+  Source:    instance.cc 
+  Used By:
+    dfa1.cc: DFA::DFA(Ranges&, Rules&, States&)
+    setcasesensitive.cc: Scanner::setCaseSensitive()
+    generator1.cc: Generator::Generator(Rules const&, Ranges const&, DFAs const&)
+    parser1.cc: Parser::Parser(Rules&, States&)
+
+interactiveDecl(std::ostream&) const
+  Full name: Generator::interactiveDecl(std::ostream&) const
+  Source:    interactivedecl.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 21data.o
+
 interactiveInit(std::ostream&) const
   Full name: Generator::interactiveInit(std::ostream&) const
   Source:    interactiveinit.cc 
@@ -637,6 +680,7 @@ key(std::ostream&) const
     inputimplementation.cc: Generator::inputImplementation(std::ostream&) const
     inputinterface.cc: Generator::inputInterface(std::ostream&) const
     insertsstream.cc: Generator::insertSstream(std::ostream&) const
+    interactivedecl.cc: Generator::interactiveDecl(std::ostream&) const
     interactiveinit.cc: Generator::interactiveInit(std::ostream&) const
     interactivelex.cc: Generator::interactiveLex(std::ostream&) const
     lexfunctiondecl.cc: Generator::lexFunctionDecl(std::ostream&) const
@@ -773,8 +817,6 @@ operator()(char const*) const
   Source:    operatorfun2.cc 
   Used By:
     baseclassheader.cc: Generator::baseclassHeader() const
-    classheader.cc: Generator::classHeader() const
-    implementationheader.cc: Generator::implementationHeader() const
 
 operator()(int) const
   Full name: Options::operator()(int) const
@@ -784,7 +826,6 @@ operator()(int) const
     debug.cc: Generator::debug(std::ostream&) const
     debugdecl.cc: Generator::debugDecl(std::ostream&) const
     debugfunctions.cc: Generator::debugFunctions(std::ostream&) const
-    showfilenames.cc: Generator::showFilenames() const
     parser1.cc: Parser::Parser(Rules&, States&)
 
 operator*() const
@@ -867,11 +908,11 @@ optionalPatterns(States&, Pattern&, unsigned int, unsigned int, std::vector<std:
   Used By:
     copy.cc: Pattern::copy(States&, Pattern&, unsigned int, unsigned int)
 
-Options(FBB::Arg const&)
-  Full name: Options::Options(FBB::Arg const&)
+Options()
+  Full name: Options::Options()
   Source:    options1.cc 
   Used By:
-    init.cc: Options::init(FBB::Arg const&)
+    instance.cc: Options::instance()
 
 optRepeatLastPattern(States&, Pattern&, unsigned int, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >&)
   Full name: Pattern::optRepeatLastPattern(States&, Pattern&, unsigned int, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >&)
@@ -956,17 +997,17 @@ popStream()
     popstream.cc: Scanner::popStream()
 
 predefined(std::string const&)
+  Full name: CharRange::predefined(std::string const&)
+  Source:    predefined.cc 
+  Used By:
+    predefined.cc: CharClass::predefined(std::string const&)
+
+predefined(std::string const&)
   Full name: CharClass::predefined(std::string const&)
   Source:    predefined.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
     dot.cc: Pattern::dot(States&)
-
-predefined(std::string const&)
-  Full name: CharRange::predefined(std::string const&)
-  Source:    predefined.cc 
-  Used By:
-    predefined.cc: CharClass::predefined(std::string const&)
 
 print()
   Full name: Parser::print()
@@ -995,6 +1036,7 @@ push(ScannerBase::StartCondition__)
     handlestdcomment.cc: Scanner::handleStdComment()
     newdefinition.cc: Scanner::newDefinition()
     scanner1.cc: Scanner::Scanner(std::string const&)
+    parse.cc: Parser::executeAction(int)
 
 pushNameExpansion()
   Full name: Scanner::pushNameExpansion()
@@ -1128,12 +1170,6 @@ s_defaultSkeletonDirectory
   Used By:
     setaccessorvariables.cc: Options::setAccessorVariables()
 
-s_defaultTargetDirectory
-  Full name: Options::s_defaultTargetDirectory
-  Source:    data.cc 
-  Used By:
-    setaccessorvariables.cc: Options::setAccessorVariables()
-
 s_dfaBase__
   Full name: ScannerBase::s_dfaBase__
   Source:    lex.cc 
@@ -1174,15 +1210,23 @@ s_lastMsg
     error.cc: Parser::error(char const*)
     reset.cc: Parser::reset()
 
+s_namespaceBaseFlag
+  Full name: Generator::s_namespaceBaseFlag
+  Source:    data.cc 
+  Used By:
+    filter.cc: Generator::filter(std::istream&, std::ostream&) const
+
+s_namespaceBaseFlagSize
+  Full name: Generator::s_namespaceBaseFlagSize
+  Source:    data.cc 
+  Used By:
+    filter.cc: Generator::filter(std::istream&, std::ostream&) const
+
 s_options
   Full name: Options::s_options
   Source:    data.cc 
   Used By:
-    dfa1.cc: DFA::DFA(Ranges&, Rules&, States&)
-    setcasesensitive.cc: Scanner::setCaseSensitive()
-    generator1.cc: Generator::Generator(Rules const&, Ranges const&, DFAs const&)
-    parser1.cc: Parser::Parser(Rules&, States&)
-    init.cc: Options::init(FBB::Arg const&)
+    instance.cc: Options::instance()
 
 s_out__
   Full name: ParserBase::s_out__
@@ -1198,10 +1242,29 @@ s_regexCall
     interval.cc: Parser::interval(Pattern&, Interval const&)
     lookahead.cc: Parser::lookahead(Pattern const&, Pattern const&)
     parse.cc: Parser::executeAction(int)
-    options1.cc: Options::Options(FBB::Arg const&)
+    options1.cc: Options::Options()
     alternatives.cc: Pattern::alternatives(States&, Pattern const&, Pattern const&)
     concatenate.cc: Pattern::concatenate(States&, Pattern const&, Pattern const&)
     quantifier.cc: Pattern::quantifier(States&, Pattern const&, unsigned int)
+
+s_verbose
+  Full name: DFA::s_verbose
+  Source:    data.cc 
+  Used By:
+    build.cc: DFA::build(std::string const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
+    dfa1.cc: DFA::DFA(Ranges&, Rules&, States&)
+    keepuniquerows.cc: DFA::keepUniqueRows()
+    setverbose.cc: DFA::setVerbose(bool)
+    shrinkdfa.cc: DFA::shrinkDFA(std::vector<unsigned int, std::allocator<unsigned int> >&)
+
+s_warnOptions
+  Full name: Options::s_warnOptions
+  Source:    data.cc 
+  Used By:
+    assign.cc: Options::assign(std::string*, Options::PathType, char const*)
+    setaccessorvariables.cc: Options::setAccessorVariables()
+    setclassname.cc: Options::setClassName()
+    setoptionpath.cc: Options::setOptionPath(std::string*, int, std::string const&, char const*, char const*)
 
 sameTransits(std::unordered_map<unsigned int, unsigned int, std::hash<unsigned int>, std::equal_to<unsigned int>, std::allocator<std::pair<unsigned int const, unsigned int> > > const&, std::unordered_map<unsigned int, unsigned int, std::hash<unsigned int>, std::equal_to<unsigned int>, std::allocator<std::pair<unsigned int const, unsigned int> > > const&)
   Full name: DFARow::sameTransits(std::unordered_map<unsigned int, unsigned int, std::hash<unsigned int>, std::equal_to<unsigned int>, std::allocator<std::pair<unsigned int const, unsigned int> > > const&, std::unordered_map<unsigned int, unsigned int, std::hash<unsigned int>, std::equal_to<unsigned int>, std::allocator<std::pair<unsigned int const, unsigned int> > > const&)
@@ -1240,7 +1303,7 @@ setAccessorVariables()
   Full name: Options::setAccessorVariables()
   Source:    setaccessorvariables.cc 
   Used By:
-    generator1.cc: Generator::Generator(Rules const&, Ranges const&, DFAs const&)
+    cleanup.cc: Parser::cleanup()
 
 setCaseSensitive()
   Full name: Scanner::setCaseSensitive()
@@ -1248,14 +1311,14 @@ setCaseSensitive()
   Used By:
     reset.cc: Parser::reset()
 
-setClassName(std::string const&)
-  Full name: Options::setClassName(std::string const&)
+setClassName()
+  Full name: Options::setClassName()
   Source:    setclassname.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
 
-setFilenames(std::string const&)
-  Full name: Options::setFilenames(std::string const&)
+setFilenames()
+  Full name: Options::setFilenames()
   Source:    setfilenames.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
@@ -1284,8 +1347,8 @@ setInitTailCount(TailCount::Type, TailCount&)
   Used By:
     settailcount.cc: DFA::setTailCount(TailCount&, unsigned int, TailCount*, unsigned int)
 
-setLexFunctionName(std::string const&)
-  Full name: Options::setLexFunctionName(std::string const&)
+setLexFunctionName()
+  Full name: Options::setLexFunctionName()
   Source:    setlexfunctionname.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
@@ -1298,31 +1361,23 @@ setLineTags(std::string const&) const
     popstream.cc: Scanner::popStream()
     scanner1.cc: Scanner::Scanner(std::string const&)
 
-setNameSpace(std::string const&)
-  Full name: Options::setNameSpace(std::string const&)
-  Source:    setnamespace.cc 
-  Used By:
-    parse.cc: Parser::executeAction(int)
-
 setNextTailCount(TailCount::Type, TailCount&, unsigned int, TailCount&, unsigned int)
   Full name: DFA::setNextTailCount(TailCount::Type, TailCount&, unsigned int, TailCount&, unsigned int)
   Source:    setnexttailcount.cc 
   Used By:
     settailcount.cc: DFA::setTailCount(TailCount&, unsigned int, TailCount*, unsigned int)
 
-setPath(std::string*, int, bool, char const*, std::string const&, char const*)
-  Full name: Options::setPath(std::string*, int, bool, char const*, std::string const&, char const*)
-  Source:    setpath2.cc 
+setOptionPath(std::string*, int, std::string const&, char const*, char const*)
+  Full name: Options::setOptionPath(std::string*, int, std::string const&, char const*, char const*)
+  Source:    setoptionpath.cc 
   Used By:
-    setaccessorvariables.cc: Options::setAccessorVariables()
+    setpathstrings.cc: Options::setPathStrings()
 
-setPath(std::string*, std::string const&)
-  Full name: Options::setPath(std::string*, std::string const&)
-  Source:    setpath.cc 
+setPathStrings()
+  Full name: Options::setPathStrings()
+  Source:    setpathstrings.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
-    setskeletondirectory.cc: Options::setSkeletonDirectory(std::string const&)
-    settargetdirectory.cc: Options::setTargetDirectory(std::string const&)
+    cleanup.cc: Parser::cleanup()
 
 setRule(unsigned int, unsigned int)
   Full name: Rules::setRule(unsigned int, unsigned int)
@@ -1330,23 +1385,17 @@ setRule(unsigned int, unsigned int)
   Used By:
     add.cc: Rules::add(bool, Pattern const&, Block const&)
 
-setSkeletonDirectory(std::string const&)
-  Full name: Options::setSkeletonDirectory(std::string const&)
-  Source:    setskeletondirectory.cc 
-  Used By:
-    parse.cc: Parser::executeAction(int)
-
 setTailCount(TailCount&, unsigned int, TailCount*, unsigned int)
   Full name: DFA::setTailCount(TailCount&, unsigned int, TailCount*, unsigned int)
   Source:    settailcount.cc 
   Used By:
     determinetailcount.cc: DFA::determineTailCount(TailCount&, unsigned int, TailCount*, unsigned int)
 
-setTargetDirectory(std::string const&)
-  Full name: Options::setTargetDirectory(std::string const&)
-  Source:    settargetdirectory.cc 
+showFilenames() const
+  Full name: Options::showFilenames() const
+  Source:    showfilenames.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    cleanup.cc: Parser::cleanup()
 
 shrinkDFA(std::vector<unsigned int, std::allocator<unsigned int> >&)
   Full name: DFA::shrinkDFA(std::vector<unsigned int, std::allocator<unsigned int> >&)
@@ -1492,11 +1541,10 @@ undelimit(std::string const&)
   Full name: Options::undelimit(std::string const&)
   Source:    undelimit.cc 
   Used By:
-    setclassname.cc: Options::setClassName(std::string const&)
-    setfilenames.cc: Options::setFilenames(std::string const&)
-    setlexfunctionname.cc: Options::setLexFunctionName(std::string const&)
-    setnamespace.cc: Options::setNameSpace(std::string const&)
-    setpath.cc: Options::setPath(std::string*, std::string const&)
+    assign.cc: Options::assign(std::string*, Options::PathType, char const*)
+    setclassname.cc: Options::setClassName()
+    setfilenames.cc: Options::setFilenames()
+    setlexfunctionname.cc: Options::setLexFunctionName()
 
 uniqueMap(std::vector<unsigned int, std::allocator<unsigned int> > const&)
   Full name: DFARow::uniqueMap(std::vector<unsigned int, std::allocator<unsigned int> > const&)
@@ -1521,6 +1569,12 @@ useAll()
   Source:    useall.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
+
+v_clone() const
+  Full name: StateData::v_clone() const
+  Source:    vclone.cc 
+  Used By:
+    destructor.cc: StateData::~StateData()
 
 v_clone() const
   Full name: StateString::v_clone() const
@@ -1560,12 +1614,6 @@ v_clone() const
     update.cc: Ranges::update(std::string const&, unsigned int const*)
     statestring1.cc: StateString::StateString(std::string const&, unsigned int, unsigned int)
 
-v_clone() const
-  Full name: StateData::v_clone() const
-  Source:    vclone.cc 
-  Used By:
-    destructor.cc: StateData::~StateData()
-
 validRange(unsigned int) const
   Full name: CharClass::validRange(unsigned int) const
   Source:    validrange.cc 
@@ -1584,6 +1632,13 @@ visitTailCount(TailCount&)
   Source:    visittailcount.cc 
   Used By:
     computetailcounts.cc: DFA::computeTailCounts()
+
+warnExisting(std::string const&, std::string const&, std::string const&, std::string const&) const
+  Full name: Generator::warnExisting(std::string const&, std::string const&, std::string const&, std::string const&) const
+  Source:    warnexisting.cc 
+  Used By:
+    classheader.cc: Generator::classHeader() const
+    implementationheader.cc: Generator::implementationHeader() const
 
 year
   Full name: year

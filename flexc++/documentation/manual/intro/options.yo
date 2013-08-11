@@ -94,14 +94,6 @@ ignored, and hand-editing may then be required to effectuate the option.
             tt(lex)-function source file, see the tt(--lex-source) option for
             that). By default the header file names will be equal to the name
             of the generated class.
-    it() loption(force-class-header)nl()
-           By default the generated class header is not overwritten once it
-            has been created. This option can be used to force the
-            (re)writing of the file containing the scanner's class.
-    it() loption(force-implementation-header)nl()
-           By default the generated implementation header is not overwritten
-            once it has been created. This option can be used to force the
-            (re)writing of the implementation header file.
     it() loption(help) (soption(h))nl()
             Write basic usage information to the standard output stream and
             terminate. 

@@ -13,12 +13,7 @@ void Generator::implementationHeader() const
 {
     string const &implementationHeader = d_options.implementationHeaderPath();
 
-    if 
-    (
-        Stat(implementationHeader)
-        &&
-        not d_options("force-implementation-header")
-    )
+    if (Stat(implementationHeader))
     {
         warnExisting(implementationHeader, d_options.classHeaderSpec(), 
                         d_options.classHeaderName(),
