@@ -16,6 +16,10 @@ $insert 8 lexFunctionDecl
         void print();
         void preCode();     // re-implement this function for code that must 
                             // be exec'ed before the patternmatching starts
+
+        void postCode(PostEnum__ type);    
+                            // re-implement this function for code that must 
+                            // be exec'ed after the rules's actions.
 };
 
 $insert scannerConstructors
@@ -23,6 +27,11 @@ $insert scannerConstructors
 $insert inlineLexFunction
 
 inline void \@::preCode() 
+{
+    // optionally replace by your own code
+}
+
+inline void \@::postCode(PostEnum__ type) 
 {
     // optionally replace by your own code
 }

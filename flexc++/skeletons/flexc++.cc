@@ -379,6 +379,7 @@ int \@::lex__()
                 if (return__())
                 {
                     print();
+                    postCode(PostEnum__::RETURN);
                     return d_token__;
                 }
                 break;
@@ -395,9 +396,15 @@ int \@::lex__()
             case ActionType__::RETURN:
 $insert 16 debug  "EOF_REACHED"
                 if (!popStream())
-                    return 0;
-            continue;
+                {
+                     postCode(PostEnum__::END);
+                     return 0;
+                }
+                postCode(PostEnum__::NEWFILE);
+             continue;
         } // switch
+
+        postCode(PostEnum__::WIP);
 
         reset__();
         preCode();

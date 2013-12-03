@@ -50,6 +50,15 @@ protected:
         RETURN,                 // no further continuation, lex returns 0.
     };
 
+    enum class PostEnum__
+    {
+        RETURN,                 // postCode called when lex__() returns
+        END,                    // postCode called when lex__() ends 
+        NEWFILE,                // postCode called after switching files
+        WIP                     // postCode called when a non-returning rule
+                                // was matched
+    };
+
 public:
     enum class StartCondition__ {
 $insert 8 startCondNames
