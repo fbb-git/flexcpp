@@ -116,6 +116,14 @@ int Scanner::lex__()
     } // while
 }
         )
+    itb(void postCode(PostEnum__ type))
+        By default this function has an empty, inline implementation in
+tt(Scanner.h). It can safely be replaced by a user-defined
+implementation. This function is called by tt(lex__), just after a rule has
+been matched. Values of the tt(enum class PostEnum__) indicate the
+characteristic of the matched rule. tt(PostEnum__) has four values:
+tt(PostEnum__::END, PostEnum__::POP, PostEnum__::RETURN), and
+tt(PostEnum__::WIP). Refer to section 8.3 for their meanings.
    itb(void print())
            When the tt(--print-tokens) or tt(%print-tokens) directive is used
             this function is called to display, on the standard output stream,

@@ -30,6 +30,25 @@ manpagesection(8.3. PROTECTED ENUMS AND -TYPES)
         This strongly typed enumeration is for internal use only.
     itb(enum Leave__)
         This enumeration is for internal use only.
+    itb(enum class PostEnum__)
+        Values of this strongly typed enumeration are passed to the scanner's
+        private member tt(postCode), indicating the scanner's action after
+        matching a rule:
+
+        - bf(PostEnum__::END): the function tt(lex__)  immediately returns 0
+            once tt(postCode) returns, indicating the end of the input was
+            reached;
+
+        - bf(PostEnum__::POP): the end of an input stream was reached, and
+            processing continues with the previously pushed input stream. In
+            this case the function tt(lex__) doesn't return, it simply
+            coontinues processing the previously pushed stream;
+
+        - bf(PostEnum__::RETURN): the function tt(lex__) immediately returns 
+            once tt(postCode) returns, returning the next token;
+
+        - bf(PostEnum__::WIP): the function tt(lex__) has matched a
+            non-returning rule, and continues its rule-matching process.
     )
 
 manpagesection(8.4. NO PUBLIC CONSTRUCTORS)

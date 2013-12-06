@@ -74,6 +74,25 @@ int Scanner::lex__()
     } // while
 }
         )
+    itb(void postCode(PostEnum__ type))
+        By default this function has an empty, inline implementation in
+tt(Scanner.h). It can safely be replaced by a user-defined
+implementation. This function is called by tt(lex__), just after a rule has
+been matched, where tt(PostEnum__)'s value indicates the characteristic of the
+matched rule. tt(PostEnum__) has four values:
+        itemization(
+        itb(PostEnum__::END): the function tt(lex__)  immediately returns 0
+            once tt(postCode) returns, indicating the end of the input was
+            reached;
+        itb(PostEnum__::POP): the end of an input stream was reached, and
+            processing continues with the previously pushed input stream. In
+            this case the function tt(lex__) doesn't return, it simply
+            coontinues processing the previously pushed stream;
+        itb(PostEnum__::RETURN): the function tt(lex__) immediately returns 
+            once tt(postCode) returns, returning the next token;
+        itb(PostEnum__::WIP): the function tt(lex__) has matched a
+            non-returning rule, and continues its rule-matching process.
+        )
     itb(void push(size_t ch))
        character tt(ch) is pushed back onto the input stream. I.e., it will be
         the character that is retrieved at the next attempt to obtain a

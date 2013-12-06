@@ -52,9 +52,9 @@ protected:
 
     enum class PostEnum__
     {
-        RETURN,                 // postCode called when lex__() returns
         END,                    // postCode called when lex__() ends 
-        NEWFILE,                // postCode called after switching files
+        POP,                    // postCode called after switching files
+        RETURN,                 // postCode called when lex__() returns
         WIP                     // postCode called when a non-returning rule
                                 // was matched
     };

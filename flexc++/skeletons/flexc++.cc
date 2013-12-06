@@ -400,7 +400,7 @@ $insert 16 debug  "EOF_REACHED"
                      postCode(PostEnum__::END);
                      return 0;
                 }
-                postCode(PostEnum__::NEWFILE);
+                postCode(PostEnum__::POP);
              continue;
         } // switch
 
