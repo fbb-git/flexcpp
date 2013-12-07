@@ -1,0 +1,48 @@
+In some programs it may be desirable to have the currently scanned line
+available, even though all its contents hasn't been read yet by flc(). 
+
+E.g., when the tt(g++) compiler detects an error or warning it displays the
+full line in which the error or warning condition arose, as well as a column
+indicator indicating where the condition was observed (below, a condition
+where the current input line should be displayed is simply called a
+`condition').
+
+Flc() could use one of the following approaches to provide the required
+information of a condition:
+    itemization(
+    it() At each end of line flc() could store the current offset of the file
+        it's reading. Furthermore, each rule adds tt(length()) to a data
+        member keeping track of the length of the line read so far, making
+        this data member's value available through an accessor (e.g.,
+        tt(column())). After each newline this data member is reset to zero.
+
+        The code calling the scanner's tt(lex) member maintains a data
+        member holding the offset that was last returned by the scanner, as
+        well as a `condition vector' whose elements contain column numbers and
+        messages describing the nature of the conditions. 
+
+        When the code calling the scanner's tt(lex) member observes a
+        condition it compares the offset returned by the scanner to its
+        own offset data member. 
+
+        If the two offset values differ the source file's line that begins at
+        the code's offset data member is read, so this line
+        can be shown together with a column indicator and a message describing
+        the condition for each of the lements of the condition
+        vector. Following this, the condition vector is erased, and the
+        scanner provided offset is assigned to the code's own offset data
+        member.
+
+        If the two offset values are equal the scanner's 
+        tt(column) value and the nature of the condition are added to a
+        `condition vector'.
+
+        This approach has the advantage of being relatively simple. A
+        disadvantage could be that it can only be used for seekable media, or
+        that the overhead of seeking and reading lines of the file that is
+        processed by flc() is considered impractical.
+
+
+    it() Each rule could append its matched text
+
+Flc() may be used to provide this information in 

@@ -91,13 +91,15 @@ includefile(lexer/intro)
     sect(Handling input your own way)
     includefile(lexer/input)
     
-    
 lchapter(generated-files)(Generated files)
 includefile(files/intro)
 
     lsect(multiplestreams)(Multiple input streams)
     includefile(files/multiple)
 
+lchapter(Pre-loading input lines)
+includefile(input/intro)
+    
 chapter(Technical documentation (PIPETHROUGH(date -R)()))
 
     includefile(technical/intro)
