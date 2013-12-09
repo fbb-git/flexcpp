@@ -1,0 +1,63 @@
+The class tt(ScannerStreambuf) uses two data members (tt(d_line) and
+tt(d_column)) to store, respectively, the line that's currently being scanned
+and the column to where the scanning process has proceeded. In addition it
+needs access to the actual input stream (in this example only one stream is
+used, so a tt(std::istream &d_in) can be used; if stream-switching should be
+supported then use a tt(std::istream *d_inPtr)), and it uses a one-character
+buffer (there's no real need to use a bigger buffer, as the input stream may
+already define its own buffer, and the scanner merely reads its input one
+character at the time anyway (through tt(Input::get)).
+
+tt(ScannerStreambuf) only needs a very basic interface:
+        verb(
+    class ScannerStreambuf: public std::streambuf
+    {
+        std::istream &d_in;
+        std::string d_line;
+        size_t d_column = 0;
+        char d_ch;
+    
+        public:
+            ScannerStreambuf(std::istream &in);
+    
+            std::string const &line() const;
+            size_t column() const;
+    
+        private:
+            int underflow() override;    
+    };
+        )
+    The members tt(line) and tt(column) are just accessors, returning,
+respectively tt(d_line) and tt(d_column). The constructor initializes tt(d_in)
+and installs an empty buffer:
+        verb(
+    ScannerStreambuf::ScannerStreambuf(istream &in)
+    :
+        d_in(in)
+    {
+        setg(0, 0, 0);
+    }
+        )
+
+    The member tt(underflow) isn't complicated either: if all characters in
+tt(d_line) have been processed (which is initially true) the next line is read
+into tt(d_line), adding a newline character to tt(d_line). 
+
+    Then the next character in tt(d_line) is assigned to tt(d_ch), and the
+input buffer is defined to point at tt(d_ch). Here is its implementation:
+        verb(
+    int ScannerStreambuf::underflow()
+    {
+        if (d_column == d_line.length())
+        {
+            if (!getline(d_in, d_line))
+                return EOF;
+    
+            d_column = 0;
+            d_line += '\n';
+        }
+        d_ch = d_line[d_column++];
+        setg(&d_ch, &d_ch, &d_ch + 1);
+        return *gptr();
+    }
+        )

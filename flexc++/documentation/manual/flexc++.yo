@@ -97,9 +97,15 @@ includefile(files/intro)
     lsect(multiplestreams)(Multiple input streams)
     includefile(files/multiple)
 
-lchapter(Pre-loading input lines)
+chapter(Pre-loading input lines)
 includefile(input/intro)
     
+    sect(Wrapping input streams)
+    includefile(input/wrappping)
+
+        subsect(The class ScannerStreambuf)
+        includefile(input/scannerstreambuf)
+
 chapter(Technical documentation (PIPETHROUGH(date -R)()))
 
     includefile(technical/intro)

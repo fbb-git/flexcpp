@@ -1,0 +1,62 @@
+Streams offering the contents and last-read column positions of the
+currently scanned line could be passed to the scanner. The streams that are
+processed by the scanner become em(wrapper streams) around the streams that
+are actually processed by the scanner. 
+
+This approach uses multiple inheritance to add tt(std::streambuf) and
+tt(std::istream) facilities to the tt(class Scanner). However, these
+facilities are for internal use only: they are merely used for wrapping the
+tt(std::istream) that is actually passed to the scanner.
+
+Once the set of files have been generated from the rules file (e.g.,
+tt(lexer)) the file tt(Scanner.h) is available, and this file will be slightly
+modified: we'll use triple inheritance for the  tt(class Scanner):
+
+    verb(
+class Scanner: private ScannerStreambuf, private std::istream, 
+               public ScannerBase 
+    )
+
+Only for the tt(ScannerBase) public inheritance is used: the initial two
+classes are used to implement tt(Scanner) in terms of these classes. The class
+tt(IStreambuf) is doing all the magic and is discussed below. The
+tt(std::istream) base class receives tt(ScannerStreambuf)'s address, turning
+tt(Scanner) objects into tt(std::istream) objects, but only so for the benefit
+of the tt(Scanner) object itself. tt(ScannerBase), of course, is left
+untouched. 
+
+The class tt(ScannerStreambuf) maintains and offers the contents of the
+currently scanned line and column numbers of returned characters. The
+tt(Scanner)'s interface shares its members tt(line) and tt(column) to make
+this information available to any class that may access the tt(Scanner)
+object. To accomplish this the following declarations are added tt(Scanner)'s
+public interface:
+        verb(
+    using ScannerStreambuf::line;
+    using ScannerStreambuf::column;
+        )
+
+The member tt(explicit Scanner(std::istream &in = std::cin, std::ostream &out
+= std::cout)) now must make sure the tt(ScannerStreambuf) and tt(std::istream)
+are properly initialized before the tt(ScannerBase) can be initialized. 
+the tt(ScannerStreambuf) is a wrapper around the actual tt(std::istream), and
+it receives the initial stream from the constructor's arguments. This
+completes the tt(ScannerStreambuf) construction, making tt(std::istream's
+std::streambuffer) available. The interesting part comes next: now that the
+tt(Scanner) is an tt(std::istream) it can simply be passed to tt(ScannerBase)
+as the input file to be processed (cf. figure ref(inputwrapping)).
+
+       figure(inputwrapping(Scanner: triple inheritance)(inputwrapping)
+
+The code implementing this organization looks like this:
+
+        verb(
+    Scanner::Scanner(std::istream &in, std::ostream &out)
+    :
+        ScannerStreambuf(cin),
+        istream(this),
+        ScannerBase(*this, cout)
+    {}
+        )
+
+

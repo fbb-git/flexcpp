@@ -1,5 +1,5 @@
 In some programs it may be desirable to have the currently scanned line
-available, even though all its contents hasn't been read yet by flc(). 
+available, even though all its contents hasn't been read yet by flc().
 
 E.g., when the tt(g++) compiler detects an error or warning it displays the
 full line in which the error or warning condition arose, as well as a column
@@ -8,7 +8,7 @@ where the current input line should be displayed is simply called a
 `condition').
 
 Flc() could use one of the following approaches to provide the required
-information of a condition:
+condition information:
     itemization(
     it() At each end of line flc() could store the current offset of the file
         it's reading. Furthermore, each rule adds tt(length()) to a data
@@ -42,7 +42,16 @@ information of a condition:
         that the overhead of seeking and reading lines of the file that is
         processed by flc() is considered impractical.
 
+        The implementation of this approach is left as an exercise to the
+        reader.
 
-    it() Each rule could append its matched text
+    it() The scanner could read lines one at a time, followed by rereading the
+        line so that it can be broken down into tokens by the scanner. This
+        approach is discussed and implemented in the next section.
 
-Flc() may be used to provide this information in 
+    it() Streams offering the contents and last-read column positions of the
+        currently scanned line could be passed to the scanner. This approach
+        is discussed and implemented in the final section of this chapter.
+    )
+
+
