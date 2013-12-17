@@ -99,12 +99,19 @@ includefile(files/intro)
 
 chapter(Pre-loading input lines)
 includefile(input/intro)
+
+    sect(Using mini-scanners to pre-load input lines)
+    includefile(input/miniscanners)
     
     sect(Wrapping input streams)
     includefile(input/wrappping)
 
         subsect(The class ScannerStreambuf)
         includefile(input/scannerstreambuf)
+
+        subsect(Illustration)
+        includefile(input/illustrationwrap)
+
 
 chapter(Technical documentation (PIPETHROUGH(date -R)()))
 

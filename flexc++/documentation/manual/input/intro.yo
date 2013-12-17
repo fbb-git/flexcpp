@@ -11,7 +11,7 @@ Flc() could use one of the following approaches to provide the required
 condition information:
     itemization(
     it() At each end of line flc() could store the current offset of the file
-        it's reading. Furthermore, each rule adds tt(length()) to a data
+        it is reading. Furthermore, each rule adds tt(length()) to a data
         member keeping track of the length of the line read so far, making
         this data member's value available through an accessor (e.g.,
         tt(column())). After each newline this data member is reset to zero.
@@ -53,5 +53,3 @@ condition information:
         currently scanned line could be passed to the scanner. This approach
         is discussed and implemented in the final section of this chapter.
     )
-
-

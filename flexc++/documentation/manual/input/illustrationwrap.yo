@@ -1,0 +1,28 @@
+Here is a set of lexer-rules which is used to illustrate the various
+approaches with:
+
+    verbinclude(scanner/lexer)
+
+Identifiers and numbers are returned as tokens, square brackets are returned
+as tt(SIGNAL) tokens, indicating that we would like to see the lines and
+columns in which they were found, white space characters are ignored, and 
+all other characters are returned as-is.
+
+The tt(main) function uses the tt(column) and tt(line) members, which were
+added to the tt(class Scanner):
+
+    verbinclude(scanner/main.cc)
+
+The tt(IStreambuf) wraps around tt(cin), and is passed to an tt(istream),
+which in turn is passed to the tt(Scanner) object. When the scanner returns
+tt(SIGNAL) tokens their lines, column indicators, line numbers and column
+numbers are shown.
+
+Members like tt(switchStream) and tt(pushStream), expecting tt(std::istream)
+references can also be used, if the actual input streams are wrapped in
+tt(ScannerStreambuf) objects, which are passed to tt(istream) objects which
+are, in turn, passed to tt(switchStream) and tt(pushStream). The members
+expecting names of streams should of course not be used, since the scanner
+creates plain tt(std::ifstream) objects for them. 
+
+

@@ -1,0 +1,81 @@
+Since the scanner has full control over what happens before and after
+determining the next token, the lexical scanner's rules can be designed so
+that it always first reads a line, and then re-reads that line in another
+mini-scanner. The tt(Scanner) object keeps the last-read line, a column
+indicator, and a reset flag, which is initially set to tt(true) and also after
+reading a newline. If the reset flag is true, the column indicator is set to
+0, otherwise it is updated to the length of the currently matched text. Here
+is the initial section of the class tt(Scanner), showing the new data members:
+        verb(
+    class Scanner: public ScannerBase
+    {
+        std::string d_storedLine;
+        size_t d_column = 0;
+        bool d_reset = true;
+    
+        public:
+        ...
+    };
+
+
+Of course, the lexer won't return for all matched text, but once a rule has
+been matched the tt(posCode) member is called, so this function can update the
+column and reset indicators:
+
+        verb(
+    void Scanner::postCode(PostEnum__ type) 
+    {
+        if (not d_reset)
+            d_column += length();
+        else
+        {
+            d_reset = false;
+            d_column = 0;
+        }
+    }
+        )
+
+The scanner's default rule (the tt(StartCondition__::INITIAL) scanner simply
+reads the initial line, and then pushes the line back onto the scanner's
+queue. A simple tt(.*) will ensure that all the line's characters are
+read. Having matched a line it must still be broken down into tokens, for
+which the tt(%x main) mini-scanner is used. The default (tt(INITIAL))
+scanner's rule looks like this:
+
+        verb(
+    .*                                  {
+                                            d_storedLine = matched();
+                                            push(d_storedLine);
+                                            begin(StartCondition__::main);
+                                            d_reset = true;
+                                        }
+        )
+
+Now that the line has been stored, it's time to obtain its tokens, which is
+the responsibility of the tt(StartCondition__::main) mini scanner:
+
+        verb(
+    <main>{
+        [ \t]+                              // skip white space chars.
+        [0-9]+                              return NUMBER;
+        [[:alpha:]_][[:alpha:][:digit:]_]*  return IDENTIFIER;
+        [][]                                return SIGNAL;
+        .                                   return matched()[0];
+        \n                                  begin(StartCondition__::INITIAL);
+    }
+        )
+    
+Identifiers and numbers are returned as tokens, square brackets are returned
+as tt(SIGNAL) tokens, indicating that we would like to see the lines and
+columns in which they were found, white space characters are ignored, and 
+all other characters are returned as-is.
+
+Once a token is returned, tt(d_column) is updated to indicate the column
+number of the last-matched character. To obtain the matched text's 
+initial column number, subtract tt(length() - 1).
+
+Here is a simple tt(main) function, reading its tt(cin) stream, and showing
+lines, column indicators, line numbers, and column numbers of detected square
+brackets:
+
+        verbinclude(scanner/minimain.cc)

@@ -27,7 +27,7 @@ tt(ScannerStreambuf) only needs a very basic interface:
             int underflow() override;    
     };
         )
-    The members tt(line) and tt(column) are just accessors, returning,
+    The members tt(line) and tt(column) are simple accessors, returning,
 respectively tt(d_line) and tt(d_column). The constructor initializes tt(d_in)
 and installs an empty buffer:
         verb(
@@ -61,3 +61,4 @@ input buffer is defined to point at tt(d_ch). Here is its implementation:
         return *gptr();
     }
         )
+
