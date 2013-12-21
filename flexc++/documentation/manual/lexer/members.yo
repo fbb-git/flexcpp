@@ -1,3 +1,5 @@
+NOUSERMACRO(postCode)
+
 The tt(Scanner) class offers the following members, which  can be called from 
 within actions (or by members called from
 those actions):

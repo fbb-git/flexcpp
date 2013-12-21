@@ -46,7 +46,7 @@ std::streambuffer) available. The interesting part comes next: now that the
 tt(Scanner) is an tt(std::istream) it can simply be passed to tt(ScannerBase)
 as the input file to be processed (cf. figure ref(inputwrapping)).
 
-       figure(inputwrapping(Scanner: triple inheritance)(inputwrapping)
+       figure(images/inputwrapping)(Scanner: triple inheritance)(inputwrapping)
 
 The code implementing this organization looks like this:
 

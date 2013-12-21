@@ -16,7 +16,7 @@ is the initial section of the class tt(Scanner), showing the new data members:
         public:
         ...
     };
-
+        )
 
 Of course, the lexer won't return for all matched text, but once a rule has
 been matched the tt(posCode) member is called, so this function can update the
