@@ -71,7 +71,7 @@ void install(string what, string where)
         run("gzip -9 -n < changelog > " + where + "/changelog.gz");
     
         printf("  INSTALLING the html-manual pages at `", where, "\n");
-        run("cp tmp/manhtml/" PROGRAM "1.html " + where);
+        run("cp tmp/manhtml/" PROGRAM ".1.html " + where);
         run("cp tmp/manhtml/" PROGRAM "api.3.html " + where);
         run("cp tmp/manhtml/" PROGRAM "input.7.html " + where);
         exit(0);
