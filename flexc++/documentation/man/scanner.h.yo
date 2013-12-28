@@ -1,4 +1,4 @@
-manpagesection(7. THE CLASS INTERFACE: SCANNER.H)
+manpagesection(2. THE CLASS INTERFACE: SCANNER.H)
 
     By default, flc() generates a file tt(Scanner.h) containing the initial
 interface of the scanner class performing the lexical scan according to the
@@ -10,13 +10,13 @@ option. In this man-page we'll stick to using the default name.
 is made to rewrite it (using flc()'s tt(--force-class-header) option).
 
     The provided interface is very light-weight, primarily offering a link to
-the scanner's base class (see this manpage's sections 8.1 through 8.8).
+the scanner's base class (see this manpage's sections 8 through 16).
 
     bf(Many of the facilities offered by the scanner class are inherited from
 the tt(ScannerBase) base class. Additional facilities offered by the
 tt(Scanner) class. are covered below).
 
-manpagesection(7.1. NAMING CONVENTION)
+manpagesection(3. NAMING CONVENTION)
 
     All symbols that are required by the generated scanner class end in two
 consecutive underscore characters (e.g., tt(executeAction__)). These names
@@ -30,7 +30,7 @@ have historically been used (e.g., tt(length)). Also, some functions are
 offered offering hooks into the implementation (like tt(preCode)). The latter
 category of function also have names that don't end in underscores.
 
-manpagesection(7.2 CONSTRUCTORS)
+manpagesection(4. CONSTRUCTORS)
 
     itemization(
     itb(explicit Scanner(std::istream &in = std::cin, 
@@ -52,7 +52,7 @@ standard error stream is used as the scanner's output medium.
     bf(This constructor is not available with interactive scanners.)
     )
     
-manpagesection(7.3. PUBLIC MEMBER FUNCTIONS)
+manpagesection(5. PUBLIC MEMBER FUNCTIONS)
 
     itemization(
     itb(int lex())
@@ -80,7 +80,7 @@ must be provided `by hand' if a non-interactive scanner is required after
 first having generated files implementing an interactive scanner.
     )
 
-manpagesection(7.4. PRIVATE MEMBER FUNCTIONS)
+manpagesection(6. PRIVATE MEMBER FUNCTIONS)
 
     itemization(
     itb(int lex__())
@@ -123,7 +123,7 @@ implementation. This function is called by tt(lex__), just after a rule has
 been matched. Values of the tt(enum class PostEnum__) indicate the
 characteristic of the matched rule. tt(PostEnum__) has four values:
 tt(PostEnum__::END, PostEnum__::POP, PostEnum__::RETURN), and
-tt(PostEnum__::WIP). Refer to section 8.3 for their meanings.
+tt(PostEnum__::WIP). Refer to section 10 for their meanings.
    itb(void print())
            When the tt(--print-tokens) or tt(%print-tokens) directive is used
             this function is called to display, on the standard output stream,
@@ -138,7 +138,7 @@ tt(PostEnum__::WIP). Refer to section 8.3 for their meanings.
             by an option controlled by the program using the scanner object.
      )
     
-manpagesection(7.5. SCANNER CLASS HEADER EXAMPLE)
+manpagesection(7. SCANNER CLASS HEADER EXAMPLE)
 
         verb(
 #ifndef Scanner_H_INCLUDED_

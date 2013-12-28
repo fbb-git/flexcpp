@@ -25,8 +25,9 @@
 #define BINARY     "/usr/bin/"${PROGRAM}
     // the full path of the final program
 
-#define MAN     "/usr/share/man/man1"
-    // the directory whre the manual page is stored
+#define MAN     "/usr/share/man"
+    // the directory below whre the manual pages are stored (below 
+    //                                          /man1, /man3 and /man7)
 
 #define MANUAL   "/usr/share/doc/"${PROGRAM}"/manual"
     // the directory whre the manual page is stored

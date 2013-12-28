@@ -38,9 +38,19 @@ void install(string what, string where)
     if (what == "man")
     {
         where = setWhere(where, MAN);
+        printf("  INSTALLING the manual pages below `", where, "'\n");
 
-        printf("  INSTALLING the manual page at `", where, "'\n");
-        run("gzip -9 < tmp/man/" PROGRAM ".1 > " + where + "/" PROGRAM ".1.gz");
+        md(where + "/man1");
+        run("gzip -9 -n < tmp/man/" PROGRAM ".1 > " + where + 
+                                            "/man1/" PROGRAM ".1.gz");
+
+        md(where + "/man3");
+        run("gzip -9 -n < tmp/man/" PROGRAM "api.3 > " + where + 
+                                            "/man3/" PROGRAM "api.3.gz");
+
+        md(where + "/man7");
+        run("gzip -9 -n < tmp/man/" PROGRAM "input.7 > " + where + 
+                                            "/man7/" PROGRAM "input.7.gz");
         exit(0);
     }
 
@@ -58,10 +68,12 @@ void install(string what, string where)
         where = setWhere(where, STD);
 
         printf("  INSTALLING the changelog at `", where, "\n");
-        run("gzip -9 < changelog > " + where + "/changelog.gz");
+        run("gzip -9 -n < changelog > " + where + "/changelog.gz");
     
-        printf("  INSTALLING the html-manual page at `", where, "\n");
-        run("cp tmp/manhtml/" PROGRAM "man.html " + where);
+        printf("  INSTALLING the html-manual pages at `", where, "\n");
+        run("cp tmp/manhtml/" PROGRAM "1.html " + where);
+        run("cp tmp/manhtml/" PROGRAM "api.3.html " + where);
+        run("cp tmp/manhtml/" PROGRAM "input.7.html " + where);
         exit(0);
     }
 

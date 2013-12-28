@@ -1,0 +1,109 @@
+NOUSERMACRO(lex setDebug input)
+
+includefile(../../release.yo)
+
+htmlbodyopt(text)(#27408B)
+htmlbodyopt(bgcolor)(#FFFAF0)
+whenhtml(mailto(Frank B. Brokken: f.b.brokken@rug.nl))
+
+DEFINEMACRO(lsoption)(3)(\
+    bf(--ARG1)=tt(ARG3) (bf(-ARG2))\
+)
+DEFINEMACRO(laoption)(2)(\
+    bf(--ARG1)=tt(ARG2)\
+)
+DEFINEMACRO(loption)(1)(\
+    bf(--ARG1)\
+)
+DEFINEMACRO(soption)(1)(\
+    bf(-ARG1)\
+)
+
+DEFINEMACRO(flc)(0)(bf(flexc++))
+DEFINEMACRO(Flc)(0)(bf(Flexc++))
+DEFINEMACRO(Cpp)(0)(bf(C++))
+DEFINEMACRO(prot)(0)(tt((prot)))
+
+DELETEMACRO(tt)
+DEFINEMACRO(tt)(1)(em(ARG1))
+DEFINEMACRO(itt)(1)(it() tt(ARG1))
+DEFINEMACRO(itb)(1)(it() bf(ARG1))
+
+NOUSERMACRO( FILE Input Scanner ScannerBase YYText accept back begin close
+debug echo filename files get interactiveLine leave length less lineNr lineno
+matched more name out popStream preCode print push pushStream reRead redo
+scanner setFilename setMatched startCondition streamStack switchIstream
+switchOstream switchStreams
+    )
+
+COMMENT( man-request, section, date, distribution file, general name)
+manpage(flexc++input)(7)(_CurYrs_)(flexc++._CurVers_.tar.gz)
+        (flexc++ input file organization)
+
+COMMENT( man-request, larger title )
+manpagename(flexc++input)(Organization of flexc++'s input file(s))
+
+manpagedescription()
+
+    Flc()(1) was designed after bf(flex)(1) and bf(flex++)(1). Like these
+latter two programs flc() generates code performing pattern-matching on text,
+possibly executing actions when certain em(regular expressions) are
+recognized.
+
+    Refer to bf(flexc++)(1) for a general overview. This manual page describes
+how flc()'s input file(s) should be organized. It contains the following
+sections:
+
+    itemization(
+    it() bf(1. SPECIFICATION FILE(S)): the format and contents of flc() input
+        files, specifying the Scanner's characteristics
+    it() bf(2. FILE SWITCHING): how to switch to another input specification
+        file
+    it() bf(3. DIRECTIVES): directives that can be used in input
+        specification files
+    it() bf(4. MINI SCANNERS): how to declare mini-scanners
+    it() bf(5. DEFINITIONS): how to define symbolic names for regular
+        expressions
+    it() bf(6. %% SEPARATOR): the separator between the input specification
+        sections 
+    it() bf(7. REGULAR EXPRESSIONS): regular expressions supported by flc()
+    it() bf(8. SPECIFICATION EXAMPLE): an example of a specification file
+    )
+
+
+includefile(rules.yo)
+
+manpagefiles()
+
+    Flc()'s default skeleton files are in tt(/usr/share/flexc++).nl()
+    By default, flc() generates the following files:
+        itemization(
+        itt(Scanner.h): the header file containing the scanner class's
+            interface. 
+        itt(Scannerbase.h): the header file containing the interface of the 
+            scanner class's base class.
+        itt(Scanner.ih): the internal header file that is meant to be included
+            by the scanner class's source files (e.g., it is included by
+            tt(lex.cc), see the next item's file), and that should contain all
+            declarations required for compiling the scanner class's sources.
+        itt(lex.cc): the source file implementing the scanner class member
+            function tt(lex) (and support functions), performing the lexical
+            scan.
+    )
+
+manpageseealso()
+
+    bf(flexc++)(1), bf(flexc++api)(3)
+
+manpagebugs()
+
+    itemization(
+    it() The priority of interval expressions (tt({...})) equals the priority
+of other multiplicative operators (like tt(*)).
+    it() All tt(INITIAL) rules apply to inclusive mini scanners, also those
+tt(INITIAL) rules that were explicitly associated with the tt(INITIAL) mini
+scanner.
+    )
+
+includefile(include/trailer.yo)
+
