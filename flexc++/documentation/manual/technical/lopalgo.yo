@@ -43,7 +43,7 @@ center(
 
 From the above table the DFA can now easily be constructed. Starting at row 0,
 representing all states accessible from NFA state 1 determine the union of
-states reacheable from the current set on input characters tt(a) and
+states reachable from the current set on input characters tt(a) and
 tt(b). NFA states 3u and 3l are em(swallowed) by state 3 if these states are
 elements of a set also containing state 3. This holds true in general. Here is
 the initial DFA:

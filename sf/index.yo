@@ -43,8 +43,12 @@ secure and Free Open Source software downloads" /></a>
 
     itemization(
     it() Here is url(the Flexc++ userguide)(flexc++.html).
-    it() Here is the url(html-version of the Flexc++ man-page)
-                (flexc++man.html).
+    it() Here is the url(html-version of the main Flexc++ man-page)
+                (flexc++.1.html).
+    it() Here is the url(html-version of the Flexc++ API man-page)
+                (flexc++api.3.html).
+    it() Here is the url(html-version of the Flexc++ input files man-page)
+                (flexc++input.7.html).
     )
 
 Enjoy Flexc++ !
