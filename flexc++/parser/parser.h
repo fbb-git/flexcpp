@@ -29,9 +29,12 @@ class Parser: public ParserBase
 
     bool d_boln             = false;    // rule starts at boln
     bool d_doError          = true;     // use the error() function at ERRORs
-    bool d_usesLOP          = false;
     bool d_warnCarets       = false;    // carets in a RE
     bool d_warnDollars      = false;    // dollars in a RE
+
+    bool d_usesLOP          = false;
+    Pattern d_lhs;                      // lhs, rhs patterns used with the LOP
+    Pattern d_rhs;
 
     bool d_printTokens;
 
@@ -68,13 +71,11 @@ class Parser: public ParserBase
         Pattern rawText();                                  // .ih
         Pattern rawText(std::string const &str);            // .ih
 
-        void assignBlock();                                 // .ih
-        void noActions();                                   // .ih
+        void assignBlock();
+        void noActions();
 
         void addRule(Pattern const &rule, bool resetMs = false);
         void addBlockRule(Pattern const &rule);
-
-        void setFlags(size_t idx, State::Flag flag);    // called fm lookahead
 
         void block();
         void error(char const *msg);    // called on (syntax) errors

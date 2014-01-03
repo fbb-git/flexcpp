@@ -16,7 +16,6 @@ statedata
 statestring             statedata
 state                   statedata
 states                  state
-tailcount               state
 
 startconditions 
 block           

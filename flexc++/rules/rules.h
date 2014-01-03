@@ -25,6 +25,7 @@ class Rules
     std::unordered_map<size_t, size_t>  d_finalToRule;  // from FINAL state to
                                                         // Rule index
     StartConditions d_startConditions;
+    size_t d_lopStartCondition = 0;         // startconditions for LOPs
 
     public:
         typedef StartConditions::const_iterator const_iterator;
@@ -32,7 +33,9 @@ class Rules
         typedef std::vector<Rule>::const_iterator rule_const_iterator;
 
         Rules(States &states);
-        void add(bool bol, Pattern const &pattern, Block const &block);
+        void add(bool bol, Pattern const &pattern, 
+                 bool usesLOP, Pattern const &lhs, Pattern const &rhs,
+                 Block const &block);
 
         Rule const &operator[](size_t idx) const;
         Rule &operator[](size_t idx);
@@ -57,8 +60,10 @@ class Rules
 
         void warnNonViable() const;
         void setOrAction();         // set the previous rule's action to '|'
+
         void assignBlock(Block const &block);   // assign 'block' to the last
                                                 // rule
+
         void noActions();                       // clear previous actions's
                                                 // 'orAction' states
 
@@ -149,15 +154,15 @@ inline void Rules::useInitialSC()
     d_startConditions.useInitialSC();
 }
 
+inline void Rules::assignBlock(Block const &block)
+{
+    d_rules.back().assignBlock(block);    
+}
+
 inline std::vector<size_t> const &Rules::operator() 
                                     (std::string const &startCondition) const
 {
     return d_startConditions(startCondition);
-}
-
-inline void Rules::assignBlock(Block const &block)
-{
-    d_rules.back().assignBlock(block);    
 }
 
 #endif

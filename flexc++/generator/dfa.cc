@@ -1,7 +1,7 @@
 #include "generator.ih"
 
 void Generator::dfa(DFAs::Pair const &dfaPair, ostream &out, 
-                    vector<RuleFlagCount> &rfc, 
+                    vector<RuleFlag> &rf, 
                     vector<string> &startStates,
                     vector<size_t> &dfaOffsets)
 {
@@ -18,5 +18,5 @@ void Generator::dfa(DFAs::Pair const &dfaPair, ostream &out,
 
     size_t index = 0;
     for (auto &row: dfaPair.second)
-        dfaRow(row, index, out, rfc);
+        dfaRow(row, index, out, rf);
 }

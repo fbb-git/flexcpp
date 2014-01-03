@@ -1,0 +1,53 @@
+In the rules files (grammar, inc/*) support rules start with an _, and are
+only used in the file in which they are defined.
+
+An action block equal to an '|' character applies the final action block to
+each of the rules. Other than that, the / operator has the lowest priority,
+so once we've seen a rule having a / operator it can be handled as such. For /
+rules the action always becomes:
+        1. define an internal start condition
+        2. match the concatenated a/b -> ab rule
+        3. start the internal start condition, matching b  on successively
+           longer tails of the matched text
+        4. match a on the head preceding the tail that first matched b
+        5. push-back the tail beyond the text matching a
+        6. execute the actions associated with the / rule.
+
+
+The / patterns are recognized in regexoreof, which is called from mscompound
+and optmsrule.
+
+An mscompound or optmsrule either encounters one rule, or multiple rules,
+combined by | operators at the end of lines. Single rules are handled by
+Parser::addRule, which are combined when an end-of-line | operator is
+encountered by by Parser::orAction. 
+
+Since we don't know what the action blocks are once we've seen a / rule, the
+lhs and rhs patterns of /-rules are stored within the rules using the /, as
+they are required later.
+
+Parser::orAction merely flags an or-action for the last rule but one, no
+further actions are required with /-rules. Parser::addRule receives, in
+addition to its standard stuff, also the d_useLOP flag, and d_lhs and d_rhs,
+which are only used when the /-operator was actually used.
+
+Following the orAction or single addRule call, either an action block follows
+(handled by parser::assignBlock), or the rules are without actions (handled by
+Parser::noActions). 
+
+Parser::noActions calls d_rules.noActions     -> to be investigated
+Parser::assignBlock calls d_rules.assignBlock -> to be investigated
+
+
+
+Other rules are defined in files having names equal to the (lowercase, w/o
+underscores) name of the rule.
+
+
+Rules are parsed by inc/rules. Each rule consists of an 
+    optional MS-rule (optMs_rule) 
+or a
+    msCompound (ms rules in a compound block) 
+
+An optMS_rule may be a plain rule (without action) or a rule + action
+

@@ -32,7 +32,6 @@ Generator::Map Generator::s_insert =
     {"scannerConstructors",     &Generator::scannerConstructors},
     {"startCondNames",          &Generator::startCondNames},
     {"sstream",                 &Generator::insertSstream},
-    {"tailCount",               &Generator::tailCount},
 };
 
 char const *Generator::s_baseFlag = "\\@";

@@ -3,7 +3,7 @@
 // States:
 //          B1 -> E1  and B2 -> E2
 // becomes:
-//          B1 -> E1 -> E2, where B2 is assigned to E1
+//          B1 -> (E1 = B2) -> E2   (B2 is assigned to E1)
 // B2 is returned to the State's free store.
 
 Pattern Pattern::concatenate(States &states, Pattern const &lhs,

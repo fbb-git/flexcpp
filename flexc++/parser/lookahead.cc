@@ -20,14 +20,22 @@ Pattern Parser::lookahead(Pattern const &left, Pattern const &right)
     }
 
     d_doError = true;
-    d_usesLOP = true;
 
-    setFlags(left.begin(), State::PRE);
-    setFlags(right.begin(), State::POST);
+    Pattern ret;
 
-    d_states[right.begin()].setFlag(State::ACCEPT);
+    if (right.canBeEmpty(d_states)
+        ret = left;
+    else
+    {
+        d_usesLOP = true;
+        d_lhs.duplicate(left);          // duplicate the lhs, so it can be
+                                        // used to perform the lop-match
+        d_rhs = right;                  // the rhs can be kept as-is, as it
+                                        // simply represents the lop's rhs.
+        ret = Pattern::concatenate(d_states, left, right);
+    }
 
-    return Pattern::concatenate(d_states, left, right);
+    return ret;
 }
 
 

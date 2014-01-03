@@ -9,7 +9,6 @@
     // required for the compilation of Parser's sources.
 #include <bobcat/mstream>
 #include <bobcat/string>
-#include <bobcat/a2x>
 
 #include "../state/state.h"
 
@@ -44,14 +43,14 @@ inline Pattern Parser::escape()
     return Pattern::escape(d_states, d_matched);
 }
 
-inline void Parser::assignBlock()
-{
-    d_rules.assignBlock(d_block);
-}
-
 inline void Parser::addBlockRule(Pattern const &rule)
 {
     d_rules.add(false, rule, d_block);
+}
+
+inline void Parser::assignBlock()
+{
+    d_rules.assignBlock(d_block);
 }
 
 inline void Parser::noActions()

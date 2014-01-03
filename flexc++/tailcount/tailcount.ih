@@ -1,7 +1,0 @@
-#include "tailcount.h"
-
-#include <ostream>
-#include <iomanip>
-
-using namespace std;
-

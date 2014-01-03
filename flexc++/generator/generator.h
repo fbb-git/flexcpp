@@ -19,7 +19,7 @@ class Generator
 {
     enum
     {
-        RFC_INDICES = 2, // begin/end indices in the run-time RFC array
+        RF_INDICES = 2, // begin/end indices in the run-time RF array
     };
 
     enum Flags
@@ -30,11 +30,10 @@ class Generator
         BOL             = 8,    // Rule is a LOP rule
     };
 
-    struct RuleFlagCount    // (RFC)
+    struct RuleFlag    // (RF)
     {
         size_t d_rule;
         size_t d_flag;
-        size_t d_count;
     };
 
     typedef void (Generator::*Inserter)(std::ostream &) const;
@@ -60,7 +59,7 @@ class Generator
     mutable std::string d_line;
     mutable std::string d_field;
 
-    mutable std::vector<RuleFlagCount> d_rfc;   // determined at dfas()
+    mutable std::vector<RuleFlagCount> d_rf;    // determined at dfas()
     mutable std::vector<size_t> d_dfaIndices;   // determined at dfas()
 
     static Map s_insert;
@@ -148,11 +147,11 @@ class Generator
         static void dfaRow(DFARow const &row, size_t &index, 
                         std::ostream &out, std::vector<RuleFlagCount> &rfc);
         static void dfaTransitions(DFARow const &row, std::ostream &out);
-        static void dfaRFCs(DFARow const &row, std::ostream &out,
-                            std::vector<RuleFlagCount> &rfc);
-        static void storeRFC(TailCount const &tailcount,
+        static void dfaRFs(DFARow const &row, std::ostream &out,
+                            std::vector<RuleFlag> &rf);
+        static void storeRF(TailCount const &tailcount,
                              std::pair<size_t, size_t> &final,
-                             std::vector<RuleFlagCount> &rfc);
+                             std::vector<RuleFlag> &rf);
 
         static void outStartState(std::string const &name, std::ostream &out);
         void ruleAction(Block const &block, std::ostream &out, size_t &idx)

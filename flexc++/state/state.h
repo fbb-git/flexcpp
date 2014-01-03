@@ -4,37 +4,19 @@
 #include <memory>
 #include <iosfwd>
 
+#include "../flextypes/flextypes.h"
+
 #include "../statedata/statedata.h"
 
-class State
+class State: private FlexTypes
 {
-    typedef char Alphabet;
+    std::shared_ptr<StateData> d_data;
 
-    public:
-        enum Flag
-        {
-            NO_LOP,     // state not belonging to a LOP-rule (default)
-            ACCEPT,     // the accept-state of a LOP-rule
-            PRE,        // a pre-accept state of a LOP-rule
-            POST        // a post-accept state of a LOP-rule
-        };
+    size_t d_type;      // if less than UNDETERMINED__: a simple character
+                        // or character range value (thus, this variable
+                        // should not have type `Type')
 
-        enum Type       // values in the Alphabet range are simple characters
-        {
-            UNDETERMINED__ =  1 << (8 * sizeof(Alphabet)),
-            EMPTY,                              
-            FINAL,
-            CHARSET,                            // string contents of [ ... ]
-            EOF__                               // EOF becomes a special char
-        };                                      // see README
-
-    private:
-        std::shared_ptr<StateData> d_data;
-
-        size_t d_type;      // if less than UNDETERMINED__: a simple character
-                            // or character range value
-        Flag d_flag;        // a Flags-value
-        size_t d_rule;      // the rule this state refers to
+    size_t d_rule;      // the rule this state refers to
 
     public:        
         State();
