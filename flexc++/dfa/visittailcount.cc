@@ -14,20 +14,16 @@
 // processRule calls processRow to do the actual work, calling inspect for
 // each transition.
 
+//FBB
     
-void DFA::visitTailCount(TailCount &tailCount)
-{
-//    d_sawACCEPT = false;
-    d_rule = tailCount.rule();
-
-                            // (re)initialize for this rule
-    d_transitSet = vector<Size_tSet>(d_row.size()); 
-
-                            // this/previous row, ptr to previous TailCount 
-    determineTailCount(tailCount, 0, 0, 0);
-}
-
-
-
-
-
+//void DFA::visitTailCount(TailCount &tailCount)
+//{
+////    d_sawACCEPT = false;
+//    d_rule = tailCount.rule();
+//
+//                            // (re)initialize for this rule
+//    d_transitSet = vector<Size_tSet>(d_row.size()); 
+//
+//                            // this/previous row, ptr to previous TailCount 
+//    determineTailCount(tailCount, 0, 0, 0);
+//}

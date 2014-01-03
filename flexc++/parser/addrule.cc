@@ -7,7 +7,7 @@ void Parser::addRule(Pattern const &rule, bool reset)
 {
     d_rules.add(
         d_boln, rule, 
-        d_useLOP, d_lhs, d_rhs,     // allow the rule to store the lhs/rhs
+        d_usesLOP, d_lhs, d_rhs,    // allow the rule to store the lhs/rhs
                                     // patterns in case / was used.
         Block(d_scanner.lineNr(), d_scanner.filename())
     );

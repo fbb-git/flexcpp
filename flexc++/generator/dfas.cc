@@ -10,10 +10,10 @@ void Generator::dfas(ostream &out) const
 
     auto iter = d_dfas.find("INITIAL");
     if (iter != d_dfas.end())
-        dfa(*iter, out, d_rfc, d_startStates, d_dfaIndices);
+        dfa(*iter, out, d_rf, d_startStates, d_dfaIndices);
 
     for(auto &dfaPair: d_dfas) 
-        dfa(dfaPair, out, d_rfc, d_startStates, d_dfaIndices);
+        dfa(dfaPair, out, d_rf, d_startStates, d_dfaIndices);
  
     out << "};\n";
 }

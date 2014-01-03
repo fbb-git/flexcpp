@@ -18,13 +18,16 @@
 using namespace std;
 using namespace FBB;
 
-//inline void DFA::translate(DFARow &row, vector<size_t> const &unique)
-//{
-//    row.uniqueMap(unique);
-//}
-
     // return the index of the DFA row containing 'nextRow'
 inline size_t DFA::available(DFARow const &nextRow)
 {
     return find(d_row.begin(), d_row.end(), nextRow) - d_row.begin();
 }
+
+
+
+
+
+
+
+

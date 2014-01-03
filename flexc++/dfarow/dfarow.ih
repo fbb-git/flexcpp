@@ -6,12 +6,9 @@
 #include <sstream>
 
 #include <bobcat/table>
-#include <bobcat/x2a>
 
 using namespace std;
 using namespace FBB;
-
-#include <iostream>     // TEMPO
 
 inline void DFARow::translate(MapValue &transition, vector<size_t> const &xlat)
 {

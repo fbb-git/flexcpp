@@ -4,9 +4,9 @@ void Ranges::inspectState(State const &state)
 {
     size_t type = state.type();
     
-    if (type < State::UNDETERMINED__)
+    if (type < UNDETERMINED__)
         add(type);
-    else if (type == State::CHARSET)
+    else if (type == CHARSET)
         add(state.data().str());
 }
 

@@ -23,7 +23,7 @@ Pattern Parser::lookahead(Pattern const &left, Pattern const &right)
 
     Pattern ret;
 
-    if (right.canBeEmpty(d_states)
+    if (right.canBeEmpty(d_states))
         ret = left;
     else
     {

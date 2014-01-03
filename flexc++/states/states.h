@@ -7,10 +7,13 @@
 #include <vector>
 #include <set>
 
+#include "../flextypes/flextypes.h"
 #include "../state/state.h"
 
-class States
+class States: private FlexTypes
 {
+    friend std::ostream &operator<<(std::ostream &out, States const &states);
+
     std::vector<State> d_state;
     std::vector<size_t> d_free;
 

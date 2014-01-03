@@ -10,7 +10,7 @@ void Rules::add(bool bol, Pattern const &patternVal,
 
         // tailBlock: call scanner's 'lopRedo' function, switching to the
         // new lop-1 mini scanner
-        d_rules.push_back( { d_states, bol, pair, tailBlock() } );
+//        d_rules.push_back( { d_states, bol, pair, tailBlock() } );
     
         size_t ruleIdx = d_rules.size() - 1;
     

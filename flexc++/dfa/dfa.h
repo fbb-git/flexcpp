@@ -25,12 +25,13 @@ class DFA
 
     std::vector<DFARow> d_row;
     std::vector<Size_tSet> d_stateSet;      // states belonging to a DFA row
-    std::vector<Size_tSet> d_transitSet;    // DFArows already visited by 
-                                            //  determineTailCount
-    //bool d_verbose;
-    bool d_sawACCEPT;           // used by visitTailCount
+//FBB
+//    std::vector<Size_tSet> d_transitSet;    // DFArows already visited by 
+//                                            //  determineTailCount
 
-    size_t d_rule;              // used when computing TailCount values 
+//    bool d_sawACCEPT;           // used by visitTailCount
+//
+//    size_t d_rule;              // used when computing TailCount values 
 
     static FBB::Mstream s_verbose;  // writes to cout if verbose was set
 
@@ -50,30 +51,12 @@ class DFA
         static void setVerbose(bool on);
 
     private:
-        void keepViableTailCounts();
-
         void keepUniqueRows();
         void inspectRows(std::vector<size_t> &unique);
         void shrinkDFA(std::vector<size_t> &unique);
 
 
         size_t available(DFARow const &nextRow);
-
-        void computeTailCounts();
-        void visitTailCount(TailCount &tailCount);
-
-        void determineTailCount(TailCount &tailCount, size_t thisRow,
-                                      TailCount *fmTailCount, size_t fmRow);
-
-        bool setTailCount(TailCount &tailCount, size_t thisRow, 
-                         TailCount *fmTailCount, size_t fmRow);
-        bool setIncTailCount(TailCount::Type type, TailCount &thisTailCount);
-        bool setInitTailCount(TailCount::Type type, TailCount &thisTailCount);
-        bool setNextTailCount(TailCount::Type type,
-                            TailCount &thisTailCount, size_t thisRow,
-                            TailCount &fmTailCount, size_t fmRow);
-        void transitTailCount(DFARow::MapValue const &rangeToRow, 
-                    TailCount *fmTailCount, size_t fmRow);
 };
 
 inline std::vector<DFARow>::const_iterator DFA::begin() const

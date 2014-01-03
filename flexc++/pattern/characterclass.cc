@@ -4,7 +4,7 @@ Pattern Pattern::characterClass(States &states, CharClass const &charClass)
 {
     States::Pair pair = states.next2();
 
-    states[pair.first] = State::factory(State::CHARSET, 
+    states[pair.first] = State::factory(CHARSET, 
                                         charClass.str(), pair.second);
 
 //    cout << "Pattern::characterClass: ";

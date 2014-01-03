@@ -15,7 +15,7 @@ set<size_t> States::eClosure(set<size_t> &current) const
 
         State const &nextState = d_state[next];
 
-        if (nextState.type() == State::EMPTY)   // e-transition?
+        if (nextState.type() == EMPTY)          // e-transition?
         {
             current.insert(nextState.next1());   // if so, add the 
             current.insert(nextState.next2());   //  next states

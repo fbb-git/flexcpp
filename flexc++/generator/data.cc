@@ -5,7 +5,8 @@ Generator::Map Generator::s_insert =
     // $insert-key              function called
     {"DFAbases",                &Generator::DFAbases},
     {"DFAs",                    &Generator::dfas},
-    {"RFCs",                    &Generator::rfcs},
+//FBB
+    {"RFs",                     &Generator::rfs},
     {"actions",                 &Generator::actions},
     {"baseclass_h",             &Generator::baseClassH},
     {"baseIncludes",            &Generator::baseIncludes},

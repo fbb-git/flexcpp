@@ -10,6 +10,9 @@
 
 class State: private FlexTypes
 {
+    friend std::ostream &operator<<(std::ostream &out, State const &state);
+
+
     std::shared_ptr<StateData> d_data;
 
     size_t d_type;      // if less than UNDETERMINED__: a simple character
@@ -48,9 +51,6 @@ class State: private FlexTypes
 
         void setRule(size_t idx);       // set the state's rule index
         size_t rule() const;
-
-        void setFlag(Flag value);       // Set a State's flag
-        Flag flag() const; 
 
             // true is returned if the state's string contains rangeChar.
             // Only defined for d_type == CHARSET
@@ -101,19 +101,6 @@ inline size_t State::rule() const
 {
     return d_rule;
 }
-
-inline State::Flag State::flag() const
-{
-    return d_flag;
-}
-
-inline void State::setFlag(Flag value)
-{
-    d_flag = value;
-}
-
-std::ostream &operator<<(std::ostream &out, State const &state);
-
 
 #endif
 

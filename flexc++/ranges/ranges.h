@@ -7,11 +7,13 @@
 
 #include <bobcat/fswap>
 
+#include "../flextypes/flextypes.h"
+
 class States;
 class State;
 class StateData;
 
-class Ranges
+class Ranges: private FlexTypes
 {
     friend std::ostream &operator<<(std::ostream &out, Ranges const &ranges);
 

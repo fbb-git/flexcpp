@@ -42,13 +42,14 @@ void DFA::build(std::string const &name, vector<size_t> const &active)
 
     keepUniqueRows();
 
-    keepViableTailCounts();
+//FBB
+//    keepViableTailCounts();
 
-    if (s_verbose)
-        cout << "DFA for " << name << " before computing tail counts:\n" <<
-                *this << '\n';
+//    if (s_verbose)
+//        cout << "DFA for " << name << " before computing tail counts:\n" <<
+//                *this << '\n';
 
-    computeTailCounts();         // compute accept counts for LA rules
+//    computeTailCounts();         // compute accept counts for LA rules
 }
 
 

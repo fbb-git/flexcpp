@@ -4,7 +4,8 @@ void DFARow::tabulate(Table &table) const
 {
     tabulateTransitions(table);
     tabulateFinals(table);
-    tabulateAccepts(table);
+//FBB
+//    tabulateAccepts(table);
 }
 
 

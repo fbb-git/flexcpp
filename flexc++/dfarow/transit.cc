@@ -6,11 +6,11 @@ void DFARow::transit(size_t stateIdx, size_t rangeChar, StateSet &nextSet)
 
     switch (size_t type = state.type())
     {
-        case State::FINAL:
+        case FINAL:
             setFinal(d_rules->ruleFromFinalState(stateIdx));
         break;
 
-        case State::CHARSET:
+        case CHARSET:
             if (state.contains(rangeChar))
             {
                 nextSet.insert(state.next1());

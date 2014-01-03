@@ -4,25 +4,12 @@
 #include <algorithm>
 #include <iterator>
 
-namespace
-{
-    char const *flagName[] = 
-    {
-        "NO_LOP ",
-        "ACCEPT ",
-        "PRE    ",
-        "POST   "
-    };
-}
-
 ostream &operator<<(ostream &out, State const &state)
 {
     size_t type = state.type();
 
     if (type == State::UNDETERMINED__)
         return(out);
-
-    out << flagName[state.flag()];
 
     if (type < State::UNDETERMINED__)
         out << type;

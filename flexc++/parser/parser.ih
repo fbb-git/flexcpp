@@ -45,7 +45,8 @@ inline Pattern Parser::escape()
 
 inline void Parser::addBlockRule(Pattern const &rule)
 {
-    d_rules.add(false, rule, d_block);
+//FBB
+    d_rules.add(false, rule, false, rule, rule, d_block);
 }
 
 inline void Parser::assignBlock()

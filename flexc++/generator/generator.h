@@ -59,7 +59,7 @@ class Generator
     mutable std::string d_line;
     mutable std::string d_field;
 
-    mutable std::vector<RuleFlagCount> d_rf;    // determined at dfas()
+    mutable std::vector<RuleFlag> d_rf;    // determined at dfas()
     mutable std::vector<size_t> d_dfaIndices;   // determined at dfas()
 
     static Map s_insert;
@@ -133,24 +133,22 @@ class Generator
         void ranges(std::ostream &out) const;
         void scannerConstructors(std::ostream &out) const;
         void startCondNames(std::ostream &out) const;
-        void tailCount(std::ostream &out) const;
 
         size_t dfaCols() const;
 
-        void rfcs(std::ostream &out) const;
-        static void outRFC(RuleFlagCount const &rfc, std::ostream &out,
+        void rfs(std::ostream &out) const;
+        static void outRF(RuleFlag const &rfc, std::ostream &out,
                                                      size_t &idx);
         static void dfa(DFAs::Pair const &dfaPair, std::ostream &out, 
-                        std::vector<RuleFlagCount> &tailCounts,
+                        std::vector<RuleFlag> &tailCounts,
                         std::vector<std::string> &startStates,
                         std::vector<size_t> &dfaOffsets);
         static void dfaRow(DFARow const &row, size_t &index, 
-                        std::ostream &out, std::vector<RuleFlagCount> &rfc);
+                        std::ostream &out, std::vector<RuleFlag> &rf);
         static void dfaTransitions(DFARow const &row, std::ostream &out);
         static void dfaRFs(DFARow const &row, std::ostream &out,
                             std::vector<RuleFlag> &rf);
-        static void storeRF(TailCount const &tailcount,
-                             std::pair<size_t, size_t> &final,
+        static void storeRF(std::pair<size_t, size_t> &final,
                              std::vector<RuleFlag> &rf);
 
         static void outStartState(std::string const &name, std::ostream &out);

@@ -9,7 +9,7 @@ void Pattern::jumpToEnd(States &states, PairVector &beginEnd,
     for (size_t idx = lower; idx != upper; ++idx)   // add connections to the
     {                                               // exit-state
         states[eject[idx]] = 
-            State::factory(State::EMPTY, beginEnd[idx].first, exitState);
+            State::factory(EMPTY, beginEnd[idx].first, exitState);
 
         beginEnd[idx].first = eject[idx];    // new begin state
     }
