@@ -2,7 +2,7 @@
 
 ostream &operator<<(ostream &out, DFA const &dfa)
 {
-    size_t nCols = dfa.d_ranges->nUsed() + 3;
+    size_t nCols = dfa.d_ranges->nUsed() + 2;
 
     TableLines support;
     support << 0;
@@ -23,7 +23,7 @@ ostream &operator<<(ostream &out, DFA const &dfa)
         if (dfa.d_ranges->used(idx))
             table << idx;
     }
-    table << 'F' << 'A';
+    table << 'F';
                                                 // display rows of the table
     for 
     (

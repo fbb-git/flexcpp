@@ -20,7 +20,7 @@ $insert ranges
     // character range was sensed. Row numbers are relative to the
     // used DFA and d_dfaBase__ is set to the first row of the subset to use.
     // The row's final two values are begin and end indices in
-    // s_rfc__[] (rule, flags and count), defining the state's rule details
+    // s_rf__[] (rule, flags and count), defining the state's rule details
 $insert DFAs
 
     // The first value is the rule index
@@ -29,7 +29,7 @@ $insert DFAs
     // 2: Inc.      5: Final,Count  13: Final/BOL,Count
     // 3: Final,Inc 9: Final/BOL    
     // The third value is the LOP count value (valid for Count flags)
-$insert RFCs
+$insert RFs
 
 $insert DFAbases
 
@@ -45,7 +45,6 @@ $insert inputImplementation
     d_out(new std::ostream(out.rdbuf())),
     d_sawEOF(false),
     d_atBOL(true),
-$insert tailCount
 $insert interactiveInit
     d_dfaBase__(s_dfa__)
 {}
@@ -71,7 +70,6 @@ $ignoreInteractive BEGIN    this section is ignored by generator/filter.cc
                                   new std::ofstream(outfilename)),
     d_sawEOF(false),
     d_atBOL(true),
-$insert tailCount
     d_input(new std::ifstream(infilename)),
     d_dfaBase__(s_dfa__)
 {}
@@ -208,14 +206,11 @@ void \@Base::accept(size_t nChars)          // old name: less
 
   // The size of d_matched is determined:
   //    The current state is a known final state (as determined by 
-  // inspectRFCs__(), just prior to calling matched__). 
-  //    The contents of d_matched are reduced to d_final's size or (if set)
-  // to the LOP-rule's tail size.
+  // inspectRFs__(), just prior to calling matched__). 
+  //    The contents of d_matched are reduced to d_final's size
 void \@Base::determineMatchedSize(FinData const &final)
 {
     size_t length = final.matchLen;
-    if (final.tailCount != std::numeric_limits<size_t>::max())
-        length -= final.tailCount;
 
     d_input.reRead(d_matched, length);      // reread the tail section
     d_matched.resize(length);               // return what's left
@@ -231,9 +226,9 @@ $insert 4 debug "MATCH"
     d_input.reRead(ch);
 
     if (!d_atBOL)
-        d_final.atBOL.rule = std::numeric_limits<size_t>::max();
+        d_final.atBOL.rule = s_maxSize_t;
 
-    FinData &final = d_final.atBOL.rule == std::numeric_limits<size_t>::max() ? 
+    FinData &final = d_final.atBOL.rule == s_maxSize_t ? 
                             d_final.notAtBOL
                         :
                             d_final.atBOL;
@@ -289,16 +284,11 @@ $insert 4 debug "ECHO_FIRST"
     echoCh__(d_matched[0]);
 }
 
-    // Inspect all s_rfc__ elements associated with the current state
-    //  If the s_rfc__ element has its COUNT flag set then set the 
-    // d_tailCount[rule] value to the element's tailCount value, if it has its 
-    // INCREMENT flag set then increment d_tailCount[rule]
-    //  If neither was set set the d_tailCount[rule] to numeric_limits<size_t>::max()
-    // 
-    // If the s_rfc__ element has its FINAL flag set then store the rule number
+    // Inspect all s_rf__ elements associated with the current state
+    // If the s_rf__ element has its FINAL flag set then store the rule number
     // in d_final.second. If it has its FINAL + BOL flags set then store the
     // rule number in d_final.first
-void \@Base::inspectRFCs__()
+void \@Base::inspectRFs__()
 {
     for 
     (
@@ -308,27 +298,22 @@ void \@Base::inspectRFCs__()
                 ++begin
     )
     {
-        size_t const *rfc = s_rfc__[begin];
-        size_t flag = rfc[FLAGS];
-        size_t rule = rfc[RULE];
-
-        if (flag & INCREMENT)
-            ++d_tailCount[rule];
-        else 
-            d_tailCount[rule] = (flag & COUNT) ? rfc[ACCCOUNT] : std::numeric_limits<size_t>::max();
+        size_t const *rf = s_rf__[begin];
+        size_t flag = rf[FLAGS];
+        size_t rule = rf[RULE];
 
         if (flag & FINAL)
         {
             FinData &final = (flag & BOL) ? d_final.atBOL : d_final.notAtBOL;
-            final = FinData { rule, d_matched.size(), d_tailCount[rule] };
+            final = FinData { rule, d_matched.size() };
         }
     }
 }
 
 void \@Base::reset__()
 {
-    d_final = Final { {std::numeric_limits<size_t>::max(), std::numeric_limits<size_t>::max(), std::numeric_limits<size_t>::max() }, 
-                      {std::numeric_limits<size_t>::max(), std::numeric_limits<size_t>::max(), std::numeric_limits<size_t>::max() } };
+    d_final = Final { {s_maxSize_t, s_maxSize_t }, 
+                      {s_maxSize_t, s_maxSize_t } };
     d_state = 0;
     d_return = true;
 
@@ -365,7 +350,8 @@ int \@::lex__()
         size_t ch = get__();                // fetch next char
         size_t range = getRange__(ch);      // determine the range
 
-        inspectRFCs__();                    // update d_tailCount values
+        inspectRFs__();                     // determine final state for
+                                            // bol/non-bol rules
 
         switch (actionType__(range))        // determine the action
         {

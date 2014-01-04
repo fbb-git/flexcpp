@@ -17,7 +17,9 @@ class \@Base
                 // idx: rule, value: tail length (NO_INCREMENTS if no tail)
     typedef std::vector<int> VectorInt;
 
-    enum        // RuleFlagsCount Indices, see s_rfc__[]
+    static size_t const s_maxSize_t = std::numeric_limits<size_t>::max();
+
+    enum        // RuleFlagsCount Indices, see s_rf__[]
     {
         RULE = 0,
         FLAGS,
@@ -69,7 +71,6 @@ private:
     {                           // traversing the DFA
         size_t rule;
         size_t matchLen;
-        size_t tailCount;
     };
 
     struct Final
@@ -103,9 +104,8 @@ private:
     size_t          d_state;
     int             d_nextState;
     std::shared_ptr<std::ostream> d_out;
-    bool            d_sawEOF;               // saw EOF: ignore tailCount
+    bool            d_sawEOF;               // saw EOF
     bool            d_atBOL;                // the matched text starts at BOL
-    std::vector<size_t> d_tailCount;         
     Final d_final;                          // 1st for BOL rules
                                             
                                             // only used interactively:
@@ -125,7 +125,7 @@ $insert 4 debugDecl
 
 $insert 4 declarations
     static size_t  const s_ranges__[];
-    static size_t  const s_rfc__[][3];
+    static size_t  const s_rf__[][2];
 
 public:
     \@Base(\@Base const &other)             = delete;
@@ -208,13 +208,18 @@ $ignoreInteractive END      end ignored section by generator/filter.cc
     void            continue__(int ch);         // handles a transition
     void            echoCh__(size_t ch);        // echoes ch, sets d_atBOL
     void            echoFirst__(size_t ch);     // handles unknown input
-    void            inspectRFCs__();            // update d_tailCount
+    void            inspectRFs__();             // update d_tailCount
     void            noReturn__();               // d_return to false
     void            print__() const;            // optionally print token
     void            pushFront__(size_t ch);     // return char to Input
     void            reset__();                  // prepare for new cycle
                                                 // next input stream:
     void            switchStream__(std::istream &in, size_t lineNr);   
+
+    //FBB
+    // TO DO for lop handling:
+    void            lopRedo__();                // pushback matched() but 1
+    void            addLast__();                // add last char
 
 private:
     void p_pushStream(std::string const &name, std::istream *streamPtr);
@@ -239,8 +244,8 @@ inline void \@Base::push(std::string const &str)
 
 inline bool \@Base::atFinalState()
 {
-    return d_final.notAtBOL.rule != std::numeric_limits<size_t>::max() || 
-            (d_atBOL && d_final.atBOL.rule != std::numeric_limits<size_t>::max());
+    return d_final.notAtBOL.rule != s_maxSize_t || 
+            (d_atBOL && d_final.atBOL.rule != s_maxSize_t);
 }
 
 inline void \@Base::setFilename(std::string const &name)
