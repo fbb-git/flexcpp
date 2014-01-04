@@ -20,15 +20,12 @@ $insert ranges
     // character range was sensed. Row numbers are relative to the
     // used DFA and d_dfaBase__ is set to the first row of the subset to use.
     // The row's final two values are begin and end indices in
-    // s_rf__[] (rule, flags and count), defining the state's rule details
+    // s_rf__[] (rule and flags), defining the state's rule details
 $insert DFAs
 
     // The first value is the rule index
     // The second value is the FLAG: see the scannerbase.h file
-    // 1: Final     4: Count        11: Final/BOL,Inc     
-    // 2: Inc.      5: Final,Count  13: Final/BOL,Count
-    // 3: Final,Inc 9: Final/BOL    
-    // The third value is the LOP count value (valid for Count flags)
+    // 1: Final     9: Final/BOL    
 $insert RFs
 
 $insert DFAbases
