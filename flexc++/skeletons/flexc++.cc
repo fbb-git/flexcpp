@@ -13,20 +13,17 @@ $insert namespace-open
     //           class header file
 $insert ranges
 
-    // s_dfa__ contains the rows of *all* DFAs ordered by start state.
-    // The enum class StartCondition__ is defined in the baseclass header
-    // INITIAL is always 0.
-    // Each entry defines the row to transit to if the column's
-    // character range was sensed. Row numbers are relative to the
-    // used DFA and d_dfaBase__ is set to the first row of the subset to use.
-    // The row's final two values are begin and end indices in
-    // s_rf__[] (rule and flags), defining the state's rule details
+    // s_dfa__ contains the rows of *all* DFAs ordered by start state.  The
+    // enum class StartCondition__ is defined in the baseclass header
+    // StartCondition__::INITIAL is always 0.  Each entry defines the row to
+    // transit to if the column's character range was sensed. Row numbers are
+    // relative to the used DFA, and d_dfaBase__ is set to the first row of
+    // the subset to use.  The row's final two values are respectively the
+    // rule that may be matched at this state, and the rule's FINAL flag. If
+    // the final value equals FINAL (= 1) then, if there's no continuation,
+    // the rule is matched. If the BOL flag (8) is also set (so FINAL + BOL (=
+    // 9) is set) then the rule only matches when d_atBol is also true.
 $insert DFAs
-
-    // The first value is the rule index
-    // The second value is the FLAG: see the scannerbase.h file
-    // 1: Final     9: Final/BOL    
-$insert RFs
 
 $insert DFAbases
 
@@ -203,7 +200,7 @@ void \@Base::accept(size_t nChars)          // old name: less
 
   // The size of d_matched is determined:
   //    The current state is a known final state (as determined by 
-  // inspectRFs__(), just prior to calling matched__). 
+  // inspectFlags__(), just prior to calling matched__). 
   //    The contents of d_matched are reduced to d_final's size
 void \@Base::determineMatchedSize(FinData const &final)
 {
@@ -281,29 +278,20 @@ $insert 4 debug "ECHO_FIRST"
     echoCh__(d_matched[0]);
 }
 
-    // Inspect all s_rf__ elements associated with the current state
-    // If the s_rf__ element has its FINAL flag set then store the rule number
-    // in d_final.second. If it has its FINAL + BOL flags set then store the
-    // rule number in d_final.first
-void \@Base::inspectRFs__()
+    // Inspect the rule/final flags associated with the current state. If
+    // rf[FLAG] == FINAL (1) then we've reached rule rf[RULE]'s final state
+    // and accept the rule if there's no continuation. If rf[FLAG] is also BOL
+    // (= 8, FINAL + BOL = 9) then the rule is matched only if d_atBol is also
+    // true.
+void \@Base::inspectFlags__()
 {
-    for 
-    (
-        size_t begin = d_dfaBase__[d_state][s_finacIdx__], 
-                 end = d_dfaBase__[d_state][s_finacIdx__ + 1];
-            begin != end;
-                ++begin
-    )
-    {
-        size_t const *rf = s_rf__[begin];
-        size_t flag = rf[FLAGS];
-        size_t rule = rf[RULE];
+    int const *rf = d_dfaBase__[d_state] + s_finIdx__;
+    size_t flag = rf[FLAGS];
 
-        if (flag & FINAL)
-        {
-            FinData &final = (flag & BOL) ? d_final.atBOL : d_final.notAtBOL;
-            final = FinData { rule, d_matched.size() };
-        }
+    if (flag & FINAL)
+    {
+        FinData &final = (flag & BOL) ? d_final.atBOL : d_final.notAtBOL;
+        final = FinData { static_cast<size_t>(rf[RULE]), d_matched.size() };
     }
 }
 
@@ -347,7 +335,7 @@ int \@::lex__()
         size_t ch = get__();                // fetch next char
         size_t range = getRange__(ch);      // determine the range
 
-        inspectRFs__();                     // determine final state for
+        inspectFlags__();                   // determine final state for
                                             // bol/non-bol rules
 
         switch (actionType__(range))        // determine the action

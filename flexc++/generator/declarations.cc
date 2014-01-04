@@ -14,7 +14,7 @@ void Generator::declarations(ostream &out) const
         "    enum: size_t {\n"
         "        s_rangeOfEOF__           = " << d_ranges.rangeOfEOF() << 
                                                                         ",\n"
-        "        s_finacIdx__             = " << dfaCols() - 2 << ",\n"
+        "        s_finIdx__               = " << dfaCols() - 2 << ",\n"
         "        s_nRules__               = " << d_rules.size() << ",\n"
         "        s_maxSizeofStreamStack__ = " << d_options.maxDepth() << "\n"
         "    };\n"

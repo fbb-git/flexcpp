@@ -8,10 +8,12 @@ void Generator::dfas(ostream &out) const
     "int const " << className << "Base::s_dfa__[][" << dfaCols() << "] =\n" 
     "{\n";
 
+    // write out the INITIAL DFA
     auto iter = d_dfas.find("INITIAL");
     if (iter != d_dfas.end())
         dfa(*iter, out, d_rf, d_startStates, d_dfaIndices);
 
+    // write the remaining DFAs
     for(auto &dfaPair: d_dfas) 
         dfa(dfaPair, out, d_rf, d_startStates, d_dfaIndices);
  

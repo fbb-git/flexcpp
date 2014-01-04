@@ -208,7 +208,7 @@ $ignoreInteractive END      end ignored section by generator/filter.cc
     void            continue__(int ch);         // handles a transition
     void            echoCh__(size_t ch);        // echoes ch, sets d_atBOL
     void            echoFirst__(size_t ch);     // handles unknown input
-    void            inspectRFs__();             // update d_tailCount
+    void            inspectFlags__();           // inspect the flags of a rule
     void            noReturn__();               // d_return to false
     void            print__() const;            // optionally print token
     void            pushFront__(size_t ch);     // return char to Input

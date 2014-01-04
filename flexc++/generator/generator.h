@@ -59,7 +59,7 @@ class Generator
     mutable std::string d_line;
     mutable std::string d_field;
 
-    mutable std::vector<RuleFlag> d_rf;    // determined at dfas()
+    mutable std::vector<RuleFlag> d_rf;         // determined at dfas()
     mutable std::vector<size_t> d_dfaIndices;   // determined at dfas()
 
     static Map s_insert;
@@ -136,7 +136,9 @@ class Generator
 
         size_t dfaCols() const;
 
-        void rfs(std::ostream &out) const;
+//FBB
+//        void rfs(std::ostream &out) const;
+
         static void outRF(RuleFlag const &rfc, std::ostream &out,
                                                      size_t &idx);
         static void dfa(DFAs::Pair const &dfaPair, std::ostream &out, 
