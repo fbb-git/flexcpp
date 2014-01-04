@@ -7,10 +7,6 @@ void Generator::dfaRFs(DFARow const &row, ostream &out,
 
     auto final = row.final();
 
-//FBB
-//    for (auto &tail: row.tailCounts())
-//        storeRF(tailCount, final, rf);
-
     if (final.first != numeric_limits<size_t>::max())
         rf.push_back(RuleFlag {final.first, FINAL | BOL});
 

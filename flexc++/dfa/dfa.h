@@ -25,13 +25,6 @@ class DFA
 
     std::vector<DFARow> d_row;
     std::vector<Size_tSet> d_stateSet;      // states belonging to a DFA row
-//FBB
-//    std::vector<Size_tSet> d_transitSet;    // DFArows already visited by 
-//                                            //  determineTailCount
-
-//    bool d_sawACCEPT;           // used by visitTailCount
-//
-//    size_t d_rule;              // used when computing TailCount values 
 
     static FBB::Mstream s_verbose;  // writes to cout if verbose was set
 

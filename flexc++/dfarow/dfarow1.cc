@@ -11,8 +11,4 @@ DFARow::DFARow(Rules &rules,
     d_stateSets(&stateSets),
     d_rules(&rules),
     d_ranges(&ranges)
-{
-//    for (auto stateIdx: stateSets[thisRowIdx])
-//        probeTailCount(stateIdx);
-//FBB
-}
+{}
