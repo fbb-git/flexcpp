@@ -91,6 +91,9 @@ class Scanner: public ScannerBase
 
         void preCode();     // re-implement this function for code that must 
                             // be exec'ed before the patternmatching starts
+
+        void postCode(PostEnum__)
+        {}
 };
 
 inline void Scanner::forceCaseSensitive()

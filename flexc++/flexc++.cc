@@ -66,6 +66,7 @@ try
 
 
     Parser parser(rules, states);
+//parser.setDebug(true);
         parser.parse();
         parser.cleanup();
 

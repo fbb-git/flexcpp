@@ -32,5 +32,8 @@ ms_spec:
     _ms_angular _ms_specs '>' 
     {
         d_scanner.ignoreWS();
+        d_scanner.multiAsChar();
     }
 ;
+
+

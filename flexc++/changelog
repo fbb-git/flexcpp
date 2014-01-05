@@ -5,6 +5,12 @@ flexc++ (2.00.00)
     the previously used class TailCount and the tail count Flag enum are no
     longer required. See also parser/README.grammar.
 
+  * Repaired a bug introduced in 1.02, causing parser failures for letter and
+    digits in REs in the context of start conditions. Cause: after '>' in
+    parser/inc/msspec multiple letters/digits must be returned as individual
+    characters. Realized by calling d_scanner.multiAsChar() at ms_spec's
+    action block.
+
 ... WIP ...
 
 

@@ -1,6 +1,6 @@
 %class-name = "Scanner" 
 %lex-source = "lex.cc"
-%skeleton-directory = "../skeletons"
+//%skeleton-directory = "../skeletons"
 
 %filenames scanner
 
@@ -64,7 +64,13 @@ OPTBL                   [[:blank:]]*
 
     // this is used by parser/inc/msspec to skip all ws following the > of a
     // mini scanner specification
-<optws>[[:space:]]*             popSc();
+<optws>{
+    [[:space:]]+                // ignore ws
+    .                           {
+                                    popSc();
+                                    redo(1);
+                                }
+}
 
 <comment>{
     .                           // ignore
