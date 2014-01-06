@@ -66,7 +66,6 @@ try
 
 
     Parser parser(rules, states);
-//parser.setDebug(true);
         parser.parse();
         parser.cleanup();
 
@@ -75,6 +74,7 @@ try
         ranges.finalizeStates();
 
     DFAs dfas(rules, states, ranges);
+
         dfas.build();
 
     rules.warnNonViable();

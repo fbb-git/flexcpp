@@ -1,12 +1,12 @@
 #include "startconditions.ih"
 
-void StartConditions::add(string const &name)
+void StartConditions::add(string const &name, bool underscoresOK)
 {
     if (d_hash.find(name) != d_hash.end())
         emsg << "start condition `" << name << "' multiply defined" << endl; 
     else 
     {
-        if (name.length() >= 2)
+        if (not underscoresOK && name.length() >= 2)
         {
             size_t pos = name.rfind("__");
             if (pos == name.length() - 2)

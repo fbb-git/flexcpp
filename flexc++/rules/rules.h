@@ -25,7 +25,6 @@ class Rules
     std::unordered_map<size_t, size_t>  d_finalToRule;  // from FINAL state to
                                                         // Rule index
     StartConditions d_startConditions;
-    size_t d_lopStartCondition = 0;         // startconditions for LOPs
 
     public:
         typedef StartConditions::const_iterator const_iterator;
@@ -33,19 +32,18 @@ class Rules
         typedef std::vector<Rule>::const_iterator rule_const_iterator;
 
         Rules(States &states);
-        void add(bool bol, Pattern const &pattern, 
-                 bool usesLOP, Pattern const &lhs, Pattern const &rhs,
-                 Block const &block);
+        void add(bool bol, Pattern const &pattern, Block const &block);
 
         Rule const &operator[](size_t idx) const;
         Rule &operator[](size_t idx);
 
         size_t ruleFromFinalState(size_t stateIdx) const;
         void setType(StartConditions::Type type);
-        void addStartCondition(std::string const &name);
+        void addStartCondition(std::string const &name, bool underscoresOK);
         void resetStartConditions();
         void useAll();
         void activateStartCondition(std::string const &name);
+
         std::vector<size_t> const &operator()   // vector of rule nrs
                                     (std::string const &startCondition) const;
         void useInitialSC();
@@ -129,9 +127,10 @@ inline void Rules::setType(StartConditions::Type type)
     d_startConditions.setType(type);
 }
 
-inline void Rules::addStartCondition(std::string const &name)
+inline void Rules::addStartCondition(std::string const &name,
+                                     bool underscoresOK)
 {
-    d_startConditions.add(name);
+    d_startConditions.add(name, underscoresOK);
 }
 
 inline void Rules::resetStartConditions()

@@ -20,6 +20,8 @@ class Rules;
 #undef Parser
 class Parser: public ParserBase
 {
+    typedef std::pair<size_t, size_t> Pair;
+
     Options &d_options;
 
     // $insert scannerobject
@@ -46,6 +48,8 @@ class Parser: public ParserBase
     Rules &d_rules;
     States &d_states;
 
+    size_t d_lopStartCondition = 0;         // startconditions for LOPs
+
     static int s_ignoreToken;
     static std::string s_lastMsg;
 
@@ -56,7 +60,10 @@ class Parser: public ParserBase
                             // and show filenames
     private:
         Pattern eolnDollar();
-        void orAction();
+
+        void orAction();    // sets the action of the last rule but one to 
+                            // the last rule's action
+
         void reset();       // prepare the parser for a new regex 
                             // (resetting tokencount and warning flags)
 
@@ -74,8 +81,10 @@ class Parser: public ParserBase
         void assignBlock();
         void noActions();
 
+//FBB        void lopRule(LopRule &rule);
+
         void addRule(Pattern const &rule, bool resetMs = false);
-        void addBlockRule(Pattern const &rule);
+//FBB        void addBlockRule(Pattern const &rule);
 
         void block();
         void error(char const *msg);    // called on (syntax) errors

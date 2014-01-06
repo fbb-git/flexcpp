@@ -1,6 +1,6 @@
 #include "rule.ih"
 
-Rule::Rule(States const &states, bool bol, Pair fstfin, 
+Rule::Rule(States const &states, bool bol, Pair const &fstfin, 
            Block const &block)
 :
     d_start(fstfin.first),                  // 1st state of this rule

@@ -22,7 +22,7 @@
 Pattern Pattern::copy(States &states, 
                       Pattern &regex, size_t lower, size_t upper)
 {
-    PairVector beginEnd(1, States::Pair{regex.begin(), regex.end()});   
+    PairVector beginEnd(1, Pair{regex.begin(), regex.end()});   
                                                         // begin/end indices
                                                         // of the regex
 
@@ -36,6 +36,5 @@ Pattern Pattern::copy(States &states,
             optionalPatterns(states, regex,     // of optional patterns
                             lower, upper, beginEnd);
 }
-
 
 

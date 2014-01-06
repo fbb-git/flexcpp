@@ -43,17 +43,6 @@ inline Pattern Parser::escape()
     return Pattern::escape(d_states, d_matched);
 }
 
-inline void Parser::addBlockRule(Pattern const &rule)
-{
-//FBB
-    d_rules.add(false, rule, false, rule, rule, d_block);
-}
-
-inline void Parser::assignBlock()
-{
-    d_rules.assignBlock(d_block);
-}
-
 inline void Parser::noActions()
 {
     d_rules.noActions();

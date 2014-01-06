@@ -2,7 +2,7 @@
 
 size_t Pattern::dupPattern(Map &map, States &states, size_t idx)
 {
-        // done if no link or if the idx is already in map
+            // done if no link or if the idx is already in map
         //
     auto iter = map.find(idx);
     if (iter != map.end())

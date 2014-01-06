@@ -17,7 +17,7 @@ void Pattern::copyPattern(States &states, size_t count,
                                                     // duplicate the pattern
         dupPattern(copied, states, begin);
 
-        beginEnd.push_back(States::Pair{copied[begin], copied[end]});
+        beginEnd.push_back(Pair{copied[begin], copied[end]});
     }
 }
 

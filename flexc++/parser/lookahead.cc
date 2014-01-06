@@ -21,19 +21,13 @@ Pattern Parser::lookahead(Pattern const &left, Pattern const &right)
 
     d_doError = true;
 
-    Pattern ret;
-
-    if (right.canBeEmpty(d_states))
-        ret = left;
-    else
-    {
-        d_usesLOP = true;
-        d_lhs.duplicate(left);          // duplicate the lhs, so it can be
-                                        // used to perform the lop-match
-        d_rhs = right;                  // the rhs can be kept as-is, as it
-                                        // simply represents the lop's rhs.
-        ret = Pattern::concatenate(d_states, left, right);
-    }
+    
+    Pattern ret = right.canBeEmpty(d_states) ?
+                    left
+                :
+                    Pattern(left, right);
 
     return ret;
 }
+
+

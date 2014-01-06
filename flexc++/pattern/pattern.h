@@ -1,6 +1,7 @@
 #ifndef INCLUDED_PATTERN_
 #define INCLUDED_PATTERN_
 
+#include <memory>
 #include <iosfwd>
 #include <unordered_map>
 #include <vector>
@@ -13,24 +14,34 @@ class Interval;
 
 class Pattern: private FlexTypes
 {
-    typedef std::unordered_map<size_t, size_t> Map;
-    typedef std::vector<States::Pair> PairVector;
+    typedef std::pair<size_t, size_t> Pair;
 
-    States::Pair d_pair;
+    typedef std::unordered_map<size_t, size_t> Map;
+    typedef std::vector<Pair> PairVector;
+
+    Pair d_pair;
+    std::shared_ptr<Pattern> d_lopRhs;
 
     public:
-        Pattern(States::Pair const &pair = States::Pair{0, 0});
+        Pattern(Pair const &pair = Pair{0, 0});
+        Pattern(Pattern const &lhs, Pattern const &rhs);    // lop pattern
+
+//        ~Pattern();
 
         Pattern &operator=(Pattern const &other) = default;
-        Pattern &operator=(States::Pair const &pair);
+        Pattern &operator=(Pair const &pair);
 
         size_t begin() const;                       // pattern's first state
         size_t end() const;                         // pattern's last state
-        States::Pair const &pair() const;           // {begin, end}
+        Pair const &pair() const;                   // {begin, end}
+        Pattern const *rhs() const;                 // 0 or LOP's rhs
+
         bool canBeEmpty(States const &states) const;// true if there's an
                                                     // empty transition from
                                                     // begin -> end
-        void duplicate(Pattern const &src);         // duplicate the states 
+
+        Pattern duplicate(States &states) const;
+                                                    // duplicate the states 
                                                     // used by src, and store
                                                     // their begin/end at this
         static Pattern eof(States &states);
@@ -47,7 +58,13 @@ class Pattern: private FlexTypes
                                                    Interval const &interval);
         static Pattern characterClass(States &states, 
                                       CharClass const &charClass);
+
+        static Pattern lop(Pattern const &lhs, Pattern const &rhs);
+        bool isLopPattern() const;
+
     private:
+        static size_t dup(Map &indexMap, States &states, size_t index);
+
         static Pattern star(States &states, Pattern const &pattern);
         static Pattern plus(States &states, Pattern const &pattern);
         static Pattern questionMark(States &states, 
@@ -77,12 +94,6 @@ class Pattern: private FlexTypes
                                          PairVector const &beginEnd);
 };
 
-inline Pattern &Pattern::operator=(States::Pair const &pair)
-{
-    d_pair = pair;
-    return *this;
-}
-        
 inline size_t Pattern::begin() const
 {
     return d_pair.first;
@@ -93,9 +104,19 @@ inline size_t Pattern::end() const
     return d_pair.second;
 }
 
-inline States::Pair const &Pattern::pair() const
+inline Pattern::Pair const &Pattern::pair() const
 {
     return d_pair;
+}
+
+inline Pattern const *Pattern::rhs() const
+{
+    return d_lopRhs.get();
+}
+
+inline bool Pattern::isLopPattern() const
+{
+    return d_lopRhs != 0;
 }
 
 #endif

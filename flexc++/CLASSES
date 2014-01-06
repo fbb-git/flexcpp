@@ -20,7 +20,7 @@ states                  state
 startconditions 
 block           
 rule                    block 
-rules                   startconditions rule
+rules                   startconditions rule 
 
 ranges
 dfarow                  ranges rules states tailcount

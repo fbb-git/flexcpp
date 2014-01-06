@@ -6,7 +6,7 @@ Pattern Pattern::alternatives(States &states,
 {
     Options::regexCall("alternatives");
 
-    States::Pair pair = states.next2();
+    Pair pair = states.next2();
     states[pair.first] = State::factory(EMPTY, lhs.begin(), rhs.begin());
 
     states[lhs.end()] = State::factory(EMPTY, pair.second, 0);

@@ -25,9 +25,21 @@ class Rule
     bool d_viable;              // this rule is viable, i.e., it can be
                                 // matched
 
+    struct LopData
+    {
+        Pair lhs;               // copy of the lhs LOP rule state indices
+        size_t mid;             // index in States where lhs ends and rhs
+                                // begins 
+    };
+    LopData *d_lop = 0;         // if not 0: a LOP pattern
+
+
     public:
         Rule() = default;               // for vector operations by Rules
-        Rule(States const &states, bool bol, Pair fstfin, Block const &block);
+
+//FBB: changed Pair fstfin to Pair const &fstfin
+        Rule(States const &states, bool bol, Pair const &fstfin, 
+             Block const &block);
 
         size_t startState() const;
         size_t finalState() const;

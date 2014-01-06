@@ -21,12 +21,12 @@ _start_condition_type:
 _start_condition_names:
     _start_condition_names identifier
     {
-        d_rules.addStartCondition($2);
-    }
+        d_rules.addStartCondition($2, false);   // false: trailing __ not 
+    }                                           // allowed
 |
     identifier
     {
-        d_rules.addStartCondition($1);
+        d_rules.addStartCondition($1, false);
     }
 ;
 

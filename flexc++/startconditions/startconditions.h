@@ -18,7 +18,7 @@ class StartConditions
         enum Type
         {
             EXCLUSIVE,
-            INCLUSIVE
+            INCLUSIVE,
         };
     private:
         struct StartCondition
@@ -33,7 +33,7 @@ class StartConditions
                                                 // and its rules
         typedef std::unordered_map<std::string, StartCondition> Hash;
         
-        Type d_type;
+        Type d_type = EXCLUSIVE;
         Hash d_hash;
 
         std::vector<StartCondition *> d_active;
@@ -79,7 +79,8 @@ class StartConditions
         };
 
         StartConditions();
-        void add(std::string const &name);   // add a name to the set of SCs
+        void add(std::string const &name, bool underscoreOK);
+                                            // add a name to the set of SCs
         void add(size_t);
         void setType(Type type);
         void reset();

@@ -2,7 +2,7 @@
 
 Pattern Pattern::escape(States &states, std::string const &ch)
 {
-    States::Pair pair = states.next2();
+    Pair pair = states.next2();
 
     states[pair.first] = 
         State::factory(
