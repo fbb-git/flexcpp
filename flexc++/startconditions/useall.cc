@@ -5,6 +5,6 @@ void StartConditions::useAll()
 {
     reset();
 
-    for(auto &mini: d_hash)
+    for(auto &mini: d_scVector)
         d_active.push_back(&mini.second);
 }

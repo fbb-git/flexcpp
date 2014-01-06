@@ -2,7 +2,7 @@
 
 ostream &operator<<(ostream &out, StartConditions const &startConditions)
 {
-    for (auto &element: startConditions.d_hash)
+    for (auto &element: startConditions.d_scVector)
     {
         out << "Rules active for `" << element.first << ":\n";
         copy (element.second.d_rules.begin(), element.second.d_rules.end(), 

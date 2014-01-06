@@ -1,7 +1,7 @@
 #include "startconditions.ih"
 
 StartConditions::StartConditions()
-{
-    d_hash["INITIAL"] = {INCLUSIVE};
-}
+:
+    d_scVector(1, KeyValue("INITIAL", {INCLUSIVE}))
+{}
 

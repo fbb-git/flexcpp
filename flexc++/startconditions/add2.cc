@@ -10,7 +10,7 @@ void StartConditions::add(size_t ruleIdx)
 
                                 // no mini scanners were explicitly mentioned:
                                 // add the rule to all inclusive mini scanners
-    for (auto &element: d_hash) 
+    for (auto &element: d_scVector) 
     {
         if (element.second.d_type == INCLUSIVE)
             element.second.d_rules.push_back(ruleIdx);

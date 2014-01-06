@@ -2,7 +2,7 @@
 #define INCLUDED_STARTCONDITIONS_
 
 #include <iosfwd>
-#include <unordered_map>
+// #include <unordered_map>
 #include <vector>
 #include <string>
 #include <iterator>
@@ -13,28 +13,28 @@ class StartConditions
 {
     friend std::ostream &operator<<(std::ostream &out, 
                                     StartConditions const &startConditions);
-
     public:
         enum Type
         {
             EXCLUSIVE,
             INCLUSIVE,
         };
+
     private:
         struct StartCondition
         {
             Type d_type;
             std::vector<size_t> d_rules;        // rules of this SC.
-
+    
             StartCondition() = default;
             StartCondition(Type type);
         };
-                                                // Hash associates SC name
-                                                // and its rules
-        typedef std::unordered_map<std::string, StartCondition> Hash;
+    
+        typedef std::pair<std::string, StartCondition> KeyValue;
+        typedef std::vector<KeyValue> SCVector;
         
         Type d_type = EXCLUSIVE;
-        Hash d_hash;
+        SCVector d_scVector;
 
         std::vector<StartCondition *> d_active;
         StartCondition *d_initialSC;
@@ -63,7 +63,7 @@ class StartConditions
         {
             friend class StartConditions;
 
-            Hash::const_iterator d_iter;
+            SCVector::const_iterator d_iter;
             mutable NameVector d_nameVector;
 
             public:
@@ -75,7 +75,7 @@ class StartConditions
                                         // initialize a const iterator with
                                         // an iterator to the name and rules
                                         // of a SC.
-                const_iterator(Hash::const_iterator const &iter);
+                const_iterator(SCVector::const_iterator const &iter);
         };
 
         StartConditions();
@@ -93,6 +93,8 @@ class StartConditions
 
         size_t size() const;                // # start conditions so far
     private:
+        SCVector::iterator find(std::string const &key) const;
+
 //        static std::string const &strOf(SemVal const &nameVal);
 };
 
@@ -100,7 +102,7 @@ class StartConditions
     // set by the parser at the section change (%%)
 inline void StartConditions::useInitialSC() 
 {
-    d_initialSC = &d_hash.find("INITIAL")->second;
+    d_initialSC = &(find("INITIAL")->second);
 }
 
 inline void StartConditions::setType(Type type)
@@ -116,11 +118,11 @@ inline void StartConditions::reset()
 inline std::vector<size_t> const &StartConditions::operator()
                                             (std::string const &name) const
 {
-    return d_hash.find(name)->second.d_rules;
+    return find(name)->second.d_rules;
 }
 
 inline StartConditions::const_iterator::const_iterator(
-                                      Hash::const_iterator const &iter)
+                                      SCVector::const_iterator const &iter)
 :
     d_iter(iter)
 {}
@@ -140,12 +142,12 @@ inline StartConditions::const_iterator
             
 inline StartConditions::const_iterator StartConditions::begin() const
 {
-    return const_iterator(d_hash.begin());
+    return const_iterator(d_scVector.begin());
 }
 
 inline StartConditions::const_iterator StartConditions::end() const
 {
-    return const_iterator(d_hash.end());
+    return const_iterator(d_scVector.end());
 }
 
 inline StartConditions::NameVector::NameVector()

@@ -2,7 +2,7 @@
 
 void StartConditions::add(string const &name, bool underscoresOK)
 {
-    if (d_hash.find(name) != d_hash.end())
+    if (find(name) != d_scVector.end())
         emsg << "start condition `" << name << "' multiply defined" << endl; 
     else 
     {
@@ -16,6 +16,6 @@ void StartConditions::add(string const &name, bool underscoresOK)
                 return;
             }
         }
-        d_hash[name] = {d_type};
+        d_scVector.push_back(KeyValue(name, {d_type}));
     }
 }
