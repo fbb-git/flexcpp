@@ -59,6 +59,8 @@ class Rule
         void setOrAction();
         void assignBlock(Block const &block);
         void noAction();
+
+        bool isLopRule() const;
         
     private:
         void setStates(std::vector<size_t> &prePostA, 
@@ -77,6 +79,10 @@ inline size_t Rule::lineNr() const
     return d_block.lineNr();
 }
 
+inline bool Rule::isLopRule() const
+{
+    return d_lop != 0;
+}
 
 inline void Rule::setBol() 
 {

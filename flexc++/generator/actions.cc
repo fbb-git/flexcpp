@@ -7,5 +7,8 @@ void Generator::actions(ostream &out) const
     size_t idx = 0;
 
     for (auto &rule: ranger(d_rules.ruleBegin(), d_rules.ruleEnd()))
-        ruleAction(rule.block(), out, idx);
+    {
+        if (not rule.isLopRule())
+            ruleAction(rule.block(), out, idx);
+    }
 }

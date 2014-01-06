@@ -64,7 +64,6 @@ try
 
     Rules rules(states);
 
-
     Parser parser(rules, states);
         parser.parse();
         parser.cleanup();
@@ -73,8 +72,9 @@ try
         ranges.determineSubsets();
         ranges.finalizeStates();
 
-    DFAs dfas(rules, states, ranges);
+//    rules.handleLopRules();
 
+    DFAs dfas(rules, states, ranges);
         dfas.build();
 
     rules.warnNonViable();
