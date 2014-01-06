@@ -92,6 +92,7 @@ class StartConditions
         std::vector<size_t> const &operator()(std::string const &name) const;
 
         size_t size() const;                // # start conditions so far
+
     private:
         SCVector::iterator find(std::string const &key) const;
 
@@ -171,6 +172,11 @@ inline std::string const &StartConditions::NameVector::name() const
 inline std::vector<size_t> const &StartConditions::NameVector::rules() const
 {
     return *d_rules;
+}
+
+inline size_t StartConditions::size() const
+{
+    return d_scVector.size();
 }
 
 #endif

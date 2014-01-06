@@ -11,7 +11,21 @@ void Rules::handleLopRule(vector<Rule>::iterator &iter)
     if (blockIter != iter)
         iter->assignBlock(blockIter->block());
 
-//    cerr << "There are " << d_startConditions.size() << " SCs\n";
-        // 
+    size_t msIndex = d_startConditions.size();
+
+        // Add the new start conditions for this LOP
+    string startCond1 = "_" + to_string(msIndex) + "_1__";
+//    addStartCondition(startCond1, true);
+//    
+//    string startCond2 = "_" + to_string(msIndex + 1) + "_2__";
+//    addStartCondition(startCond2, true);
+// 
+//    Block block(iter->block());         // save the current action block
+//
+//    Block sc1Block(block.lineNr(), block.filename());
+//    sc1Block += "lop1__(" + to_string(msIndex) + ");\n";
+//
+//    iter->assignBlock(sc1Block);
 }
+
 

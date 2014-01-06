@@ -18,4 +18,6 @@ void StartConditions::add(string const &name, bool underscoresOK)
         }
         d_scVector.push_back(KeyValue(name, {d_type}));
     }
+cerr << "Add 4 " << name << '\n';
+
 }

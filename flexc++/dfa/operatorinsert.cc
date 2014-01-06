@@ -4,10 +4,17 @@ ostream &operator<<(ostream &out, DFA const &dfa)
 {
     size_t nCols = dfa.d_ranges->nUsed() + 2;
 
+    out << "\nDFA Ranges: " << dfa.d_ranges->nUsed() << '\n';
+    return out;
+
+
+
     TableLines support;
     support << 0;
+
     for (size_t idx = 0; idx != nCols - 3; ++idx)   // set separator widths
         support << 2;
+
     support << 3 << 3 << 2;                         // F column stands out
                                                     // more clearly
 

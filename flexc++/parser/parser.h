@@ -48,6 +48,7 @@ class Parser: public ParserBase
     Rules &d_rules;
     States &d_states;
 
+//FBB   remove:
     size_t d_lopStartCondition = 0;         // startconditions for LOPs
 
     static int s_ignoreToken;

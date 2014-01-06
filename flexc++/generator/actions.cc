@@ -10,5 +10,18 @@ void Generator::actions(ostream &out) const
     {
         if (not rule.isLopRule())
             ruleAction(rule.block(), out, idx);
+        else
+            ++idx;
     }
+
+//    idx = 0;
+//
+//    for (auto &rule: ranger(d_rules.ruleBegin(), d_rules.ruleEnd()))
+//    {
+//        if (rule.isLopRule())
+//            ruleAction(rule.block(), out, idx);
+//        else
+//            ++idx;
+//    }
+
 }
