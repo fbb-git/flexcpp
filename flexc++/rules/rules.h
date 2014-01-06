@@ -67,6 +67,10 @@ class Rules
 
         StartConditions const &startConditions() const;
 
+        void handleLopRules();
+
+        void handleLopRule(std::vector<Rule>::iterator &iter);
+
     private:
         void setRule(size_t state, size_t index);
         static bool nonViable(Rule const &rule);

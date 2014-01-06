@@ -1,25 +1,3 @@
-// #include "parser.ih"
-// 
-// void Parser::lopRule(LopRule &rule)
-// {
-//         // Keep a copy of the lhs expression, the begin of the rhs expression
-//         // and concatenate a/b into ab:
-// 
-//                     // Save a duplicate of the lhs
-//     Pattern lhs(rule.pattern().duplicate(d_states));
-// 
-//                     // keep the first state of the rhs
-//     Pair rhs = rule.pattern().rhs();
-// 
-//                     // comcatenate lhs-rhs
-//     Pattern concat(
-//                 Pattern::concatenate(
-//                     d_states, 
-//                     rule.pattern(), 
-//                     Pattern(rule.pattern().rhs())
-//                 )
-//             );
-// 
 //                 // define 1st startconditionname
 //     string startCond1 = "_" + to_string(d_lopStartCondition++) + "_1__";
 //     d_rules.addStartCondition(startCond1, true);    // add a new start

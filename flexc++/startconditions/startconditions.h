@@ -91,6 +91,7 @@ class StartConditions
         const_iterator end() const;
         std::vector<size_t> const &operator()(std::string const &name) const;
 
+        size_t size() const;                // # start conditions so far
     private:
 //        static std::string const &strOf(SemVal const &nameVal);
 };

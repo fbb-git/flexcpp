@@ -72,7 +72,7 @@ try
         ranges.determineSubsets();
         ranges.finalizeStates();
 
-//    rules.handleLopRules();
+    rules.handleLopRules();
 
     DFAs dfas(rules, states, ranges);
         dfas.build();
