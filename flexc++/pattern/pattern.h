@@ -26,15 +26,13 @@ class Pattern: private FlexTypes
         Pattern(Pair const &pair = Pair{0, 0});
         Pattern(Pattern const &lhs, Pattern const &rhs);    // lop pattern
 
-//        ~Pattern();
-
         Pattern &operator=(Pattern const &other) = default;
         Pattern &operator=(Pair const &pair);
 
         size_t begin() const;                       // pattern's first state
         size_t end() const;                         // pattern's last state
         Pair const &pair() const;                   // {begin, end}
-        Pattern const *rhs() const;                 // 0 or LOP's rhs
+        Pattern const &rhs() const;                 // LOP's rhs
 
         bool canBeEmpty(States const &states) const;// true if there's an
                                                     // empty transition from
@@ -109,9 +107,9 @@ inline Pattern::Pair const &Pattern::pair() const
     return d_pair;
 }
 
-inline Pattern const *Pattern::rhs() const
+inline Pattern const &Pattern::rhs() const
 {
-    return d_lopRhs.get();
+    return *d_lopRhs;
 }
 
 inline bool Pattern::isLopPattern() const

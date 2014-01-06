@@ -8,6 +8,7 @@
 #include "../block/block.h"
 
 class States;
+class Pattern;
 
 class Rule
 {
@@ -16,8 +17,8 @@ class Rule
 
     typedef std::pair<size_t, size_t> Pair;     // first/final state nrs.
 
-    size_t d_start;             // index in States
-    size_t d_final;             // index in States
+    Pair d_pair;                // first: States start index, 
+                                // second: States final index
 
     Block d_block;              // action block
 
@@ -37,10 +38,10 @@ class Rule
     public:
         Rule() = default;               // for vector operations by Rules
 
-//FBB: changed Pair fstfin to Pair const &fstfin
-        Rule(States const &states, bool bol, Pair const &fstfin, 
+        Rule(States &states, bool bol, Pattern const &pattern,
              Block const &block);
 
+        Pair const &pair() const;
         size_t startState() const;
         size_t finalState() const;
         Block const &block() const;
@@ -97,14 +98,19 @@ inline bool Rule::viable() const
     return d_viable;
 }
 
+inline Rule::Pair const &Rule::pair() const
+{
+    return d_pair;
+}
+
 inline size_t Rule::startState() const
 {
-    return d_start;
+    return d_pair.first;
 }
 
 inline size_t Rule::finalState() const
 {
-    return d_final;
+    return d_pair.second;
 }
 
 inline Block const &Rule::block() const
