@@ -1,7 +1,9 @@
 #include "pattern.ih"
 
-Pattern::Pattern(Pattern const &lhs, Pattern const &rhs)
+Pattern::Pattern(States &states, Pattern const &lopLhs, Pattern const &lopRhs, 
+                 size_t startCondition)
 :
-    d_pair(lhs.d_pair),
-    d_lopRhs(new Pattern(rhs))
+    d_lopData(new LopData {startCondition, lopRhs.pair().first,
+                           lopLhs.duplicate(states) }),    
+    d_pair(concatenate(states, lopLhs, lopRhs).pair())
 {}

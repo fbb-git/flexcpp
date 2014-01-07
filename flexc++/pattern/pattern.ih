@@ -12,6 +12,7 @@
 #include "../interval/interval.h"
 #include "../charclass/charclass.h"
 #include "../options/options.h"
+#include "../states/states.h"
 
 using namespace std;
 using namespace FBB;

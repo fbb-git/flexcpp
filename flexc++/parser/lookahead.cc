@@ -21,11 +21,14 @@ Pattern Parser::lookahead(Pattern const &left, Pattern const &right)
 
     d_doError = true;
 
-    
-    Pattern ret = right.canBeEmpty(d_states) ?
-                    left
-                :
-                    Pattern(left, right);
+    Pattern ret;
+    if (right.canBeEmpty(d_states))
+        ret = left;    
+    else
+    {
+        ret = Pattern(d_states, left, right,  d_lopStartCondition);
+        d_lopStartCondition += 2;
+    }
 
     return ret;
 }

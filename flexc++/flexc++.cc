@@ -66,13 +66,14 @@ try
 
     Parser parser(rules, states);
         parser.parse();
+        parser.addLopStartConditions();
         parser.cleanup();
+
+    rules.handleLopRules();
 
     Ranges ranges(states);
         ranges.determineSubsets();
         ranges.finalizeStates();
-
-    rules.handleLopRules();
 
     DFAs dfas(rules, states, ranges);
         dfas.build();

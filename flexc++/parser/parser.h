@@ -48,7 +48,6 @@ class Parser: public ParserBase
     Rules &d_rules;
     States &d_states;
 
-//FBB   remove:
     size_t d_lopStartCondition = 0;         // startconditions for LOPs
 
     static int s_ignoreToken;
@@ -57,6 +56,7 @@ class Parser: public ParserBase
     public:
         Parser(Rules &rules, States &states);
         int parse();
+        void addLopStartConditions();
         void cleanup();     // prepare Mstream tags, define accessor variables
                             // and show filenames
     private:
@@ -81,8 +81,6 @@ class Parser: public ParserBase
 
         void assignBlock();
         void noActions();
-
-//FBB        void lopRule(LopRule &rule);
 
         void addRule(Pattern const &rule, bool resetMs = false);
 //FBB        void addBlockRule(Pattern const &rule);

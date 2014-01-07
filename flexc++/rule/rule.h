@@ -6,9 +6,9 @@
 #include <set>
 
 #include "../block/block.h"
+#include "../pattern/pattern.h"
 
 class States;
-class Pattern;
 
 class Rule
 {
@@ -17,7 +17,8 @@ class Rule
 
     typedef std::pair<size_t, size_t> Pair;     // first/final state nrs.
 
-    Pair d_pair;                // first: States start index, 
+    Pattern d_pattern;          // pattern to match for this rule.
+                                // first: States start index, 
                                 // second: States final index
 
     Block d_block;              // action block
@@ -25,16 +26,6 @@ class Rule
     bool d_bol;                 // this rule is matched if starting at BOL
     bool d_viable;              // this rule is viable, i.e., it can be
                                 // matched
-
-    struct LopData
-    {
-        Pair lhs;               // copy of the lhs LOP rule state indices
-        size_t mid;             // index in States where lhs ends and rhs
-                                // begins 
-    };
-    LopData *d_lop = 0;         // if not 0: a LOP pattern
-
-
     public:
         Rule() = default;               // for vector operations by Rules
 
@@ -81,7 +72,7 @@ inline size_t Rule::lineNr() const
 
 inline bool Rule::isLopRule() const
 {
-    return d_lop != 0;
+    return d_pattern.isLopPattern();
 }
 
 inline void Rule::setBol() 
@@ -106,17 +97,17 @@ inline bool Rule::viable() const
 
 inline Rule::Pair const &Rule::pair() const
 {
-    return d_pair;
+    return d_pattern.pair();
 }
 
 inline size_t Rule::startState() const
 {
-    return d_pair.first;
+    return d_pattern.pair().first;
 }
 
 inline size_t Rule::finalState() const
 {
-    return d_pair.second;
+    return d_pattern.pair().second;
 }
 
 inline Block const &Rule::block() const

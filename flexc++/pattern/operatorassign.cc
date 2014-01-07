@@ -3,6 +3,6 @@
 Pattern &Pattern::operator=(Pair const &pair)
 {
     d_pair = pair;
-    d_lopRhs.reset();
+    d_lopData.reset();
     return *this;
 }

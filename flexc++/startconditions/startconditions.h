@@ -94,11 +94,26 @@ class StartConditions
         size_t size() const;                // # start conditions so far
 
     private:
-        SCVector::iterator find(std::string const &key) const;
+        SCVector::iterator find(std::string const &key);
+        SCVector::const_iterator find(std::string const &key) const;
+
+        KeyValue *findKV(std::string const &key) const;
 
 //        static std::string const &strOf(SemVal const &nameVal);
 };
 
+
+inline StartConditions::SCVector::const_iterator 
+        StartConditions::find(std::string const &key) const
+{
+    return SCVector::const_iterator(findKV(key));
+}
+
+inline StartConditions::SCVector::iterator 
+        StartConditions::find(std::string const &key)
+{
+    return SCVector::iterator(findKV(key));
+}
 
     // set by the parser at the section change (%%)
 inline void StartConditions::useInitialSC() 

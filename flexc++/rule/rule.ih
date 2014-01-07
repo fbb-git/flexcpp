@@ -1,7 +1,6 @@
 #include "rule.h"
 
 #include "../states/states.h"
-#include "../pattern/pattern.h"
 
 // #include <iostream>     // TEMPO
 

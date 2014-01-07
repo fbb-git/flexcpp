@@ -54,7 +54,7 @@ class Rules
         rule_const_iterator ruleBegin() const;
         rule_const_iterator ruleEnd() const;
 
-        size_t size() const;
+        size_t size() const;                    // # of rules
 
         void warnNonViable() const;
         void setOrAction();         // set the previous rule's action to '|'

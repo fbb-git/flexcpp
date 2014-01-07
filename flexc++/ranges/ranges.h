@@ -62,7 +62,7 @@ class Ranges: private FlexTypes
 
         size_t size() const;
         size_t const *ranges() const;
-        
+        size_t charSize() 
     private:
         static bool collision(std::string const &str, size_t const *next);
         static bool chCollision(unsigned char ch, unsigned char &pre, 

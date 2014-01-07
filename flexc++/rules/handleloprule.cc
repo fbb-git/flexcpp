@@ -13,13 +13,6 @@ void Rules::handleLopRule(vector<Rule>::iterator &iter)
 
     size_t msIndex = d_startConditions.size();
 
-        // Add the new start conditions for this LOP
-    string startCond1 = "_" + to_string(msIndex) + "_1__";
-//    addStartCondition(startCond1, true);
-//    
-//    string startCond2 = "_" + to_string(msIndex + 1) + "_2__";
-//    addStartCondition(startCond2, true);
-// 
 //    Block block(iter->block());         // save the current action block
 //
 //    Block sc1Block(block.lineNr(), block.filename());
