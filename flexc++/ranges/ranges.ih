@@ -9,6 +9,7 @@
 #include <ostream>
 #include <iomanip>
 #include <cctype>
+#include <cstring>
 
 #include "../states/states.h"
 #include "../statestring/statestring.h"

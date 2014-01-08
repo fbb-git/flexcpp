@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <set>
+#include <memory>
 
 #include <bobcat/fswap>
 
@@ -70,6 +71,8 @@ class Ranges: private FlexTypes
 
         size_t nRanges() const;
         size_t const *alphabet() const;
+
+        void copyUsedRanges(std::shared_ptr<bool> &dest);
 
     private:
         static bool collision(std::string const &str, size_t const *next);
