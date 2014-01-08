@@ -83,6 +83,7 @@ section_delimiter:
     {
         d_rules.useInitialSC();
         d_lopStartCondition = d_rules.startConditions().size();
+        //d_rules.setEndUserSC();
         reset();
     }
 ;

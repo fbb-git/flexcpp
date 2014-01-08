@@ -35,6 +35,7 @@ class StartConditions
         
         Type d_type = EXCLUSIVE;
         SCVector d_scVector;
+        SCVector::iterator d_endUserSC;
 
         std::vector<StartCondition *> d_active;
         StartCondition *d_initialSC;
@@ -93,6 +94,8 @@ class StartConditions
 
         size_t size() const;                // # start conditions so far
 
+        void setEndUserSC();
+
     private:
         SCVector::iterator find(std::string const &key);
         SCVector::const_iterator find(std::string const &key) const;
@@ -102,6 +105,10 @@ class StartConditions
 //        static std::string const &strOf(SemVal const &nameVal);
 };
 
+inline void StartConditions::setEndUserSC()
+{
+    d_endUserSC = d_scVector.end();
+}
 
 inline StartConditions::SCVector::const_iterator 
         StartConditions::find(std::string const &key) const
