@@ -45,16 +45,6 @@ void DFA::build(std::string const &name, vector<size_t> const &active)
     d_nUsedRanges = d_ranges->nUsedRanges();
     d_ranges->copyUsedRanges(d_usedRanges);
 
-
-cerr << "DFA " << name << " uses " << d_nUsedRanges << " ranges\n";
-cerr << "nRanges: " << d_ranges->nRanges() << '\n';
-    for (size_t idx = 0, end = d_ranges->nRanges(); idx++ != end; )
-    {
-        if (d_usedRanges.get()[idx - 1])
-            cerr << setw(3) << idx;
-    }
-cerr << '\n';
-
     for (auto &row: d_row)
         row.setUsedRanges(d_usedRanges.get());
 }

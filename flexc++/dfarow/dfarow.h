@@ -89,7 +89,6 @@ class DFARow: private FlexTypes
 
         void tabulateTransitions(FBB::Table &table) const;
         void tabulateFinals(FBB::Table &table) const;
-//        void tabulateAccepts(FBB::Table &table) const;
 
             // determine the eClosure of a set of transitions for each of the
             // char-ranges of the input alphabet, including the special 

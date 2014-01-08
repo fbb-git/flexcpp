@@ -136,9 +136,6 @@ class Generator
 
         size_t dfaCols() const;
 
-//FBB
-//        void rfs(std::ostream &out) const;
-
         static void outRF(RuleFlag const &rfc, std::ostream &out,
                                                      size_t &idx);
         static void dfa(DFAs::Pair const &dfaPair, std::ostream &out, 

@@ -71,7 +71,5 @@ inline size_t DFA::size() const
     return d_row.size();
 }
 
-//        void mergeFinalSet();
-
 #endif
 

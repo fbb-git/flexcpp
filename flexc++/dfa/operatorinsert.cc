@@ -29,7 +29,6 @@ ostream &operator<<(ostream &out, DFA const &dfa)
     table << "   ";                                // char-ranges display
     for (size_t idx = 0, end = dfa.d_ranges->nRanges(); idx++ != end; )
     {
-//        if (dfa.d_ranges->usedRange(idx))
         if (dfa.d_usedRanges.get()[idx - 1])
             table << idx;
     }
