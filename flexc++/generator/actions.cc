@@ -6,6 +6,8 @@ void Generator::actions(ostream &out) const
 
     size_t idx = 0;
 
+    // handle the non-LOP rule actions:
+
     for (auto &rule: ranger(d_rules.ruleBegin(), d_rules.ruleEnd()))
     {
         if (not rule.isLopRule())
