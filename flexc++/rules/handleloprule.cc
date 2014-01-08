@@ -1,13 +1,20 @@
 #include "rules.ih"
 
+    // On entry iter points at a LOP rule.
 void Rules::handleLopRule(vector<Rule>::iterator &iter)
 {
-        // make sure LOP rules have their own action blocks:
-    auto &blockIter = iter;
+        // make sure LOP rules have their own action blocks: it may not yet
+        // have an action block, because it can be part of an OR-chained 
+        // series of actions
 
+        // Find the first non-OR action:
+    auto &blockIter = iter;
     while (blockIter->block().orAction())
         ++blockIter;
 
+        // Got it, at a different location than iter itsef, then
+        // assign the true action block to the lop rule's action block
+        
     if (blockIter != iter)
         iter->assignBlock(blockIter->block());
 

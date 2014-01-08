@@ -70,13 +70,19 @@ class Rules
 
         void handleLopRules();
 
-        void handleLopRule(std::vector<Rule>::iterator &iter);
-
         void setEndUserSC();
 
     private:
         void setRule(size_t state, size_t index);
+
+        void setLopBlocks();
+
+        void handleLopRule(std::vector<Rule>::iterator &iter);  //FBB
+
+
         static bool nonViable(Rule const &rule);
+
+
 };
 
 inline void Rules::setEndUserSC()
