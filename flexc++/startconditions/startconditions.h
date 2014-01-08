@@ -13,6 +13,7 @@ class StartConditions
 {
     friend std::ostream &operator<<(std::ostream &out, 
                                     StartConditions const &startConditions);
+
     public:
         enum Type
         {
@@ -35,6 +36,7 @@ class StartConditions
         
         Type d_type = EXCLUSIVE;
         SCVector d_scVector;
+        SCVector::iterator d_endUserSC;      
 
         std::vector<StartCondition *> d_active;
         StartCondition *d_initialSC;
@@ -93,6 +95,8 @@ class StartConditions
 
         size_t size() const;                // # start conditions so far
 
+        void updateEndUserSC();
+
     private:
         SCVector::iterator find(std::string const &key);
         SCVector::const_iterator find(std::string const &key) const;
@@ -102,6 +106,10 @@ class StartConditions
 //        static std::string const &strOf(SemVal const &nameVal);
 };
 
+void StartConditions::updateEndUserSC()
+{
+    d_endUserSC = d_scVector.end();
+}
 
 inline StartConditions::SCVector::const_iterator 
         StartConditions::find(std::string const &key) const
@@ -163,7 +171,7 @@ inline StartConditions::const_iterator StartConditions::begin() const
 
 inline StartConditions::const_iterator StartConditions::end() const
 {
-    return const_iterator(d_scVector.end());
+    return const_iterator(d_endUsedStartConditions);
 }
 
 inline StartConditions::NameVector::NameVector()

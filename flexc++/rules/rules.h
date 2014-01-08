@@ -71,6 +71,8 @@ class Rules
 
         void handleLopRule(std::vector<Rule>::iterator &iter);
 
+        void updateEndUserSC();
+
     private:
         void setRule(size_t state, size_t index);
         static bool nonViable(Rule const &rule);
@@ -79,6 +81,11 @@ class Rules
 inline StartConditions const &Rules::startConditions() const
 {
     return d_startConditions;
+}
+
+inline void Rules::updateEndUserSC()
+{
+    d_rules.updateEndUserSC();
 }
 
 inline void Rules::setOrAction()
