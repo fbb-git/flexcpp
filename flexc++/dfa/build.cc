@@ -55,6 +55,8 @@ cerr << "nRanges: " << d_ranges->nRanges() << '\n';
     }
 cerr << '\n';
 
+    for (auto &row: d_row)
+        row.setUsedRanges(d_usedRanges.get());
 }
 
 

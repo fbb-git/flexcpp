@@ -44,6 +44,8 @@ class DFARow: private FlexTypes
     Rules *d_rules;
     Ranges *d_ranges;
 
+    bool const *d_usedRanges;
+
     public:
         typedef std::unordered_map<size_t, size_t>::value_type MapValue;
 
@@ -79,6 +81,8 @@ class DFARow: private FlexTypes
         bool operator==(DFARow const &rhs) const;
 
         void uniqueMap(std::vector<size_t> const &xlat);
+
+        void setUsedRanges(bool *usedRanges);
 
     private:
         void updateViable(size_t &destIdx, size_t ruleIdx); // in setfinal.cc
@@ -120,6 +124,11 @@ inline std::pair<size_t, size_t> const &DFARow::final() const
 inline size_t DFARow::size() const
 {
     return d_ranges->nRanges();
+}
+
+inline void DFARow::setUsedRanges(bool *usedRanges)
+{
+    d_usedRanges = usedRanges;
 }
 
 FBB::Table &operator<<(FBB::Table& out, DFARow const &row);

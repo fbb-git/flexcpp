@@ -2,12 +2,14 @@
 
 ostream &operator<<(ostream &out, DFA const &dfa)
 {
-//    size_t nCols = dfa.d_ranges->nUsedRanges() + 2;
+    if (dfa.d_nUsedRanges == 0)
+    {
+        out << "    No transitions\n"
+                "\n";
+        return out;
+    }
 
     size_t nCols = dfa.d_nUsedRanges + 2;
-
-    if (nCols == 2)
-        return out;
 
     TableLines support;
     support << 0;
@@ -27,7 +29,8 @@ ostream &operator<<(ostream &out, DFA const &dfa)
     table << "   ";                                // char-ranges display
     for (size_t idx = 0, end = dfa.d_ranges->nRanges(); idx++ != end; )
     {
-        if (dfa.d_ranges->usedRange(idx))
+//        if (dfa.d_ranges->usedRange(idx))
+        if (dfa.d_usedRanges.get()[idx - 1])
             table << idx;
     }
     table << 'F';
@@ -38,8 +41,6 @@ ostream &operator<<(ostream &out, DFA const &dfa)
             idx != end; 
                 ++idx)
     {
-//        if (dfa.d_unique[idx] < next)
-//            continue;
         table << next << dfa.d_row[idx];
         ++next;
     }
