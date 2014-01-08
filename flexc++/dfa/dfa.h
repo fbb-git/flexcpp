@@ -26,7 +26,7 @@ class DFA
     std::vector<DFARow> d_row;
     std::vector<Size_tSet> d_stateSet;      // states belonging to a DFA row
 
-    size_t d_nUsed = 0;             // number of ranges used by this DFA
+    size_t d_nUsedRanges = 0;             // number of ranges used by this DFA
     bool *d_used = 0;
 
     static FBB::Mstream s_verbose;  // writes to cout if verbose was set

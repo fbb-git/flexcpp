@@ -17,6 +17,6 @@ void Ranges::finalizeStates()
     for(auto &state: d_states)
         finalizeState(state);
 
-    d_used = new bool[d_nRanges];
-    clearUsed();
+    d_usedRanges = new bool[d_nRanges];
+    clearUsedRanges();
 }

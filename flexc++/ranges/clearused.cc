@@ -1,6 +1,6 @@
 #include "ranges.ih"
 
-void Ranges::clearUsed()
+void Ranges::clearUsedRanges()
 {
-    fill(d_used, d_used + d_nRanges, false);
+    fill(d_usedRanges, d_usedRanges + d_nRanges, false);
 }

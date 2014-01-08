@@ -4,7 +4,7 @@
 
 void DFA::build(std::string const &name, vector<size_t> const &active)    
 {
-    d_ranges->clearUsed();
+    d_ranges->clearUsedRanges();
 
         // start with the initial states of all rules that are active in this 
         // miniscanner (rule nrs provided by the active-vector) 
@@ -40,14 +40,14 @@ void DFA::build(std::string const &name, vector<size_t> const &active)
 
     s_verbose << '\n';
 
-    d_nUsed = d_ranges->nUsed();
+    d_nUsedRanges = d_ranges->nUsedRanges();
 
 
-cerr << "DFA " << name << " uses " << d_nUsed << " ranges\n";
+cerr << "DFA " << name << " uses " << d_nUsedRanges << " ranges\n";
 cerr << "Ranges size: " << d_ranges->nRanges() << '\n';
     for (size_t idx = 0, end = d_ranges->nRanges(); idx++ != end; )
     {
-        if (d_ranges->used(idx))
+        if (d_ranges->usedRange(idx))
             cerr << setw(3) << idx;
     }
 cerr << '\n';

@@ -2,9 +2,9 @@
 
 ostream &operator<<(ostream &out, DFA const &dfa)
 {
-//    size_t nCols = dfa.d_ranges->nUsed() + 2;
+//    size_t nCols = dfa.d_ranges->nUsedRanges() + 2;
 
-    size_t nCols = dfa.d_nUsed + 2;
+    size_t nCols = dfa.d_nUsedRanges + 2;
 
     if (nCols == 2)
         return out;
@@ -27,7 +27,7 @@ ostream &operator<<(ostream &out, DFA const &dfa)
     table << "   ";                                // char-ranges display
     for (size_t idx = 0, end = dfa.d_ranges->nRanges(); idx++ != end; )
     {
-        if (dfa.d_ranges->used(idx))
+        if (dfa.d_ranges->usedRange(idx))
             table << idx;
     }
     table << 'F';
