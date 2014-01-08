@@ -88,11 +88,6 @@ inline StartConditions const &Rules::startConditions() const
     return d_startConditions;
 }
 
-inline void Rules::updateEndUserSC()
-{
-    d_rules.updateEndUserSC();
-}
-
 inline void Rules::setOrAction()
 {
     d_rules[d_rules.size() - 2].setOrAction();

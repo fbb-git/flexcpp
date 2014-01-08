@@ -171,7 +171,7 @@ inline StartConditions::const_iterator StartConditions::begin() const
 
 inline StartConditions::const_iterator StartConditions::end() const
 {
-    return const_iterator(d_endUsedStartConditions);
+    return const_iterator(d_scVector.end());
 }
 
 inline StartConditions::NameVector::NameVector()

@@ -69,7 +69,7 @@ try
         parser.addLopStartConditions();
         parser.cleanup();
 
-    rules.handleLopRules();
+//    rules.handleLopRules();
 
     Ranges ranges(states);
         ranges.determineSubsets();
