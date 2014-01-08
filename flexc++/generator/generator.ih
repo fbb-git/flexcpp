@@ -25,7 +25,7 @@ using namespace FBB;
 
 inline size_t Generator::dfaCols() const
 {
-    return d_ranges.size() + RF_INDICES; 
+    return d_ranges.nRanges() + RF_INDICES; 
 }
 
 inline void Generator::outStartState(string const &name, ostream &out)

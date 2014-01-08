@@ -8,7 +8,7 @@ void Generator::ranges(ostream &out) const
         "size_t const " << className << "Base::s_ranges__[] =\n" 
         "{";
 
-    size_t const *charRange = d_ranges.ranges();
+    size_t const *charRange = d_ranges.alphabet();
     for (size_t begin = 0; begin != 256; ++begin)
     {
         if (begin % 25 == 0)

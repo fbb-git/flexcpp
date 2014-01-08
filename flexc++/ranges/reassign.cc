@@ -1,6 +1,6 @@
 #include "ranges.ih"
 
-// And individual element in the current d_ranges array is replaced by 
+// And individual element in the current d_alphabet array is replaced by 
 // its index in the rangeNr vector
 
 void Ranges::reassign(size_t &count, vector<size_t> &rangeNrs)

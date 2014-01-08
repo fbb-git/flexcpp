@@ -42,10 +42,10 @@ void DFA::build(std::string const &name, vector<size_t> const &active)
 
     d_nUsed = d_ranges->nUsed();
 
-    d_used = new
+
 cerr << "DFA " << name << " uses " << d_nUsed << " ranges\n";
-cerr << "Ranges size: " << d_ranges->size() << '\n';
-    for (size_t idx = 0, end = d_ranges->size(); idx++ != end; )
+cerr << "Ranges size: " << d_ranges->nRanges() << '\n';
+    for (size_t idx = 0, end = d_ranges->nRanges(); idx++ != end; )
     {
         if (d_ranges->used(idx))
             cerr << setw(3) << idx;

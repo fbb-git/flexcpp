@@ -9,16 +9,16 @@ void Ranges::update(string const &str, size_t const *next)
         // add next to ranges, otherwise copy next to ranges
         //    
     if (collision(str, next))       
-        transform(d_ranges, d_ranges + d_size, next, d_ranges, plus<size_t>());
+        transform(d_alphabet, d_alphabet + d_alphabetSize, next, d_alphabet, plus<size_t>());
     else
-        copy(next, next + d_size, d_ranges);
+        copy(next, next + d_alphabetSize, d_alphabet);
 
         // Determine the numbers used in the ranges, reduce the actual
         // d_range vaues by their indices in rangeNrs
     vector<size_t> rangeNrs;
 
     for_each(
-        d_ranges, d_ranges + d_size, 
+        d_alphabet, d_alphabet + d_alphabetSize, 
         [&](size_t &count)
         {
             countRanges(count, rangeNrs);

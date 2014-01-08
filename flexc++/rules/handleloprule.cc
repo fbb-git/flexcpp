@@ -11,7 +11,7 @@ void Rules::handleLopRule(vector<Rule>::iterator &iter)
     if (blockIter != iter)
         iter->assignBlock(blockIter->block());
 
-    size_t msIndex = d_startConditions.size();
+//    size_t msIndex = d_startConditions.size();
 
 //    Block block(iter->block());         // save the current action block
 //

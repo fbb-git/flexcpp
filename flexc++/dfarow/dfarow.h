@@ -119,7 +119,7 @@ inline std::pair<size_t, size_t> const &DFARow::final() const
 
 inline size_t DFARow::size() const
 {
-    return d_ranges->size();
+    return d_ranges->nRanges();
 }
 
 FBB::Table &operator<<(FBB::Table& out, DFARow const &row);

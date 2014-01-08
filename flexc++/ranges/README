@@ -190,4 +190,4 @@ kunnen worden genegeerd bij de DFA constructie.
 ------------------------------------------------------------------
 19/4
 
-Returned Ranges are indices, d_ranges returns the number of different ranges. 
+Returned Ranges are indices, d_alphabet returns the number of different ranges. 

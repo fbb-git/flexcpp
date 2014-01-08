@@ -12,11 +12,11 @@
 void Ranges::finalizeStates()
 {
                                     // always use the <<EOF>> range
-    d_eof = d_subsets == 0 ? ++d_subsets : d_subsets++;
+    d_eof = d_nRanges == 0 ? ++d_nRanges : d_nRanges++;
 
     for(auto &state: d_states)
         finalizeState(state);
 
-    d_used = new bool[d_subsets];
+    d_used = new bool[d_nRanges];
     clearUsed();
 }

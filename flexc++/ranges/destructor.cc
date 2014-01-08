@@ -2,6 +2,6 @@
 
 Ranges::~Ranges()
 {
-    delete[] d_ranges;
+    delete[] d_alphabet;
     delete[] d_used;
 }

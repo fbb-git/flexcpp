@@ -2,5 +2,5 @@
 
 void Ranges::clearUsed()
 {
-    fill(d_used, d_used + d_subsets, false);
+    fill(d_used, d_used + d_nRanges, false);
 }

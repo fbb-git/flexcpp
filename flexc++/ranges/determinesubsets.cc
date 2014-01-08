@@ -8,8 +8,8 @@ void Ranges::determineSubsets()
     // now convert counts to ranges. At each transition increment the range 
     // nr. The initial range is 0
 
-    size_t *begin = d_ranges;
-    size_t *end = d_ranges + d_size;
+    size_t *begin = d_alphabet;
+    size_t *end = d_alphabet + d_alphabetSize;
     size_t range = 0;
     while (begin != end)
     {

@@ -25,7 +25,7 @@ ostream &operator<<(ostream &out, DFA const &dfa)
 
 
     table << "   ";                                // char-ranges display
-    for (size_t idx = 0, end = dfa.d_ranges->size(); idx++ != end; )
+    for (size_t idx = 0, end = dfa.d_ranges->nRanges(); idx++ != end; )
     {
         if (dfa.d_ranges->used(idx))
             table << idx;

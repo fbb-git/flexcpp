@@ -3,7 +3,7 @@
 void DFARow::tabulateTransitions(Table &table) const
 {
                                     // only display the ranges that are used 
-     for (size_t idx = 0, end = d_ranges->size(); idx++ != end; )
+     for (size_t idx = 0, end = d_ranges->nRanges(); idx++ != end; )
      {
          if (not d_ranges->used(idx))
              continue;

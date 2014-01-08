@@ -2,11 +2,11 @@
 
 ostream &operator<<(ostream &out, Ranges const &rangesObj)
 {
-    out << "Nsubsets: " << rangesObj.d_subsets << '\n';
+    out << "Nsubsets: " << rangesObj.d_nRanges << '\n';
 
-    size_t *ranges = rangesObj.d_ranges;
+    size_t *ranges = rangesObj.d_alphabet;
     size_t *begin = ranges;
-    size_t *end = ranges + rangesObj.d_size;
+    size_t *end = ranges + rangesObj.d_alphabetSize;
     size_t range = 0;
 
     while (begin != end)

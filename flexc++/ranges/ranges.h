@@ -13,17 +13,25 @@ class States;
 class State;
 class StateData;
 
+// After computing the ranges (after determineSubsets and finalizeStates) the
+// indices of d_alphabet refer to the characters of the input alphabet and
+// their values refer to the subset (the range) to which the character
+// belongs.  if adjacent indices have identical values then they belong to the
+// same character set.
+
 class Ranges: private FlexTypes
 {
     friend std::ostream &operator<<(std::ostream &out, Ranges const &ranges);
 
-    size_t *d_ranges;       // all (by default) 256 characters
-    size_t d_size;
+    size_t *d_alphabet;       // all (by default) 256 characters
+    size_t d_alphabetSize;
 
-    size_t d_subsets;
+    size_t d_nRanges;
     size_t d_bol;           // nrs for EOF__ and BOL
     size_t d_eof;
     States &d_states;
+
+
     bool *d_used;           // ranges used in the DFA's
     
     public:
@@ -39,7 +47,7 @@ class Ranges: private FlexTypes
         void swap(Ranges &other);
 
         void determineSubsets();    // determine the ranges for chars in
-                                    // d_ranges. 
+                                    // d_alphabet. 
 
         void finalizeStates();      // all chars, strings and sets are 
                                     // converted to character sets.
@@ -60,9 +68,9 @@ class Ranges: private FlexTypes
         void setUsed(size_t rangeNr);
         size_t nUsed() const;
 
-        size_t size() const;
-        size_t const *ranges() const;
-        size_t charSize() 
+        size_t nRanges() const;
+        size_t const *alphabet() const;
+
     private:
         static bool collision(std::string const &str, size_t const *next);
         static bool chCollision(unsigned char ch, unsigned char &pre, 
@@ -86,19 +94,19 @@ inline void Ranges::swap(Ranges &other)
     FBB::fswap(*this, other);
 }
 
-inline size_t Ranges::size() const
+inline size_t Ranges::nRanges() const
 {
-    return d_subsets;
+    return d_nRanges;
 }
 
-inline size_t const *Ranges::ranges() const
+inline size_t const *Ranges::alphabet() const
 {
-    return d_ranges;
+    return d_alphabet;
 }
 
 inline size_t Ranges::rangeOf(char ch) const
 {
-    return d_ranges[static_cast<unsigned char>(ch)];
+    return d_alphabet[static_cast<unsigned char>(ch)];
 }
 
 inline size_t Ranges::rangeOfBOL() const

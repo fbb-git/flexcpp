@@ -7,7 +7,7 @@ void Ranges::finalizeState(State &state)
     switch (size_t type = state.type())
     {
         case CHARSET:
-            charsetToRanges(state.data(), d_ranges);
+            charsetToRanges(state.data(), d_alphabet);
         break;
 
         case EOF__:
@@ -16,7 +16,7 @@ void Ranges::finalizeState(State &state)
 
         default:
             if (type < UNDETERMINED__)
-                state.setType(d_ranges[type]);
+                state.setType(d_alphabet[type]);
         break;
     }
 }
