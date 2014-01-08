@@ -50,6 +50,7 @@ class Rules
 
         const_iterator begin() const;
         const_iterator end() const;
+        const_iterator endUserSC() const;
 
         rule_const_iterator ruleBegin() const;
         rule_const_iterator ruleEnd() const;
@@ -106,6 +107,11 @@ inline Rules::const_iterator Rules::begin() const
 inline Rules::const_iterator Rules::end() const
 {
     return d_startConditions.end();
+}
+        
+inline Rules::const_iterator Rules::endUserSC() const
+{
+    return d_startConditions.endUserSC();
 }
         
 inline Rules::rule_const_iterator Rules::ruleBegin() const

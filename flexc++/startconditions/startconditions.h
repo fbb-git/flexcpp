@@ -2,7 +2,6 @@
 #define INCLUDED_STARTCONDITIONS_
 
 #include <iosfwd>
-// #include <unordered_map>
 #include <vector>
 #include <string>
 #include <iterator>
@@ -36,7 +35,7 @@ class StartConditions
         
         Type d_type = EXCLUSIVE;
         SCVector d_scVector;
-        SCVector::iterator d_endUserSC;
+        size_t d_endUserSC;
 
         std::vector<StartCondition *> d_active;
         StartCondition *d_initialSC;
@@ -91,6 +90,7 @@ class StartConditions
         void useInitialSC();
         const_iterator begin() const;
         const_iterator end() const;
+        const_iterator endUserSC() const;
         std::vector<size_t> const &operator()(std::string const &name) const;
 
         size_t size() const;                // # start conditions so far
@@ -108,7 +108,7 @@ class StartConditions
 
 inline void StartConditions::setEndUserSC()
 {
-    d_endUserSC = d_scVector.end();
+    d_endUserSC = d_scVector.size();
 }
 
 inline StartConditions::SCVector::const_iterator 
@@ -172,6 +172,11 @@ inline StartConditions::const_iterator StartConditions::begin() const
 inline StartConditions::const_iterator StartConditions::end() const
 {
     return const_iterator(d_scVector.end());
+}
+
+inline StartConditions::const_iterator StartConditions::endUserSC() const
+{
+    return const_iterator(d_scVector.begin() + d_endUserSC);
 }
 
 inline StartConditions::NameVector::NameVector()
