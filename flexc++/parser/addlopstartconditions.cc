@@ -3,7 +3,7 @@
 void Parser::addLopStartConditions()
 {
     for (
-        size_t nr = d_rules.startConditions().size();
+        size_t nr = d_nUserStartConditions;
             nr != d_lopStartCondition;
                 ++nr
     )

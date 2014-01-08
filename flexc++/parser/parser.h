@@ -48,7 +48,11 @@ class Parser: public ParserBase
     Rules &d_rules;
     States &d_states;
 
-    size_t d_lopStartCondition = 0;         // startconditions for LOPs
+    size_t d_nUserStartConditions = 0;      // the number of defined used
+                                            // start conditions (including
+                                            //INITIAL) 
+    size_t d_lopStartCondition = 0;         // startconditions index for 
+                                            // the next LOP
 
     static int s_ignoreToken;
     static std::string s_lastMsg;

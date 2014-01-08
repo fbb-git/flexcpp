@@ -13,6 +13,7 @@ class StartConditions
 {
     friend std::ostream &operator<<(std::ostream &out, 
                                     StartConditions const &startConditions);
+
     public:
         enum Type
         {
@@ -170,7 +171,7 @@ inline StartConditions::const_iterator StartConditions::begin() const
 
 inline StartConditions::const_iterator StartConditions::end() const
 {
-    return const_iterator(d_scVector.end());
+    return const_iterator(d_endUsedStartConditions);
 }
 
 inline StartConditions::NameVector::NameVector()
