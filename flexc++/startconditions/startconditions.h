@@ -84,9 +84,15 @@ class StartConditions
                                             // add a name to the set of SCs
         void add(size_t);
         void setType(Type type);
-        void reset();
+
+        void reset();                       // clear the set of active start
+                                            // conditions. 
+
         void useAll();
-        void activate(std::string const &name);
+
+        void addSC(std::string const &name); // adds name to a set of SCs
+        void activate(size_t scIndex);          // activates just this SC
+
         void useInitialSC();
         const_iterator begin() const;
         const_iterator end() const;
@@ -97,12 +103,8 @@ class StartConditions
 
         void setEndUserSC();
 
-        void removeLastRule();          // remove the last rule from all
-                                        // active SCs. This is called by the
-                                        // at the end of parsing when LOP
-                                        // rules have been found. The last
-                                        // rule is the catch-all rule, which
-                                        // is only used by LOP SCs.
+        void remove(size_t ruleIndex);  // remove ruleIndex from all the SC
+                                        // vectors
 
     private:
         SCVector::iterator find(std::string const &key);
@@ -112,6 +114,11 @@ class StartConditions
 
 //        static std::string const &strOf(SemVal const &nameVal);
 };
+
+inline void StartConditions::activate(size_t scIndex)
+{
+    d_active = std::vector<StartCondition *>(1, &d_scVector[scIndex].second);
+}
 
 inline void StartConditions::setEndUserSC()
 {

@@ -37,6 +37,7 @@ class Pattern: private FlexTypes
         size_t end() const;                         // pattern's last state
         Pair const &pair() const;                   // {begin, end}
         Pair rhsPair() const;                       // LOP's rhs's states
+        Pattern const &lhs() const;                 // LOP's lhs duplicate
 
         bool canBeEmpty(States const &states) const;// true if there's an
                                                     // empty transition from
@@ -105,6 +106,11 @@ struct Pattern::LopData
     size_t mid;                     // begin of the RHS pattern in d_pair
     Pattern lhs;                    // duplicate of the LHS pattern
 };
+
+inline Pattern const &Pattern::lhs() const
+{
+    return d_lopData->lhs;
+}
 
 inline size_t Pattern::scIndex() const
 {

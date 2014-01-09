@@ -26,6 +26,8 @@ class Rules
                                                         // Rule index
     StartConditions d_startConditions;
 
+    size_t d_catchAllIndex = 0;
+
     public:
         typedef StartConditions::const_iterator const_iterator;
         typedef StartConditions::NameVector NameVector;
@@ -40,9 +42,11 @@ class Rules
         size_t ruleFromFinalState(size_t stateIdx) const;
         void setType(StartConditions::Type type);
         void addStartCondition(std::string const &name, bool underscoresOK);
-        void resetStartConditions();
+
+        void resetStartConditions();        // clear the set of active start
+                                            // conditions. 
         void useAll();
-        void activateStartCondition(std::string const &name);
+        void addStartCondition(std::string const &name);
 
         std::vector<size_t> const &operator()   // vector of rule nrs
                                     (std::string const &startCondition) const;
@@ -72,15 +76,20 @@ class Rules
 
         void setEndUserSC();
 
-        void handleCatchAllRule();
+        void processCatchAllRule();
+
+        void addIndex(size_t index)
+        {
+            d_startConditions.add(index);
+        }
 
     private:
         void setRule(size_t state, size_t index);
 
         void setLopBlocks();
+        void handleLopRule(Rule &rule);
 
-        void handleLopRule(std::vector<Rule>::iterator &iter);  //FBB
-
+        void addCatchAll();
 
         static bool nonViable(Rule const &rule);
 
@@ -168,9 +177,9 @@ inline void Rules::useAll()
     d_startConditions.useAll();
 }
 
-inline void Rules::activateStartCondition(std::string const &name)
+inline void Rules::addStartCondition(std::string const &name)
 {
-    d_startConditions.activate(name);
+    d_startConditions.addSC(name);
 }
 
 inline void Rules::useInitialSC()

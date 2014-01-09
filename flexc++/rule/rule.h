@@ -52,9 +52,8 @@ class Rule
         void noAction();
 
         bool isLopRule() const;
-        size_t scIndex() const;         // 1st SC index of a LOP rule
-                                        // (undefined behavior if called 
-                                        //  for non-LOP rules)
+        Pattern const &pattern() const;
+
     private:
         void setStates(std::vector<size_t> &prePostA, 
                         States const &states, size_t begin, size_t end);
@@ -62,9 +61,9 @@ class Rule
                                                         States const &states);
 };
 
-inline size_t Rule::scIndex() const
+inline Pattern const &Rule::pattern() const
 {
-    return d_pattern.scIndex();
+    return d_pattern;
 }
 
 inline std::string const &Rule::source() const

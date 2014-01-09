@@ -1,10 +1,10 @@
 #include "startconditions.ih"
 
-void StartConditions::activate(string const &name)
+void StartConditions::addSC(string const &name)
 {
     auto iter = find(name);
 
-    if (iter == d_scVector.end())       // done if the name isn't a startcondition
+    if (iter == d_scVector.end())   // done if the name isn't a startcondition
     {
         emsg << "cannot find start condition `" << name << '\'' << endl;
         return;
