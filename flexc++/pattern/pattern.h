@@ -58,6 +58,9 @@ class Pattern: private FlexTypes
                                       CharClass const &charClass);
 
         bool isLopPattern() const;
+        size_t scIndex() const;         // 1st SC index of a LOP rule
+                                        // (undefined behavior if called 
+                                        //  for non-LOP rules)
 
     private:
         Pattern duplicate(States &states) const;    // return Pattern which
@@ -103,6 +106,10 @@ struct Pattern::LopData
     Pattern lhs;                    // duplicate of the LHS pattern
 };
 
+inline size_t Pattern::scIndex() const
+{
+    return d_lopData->startCondition;
+}
 
 inline size_t Pattern::begin() const
 {
