@@ -18,6 +18,12 @@ class Scanner: public ScannerBase
                                 // IDENTIFIER and DECIMAL as themselves,
                                 // otherwise accept their first chars as CHAR
 
+    std::string d_catchAll;     // the contents of the catch-all rule.
+                                // Requested by the parser to create an 
+                                // additional catch all rule (.|\n) which is 
+                                // needed by LOP expressions
+
+
     bool d_caseSensitive;
 
     std::unordered_map<std::string, std::string> d_nameExpansion;
@@ -42,6 +48,7 @@ class Scanner: public ScannerBase
         void eolnDollar();
         void acceptMulti();
         void multiAsChar();
+        void needCatchAll();
 
         void forceCaseSensitive();
         void setCaseSensitive();
@@ -93,7 +100,15 @@ class Scanner: public ScannerBase
                             // be exec'ed before the patternmatching starts
 
         void postCode(PostEnum__);
+
+        bool moreInput();
 };
+
+inline void Scanner::needCatchAll()
+{
+    d_catchAll = "\n"
+                 ".|\\n      lop3__();\n";    
+}
 
 inline void Scanner::forceCaseSensitive()
 {

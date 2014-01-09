@@ -34,9 +34,8 @@ class Parser: public ParserBase
     bool d_warnCarets       = false;    // carets in a RE
     bool d_warnDollars      = false;    // dollars in a RE
 
-    bool d_usesLOP          = false;
-    Pattern d_lhs;                      // lhs, rhs patterns used with the LOP
-    Pattern d_rhs;
+    bool d_usesLOP          = false;    // true while inside a regex using the
+                                        // LOP: see lookahead.cc
 
     bool d_printTokens;
 

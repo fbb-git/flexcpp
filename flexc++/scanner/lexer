@@ -178,6 +178,10 @@ OPTBL                   [[:blank:]]*
 <line>.*                        return Parser::STRING;
 <line>\n                        return popSc('\n');
 
+<<EOF>>                         {
+                                    if (not moreInput())
+                                        return 0;
+                                }
 
 
 

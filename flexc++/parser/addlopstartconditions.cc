@@ -2,10 +2,13 @@
 
 void Parser::addLopStartConditions()
 {
-    for (
-        size_t nr = d_rules.startConditions().size();
-            nr != d_lopStartCondition;
-                ++nr
-    )
-        d_rules.addStartCondition("_" + to_string(nr) + "__", true);
+    size_t nRules = d_rules.startConditions().size();
+
+    if (nRules == d_lopStartCondition)      // no LOP rules encountered
+        return;
+
+    d_rules.handleCatchAllRule();
+
+    for (; nRules != d_lopStartCondition; ++nRules)
+        d_rules.addStartCondition("_" + to_string(nRules) + "__", true);
 }

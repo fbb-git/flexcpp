@@ -72,6 +72,8 @@ class Rules
 
         void setEndUserSC();
 
+        void handleCatchAllRule();
+
     private:
         void setRule(size_t state, size_t index);
 

@@ -97,6 +97,13 @@ class StartConditions
 
         void setEndUserSC();
 
+        void removeLastRule();          // remove the last rule from all
+                                        // active SCs. This is called by the
+                                        // at the end of parsing when LOP
+                                        // rules have been found. The last
+                                        // rule is the catch-all rule, which
+                                        // is only used by LOP SCs.
+
     private:
         SCVector::iterator find(std::string const &key);
         SCVector::const_iterator find(std::string const &key) const;

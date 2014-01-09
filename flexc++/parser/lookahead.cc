@@ -20,6 +20,7 @@ Pattern Parser::lookahead(Pattern const &left, Pattern const &right)
     }
 
     d_doError = true;
+    d_usesLOP = true;
 
     Pattern ret;
     if (right.canBeEmpty(d_states))
@@ -30,7 +31,10 @@ Pattern Parser::lookahead(Pattern const &left, Pattern const &right)
         d_lopStartCondition += 2;
     }
 
+    d_scanner.needCatchAll();
+
     return ret;
 }
+
 
 
