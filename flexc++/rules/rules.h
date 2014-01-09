@@ -26,7 +26,7 @@ class Rules
                                                         // Rule index
     StartConditions d_startConditions;
 
-    size_t d_catchAllIndex = 0;
+    Rule d_catchAll;
 
     public:
         typedef StartConditions::const_iterator const_iterator;
@@ -78,23 +78,24 @@ class Rules
 
         void processCatchAllRule();
 
-        void addIndex(size_t index)
-        {
-            d_startConditions.add(index);
-        }
-
     private:
         void setRule(size_t state, size_t index);
 
         void setLopBlocks();
         void handleLopRule(Rule &rule);
 
-        void addCatchAll();
+        void addIndex(size_t index);
+
+        void addCatchAll(Rule const &rule, size_t catchAllIndex);
 
         static bool nonViable(Rule const &rule);
-
-
 };
+
+inline void Rules::addIndex(size_t index)
+{
+    d_startConditions.add(index);
+}
+
 
 inline void Rules::setEndUserSC()
 {

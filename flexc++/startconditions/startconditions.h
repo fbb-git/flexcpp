@@ -41,7 +41,6 @@ class StartConditions
         StartCondition *d_initialSC;
 
     public:
-
         class const_iterator;
         class NameVector                        // used and returned by
         {                                       // const_iterator below
@@ -114,11 +113,6 @@ class StartConditions
 
 //        static std::string const &strOf(SemVal const &nameVal);
 };
-
-inline void StartConditions::activate(size_t scIndex)
-{
-    d_active = std::vector<StartCondition *>(1, &d_scVector[scIndex].second);
-}
 
 inline void StartConditions::setEndUserSC()
 {

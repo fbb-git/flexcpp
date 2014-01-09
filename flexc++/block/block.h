@@ -16,7 +16,7 @@ class Block
     std::string d_str;
     
     public:
-//        Block();
+        Block() = default;
         Block(size_t lineno, std::string const &filename);
         
         void clear();

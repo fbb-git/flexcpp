@@ -1,7 +1,7 @@
 _ms_name:
     identifier
     {
-        d_rules.activateStartCondition($1);
+        d_rules.addStartCondition($1);
     }
 ;
 

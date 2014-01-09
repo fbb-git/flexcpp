@@ -2,8 +2,8 @@
 
 void Rules::processCatchAllRule()
 {
-    d_catchAllIndex = d_rules.size() - 1;
-
-    d_startConditions.remove(d_catchAllIndex);
+    d_startConditions.remove(d_rules.size() - 1);
+    d_catchAll = d_rules.back();
+    d_rules.pop_back();
 }
 

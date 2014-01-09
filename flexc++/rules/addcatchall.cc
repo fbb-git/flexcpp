@@ -1,12 +1,14 @@
 #include "rules.ih"
 
-void Rules::addCatchAll()
+void Rules::addCatchAll(Rule const &rule, size_t catchAllIndex)
 {
-    Pair const &pair = d_rules[d_catchAllIndex].pair();
+    Pattern const &pattern = rule.pattern();
 
-    d_finalToRule[pair.second] = d_catchAllIndex;
+    size_t scIndex = pattern.scIndex();
 
-    setRule(pair.first, d_catchAllIndex);
+    d_startConditions.activate(scIndex);
 
-    d_startConditions.add(d_catchAllIndex);
-}    
+    addIndex(catchAllIndex);
+}
+
+

@@ -7,7 +7,6 @@ void StartConditions::add(size_t ruleIdx)
 
     if (d_active.size())        // this rule is for specific mini scanners:
         return;                 // done
-
                                 // no mini scanners were explicitly mentioned:
                                 // add the rule to all inclusive mini scanners
     for (auto &element: d_scVector) 
