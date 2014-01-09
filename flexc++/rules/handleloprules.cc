@@ -11,11 +11,9 @@ void Rules::handleLopRules()
 
     for (size_t idx = 0, nRules = d_rules.size(); idx != nRules; ++idx)
     {
-        Rule &rule = d_rules[idx];
-
-        if (rule.isLopRule())
+        if (d_rules[idx].isLopRule())
         {
-            handleLopRule(rule);
+            handleLopRule(idx);
             lopIndices.push_back(idx);
         }
     }

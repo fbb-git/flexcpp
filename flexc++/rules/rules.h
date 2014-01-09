@@ -82,7 +82,7 @@ class Rules
         void setRule(size_t state, size_t index);
 
         void setLopBlocks();
-        void handleLopRule(Rule &rule);
+        void handleLopRule(size_t idx);
 
         void addIndex(size_t index);
 
