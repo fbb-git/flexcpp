@@ -24,6 +24,11 @@ class Rules
     std::vector<Rule> d_rules;
     std::unordered_map<size_t, size_t>  d_finalToRule;  // from FINAL state to
                                                         // Rule index
+    std::unordered_map<size_t, size_t>  d_impliedViable;// key is 2nd lop 
+                                                    // rule. If viable then 
+                                                    // the value is viable by
+                                                    // implication
+
     StartConditions d_startConditions;
 
     Rule d_catchAll;
@@ -61,7 +66,7 @@ class Rules
 
         size_t size() const;                    // # of rules
 
-        void warnNonViable() const;
+        void warnNonViable();
         void setOrAction();         // set the previous rule's action to '|'
 
         void assignBlock(Block const &block);   // assign 'block' to the last

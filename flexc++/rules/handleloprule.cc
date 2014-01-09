@@ -2,6 +2,8 @@
 
 void Rules::handleLopRule(size_t idx)
 {
+    d_impliedViable[d_rules.size()] = idx;  // set the implied viable relation
+
     Rule *rule = &d_rules[idx];
 
     Block action(rule->block());        // save the LOP rule's action block
