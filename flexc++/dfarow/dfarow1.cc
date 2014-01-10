@@ -2,7 +2,7 @@
 
 DFARow::DFARow(Rules &rules, 
                States &states, StateSetVector &stateSets, 
-               size_t thisRowIdx, Ranges &ranges)
+               size_t thisRowIdx, Ranges &ranges, vector<bool> *usedR)
 :
     d_finalRule(numeric_limits<size_t>::max(), numeric_limits<size_t>::max()),
     d_thisIdx(thisRowIdx),
@@ -10,5 +10,6 @@ DFARow::DFARow(Rules &rules,
     d_states(&states),
     d_stateSets(&stateSets),
     d_rules(&rules),
-    d_ranges(&ranges)
+    d_ranges(&ranges),
+    d_usedR(usedR)
 {}

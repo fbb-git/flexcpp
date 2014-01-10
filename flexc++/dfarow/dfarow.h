@@ -61,7 +61,8 @@ class DFARow: private FlexTypes
                 // index in the DFA (and in stateSets) of this row
             size_t thisIdx,
                 // info about used character ranges
-            Ranges &ranges
+            Ranges &ranges,
+            std::vector<bool> *usedR
         );
 
             // visit all states of this row and determine their transitions

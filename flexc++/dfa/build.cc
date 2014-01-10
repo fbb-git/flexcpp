@@ -5,6 +5,7 @@
 void DFA::build(std::string const &name, vector<size_t> const &active)    
 {
     d_ranges->clearUsedRanges();
+    d_usedR.assign(d_usedR.size(), false);
 
         // start with the initial states of all rules that are active in this 
         // miniscanner (rule nrs provided by the active-vector) 
@@ -26,7 +27,7 @@ void DFA::build(std::string const &name, vector<size_t> const &active)
     {                                               // checked all state sets
             // add another row and determine transitions 
         d_row.push_back(DFARow(*d_rules, *d_states, d_stateSet, d_row.size(),
-                              *d_ranges));
+                              *d_ranges, &d_usedR));
         d_row.back().transitions();
         
         s_verbose << "Row " << d_row.size()-1 << ": ";
@@ -42,7 +43,9 @@ void DFA::build(std::string const &name, vector<size_t> const &active)
 
     keepUniqueRows();
 
-    d_nUsedRanges = d_ranges->nUsedRanges();
+//    d_nUsedRanges = d_ranges->nUsedRanges();
+    d_nUsedRanges = count(d_usedR.begin(), d_usedR.end(), true);
+
     d_ranges->copyUsedRanges(d_usedRanges);
 
     for (auto &row: d_row)
