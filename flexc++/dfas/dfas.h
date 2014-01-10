@@ -16,7 +16,7 @@ class DFAs
     friend std::ostream &operator<<(std::ostream &out, DFAs const &dfas);
 
     public:
-        typedef std::pair<std::string, DFA> Pair;
+        typedef std::pair<std::string, DFA *> Pair;
         typedef std::vector<Pair> DFAInfo;
 
     private:
@@ -28,6 +28,7 @@ class DFAs
         
     public:
         DFAs(Rules &rules, States &states, Ranges &ranges);
+        ~DFAs();
 
         void build();
         DFAInfo::const_iterator begin() const;

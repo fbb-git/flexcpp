@@ -29,6 +29,7 @@ class DFA
 
     size_t d_nUsedRanges = 0;             // number of ranges used by this DFA
     std::shared_ptr<bool> d_usedRanges;
+    std::vector<bool> d_usedR;
 
     static FBB::Mstream s_verbose;  // writes to cout if verbose was set
 

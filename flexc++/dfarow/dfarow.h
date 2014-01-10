@@ -45,6 +45,7 @@ class DFARow: private FlexTypes
     Ranges *d_ranges;
 
     bool const *d_usedRanges;
+    std::vector<bool> *d_usedR;
 
     public:
         typedef std::unordered_map<size_t, size_t>::value_type MapValue;
