@@ -7,10 +7,11 @@
 
 #include "../block/block.h"
 #include "../pattern/pattern.h"
+#include "../flextypes/flextypes.h"
 
 class States;
 
-class Rule
+class Rule: public FlexTypes
 {
     friend std::ostream &operator<<(std::ostream &out, Rule const &rule);
 
@@ -26,11 +27,14 @@ class Rule
     bool d_bol;                 // this rule is matched if starting at BOL
     bool d_viable;              // this rule is viable, i.e., it can be
                                 // matched
+
+    RuleType d_type;
+
     public:
         Rule() = default;               // for vector operations by Rules
 
         Rule(States &states, bool bol, Pattern const &pattern,
-             Block const &block);
+             Block const &block, RuleType type);
 
         Pair const &pair() const;
         size_t startState() const;

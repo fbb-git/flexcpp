@@ -15,6 +15,15 @@ class FlexTypes
             CHARSET,                            // string contents of [ ... ]
             EOF__                               // EOF becomes a special char
         };                                      // see README
+
+        enum RuleType
+        {
+            NORMAL,
+            LOP_1,                          // LOP rule
+            LOP_2,
+            LOP_3,
+            LOP_4
+        };
 };
         
 #endif

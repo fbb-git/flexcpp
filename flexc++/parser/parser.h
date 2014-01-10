@@ -8,6 +8,7 @@
 #include "../state/state.h"
 #include "../block/block.h"
 #include "../options/options.h"
+#include "../flextypes/flextypes.h"
 
 // $insert baseclass
 #include "parserbase.h"
@@ -18,7 +19,7 @@ class States;
 class Rules;
 
 #undef Parser
-class Parser: public ParserBase
+class Parser: public ParserBase, public FlexTypes
 {
     typedef std::pair<size_t, size_t> Pair;
 
@@ -83,7 +84,6 @@ class Parser: public ParserBase
         void noActions();
 
         void addRule(Pattern const &rule, bool resetMs = false);
-//FBB        void addBlockRule(Pattern const &rule);
 
         void block();
         void error(char const *msg);    // called on (syntax) errors

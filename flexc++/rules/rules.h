@@ -8,12 +8,13 @@
 
 #include "../startconditions/startconditions.h"
 #include "../rule/rule.h"
+#include "../flextypes/flextypes.h"
 
 class States;
 class Block;
 class Pattern;
 
-class Rules
+class Rules: public FlexTypes
 {
     friend std::ostream &operator<<(std::ostream &out, Rules const &rules);
 
@@ -39,7 +40,8 @@ class Rules
         typedef std::vector<Rule>::const_iterator rule_const_iterator;
 
         Rules(States &states);
-        void add(bool bol, Pattern const &pattern, Block const &block);
+        void add(bool bol, Pattern const &pattern, Block const &block,
+                RuleType type);
 
         Rule const &operator[](size_t idx) const;
         Rule &operator[](size_t idx);

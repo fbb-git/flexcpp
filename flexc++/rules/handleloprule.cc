@@ -28,7 +28,7 @@ void Rules::handleLopRule(size_t idx)
 
 
                                         // add this rule to the 1st SC
-    add(false, Pattern(pattern->rhsPair()), workBlock);
+    add(false, Pattern(pattern->rhsPair()), workBlock, RuleType::LOP_2);
 
     pattern = &d_rules[idx].pattern();  // reset the pointer, as the vector 
                                         // may have resized
@@ -41,7 +41,7 @@ void Rules::handleLopRule(size_t idx)
                                                 // on to the input stream
 
                                         // add this rule to the 2nd SC
-    add(false, pattern->lhs(), workBlock);   
+    add(false, pattern->lhs(), workBlock, RuleType::LOP_4);   
 }
 
 

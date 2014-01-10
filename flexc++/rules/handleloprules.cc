@@ -20,11 +20,13 @@ void Rules::handleLopRules()
 
     size_t catchAllIndex = d_rules.size();
 
-    add(false, d_catchAll.pattern(), d_catchAll.block());
+    add(false, d_catchAll.pattern(), d_catchAll.block(), RuleType::LOP_3);
 
     for (size_t idx: lopIndices)
         addCatchAll(d_rules[idx], catchAllIndex);
 }
+
+
 
 
 

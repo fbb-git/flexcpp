@@ -1,8 +1,9 @@
 #include "rules.ih"
 
-void Rules::add(bool bol, Pattern const &pattern, Block const &block)
+void Rules::add(bool bol, Pattern const &pattern, Block const &block,
+                RuleType type) 
 {
-    d_rules.push_back( { d_states, bol, pattern, block } );
+    d_rules.push_back( { d_states, bol, pattern, block, type } );
 
     Pair const &pair = d_rules.back().pair();
 
