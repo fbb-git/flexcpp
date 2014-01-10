@@ -81,7 +81,6 @@ input:
 section_delimiter:
     SECTION_DELIMITER   '\n'
     {
-        d_rules.useInitialSC();
         d_lopStartCondition = d_rules.startConditions().size();
         d_rules.setEndUserSC();
         reset();

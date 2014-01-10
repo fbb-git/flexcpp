@@ -55,7 +55,6 @@ class Rules
 
         std::vector<size_t> const &operator()   // vector of rule nrs
                                     (std::string const &startCondition) const;
-        void useInitialSC();
 
         const_iterator begin() const;
         const_iterator end() const;
@@ -186,11 +185,6 @@ inline void Rules::useAll()
 inline void Rules::addStartCondition(std::string const &name)
 {
     d_startConditions.addSC(name);
-}
-
-inline void Rules::useInitialSC()
-{
-    d_startConditions.useInitialSC();
 }
 
 inline void Rules::assignBlock(Block const &block)

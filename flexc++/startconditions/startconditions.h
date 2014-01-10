@@ -37,8 +37,7 @@ class StartConditions
         SCVector d_scVector;
         size_t d_endUserSC;
 
-        std::vector<StartCondition *> d_active;
-        StartCondition *d_initialSC;
+        std::vector<StartCondition *> d_active; // first is INITIAL per def.
 
     public:
         class const_iterator;
@@ -92,7 +91,6 @@ class StartConditions
         void addSC(std::string const &name); // adds name to a set of SCs
         void activate(size_t scIndex);          // activates just this SC
 
-        void useInitialSC();
         const_iterator begin() const;
         const_iterator end() const;
         const_iterator endUserSC() const;
@@ -129,12 +127,6 @@ inline StartConditions::SCVector::iterator
         StartConditions::find(std::string const &key)
 {
     return SCVector::iterator(findKV(key));
-}
-
-    // set by the parser at the section change (%%)
-inline void StartConditions::useInitialSC() 
-{
-    d_initialSC = &(find("INITIAL")->second);
 }
 
 inline void StartConditions::setType(Type type)
