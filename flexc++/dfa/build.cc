@@ -43,7 +43,6 @@ void DFA::build(std::string const &name, vector<size_t> const &active)
 
     keepUniqueRows();
 
-//    d_nUsedRanges = d_ranges->nUsedRanges();
     d_nUsedRanges = count(d_usedR.begin(), d_usedR.end(), true);
 
     d_ranges->copyUsedRanges(d_usedRanges);
