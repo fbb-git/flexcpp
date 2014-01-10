@@ -6,7 +6,7 @@
 #include <set>
 #include <unordered_map>
 
-#include "../ranges/ranges.h"
+// #include "../ranges/ranges.h"
 #include "../rules/rules.h"
 #include "../states/states.h"
 
@@ -42,8 +42,8 @@ class DFARow: private FlexTypes
                                             // of the States used for this
                                             // DFArow.
     Rules *d_rules;
-    Ranges *d_ranges;
 
+    size_t d_nRanges;
     bool const *d_usedRanges;
     std::vector<bool> *d_usedR;
 
@@ -61,7 +61,7 @@ class DFARow: private FlexTypes
                 // index in the DFA (and in stateSets) of this row
             size_t thisIdx,
                 // info about used character ranges
-            Ranges &ranges,
+            size_t nRanges,
             std::vector<bool> *usedR
         );
 
@@ -124,7 +124,7 @@ inline std::pair<size_t, size_t> const &DFARow::final() const
 
 inline size_t DFARow::size() const
 {
-    return d_ranges->nRanges();
+    return d_nRanges;
 }
 
 inline void DFARow::setUsedRanges(bool *usedRanges)

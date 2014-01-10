@@ -23,7 +23,7 @@ rule                    block
 rules                   startconditions rule 
 
 ranges
-dfarow                  ranges rules states tailcount
+dfarow                  rules states 
 dfa                     dfarow        
 dfas                    rules dfa  
 

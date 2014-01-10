@@ -11,7 +11,7 @@
 void DFARow::transitions()
 {
         // visit all ranges of input characters
-    for (size_t nr = 0, end = d_ranges->nRanges(); nr++ != end; )    
+    for (size_t nr = 0; nr++ != d_nRanges; )    
     {
         StateSet &thisSet = (*d_stateSets)[d_thisIdx];
 

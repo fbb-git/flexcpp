@@ -26,7 +26,7 @@ void DFA::build(std::string const &name, vector<size_t> const &active)
     {                                               // checked all state sets
             // add another row and determine transitions 
         d_row.push_back(DFARow(*d_rules, *d_states, d_stateSet, d_row.size(),
-                              *d_ranges, &d_usedR));
+                              d_ranges->nRanges(), &d_usedR));
         d_row.back().transitions();
         
         s_verbose << "Row " << d_row.size()-1 << ": ";
