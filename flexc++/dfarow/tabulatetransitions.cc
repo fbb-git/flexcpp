@@ -5,7 +5,7 @@ void DFARow::tabulateTransitions(Table &table) const
                                     // only display the ranges that are used 
      for (size_t idx = 0; idx++ != d_nRanges; )
      {
-         if (not (*d_usedR)[idx - 1])
+         if (not (*d_usedRanges)[idx - 1])
              continue;
  
          auto iter = d_map.find(idx);

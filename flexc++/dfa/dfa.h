@@ -5,10 +5,10 @@
 #include <vector>
 #include <string>
 #include <set>
-#include <memory>
 
 class Rules;
 class States;
+class Ranges;
 
 #include <bobcat/mstream>
 
@@ -28,8 +28,7 @@ class DFA
     std::vector<Size_tSet> d_stateSet;      // states belonging to a DFA row
 
     size_t d_nUsedRanges = 0;             // number of ranges used by this DFA
-    std::shared_ptr<bool> d_usedRanges;
-    std::vector<bool> d_usedR;
+    std::vector<bool> d_usedRanges;
 
     static FBB::Mstream s_verbose;  // writes to cout if verbose was set
 

@@ -11,5 +11,5 @@ DFARow::DFARow(Rules &rules,
     d_stateSets(&stateSets),
     d_rules(&rules),
     d_nRanges(nRanges),
-    d_usedR(usedR)
+    d_usedRanges(usedR)
 {}
