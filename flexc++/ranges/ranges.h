@@ -32,9 +32,6 @@ class Ranges: private FlexTypes
     size_t d_eof;
     States &d_states;
 
-
-    bool *d_usedRanges;           // ranges used in the DFA's
-    
     public:
         Ranges(States &states, size_t size = 256);  // default:   
                                                     // 1 << (sizeof(char) * 8)
@@ -64,15 +61,8 @@ class Ranges: private FlexTypes
         void add(std::string const &str);
         void add(size_t ch);
 
-        void clearUsedRanges();
-        bool usedRange(size_t rangeNr) const;
-        void useRange(size_t rangeNr);
-        size_t nUsedRanges() const;
-
         size_t nRanges() const;
         size_t const *alphabet() const;
-
-        void copyUsedRanges(std::shared_ptr<bool> &dest);
 
     private:
         static bool collision(std::string const &str, size_t const *next);
@@ -122,16 +112,12 @@ inline size_t Ranges::rangeOfEOF() const
     return d_eof;
 }
 
-inline bool Ranges::usedRange(size_t rangeNr) const
-{
-    return d_usedRanges[rangeNr - 1];
-}
-
-inline void Ranges::useRange(size_t rangeNr)
-{
-    d_usedRanges[rangeNr - 1] = true;
-}
-
 std::ostream &operator<<(std::ostream &out, Ranges const &ranges);
 
 #endif
+
+
+
+
+
+

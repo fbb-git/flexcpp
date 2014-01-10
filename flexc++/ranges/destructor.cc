@@ -3,5 +3,4 @@
 Ranges::~Ranges()
 {
     delete[] d_alphabet;
-    delete[] d_usedRanges;
 }

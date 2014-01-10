@@ -7,8 +7,7 @@ Ranges::Ranges(States &states, size_t size)
     d_nRanges(0),
     d_bol(0),
     d_eof(0),
-    d_states(states),
-    d_usedRanges(0)
+    d_states(states)
 {
     fill(d_alphabet, d_alphabet + d_alphabetSize, 0);
 }
