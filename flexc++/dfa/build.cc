@@ -4,7 +4,6 @@
 
 void DFA::build(std::string const &name, vector<size_t> const &active)    
 {
-    d_ranges->clearUsedRanges();
     d_usedR.assign(d_usedR.size(), false);
 
         // start with the initial states of all rules that are active in this 
@@ -44,11 +43,6 @@ void DFA::build(std::string const &name, vector<size_t> const &active)
     keepUniqueRows();
 
     d_nUsedRanges = count(d_usedR.begin(), d_usedR.end(), true);
-
-    d_ranges->copyUsedRanges(d_usedRanges);
-
-    for (auto &row: d_row)
-        row.setUsedRanges(d_usedRanges.get());
 }
 
 
