@@ -27,7 +27,6 @@ void DFARow::transitions()
         if (nextSet.empty())
             continue;
 
-        d_ranges->useRange(nr);
         (*d_usedR)[nr - 1] = true;
 
         auto iter = find(d_stateSets->begin(), d_stateSets->end(), nextSet);
