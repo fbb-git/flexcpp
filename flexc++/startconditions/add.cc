@@ -2,6 +2,9 @@
 
 void StartConditions::add(string const &name, bool underscoresOK)
 {
+    if (not d_acceptRules)
+        return;
+
     if (find(name) != d_scVector.end())
         emsg << "start condition `" << name << "' multiply defined" << endl; 
     else 

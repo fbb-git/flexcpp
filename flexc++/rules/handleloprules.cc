@@ -7,23 +7,25 @@ void Rules::handleLopRules()
         // handleLopRule may extend d_rules, but will never add another LOP
         // rule. That's why d_rules.size() can be used.
 
-    vector<size_t> lopIndices;
+    vector<size_t> catchAllSCs;
 
     for (size_t idx = 0, nRules = d_rules.size(); idx != nRules; ++idx)
     {
         if (d_rules[idx].isLopRule())
-        {
-            handleLopRule(idx);
-            lopIndices.push_back(idx);
-        }
+            catchAllSCs.push_back(handleLopRule(idx));
     }
 
-    size_t catchAllIndex = d_rules.size();
+    d_startConditions.acceptRules(false);
 
+        // determine the catch-all rule index, and add it to d_rules:
+    size_t catchAllRuleIndex = d_rules.size();
     add(false, d_catchAll.pattern(), d_catchAll.block(), RuleType::LOP_3);
 
-    for (size_t idx: lopIndices)
-        addCatchAll(d_rules[idx], catchAllIndex);
+    d_startConditions.acceptRules(true);
+
+        // add the catch-all rule to the appropriate SCs
+    for (size_t idx: catchAllSCs)
+        addCatchAll(idx, catchAllRuleIndex);
 }
 
 

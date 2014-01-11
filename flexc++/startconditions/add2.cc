@@ -2,6 +2,9 @@
 
 void StartConditions::add(size_t ruleIdx)
 {
+    if (not d_acceptRules)
+        return;
+
     for (auto &sc: d_active)    // add the rule to all active mini scanners
         sc->d_rules.push_back(ruleIdx);
 

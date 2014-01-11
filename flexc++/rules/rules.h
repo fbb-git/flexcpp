@@ -88,11 +88,11 @@ class Rules: public FlexTypes
         void setRule(size_t state, size_t index);
 
         void setLopBlocks();
-        void handleLopRule(size_t idx);
+        size_t handleLopRule(size_t idx);
 
         void addIndex(size_t index);
 
-        void addCatchAll(Rule const &rule, size_t catchAllIndex);
+        void addCatchAll(size_t scIndex, size_t catchAllRuleIndex);
 
         static bool nonViable(Rule const &rule);
 };

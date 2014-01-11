@@ -39,6 +39,8 @@ class StartConditions
 
         std::vector<StartCondition *> d_active; // first is INITIAL per def.
 
+        bool d_acceptRules = true;
+
     public:
         class const_iterator;
         class NameVector                        // used and returned by
@@ -78,6 +80,10 @@ class StartConditions
         };
 
         StartConditions();
+
+        void acceptRules(bool ok);          // may suppres additions of rules
+                                            // by add members
+
         void add(std::string const &name, bool underscoreOK);
                                             // add a name to the set of SCs
         void add(size_t);
@@ -111,6 +117,11 @@ class StartConditions
 
 //        static std::string const &strOf(SemVal const &nameVal);
 };
+
+inline void StartConditions::acceptRules(bool ok)
+{
+    d_acceptRules = ok;
+}
 
 inline void StartConditions::setEndUserSC()
 {

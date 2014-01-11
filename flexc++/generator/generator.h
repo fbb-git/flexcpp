@@ -9,13 +9,14 @@
 
 #include "../dfas/dfas.h"
 #include "../startconditions/startconditions.h"
+#include "../flextypes/flextypes.h"
 
 class Ranges;
 class Options;
 class States;
 class Block;
 
-class Generator
+class Generator: public FlexTypes
 {
     enum
     {
@@ -51,7 +52,7 @@ class Generator
     std::string d_baseclassScope;
     std::string d_constructionFilename;
 
-    bool d_lineDirectives;
+mutable    bool d_lineDirectives;
     bool d_debug;
 
     mutable std::vector<std::string> d_startStates;
@@ -151,7 +152,7 @@ class Generator
                              std::vector<RuleFlag> &rf);
 
         static void outStartState(std::string const &name, std::ostream &out);
-        void ruleAction(Block const &block, std::ostream &out, size_t &idx)
+        void ruleAction(Block const &block, std::ostream &out, size_t idx)
                                                                     const;
 };
 

@@ -56,6 +56,8 @@ class Rule: public FlexTypes
         void noAction();
 
         bool isLopRule() const;
+        RuleType type() const;
+
         Pattern const &pattern() const;
 
     private:
@@ -64,6 +66,12 @@ class Rule: public FlexTypes
         static bool cmpAccept(size_t left, size_t right, 
                                                         States const &states);
 };
+
+inline Rule::RuleType Rule::type() const
+{
+    return d_type;
+}
+
 
 inline Pattern const &Rule::pattern() const
 {
@@ -82,7 +90,7 @@ inline size_t Rule::lineNr() const
 
 inline bool Rule::isLopRule() const
 {
-    return d_pattern.isLopPattern();
+    return d_type == RuleType::LOP_1;
 }
 
 inline void Rule::setBol() 
