@@ -25,14 +25,14 @@ class Rules: public FlexTypes
     std::vector<Rule> d_rules;
     std::unordered_map<size_t, size_t>  d_finalToRule;  // from FINAL state to
                                                         // Rule index
-    std::unordered_map<size_t, size_t>  d_impliedViable;// key is 2nd lop 
-                                                    // rule. If viable then 
-                                                    // the value is viable by
-                                                    // implication
+    std::unordered_map<size_t, size_t>  d_lopToRule;// key is lop rule,
+                                                    // value is rule to use
+                                                    // while in user SCs
 
     StartConditions d_startConditions;
 
     Rule d_catchAll;
+    bool d_userSC = true;
 
     public:
         typedef StartConditions::const_iterator const_iterator;
@@ -46,7 +46,9 @@ class Rules: public FlexTypes
         Rule const &operator[](size_t idx) const;
         Rule &operator[](size_t idx);
 
+        
         size_t ruleFromFinalState(size_t stateIdx) const;
+
         void setType(StartConditions::Type type);
         void addStartCondition(std::string const &name, bool underscoresOK);
 
@@ -84,6 +86,8 @@ class Rules: public FlexTypes
 
         void processCatchAllRule();
 
+        void checkUserSC(size_t scIndex);
+
     private:
         void setRule(size_t state, size_t index);
 
@@ -102,6 +106,10 @@ inline void Rules::addIndex(size_t index)
     d_startConditions.add(index);
 }
 
+inline void Rules::checkUserSC(size_t idx)
+{
+    d_userSC = d_userSC && idx < d_startConditions.nUserSCs();
+}
 
 inline void Rules::setEndUserSC()
 {
@@ -148,11 +156,6 @@ inline Rules::rule_const_iterator Rules::ruleEnd() const
     return d_rules.end();
 }
         
-inline size_t Rules::ruleFromFinalState(size_t stateIdx) const
-{
-    return d_finalToRule.find(stateIdx)->second;
-}
-
 inline Rule const &Rules::operator[](size_t idx) const
 {
     return d_rules[idx];

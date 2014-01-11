@@ -108,6 +108,7 @@ class StartConditions
 
         void remove(size_t ruleIndex);  // remove ruleIndex from all the SC
                                         // vectors
+        size_t nUserSCs() const;
 
     private:
         SCVector::iterator find(std::string const &key);
@@ -117,6 +118,11 @@ class StartConditions
 
 //        static std::string const &strOf(SemVal const &nameVal);
 };
+
+inline size_t StartConditions::nUserSCs() const
+{
+    return d_endUserSC;
+}
 
 inline void StartConditions::acceptRules(bool ok)
 {

@@ -3,7 +3,7 @@
     // returns the index of the SC to receive the catch-all rule
 size_t Rules::handleLopRule(size_t idx)
 {
-    d_impliedViable[d_rules.size()] = idx;  // set the implied viable relation
+    d_lopToRule[d_rules.size()] = idx;  // set the implied viable relation
 
     Rule *rule = &d_rules[idx];
 
