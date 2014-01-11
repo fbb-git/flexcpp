@@ -107,7 +107,7 @@ class Scanner: public ScannerBase
 inline void Scanner::needCatchAll()
 {
     d_catchAll = "\n"
-                 ".|\\n      CATCH ALL lop3__();\n";    
+                 ".|\\n  lop3__();\n";    
 }
 
 inline void Scanner::forceCaseSensitive()

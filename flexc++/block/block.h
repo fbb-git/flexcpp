@@ -12,7 +12,7 @@ class Block
     std::string d_filename;               // the filename in which the block 
                                         // was found. The block's text itself
                                         // is in the Block's base class
-    int     d_level;
+    int     d_level = 0;
     std::string d_str;
     
     public:
@@ -21,6 +21,7 @@ class Block
         
         void clear();
     
+        void setLineNr(size_t lineNr);
         void setOrAction();
         bool orAction() const;          // if true, Generator uses this
                                         // to let cases fall through
@@ -30,17 +31,13 @@ class Block
         bool close();
         void indent();
         void operator+=(std::string const &text);
-  
+        void addContents(Block const &other);    // adds other's contents
+          
         size_t level() const;
         std::string const &str() const; // the block's contents
         size_t lineNr() const;
         std::string const &filename() const;
 };
-
-//inline Block::Block()
-//:
-//    d_level(0)
-//{}
 
 inline Block::Block(size_t lineno, std::string const &filename)
 :
@@ -52,6 +49,11 @@ inline Block::Block(size_t lineno, std::string const &filename)
 inline void Block::setOrAction()
 {
     d_level = std::numeric_limits<int>::max();
+}
+
+inline void Block::setLineNr(size_t lineNr)
+{
+    d_line = lineNr;
 }
 
 inline bool Block::orAction() const
@@ -87,6 +89,11 @@ inline std::string const &Block::str() const
 inline std::ostream &operator<<(std::ostream &out, Block const &block)
 {
     return out << block.str();
+}
+
+inline void Block::addContents(Block const &other)
+{
+    d_str += other.d_str;
 }
 
 #endif

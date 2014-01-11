@@ -14,8 +14,13 @@ void Generator::ruleAction(Block const &block, ostream &out, size_t idx)
         if (d_lineDirectives)
             out << "#line " << block.lineNr()  << 
                                " \"" << block.filename() << "\"\n";
+
+        istringstream actions(block.str());
+        string line;
+        while (getline(actions, line))
+            out << setw(12) << ' ' << line << '\n';
+
         out << 
-            "            " << block.str() << "\n"
             "        }\n"
             "        break;\n";
     }

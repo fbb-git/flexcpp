@@ -17,15 +17,14 @@ size_t Rules::handleLopRule(size_t idx)
                                         // calling lop__1, pasing it the SC 
                                         // index of its 1st SC
     Block workBlock(action.lineNr(), action.filename());
-    workBlock += "FULL match lop1__(" + to_string(scIndex) + ");\n";
+    workBlock += "lop1__(" + to_string(scIndex) + ");" ;
     rule->assignBlock(workBlock);
 
-                                        // lop2__() is called when the tail
-                                        // matches. It then switches to the
-    workBlock.clear();                  // 2nd SC
-    workBlock += "TAIL match lop2__();\n";// and pushes the initial part of the 
-                                        // matched text on to the input stream
-
+            // lop2__() is called when the LOP's tail was matched. 
+            // It then switches to the 2nd SC and pushes the initial part of
+            // the matched text on to the input stream
+    workBlock.clear();
+    workBlock += "lop2__();";
 
                                         // activate the LOP rule's 1st SCs:
     d_startConditions.activate(scIndex);
@@ -37,13 +36,20 @@ size_t Rules::handleLopRule(size_t idx)
                                         // rule, as the vector may have
                                         // resized
 
-
+    // lop3__() is called via the Scanner's needCatchAll() member in
+    // scanner.h, called by Parser::lookahead.
+    
                                         // activate the LOP rule's 2nd SCs:
     d_startConditions.activate(scIndex + 1);
 
+        // Code executed after the LOP's head has been matched
     workBlock.clear();                  // lop4__ returns to the previous SC
-    workBlock += "HEAD match lop4__();\n" + action.str();  // and puses the LOP's tail
-                                                // on to the input stream
+    workBlock += "lop4__();";           // and pushes the LOP's tail on to the
+    workBlock += "\n";                  // input stream.
+    workBlock.addContents(action);
+
+    workBlock.setLineNr(workBlock.lineNr() - 1);  // compensate for the
+                                                // lop4__() line.
 
                                         // add this rule to the 2nd SC
     add(false, pattern->lhs(), workBlock, RuleType::LOP_4);   

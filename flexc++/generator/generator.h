@@ -52,7 +52,7 @@ class Generator: public FlexTypes
     std::string d_baseclassScope;
     std::string d_constructionFilename;
 
-mutable    bool d_lineDirectives;
+    mutable bool d_lineDirectives;          // manipulated by 'actions'
     bool d_debug;
 
     mutable std::vector<std::string> d_startStates;

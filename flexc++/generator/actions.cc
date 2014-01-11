@@ -13,15 +13,7 @@ void Generator::actions(ostream &out) const
                 RuleType::LOP_1
             };
 
-// TEMPORARILY mutable!!
-d_lineDirectives = false;
-
-//        size_t idx = 0;
-//        for (auto &rule: ranger(d_rules.ruleBegin(), d_rules.ruleEnd()))
-//        {
-//                ruleAction(rule.block(), out, idx);
-//            ++idx;
-//        }
+    bool lineDirectives = d_lineDirectives;
 
     for (RuleType type: blockTypes)
     {
@@ -32,6 +24,7 @@ d_lineDirectives = false;
                 ruleAction(rule.block(), out, idx);
             ++idx;
         }
+        d_lineDirectives = false;
     }    
 
     static RuleType fallThroughTypes[] = {
@@ -45,6 +38,9 @@ d_lineDirectives = false;
 
     for (RuleType type: fallThroughTypes)
     {
+        if (type == RuleType::LOP_4)
+            d_lineDirectives = lineDirectives;
+
         auto rule = find_if(first, end, 
             [&](Rule const &rule)
             {
