@@ -10,7 +10,8 @@ void Generator::actions(ostream &out) const
 
     static RuleType blockTypes[] = {
                 RuleType::NORMAL,
-                RuleType::LOP_1
+                RuleType::LOP_1,
+                RuleType::LOP_4
             };
 
     bool lineDirectives = d_lineDirectives;
@@ -20,17 +21,23 @@ void Generator::actions(ostream &out) const
         size_t idx = 0;
         for (auto &rule: ranger(d_rules.ruleBegin(), d_rules.ruleEnd()))
         {
+            d_lineDirectives = 
+                    type == RuleType::LOP_1 ? 
+                        false 
+                    :
+                        lineDirectives; 
+
             if (rule.type() == type)
                 ruleAction(rule.block(), out, idx);
             ++idx;
         }
-        d_lineDirectives = false;
     }    
+
+    d_lineDirectives = false;
 
     static RuleType fallThroughTypes[] = {
                 RuleType::LOP_2,
                 RuleType::LOP_3,
-                RuleType::LOP_4,
             };
 
     auto first = d_rules.ruleBegin();
