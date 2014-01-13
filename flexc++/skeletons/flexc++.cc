@@ -193,13 +193,10 @@ void \@Base::lop4__()
     begin(static_cast<StartCondition__>(d_lopSC));  // restore original SC
     d_get = &\@Base::getInput;                  // restore get function
 
+    if (d_lop1stTail != AT_EOF)
+        getInput();
                                                 // reinsert the tail into the 
                                                 // input stream
-    getInput();                                 // the first char. of the
-                                                // tail was kept in the input
-                                                // (cf. matched__()). It is
-                                                // removed, and the full tail
-                                                // is pushed on to the input
     push(d_lopMatched.substr(length(), string::npos));
 }
 
@@ -259,6 +256,7 @@ size_t \@Base::matched__(size_t ch)
 {
 $insert 4 debug "MATCH"
     d_input.reRead(ch);
+    d_lop1stTail = ch;
 
     if (!d_atBOL)
         d_final.atBOL.rule = s_maxSize_t;

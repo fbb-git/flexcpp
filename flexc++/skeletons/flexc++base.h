@@ -125,6 +125,7 @@ private:
     std::string::iterator d_lopTail;
     std::string::iterator d_lopIter;
     std::string::iterator d_lopEnd;
+    size_t          d_lop1stTail;
 
 protected:
     std::istream   *d_in__;
