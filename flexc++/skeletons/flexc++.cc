@@ -34,11 +34,7 @@ $insert inputImplementation
 \@Base::\@Base(std::istream &in, std::ostream &out)
 :
     d_filename("-"),
-    d_startCondition(StartCondition__::INITIAL),
-    d_state(0),
     d_out(new std::ostream(out.rdbuf())),
-    d_sawEOF(false),
-    d_atBOL(true),
 $insert interactiveInit
     d_dfaBase__(s_dfa__)
 {}
@@ -46,10 +42,7 @@ $insert interactiveInit
 void \@Base::switchStream__(std::istream &in, size_t lineNr)
 {
     d_input.close();
-    d_state = 0;
     d_input = Input(new std::istream(in.rdbuf()), lineNr);
-    d_sawEOF = false;
-    d_atBOL = true;
 }
 
 $ignoreInteractive BEGIN    this section is ignored by generator/filter.cc
@@ -57,13 +50,9 @@ $ignoreInteractive BEGIN    this section is ignored by generator/filter.cc
 \@Base::\@Base(std::string const &infilename, std::string const &outfilename)
 :
     d_filename(infilename),
-    d_startCondition(StartCondition__::INITIAL),
-    d_state(0),
     d_out(outfilename == "-"    ? new std::ostream(std::cout.rdbuf()) :
           outfilename == ""     ? new std::ostream(std::cerr.rdbuf()) :
                                   new std::ofstream(outfilename)),
-    d_sawEOF(false),
-    d_atBOL(true),
     d_input(new std::ifstream(infilename)),
     d_dfaBase__(s_dfa__)
 {}
@@ -152,7 +141,6 @@ void \@Base::p_pushStream(std::string const &name, std::istream *streamPtr)
     d_atBOL = true;
 }
 
-
 bool \@Base::popStream()
 {
     d_input.close();
@@ -168,6 +156,56 @@ bool \@Base::popStream()
     d_sawEOF = false;
 
     return true;
+}
+
+
+//$insert lopImplementation
+void \@Base::lop1__(int lopSC)
+{
+    d_lopSC = d_startCondition;                 // remember original SC
+
+    begin(static_cast<StartCondition__>(lopSC));    // activate the 
+                                                    // tail-matching SC
+    d_lopMatched = d_matched;
+
+    d_lopEnd = d_lopMatched.end();
+    d_lopBegin = d_lopMatched.begin() + d_lopMatched.size() - 1;
+
+    d_get = &\@Base::getLOP;
+}
+
+void \@Base::lop2__()                      // matched the tail
+{
+    d_lopEnd = d_lopBegin;                      // read the head
+    d_lopBegin = d_lopMatched.begin();
+                                                // switch to the head-matching
+                                                // SC
+    begin(static_cast<StartCondition__>(d_startCondition + 1));
+}
+
+void \@Base::lop3__()                      // catch-all handler
+{
+    d_lopBegin -= 2;                            // re-read the last two chars
+}
+    
+void \@Base::lop4__()
+{
+    begin(static_cast<StartCondition__>(d_lopSC));  // restore original SC
+    d_get = &\@Base::getInput;                  // restore get function
+
+                                                // reinsert the tail into the 
+                                                // input stream
+    d_lopMatched.pop_back();                    // already there because of
+                                                // earlier matched__()
+    push(d_lopMatched.substr(d_matched.size(), std::string::npos));
+}
+
+size_t \@Base::getLOP()
+{
+    return d_lopBegin == d_lopEnd ? 
+                static_cast<size_t>(AT_EOF) 
+            : 
+                *d_lopBegin++;
 }
 
 \@Base::ActionType__ \@Base::actionType__(size_t range)

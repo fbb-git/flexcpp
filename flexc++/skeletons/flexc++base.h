@@ -100,12 +100,12 @@ private:
                                             // the name "<istream #>", where
                                             // # is the sequence number of the 
                                             // istream (starting at 1)
-    StartCondition__  d_startCondition;
-    size_t          d_state;
+    int             d_startCondition = 0;
+    size_t          d_state = 0;
     int             d_nextState;
     std::shared_ptr<std::ostream> d_out;
-    bool            d_sawEOF;               // saw EOF
-    bool            d_atBOL;                // the matched text starts at BOL
+    bool            d_sawEOF = false;       // saw EOF
+    bool            d_atBOL = true;         // the matched text starts at BOL
     Final d_final;                          // 1st for BOL rules
                                             
                                             // only used interactively:
@@ -116,6 +116,14 @@ private:
     std::string     d_matched;              // matched characters
     bool            d_return;               // return after a rule's action 
     bool            d_more = false;         // set to true by more()
+
+    size_t (ScannerBase::*d_get)() = &ScannerBase::getInput;
+
+//$insert 4 lopData
+    int             d_lopSC = 0;
+    std::string     d_lopMatched;           // matched lop-rule characters 
+    std::string::iterator d_lopBegin;
+    std::string::iterator d_lopEnd;
 
 protected:
     std::istream   *d_in__;
@@ -216,12 +224,15 @@ $ignoreInteractive END      end ignored section by generator/filter.cc
                                                 // next input stream:
     void            switchStream__(std::istream &in, size_t lineNr);   
 
-    //FBB
-    // TO DO for lop handling:
-    void            lopRedo__();                // pushback matched() but 1
-    void            addLast__();                // add last char
+//$insert 4 lopMemberFunctions
+    void            lop1__(int lopSC);          // matches ab for a/b
+    void            lop2__();                   // matches the LOP's b tail
+    void            lop3__();                   // catch-all while matching b
+    void            lop4__();                   // matches the LOP's a head
 
 private:
+    size_t getInput();
+    size_t getLOP();
     void p_pushStream(std::string const &name, std::istream *streamPtr);
     void determineMatchedSize(FinData const &final);
     bool atFinalState();
@@ -265,7 +276,7 @@ inline std::string const &\@Base::matched() const
 
 inline \@Base::StartCondition__ \@Base::startCondition() const
 {
-    return d_startCondition;
+    return static_cast<StartCondition__>(d_startCondition);
 }
 
 inline std::string const &\@Base::filename() const
@@ -300,8 +311,9 @@ inline void \@Base::more()
 
 inline void \@Base::begin(StartCondition__ startCondition)
 {
+    // d_state is reset to 0 by reset__()
     d_dfaBase__ = 
-        s_dfaBase__[static_cast<int>(d_startCondition = startCondition)];
+        s_dfaBase__[d_startCondition = static_cast<int>(startCondition)];
 }
 
 inline size_t \@Base::state__() const
@@ -310,6 +322,11 @@ inline size_t \@Base::state__() const
 }
 
 inline size_t \@Base::get__()
+{
+    return (this->*d_get)();
+}
+
+inline size_t \@Base::getInput()
 {
     return d_input.get();
 }
