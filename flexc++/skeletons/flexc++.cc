@@ -158,7 +158,6 @@ bool \@Base::popStream()
     return true;
 }
 
-
 //$insert lopImplementation
 void \@Base::lop1__(int lopSC)
 {
@@ -169,15 +168,16 @@ void \@Base::lop1__(int lopSC)
     d_lopMatched = d_matched;
 
     d_lopEnd = d_lopMatched.end();
-    d_lopBegin = d_lopMatched.begin() + d_lopMatched.size() - 1;
+    d_lopTail = d_lopEnd - 1;
+    d_lopIter = d_lopTail;
 
     d_get = &\@Base::getLOP;
 }
 
 void \@Base::lop2__()                      // matched the tail
 {
-    d_lopEnd = d_lopBegin;                      // read the head
-    d_lopBegin = d_lopMatched.begin();
+    d_lopEnd = d_lopTail;                  // now read the head
+    d_lopIter = d_lopMatched.begin();
                                                 // switch to the head-matching
                                                 // SC
     begin(static_cast<StartCondition__>(d_startCondition + 1));
@@ -185,7 +185,7 @@ void \@Base::lop2__()                      // matched the tail
 
 void \@Base::lop3__()                      // catch-all handler
 {
-    d_lopBegin -= 2;                            // re-read the last two chars
+    d_lopIter = --d_lopTail;               // increase the tail, try again
 }
     
 void \@Base::lop4__()
@@ -195,17 +195,20 @@ void \@Base::lop4__()
 
                                                 // reinsert the tail into the 
                                                 // input stream
-    d_lopMatched.pop_back();                    // already there because of
-                                                // earlier matched__()
-    push(d_lopMatched.substr(d_matched.size(), std::string::npos));
+    getInput();                                 // the first char. of the
+                                                // tail was kept in the input
+                                                // (cf. matched__()). It is
+                                                // removed, and the full tail
+                                                // is pushed on to the input
+    push(d_lopMatched.substr(length(), string::npos));
 }
 
 size_t \@Base::getLOP()
 {
-    return d_lopBegin == d_lopEnd ? 
+    return d_lopIter == d_lopEnd ? 
                 static_cast<size_t>(AT_EOF) 
             : 
-                *d_lopBegin++;
+                *d_lopIter++;
 }
 
 \@Base::ActionType__ \@Base::actionType__(size_t range)

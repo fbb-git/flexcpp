@@ -122,7 +122,8 @@ private:
 //$insert 4 lopData
     int             d_lopSC = 0;
     std::string     d_lopMatched;           // matched lop-rule characters 
-    std::string::iterator d_lopBegin;
+    std::string::iterator d_lopTail;
+    std::string::iterator d_lopIter;
     std::string::iterator d_lopEnd;
 
 protected:
