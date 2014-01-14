@@ -2,6 +2,9 @@
 
 void Rules::handleLopRules()
 {
+    if (not usesLOPrules())
+        return;
+
     setLopBlocks();     // make sure each LOP rule gets its own action block
 
         // handleLopRule may extend d_rules, but will never add another LOP
