@@ -3,8 +3,6 @@
 #include <iostream>     // TMP
 
 #include <limits>
-#include <bobcat/a2x>
 
 using namespace std;
-using namespace FBB;
 

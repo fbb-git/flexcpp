@@ -2,6 +2,6 @@
 
 Interval Interval::range(string const &lower, string const &upper)
 {
-    Interval ret {A2x(lower), A2x(upper)};
+    Interval ret {stoul(lower), stoul(upper)};
     return ret;
 }

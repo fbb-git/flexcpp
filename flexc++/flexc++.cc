@@ -69,16 +69,28 @@ try
         parser.addLopStartConditions();
         parser.cleanup();
 
+cerr << "Parsed\n";
+
     rules.handleLopRules();
 
+cerr << "LOPRules\n";
+
     Ranges ranges(states);
+cerr << "RANGES\n";
         ranges.determineSubsets();
+cerr << "subsets\n";
         ranges.finalizeStates();
+
+cerr << "Ranges\n";
 
     DFAs dfas(rules, states, ranges);
         dfas.build();
 
+cerr << "DFAs\n";
+
     rules.warnNonViable();
+
+cerr << "Generator\n";
 
     Generator generator(rules, ranges, dfas);
         generator.construction(states);

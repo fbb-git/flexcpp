@@ -23,7 +23,7 @@ Pattern Pattern::interval(States &states, Pattern &regex,
     else
     {
         Pair pair = states.next2();
-        states[pair.first] = State::factory(EMPTY, pair.second, 0);
+        states[pair.first] = State(EMPTY, pair.second, 0);
 
         ret = Pattern(pair);
     }

@@ -2,8 +2,16 @@
 
 void Ranges::determineSubsets()
 {
+cerr << "Number of states: " << d_states.size() << '\n';
+
+size_t count = 0;
     for(auto &state: d_states)
+{
+cerr << "   state " << count++ << '\n';
         inspectState(state);
+}
+
+cerr << "All stated visited\n";
 
     // now convert counts to ranges. At each transition increment the range 
     // nr. The initial range is 0

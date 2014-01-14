@@ -10,7 +10,7 @@ Pattern Pattern::rawText(States &states, std::string const &str)
     if (length == 0)            // pathological case: string without contents
     {
         Pair pair = states.next2();
-        states[pair.first] = State::factory(EMPTY, pair.second, 0);
+        states[pair.first] = State(EMPTY, pair.second, 0);
 
         ret = pair;
         return ret;
@@ -20,7 +20,7 @@ Pattern Pattern::rawText(States &states, std::string const &str)
     Pair pair = Pair(*indices, indices[length]);
 
     for (size_t idx = 0; idx != length; ++idx)
-        states[indices[idx]] = State::factory(str[idx], indices[idx + 1]);
+        states[indices[idx]] = State(str[idx], indices[idx + 1]);
 
     delete [] indices;
 

@@ -2,7 +2,7 @@
 
 Interval Interval::exact(std::string const &text)
 {
-    size_t value = A2x(text);
+    size_t value = stoul(text);
 
     Interval ret(value, value);
     return ret;
