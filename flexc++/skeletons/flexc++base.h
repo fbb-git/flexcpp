@@ -79,12 +79,14 @@ private:
         FinData notAtBOL;
     };
 
+    static StartCondition__ constexpr SC(int sc);
+    static int constexpr SC(StartCondition__ sc);
+
         // class Input encapsulates all input operations. 
         // Its member get() returns the next input character
 $insert inputInterface
 
 protected:
-
     struct StreamStruct
     {
         std::string pushedName;
@@ -92,7 +94,6 @@ protected:
     };
 
 private:
-
     std::vector<StreamStruct>    d_streamStack;
 
     std::string     d_filename;             // name of the currently processed
@@ -101,6 +102,8 @@ private:
                                             // # is the sequence number of the 
                                             // istream (starting at 1)
     int             d_startCondition = 0;
+    int             d_lopSC = 0;
+
     size_t          d_state = 0;
     int             d_nextState;
     std::shared_ptr<std::ostream> d_out;
@@ -114,18 +117,16 @@ private:
     
     Input           d_input;
     std::string     d_matched;              // matched characters
+    std::string     d_lopMatched;           // matched lop-rule characters 
+    std::string::iterator d_lopIter;
+    std::string::iterator d_lopTail;
+    std::string::iterator d_lopEnd;
+
+    size_t          d_lop1stTail;
     bool            d_return;               // return after a rule's action 
     bool            d_more = false;         // set to true by more()
 
-    size_t (ScannerBase::*d_get)() = &ScannerBase::getInput;
-
-//$insert 4 lopData
-    int             d_lopSC = 0;
-    std::string     d_lopMatched;           // matched lop-rule characters 
-    std::string::iterator d_lopTail;
-    std::string::iterator d_lopIter;
-    std::string::iterator d_lopEnd;
-    size_t          d_lop1stTail;
+    size_t (\@Base::*d_get)() = &\@Base::getInput;
 
 protected:
     std::istream   *d_in__;
@@ -225,8 +226,6 @@ $ignoreInteractive END      end ignored section by generator/filter.cc
     void            reset__();                  // prepare for new cycle
                                                 // next input stream:
     void            switchStream__(std::istream &in, size_t lineNr);   
-
-//$insert 4 lopMemberFunctions
     void            lop1__(int lopSC);          // matches ab for a/b
     void            lop2__();                   // matches the LOP's b tail
     void            lop3__();                   // catch-all while matching b
@@ -239,6 +238,16 @@ private:
     void determineMatchedSize(FinData const &final);
     bool atFinalState();
 };
+
+inline \@Base::StartCondition__ constexpr \@Base::SC(int sc)
+{
+    return static_cast<StartCondition__>(sc);
+}
+
+inline int constexpr \@Base::SC(StartCondition__ sc)
+{
+    return static_cast<int>(sc);
+}
 
 inline std::ostream &\@Base::out()
 {
@@ -278,7 +287,7 @@ inline std::string const &\@Base::matched() const
 
 inline \@Base::StartCondition__ \@Base::startCondition() const
 {
-    return static_cast<StartCondition__>(d_startCondition);
+    return SC(d_startCondition);
 }
 
 inline std::string const &\@Base::filename() const
@@ -314,8 +323,7 @@ inline void \@Base::more()
 inline void \@Base::begin(StartCondition__ startCondition)
 {
     // d_state is reset to 0 by reset__()
-    d_dfaBase__ = 
-        s_dfaBase__[d_startCondition = static_cast<int>(startCondition)];
+    d_dfaBase__ = s_dfaBase__[d_startCondition = SC(startCondition)];
 }
 
 inline size_t \@Base::state__() const

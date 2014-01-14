@@ -7,6 +7,7 @@ Generator::Generator(Rules const &rules, Ranges const &ranges,
     d_rules(rules),
     d_ranges(ranges),
     d_dfas(dfas),
+    d_lopUsed(rules.usesLOPrules()),
     d_dfaIndices(1, 0)
 {
     d_baseclassScope = d_options.className() + "Base::";

@@ -88,6 +88,8 @@ class Rules: public FlexTypes
 
         void checkUserSC(size_t scIndex);
 
+        bool usesLOPrules() const;
+
     private:
         void setRule(size_t state, size_t index);
 
@@ -100,6 +102,11 @@ class Rules: public FlexTypes
 
         static bool nonViable(Rule const &rule);
 };
+
+inline bool Rules::usesLOPrules() const
+{
+    return d_startConditions.nUserSCs() != d_startConditions.size();
+}
 
 inline void Rules::addIndex(size_t index)
 {

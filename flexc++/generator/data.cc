@@ -23,6 +23,8 @@ Generator::Map Generator::s_insert =
     {"interactiveInit",         &Generator::interactiveInit},
     {"interactiveLex",          &Generator::interactiveLex},
     {"lexFunctionDecl",         &Generator::lexFunctionDecl},
+    {"lopImplementation",       &Generator::lopImplementation},
+    {"lop1stTail",              &Generator::lop1stTail},
     {"namespace-close",         &Generator::namespaceClose},    
     {"namespace-open",          &Generator::namespaceOpen},
     {"namespace-use",           &Generator::namespaceUse},

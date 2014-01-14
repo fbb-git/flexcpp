@@ -158,55 +158,7 @@ bool \@Base::popStream()
     return true;
 }
 
-//$insert lopImplementation
-void \@Base::lop1__(int lopSC)
-{
-    d_lopSC = d_startCondition;                 // remember original SC
-
-    begin(static_cast<StartCondition__>(lopSC));    // activate the 
-                                                    // tail-matching SC
-    d_lopMatched = d_matched;
-
-    d_lopEnd = d_lopMatched.end();
-    d_lopTail = d_lopEnd - 1;
-    d_lopIter = d_lopTail;
-
-    d_get = &\@Base::getLOP;
-}
-
-void \@Base::lop2__()                      // matched the tail
-{
-    d_lopEnd = d_lopTail;                  // now read the head
-    d_lopIter = d_lopMatched.begin();
-                                                // switch to the head-matching
-                                                // SC
-    begin(static_cast<StartCondition__>(d_startCondition + 1));
-}
-
-void \@Base::lop3__()                      // catch-all handler
-{
-    d_lopIter = --d_lopTail;               // increase the tail, try again
-}
-    
-void \@Base::lop4__()
-{
-    begin(static_cast<StartCondition__>(d_lopSC));  // restore original SC
-    d_get = &\@Base::getInput;                  // restore get function
-
-    if (d_lop1stTail != AT_EOF)
-        getInput();
-                                                // reinsert the tail into the 
-                                                // input stream
-    push(d_lopMatched.substr(length(), string::npos));
-}
-
-size_t \@Base::getLOP()
-{
-    return d_lopIter == d_lopEnd ? 
-                static_cast<size_t>(AT_EOF) 
-            : 
-                *d_lopIter++;
-}
+$insert lopImplementation
 
 \@Base::ActionType__ \@Base::actionType__(size_t range)
 {
@@ -256,7 +208,7 @@ size_t \@Base::matched__(size_t ch)
 {
 $insert 4 debug "MATCH"
     d_input.reRead(ch);
-    d_lop1stTail = ch;
+$insert lop1stTail
 
     if (!d_atBOL)
         d_final.atBOL.rule = s_maxSize_t;
@@ -285,8 +237,7 @@ $insert caseCheck
 }
 
   // At this point d_nextState contains the next state and continuation is
-  // possible. The just read char. is appended to d_match, and LOP counts
-  // are updated.
+  // possible. The just read char. is appended to d_match
 void \@Base::continue__(int ch)
 {
 $insert 4 debug "CONTINUE, NEXT STATE: " << d_nextState

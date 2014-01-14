@@ -54,6 +54,7 @@ class Generator: public FlexTypes
 
     mutable bool d_lineDirectives;          // manipulated by 'actions'
     bool d_debug;
+    bool d_lopUsed;
 
     mutable std::vector<std::string> d_startStates;
     mutable std::string d_key;          // extracted at $insert statements
@@ -127,6 +128,8 @@ class Generator: public FlexTypes
         void interactiveLex(std::ostream &out) const;
         void key(std::ostream &out) const;
         void lexFunctionDecl(std::ostream &out) const;
+        void lopImplementation(std::ostream &out) const;
+        void lop1stTail(std::ostream &out) const;
         void namespaceClose(std::ostream &out) const;
         void namespaceOpen(std::ostream &out) const;
         void namespaceUse(std::ostream &out) const;
