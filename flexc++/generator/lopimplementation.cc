@@ -45,7 +45,7 @@ void )" << d_baseclassScope << R"(lop4__()
     d_get = &)" << d_baseclassScope << 
                     R"(getInput;              // restore get function
 
-    if (d_lop1stTail != AT_EOF)             // skip 1st tail char pushed
+    if (d_lopTail1 != AT_EOF)               // skip 1st tail char pushed
         getInput();                         // on to the input
 
                                             // reinsert the tail into the 

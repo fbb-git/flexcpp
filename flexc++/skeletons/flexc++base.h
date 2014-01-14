@@ -122,7 +122,7 @@ private:
     std::string::iterator d_lopTail;
     std::string::iterator d_lopEnd;
 
-    size_t          d_lop1stTail;
+    size_t          d_lopTail1;             // char. beyond LOP-head
     bool            d_return;               // return after a rule's action 
     bool            d_more = false;         // set to true by more()
 
