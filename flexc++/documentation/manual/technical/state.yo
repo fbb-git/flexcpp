@@ -3,12 +3,9 @@ link(pattern)(PATTERNS). A tt(State) contains/offers:
     itemization(
     itt(d_type): the type represented by the State (EMPTY, FINAL, CHARSET,
         BOL), the internally used tt(UNDETERMINED__) and tt(EOF__) types, or
-        the ascii-value of a single character;
-    itt(d_flag): the state-type: tt(NO_LOP) if the RE for this state does not
-        use the LOP; tt(ACCEPT) if this state is the first state following the
-        LOP (reached via an empty transition from the last state before the
-        LOP); tt(PRE) for all states preceding the tt(ACCEPT) state; tt(POST)
-        for all states following the tt(ACCEPT) state.
+        the ascii-value of a single character; No other type may occur. If
+        another type is encountered flc() contains an internal logic error and
+        the program terminates in a fatal exception.
     itt(d_rule): an index into the link(Rules)(RULES) object to the
         link(rule)(RULE) object defining the pattern;
     it() A shared pointer to tt(StateData). The class tt(StateData) is derived

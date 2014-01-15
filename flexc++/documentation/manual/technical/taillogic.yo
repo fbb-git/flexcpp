@@ -1,6 +1,0 @@
-The following table shows the decisions/actions to make/perform for the
-various combinations of tt(d_sawAccept) and tt(TailCount) flag values. The
-flag tt(PROCESSED) is defined in tt(TailCount) as well and is set once a
-tt(TailCount)'s COUNT or INCREMENTING tt(d_flag) has been determined.
-
-verbinclude(../../../dfa/README.tailcounts)

@@ -1,9 +1,5 @@
 #include "state.ih"
 
-#include <ostream>
-#include <algorithm>
-#include <iterator>
-
 ostream &operator<<(ostream &out, State const &state)
 {
     size_t type = state.type();
@@ -20,7 +16,8 @@ ostream &operator<<(ostream &out, State const &state)
     else if (type == State::CHARSET)
         out << 'S';
     else
-        out << '*' << type << '*';
+        fmsg << "internal error: * unexpected State type " << type << 
+                "encountered* in State's operator<<" << endl;
 
     out  << " -> " << state.next1() << ", " << state.next2();
 

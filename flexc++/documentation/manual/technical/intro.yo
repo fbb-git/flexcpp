@@ -2,10 +2,45 @@ Starting point of the analysis is the parser. The parser needs access to
 tt(States) and tt(Rules). The parser is described link(here)(PARSER).
 
 After some preliminary definitions flc() defines its tt(Parser)
-object. The parser performs the following tasks:
+object. The parser's main tasks are these:
     itemization(
     itt(parse): the input is analyzed, resulting in the definitions of
 em(rules). Each regular expression consists of a series of states, summarized
 by tt(Patterns) and an em(action block). Action blocks may be empty, and may
 be identical for subsequent regular expressions. A tt(Pattern) plus action
-block 
+block (plus maybe a begin-of-line indicator) becomes a rule which 
+is added to the tt(Rules) object. The first regular expression in the input
+file becomes rule 0.
+    itt(addLopStartConditions): once the input has been parsed, and LOP-rules
+were recognized the LOP mini scanners need a catch-all rule. The catch-all
+rule looks like this:
+        verb(
+    .|\n        lop3__();
+        )
+    and is added by the scanner to the input once all input files have been
+processed. This rule is then used in the LOP-tail matching procedure,
+explained in section ref(LOOKAHEAD). 
+    )
+
+After parsing the tt(Rules) object's tt(handleLopRules) adds a catch-all rule
+to the tt(LOP) rule processing code. This member also updates the LOP-rules
+action blocks, calling tt(lop1__, lop2__, lop3__) and tt(lop4__). Again:
+refer to section ref(LOOKAHEAD) for details.
+
+Rather than using the characters groups of characters are combined, forming
+clusters or ranges. This way the DFAs do not need column entries representing
+the individual input characters, but only need columns representing the
+categories, usually resulting in strongly reduced column dimensions. The
+ranges are determined by the tt(Ranges) object. These ranges can only be
+determined once the regular expressions have been analyzed, which is why the
+tt(Ranges) object is defined and performs its actions after the parser has
+completed its work.
+
+Once the ranges and the states of the regular expressions have been
+determined, the DFAs can be constructed. A DFA is constructed for each start
+condition (i.e. mini scanner) by the tt(DFAs) object.
+
+Finally, a tt(Generator) generates the output files. The tt(Generator) reads
+the skeleton files, copying them to their destinations which inserting
+information (like the range definitions and DFA tables) which was created
+before. 

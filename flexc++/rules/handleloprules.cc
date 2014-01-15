@@ -32,5 +32,3 @@ void Rules::handleLopRules()
 }
 
 
-
-

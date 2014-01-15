@@ -120,11 +120,6 @@ chapter(Technical documentation (PIPETHROUGH(date -R)()))
     lsect(NOTATION)(Notation, Terminology)
     includefile(technical/notations)
     
-    COMMENT(
-            lsubsect(FINACALGO)(The FinAc computing algorithm)
-            includefile(technical/finacalgo)
-    END)
-    
     lsect(PARSER)(The parser)
     includefile(technical/parser)
 
@@ -162,17 +157,11 @@ chapter(Technical documentation (PIPETHROUGH(date -R)()))
     lsect(RANGES)(Ranges)
     includefile(technical/ranges)
     
-    lsect(TAILCOUNT)(The class TailCount)
-    includefile(technical/tailcount)
-    
     sect(The class DFAs)
     includefile(technical/dfas)
     
         lsect(DFA)(The DFA)
     includefile(technical/dfa)
-    
-        lsubsect(TAILLOGIC)(The logic used in 'setTailCount')
-        includefile(technical/taillogic)
     
     lsect(DFAROW)(The rows of the DFA: DFAROW)
     includefile(technical/dfarow)
@@ -190,11 +179,6 @@ chapter(Technical documentation (PIPETHROUGH(date -R)()))
     
         subsect(The steps of the LOP handling algorithm)
         includefile(technical/lopalgosteps)
-    
-COMMENT(
-        subsect(Implementation)
-        includefile(technical/lookahead)
-END)
     
     lsect(FINALSTATE)(Final states and ^xyz vs. xyz patterns)
     includefile(technical/bolrules)
