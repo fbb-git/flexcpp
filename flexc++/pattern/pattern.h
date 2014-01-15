@@ -82,6 +82,7 @@ class Pattern: private FlexTypes
         static void copyPattern(States &states, size_t lower, size_t upper,
                                                 Map &eject, PairVector &pv);
 
+            // used by copyPattern
         static size_t dupPattern(Map &map, States &states, size_t idx);
 
         static Pattern optRepeatLastPattern(States &states, 
