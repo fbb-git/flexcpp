@@ -9,7 +9,7 @@ ostream &operator<<(ostream &out, State const &state)
     size_t type = state.type();
 
     if (type == State::UNDETERMINED__)
-        return(out);
+        return out;
 
     if (type < State::UNDETERMINED__)
         out << type;
@@ -36,6 +36,8 @@ ostream &operator<<(ostream &out, State const &state)
 
     return out;
 }
+
+
 
 
 

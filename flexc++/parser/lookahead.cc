@@ -1,5 +1,7 @@
 #include "parser.ih"
 
+#include "../states/states.h" //TMP
+
 Pattern Parser::lookahead(Pattern const &left, Pattern const &right)
 {
     Options::regexCall("lookahead");
@@ -27,8 +29,12 @@ Pattern Parser::lookahead(Pattern const &left, Pattern const &right)
         ret = left;    
     else
     {
+cerr << d_states << '\n';
+
         ret = Pattern(d_states, left, right,  d_lopStartCondition);
         d_lopStartCondition += 2;
+
+cerr << d_states << '\n';
     }
 
     d_scanner.needCatchAll();

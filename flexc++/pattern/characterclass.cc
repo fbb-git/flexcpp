@@ -6,15 +6,15 @@ Pattern Pattern::characterClass(States &states, CharClass const &charClass)
 
     states[pair.first] = State(CHARSET, charClass.str(), pair.second);
 
-//    cout << "Pattern::characterClass: ";
+//    cerr << "Pattern::characterClass: ";
 //    for (auto ch: charClass.str())
 //    {
 //        if (isprint(ch)) 
-//            cout << ch;
+//            cerr << ch;
 //        else
-//            cout << ' ' << (int)ch << ' ';
+//            cerr << ' ' << (int)ch << ' ';
 //    }
-//    cout << "\n"
+//    cerr << "\n"
 //            "States: " << pair.first << " .. " << pair.second << '\n';
 
     Pattern ret(pair);

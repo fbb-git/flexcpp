@@ -2,7 +2,6 @@
 
 void Ranges::inspectState(State const &state)
 {
-cerr << "   " << state << '\n';
     size_t type = state.type();
     
     if (type < UNDETERMINED__)

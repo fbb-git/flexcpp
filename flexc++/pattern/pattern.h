@@ -14,10 +14,9 @@ class States;
 
 class Pattern: private FlexTypes
 {
-    typedef std::pair<size_t, size_t> Pair;
-
-    typedef std::unordered_map<size_t, size_t> Map;
-    typedef std::vector<Pair> PairVector;
+        typedef std::unordered_map<size_t, size_t>  Map;
+        typedef std::pair<size_t, size_t>           Pair;
+        typedef std::vector<Pair>                   PairVector;
 
     struct LopData;
     std::shared_ptr<LopData> d_lopData;
@@ -69,13 +68,16 @@ class Pattern: private FlexTypes
                                                     // the states of `this'
                                                     // pattern.
 
+//FBB
         static size_t dup(Map &indexMap, States &states, size_t index);
+//-------
 
         static Pattern star(States &states, Pattern const &pattern);
         static Pattern plus(States &states, Pattern const &pattern);
         static Pattern questionMark(States &states, 
                                        Pattern const &pattern);
 
+        // lower and upper are the lower and upper limits of an Interval
         static Pattern copy(States &states, 
                                 Pattern &pattern, 
                                 size_t lower, size_t upper);

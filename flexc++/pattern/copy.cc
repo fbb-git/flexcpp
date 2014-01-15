@@ -4,6 +4,8 @@
 //         begin, end: the begin/end state indices of the initial pattern
 //         beginEnd: vector of pairs holding begin and end indices of copied
 //                   patterns
+//
+//         lower and upper are the lower and upper limits of an Interval
 // 
 // First the initial number of required patterns is duplicated (the 1st one 
 //         already being available as it is `pattern' itself)
