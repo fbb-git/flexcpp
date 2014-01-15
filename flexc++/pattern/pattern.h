@@ -68,10 +68,6 @@ class Pattern: private FlexTypes
                                                     // the states of `this'
                                                     // pattern.
 
-//FBB
-        static size_t dup(Map &indexMap, States &states, size_t index);
-//-------
-
         static Pattern star(States &states, Pattern const &pattern);
         static Pattern plus(States &states, Pattern const &pattern);
         static Pattern questionMark(States &states, 
