@@ -29,6 +29,14 @@ R"(
             {
                 return d_lineNr;
             }
+            size_t nPending() const
+            {
+                return d_deque.size();
+            }
+            size_t setPending(size_t size)
+            {
+                d_deque.resize(size);
+            }
             void close()                    // force closing the stream
             {
                 delete d_in;

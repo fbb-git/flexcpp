@@ -129,7 +129,6 @@ class Generator: public FlexTypes
         void key(std::ostream &out) const;
         void lexFunctionDecl(std::ostream &out) const;
         void lopImplementation(std::ostream &out) const;
-        void lopTail1(std::ostream &out) const;
         void namespaceClose(std::ostream &out) const;
         void namespaceOpen(std::ostream &out) const;
         void namespaceUse(std::ostream &out) const;

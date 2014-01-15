@@ -11,6 +11,7 @@ void Generator::lopImplementation(std::ostream &out) const
 "void " << d_baseclassScope << R"(lop1__(int lopSC)
 {
     d_lopMatched = d_matched;
+    d_lopPending = d_input.nPending();
 
     d_lopEnd = d_lopMatched.end();
     d_lopTail = d_lopEnd - 1;
@@ -45,8 +46,7 @@ void )" << d_baseclassScope << R"(lop4__()
     d_get = &)" << d_baseclassScope << 
                     R"(getInput;              // restore get function
 
-    if (d_lopTail1 != AT_EOF)               // skip 1st tail char pushed
-        getInput();                         // on to the input
+    d_input.setPending(d_lopPending);
 
                                             // reinsert the tail into the 
                                             // input stream

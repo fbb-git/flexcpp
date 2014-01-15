@@ -208,7 +208,6 @@ size_t \@Base::matched__(size_t ch)
 {
 $insert 4 debug "MATCH"
     d_input.reRead(ch);
-$insert lopTail1
 
     if (!d_atBOL)
         d_final.atBOL.rule = s_maxSize_t;

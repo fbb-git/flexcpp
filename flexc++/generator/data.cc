@@ -24,7 +24,6 @@ Generator::Map Generator::s_insert =
     {"interactiveLex",          &Generator::interactiveLex},
     {"lexFunctionDecl",         &Generator::lexFunctionDecl},
     {"lopImplementation",       &Generator::lopImplementation},
-    {"lopTail1",                &Generator::lopTail1},
     {"namespace-close",         &Generator::namespaceClose},    
     {"namespace-open",          &Generator::namespaceOpen},
     {"namespace-use",           &Generator::namespaceUse},
