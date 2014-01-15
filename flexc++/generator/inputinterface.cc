@@ -35,7 +35,7 @@ R"(
             }
             size_t setPending(size_t size)
             {
-                d_deque.resize(size);
+                d_deque.erase(d_deque.begin(), d_deque.end() - size);
             }
             void close()                    // force closing the stream
             {

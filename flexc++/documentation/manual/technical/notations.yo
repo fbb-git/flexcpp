@@ -7,21 +7,13 @@ subsubsect(Notations)
     )
 
     itemization(
-    itt(Ax): accept count, indicating that em(x) state transitions have been
-        performed since the initial accepting state (tt(A0)).
-    itt(Ax): incrementing accept count. The accept count of this state is
-        incremented each time this state is reached again
-    itt(Fx): A final state with an associated accept count.
-    it() em(pre-A-state): any NFA state in a pattern preceding its tt(A0)
-        state. 
-    it() em(post-A-state): any NFA state in a pattern at or beyond its tt(A0)
-        state.
-    it() em(LA operator): the em(lookahead) operator (tt('/')).
+    itt(F): A final state.
+    it() em(LOP): the em(lookahead) operator (tt('/')).
     itt(x[y]): at state tt(x) an empty transition to state tt(y) is allowed.
         See figure ref(NFA1FIG).
     )
 
-subsubsect(Example patterns with an LA operator)
+subsubsect(Example of LOP-patterns)
 
     When an tt(F) state of a LOP pattern  is reached and there
         is no continuation at that point then the pattern until the A0 state

@@ -1,2 +1,11 @@
 Starting point of the analysis is the parser. The parser needs access to
 tt(States) and tt(Rules). The parser is described link(here)(PARSER).
+
+After some preliminary definitions flc() defines its tt(Parser)
+object. The parser performs the following tasks:
+    itemization(
+    itt(parse): the input is analyzed, resulting in the definitions of
+em(rules). Each regular expression consists of a series of states, summarized
+by tt(Patterns) and an em(action block). Action blocks may be empty, and may
+be identical for subsequent regular expressions. A tt(Pattern) plus action
+block 
