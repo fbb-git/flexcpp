@@ -33,7 +33,7 @@ R"(
             {
                 return d_deque.size();
             }
-            size_t setPending(size_t size)
+            void setPending(size_t size)
             {
                 d_deque.erase(d_deque.begin(), d_deque.end() - size);
             }

@@ -28,7 +28,7 @@ cp ./self/lex.cc ./self/scannerbase.h ./scanner
 
 
 prompt "    4. Rebuild: rebuilding the program ('build program')"
-# touch ./scanner/a
+touch ./scanner/a
 build program || exit 1
 echo
 
