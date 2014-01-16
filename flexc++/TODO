@@ -1,5 +1,2 @@
 final %% should be recognized by the scanner as its end-line
 ADD OPTION TO DISPLAY THE MATCHED RULE  TO EXECUTE
-
-Why is the d_lop1stTail handling necessary? See Generator::lopImplementation
-and a generated lex.cc file in lop4__ and matched__.
