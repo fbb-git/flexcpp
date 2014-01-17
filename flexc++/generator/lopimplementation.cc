@@ -6,8 +6,23 @@ void Generator::lopImplementation(std::ostream &out) const
         return;
 
     key(out);
-    out << 
 
+
+    if (d_rules.usesFixedLOPtails())
+        out << 
+"void " << d_baseclassScope << R"(lopf__(size_t tail)
+{
+    tail = length() - tail;
+    push(d_matched.substr(tail, string::npos));
+    d_matched.resize(tail);
+}
+
+)";     
+// >>>> R"( section ends <<<<
+
+
+    if (d_rules.usesVariableLOPtails())
+        out <<
 "void " << d_baseclassScope << R"(lop1__(int lopSC)
 {
     d_lopMatched = d_matched;

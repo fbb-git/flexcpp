@@ -35,7 +35,7 @@ class Pattern: private FlexTypes
                                     size_t lopStartCondition);    
 
         Pattern(States &states,                     // lop pattern,
-                size_t lopStartCondition,           // having fixed sized tail.
+                size_t tailLength,                  // having fixed sized tail.
                 Pattern const &lhs, Pattern const &rhs);    
 
         Pattern &operator=(Pattern const &other) = default;
@@ -66,7 +66,7 @@ class Pattern: private FlexTypes
         static Pattern characterClass(States &states, 
                                       CharClass const &charClass);
 
-        bool isLopPattern() const;
+        RuleType type() const;
         bool fixedLength() const;
         size_t length() const;          // if fixedLength() the length of the
                                         // text matched by this pattern
@@ -74,6 +74,9 @@ class Pattern: private FlexTypes
         size_t scIndex() const;         // 1st SC index of a LOP rule
                                         // (undefined behavior if called 
                                         //  for non-LOP rules)
+        size_t lopTailLength() const;   // length of a fixed tail of a LOP
+                                        // rule as retrieved by
+                                        // Generator::actions 
 
     private:
         Pattern duplicate(States &states) const;    // return Pattern which
@@ -114,9 +117,15 @@ class Pattern: private FlexTypes
 
 struct Pattern::LopData
 {
-    size_t startCondition;
+    size_t scOrLength;              // Start condition index, or tail length
+                                    // for fixed-sized tail LOP rules
     size_t mid;                     // begin of the RHS pattern in d_pair
-    Pattern lhs;                    // duplicate of the LHS pattern
+                                    // or 0, in which case scOrLength
+                                    // is the length of the fixed-sized 
+                                    // LOP rhs pattern's tail
+    Pattern lhs;                    // duplicate of the LHS pattern or an
+                                    // empty pattern with fixed-sized LOP
+                                    // rules 
 };
 
 inline Pattern const &Pattern::lhs() const
@@ -126,7 +135,12 @@ inline Pattern const &Pattern::lhs() const
 
 inline size_t Pattern::scIndex() const
 {
-    return d_lopData->startCondition;
+    return d_lopData->scOrLength;
+}
+
+inline size_t Pattern::lopTailLength() const
+{
+    return d_lopData->scOrLength;
 }
 
 inline size_t Pattern::begin() const
@@ -149,9 +163,11 @@ inline Pattern::Pair Pattern::rhsPair() const
     return Pair(d_lopData->mid, d_pair.second);
 }
 
-inline bool Pattern::isLopPattern() const
+inline Pattern::RuleType Pattern::type() const
 {
-    return d_lopData != 0;
+    return d_lopData == 0 ?         RuleType::NORMAL :
+           d_lopData->mid == 0 ?    RuleType::LOP_FIXED :
+                                    RuleType::LOP_1;
 }
 
 inline bool Pattern::fixedLength() const

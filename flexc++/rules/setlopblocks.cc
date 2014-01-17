@@ -12,7 +12,8 @@ void Rules::setLopBlocks()
     {
         Rule &rule = d_rules[idx];
 
-        if (rule.isLopRule())
+        RuleType type = rule.type();
+        if (type == RuleType::LOP_1 or type == RuleType::LOP_FIXED)
         {
             lopIdx = idx;       // remember the last LOP rule
 

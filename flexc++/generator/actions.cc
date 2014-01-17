@@ -5,11 +5,11 @@ void Generator::actions(ostream &out) const
     key(out);
 
 
-    // First handle the non-LOP rule actions:
-    // this allows falling throug if rules are using OR actions
+    // First handle the rules which must be handled as-is:
 
     static RuleType blockTypes[] = {
                 RuleType::NORMAL,
+                RuleType::LOP_FIXED,
                 RuleType::LOP_1,
                 RuleType::LOP_4
             };
@@ -34,6 +34,8 @@ void Generator::actions(ostream &out) const
     }    
 
     d_lineDirectives = false;
+
+    // then handle the rules for which flexc++ may fall through:
 
     static RuleType fallThroughTypes[] = {
                 RuleType::LOP_2,

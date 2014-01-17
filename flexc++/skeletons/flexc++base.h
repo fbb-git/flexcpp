@@ -226,7 +226,8 @@ $ignoreInteractive END      end ignored section by generator/filter.cc
     void            reset__();                  // prepare for new cycle
                                                 // next input stream:
     void            switchStream__(std::istream &in, size_t lineNr);   
-    void            lop1__(int lopSC);          // matches ab for a/b
+    void            lopf__(size_t tail);        // matched fixed size tail
+    void            lop1__(int lopSC);          // matched ab for a/b
     void            lop2__();                   // matches the LOP's b tail
     void            lop3__();                   // catch-all while matching b
     void            lop4__();                   // matches the LOP's a head

@@ -33,6 +33,7 @@ class Rules: public FlexTypes
 
     Rule d_catchAll;
     bool d_userSC = true;
+    bool d_usesFixedLOPtails = false;
 
     public:
         typedef StartConditions::const_iterator const_iterator;
@@ -89,12 +90,15 @@ class Rules: public FlexTypes
         void checkUserSC(size_t scIndex);
 
         bool usesLOPrules() const;
+        bool usesFixedLOPtails() const;
+        bool usesVariableLOPtails() const;
 
     private:
         void setRule(size_t state, size_t index);
 
         void setLopBlocks();
         size_t handleLopRule(size_t idx);
+        void handleFixedTailLopRule(Rule &rule);
 
         void addIndex(size_t index);
 
@@ -103,9 +107,19 @@ class Rules: public FlexTypes
         static bool nonViable(Rule const &rule);
 };
 
-inline bool Rules::usesLOPrules() const
+inline bool Rules::usesFixedLOPtails() const
+{
+    return d_usesFixedLOPtails;
+}
+
+inline bool Rules::usesVariableLOPtails() const
 {
     return d_startConditions.nUserSCs() != d_startConditions.size();
+}
+
+inline bool Rules::usesLOPrules() const
+{
+    return usesFixedLOPtails() || usesVariableLOPtails();
 }
 
 inline void Rules::addIndex(size_t index)

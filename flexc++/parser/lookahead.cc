@@ -30,7 +30,7 @@ Pattern Parser::lookahead(Pattern const &left, Pattern const &right)
     )
         ret = left;    
     else if (right.fixedLength())            // fixed tail lop rule
-        ret = Pattern(d_states, d_lopStartCondition++, left, right);
+        ret = Pattern(d_states, right.length(), left, right);
     else
     {
         ret = Pattern(d_states, left, right,  d_lopStartCondition);

@@ -14,12 +14,7 @@ void Parser::addRule(Pattern const &pattern, bool reset)
     Block block(d_scanner.lineNr(), d_scanner.filename());
 
 
-    d_rules.add(d_boln, pattern, block, 
-                    pattern.isLopPattern() ? 
-                        RuleType::LOP_1
-                    :
-                        RuleType::NORMAL
-    );
+    d_rules.add(d_boln, pattern, block, pattern.type());
 
     if (reset)
         d_rules.resetStartConditions();

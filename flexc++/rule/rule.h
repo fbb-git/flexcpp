@@ -55,7 +55,6 @@ class Rule: public FlexTypes
         void assignBlock(Block const &block);
         void noAction();
 
-        bool isLopRule() const;
         RuleType type() const;
 
         Pattern const &pattern() const;
@@ -86,11 +85,6 @@ inline std::string const &Rule::source() const
 inline size_t Rule::lineNr() const
 {
     return d_block.lineNr();
-}
-
-inline bool Rule::isLopRule() const
-{
-    return d_type == RuleType::LOP_1;
 }
 
 inline void Rule::setBol() 
