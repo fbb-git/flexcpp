@@ -16,6 +16,9 @@ Pattern Pattern::concatenate(States &states, Pattern const &lhs,
 
     Pattern ret({lhs.begin(), rhs.end()} );
 
+    if (lhs.fixedLength() && rhs.fixedLength())
+        ret.d_length = lhs.d_length + rhs.d_length;
+
     return ret;
 }
 

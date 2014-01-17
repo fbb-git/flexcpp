@@ -30,6 +30,8 @@ class CharClass
         CharClass negate() const;
         CharClass negate(CharClass const &rhs);
 
+        bool empty() const;
+
     private:
         CharClass(char ch);
         CharClass(std::string const &str);
@@ -45,6 +47,11 @@ class CharClass
         bool validRange(size_t idx) const;          // T if valid range,
                                                     // idx at '-'
 };
+
+inline bool CharClass::empty() const
+{
+    return d_chars.empty();
+}
 
 inline CharClass CharClass::negate(CharClass const &right)
 {

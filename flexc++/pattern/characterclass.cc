@@ -19,5 +19,7 @@ Pattern Pattern::characterClass(States &states, CharClass const &charClass)
 
     Pattern ret(pair);
 
+    ret.d_length = not charClass.empty();
+
     return ret;
 }

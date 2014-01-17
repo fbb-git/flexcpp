@@ -23,11 +23,20 @@ class Pattern: private FlexTypes
 
     Pair d_pair;
 
+    static size_t const s_max = -1;
+    size_t d_length = s_max;        // if fixed: the length of the pattern 
+                                    // otherwise s_max
+
     public:
         Pattern(Pair const &pair = Pair{0, 0});
+
         Pattern(States &states,                     // lop pattern
                 Pattern const &lhs, Pattern const &rhs,     
                                     size_t lopStartCondition);    
+
+        Pattern(States &states,                     // lop pattern,
+                size_t lopStartCondition,           // having fixed sized tail.
+                Pattern const &lhs, Pattern const &rhs);    
 
         Pattern &operator=(Pattern const &other) = default;
         Pattern &operator=(Pair const &pair);
@@ -58,6 +67,10 @@ class Pattern: private FlexTypes
                                       CharClass const &charClass);
 
         bool isLopPattern() const;
+        bool fixedLength() const;
+        size_t length() const;          // if fixedLength() the length of the
+                                        // text matched by this pattern
+
         size_t scIndex() const;         // 1st SC index of a LOP rule
                                         // (undefined behavior if called 
                                         //  for non-LOP rules)
@@ -139,6 +152,16 @@ inline Pattern::Pair Pattern::rhsPair() const
 inline bool Pattern::isLopPattern() const
 {
     return d_lopData != 0;
+}
+
+inline bool Pattern::fixedLength() const
+{
+    return d_length != s_max;
+}
+
+inline size_t Pattern::length() const
+{
+    return d_length;
 }
 
 #endif

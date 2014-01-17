@@ -11,5 +11,6 @@ Pattern Pattern::escape(States &states, std::string const &ch)
         );
 
     Pattern ret(pair);
+    ret.d_length = 1;
     return ret;
 }

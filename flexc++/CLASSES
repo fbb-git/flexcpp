@@ -2,34 +2,61 @@
 #   `touch classname/ALL' to recompile all class sources and sources of
 #   depending classes, using icmbuild
 
-interval
-options         
-
-scanner                 options
-
-pattern                 options
+block           
 
 charrange       
-charclass               charrange
 
-statedata       
-statestring             statedata
-state                   statedata
-states                  state
+charclass   \            
+            charrange
+
+dfa         \
+            dfarow rules states ranges options
+
+dfarow      \
+            rules states flextypes
+
+dfas        \
+            rules dfa  
+
+flextypes
+
+generator   \
+            dfa dfas dfarow startconditions flextypes ranges states state \
+            options 
+
+interval
+
+options         
+
+parser      \
+            state block options flextypes scanner rules charclass interval \
+            pattern  
+
+pattern     \
+            flextypes interval charclass options states
+
+ranges      \
+            flextypes states statestring
+
+rule        \
+            block pattern flextypes states 
+
+rules       \
+            startconditions rule flextypes states pattern
+
+scanner                 
 
 startconditions 
-block           
-rule                    block 
-rules                   startconditions rule 
 
-ranges
-dfarow                  rules states 
-dfa                     dfarow        
-dfas                    rules dfa  
+state       \
+            statestring statedata flextypes
 
-parser                  state block scanner states options
+states      \
+            state flextypes
 
-generator               dfas startconditions options
+statedata       
 
+statestring \
+            statedata
 
 

@@ -6,10 +6,10 @@
 #include <iosfwd>
 
 #include "../rules/rules.h"
-#include "../dfa/dfa.h"
 
 class States;
 class Ranges;
+class DFA;
     
 class DFAs
 {

@@ -7,6 +7,8 @@ Pattern Pattern::rawText(States &states, std::string const &str)
 
     Pattern ret;
 
+    ret.d_length = length;
+
     if (length == 0)            // pathological case: string without contents
     {
         Pair pair = states.next2();

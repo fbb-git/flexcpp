@@ -6,7 +6,7 @@
 #include <iterator>
 
 #include <bobcat/string>
-#include "bobcat/mstream"
+#include <bobcat/mstream>
 
 #include "../charrange/charrange.h"
 

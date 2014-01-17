@@ -14,6 +14,14 @@ Pattern Pattern::alternatives(States &states,
 
     Pattern ret(pair);
 
+    if 
+    (
+        lhs.fixedLength() 
+        && rhs.fixedLength() 
+        && lhs.d_length == rhs.d_length
+    )
+        ret.d_length = lhs.d_length;
+
     return ret;
 }
 

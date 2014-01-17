@@ -7,14 +7,15 @@
 #include <set>
 #include <unordered_map>
 
-#include "../dfas/dfas.h"
-#include "../startconditions/startconditions.h"
 #include "../flextypes/flextypes.h"
+#include "../dfas/dfas.h"
 
-class Ranges;
-class Options;
-class States;
 class Block;
+class DFARow;
+class Options;
+class Ranges;
+class Rules;
+class States;
 
 class Generator: public FlexTypes
 {

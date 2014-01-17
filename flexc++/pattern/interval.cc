@@ -18,7 +18,11 @@ Pattern Pattern::interval(States &states, Pattern &regex,
         ret = plus(states, regex);
 
     else if (lower <=  upper)
+    {
         ret = copy(states, regex, lower, upper);
+        if (lower == upper && regex.fixedLength())
+            ret.d_length = lower * regex.d_length;
+    }
 
     else
     {

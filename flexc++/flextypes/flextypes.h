@@ -19,7 +19,8 @@ class FlexTypes
         enum RuleType
         {
             NORMAL,
-            LOP_1,                          // LOP rule
+            LOP_FIXED,                          // LOP rule with fixed tail
+            LOP_1,                              // LOP rule with variable tail
             LOP_2,
             LOP_3,
             LOP_4

@@ -23,8 +23,14 @@ Pattern Parser::lookahead(Pattern const &left, Pattern const &right)
     d_usesLOP = true;
 
     Pattern ret;
-    if (right.canBeEmpty(d_states))
+    if (
+        right.canBeEmpty(d_states)
+        ||
+        (right.fixedLength() && right.length() == 0)
+    )
         ret = left;    
+    else if (right.fixedLength())            // fixed tail lop rule
+        ret = Pattern(d_states, d_lopStartCondition++, left, right);
     else
     {
         ret = Pattern(d_states, left, right,  d_lopStartCondition);

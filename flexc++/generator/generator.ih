@@ -17,6 +17,9 @@
 #include "../states/states.h"
 #include "../state/state.h"
 #include "../options/options.h"
+#include "../dfarow/dfarow.h"
+#include "../dfa/dfa.h"
+#include "../startconditions/startconditions.h"
 
 extern char version[];
 

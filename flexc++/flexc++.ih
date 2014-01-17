@@ -10,7 +10,8 @@
 #include "rules/rules.h"
 #include "parser/parser.h"
 #include "ranges/ranges.h"
-#include "dfas/dfas.h"              // includes dfa.h
+#include "dfas/dfas.h"
+#include "dfa/dfa.h"
 #include "generator/generator.h"
 
 extern char version[];
