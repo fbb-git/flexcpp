@@ -7,7 +7,8 @@
 #include "scannerbase.h"
 
 #include <stack>
-#include <unordered_map>
+
+#include <bobcat/linearmap>
 
 class Scanner: public ScannerBase
 {
@@ -26,7 +27,7 @@ class Scanner: public ScannerBase
 
     bool d_caseSensitive;
 
-    std::unordered_map<std::string, std::string> d_nameExpansion;
+    FBB::LinearMap<std::string, std::string> d_nameExpansion;
 
     // declared below:
     // SCStack d_scStack;

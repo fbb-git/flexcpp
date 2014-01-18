@@ -6,8 +6,8 @@
 // unequal.
 
 bool DFARow::sameTransits(
-            std::unordered_map<size_t, size_t> const &lhs,
-            std::unordered_map<size_t, size_t> const &rhs)
+            FBB::LinearMap<size_t, size_t> const &lhs,
+            FBB::LinearMap<size_t, size_t> const &rhs)
 {
     if (lhs.size() != rhs.size())
         return false;

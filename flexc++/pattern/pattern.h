@@ -3,8 +3,9 @@
 
 #include <memory>
 #include <iosfwd>
-#include <unordered_map>
 #include <vector>
+
+#include <bobcat/linearmap>
 
 #include "../flextypes/flextypes.h"
 
@@ -14,7 +15,7 @@ class States;
 
 class Pattern: private FlexTypes
 {
-        typedef std::unordered_map<size_t, size_t>  Map;
+        typedef FBB::LinearMap<size_t, size_t>  Map;
         typedef std::pair<size_t, size_t>           Pair;
         typedef std::vector<Pair>                   PairVector;
 

@@ -4,7 +4,8 @@
 #include <iosfwd>
 #include <vector>
 #include <set>
-#include <unordered_map>
+
+#include <bobcat/linearmap>
 
 #include "../rules/rules.h"
 #include "../states/states.h"
@@ -25,7 +26,7 @@ class DFARow: private FlexTypes
     typedef std::vector<StateSet> StateSetVector;   // a set of states per
                                                     // input symbol
 
-    std::unordered_map<size_t, size_t> d_map;   // Relate input symbols (key) 
+    FBB::LinearMap<size_t, size_t> d_map;   // Relate input symbols (key) 
                                                 // to the row to transit to 
                                                 // (value)
 
@@ -46,7 +47,7 @@ class DFARow: private FlexTypes
     std::vector<bool> *d_usedRanges;
 
     public:
-        typedef std::unordered_map<size_t, size_t>::value_type MapValue;
+        typedef FBB::LinearMap<size_t, size_t>::value_type MapValue;
 
         DFARow() = default;
 
@@ -69,7 +70,7 @@ class DFARow: private FlexTypes
         void tabulate(FBB::Table &table) const;
 
 
-        std::unordered_map<size_t, size_t> const &map() const;
+        FBB::LinearMap<size_t, size_t> const &map() const;
         size_t size() const;            // the number of character-ranges
 
         std::string const &action(size_t idx) const;  // only for FINAL rows
@@ -104,11 +105,11 @@ class DFARow: private FlexTypes
                                 std::vector<size_t> const &haystack);
 
         static bool sameTransits(
-            std::unordered_map<size_t, size_t> const &lhs,
-            std::unordered_map<size_t, size_t> const &rhs);
+            FBB::LinearMap<size_t, size_t> const &lhs,
+            FBB::LinearMap<size_t, size_t> const &rhs);
 };
 
-inline std::unordered_map<size_t, size_t> const &DFARow::map() const
+inline FBB::LinearMap<size_t, size_t> const &DFARow::map() const
 {
     return d_map;
 }

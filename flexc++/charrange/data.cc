@@ -1,8 +1,8 @@
 #include "charrange.ih"
 
-std::unordered_map<std::string, std::set<char>> CharRange::s_hash =
+FBB::LinearMap<std::string, std::set<char>> CharRange::s_hash =
 {
-    { "[:alnum:]" , set<char>()  },
+    { "[:alnum:]" , set<char>() },
     { "[:alpha:]" , set<char>() },
     { "[:blank:]" , set<char>() },
     { "[:cntrl:]" , set<char>() },
@@ -31,7 +31,7 @@ std::unordered_map<std::string, std::set<char>> CharRange::s_hash =
 };
 
 
-std::unordered_map<std::string, int (*)(int)> CharRange::s_funHash =
+FBB::LinearMap<std::string, int (*)(int)> CharRange::s_funHash =
 {
     { "[:alnum:]" , isalnum },
     { "[:alpha:]" , isalpha },

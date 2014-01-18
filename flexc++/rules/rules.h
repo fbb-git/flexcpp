@@ -4,7 +4,8 @@
 #include <iosfwd>
 #include <vector>
 #include <string>
-#include <unordered_map>
+
+#include <bobcat/linearmap>
 
 #include "../startconditions/startconditions.h"
 #include "../rule/rule.h"
@@ -23,9 +24,9 @@ class Rules: public FlexTypes
     States &d_states;
 
     std::vector<Rule> d_rules;
-    std::unordered_map<size_t, size_t>  d_finalToRule;  // from FINAL state to
+    FBB::LinearMap<size_t, size_t>  d_finalToRule;  // from FINAL state to
                                                         // Rule index
-    std::unordered_map<size_t, size_t>  d_lopToRule;// key is lop rule,
+    FBB::LinearMap<size_t, size_t>  d_lopToRule;// key is lop rule,
                                                     // value is rule to use
                                                     // while in user SCs
 

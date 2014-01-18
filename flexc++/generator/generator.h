@@ -5,7 +5,8 @@
 #include <string>
 #include <fstream>
 #include <set>
-#include <unordered_map>
+
+#include <bobcat/linearmap>
 
 #include "../flextypes/flextypes.h"
 #include "../dfas/dfas.h"
@@ -39,7 +40,7 @@ class Generator: public FlexTypes
     };
 
     typedef void (Generator::*Inserter)(std::ostream &) const;
-    typedef std::unordered_map<std::string, Inserter>   Map;
+    typedef FBB::LinearMap<std::string, Inserter>   Map;
     typedef Map::value_type                             MapValue;
     typedef Map::const_iterator                         MapConstIter;
 
