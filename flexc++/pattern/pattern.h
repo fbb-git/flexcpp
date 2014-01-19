@@ -31,11 +31,11 @@ class Pattern: private FlexTypes
     public:
         Pattern(Pair const &pair = Pair{0, 0});
 
-        Pattern(States &states,                     // lop pattern
+        Pattern(States &states,                     // 2: lop pattern
                 Pattern const &lhs, Pattern const &rhs,     
                                     size_t lopStartCondition);    
 
-        Pattern(States &states,                     // lop pattern,
+        Pattern(States &states,                     // 3: lop pattern,
                 size_t tailLength,                  // having fixed sized tail.
                 Pattern const &lhs, Pattern const &rhs);    
 
@@ -50,7 +50,9 @@ class Pattern: private FlexTypes
 
         bool canBeEmpty(States const &states) const;// true if there's an
                                                     // empty transition from
-                                                    // begin -> end
+                                                    // begin -> end or if the
+                                                    // Pattern has a fixed
+                                                    // length of 0.
 
         static Pattern eof(States &states);
         static Pattern escape(States &states, std::string const &ch);
