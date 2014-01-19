@@ -1,0 +1,44 @@
+The way the lookahead operator (LOP, tt(/)) is handled has
+completely changed at flc()'s upgrade from version 1 to version 2. The
+LOP-handling algorithm used in flc() versions before 2 worked correctly in
+most situations, but we were unable to prove its correctness, and over time
+bugs in the algorithm were uncovered which often were very hard to squash. 
+
+On the other hand, the algorithm implemented since flc() version 2 is
+surprisingly simple and can be proven to work.
+
+The philosophy underlying the current LOP algorithm is simply that, in order
+to match tt({head}/{tail}), where tt({head}) and tt({tail}) are regular
+expressions, the scanner must at least be able to match tt({head}{tail}): the
+concatenation of tt({head}) and tt({tail}). 
+
+Lookahead tail patterns, however, must match input strings which should be as
+short as possible. To find this shortest tail pattern the scanner will try to
+match the last character of the text that matched tt({head}/{tail}) with the
+tt({tail}) pattern. If this succeeds, then the shortest tail was found. If the
+last character didn't already match tt({tail}) then the last two characters
+are matched against tt(({tail}). This process (i.e., increasing the length of
+the final substring of the input matching tt({head}{tail})) is continued until
+tt({tail}) is eventually matched. This must succeed since, after all, the full
+input matched tt({head}{tail})). Thus a short tail was found matching
+tt({tail}).
+
+After matching the tail pattern, the matching final substring is removed from
+the original input string, and the initial substring is passed to the
+tt({head}) pattern, thus finding the em(longest) match, given that the
+remaining characters of the matched text still match tt({tail}). Figure
+ref(LOPPROCEDURE) illustrates the algorithm.
+
+    figure(images/lopprocedure)(Look-ahead matching algorithm)(LOPPROCEDURE)
+
+Some minor optimizations handle potentially zero length tails and handle fixed
+tail lengths. With potentially zero length tail lengths (e.g.,
+tt({head}/{tail}*)) the scanner ignores the tail and replaces
+tt({head}/{tail}*)) by tt({head})). With fixed tail lengths the length of the
+tail (tt(|tail|) is known, and the final tt(|tail|) characters of the matched
+input text can immediately be pushed back on to the input stream, returning
+the remaining text as the text matching tt({head}).
+
+The following subsections describe how flc() recognizes and handles
+LOP-patterns. The next section (ref(LOPRUNTIME)) describes the run-time
+handling of LOP-patterns.

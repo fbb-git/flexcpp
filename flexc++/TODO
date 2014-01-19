@@ -1,2 +1,5 @@
 final %% should be recognized by the scanner as its end-line
-ADD OPTION TO DISPLAY THE MATCHED RULE  TO EXECUTE
+
+See documentation/manual/technical/loppatterns.yo's Note at the end:
+optimization possible?
+

@@ -1,0 +1,6 @@
+Once the parser has completed its work, the tt(Rules) object finalizes its
+rules, adding additional rules for tt(LOP_1) type of rules. Rules' member
+tt(handleLopRules) is performing the finalization.
+
+
+

@@ -1,0 +1,31 @@
+Regular expressions are parsed according to the rules in
+tt(parser/inc/regexoreof). LOP-patterns are recognized using
+        verb(
+    _regex '/' _regex
+    {
+        $$ = lookahead($1, $3);
+    }
+        )
+    Here tt(_regex) represents a regular expression pattern, stored in 
+tt(Pattern) objects.
+
+The parser's member tt(lookahead) verifies that a regular expression contains
+but one LOP, and that the LOP is not used in a parenthesized regular
+expression. If the rhs pattern can be empty the rhs is ignored and the lhs
+pattern is returned. If the rhs pattern has a fixed non-zero length the
+tt(Pattern) constructor 
+        verb(
+    Pattern(States &states, size_t tailLength,
+            Pattern const &lhs, Pattern const &rhs);    
+        )
+    is called to define a pattern having a fixed length tail. Otherwise a
+variable (standard) LOP-expression was encountered. 
+
+Standard tt(LOP) expressions are handled according to the algorithm
+illustrated in figure ref(LOPPROCEDURE). This is implemented using two
+separate startconditions (see the next section (ref(LOPSCs))).
+
+Until the tail pattern is actually matched, its length is gradually
+increased. This is handled by a catch-all rule (using the pattern tt(.|\n))
+which can be added to the scanner's input, and which is used as fall-back rule
+in tail-matching start conditions (see section ref(LOPSCs)).

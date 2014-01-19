@@ -1,15 +1,15 @@
-A tt(PatternVal) is derived from tt(SemVal). It mainly consists of static
-factory functions returning shared pointers to tt(SemVal) objects
-(tt(spSemVal)). 
-
-tt(PatternVal) objects contain (and offer, through the members tt(begin) and
+tt(Pattern) objects contain (and offer, through the members tt(begin) and
 tt(end)) index values in the tt(States::d_states) of tt(State) objects. The
-value returned by tt(PatternVal::begin()) is the index of the first tt(State)
-defining the pattern, the value returned by tt(PattenVal::end()) is the index
+value returned by tt(Pattern::begin()) is the index of the first tt(State)
+defining the pattern, the value returned by tt(Pattern::end()) is the index
 of the last (so: tt(State::FINAL)) tt(State) of the pattern (cf. figure
-ref(PATTERNVALFIG)).
+ref(PATTERN)).
 
-    figure(images/patternval)(PatternVal objects)(PATTERNVALFIG)
+    figure(images/pattern)(Pattern objects)(PATTERN)
+
+tt(Pattern) objects also have a tt(d_lopData) data member, which is a pointer
+to an internally used tt(LopData) struct. This data member is only used with
+LOP-patterns, and is covered in section ref(LOPPATTERN).
 
 tt(parser/rules/pattern): the following descriptions of the working of some
 basic patterns illustrate how the vector of tt(State) objects in tt(States) is

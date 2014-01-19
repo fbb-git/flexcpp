@@ -1,0 +1,55 @@
+Two tt(Pattern) constructors are used to handle LOP-expressions (see also
+figure ref(PATTERN), showing the data-members of tt(Pattern)
+objects). tt(Pattern) constructors that are used to represent LOP-patterns use
+their tt(d_lopData) members. If this member is zero, the object does not
+represent a LOP-pattern; if it is non-zero it points to a tt(LopData) struct,
+and the object em(does) represent a LOP-pattern. 
+
+This is the constructor that is used to represent a LOP expression having a
+fixed non-zero length LOP-tail:
+        verb(
+    Pattern(States &states, size_t tailLength,
+            Pattern const &lhs, Pattern const &rhs);    
+        )
+    In this case the tt(LopData's) tt(mid) and tt(lhs) fields are not used,
+and tt(scOrLength) stores the length of the fixed-length tail of the
+LOP-expression. As the pattern to match is tt({head}{tail}), the states of the
+tt(lhs) and tt(rhs) expressions are concatenated, and the concatenated states
+are accessed though the object's tt(d_pair) member.
+
+    figure(images/lopdata)(Pattern data organization for LOP-expressions)
+            (LOPDATA)
+
+For standard LOP-expressions (having variable length tails) this constructor
+is used (cf. figure ref(LOPDATA)):
+        verb(
+    Pattern(States &states,
+            Pattern const &lhs, Pattern const &rhs,     
+            size_t lopStartCondition);    
+        )
+    Here the pattern to match is, as before, the concatenated states of the
+lhs and rhs patterns, which are accessed though the object's tt(d_pair)
+member. However, once tt({head}{tail}) has been matched, the tail pattern must
+be matched, using a separate start condition. The state number of the first
+state of the tt({tail}) pattern is stored in tt(d_lopData->mid), and will
+later (by the tt(Rules) object) be used to create a specific tail-matching
+rule. The number of the start condition handling the tail-matching process is
+tt(lopStartCondition) which is stored in tt(d_lopData->scOrLength). Finally, a
+rule must be available for matching tt({head}), once tt({tail}) has been
+matched. The states of this rule are accessed through tt(d_lopData->lhs),
+which is a tt(Pattern) object initialized with the states of a duplicate of
+the lhs pattern. Once the tt({tail}) has been matched, this duplicated pattern
+is used in the next start condition to match tt({head}).
+
+(Note: this may actually not be necessary. Probably the first and
+tt(d_lopData->mid) values could also be used. This is an optimization which
+needs to be investigated later on).
+
+The em(type) of a pattern is inferred from the pattern object's tt(d_lopData)
+member. If zero, then the pattern does not represent a LOP-expression, and its
+type (returned by its tt(type()) member) is tt(RuleType::NORMAL). Otherwise,
+if the LOP-expression has a fixed-size tail, then tt(d_lopData->mid) equals 0,
+and the pattern's type is tt(RuleType::LOP_FIXED). If tt(d_lopData->mid) is
+unequal 0, then the pattern represent a standard LOP-expression, and its type
+is tt(RuleType::LOP_1). 
+
