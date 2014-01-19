@@ -84,8 +84,8 @@ class StartConditions
         void acceptRules(bool ok);          // may suppres additions of rules
                                             // by add members
 
-        void add(std::string const &name, bool underscoreOK);
-                                            // add a name to the set of SCs
+        void define(std::string const &name);   // define a new SC
+                                            
         void add(size_t);
         void setType(Type type);
 

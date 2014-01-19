@@ -52,7 +52,7 @@ class Rules: public FlexTypes
         size_t ruleFromFinalState(size_t stateIdx) const;
 
         void setType(StartConditions::Type type);
-        void addStartCondition(std::string const &name, bool underscoresOK);
+        void defineStartCondition(std::string const &name);
 
         void resetStartConditions();        // clear the set of active start
                                             // conditions. 
@@ -193,10 +193,9 @@ inline void Rules::setType(StartConditions::Type type)
     d_startConditions.setType(type);
 }
 
-inline void Rules::addStartCondition(std::string const &name,
-                                     bool underscoresOK)
+inline void Rules::defineStartCondition(std::string const &name)
 {
-    d_startConditions.add(name, underscoresOK);
+    d_startConditions.define(name);
 }
 
 inline void Rules::resetStartConditions()
