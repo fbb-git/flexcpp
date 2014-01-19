@@ -17,5 +17,5 @@ void Parser::addLopStartConditions()
 
                                             // define the LOP SCs
     for (; nRules != d_lopStartCondition; ++nRules)
-        d_rules.addStartCondition("_" + to_string(nRules) + "__", true);
+        d_rules.addStartCondition(" " + to_string(nRules), true);
 }
