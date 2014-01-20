@@ -4,7 +4,6 @@ void Rules::handleLopRules()
 {
     setLopBlocks();     // make sure each LOP rule gets its own action block
 
-
     if (d_hasFixedTailLOPrules)
     {
         for (auto &rule: d_rules)

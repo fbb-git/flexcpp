@@ -183,9 +183,6 @@ includefile(technical/intro)
         subsect(After parsing: adding LOP start conditions)
         includefile(technical/addlopscs)
 
-        subsect(After parsing: adding LOP start conditions)
-        includefile(technical/addlopscs)
-
         subsect(After parsing: handling LOP rules)
         includefile(technical/loprules)
 

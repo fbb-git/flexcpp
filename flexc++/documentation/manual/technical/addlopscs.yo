@@ -1,15 +1,19 @@
-Once all regular expressions have been parsed and standard LOP-expressions
-were encountered the catch-all rule is added to the existing rules (by
-tt(Rules::processCatchAllRule)). 
+After parsing tt(Parser::addLopStartConditions) is called.
 
-The catch-all rule is the last rule, injected by the scanner once it has
-reached the end of its input. It is not inspected for viability, and is stored
+If no variable tail LOP rules were encountered, this function immediately
+returns. Otherwise, there are tail matching mini scanners, which
+need a catch-all rule, and for each variable tail LOP rule two start
+conditions are defined. 
+
+
+The catch-all rule is added to the tt(Rules) object by the
+tt(Rules::processCatchAllRule) member. The catch-all rule is the last rule,
+injected by the scanner once it has reached the end of its input. It is stored
 inside the tt(Rules) object in a separate tt(Rule d_catchAll) object.
 
-Next the LOP-rules' start conditions are defined.
-
-At this point all user-defined rules are known, and the user-defined start
-conditions are also known (as the parser has processed the tt(%x) and tt(%s)
+Next the variable tail LOP rules' start conditions are defined.  At this point
+all user-defined rules are known, and the user-defined start conditions are
+also known (as the parser has processed the tt(%x) and tt(%s)
 directives). Therefore, all start conditions which are required for handling
 standard LOP-rules have index values exceeding the number of user-defined
 start conditions. When a standard LOP-rule was encountered by the parser,
@@ -19,6 +23,8 @@ defined.
 
 These start conditions are for internal use only. Their names are not made
 available in the generated tt(ScannerBase.h) header file. They start with a
-blank space, which cannot be used by user-called tt(begin) statements.
-
-
+blank space, which can therefore not be specified in user-defined input
+files. Furthermore, the code generator will only add the user-defined start
+condition names to the tt(enum class StartCondition__), defined in
+tt(ScannerBase.h), so the variable tail LOP rules' start conditions cannot be
+specified by user-called tt(begin) statements.

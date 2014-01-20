@@ -1,8 +1,5 @@
 #include "rules.ih"
 
-#include <ostream>
-#include <iomanip>
-
 ostream &operator<<(ostream &out, Rules const &rules)
 {
     out << rules.startConditions() << '\n';
