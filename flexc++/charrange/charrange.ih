@@ -1,7 +1,5 @@
 #include "charrange.h"
 
-#include <iostream>     // TMP
-
 #include <limits>
 #include <cctype>
 #include <iterator>
