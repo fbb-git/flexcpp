@@ -10,12 +10,12 @@ void Parser::addLopStartConditions()
 {
     size_t nRules = d_rules.startConditions().size();
 
-    if (nRules == d_lopStartCondition)      // no LOP rules encountered
+    if (nRules == d_nLOPstartConditions)    // no LOP rules encountered
         return;
 
     d_rules.processCatchAllRule();          // define the catch-all rule
 
                                             // define the LOP SCs
-    for (; nRules != d_lopStartCondition; ++nRules)
+    for (; nRules != d_nLOPstartConditions; ++nRules)
         d_rules.defineStartCondition(" " + to_string(nRules));
 }

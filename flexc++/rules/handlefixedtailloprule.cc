@@ -2,8 +2,6 @@
 
 void Rules::handleFixedTailLopRule(Rule &rule)
 {
-    d_usesFixedLOPtails = true;
-
     auto const &block = rule.block();
     auto const &pattern = rule.pattern();
 

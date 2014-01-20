@@ -34,7 +34,8 @@ class Rules: public FlexTypes
 
     Rule d_catchAll;
     bool d_userSC = true;
-    bool d_usesFixedLOPtails = false;
+    bool d_hasFixedTailLOPrules = false;      
+    bool d_hasVariableTailLOPrules = false;      
 
     public:
         typedef StartConditions::const_iterator const_iterator;
@@ -90,9 +91,12 @@ class Rules: public FlexTypes
 
         void checkUserSC(size_t scIndex);
 
-        bool usesLOPrules() const;
-        bool usesFixedLOPtails() const;
-        bool usesVariableLOPtails() const;
+        void setFixedTailLOPrules();
+        void setVariableTailLOPrules();
+
+        bool hasLOPrules() const;
+        bool hasFixedTailLOPrules() const;
+        bool hasVariableTailLOPrules() const;
 
     private:
         void setRule(size_t state, size_t index);
@@ -108,19 +112,29 @@ class Rules: public FlexTypes
         static bool nonViable(Rule const &rule);
 };
 
-inline bool Rules::usesFixedLOPtails() const
+inline void Rules::setFixedTailLOPrules()
 {
-    return d_usesFixedLOPtails;
+    d_hasFixedTailLOPrules = true;
 }
 
-inline bool Rules::usesVariableLOPtails() const
+inline void Rules::setVariableTailLOPrules()
 {
-    return d_startConditions.nUserSCs() != d_startConditions.size();
+    d_hasVariableTailLOPrules = true;
 }
 
-inline bool Rules::usesLOPrules() const
+inline bool Rules::hasFixedTailLOPrules() const
 {
-    return usesFixedLOPtails() || usesVariableLOPtails();
+    return d_hasFixedTailLOPrules;
+}
+
+inline bool Rules::hasVariableTailLOPrules() const
+{
+    return d_hasVariableTailLOPrules;
+}
+
+inline bool Rules::hasLOPrules() const
+{
+    return hasFixedTailLOPrules() || hasVariableTailLOPrules();
 }
 
 inline void Rules::addIndex(size_t index)

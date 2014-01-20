@@ -26,11 +26,15 @@ Pattern Parser::lookahead(Pattern const &left, Pattern const &right)
     if (right.canBeEmpty(d_states))
         ret = left;    
     else if (right.fixedLength())            // fixed tail lop rule
+    {
+        d_rules.setFixedTailLOPrules();
         ret = Pattern(d_states, right.length(), left, right);
+    }
     else
     {
-        ret = Pattern(d_states, left, right,  d_lopStartCondition);
-        d_lopStartCondition += 2;
+        d_rules.setVariableTailLOPrules();
+        ret = Pattern(d_states, left, right,  d_nLOPstartConditions);
+        d_nLOPstartConditions += 2;
         d_scanner.needCatchAll();
     }
 

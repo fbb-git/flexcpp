@@ -8,7 +8,7 @@ void Generator::lopImplementation(std::ostream &out) const
     key(out);
 
 
-    if (d_rules.usesFixedLOPtails())
+    if (d_rules.hasFixedTailLOPrules())
         out << 
 "void " << d_baseclassScope << R"(lopf__(size_t tail)
 {
@@ -21,7 +21,7 @@ void Generator::lopImplementation(std::ostream &out) const
 // >>>> R"( section ends <<<<
 
 
-    if (d_rules.usesVariableLOPtails())
+    if (d_rules.hasVariableTailLOPrules())
         out <<
 "void " << d_baseclassScope << R"(lop1__(int lopSC)
 {

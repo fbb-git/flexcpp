@@ -48,8 +48,9 @@ class Parser: public ParserBase, public FlexTypes
     Rules &d_rules;
     States &d_states;
 
-    size_t d_lopStartCondition = 0;         // startconditions index for 
-                                            // the next LOP
+    size_t d_nLOPstartConditions;           // startconditions index for 
+                                            // the next LOP, initialized in
+                                            // 'grammar'
 
     static int s_ignoreToken;
     static std::string s_lastMsg;
