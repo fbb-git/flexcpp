@@ -82,10 +82,17 @@ try
 
     Generator generator(rules, ranges, dfas);
         generator.construction(states);
+
+    if (rules.size() == 0)
+        wmsg << "No regular expressions were defined: source files not "
+                "generated" << endl;
+    else
+    {
         generator.lexSource();
         generator.baseclassHeader();
         generator.classHeader();
         generator.implementationHeader();
+    }
 }
 catch (int x)
 {
