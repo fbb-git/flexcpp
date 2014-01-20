@@ -1,1 +1,10 @@
-TO DO
+tt(ScannerBase.h) adds the following data members to tt(ScannerBase.h):
+        verb(
+    int             d_lopSC = 0;
+    std::string     d_lopMatched;           // matched lop-rule characters 
+    std::string::iterator d_lopIter;
+    std::string::iterator d_lopTail;
+    std::string::iterator d_lopEnd;
+    size_t          d_lopPending;           // # pending input chars at lop1__
+    size_t (\@Base::*d_get)() = &\@Base::getInput;
+        )

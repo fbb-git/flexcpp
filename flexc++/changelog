@@ -5,6 +5,13 @@ flexc++ (2.00.00)
     class TailCount and the tail count Flag enum are no longer required. See
     also parser/README.grammar.
 
+  * NOTE WELL: when using flexc++ >= 2.00.00 to re-generate lex.cc and
+    ScannerBase.h previously created with flexc++ < 2.00.00, file(s) defining
+    and using the Scanner object should be recompiled, as flexc++ 2.00.00 uses
+    a different data-member organization in its ScannerBase class.
+
+  * NOTE WELL: new Input-class requirements (to elaborate)
+
   * A second %% line in flexc++'s input file ends its input file processing.
     To specify a regex starting with %% surround it with double quotes or 
     indent it by at least one blank space.
