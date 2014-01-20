@@ -14,7 +14,7 @@ appended to the rule's tt(lopf__(size_t tailLength)) call.
 To prepare the rules for their appropriate actions, consider figure
 ref(LOPRULES). 
 
-    figure(images/loprules)(Providing rules with action blocks)(LOPRULES)
+    figure(images/setlopblocks)(Providing rules with action blocks)(LOPRULES)
 
 Initially, tt(actionIdx) and tt(lopIdx) point beyond the last rule index. When
 a rule has an action block of its own tt(actionIdx) is given this rule's index

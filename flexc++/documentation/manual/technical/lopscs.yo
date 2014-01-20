@@ -21,7 +21,7 @@ this in a flc() specification file:
                             action-block
                         }
         )
-    Once tt({head}{tail} is matched (see also figure ref(LOPPROCEDURE)), an
+    Once tt({head}{tail}) is matched (see also figure ref(LOPPROCEDURE)), an
 internally defined member tt(lop1__(x)) is called. This function prepares the
 scanner for matching the LOP-expression (cf. section ref(LOPRUNTIME)), and
 switches to start condition tt(x).

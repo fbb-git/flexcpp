@@ -214,9 +214,11 @@ END)
     
         subsect(The DFAs)
         includefile(technical/gendfas)
-    
+
+COMMENT(    
         lsubsect(SFINACINFO)(The Final-Accept info array)
         includefile(technical/finac)
+END)
     
     lsect(RUNTIME)(Run-time operations)
     includefile(technical/runtime)
@@ -228,3 +230,7 @@ END)
     includefile(technical/reflex)
     
     COMMENT(includefile(technical/developernotes))
+
+
+
+

@@ -10,7 +10,12 @@ flexc++ (2.00.00)
     and using the Scanner object should be recompiled, as flexc++ 2.00.00 uses
     a different data-member organization in its ScannerBase class.
 
-  * NOTE WELL: new Input-class requirements (to elaborate)
+  * NOTE WELL: new Input-class requirements: size_t Input::nPending() const
+    must return the current number of pending (i.e., read and pushed back)
+    input characters; Input::setPending(size_t size) must remove the initial
+    number of pending characters, reducing the number of pending characters to
+    tt(size). The lexical scanner always passes the value received from 
+    nPending() to setPending(), without calling Input::get() in between.
 
   * A second %% line in flexc++'s input file ends its input file processing.
     To specify a regex starting with %% surround it with double quotes or 

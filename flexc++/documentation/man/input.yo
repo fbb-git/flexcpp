@@ -100,7 +100,9 @@ characters which were passed back to the tt(Input) object using its tt(reRead)
 members which were not yet retrieved again by its tt(get) member).
     itb(void setPending(size_t nPending))
         should remove tt(nPending) characters from the head of the tt(Input)
-object's pending input queue.
+object's pending input queue. The lexical scanner always passes the value
+received from tt(nPending) to tt(setPending), without calling tt(get) in
+between.
      itb(void reRead(size_t ch))
        if provided with a value smaller than 0x100 tt(ch) should be pushed
 back onto the tt(istream), where it becomes the character next to be

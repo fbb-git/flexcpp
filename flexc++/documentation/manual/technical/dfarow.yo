@@ -24,10 +24,6 @@ defining and adding new sets of tt(State)s is the responsibility of
 tt(DFARow::transition).
 
 itemization(
-    itt(d_tailCount): if the current row is visited while recognizing a rule
-using the LOP then tt(d_tailCount) contains a tt(TailCount) element for that
-rule. See section ref(LOOKAHEAD) for a description of the used algorithm and
-section ref(TAILCOUNT) for a description of the class tt(TailCount).
     itt(d_map): the tt(DFARow)'s tt(unordered_map d_map) defines the
 relationship between an input character range (the map's key) and the row to
 transit to when a character from that input range has been observed.

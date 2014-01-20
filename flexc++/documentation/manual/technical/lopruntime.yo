@@ -1,10 +1,125 @@
 tt(ScannerBase.h) adds the following data members to tt(ScannerBase.h):
         verb(
-    int             d_lopSC = 0;
-    std::string     d_lopMatched;           // matched lop-rule characters 
-    std::string::iterator d_lopIter;
-    std::string::iterator d_lopTail;
-    std::string::iterator d_lopEnd;
-    size_t          d_lopPending;           // # pending input chars at lop1__
+    int             d_lopSC = 0;        // the active SC when lop1__() 
+                                        // is called
+    std::string     d_lopMatched;       // matched lop-rule characters 
+    std::string::iterator d_lopTail;    // iterator pointing to the first 
+                                        // character of the tail the scanner
+                                        // is trying to match against {tail}.
+    std::string::iterator d_lopEnd;     // iterator indicating the end of the
+                                        // text to match agains {tail} or the
+                                        // end of the text to match against
+                                        // {head}
+    std::string::iterator d_lopIter;    // iterator iterating from d_lopTail
+                                        // to d_lopEnd while trying to match
+                                        // {tail}
+    size_t          d_lopPending;       // # pending input chars when lop1__
+                                        // is called
+                                        // pointer to the input function.
     size_t (\@Base::*d_get)() = &\@Base::getInput;
         )
+
+After matching tt{{head}{tail}) of fixed length tail LOP rules, the matched
+text is first processed by tt(lopf__(tailLength)), before the LOP rule's
+original action block is executed. If fixed length tail LOP rules are used,
+then tt(lopf__(tailLength)) is implemented in tt(lex.cc) and looks like this:
+        verb(
+    void ScannerBase::lopf__(size_t tail)
+    {
+        tail = length() - tail;
+        push(d_matched.substr(tail, string::npos));
+        d_matched.resize(tail);
+    }
+        )
+    This member simply pushes the last tt(tail) number of characters back to
+the input stream, and removes them from tt(d_matched).
+
+After matching tt{{head}{tail}) of variable length tail LOP rules,
+tt(lop1__(size_t lopSc)) is called. This member prepares the scanner for
+finding the shortest tail. It's implementation is:
+        verb(
+    void ScannerBase::lop1__(int lopSC)
+    {
+        d_lopMatched = d_matched;               // local copy of the matched
+                                                // text
+        d_lopPending = d_input.nPending();      // remember the # of pending
+                                                // characters in Input's queue
+        d_lopEnd = d_lopMatched.end();          // initialize the iterators
+        d_lopTail = d_lopEnd - 1;               // to the final substring
+        d_lopIter = d_lopTail;                  // of one character
+    
+        d_get = &ScannerBase::getLOP;           // obtain characters from
+                                                // d_lopIter
+    
+        d_lopSC = d_startCondition;             // remember original SC
+        begin(SC(lopSC));                       // activate the 
+                                                // tail-matching SC
+    }
+        )
+        
+    Note the used of the member tt(Input::nPending). This member is added to
+the class tt(Input's) interface and should return the number of characters
+currently in the tt(Input) object's pending queue. In the default
+implementation it simply returns the tt(Input) object's tt(d_deque)'s length.
+
+To match the shortest tail tt(lop2__) and tt(lop3__) are used. The member
+tt(lop3__) is called when the current tail characters do not match
+tt({tail}). It increments the tail, and resets tt(d_lopIter):
+        verb(
+    void ScannerBase::lop3__()
+    {
+        d_lopIter = --d_lopTail;                // increase the tail
+    }
+        )
+
+The member tt(lop2__) is called when tt({tail}) has been matched. It defines
+the initial characters, up to tt(d_lopTail) as the characters to match agains
+tt({head}) and starts the next next start condition, which handles the matched
+tt({head}). Here is tt(lop2__)'s implementation:
+        verb(
+    void ScannerBase::lop2__()
+    {
+        d_lopEnd = d_lopTail;                   // read the head
+        d_lopIter = d_lopMatched.begin();
+                                                
+        begin(SC(d_startCondition + 1));        // switch to the head-matching
+                                                // SC
+    }
+        )
+    
+Finally, tt(lop4__) returns the scanner to its original state, having matched
+tt({head}), and pushes the remaining characters (the actual tail) on to the
+input stream:
+        verb(
+    void ScannerBase::lop4__()
+    {
+        begin(SC(d_lopSC));                     // restore original SC
+        d_get = &ScannerBase::getInput;         // restore get function
+    
+        d_input.setPending(d_lopPending);       // reduce # pending chars to
+                                                // the original number
+
+                                                // reinsert the tail into the 
+                                                // input stream
+        push(d_lopMatched.substr(length(), string::npos));
+    }
+        )
+
+    As stated in the code, the member tt(Input::setPending) resets the number
+of pending characters to its original value. Its default implementation is
+        verb(
+    void setPending(size_t size)
+    {
+        d_deque.erase(d_deque.begin(), d_deque.end() - size);
+    }
+        )
+
+
+
+
+
+
+
+
+
+
