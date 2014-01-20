@@ -103,6 +103,8 @@ class Scanner: public ScannerBase
         void postCode(PostEnum__);
 
         bool moreInput();
+        bool secondSectionDelimiter();
+        bool insertedCatchAll();
 };
 
 inline void Scanner::needCatchAll()

@@ -137,6 +137,11 @@ OPTBL                   [[:blank:]]*
 
 \$                              return Parser::DOLLAR;  // push("/\\n");
 
+^"%%"                           {
+                                    if (secondSectionDelimiter())
+                                        return 0;
+                                }
+
                                     // return special chars as themselves
 ['.,^/|()*+?{}<>-]              return matched()[0];
 
@@ -146,7 +151,7 @@ OPTBL                   [[:blank:]]*
 <pre>{
     {BL}                        // skip white space
 
-    %%                          {
+    "%%"                        {
                                     switchToINITIAL();
                                     return Parser::SECTION_DELIMITER;
                                 }
