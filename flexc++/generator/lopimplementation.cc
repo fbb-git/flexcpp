@@ -13,7 +13,7 @@ void Generator::lopImplementation(std::ostream &out) const
 "void " << d_baseclassScope << R"(lopf__(size_t tail)
 {
     tail = length() - tail;
-    push(d_matched.substr(tail, string::npos));
+    push(d_matched.substr(tail, std::string::npos));
     d_matched.resize(tail);
 }
 
@@ -65,7 +65,7 @@ void )" << d_baseclassScope << R"(lop4__()
 
                                             // reinsert the tail into the 
                                             // input stream
-    push(d_lopMatched.substr(length(), string::npos));
+    push(d_lopMatched.substr(length(), std::string::npos));
 }
 
 size_t )" << d_baseclassScope << R"(getLOP()
