@@ -275,19 +275,22 @@ $insert 4 debug "ECHO_FIRST"
 void \@Base::inspectFlags__()
 {
     int const *rf = d_dfaBase__[d_state] + s_finIdx__;
-    size_t flag = rf[FLAGS];
+//    size_t flag = rf[FLAGS];
 
-    if (flag & FINAL)
-    {
-        FinData &final = (flag & BOL) ? d_final.atBOL : d_final.notAtBOL;
-        final = FinData { static_cast<size_t>(rf[RULE]), d_matched.size() };
-    }
+    d_final.notAtBOL = FinData{static_cast<size_t>(rf[0]), d_matched.size()};
+    d_final.atBOL = FinData{static_cast<size_t>(rf[1]), d_matched.size()};
+//
+//    if (flag & FINAL)
+//    {
+//        FinData &final = (flag & BOL) ? d_final.atBOL : d_final.notAtBOL;
+//        final = FinData { static_cast<size_t>(rf[RULE]), d_matched.size() };
+//    }
 }
 
 void \@Base::reset__()
 {
-    d_final = Final { {s_maxSize_t, s_maxSize_t }, 
-                      {s_maxSize_t, s_maxSize_t } };
+//    d_final = Final { {s_maxSize_t, s_maxSize_t }, 
+//                      {s_maxSize_t, s_maxSize_t } };
     d_state = 0;
     d_return = true;
 
