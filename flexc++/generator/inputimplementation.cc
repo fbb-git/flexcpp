@@ -13,95 +13,88 @@ void Generator::inputImplementation(ostream &out) const
     }
 
     out <<  
-        d_baseclassScope << "Input::Input()\n"
-        ":\n"
-        "    d_in(0),\n"
-        "    d_lineNr(1)";
+        d_baseclassScope << R"(Input::Input()
+:
+    d_in(0),
+    d_lineNr(1)
+{}
 
-    out << "\n"        
-        "{}\n"
-        "\n" <<
-        d_baseclassScope << 
-                    "Input::Input(std::istream *iStream, size_t lineNr)\n"
-        ":\n"
-        "    d_in(iStream),\n"
-        "    d_lineNr(lineNr)";
+)" << d_baseclassScope << 
+                       R"(Input::Input(std::istream *iStream, size_t lineNr)
+:
+    d_in(iStream),
+    d_lineNr(lineNr)
+{}
 
-    out << "\n"        
-        "{}\n"
-        "\n"
-        "size_t " << d_baseclassScope << "Input::get()\n"
-        "{\n";
+size_t )" << d_baseclassScope << R"(Input::get()
+{
+    switch (size_t ch = next())         // get the next input char
+    {
+        case '\n':
+            ++d_lineNr;
+        // FALLING THROUGH
 
-    out <<
-        "    switch (size_t ch = next())         // get the next input char\n"
-        "    {\n"
-        "        case '\\n':\n";
-
-    out << 
-        "            ++d_lineNr;\n"
-        "        // FALLING THROUGH\n"
-        "\n"
-        "        default:\n";
+        default:)";
 
     if (d_debug)
-        out <<
-        "            if (s_debug__)\n"
-        "            {\n"
-        "                s_out__ << \"Input::get() returns \";\n"
-        "                if (isprint(ch))\n"
-        "                    s_out__ << '`' << static_cast<char>(ch) << "
-                                                                "'\\\'';\n"
-        "                else\n"
-        "                    s_out__ << '#' << static_cast<int>(ch);\n"
-        "                s_out__ << '\\n' << dflush__;\n"
-        "            }\n";
+        out << R"raw(
+            if (s_debug__)
+            {
+                s_out__ << "Input::get() returns ";
+                if (isprint(ch))
+                    s_out__ << '`' << static_cast<char>(ch) << '\'';
+                else
+                    s_out__ << "(int)" << static_cast<int>(ch);
+                s_out__ << '\n' << dflush__;
+            })raw";
 
-    out <<
-        "        return ch;\n"
-        "    }\n"
-        "}\n"
-        "\n"
-        "size_t " << d_baseclassScope << "Input::next()\n"
-        "{\n"
-        "    size_t ch;\n"
-        "\n"
-        "    if (d_deque.empty())                    // deque empty: next char fm d_in\n"
-        "    {\n"
-        "        if (d_in == 0)\n"
-        "            return AT_EOF;\n"
-        "        ch = d_in->get();\n"
-        "        return *d_in ? ch : static_cast<size_t>(AT_EOF);\n"
-        "    }\n"
-        "\n"
-        "    ch = d_deque.front();\n"
-        "    d_deque.pop_front();\n"
-        "\n"
-        "    return ch;\n"
-        "}\n"
-        "\n"
-        "void " << d_baseclassScope << "Input::reRead(size_t ch)\n"
-        "{\n"
-        "    if (ch < 0x100)\n"
-        "    {\n";
-
-    if (d_debug)
-        out <<
-        "            if (s_debug__)\n"
-        "                s_out__ << \"Input::reRead(\" << ch << \")\\n\" <<\n"
-        "                                                       dflush__;\n";
-
-    out <<
-        "        if (ch == '\\n')\n"
-        "            --d_lineNr;\n"
-        "        d_deque.push_front(ch);\n"
-        "    }\n"
-        "}\n"
-        "\n"
-        "void " << d_baseclassScope << 
-                    "Input::reRead(std::string const &str, size_t fm)\n"
-        "{\n"
-        "    for (size_t idx = str.size(); idx-- > fm; )\n"
-        "        reRead(str[idx]);\n"
-        "}\n";
+    out << R"(
+        return ch;
+    }
 }
+
+size_t )" << d_baseclassScope << R"(Input::next()
+{
+    size_t ch;
+
+    if (d_deque.empty())                // deque empty: next char fm d_in
+    {
+        if (d_in == 0)
+            return AT_EOF;
+        ch = d_in->get();
+        return *d_in ? ch : static_cast<size_t>(AT_EOF);
+    }
+
+    ch = d_deque.front();
+    d_deque.pop_front();
+
+    return ch;
+}
+
+void )" << d_baseclassScope << R"(Input::reRead(size_t ch)
+{
+    if (ch < 0x100)
+    {)";
+
+    if (d_debug)
+        out << R"(
+        if (s_debug__)
+            s_out__ << "Input::reRead(" << ch << ")\n" << dflush__;)";
+
+    out << R"(
+        if (ch == '\n')
+            --d_lineNr;
+        d_deque.push_front(ch);
+    }
+}
+
+void )" << d_baseclassScope << 
+                    R"(Input::reRead(std::string const &str, size_t fm)
+{
+    for (size_t idx = str.size(); idx-- > fm; )
+        reRead(str[idx]);
+}
+)";
+
+}
+
