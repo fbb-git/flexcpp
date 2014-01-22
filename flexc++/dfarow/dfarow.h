@@ -76,9 +76,11 @@ class DFARow: private FlexTypes
         std::string const &action(size_t idx) const;  // only for FINAL rows
 
         std::pair<size_t, size_t> const &final() const; // final row for which
-                                        // rules? the 1st index is a BOL rule
-                                        // the 2nd not (or
+                                        // rules? the 1st index is a non-BOL
+                                        // rule index, the 2nd a BOL rule
+                                        // index.
                                         // std::numeric_limits<size_t>::max())
+                                        // indicates `not a final rule index'
         bool operator==(DFARow const &rhs) const;
 
         void uniqueMap(std::vector<size_t> const &xlat);

@@ -13,6 +13,7 @@ void DFARow::tabulateFinals(Table &table) const
         if (second != numeric_limits<size_t>::max())
             out << ',';
     }
+
     if (second != numeric_limits<size_t>::max())
         out << second;
 
