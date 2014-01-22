@@ -3,9 +3,7 @@
     // Generate a DFA in the lex.cc file.
 
 void Generator::dfa(DFAs::Pair const &dfaPair, ostream &out, 
-                    vector<RuleFlag> &rf, 
-                    vector<string> &startStates,
-                    vector<size_t> &dfaOffsets)
+                    vector<string> &startStates, vector<size_t> &dfaOffsets)
 {
     if 
     (
@@ -20,5 +18,5 @@ void Generator::dfa(DFAs::Pair const &dfaPair, ostream &out,
 
     size_t index = 0;
     for (auto &row: *dfaPair.second)
-        dfaRow(row, index, out, rf);            // write the DFA's rows
+        dfaRow(row, index, out);
 }

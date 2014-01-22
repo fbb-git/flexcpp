@@ -1,8 +1,7 @@
 #include "generator.ih"
 
     // show one row of a DFA
-void Generator::dfaRow(DFARow const &row, size_t &index, ostream &out, 
-                        vector<RuleFlag> &rfs)
+void Generator::dfaRow(DFARow const &row, size_t &index, ostream &out)
 {
     out << "    {";
 
@@ -10,7 +9,7 @@ void Generator::dfaRow(DFARow const &row, size_t &index, ostream &out,
 
     out << "   ";                   // extra space to separate R / F
 
-    dfaRFs(row, out, rfs);
+    dfaFinalRules(row, out);
 
     out << "},  // " << index++ << '\n';
 }

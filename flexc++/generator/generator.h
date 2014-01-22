@@ -33,12 +33,6 @@ class Generator: public FlexTypes
         BOL             = 8,    // Rule is a LOP rule
     };
 
-    struct RuleFlag    // (RF)
-    {
-        size_t d_rule;
-        size_t d_flag;
-    };
-
     typedef void (Generator::*Inserter)(std::ostream &) const;
     typedef FBB::LinearMap<std::string, Inserter>   Map;
     typedef Map::value_type                             MapValue;
@@ -63,7 +57,6 @@ class Generator: public FlexTypes
     mutable std::string d_line;
     mutable std::string d_field;
 
-    mutable std::vector<RuleFlag> d_rf;         // determined at dfas()
     mutable std::vector<size_t> d_dfaIndices;   // determined at dfas()
 
     static Map s_insert;
@@ -141,19 +134,14 @@ class Generator: public FlexTypes
 
         size_t dfaCols() const;
 
-        static void outRF(RuleFlag const &rfc, std::ostream &out,
-                                                     size_t &idx);
         static void dfa(DFAs::Pair const &dfaPair, std::ostream &out, 
-                        std::vector<RuleFlag> &tailCounts,
                         std::vector<std::string> &startStates,
                         std::vector<size_t> &dfaOffsets);
         static void dfaRow(DFARow const &row, size_t &index, 
-                        std::ostream &out, std::vector<RuleFlag> &rf);
+                        std::ostream &out);
+
         static void dfaTransitions(DFARow const &row, std::ostream &out);
-        static void dfaRFs(DFARow const &row, std::ostream &out,
-                            std::vector<RuleFlag> &rf);
-        static void storeRF(std::pair<size_t, size_t> &final,
-                             std::vector<RuleFlag> &rf);
+        static void dfaFinalRules(DFARow const &row, std::ostream &out);
 
         static void outStartState(std::string const &name, std::ostream &out);
         void ruleAction(Block const &block, std::ostream &out, size_t idx)
