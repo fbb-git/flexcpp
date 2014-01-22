@@ -19,21 +19,6 @@ class \@Base
 
     static size_t const s_maxSize_t = std::numeric_limits<size_t>::max();
 
-    enum        // RuleFlagsCount Indices, see s_rf__[]
-    {
-        RULE = 0,
-        FLAGS,
-        ACCCOUNT,
-    };
-
-    enum
-    {
-        FINAL = 1,
-        INCREMENT = 2,
-        COUNT = 4,
-        BOL = 8
-    };
-
     enum 
     {
         AT_EOF = -1
@@ -67,16 +52,11 @@ $insert 8 startCondNames
     };
 
 private:
-    struct FinData            // Info about intermediate matched rules while
-    {                           // traversing the DFA
-        size_t rule;
-        size_t matchLen;
-    };
-
     struct Final
     {
-        FinData atBOL;
-        FinData notAtBOL;
+         size_t nonBolRule;
+         size_t bolRule;
+         size_t matchLen;
     };
 
     static StartCondition__ constexpr SC(int sc);
@@ -236,7 +216,7 @@ private:
     size_t getInput();
     size_t getLOP();
     void p_pushStream(std::string const &name, std::istream *streamPtr);
-    void determineMatchedSize(FinData const &final);
+    void determineMatchedSize(size_t length);
     bool atFinalState();
 };
 
@@ -267,8 +247,9 @@ inline void \@Base::push(std::string const &str)
 
 inline bool \@Base::atFinalState()
 {
-    return d_final.notAtBOL.rule != s_maxSize_t || 
-            (d_atBOL && d_final.atBOL.rule != s_maxSize_t);
+     return (not d_atBOL && d_final.nonBolRule != s_maxSize_t )
+             || 
+             (d_atBOL && d_final.bolRule != s_maxSize_t);
 }
 
 inline void \@Base::setFilename(std::string const &name)

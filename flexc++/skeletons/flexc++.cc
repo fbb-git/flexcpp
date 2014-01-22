@@ -192,10 +192,10 @@ void \@Base::accept(size_t nChars)          // old name: less
   //    The current state is a known final state (as determined by 
   // inspectFlags__(), just prior to calling matched__). 
   //    The contents of d_matched are reduced to d_final's size
-void \@Base::determineMatchedSize(FinData const &final)
+void \@Base::determineMatchedSize(size_t length)
 {
-    size_t length = final.matchLen;
 
+//std::cerr << "length: " << length << ", matched: " << d_matched.size() << '\n';
     d_input.reRead(d_matched, length);      // reread the tail section
     d_matched.resize(length);               // return what's left
 }
@@ -209,21 +209,15 @@ size_t \@Base::matched__(size_t ch)
 $insert 4 debug "MATCH"
     d_input.reRead(ch);
 
-    if (!d_atBOL)
-        d_final.atBOL.rule = s_maxSize_t;
+    size_t rule = d_atBOL ? d_final.bolRule : d_final.nonBolRule;
 
-    FinData &final = d_final.atBOL.rule == s_maxSize_t ? 
-                            d_final.notAtBOL
-                        :
-                            d_final.atBOL;
-
-    determineMatchedSize(final);
+    determineMatchedSize(d_final.matchLen);
 
     d_atBOL = *d_matched.rbegin() == '\n';
 
 $insert 4 debug "match buffer contains `" << d_matched << "'"
 
-    return final.rule;
+    return rule;
 }
 
 size_t \@Base::getRange__(int ch)       // using int to prevent casts
@@ -275,19 +269,17 @@ $insert 4 debug "ECHO_FIRST"
 void \@Base::inspectFlags__()
 {
     int const *rf = d_dfaBase__[d_state] + s_finIdx__;
-    size_t flag = rf[FLAGS];
 
-    if (flag & FINAL)
-    {
-        FinData &final = (flag & BOL) ? d_final.atBOL : d_final.notAtBOL;
-        final = FinData { static_cast<size_t>(rf[RULE]), d_matched.size() };
-    }
+    d_final = Final { 
+                    static_cast<size_t>(rf[0]), static_cast<size_t>(rf[1]), 
+                    d_matched.size() 
+                };
 }
 
 void \@Base::reset__()
 {
-    d_final = Final { {s_maxSize_t, s_maxSize_t }, 
-                      {s_maxSize_t, s_maxSize_t } };
+    d_final = Final {s_maxSize_t, s_maxSize_t, 0};
+
     d_state = 0;
     d_return = true;
 
