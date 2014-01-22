@@ -18,11 +18,11 @@ $insert ranges
     // StartCondition__::INITIAL is always 0.  Each entry defines the row to
     // transit to if the column's character range was sensed. Row numbers are
     // relative to the used DFA, and d_dfaBase__ is set to the first row of
-    // the subset to use.  The row's final two values are respectively the
-    // rule that may be matched at this state, and the rule's FINAL flag. If
-    // the final value equals FINAL (= 1) then, if there's no continuation,
-    // the rule is matched. If the BOL flag (8) is also set (so FINAL + BOL (=
-    // 9) is set) then the rule only matches when d_atBol is also true.
+    // the subset to use.
+    // if d_atBol is true, the last element defines the matched rule if it is
+    // unequal -1. If d_atBol is false then the last but one element defines
+    // the index of the rule that is matched if it is unequal -1. Otherwise,
+    // this row does not represent a final state for any rule.
 $insert DFAs
 
 $insert DFAbases
@@ -188,18 +188,6 @@ void \@Base::accept(size_t nChars)          // old name: less
     }
 }
 
-  // The size of d_matched is determined:
-  //    The current state is a known final state (as determined by 
-  // inspectFlags__(), just prior to calling matched__). 
-  //    The contents of d_matched are reduced to d_final's size
-void \@Base::determineMatchedSize(size_t length)
-{
-
-//std::cerr << "length: " << length << ", matched: " << d_matched.size() << '\n';
-    d_input.reRead(d_matched, length);      // reread the tail section
-    d_matched.resize(length);               // return what's left
-}
-
   // At this point a rule has been matched.  The next character is not part of
   // the matched rule and is sent back to the input.  The final match length
   // is determined, the index of the matched rule is determined, and then
@@ -209,9 +197,10 @@ size_t \@Base::matched__(size_t ch)
 $insert 4 debug "MATCH"
     d_input.reRead(ch);
 
-    size_t rule = d_atBOL ? d_final.bolRule : d_final.nonBolRule;
-
-    determineMatchedSize(d_final.matchLen);
+    size_t rule = not d_atBOL || d_final.BOLrule == s_maxSize_t ?
+                        d_final.nonBOLrule
+                    :
+                        d_final.BOLrule;
 
     d_atBOL = *d_matched.rbegin() == '\n';
 
@@ -226,7 +215,7 @@ size_t \@Base::getRange__(int ch)       // using int to prevent casts
         d_sawEOF = false;
 
 $insert caseCheck
-    return ch == AT_EOF ? static_cast<size_t>(s_rangeOfEOF__) : s_ranges__[ch];
+    return ch == AT_EOF ? as<size_t>(s_rangeOfEOF__) : s_ranges__[ch];
 }
 
   // At this point d_nextState contains the next state and continuation is
@@ -243,7 +232,7 @@ $insert 4 debug "CONTINUE, NEXT STATE: " << d_nextState
 void \@Base::echoCh__(size_t ch)
 {
 $insert 4 debug "ECHO_CH" 
-    *d_out << static_cast<char>(ch);
+    *d_out << as<char>(ch);
     d_atBOL = ch == '\n';
 }
 
@@ -270,15 +259,12 @@ void \@Base::inspectFlags__()
 {
     int const *rf = d_dfaBase__[d_state] + s_finIdx__;
 
-    d_final = Final { 
-                    static_cast<size_t>(rf[0]), static_cast<size_t>(rf[1]), 
-                    d_matched.size() 
-                };
+    d_final = Final {as<size_t>(rf[0]), as<size_t>(rf[1]) };
 }
 
 void \@Base::reset__()
 {
-    d_final = Final {s_maxSize_t, s_maxSize_t, 0};
+    d_final = Final {s_maxSize_t, s_maxSize_t};
 
     d_state = 0;
     d_return = true;

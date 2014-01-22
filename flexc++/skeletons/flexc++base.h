@@ -54,9 +54,8 @@ $insert 8 startCondNames
 private:
     struct Final
     {
-         size_t nonBolRule;
-         size_t bolRule;
-         size_t matchLen;
+         size_t nonBOLrule;
+         size_t BOLrule;
     };
 
     static StartCondition__ constexpr SC(int sc);
@@ -216,9 +215,16 @@ private:
     size_t getInput();
     size_t getLOP();
     void p_pushStream(std::string const &name, std::istream *streamPtr);
-    void determineMatchedSize(size_t length);
     bool atFinalState();
+    template <typename ReturnType, typename ArgType>
+    static ReturnType constexpr as(ArgType value);
 };
+
+template <typename ReturnType, typename ArgType>
+inline ReturnType constexpr \@Base::as(ArgType value)
+{
+    return static_cast<ReturnType>(value);
+}
 
 inline \@Base::StartCondition__ constexpr \@Base::SC(int sc)
 {
@@ -247,9 +253,10 @@ inline void \@Base::push(std::string const &str)
 
 inline bool \@Base::atFinalState()
 {
-     return (not d_atBOL && d_final.nonBolRule != s_maxSize_t )
-             || 
-             (d_atBOL && d_final.bolRule != s_maxSize_t);
+     return  
+        (d_atBOL && d_final.BOLrule != s_maxSize_t)
+        ||
+        d_final.nonBOLrule != s_maxSize_t;
 }
 
 inline void \@Base::setFilename(std::string const &name)
