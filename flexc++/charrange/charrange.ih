@@ -1,9 +1,10 @@
 #include "charrange.h"
 
-#include <limits>
 #include <cctype>
 #include <iterator>
 #include <algorithm>
+
+#include "../templates/templates.h"
 
 struct AllChars: public std::iterator<std::input_iterator_tag, char>
 {

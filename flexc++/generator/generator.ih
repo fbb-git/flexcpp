@@ -1,7 +1,6 @@
 #include "generator.h"
 
 #include <iterator>
-#include <limits>
 #include <iomanip>
 
 #include <bobcat/mstream>
@@ -20,6 +19,7 @@
 #include "../dfarow/dfarow.h"
 #include "../dfa/dfa.h"
 #include "../startconditions/startconditions.h"
+#include "../templates/templates.h"
 
 extern char version[];
 

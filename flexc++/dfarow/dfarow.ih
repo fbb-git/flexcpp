@@ -1,11 +1,12 @@
 #include "dfarow.h"
 
-#include <limits>
 #include <sstream>
 #include <iterator>
 #include <sstream>
 
 #include <bobcat/table>
+
+#include "../templates/templates.h"
 
 using namespace std;
 using namespace FBB;

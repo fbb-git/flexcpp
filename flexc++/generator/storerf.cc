@@ -13,13 +13,13 @@ void Generator::storeRF(pair<size_t, size_t> &final,
 
     if (final.first == rule)
     {
-        final.first = numeric_limits<size_t>::max();
+        final.first = max<size_t>();
         rf.d_flag |= FINAL | BOL;
     }
 
     if (final.second == rule)
     {
-        final.second = numeric_limits<size_t>::max();
+        final.second = max<size_t>();
         rf.d_flag |= FINAL;
     }
 

@@ -31,7 +31,7 @@ Pattern Pattern::copy(States &states,
     copyPattern(states, lower - 1, beginEnd);           // copy req'd patterns
 
     return
-        upper == numeric_limits<size_t>::max() ?    // no upper limit: 
+        upper == max<size_t>() ?    // no upper limit: 
             optRepeatLastPattern(states,            // optionally  repeat the 
                             regex, lower, beginEnd) // last pattern. 
         :                                       // Otherwise add fixed nr

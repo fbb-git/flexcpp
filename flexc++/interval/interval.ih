@@ -1,6 +1,6 @@
 #include "interval.h"
 
-#include <limits>
+#include "../templates/templates.h"
 
 using namespace std;
 

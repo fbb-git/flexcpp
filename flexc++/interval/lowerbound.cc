@@ -2,6 +2,6 @@
 
 Interval Interval::lowerBound(std::string const &lower)
 {
-    Interval ret(stoul(lower), numeric_limits<size_t>::max());
+    Interval ret(stoul(lower), max<size_t>());
     return ret;
 }
