@@ -131,6 +131,47 @@ miniscanner, start matching the next rule.
 
         
     
+Handling BOL rules (TO ELABORATE)
+
+ScannerBase::knownFinalState returns    
+
+        verb(
+    (d_atBOL && available(d_final.atBOL.rule)) 
+    || 
+    available(d_final.notAtBOL.rule);
+        )
+
+Only if this is true, ScannerBase::actionType__ returns ActionType__::MATCH,
+
+Three variables are used, resulting in 8 possibilities:
+    verb(
+    --------------------------------------------------------------------
+                       available rule
+                      ---------------
+     nr   d_atBOL      std       bol                action
+    --------------------------------------------------------------------
+      1       0         0         0         prevented by knownFinalState
+      2       0         0         1         prevented by knownFinalState
+
+      3       0         1         0         use the std. rule
+      4       0         1         1         use the std. rule
+
+      5       1         0         0         prevented by knownFinalState
+      6       1         0         1         use the BOL rule
+
+      7       1         1         0         use the std rule
+      8       1         1         1         different match lengths: use
+                                            the rule matching the longest 
+                                            text;
+                                            equal match lengths: use the 
+                                            earlier rule.
+    --------------------------------------------------------------------
+)
+    The numbers in this table are referred to by skeleton/flexc++.cc's
+matched__ member.
+
+
+
 
 
 

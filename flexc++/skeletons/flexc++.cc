@@ -161,6 +161,8 @@ bool \@Base::popStream()
 $insert lopImplementation
 
 
+  // See the manual's section `Run-time operations' section for an explanation
+  // of this member.
 \@Base::ActionType__ \@Base::actionType__(size_t range)
 {
     d_nextState = d_dfaBase__[d_state][range];
@@ -199,42 +201,41 @@ void \@Base::setMatchedSize(size_t length)
   // the matched rule and is sent back to the input.  The final match length
   // is determined, the index of the matched rule is determined, and then
   // d_atBOL is updated. Finally the rule's index is returned.
+  // The numbers behind the finalPtr assignments are explained in the 
+  // manual's `Run-time operations' section.
 size_t \@Base::matched__(size_t ch)
 {
 $insert 4 debug "MATCH"
     d_input.reRead(ch);
 
     FinalData *finalPtr;
+                            
+    if (not d_atBOL)                    // not at BOL
+        finalPtr = &d_final.std;        // then use the non-BOL rule (3, 4)
 
-    if (d_atBOL)                        // BOL rule required:
-        finalPtr = &d_final.atBOL;      // point to it.
+                                        // at BOL
+    else if (not available(d_final.std.rule))   // only a BOL rule avail.
+            finalPtr = &d_final.bol;            // use the BOL rule (6)
 
-                                        // BOL rule not required:
-    else if (not available(d_final.atBOL.rule)) // also not available
-        finalPtr = &d_final.notAtBOL;   // so use the non BOL rule
-
-                                        // BOL rule is available:
-    else if (not available(d_final.notAtBOL.rule))  // non BOL rule isn't:
-        finalPtr = &d_final.atBOL;      // so use the BOL rule
-
-                                        // Both are available: check lengths:
-    else if (d_final.atBOL.length == d_final.notAtBOL.length)
-        finalPtr =                      // equal lengths: use the first rule
-            d_final.atBOL.rule < d_final.notAtBOL.rule ?
-                &d_final.atBOL
+    else if (not available(d_final.bol.rule)) // only non-BOL avail.
+        finalPtr = &d_final.std;        // use the non-BOL rule (7)
+        
+    else if (                           // Both are available (8)
+        d_final.bol.length !=           // check lengths of matched texts
+        d_final.std.length              // unequal lengths, use the rule
+    )                                   // having the longer match length
+        finalPtr =              
+            d_final.bol.length > d_final.std.length ?
+                &d_final.bol
             :
-                &d_final.notAtBOL;
+                &d_final.std;
 
-    else                                // unequal lengths: use the rule 
-        finalPtr =                      // having the longer match length
-            d_final.atBOL.length > d_final.notAtBOL.length ?
-                &d_final.atBOL
+    else                            // lengths are equal: use 1st rule
+        finalPtr = 
+            d_final.bol.rule < d_final.std.rule ?
+                &d_final.bol
             :
-                &d_final.notAtBOL;
-
-//std::cerr << "\n   matched__ finalPtr: " <<
-//finalPtr->rule << ", " << finalPtr->length << ", matched: `" <<
-//d_matched << "'\n";
+                &d_final.std;
 
     setMatchedSize(finalPtr->length);
 
@@ -297,14 +298,11 @@ void \@Base::updateFinals__()
     int const *rf = d_dfaBase__[d_state] + s_finIdx__;
 
     if (rf[0] != -1)        // update to the latest non-bol rule
-        d_final.notAtBOL = FinalData { as<size_t>(rf[0]), len };
+        d_final.std = FinalData { as<size_t>(rf[0]), len };
 
     if (rf[1] != -1)        // update to the latest bol rule
-        d_final.atBOL = FinalData { as<size_t>(rf[1]), len };
+        d_final.bol = FinalData { as<size_t>(rf[1]), len };
 
-//std::cerr << "\n   updated d_final: " <<
-//d_final.notAtBOL.rule << ", " << d_final.notAtBOL.length << ", bol: " <<
-//d_final.atBOL.rule << ", " << d_final.atBOL.length << "\n";
 }
 
 void \@Base::reset__()

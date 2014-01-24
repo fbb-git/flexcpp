@@ -59,8 +59,8 @@ private:
     };
     struct Final
     {
-        FinalData atBOL;
-        FinalData notAtBOL;
+        FinalData std;
+        FinalData bol;
     };
 
     static StartCondition__ constexpr SC(int sc);
@@ -241,18 +241,8 @@ bool constexpr \@Base::available(size_t value)
 
 inline bool \@Base::knownFinalState()
 {
-    bool ret = available(d_final.atBOL.rule) ||
-                available(d_final.notAtBOL.rule);
-
-//std::cerr << "\n   knownFinalState: notAtBOL " <<
-//available(d_final.notAtBOL.rule) << ", " <<
-//d_final.notAtBOL.rule << ", " << d_final.notAtBOL.length << ", bol: " <<
-//available(d_final.notAtBOL.rule) << ", " <<
-//d_final.atBOL.rule << ", " << d_final.atBOL.length << ": knownFinalState: "
-//<< ret << '\n';
-
-return ret;
-
+    return  (d_atBOL && available(d_final.bol.rule)) ||
+            available(d_final.std.rule);
 }
 
 inline \@Base::StartCondition__ constexpr \@Base::SC(int sc)
