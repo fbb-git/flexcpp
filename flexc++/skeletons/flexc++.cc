@@ -211,14 +211,14 @@ $insert 4 debug "MATCH"
     FinalData *finalPtr;
                             
     if (not d_atBOL)                    // not at BOL
-        finalPtr = &d_final.std;        // then use the non-BOL rule (3, 4)
+        finalPtr = &d_final.std;        // then use the std rule (3, 4)
 
                                         // at BOL
     else if (not available(d_final.std.rule))   // only a BOL rule avail.
             finalPtr = &d_final.bol;            // use the BOL rule (6)
 
-    else if (not available(d_final.bol.rule)) // only non-BOL avail.
-        finalPtr = &d_final.std;        // use the non-BOL rule (7)
+    else if (not available(d_final.bol.rule)) // only a std rule is avail.
+        finalPtr = &d_final.std;        // use the std rule (7)
         
     else if (                           // Both are available (8)
         d_final.bol.length !=           // check lengths of matched texts
@@ -288,7 +288,7 @@ $insert 4 debug "ECHO_FIRST"
 }
 
     // Update the rules associated with the current state, do this separately
-    // for BOL and non-BOL rules.
+    // for BOL and std rules.
     // If a rule was set, update the rule index and the current d_matched
     // length. 
 void \@Base::updateFinals__()
@@ -297,7 +297,7 @@ void \@Base::updateFinals__()
 
     int const *rf = d_dfaBase__[d_state] + s_finIdx__;
 
-    if (rf[0] != -1)        // update to the latest non-bol rule
+    if (rf[0] != -1)        // update to the latest std rule
         d_final.std = FinalData { as<size_t>(rf[0]), len };
 
     if (rf[1] != -1)        // update to the latest bol rule

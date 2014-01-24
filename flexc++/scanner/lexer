@@ -143,8 +143,7 @@ OPTBL                   [[:blank:]]*
                                 }
 
                                     // return special chars as themselves
-[.,^/|()*+?{}<>-]               return matched()[0];
-"'"                             return d_inCharClass ? Parser::STRING : '\'';
+['.,^/|()*+?{}<>-]              return matched()[0];
 
                                     // return other chars as CHAR
 .                               return Parser::CHAR;
