@@ -160,6 +160,21 @@ bool \@Base::popStream()
 
 $insert lopImplementation
 
+bool \@Base::knownFinalState(size_t range)
+{
+    bool ret = not d_sawEOF 
+                &&
+                (
+                    (d_atBOL && available(d_final.bol.rule)) ||
+                    available(d_final.std.rule)
+                );
+
+    if (range == s_rangeOfEOF__)
+        d_sawEOF = true;
+
+    return ret;
+}
+
 
   // See the manual's section `Run-time operations' section for an explanation
   // of this member.
@@ -170,7 +185,7 @@ $insert lopImplementation
     if (d_nextState != -1)                  // transition is possible
         return ActionType__::CONTINUE;
 
-    if (knownFinalState())                  // FINAL state reached
+    if (knownFinalState(range))             // FINAL state reached
         return ActionType__::MATCH;         
 
     if (d_matched.size())
