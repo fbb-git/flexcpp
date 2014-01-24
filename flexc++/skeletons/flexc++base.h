@@ -63,9 +63,6 @@ private:
         FinalData bol;
     };
 
-    static StartCondition__ constexpr SC(int sc);
-    static int constexpr SC(StartCondition__ sc);
-
         // class Input encapsulates all input operations. 
         // Its member get() returns the next input character
 $insert inputInterface
@@ -93,7 +90,7 @@ private:
     std::shared_ptr<std::ostream> d_out;
     bool            d_sawEOF = false;       // saw EOF
     bool            d_atBOL = true;         // the matched text starts at BOL
-    Final d_final;                          // 1st for non-BOL rules
+    Final d_final;
 
                                             // only used interactively:
     std::istream *d_in;                     // points to the input stream
@@ -222,9 +219,12 @@ private:
     void p_pushStream(std::string const &name, std::istream *streamPtr);
     void setMatchedSize(size_t length);
     bool knownFinalState();
-    static bool constexpr available(size_t value);
+
     template <typename ReturnType, typename ArgType>
     static ReturnType constexpr as(ArgType value);
+    static bool constexpr available(size_t value);
+    static StartCondition__ constexpr SC(int sc);
+    static int constexpr SC(StartCondition__ sc);
 };
 
 
