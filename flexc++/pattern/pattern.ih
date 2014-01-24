@@ -1,6 +1,5 @@
 #include "pattern.h"
 
-#include <limits>
 #include <string>
 #include <stdexcept>
 #include <algorithm>
@@ -11,6 +10,7 @@
 #include "../charclass/charclass.h"
 #include "../options/options.h"
 #include "../states/states.h"
+#include "../templates/templates.h"
 
 using namespace std;
 using namespace FBB;

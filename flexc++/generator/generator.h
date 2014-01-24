@@ -137,11 +137,9 @@ class Generator: public FlexTypes
         static void dfa(DFAs::Pair const &dfaPair, std::ostream &out, 
                         std::vector<std::string> &startStates,
                         std::vector<size_t> &dfaOffsets);
-        static void dfaRow(DFARow const &row, size_t &index, 
-                        std::ostream &out);
-
+        static void dfaRow(DFARow const &row, size_t &idx, std::ostream &out);
         static void dfaTransitions(DFARow const &row, std::ostream &out);
-        static void dfaFinalRules(DFARow const &row, std::ostream &out);
+        static void dfaRules(DFARow const &row, std::ostream &out);
 
         static void outStartState(std::string const &name, std::ostream &out);
         void ruleAction(Block const &block, std::ostream &out, size_t idx)

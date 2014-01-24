@@ -17,7 +17,7 @@ class \@Base
                 // idx: rule, value: tail length (NO_INCREMENTS if no tail)
     typedef std::vector<int> VectorInt;
 
-    static size_t const s_maxSize_t = std::numeric_limits<size_t>::max();
+    static size_t const s_unavailable = std::numeric_limits<size_t>::max();
 
     enum 
     {
@@ -52,14 +52,16 @@ $insert 8 startCondNames
     };
 
 private:
+    struct FinalData
+    {
+        size_t rule;
+        size_t length;
+    };
     struct Final
     {
-         size_t nonBOLrule;
-         size_t BOLrule;
+        FinalData std;
+        FinalData bol;
     };
-
-    static StartCondition__ constexpr SC(int sc);
-    static int constexpr SC(StartCondition__ sc);
 
         // class Input encapsulates all input operations. 
         // Its member get() returns the next input character
@@ -88,8 +90,8 @@ private:
     std::shared_ptr<std::ostream> d_out;
     bool            d_sawEOF = false;       // saw EOF
     bool            d_atBOL = true;         // the matched text starts at BOL
-    Final d_final;                          // 1st for BOL rules
-                                            
+    Final d_final;
+
                                             // only used interactively:
     std::istream *d_in;                     // points to the input stream
     std::shared_ptr<std::istringstream> d_line; // holds line fm d_in
@@ -198,7 +200,7 @@ $ignoreInteractive END      end ignored section by generator/filter.cc
     void            continue__(int ch);         // handles a transition
     void            echoCh__(size_t ch);        // echoes ch, sets d_atBOL
     void            echoFirst__(size_t ch);     // handles unknown input
-    void            inspectFlags__();           // inspect the flags of a rule
+    void            updateFinals__();           // update a state's Final info
     void            noReturn__();               // d_return to false
     void            print__() const;            // optionally print token
     void            pushFront__(size_t ch);     // return char to Input
@@ -215,9 +217,14 @@ private:
     size_t getInput();
     size_t getLOP();
     void p_pushStream(std::string const &name, std::istream *streamPtr);
-    bool atFinalState();
+    void setMatchedSize(size_t length);
+    bool knownFinalState();
+
     template <typename ReturnType, typename ArgType>
     static ReturnType constexpr as(ArgType value);
+    static bool constexpr available(size_t value);
+    static StartCondition__ constexpr SC(int sc);
+    static int constexpr SC(StartCondition__ sc);
 };
 
 template <typename ReturnType, typename ArgType>
@@ -226,14 +233,25 @@ inline ReturnType constexpr \@Base::as(ArgType value)
     return static_cast<ReturnType>(value);
 }
 
+bool constexpr \@Base::available(size_t value)
+{   
+    return value != std::numeric_limits<size_t>::max();
+}
+
+inline bool \@Base::knownFinalState()
+{
+    return  (d_atBOL && available(d_final.bol.rule)) ||
+            available(d_final.std.rule);
+}
+
 inline \@Base::StartCondition__ constexpr \@Base::SC(int sc)
 {
-    return static_cast<StartCondition__>(sc);
+    return as<StartCondition__>(sc);
 }
 
 inline int constexpr \@Base::SC(StartCondition__ sc)
 {
-    return static_cast<int>(sc);
+    return as<int>(sc);
 }
 
 inline std::ostream &\@Base::out()
@@ -249,14 +267,6 @@ inline void \@Base::push(size_t ch)
 inline void \@Base::push(std::string const &str)
 {
     d_input.reRead(str, 0);
-}
-
-inline bool \@Base::atFinalState()
-{
-     return  
-        (d_atBOL && d_final.BOLrule != s_maxSize_t)
-        ||
-        d_final.nonBOLrule != s_maxSize_t;
 }
 
 inline void \@Base::setFilename(std::string const &name)
@@ -296,7 +306,7 @@ inline size_t \@Base::length() const
 
 inline void \@Base::leave(int retValue) const
 {
-    throw static_cast<Leave__>(retValue);
+    throw as<Leave__>(retValue);
 }
 
 inline size_t \@Base::lineNr() const

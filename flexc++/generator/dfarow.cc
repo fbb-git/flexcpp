@@ -7,9 +7,10 @@ void Generator::dfaRow(DFARow const &row, size_t &index, ostream &out)
 
     dfaTransitions(row, out);       // show the transitions
 
-    out << "   ";                   // extra space to separate R / F
+    out << "   ";                   // extra space to separate states from
+                                    // the rules
 
-    dfaFinalRules(row, out);
+    dfaRules(row, out);             // show the rules, matched in this state
 
     out << "},  // " << index++ << '\n';
 }

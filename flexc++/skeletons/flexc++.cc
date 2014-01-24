@@ -18,11 +18,11 @@ $insert ranges
     // StartCondition__::INITIAL is always 0.  Each entry defines the row to
     // transit to if the column's character range was sensed. Row numbers are
     // relative to the used DFA, and d_dfaBase__ is set to the first row of
-    // the subset to use.
-    // if d_atBol is true, the last element defines the matched rule if it is
-    // unequal -1. If d_atBol is false then the last but one element defines
-    // the index of the rule that is matched if it is unequal -1. Otherwise,
-    // this row does not represent a final state for any rule.
+    // the subset to use.  The row's final two values are respectively the
+    // rule that may be matched at this state, and the rule's FINAL flag. If
+    // the final value equals FINAL (= 1) then, if there's no continuation,
+    // the rule is matched. If the BOL flag (8) is also set (so FINAL + BOL (=
+    // 9) is set) then the rule only matches when d_atBOL is also true.
 $insert DFAs
 
 $insert DFAbases
@@ -160,6 +160,9 @@ bool \@Base::popStream()
 
 $insert lopImplementation
 
+
+  // See the manual's section `Run-time operations' section for an explanation
+  // of this member.
 \@Base::ActionType__ \@Base::actionType__(size_t range)
 {
     d_nextState = d_dfaBase__[d_state][range];
@@ -167,8 +170,8 @@ $insert lopImplementation
     if (d_nextState != -1)                  // transition is possible
         return ActionType__::CONTINUE;
 
-    if (atFinalState())                     // FINAL state reached
-        return ActionType__::MATCH;
+    if (knownFinalState())                  // FINAL state reached
+        return ActionType__::MATCH;         
 
     if (d_matched.size())
         return ActionType__::ECHO_FIRST;    // no match, echo the 1st char
@@ -188,25 +191,59 @@ void \@Base::accept(size_t nChars)          // old name: less
     }
 }
 
+void \@Base::setMatchedSize(size_t length)
+{
+    d_input.reRead(d_matched, length);  // reread the tail section
+    d_matched.resize(length);           // return what's left
+}
+
   // At this point a rule has been matched.  The next character is not part of
   // the matched rule and is sent back to the input.  The final match length
   // is determined, the index of the matched rule is determined, and then
-  // d_atBOL is updated. Finally the rule index is returned.
+  // d_atBOL is updated. Finally the rule's index is returned.
+  // The numbers behind the finalPtr assignments are explained in the 
+  // manual's `Run-time operations' section.
 size_t \@Base::matched__(size_t ch)
 {
 $insert 4 debug "MATCH"
     d_input.reRead(ch);
 
-    size_t rule = not d_atBOL || d_final.BOLrule == s_maxSize_t ?
-                        d_final.nonBOLrule
-                    :
-                        d_final.BOLrule;
+    FinalData *finalPtr;
+                            
+    if (not d_atBOL)                    // not at BOL
+        finalPtr = &d_final.std;        // then use the std rule (3, 4)
 
-    d_atBOL = *d_matched.rbegin() == '\n';
+                                        // at BOL
+    else if (not available(d_final.std.rule))   // only a BOL rule avail.
+            finalPtr = &d_final.bol;            // use the BOL rule (6)
+
+    else if (not available(d_final.bol.rule)) // only a std rule is avail.
+        finalPtr = &d_final.std;        // use the std rule (7)
+        
+    else if (                           // Both are available (8)
+        d_final.bol.length !=           // check lengths of matched texts
+        d_final.std.length              // unequal lengths, use the rule
+    )                                   // having the longer match length
+        finalPtr =              
+            d_final.bol.length > d_final.std.length ?
+                &d_final.bol
+            :
+                &d_final.std;
+
+    else                            // lengths are equal: use 1st rule
+        finalPtr = 
+            d_final.bol.rule < d_final.std.rule ?
+                &d_final.bol
+            :
+                &d_final.std;
+
+    setMatchedSize(finalPtr->length);
+
+    d_atBOL = d_matched.back() == '\n';
 
 $insert 4 debug "match buffer contains `" << d_matched << "'"
 
-    return rule;
+    return finalPtr->rule;
 }
 
 size_t \@Base::getRange__(int ch)       // using int to prevent casts
@@ -250,21 +287,29 @@ $insert 4 debug "ECHO_FIRST"
     echoCh__(d_matched[0]);
 }
 
-    // Inspect the rule/final flags associated with the current state. If
-    // rf[FLAG] == FINAL (1) then we've reached rule rf[RULE]'s final state
-    // and accept the rule if there's no continuation. If rf[FLAG] is also BOL
-    // (= 8, FINAL + BOL = 9) then the rule is matched only if d_atBol is also
-    // true.
-void \@Base::inspectFlags__()
+    // Update the rules associated with the current state, do this separately
+    // for BOL and std rules.
+    // If a rule was set, update the rule index and the current d_matched
+    // length. 
+void \@Base::updateFinals__()
 {
+    size_t len = d_matched.size();
+
     int const *rf = d_dfaBase__[d_state] + s_finIdx__;
 
-    d_final = Final {as<size_t>(rf[0]), as<size_t>(rf[1]) };
+    if (rf[0] != -1)        // update to the latest std rule
+        d_final.std = FinalData { as<size_t>(rf[0]), len };
+
+    if (rf[1] != -1)        // update to the latest bol rule
+        d_final.bol = FinalData { as<size_t>(rf[1]), len };
 }
 
 void \@Base::reset__()
 {
-    d_final = Final {s_maxSize_t, s_maxSize_t};
+    d_final = Final{ 
+                    FinalData{s_unavailable, 0}, 
+                    FinalData {s_unavailable, 0} 
+                };
 
     d_state = 0;
     d_return = true;
@@ -302,8 +347,7 @@ int \@::lex__()
         size_t ch = get__();                // fetch next char
         size_t range = getRange__(ch);      // determine the range
 
-        inspectFlags__();                   // determine final state for
-                                            // bol/non-bol rules
+        updateFinals__();                    // update the state's Final info
 
         switch (actionType__(range))        // determine the action
         {

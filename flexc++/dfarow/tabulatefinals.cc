@@ -7,14 +7,14 @@ void DFARow::tabulateFinals(Table &table) const
 
     ostringstream out;
 
-    if (first != numeric_limits<size_t>::max())
+    if (first != max<size_t>())
     {
         out << d_finalRule.first;
-        if (second != numeric_limits<size_t>::max())
+        if (second != max<size_t>())
             out << ',';
     }
 
-    if (second != numeric_limits<size_t>::max())
+    if (second != max<size_t>())
         out << second;
 
     table << out.str();

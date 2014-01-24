@@ -8,7 +8,7 @@ void Generator::dfas(ostream &out) const
     "int const " << className << "Base::s_dfa__[][" << dfaCols() << "] =\n" 
     "{\n";
 
-    // write the DFAs (INITIAL is always first, due to FBB::LinearMap)
+    // write the DFAs: INITIAL is first, because FBB::LinearMap is used.
     for(auto &dfaPair: d_dfas) 
         dfa(dfaPair, out, d_startStates, d_dfaIndices);
  
