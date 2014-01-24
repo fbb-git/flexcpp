@@ -315,6 +315,7 @@ inline void \@Base::more()
 
 inline void \@Base::begin(StartCondition__ startCondition)
 {
+$insert 4 debug "Switching to StartCondition__ # " << as<int>(startCondition)
     // d_state is reset to 0 by reset__()
     d_dfaBase__ = s_dfaBase__[d_startCondition = SC(startCondition)];
 }

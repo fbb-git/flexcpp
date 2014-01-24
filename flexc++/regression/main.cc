@@ -12,19 +12,22 @@ try
     while (int token = scanner.lex())
     {
         cout << "Line: " << scanner.lineNr() << " returns " << token << ". "
-                "matched `" << scanner.matched() << "'.";
+                "matched `" << scanner.matched() << '\'';
 
         if (scanner.pattern().size())
             cout << "\t\t(@ `" << scanner.pattern() << "')";
         
         cout << '\n';
 
+        if (token < 0)
+            throw token;
+
         scanner.clearPattern();
     }
     cout << '\n';
 }
-
 catch (...)
 {
+    cout << "this regression test FAILED\n";
     return 1;
 }

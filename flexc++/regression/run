@@ -26,6 +26,7 @@ runflex()
         echo
         echo "flex reports:"
         echo "$FLEX"
+        echo
         echo "(press Enter to continue)"
         read
     fi
@@ -34,8 +35,8 @@ runflex()
 runflexcpp()
 {
     cat preamble patterns > lexer
-    echo "Running ../tmp/bin/flexc++ -V lexer > out"
-    ../tmp/bin/flexc++ -V lexer > out
+    echo "Running ../tmp/bin/binary -K lexer > out"
+    ../tmp/bin/binary -K lexer > out
 }
 
 makeprogram()
