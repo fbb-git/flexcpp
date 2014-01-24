@@ -20,7 +20,7 @@ cp  scanner/lexer self
 [ -e scanner/inc ] && cp -r scanner/inc self
 
 prompt "    2." Run "(in ./self)" ../tmp/bin/binary on lexer
-cd self && ../tmp/bin/binary -S ../skeletons lexer > pre-rules
+cd self && ../tmp/bin/binary -S ../skeletons lexer
 cd ..
 
 prompt "    3." Copy the generated scannerbase.h and lex.cc to ./scanner
@@ -33,7 +33,7 @@ build program || exit 1
 echo
 
 prompt "    5. Again: run '../tmp/bin/binary' on lexer"
-cd self && ../tmp/bin/binary -S ../skeletons lexer > post-rules
+cd self && ../tmp/bin/binary -S ../skeletons lexer
 cd ..
 
 echo "    6. Diffs should show differences in timestamps only:"
