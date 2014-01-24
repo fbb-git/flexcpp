@@ -22,7 +22,7 @@ $insert ranges
     // rule that may be matched at this state, and the rule's FINAL flag. If
     // the final value equals FINAL (= 1) then, if there's no continuation,
     // the rule is matched. If the BOL flag (8) is also set (so FINAL + BOL (=
-    // 9) is set) then the rule only matches when d_atBol is also true.
+    // 9) is set) then the rule only matches when d_atBOL is also true.
 $insert DFAs
 
 $insert DFAbases
@@ -160,6 +160,7 @@ bool \@Base::popStream()
 
 $insert lopImplementation
 
+
 \@Base::ActionType__ \@Base::actionType__(size_t range)
 {
     d_nextState = d_dfaBase__[d_state][range];
@@ -167,8 +168,8 @@ $insert lopImplementation
     if (d_nextState != -1)                  // transition is possible
         return ActionType__::CONTINUE;
 
-    if (atFinalState())                     // FINAL state reached
-        return ActionType__::MATCH;
+    if (knownFinalState())                  // FINAL state reached
+        return ActionType__::MATCH;         
 
     if (d_matched.size())
         return ActionType__::ECHO_FIRST;    // no match, echo the 1st char
@@ -188,42 +189,60 @@ void \@Base::accept(size_t nChars)          // old name: less
     }
 }
 
-  // The size of d_matched is determined:
-  //    The current state is a known final state (as determined by 
-  // inspectFlags__(), just prior to calling matched__). 
-  //    The contents of d_matched are reduced to d_final's size
-void \@Base::determineMatchedSize(FinData const &final)
+void \@Base::setMatchedSize(size_t length)
 {
-    size_t length = final.matchLen;
-
-    d_input.reRead(d_matched, length);      // reread the tail section
-    d_matched.resize(length);               // return what's left
+    d_input.reRead(d_matched, length);  // reread the tail section
+    d_matched.resize(length);           // return what's left
 }
 
   // At this point a rule has been matched.  The next character is not part of
   // the matched rule and is sent back to the input.  The final match length
   // is determined, the index of the matched rule is determined, and then
-  // d_atBOL is updated. Finally the rule index is returned.
+  // d_atBOL is updated. Finally the rule's index is returned.
 size_t \@Base::matched__(size_t ch)
 {
 $insert 4 debug "MATCH"
     d_input.reRead(ch);
 
-    if (!d_atBOL)
-        d_final.atBOL.rule = s_maxSize_t;
+    FinalData *finalPtr;
 
-    FinData &final = d_final.atBOL.rule == s_maxSize_t ? 
-                            d_final.notAtBOL
-                        :
-                            d_final.atBOL;
+    if (d_atBOL)                        // BOL rule required:
+        finalPtr = &d_final.atBOL;      // point to it.
 
-    determineMatchedSize(final);
+                                        // BOL rule not required:
+    else if (not available(d_final.atBOL.rule)) // also not available
+        finalPtr = &d_final.notAtBOL;   // so use the non BOL rule
 
-    d_atBOL = *d_matched.rbegin() == '\n';
+                                        // BOL rule is available:
+    else if (not available(d_final.notAtBOL.rule))  // non BOL rule isn't:
+        finalPtr = &d_final.atBOL;      // so use the BOL rule
+
+                                        // Both are available: check lengths:
+    else if (d_final.atBOL.length == d_final.notAtBOL.length)
+        finalPtr =                      // equal lengths: use the first rule
+            d_final.atBOL.rule < d_final.notAtBOL.rule ?
+                &d_final.atBOL
+            :
+                &d_final.notAtBOL;
+
+    else                                // unequal lengths: use the rule 
+        finalPtr =                      // having the longer match length
+            d_final.atBOL.length > d_final.notAtBOL.length ?
+                &d_final.atBOL
+            :
+                &d_final.notAtBOL;
+
+//std::cerr << "\n   matched__ finalPtr: " <<
+//finalPtr->rule << ", " << finalPtr->length << ", matched: `" <<
+//d_matched << "'\n";
+
+    setMatchedSize(finalPtr->length);
+
+    d_atBOL = d_matched.back() == '\n';
 
 $insert 4 debug "match buffer contains `" << d_matched << "'"
 
-    return final.rule;
+    return finalPtr->rule;
 }
 
 size_t \@Base::getRange__(int ch)       // using int to prevent casts
@@ -232,7 +251,7 @@ size_t \@Base::getRange__(int ch)       // using int to prevent casts
         d_sawEOF = false;
 
 $insert caseCheck
-    return ch == AT_EOF ? static_cast<size_t>(s_rangeOfEOF__) : s_ranges__[ch];
+    return ch == AT_EOF ? as<size_t>(s_rangeOfEOF__) : s_ranges__[ch];
 }
 
   // At this point d_nextState contains the next state and continuation is
@@ -249,7 +268,7 @@ $insert 4 debug "CONTINUE, NEXT STATE: " << d_nextState
 void \@Base::echoCh__(size_t ch)
 {
 $insert 4 debug "ECHO_CH" 
-    *d_out << static_cast<char>(ch);
+    *d_out << as<char>(ch);
     d_atBOL = ch == '\n';
 }
 
@@ -267,30 +286,34 @@ $insert 4 debug "ECHO_FIRST"
     echoCh__(d_matched[0]);
 }
 
-    // Inspect the rule/final flags associated with the current state. If
-    // rf[FLAG] == FINAL (1) then we've reached rule rf[RULE]'s final state
-    // and accept the rule if there's no continuation. If rf[FLAG] is also BOL
-    // (= 8, FINAL + BOL = 9) then the rule is matched only if d_atBol is also
-    // true.
-void \@Base::inspectFlags__()
+    // Update the rules associated with the current state, do this separately
+    // for BOL and non-BOL rules.
+    // If a rule was set, update the rule index and the current d_matched
+    // length. 
+void \@Base::updateFinals__()
 {
-    int const *rf = d_dfaBase__[d_state] + s_finIdx__;
-//    size_t flag = rf[FLAGS];
+    size_t len = d_matched.size();
 
-    d_final.notAtBOL = FinData{static_cast<size_t>(rf[0]), d_matched.size()};
-    d_final.atBOL = FinData{static_cast<size_t>(rf[1]), d_matched.size()};
-//
-//    if (flag & FINAL)
-//    {
-//        FinData &final = (flag & BOL) ? d_final.atBOL : d_final.notAtBOL;
-//        final = FinData { static_cast<size_t>(rf[RULE]), d_matched.size() };
-//    }
+    int const *rf = d_dfaBase__[d_state] + s_finIdx__;
+
+    if (rf[0] != -1)        // update to the latest non-bol rule
+        d_final.notAtBOL = FinalData { as<size_t>(rf[0]), len };
+
+    if (rf[1] != -1)        // update to the latest bol rule
+        d_final.atBOL = FinalData { as<size_t>(rf[1]), len };
+
+//std::cerr << "\n   updated d_final: " <<
+//d_final.notAtBOL.rule << ", " << d_final.notAtBOL.length << ", bol: " <<
+//d_final.atBOL.rule << ", " << d_final.atBOL.length << "\n";
 }
 
 void \@Base::reset__()
 {
-//    d_final = Final { {s_maxSize_t, s_maxSize_t }, 
-//                      {s_maxSize_t, s_maxSize_t } };
+    d_final = Final{ 
+                    FinalData{s_unavailable, 0}, 
+                    FinalData {s_unavailable, 0} 
+                };
+
     d_state = 0;
     d_return = true;
 
@@ -327,8 +350,7 @@ int \@::lex__()
         size_t ch = get__();                // fetch next char
         size_t range = getRange__(ch);      // determine the range
 
-        inspectFlags__();                   // determine final state for
-                                            // bol/non-bol rules
+        updateFinals__();                    // update the state's Final info
 
         switch (actionType__(range))        // determine the action
         {

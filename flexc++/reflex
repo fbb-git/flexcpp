@@ -49,8 +49,9 @@ diff self/pre-rules self/post-rules
 
 prompt "    8. [optional] recreate the scanner without -R"
 cd self && ../tmp/bin/binary -S ../skeletons lexer
-cp ./self/lex.cc ./self/scannerbase.h ./scanner
-touch ./scanner/a
+cp lex.cc scannerbase.h ../scanner
+cd ..
+touch scanner/a
 build program
 
 
