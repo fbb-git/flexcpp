@@ -86,6 +86,11 @@ _stringOrIdent:
     STRING
 |
     IDENTIFIER
+|
+    RAWSTRING
+    {
+        $$ = d_scanner.rawString();
+    }
 ;
 
 _opt_is:

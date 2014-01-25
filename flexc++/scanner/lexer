@@ -22,7 +22,7 @@ OPTBL                   [[:blank:]]*
 // line is a small miniscanner reading the rest of the line as-is, presumably
 // holding a named pattern RE.
 
-%x pre line comment string optws
+%x pre line comment string rawstring optws
 
 // IDENTIFIER is also used in character classes to represent any series of
 // characters (in matched()) that should enter the character set
@@ -56,6 +56,11 @@ OPTBL                   [[:blank:]]*
                                         return Parser::CHAR;
                                 }
 
+    R\"{IDENTIFIER}?\(          {
+                                    if (not handleRawString())
+                                        return 'R';
+                                }
+
     {IDENTIFIER}                return handleMulti(Parser::IDENTIFIER);
 
     \n{OPTBL}                   return closeCC('\n');
@@ -86,6 +91,14 @@ OPTBL                   [[:blank:]]*
     "\\".                       more();
     \"                          return popSc(Parser::STRING);
     .                           more();
+}
+
+<rawstring>{
+    \){IDENTIFIER}?\"           {
+                                    if (endOfRawString())
+                                        return popSc(Parser::RAWSTRING);
+                                }
+    .|\n                        more();
 }
 
     // A quote is 

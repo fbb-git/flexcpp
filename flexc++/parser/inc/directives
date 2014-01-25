@@ -47,6 +47,11 @@ _name_definition:
     {
         d_scanner.addDefinition($1, d_scanner.matched());
     }
+|
+    _name_def RAWSTRING
+    {
+        d_scanner.addDefinition($1, d_scanner.rawString());
+    }
 ;
 
 _directive:

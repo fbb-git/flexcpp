@@ -24,7 +24,7 @@ class Scanner: public ScannerBase
                                 // Requested by the parser to create an 
                                 // additional catch all rule (.|\n) which is 
                                 // needed by LOP expressions
-
+    std::string d_rawString;
 
     bool d_caseSensitive;
 
@@ -58,6 +58,8 @@ class Scanner: public ScannerBase
         void ignoreWS();
         bool allowNullMatches();
 
+        std::string rawString() const;
+
     private:
         int openCC(int token);
         int closeCC(int token = 0);
@@ -69,7 +71,9 @@ class Scanner: public ScannerBase
         bool handleStdComment();
         bool handleDquote();
         int handleOpenBracket();
-
+        bool handleRawString();
+        bool endOfRawString();
+        
         int handleMulti(int token);
 
         void switchToINITIAL();
@@ -109,6 +113,10 @@ class Scanner: public ScannerBase
         bool insertedCatchAll();
 };
 
+inline std::string Scanner::rawString() const
+{
+    return d_rawString;
+}
 
 inline void Scanner::needCatchAll()
 {

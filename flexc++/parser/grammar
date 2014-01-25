@@ -35,6 +35,7 @@
 %token  BLOCK
         IDENTIFIER
         EOF_PATTERN
+        RAWSTRING
         STRING
         QUOTES
         DECIMAL
