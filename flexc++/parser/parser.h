@@ -36,7 +36,7 @@ class Parser: public ParserBase, public FlexTypes
     bool d_warnDollars      = false;    // dollars in a RE
     bool d_usesLOP          = false;    // true while inside a regex using the
                                         // LOP: see lookahead.cc
-
+    bool d_nullMatchingRules = false;
     bool d_printTokens;
 
     size_t d_parentheses = 0;

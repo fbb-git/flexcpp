@@ -11,11 +11,14 @@
 
 void Parser::addRule(Pattern const &pattern, bool reset)
 {
-    if (pattern.canBeEmpty(d_states))
-        wmsg << 
-            "null-matching regular expressions may cause "
-                "continuous loops" << endl;
-
+    if (not d_scanner.allowNullMatches() && pattern.canBeEmpty(d_states))
+    {
+        d_nullMatchingRules = true;
+        emsg << 
+            "null-matching regular expressions by default not allowed" << 
+            endl;
+        return;
+    }
     Block block(d_scanner.lineNr(), d_scanner.filename());
     d_rules.add(d_boln, pattern, block, pattern.type());
 
