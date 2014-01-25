@@ -34,7 +34,6 @@ class Parser: public ParserBase, public FlexTypes
     bool d_doError          = true;     // use the error() function at ERRORs
     bool d_warnCarets       = false;    // carets in a RE
     bool d_warnDollars      = false;    // dollars in a RE
-
     bool d_usesLOP          = false;    // true while inside a regex using the
                                         // LOP: see lookahead.cc
 

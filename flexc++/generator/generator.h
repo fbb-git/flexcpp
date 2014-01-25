@@ -85,6 +85,13 @@ class Generator: public FlexTypes
         void declarations();
 
     private:
+        void lopf(std::ostream &out) const;
+        void lop1(std::ostream &out) const;
+        void lop2(std::ostream &out) const;
+        void lop3(std::ostream &out) const;
+        void lop4(std::ostream &out) const;
+        void getLOP(std::ostream &out) const;
+
         static std::string filename(std::string const &path);
 
         void DFAbases(std::ostream &out) const;

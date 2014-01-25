@@ -88,7 +88,6 @@ private:
     size_t          d_state = 0;
     int             d_nextState;
     std::shared_ptr<std::ostream> d_out;
-    bool            d_sawEOF = false;
     bool            d_atBOL = true;         // the matched text starts at BOL
     Final d_final;
 
@@ -218,7 +217,7 @@ private:
     size_t getLOP();
     void p_pushStream(std::string const &name, std::istream *streamPtr);
     void setMatchedSize(size_t length);
-    bool knownFinalState(size_t range);
+    bool knownFinalState();
 
     template <typename ReturnType, typename ArgType>
     static ReturnType constexpr as(ArgType value);
@@ -233,7 +232,13 @@ inline ReturnType constexpr \@Base::as(ArgType value)
     return static_cast<ReturnType>(value);
 }
 
-bool constexpr \@Base::available(size_t value)
+inline bool \@Base::knownFinalState()
+{
+    return (d_atBOL && available(d_final.bol.rule)) ||
+           available(d_final.std.rule);
+}
+
+inline bool constexpr \@Base::available(size_t value)
 {   
     return value != std::numeric_limits<size_t>::max();
 }

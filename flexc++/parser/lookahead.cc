@@ -24,7 +24,10 @@ Pattern Parser::lookahead(Pattern const &left, Pattern const &right)
 
     Pattern ret;
     if (right.canBeEmpty(d_states))
+    {
+        wmsg << "null-matching trailing context is ignored" << endl;
         ret = left;    
+    }
     else if (right.fixedLength())            // fixed tail lop rule
     {
         d_rules.setFixedTailLOPrules();

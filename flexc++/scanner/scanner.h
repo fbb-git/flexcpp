@@ -12,6 +12,7 @@
 
 class Scanner: public ScannerBase
 {
+    bool d_warnNullMatches = true;  // warn for ruless accepting null-matches
     bool d_inBlock;             // when in-block return ' ' on blanks
     bool d_inCharClass;         // in a char-class return sequences as
                                 //  IDENTIFIERS, and multiple blanks as ' '

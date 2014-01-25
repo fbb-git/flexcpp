@@ -96,7 +96,6 @@ void \@Base::switchIstream(std::string const &infilename)
     d_input.close();
     d_filename = infilename;
     d_input = Input(new std::ifstream(infilename));
-    d_sawEOF = false;
     d_atBOL = true;
 }
 
@@ -137,7 +136,6 @@ void \@Base::p_pushStream(std::string const &name, std::istream *streamPtr)
     d_streamStack.push_back(StreamStruct{d_filename, d_input});
     d_filename = name;
     d_input = Input(streamPtr);
-    d_sawEOF = false;
     d_atBOL = true;
 }
 
@@ -153,27 +151,11 @@ bool \@Base::popStream()
     d_input =   top.pushedInput;
     d_filename = top.pushedName;
     d_streamStack.pop_back();
-    d_sawEOF = false;
 
     return true;
 }
 
 $insert lopImplementation
-
-bool \@Base::knownFinalState(size_t range)
-{
-    bool ret = not d_sawEOF 
-                &&
-                (
-                    (d_atBOL && available(d_final.bol.rule)) ||
-                    available(d_final.std.rule)
-                );
-
-    if (range == s_rangeOfEOF__)
-        d_sawEOF = true;
-
-    return ret;
-}
 
 
   // See the manual's section `Run-time operations' section for an explanation
@@ -185,7 +167,7 @@ bool \@Base::knownFinalState(size_t range)
     if (d_nextState != -1)                  // transition is possible
         return ActionType__::CONTINUE;
 
-    if (knownFinalState(range))             // FINAL state reached
+    if (knownFinalState())                  // FINAL state reached
         return ActionType__::MATCH;         
 
     if (d_matched.size())
@@ -263,9 +245,6 @@ $insert 4 debug "match buffer contains `" << d_matched << "'"
 
 size_t \@Base::getRange__(int ch)       // using int to prevent casts
 {
-    if (ch != AT_EOF)
-        d_sawEOF = false;
-
 $insert caseCheck
     return ch == AT_EOF ? as<size_t>(s_rangeOfEOF__) : s_ranges__[ch];
 }

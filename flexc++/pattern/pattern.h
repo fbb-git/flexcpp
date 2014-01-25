@@ -87,6 +87,8 @@ class Pattern: private FlexTypes
                                                     // the states of `this'
                                                     // pattern.
 
+        static bool empty(States const &states, size_t idx);
+
         static Pattern star(States &states, Pattern const &pattern);
         static Pattern plus(States &states, Pattern const &pattern);
         static Pattern questionMark(States &states, 
