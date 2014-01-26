@@ -13,9 +13,9 @@ showinfo()
     echo
     echo "-------------------------------------------------------------------"
     echo "----------- Regression tests for patterns in \`$1' ----------------"
-    grep "^//" $1 | sed 's,^//[[:space:]]*,,'
+    grep "^//[^%]" $1 | sed 's,^//[[:space:]]*,,'
     echo
-    grep -v "^//" $1 > patterns
+    grep -v "^//[^%]" $1 > patterns
 }
 
 runflex()
