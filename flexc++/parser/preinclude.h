@@ -6,5 +6,6 @@
 #include "../charclass/charclass.h"
 #include "../interval/interval.h"
 #include "../pattern/pattern.h"
+#include "../flextypes/flextypes.h"
 
 #endif

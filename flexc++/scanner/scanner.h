@@ -10,7 +10,9 @@
 
 #include <bobcat/linearmap>
 
-class Scanner: public ScannerBase
+#include "../flextypes/flextypes.h"
+
+class Scanner: public ScannerBase, private FlexTypes
 {
     bool d_allowNullMatches = false;  // allow a null-matching RE
     bool d_inBlock;             // when in-block return ' ' on blanks
@@ -43,8 +45,7 @@ class Scanner: public ScannerBase
         using ScannerBase::accept;
         void newDefinition();       // new named regex, 'line' miniscanner
                                     
-        void addDefinition(std::string const &spName, 
-                           std::string const &definition);
+        void addDefinition(std::string const &spName, TextType textType);
 
         void blockEnds();
         void eolnDollar();

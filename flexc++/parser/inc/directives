@@ -42,15 +42,22 @@ _name_def:
     }
 ;
 
-_name_definition:
-    _name_def STRING
+_stringType:
+    STRING
     {
-        d_scanner.addDefinition($1, d_scanner.matched());
+        $$ = TextType::STRING;
     }
 |
-    _name_def RAWSTRING
+    RAWSTRING
     {
-        d_scanner.addDefinition($1, d_scanner.rawString());
+        $$ = TextType::RAWSTRING;
+    }
+;
+
+_name_definition:
+    _name_def _stringType
+    {
+        d_scanner.addDefinition($1, $2);
     }
 ;
 

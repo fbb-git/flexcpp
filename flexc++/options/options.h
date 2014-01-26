@@ -5,12 +5,14 @@
 #include <string>
 #include <set>
 
+#include "../flextypes/flextypes.h"
+
 namespace FBB
 {
     class Arg;
 }
 
-class Options
+class Options: private FlexTypes
 {
     enum PathType
     {
@@ -21,7 +23,9 @@ class Options
     FBB::Arg const &d_arg;
 
     std::string const *d_matched = 0;   // text matched by the scanner,
-                                        // initialized by the Parser
+    std::string const *d_rawString = 0; // initialized by the Parser
+    std::string d_undelimit;            // used by textOf to remove the "
+                                        // around a *d_matched string
 
         // The next four variables cannot have path-specifications with their
         // option/directive values. After their values have been obtained,
@@ -86,7 +90,8 @@ class Options
 
         Options(Options const &other) = delete;
 
-        void setMatched(std::string const &matched);
+        void setParserInfo(std::string const &matched, 
+                           std::string const &rawString);
 
         void setAccessorVariables();
         void showFilenames() const;
@@ -127,23 +132,23 @@ class Options
         std::string const &constructionPath() const;
         std::string implementationHeaderName() const;
 
-        void setBaseClassHeader();
-        void setClassHeader();
-        void setClassName();
+        void setBaseClassHeader(TextType textType);
+        void setClassHeader(TextType textType);
+        void setClassName(TextType textType);
         void setCaseInsensitive();
         void setDebug();
-        void setFilenames();
-        void setImplementationHeader();
-        void setInputImplementationPath();
-        void setInputInterfacePath();
+        void setFilenames(TextType textType);
+        void setImplementationHeader(TextType textType);
+        void setInputImplementationPath(TextType textType);
+        void setInputInterfacePath(TextType textType);
         void setInteractive();
-        void setLexFunctionName();
-        void setLexSource();
+        void setLexFunctionName(TextType textType);
+        void setLexSource(TextType textType);
         void setLines(bool yesNo);
-        void setNameSpace();
+        void setNameSpace(TextType textType);
         void setPrint();
-        void setSkeletonDirectory();
-        void setTargetDirectory();
+        void setSkeletonDirectory(TextType textType);
+        void setTargetDirectory(TextType textType);
 
         static void regexCall(char const *funname);
 
@@ -155,11 +160,12 @@ class Options
     private:
         Options();  // FBB::Arg const &arg);
 
-        static std::string undelimit(std::string const &str);
+        std::string const &textOf(TextType type);
 
-        void assign(std::string *target, PathType pathType, 
-                                          char const *declTxt);
-        std::string const &accept(PathType pathType, char const *declTxt);
+        void assign(TextType textType, std::string *target, PathType pathType, 
+                    char const *declTxt);
+        void accept(std::string const &text, 
+                    PathType pathType, char const *declTxt);
 
 
 //        static void setPath(std::string *target, std::string const &name);
@@ -295,50 +301,51 @@ inline std::string const &Options::infile() const
     return d_infile;
 }
 
-inline void Options::setSkeletonDirectory()
+inline void Options::setSkeletonDirectory(TextType textType)
 {
-    assign(&d_skeletonDirectory, PATHNAME, "skeleton-directory");
+    assign(textType, &d_skeletonDirectory, PATHNAME, "skeleton-directory");
 }
 
-inline void Options::setTargetDirectory()
+inline void Options::setTargetDirectory(TextType textType)
 {
-    assign(&d_targetDirectory, PATHNAME, "target-directory");
+    assign(textType, &d_targetDirectory, PATHNAME, "target-directory");
 }
 
-inline void Options::setNameSpace()
+inline void Options::setNameSpace(TextType textType)
 {
-    assign(&d_nameSpace, FILENAME, "namespace");
+    assign(textType, &d_nameSpace, FILENAME, "namespace");
 }
 
 
-inline void Options::setInputImplementationPath()
+inline void Options::setInputImplementationPath(TextType textType)
 {
-    assign(&d_inputImplementation, PATHNAME, "input-implementation");
+    assign(textType, &d_inputImplementation, PATHNAME, "input-implementation");
 }
    
-inline void Options::setInputInterfacePath()
+inline void Options::setInputInterfacePath(TextType textType)
 {
-    assign(&d_inputInterfacePath, PATHNAME, "input-interface");
+    assign(textType, &d_inputInterfacePath, PATHNAME, "input-interface");
 }
    
-inline void Options::setBaseClassHeader()
+inline void Options::setBaseClassHeader(TextType textType)
 {
-    assign(&d_baseClassHeader, FILENAME, baseclassHeaderSpec());
+    assign(textType, &d_baseClassHeader, FILENAME, baseclassHeaderSpec());
 }
    
-inline void Options::setClassHeader()
+inline void Options::setClassHeader(TextType textType)
 {
-    assign(&d_classHeader, FILENAME, classHeaderSpec());
+    assign(textType, &d_classHeader, FILENAME, classHeaderSpec());
 }
    
-inline void Options::setImplementationHeader()
+inline void Options::setImplementationHeader(TextType textType)
 {
-    assign(&d_implementationHeader, FILENAME, implementationHeaderSpec());
+    assign(textType, &d_implementationHeader, FILENAME, 
+           implementationHeaderSpec());
 }
    
-inline void Options::setLexSource()
+inline void Options::setLexSource(TextType textType)
 {
-    assign(&d_lexSource, FILENAME, "lex-source");
+    assign(textType, &d_lexSource, FILENAME, "lex-source");
 }
    
 inline void Options::setInteractive()
@@ -390,11 +397,6 @@ inline bool Options::lines() const
 inline bool Options::debug() const
 {
     return d_debug;
-}
-
-inline void Options::setMatched(std::string const &matched)
-{
-    d_matched = &matched;
 }
 
 #endif

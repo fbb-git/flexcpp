@@ -1,14 +1,14 @@
 #include "options.ih"
 
-void Options::assign(std::string *target, PathType pathType, 
-                                          char const *declTxt)
+void Options::assign(TextType textType, std::string *target, 
+                     PathType pathType, char const *declTxt)
 {
-    if (target->empty())
+    if (not target->empty())
+        emsg << "%" << declTxt << " multiply specified" << endl;
+    else
     {
         s_warnOptions.insert(declTxt);
-        *target = undelimit(accept(pathType, declTxt));
+        accept(*target = textOf(textType), pathType, declTxt);
     }
-    else
-        emsg << "%" << declTxt << " multiply specified" << endl;
 }
         

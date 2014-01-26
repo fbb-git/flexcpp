@@ -1,9 +1,8 @@
 #include "options.ih"
 
-std::string const &Options::accept(PathType pathType, char const *declTxt)
+void Options::accept(string const &text, 
+                     PathType pathType, char const *declTxt)
 {
-    if (pathType == FILENAME && d_matched->find('/') != string::npos)
+    if (pathType == FILENAME && text.find('/') != string::npos)
         emsg << '`' << declTxt << "' option/directive: no path names" << endl;
-
-    return *d_matched;
 }

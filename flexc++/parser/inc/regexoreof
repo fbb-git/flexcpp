@@ -72,7 +72,7 @@ _unit:
 |
     RAWSTRING
     {
-        $$ = str();
+        $$ = rawText(d_scanner.rawString());
     }
 |
     QUOTES

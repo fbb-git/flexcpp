@@ -8,7 +8,6 @@
 #include "../state/state.h"
 #include "../block/block.h"
 #include "../options/options.h"
-#include "../flextypes/flextypes.h"
 
 // $insert baseclass
 #include "parserbase.h"

@@ -7,6 +7,13 @@ class FlexTypes
     typedef char Alphabet;
 
     public:
+        enum class TextType
+        {
+            IDENT,
+            STRING,
+            RAWSTRING
+        };
+            
         enum Type       // values in the Alphabet range are simple characters
         {
             UNDETERMINED__ =  1 << (8 * sizeof(Alphabet)),

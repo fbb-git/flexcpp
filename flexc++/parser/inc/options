@@ -84,12 +84,18 @@ _target_directory:
 
 _stringOrIdent:
     STRING
+    {
+        $$ = TextType::STRING;
+    }
 |
     IDENTIFIER
+    {
+        $$ = TextType::IDENT;
+    }
 |
     RAWSTRING
     {
-        $$ = d_scanner.rawString();
+        $$ = TextType::RAWSTRING;
     }
 ;
 
@@ -102,62 +108,62 @@ _opt_is:
 option:
     _inputinterface _opt_is _stringOrIdent
     {
-        d_options.setInputInterfacePath();
+        d_options.setInputInterfacePath($3);
     }
 |
     _inputimplementation _opt_is _stringOrIdent
     {
-        d_options.setInputImplementationPath();
+        d_options.setInputImplementationPath($3);
     }
 |
     _classname _opt_is _stringOrIdent
     {
-        d_options.setClassName();
+        d_options.setClassName($3);
     }
 |
     _filenames _opt_is _stringOrIdent
     {
-        d_options.setFilenames();
+        d_options.setFilenames($3);
     }
 |
     _lexfunctionname _opt_is _stringOrIdent
     {
-        d_options.setLexFunctionName();
+        d_options.setLexFunctionName($3);
     }
 |
     _baseclassheader _opt_is _stringOrIdent
     {
-        d_options.setBaseClassHeader();
+        d_options.setBaseClassHeader($3);
     }
 |
     _classheader _opt_is _stringOrIdent
     {
-        d_options.setClassHeader();
+        d_options.setClassHeader($3);
     }
 |
     _implementationheader _opt_is _stringOrIdent
     {
-        d_options.setImplementationHeader();
+        d_options.setImplementationHeader($3);
     }
 |
     _lexsource _opt_is _stringOrIdent
     {
-        d_options.setLexSource();
+        d_options.setLexSource($3);
     }
 |
     _skeleton_directory _opt_is _stringOrIdent
     {
-        d_options.setSkeletonDirectory();
+        d_options.setSkeletonDirectory($3);
     }
 |
     _target_directory _opt_is _stringOrIdent
     {
-        d_options.setTargetDirectory();
+        d_options.setTargetDirectory($3);
     }
 |
     _namespace _opt_is _stringOrIdent
     {
-        d_options.setNameSpace();
+        d_options.setNameSpace($3);
     }
 |
     CASEINSENSITIVE
