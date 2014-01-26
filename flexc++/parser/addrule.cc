@@ -19,7 +19,7 @@ void Parser::addRule(Pattern const &pattern, bool reset)
             endl;
         return;
     }
-    Block block(d_scanner.lineNr(), d_scanner.filename());
+    Block block(d_scanner.lineNr() - 1, d_scanner.filename());
     d_rules.add(d_boln, pattern, block, pattern.type());
 
     if (reset)
