@@ -27,6 +27,8 @@ class Parser: public ParserBase, public FlexTypes
     // $insert scannerobject
     Scanner d_scanner;
     std::string const &d_matched;   // text matched at the last lex() call.
+    std::string d_rawStringContents;    // only valid when RAWSTRING was
+                                        // returned 
     Block   d_block;
 
     bool d_boln             = false;    // rule starts at boln
@@ -84,6 +86,8 @@ class Parser: public ParserBase, public FlexTypes
 
         void addRule(Pattern const &rule, bool resetMs = false);
 
+        TextType rawString();           // returns the raw string contents
+
         void block();
         void error(char const *msg);    // called on (syntax) errors
         int lex();                      // returns the next token from the
@@ -100,6 +104,8 @@ class Parser: public ParserBase, public FlexTypes
 };
 
 #endif
+
+
 
 
 

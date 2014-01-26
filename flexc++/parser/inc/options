@@ -95,7 +95,7 @@ _stringOrIdent:
 |
     RAWSTRING
     {
-        $$ = TextType::RAWSTRING;
+        $$ = rawString();
     }
 ;
 

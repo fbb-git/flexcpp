@@ -59,7 +59,7 @@ class Scanner: public ScannerBase, private FlexTypes
         void ignoreWS();
         bool allowNullMatches();
 
-        std::string rawString() const;
+        std::string rawStringContents() const;
 
     private:
         int openCC(int token);
@@ -113,11 +113,6 @@ class Scanner: public ScannerBase, private FlexTypes
         bool secondSectionDelimiter();
         bool insertedCatchAll();
 };
-
-inline std::string Scanner::rawString() const
-{
-    return d_rawString;
-}
 
 inline void Scanner::needCatchAll()
 {

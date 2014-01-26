@@ -50,7 +50,7 @@ _stringType:
 |
     RAWSTRING
     {
-        $$ = TextType::RAWSTRING;
+        $$ = rawString();
     }
 ;
 

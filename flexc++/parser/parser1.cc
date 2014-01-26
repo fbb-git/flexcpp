@@ -10,7 +10,7 @@ Parser::Parser(Rules &rules, States &states)
     d_rules(rules),
     d_states(states)
 {
-    d_options.setParserInfo(d_matched, d_scanner.rawString());
+    d_options.setParserInfo(d_matched, d_rawStringContents);
     s_ignoreToken = d_token__;      // set by ParserBase to _UNDETERMINED
     setDebug(d_options.debug());
 }

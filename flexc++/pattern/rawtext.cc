@@ -3,8 +3,6 @@
     // text without (d)quotes, accepted as-is
 Pattern Pattern::rawText(States &states, std::string const &str)
 {
-cerr << "Pattern::rawText: `" << str << "'\n";
-
     size_t length = str.length();
 
     Pattern ret;

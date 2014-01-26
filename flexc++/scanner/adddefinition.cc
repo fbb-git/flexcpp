@@ -4,10 +4,7 @@ void Scanner::addDefinition(string const &name, TextType textType)
 {
     string namePattern = '{' + name + '}';
 
-    string const &def = textType == TextType::STRING ?
-                            matched()
-                        :
-                            rawString();
+    string const &def = matched();
 
     if (d_nameExpansion.find(namePattern) != d_nameExpansion.end())
         emsg << "pattern '" << name << "' multiply defined" << endl;
