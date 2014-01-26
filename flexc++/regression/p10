@@ -1,0 +1,5 @@
+// raw string literals in patterns and actions
+%%
+^R"(//test)"            d_p = R"p(^R"(//test)")p";          return 1;
+R"label(//)label".*     d_p = R"p(R"label(//)label".*)p";   return 2;
+
