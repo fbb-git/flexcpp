@@ -1,0 +1,8 @@
+// joren-bug, i11 returns 1, 2, 3, 3, 3
+ident   [[:alpha:]]+
+
+%%
+
+fu                  d_p = "fu";             return 1;
+{ident}/'('         d_p = "{ident}/'('";    return 2;
+.                   d_p = ".";              return 3;
