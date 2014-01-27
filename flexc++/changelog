@@ -1,23 +1,29 @@
 flexc++ (2.00.00)
 
-  * Completely re-implements the way the look-ahead operator (LOP) is
-    handled. The LOP is now handled through mini-scanners, the previously used
-    class TailCount and the tail count Flag enum are no longer required. See
-    also parser/README.grammar.
+  * Completely re-implemented look-ahead operator (LOP) handling. The LOP is
+    now handled through mini-scanners, the previously used class TailCount and
+    the tail count Flag enum are no longer required and were removed from the
+    implementation. See also parser/README.grammar.
 
-  * NOTE WELL: when using flexc++ >= 2.00.00 to re-generate lex.cc and
-    ScannerBase.h previously created with flexc++ < 2.00.00, file(s) defining
-    and using the Scanner object should be recompiled, as flexc++ 2.00.00 uses
-    a different data-member organization in its ScannerBase class.
+  * NOTE WELL: 
 
-  * NOTE WELL: new Input-class requirements: size_t Input::nPending() const
-    must return the current number of pending (i.e., read and pushed back)
-    input characters; Input::setPending(size_t size) must remove the initial
-    number of pending characters, reducing the number of pending characters to
-    tt(size). The lexical scanner always passes the value received from 
-    nPending() to setPending(), without calling Input::get() in between.
+        - when using flexc++ >= 2.00.00 to re-generate lex.cc and
+            ScannerBase.h, existing object files defining and using the
+            Scanner object should be recompiled, as flexc++ 2.00.00 uses a
+            different data-member organization in its ScannerBase class.
 
-  * A second %% line in flexc++'s input file ends its input file processing.
+        - new Input-class requirements: 
+            size_t Input::nPending() const 
+                must return the current number of pending (i.e., read and
+                pushed back) input characters;
+            void Input::setPending(size_t size) 
+                must remove the initial number of pending characters, reducing
+                the number of pending characters to size.
+            The lexical scanner always passes the value received from
+            nPending() to setPending(), without calling Input::get() in
+            between.
+
+  * A second %% line in flexc++'s input file ends input file processing.
     To specify a regex starting with %% surround it with double quotes or 
     indent it by at least one blank space.
 
@@ -27,7 +33,15 @@ flexc++ (2.00.00)
     characters. Realized by calling d_scanner.multiAsChar() at ms_spec's
     action block.
 
-... WIP ...
+  * Null-matching regular expressions (i.e., regular expressions that may not
+    match any characters) are potentially dangerous as they may cause
+    continuous loops (e.g. a*/b, with input b). A warning is generated when
+    such regexes are encountered. The warning can be prevented by preceding
+    them with a line merely containing //%nowarn. 
+
+  * Raw string literals, as defined by C++11, are supported
+
+  * Added several new regression tests 
 
 
     

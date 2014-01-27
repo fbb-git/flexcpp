@@ -1,15 +1,15 @@
 oxref by Frank B. Brokken (f.b.brokken@rug.nl)
-oxref V0.91.00 2012-2013
+oxref V1.00.01 2012-2013
 
-CREATED Sun, 11 Aug 2013 16:48:11 +0000
+CREATED Mon, 27 Jan 2014 18:52:56 +0000
 CROSS REFERENCE FOR: -fxs tmp/libmodules.a 
 ----------------------------------------------------------------------
 
-accept(Options::PathType, char const*)
-  Full name: Options::accept(Options::PathType, char const*)
+accept(std::string const&, Options::PathType, char const*)
+  Full name: Options::accept(std::string const&, Options::PathType, char const*)
   Source:    accept.cc 
   Used By:
-    assign.cc: Options::assign(std::string*, Options::PathType, char const*)
+    assign.cc: Options::assign(FlexTypes::TextType, std::string*, Options::PathType, char const*)
 
 accept(unsigned int)
   Full name: ScannerBase::accept(unsigned int)
@@ -17,31 +17,30 @@ accept(unsigned int)
   Used By:
     handleeolncomment.cc: Scanner::handleEOLNcomment()
     handlemulti.cc: Scanner::handleMulti(int)
+    handlerawstring.cc: Scanner::handleRawString()
+    secondsectiondelimiter.cc: Scanner::secondSectionDelimiter()
     block.cc: Parser::block()
 
 actions(std::ostream&) const
   Full name: Generator::actions(std::ostream&) const
   Source:    actions.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
-activate(std::string const&)
-  Full name: StartConditions::activate(std::string const&)
+activate(unsigned int)
+  Full name: StartConditions::activate(unsigned int)
   Source:    activate.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    addcatchall.cc: Rules::addCatchAll(unsigned int, unsigned int)
+    handleloprule.cc: Rules::handleLopRule(unsigned int)
 
-add(bool, Pattern const&, Block const&)
-  Full name: Rules::add(bool, Pattern const&, Block const&)
+add(bool, Pattern const&, Block const&, FlexTypes::RuleType)
+  Full name: Rules::add(bool, Pattern const&, Block const&, FlexTypes::RuleType)
   Source:    add.cc 
   Used By:
+    handleloprule.cc: Rules::handleLopRule(unsigned int)
+    handleloprules.cc: Rules::handleLopRules()
     addrule.cc: Parser::addRule(Pattern const&, bool)
-
-add(std::string const&)
-  Full name: StartConditions::add(std::string const&)
-  Source:    add.cc 
-  Used By:
-    parse.cc: Parser::executeAction(int)
 
 add(std::string const&)
   Full name: Ranges::add(std::string const&)
@@ -51,16 +50,23 @@ add(std::string const&)
     inspectstate.cc: Ranges::inspectState(State const&)
 
 add(unsigned int)
-  Full name: StartConditions::add(unsigned int)
-  Source:    add2.cc 
-  Used By:
-    add.cc: Rules::add(bool, Pattern const&, Block const&)
-
-add(unsigned int)
   Full name: Ranges::add(unsigned int)
   Source:    add3.cc 
   Used By:
     inspectstate.cc: Ranges::inspectState(State const&)
+
+add(unsigned int)
+  Full name: StartConditions::add(unsigned int)
+  Source:    add2.cc 
+  Used By:
+    add.cc: Rules::add(bool, Pattern const&, Block const&, FlexTypes::RuleType)
+    addcatchall.cc: Rules::addCatchAll(unsigned int, unsigned int)
+
+addCatchAll(unsigned int, unsigned int)
+  Full name: Rules::addCatchAll(unsigned int, unsigned int)
+  Source:    addcatchall.cc 
+  Used By:
+    handleloprules.cc: Rules::handleLopRules()
 
 addChars(std::set<char, std::less<char>, std::allocator<char> >&, unsigned int, unsigned int) const
   Full name: CharClass::addChars(std::set<char, std::less<char>, std::allocator<char> >&, unsigned int, unsigned int) const
@@ -68,8 +74,8 @@ addChars(std::set<char, std::less<char>, std::allocator<char> >&, unsigned int, 
   Used By:
     addrange.cc: CharClass::addRange(std::set<char, std::less<char>, std::allocator<char> >&, unsigned int) const
 
-addDefinition(std::string const&, std::string const&)
-  Full name: Scanner::addDefinition(std::string const&, std::string const&)
+addDefinition(std::string const&, FlexTypes::TextType)
+  Full name: Scanner::addDefinition(std::string const&, FlexTypes::TextType)
   Source:    adddefinition.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
@@ -92,15 +98,33 @@ addRule(Pattern const&, bool)
   Used By:
     parse.cc: Parser::executeAction(int)
 
+addSC(std::string const&)
+  Full name: StartConditions::addSC(std::string const&)
+  Source:    addsc.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+
+allowNullMatches()
+  Full name: Scanner::allowNullMatches()
+  Source:    allownullmatches.cc 
+  Used By:
+    addrule.cc: Parser::addRule(Pattern const&, bool)
+
 alternatives(States&, Pattern const&, Pattern const&)
   Full name: Pattern::alternatives(States&, Pattern const&, Pattern const&)
   Source:    alternatives.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
 
-assign(std::string*, Options::PathType, char const*)
-  Full name: Options::assign(std::string*, Options::PathType, char const*)
+assign(FlexTypes::TextType, std::string*, Options::PathType, char const*)
+  Full name: Options::assign(FlexTypes::TextType, std::string*, Options::PathType, char const*)
   Source:    assign.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+
+assignBlock()
+  Full name: Parser::assignBlock()
+  Source:    assignblock.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
 
@@ -108,7 +132,7 @@ baseClassH(std::ostream&) const
   Full name: Generator::baseClassH(std::ostream&) const
   Source:    baseclassh.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
 baseclassHeaderName() const
   Full name: Options::baseclassHeaderName() const
@@ -121,7 +145,7 @@ baseIncludes(std::ostream&) const
   Full name: Generator::baseIncludes(std::ostream&) const
   Source:    baseincludes.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
 block()
   Full name: Parser::block()
@@ -141,18 +165,25 @@ build(std::string const&, std::vector<unsigned int, std::allocator<unsigned int>
   Used By:
     build.cc: DFAs::build()
 
+canBeEmpty(States const&) const
+  Full name: Pattern::canBeEmpty(States const&) const
+  Source:    canbeempty.cc 
+  Used By:
+    addrule.cc: Parser::addRule(Pattern const&, bool)
+    lookahead.cc: Parser::lookahead(Pattern const&, Pattern const&)
+
 caseCheck(std::ostream&) const
   Full name: Generator::caseCheck(std::ostream&) const
   Source:    casecheck.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
 characterClass(States&, CharClass const&)
   Full name: Pattern::characterClass(States&, CharClass const&)
   Source:    characterclass.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
     dot.cc: Pattern::dot(States&)
+    parse.cc: Parser::executeAction(int)
 
 charsetToRanges(StateData&, unsigned int*)
   Full name: Ranges::charsetToRanges(StateData&, unsigned int*)
@@ -170,13 +201,13 @@ classH(std::ostream&) const
   Full name: Generator::classH(std::ostream&) const
   Source:    classh.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
 classHead(std::ostream&) const
   Full name: Generator::classHead(std::ostream&) const
   Source:    classhead.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
 classHeaderName() const
   Full name: Options::classHeaderName() const
@@ -189,21 +220,15 @@ classIH(std::ostream&) const
   Full name: Generator::classIH(std::ostream&) const
   Source:    classih.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
 clear()
   Full name: Block::clear()
   Source:    clear.cc 
   Used By:
-    open.cc: Block::open(unsigned int, std::string const&)
+    handleloprule.cc: Rules::handleLopRule(unsigned int)
     noactions.cc: Rules::noActions()
-
-clearUsed()
-  Full name: Ranges::clearUsed()
-  Source:    clearused.cc 
-  Used By:
-    finalizestates.cc: Ranges::finalizeStates()
-    build.cc: DFA::build(std::string const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
+    open.cc: Block::open(unsigned int, std::string const&)
 
 close()
   Full name: Block::close()
@@ -223,12 +248,6 @@ collision(std::string const&, unsigned int const*)
   Used By:
     update.cc: Ranges::update(std::string const&, unsigned int const*)
 
-computeTailCounts()
-  Full name: DFA::computeTailCounts()
-  Source:    computetailcounts.cc 
-  Used By:
-    build.cc: DFA::build(std::string const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
-
 concatenate(CharClass const&)
   Full name: CharClass::concatenate(CharClass const&)
   Source:    concatenate.cc 
@@ -239,9 +258,10 @@ concatenate(States&, Pattern const&, Pattern const&)
   Full name: Pattern::concatenate(States&, Pattern const&, Pattern const&)
   Source:    concatenate.cc 
   Used By:
-    lookahead.cc: Parser::lookahead(Pattern const&, Pattern const&)
-    parse.cc: Parser::executeAction(int)
     join.cc: Pattern::join(States&, Pattern&, unsigned int, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > > const&)
+    pattern2.cc: Pattern::Pattern(States&, Pattern const&, Pattern const&, unsigned int)
+    pattern3.cc: Pattern::Pattern(States&, unsigned int, Pattern const&, Pattern const&)
+    parse.cc: Parser::executeAction(int)
 
 contains(unsigned int) const
   Full name: State::contains(unsigned int) const
@@ -261,8 +281,8 @@ copyPattern(States&, unsigned int, std::vector<std::pair<unsigned int, unsigned 
   Used By:
     copy.cc: Pattern::copy(States&, Pattern&, unsigned int, unsigned int)
 
-copyPattern(States&, unsigned int, unsigned int, std::unordered_map<unsigned int, unsigned int, std::hash<unsigned int>, std::equal_to<unsigned int>, std::allocator<std::pair<unsigned int const, unsigned int> > >&, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >&)
-  Full name: Pattern::copyPattern(States&, unsigned int, unsigned int, std::unordered_map<unsigned int, unsigned int, std::hash<unsigned int>, std::equal_to<unsigned int>, std::allocator<std::pair<unsigned int const, unsigned int> > >&, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >&)
+copyPattern(States&, unsigned int, unsigned int, FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > >&, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >&)
+  Full name: Pattern::copyPattern(States&, unsigned int, unsigned int, FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > >&, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >&)
   Source:    copypattern2.cc 
   Used By:
     optionalpatterns.cc: Pattern::optionalPatterns(States&, Pattern&, unsigned int, unsigned int, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >&)
@@ -277,32 +297,32 @@ debug(std::ostream&) const
   Full name: Generator::debug(std::ostream&) const
   Source:    debug.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
 debugDecl(std::ostream&) const
   Full name: Generator::debugDecl(std::ostream&) const
   Source:    debugdecl.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
 debugFunctions(std::ostream&) const
   Full name: Generator::debugFunctions(std::ostream&) const
   Source:    debugfunctions.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
 declarations(std::ostream&) const
   Full name: Generator::declarations(std::ostream&) const
   Source:    declarations.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
-determineTailCount(TailCount&, unsigned int, TailCount*, unsigned int)
-  Full name: DFA::determineTailCount(TailCount&, unsigned int, TailCount*, unsigned int)
-  Source:    determinetailcount.cc 
+define(std::string const&)
+  Full name: StartConditions::define(std::string const&)
+  Source:    define.cc 
   Used By:
-    transittailcount.cc: DFA::transitTailCount(std::pair<unsigned int const, unsigned int> const&, TailCount*, unsigned int)
-    visittailcount.cc: DFA::visitTailCount(TailCount&)
+    addlopstartconditions.cc: Parser::addLopStartConditions()
+    parse.cc: Parser::executeAction(int)
 
 DFA(Ranges&, Rules&, States&)
   Full name: DFA::DFA(Ranges&, Rules&, States&)
@@ -310,8 +330,8 @@ DFA(Ranges&, Rules&, States&)
   Used By:
     build.cc: DFAs::build()
 
-dfa(std::pair<std::string, DFA> const&, std::ostream&, std::vector<Generator::RuleFlagCount, std::allocator<Generator::RuleFlagCount> >&, std::vector<std::string, std::allocator<std::string> >&, std::vector<unsigned int, std::allocator<unsigned int> >&)
-  Full name: Generator::dfa(std::pair<std::string, DFA> const&, std::ostream&, std::vector<Generator::RuleFlagCount, std::allocator<Generator::RuleFlagCount> >&, std::vector<std::string, std::allocator<std::string> >&, std::vector<unsigned int, std::allocator<unsigned int> >&)
+dfa(std::pair<std::string, DFA*> const&, std::ostream&, std::vector<std::string, std::allocator<std::string> >&, std::vector<unsigned int, std::allocator<unsigned int> >&)
+  Full name: Generator::dfa(std::pair<std::string, DFA*> const&, std::ostream&, std::vector<std::string, std::allocator<std::string> >&, std::vector<unsigned int, std::allocator<unsigned int> >&)
   Source:    dfa.cc 
   Used By:
     dfas.cc: Generator::dfas(std::ostream&) const
@@ -320,37 +340,37 @@ DFAbases(std::ostream&) const
   Full name: Generator::DFAbases(std::ostream&) const
   Source:    dfabases.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
-dfaRFCs(DFARow const&, std::ostream&, std::vector<Generator::RuleFlagCount, std::allocator<Generator::RuleFlagCount> >&)
-  Full name: Generator::dfaRFCs(DFARow const&, std::ostream&, std::vector<Generator::RuleFlagCount, std::allocator<Generator::RuleFlagCount> >&)
-  Source:    dfarfcs.cc 
-  Used By:
-    dfarow.cc: Generator::dfaRow(DFARow const&, unsigned int&, std::ostream&, std::vector<Generator::RuleFlagCount, std::allocator<Generator::RuleFlagCount> >&)
-
-dfaRow(DFARow const&, unsigned int&, std::ostream&, std::vector<Generator::RuleFlagCount, std::allocator<Generator::RuleFlagCount> >&)
-  Full name: Generator::dfaRow(DFARow const&, unsigned int&, std::ostream&, std::vector<Generator::RuleFlagCount, std::allocator<Generator::RuleFlagCount> >&)
+dfaRow(DFARow const&, unsigned int&, std::ostream&)
+  Full name: Generator::dfaRow(DFARow const&, unsigned int&, std::ostream&)
   Source:    dfarow.cc 
   Used By:
-    dfa.cc: Generator::dfa(std::pair<std::string, DFA> const&, std::ostream&, std::vector<Generator::RuleFlagCount, std::allocator<Generator::RuleFlagCount> >&, std::vector<std::string, std::allocator<std::string> >&, std::vector<unsigned int, std::allocator<unsigned int> >&)
+    dfa.cc: Generator::dfa(std::pair<std::string, DFA*> const&, std::ostream&, std::vector<std::string, std::allocator<std::string> >&, std::vector<unsigned int, std::allocator<unsigned int> >&)
 
-DFARow(Rules&, States&, std::vector<std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> >, std::allocator<std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> > > >&, unsigned int, Ranges&)
-  Full name: DFARow::DFARow(Rules&, States&, std::vector<std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> >, std::allocator<std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> > > >&, unsigned int, Ranges&)
+DFARow(Rules&, States&, std::vector<std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> >, std::allocator<std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> > > >&, unsigned int, unsigned int, std::vector<bool, std::allocator<bool> >*)
+  Full name: DFARow::DFARow(Rules&, States&, std::vector<std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> >, std::allocator<std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> > > >&, unsigned int, unsigned int, std::vector<bool, std::allocator<bool> >*)
   Source:    dfarow1.cc 
   Used By:
     build.cc: DFA::build(std::string const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
+
+dfaRules(DFARow const&, std::ostream&)
+  Full name: Generator::dfaRules(DFARow const&, std::ostream&)
+  Source:    dfarules.cc 
+  Used By:
+    dfarow.cc: Generator::dfaRow(DFARow const&, unsigned int&, std::ostream&)
 
 dfas(std::ostream&) const
   Full name: Generator::dfas(std::ostream&) const
   Source:    dfas.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
 dfaTransitions(DFARow const&, std::ostream&)
   Full name: Generator::dfaTransitions(DFARow const&, std::ostream&)
   Source:    dfatransitions.cc 
   Used By:
-    dfarow.cc: Generator::dfaRow(DFARow const&, unsigned int&, std::ostream&, std::vector<Generator::RuleFlagCount, std::allocator<Generator::RuleFlagCount> >&)
+    dfarow.cc: Generator::dfaRow(DFARow const&, unsigned int&, std::ostream&)
 
 dflush__(std::ostream&)
   Full name: ParserBase::dflush__(std::ostream&)
@@ -381,27 +401,46 @@ dup(State const&, unsigned int, unsigned int)
   Full name: State::dup(State const&, unsigned int, unsigned int)
   Source:    dup.cc 
   Used By:
-    duppattern.cc: Pattern::dupPattern(std::unordered_map<unsigned int, unsigned int, std::hash<unsigned int>, std::equal_to<unsigned int>, std::allocator<std::pair<unsigned int const, unsigned int> > >&, States&, unsigned int)
+    duppattern.cc: Pattern::dupPattern(FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > >&, States&, unsigned int)
 
-dupPattern(std::unordered_map<unsigned int, unsigned int, std::hash<unsigned int>, std::equal_to<unsigned int>, std::allocator<std::pair<unsigned int const, unsigned int> > >&, States&, unsigned int)
-  Full name: Pattern::dupPattern(std::unordered_map<unsigned int, unsigned int, std::hash<unsigned int>, std::equal_to<unsigned int>, std::allocator<std::pair<unsigned int const, unsigned int> > >&, States&, unsigned int)
+duplicate(States&) const
+  Full name: Pattern::duplicate(States&) const
+  Source:    duplicate.cc 
+  Used By:
+    pattern2.cc: Pattern::Pattern(States&, Pattern const&, Pattern const&, unsigned int)
+
+dupPattern(FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > >&, States&, unsigned int)
+  Full name: Pattern::dupPattern(FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > >&, States&, unsigned int)
   Source:    duppattern.cc 
   Used By:
     copypattern1.cc: Pattern::copyPattern(States&, unsigned int, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >&)
-    copypattern2.cc: Pattern::copyPattern(States&, unsigned int, unsigned int, std::unordered_map<unsigned int, unsigned int, std::hash<unsigned int>, std::equal_to<unsigned int>, std::allocator<std::pair<unsigned int const, unsigned int> > >&, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >&)
+    copypattern2.cc: Pattern::copyPattern(States&, unsigned int, unsigned int, FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > >&, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >&)
+    duplicate.cc: Pattern::duplicate(States&) const
 
 eClosure(std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> >&) const
   Full name: States::eClosure(std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> >&) const
   Source:    eclosure.cc 
   Used By:
-    transitions.cc: DFARow::transitions()
     build.cc: DFA::build(std::string const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
+    transitions.cc: DFARow::transitions()
 
 elements(std::string const&, unsigned int)
   Full name: CharClass::elements(std::string const&, unsigned int)
   Source:    elements.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
+
+empty(States const&, unsigned int)
+  Full name: Pattern::empty(States const&, unsigned int)
+  Source:    empty.cc 
+  Used By:
+    canbeempty.cc: Pattern::canBeEmpty(States const&) const
+
+endOfRawString()
+  Full name: Scanner::endOfRawString()
+  Source:    endofrawstring.cc 
+  Used By:
+    lex.cc: Scanner::executeAction__(unsigned int)
 
 eof(States&)
   Full name: Pattern::eof(States&)
@@ -439,34 +478,6 @@ exact(std::string const&)
   Used By:
     parse.cc: Parser::executeAction(int)
 
-factory(unsigned char, unsigned int)
-  Full name: State::factory(unsigned char, unsigned int)
-  Source:    factory3.cc 
-  Used By:
-    escape.cc: Pattern::escape(States&, std::string const&)
-    rawtext.cc: Pattern::rawText(States&, std::string const&)
-
-factory(unsigned int, std::string const&, unsigned int, unsigned int)
-  Full name: State::factory(unsigned int, std::string const&, unsigned int, unsigned int)
-  Source:    factory2.cc 
-  Used By:
-    characterclass.cc: Pattern::characterClass(States&, CharClass const&)
-
-factory(unsigned int, unsigned int, unsigned int)
-  Full name: State::factory(unsigned int, unsigned int, unsigned int)
-  Source:    factory1.cc 
-  Used By:
-    next2.cc: States::next2()
-    next3.cc: States::next(unsigned int)
-    alternatives.cc: Pattern::alternatives(States&, Pattern const&, Pattern const&)
-    eof.cc: Pattern::eof(States&)
-    interval.cc: Pattern::interval(States&, Pattern&, Interval const&)
-    jumptoend.cc: Pattern::jumpToEnd(States&, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >&, unsigned int, unsigned int, std::unordered_map<unsigned int, unsigned int, std::hash<unsigned int>, std::equal_to<unsigned int>, std::allocator<std::pair<unsigned int const, unsigned int> > >&)
-    plus.cc: Pattern::plus(States&, Pattern const&)
-    questionmark.cc: Pattern::questionMark(States&, Pattern const&)
-    rawtext.cc: Pattern::rawText(States&, std::string const&)
-    star.cc: Pattern::star(States&, Pattern const&)
-
 filename(std::string const&)
   Full name: Generator::filename(std::string const&)
   Source:    filename.cc 
@@ -490,17 +501,24 @@ finalizeState(State&)
   Used By:
     finalizestates.cc: Ranges::finalizeStates()
 
-find(std::string const&) const
-  Full name: DFAs::find(std::string const&) const
-  Source:    find.cc 
+findKV(std::string const&) const
+  Full name: StartConditions::findKV(std::string const&) const
+  Source:    findkv.cc 
   Used By:
-    dfas.cc: Generator::dfas(std::ostream&) const
+    addsc.cc: StartConditions::addSC(std::string const&)
+    define.cc: StartConditions::define(std::string const&)
 
 findRange(unsigned int) const
   Full name: CharClass::findRange(unsigned int) const
   Source:    findrange.cc 
   Used By:
     set.cc: CharClass::set() const
+
+getLOP(std::ostream&) const
+  Full name: Generator::getLOP(std::ostream&) const
+  Source:    getlop.cc 
+  Used By:
+    lopimplementation.cc: Generator::lopImplementation(std::ostream&) const
 
 grep(std::string const&, std::string const&) const
   Full name: Generator::grep(std::string const&, std::string const&) const
@@ -526,6 +544,18 @@ handleEOLNcomment()
   Used By:
     lex.cc: Scanner::executeAction__(unsigned int)
 
+handleFixedTailLopRule(Rule&)
+  Full name: Rules::handleFixedTailLopRule(Rule&)
+  Source:    handlefixedtailloprule.cc 
+  Used By:
+    handleloprules.cc: Rules::handleLopRules()
+
+handleLopRule(unsigned int)
+  Full name: Rules::handleLopRule(unsigned int)
+  Source:    handleloprule.cc 
+  Used By:
+    handleloprules.cc: Rules::handleLopRules()
+
 handleMulti(int)
   Full name: Scanner::handleMulti(int)
   Source:    handlemulti.cc 
@@ -535,6 +565,12 @@ handleMulti(int)
 handleOpenBracket()
   Full name: Scanner::handleOpenBracket()
   Source:    handleopenbracket.cc 
+  Used By:
+    lex.cc: Scanner::executeAction__(unsigned int)
+
+handleRawString()
+  Full name: Scanner::handleRawString()
+  Source:    handlerawstring.cc 
   Used By:
     lex.cc: Scanner::executeAction__(unsigned int)
 
@@ -554,19 +590,19 @@ inlineLexFunction(std::ostream&) const
   Full name: Generator::inlineLexFunction(std::ostream&) const
   Source:    inlinelexfunction.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
 inputImplementation(std::ostream&) const
   Full name: Generator::inputImplementation(std::ostream&) const
   Source:    inputimplementation.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
 inputInterface(std::ostream&) const
   Full name: Generator::inputInterface(std::ostream&) const
   Source:    inputinterface.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
 insert(std::ostream&) const
   Full name: Generator::insert(std::ostream&) const
@@ -574,11 +610,18 @@ insert(std::ostream&) const
   Used By:
     filter.cc: Generator::filter(std::istream&, std::ostream&) const
 
+insertedCatchAll()
+  Full name: Scanner::insertedCatchAll()
+  Source:    insertedcatchall.cc 
+  Used By:
+    moreinput.cc: Scanner::moreInput()
+    secondsectiondelimiter.cc: Scanner::secondSectionDelimiter()
+
 insertSstream(std::ostream&) const
   Full name: Generator::insertSstream(std::ostream&) const
   Source:    insertsstream.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
 inspectRows(std::vector<unsigned int, std::allocator<unsigned int> >&)
   Full name: DFA::inspectRows(std::vector<unsigned int, std::allocator<unsigned int> >&)
@@ -596,28 +639,28 @@ instance()
   Full name: Options::instance()
   Source:    instance.cc 
   Used By:
-    dfa1.cc: DFA::DFA(Ranges&, Rules&, States&)
-    setcasesensitive.cc: Scanner::setCaseSensitive()
     generator1.cc: Generator::Generator(Rules const&, Ranges const&, DFAs const&)
+    setcasesensitive.cc: Scanner::setCaseSensitive()
     parser1.cc: Parser::Parser(Rules&, States&)
+    dfa1.cc: DFA::DFA(Ranges&, Rules&, States&)
 
 interactiveDecl(std::ostream&) const
   Full name: Generator::interactiveDecl(std::ostream&) const
   Source:    interactivedecl.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
 interactiveInit(std::ostream&) const
   Full name: Generator::interactiveInit(std::ostream&) const
   Source:    interactiveinit.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
 interactiveLex(std::ostream&) const
   Full name: Generator::interactiveLex(std::ostream&) const
   Source:    interactivelex.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
 interval(Pattern&, Interval const&)
   Full name: Parser::interval(Pattern&, Interval const&)
@@ -638,8 +681,8 @@ join(States&, Pattern&, unsigned int, std::vector<std::pair<unsigned int, unsign
     optionalpatterns.cc: Pattern::optionalPatterns(States&, Pattern&, unsigned int, unsigned int, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >&)
     optrepeatlastpattern.cc: Pattern::optRepeatLastPattern(States&, Pattern&, unsigned int, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >&)
 
-jumpToEnd(States&, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >&, unsigned int, unsigned int, std::unordered_map<unsigned int, unsigned int, std::hash<unsigned int>, std::equal_to<unsigned int>, std::allocator<std::pair<unsigned int const, unsigned int> > >&)
-  Full name: Pattern::jumpToEnd(States&, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >&, unsigned int, unsigned int, std::unordered_map<unsigned int, unsigned int, std::hash<unsigned int>, std::equal_to<unsigned int>, std::allocator<std::pair<unsigned int const, unsigned int> > >&)
+jumpToEnd(States&, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >&, unsigned int, unsigned int, FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > >&)
+  Full name: Pattern::jumpToEnd(States&, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >&, unsigned int, unsigned int, FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > >&)
   Source:    jumptoend.cc 
   Used By:
     optionalpatterns.cc: Pattern::optionalPatterns(States&, Pattern&, unsigned int, unsigned int, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >&)
@@ -649,18 +692,6 @@ keepUniqueRows()
   Source:    keepuniquerows.cc 
   Used By:
     build.cc: DFA::build(std::string const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
-
-keepViableTailCounts()
-  Full name: DFA::keepViableTailCounts()
-  Source:    keepviabletailcounts.cc 
-  Used By:
-    build.cc: DFA::build(std::string const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
-
-keepViableTailCounts(DFARow&)
-  Full name: DFARow::keepViableTailCounts(DFARow&)
-  Source:    keepviabletailcounts.cc 
-  Used By:
-    keepviabletailcounts.cc: DFA::keepViableTailCounts()
 
 key(std::ostream&) const
   Full name: Generator::key(std::ostream&) const
@@ -684,6 +715,7 @@ key(std::ostream&) const
     interactiveinit.cc: Generator::interactiveInit(std::ostream&) const
     interactivelex.cc: Generator::interactiveLex(std::ostream&) const
     lexfunctiondecl.cc: Generator::lexFunctionDecl(std::ostream&) const
+    lopimplementation.cc: Generator::lopImplementation(std::ostream&) const
     namespaceclose.cc: Generator::namespaceClose(std::ostream&) const
     namespaceopen.cc: Generator::namespaceOpen(std::ostream&) const
     namespaceuse.cc: Generator::namespaceUse(std::ostream&) const
@@ -708,13 +740,49 @@ lexFunctionDecl(std::ostream&) const
   Full name: Generator::lexFunctionDecl(std::ostream&) const
   Source:    lexfunctiondecl.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
 lookahead(Pattern const&, Pattern const&)
   Full name: Parser::lookahead(Pattern const&, Pattern const&)
   Source:    lookahead.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
+
+lop1(std::ostream&) const
+  Full name: Generator::lop1(std::ostream&) const
+  Source:    lop1.cc 
+  Used By:
+    lopimplementation.cc: Generator::lopImplementation(std::ostream&) const
+
+lop2(std::ostream&) const
+  Full name: Generator::lop2(std::ostream&) const
+  Source:    lop2.cc 
+  Used By:
+    lopimplementation.cc: Generator::lopImplementation(std::ostream&) const
+
+lop3(std::ostream&) const
+  Full name: Generator::lop3(std::ostream&) const
+  Source:    lop3.cc 
+  Used By:
+    lopimplementation.cc: Generator::lopImplementation(std::ostream&) const
+
+lop4(std::ostream&) const
+  Full name: Generator::lop4(std::ostream&) const
+  Source:    lop4.cc 
+  Used By:
+    lopimplementation.cc: Generator::lopImplementation(std::ostream&) const
+
+lopf(std::ostream&) const
+  Full name: Generator::lopf(std::ostream&) const
+  Source:    lopf.cc 
+  Used By:
+    lopimplementation.cc: Generator::lopImplementation(std::ostream&) const
+
+lopImplementation(std::ostream&) const
+  Full name: Generator::lopImplementation(std::ostream&) const
+  Source:    lopimplementation.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 10data.o
 
 lowerBound(std::string const&)
   Full name: Interval::lowerBound(std::string const&)
@@ -728,23 +796,29 @@ maybeSwitchStream()
   Used By:
     lex.cc: Scanner::executeAction__(unsigned int)
 
+moreInput()
+  Full name: Scanner::moreInput()
+  Source:    moreinput.cc 
+  Used By:
+    lex.cc: Scanner::executeAction__(unsigned int)
+
 namespaceClose(std::ostream&) const
   Full name: Generator::namespaceClose(std::ostream&) const
   Source:    namespaceclose.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
 namespaceOpen(std::ostream&) const
   Full name: Generator::namespaceOpen(std::ostream&) const
   Source:    namespaceopen.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
 namespaceUse(std::ostream&) const
   Full name: Generator::namespaceUse(std::ostream&) const
   Source:    namespaceuse.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
 negate() const
   Full name: CharClass::negate() const
@@ -769,11 +843,11 @@ next()
   Full name: States::next()
   Source:    next.cc 
   Used By:
+    copypattern2.cc: Pattern::copyPattern(States&, unsigned int, unsigned int, FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > >&, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >&)
+    duppattern.cc: Pattern::dupPattern(FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > >&, States&, unsigned int)
+    questionmark.cc: Pattern::questionMark(States&, Pattern const&)
     next2.cc: States::next2()
     next3.cc: States::next(unsigned int)
-    copypattern2.cc: Pattern::copyPattern(States&, unsigned int, unsigned int, std::unordered_map<unsigned int, unsigned int, std::hash<unsigned int>, std::equal_to<unsigned int>, std::allocator<std::pair<unsigned int const, unsigned int> > >&, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >&)
-    duppattern.cc: Pattern::dupPattern(std::unordered_map<unsigned int, unsigned int, std::hash<unsigned int>, std::equal_to<unsigned int>, std::allocator<std::pair<unsigned int const, unsigned int> > >&, States&, unsigned int)
-    questionmark.cc: Pattern::questionMark(States&, Pattern const&)
 
 next(unsigned int)
   Full name: States::next(unsigned int)
@@ -799,12 +873,6 @@ noActions()
   Source:    noactions.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
-
-nUsed() const
-  Full name: Ranges::nUsed() const
-  Source:    nused.cc 
-  Used By:
-    operatorinsert.cc: operator<<(std::ostream&, DFA const&)
 
 open(unsigned int, std::string const&)
   Full name: Block::open(unsigned int, std::string const&)
@@ -832,13 +900,15 @@ operator*() const
   Full name: StartConditions::const_iterator::operator*() const
   Source:    operatorstar.cc 
   Used By:
-    build.cc: DFAs::build()
     startcondnames.cc: Generator::startCondNames(std::ostream&) const
+    build.cc: DFAs::build()
 
 operator+=(std::string const&)
   Full name: Block::operator+=(std::string const&)
   Source:    operatorplusis.cc 
   Used By:
+    handlefixedtailloprule.cc: Rules::handleFixedTailLopRule(Rule&)
+    handleloprule.cc: Rules::handleLopRule(unsigned int)
     block.cc: Parser::block()
 
 operator<<(FBB::Table&, DFARow const&)
@@ -851,7 +921,6 @@ operator<<(std::ostream&, DFA const&)
   Full name: operator<<(std::ostream&, DFA const&)
   Source:    operatorinsert.cc 
   Used By:
-    build.cc: DFA::build(std::string const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
     operatorinsert.cc: operator<<(std::ostream&, DFAs const&)
 
 operator<<(std::ostream&, DFAs const&)
@@ -896,6 +965,12 @@ operator<<(std::ostream&, States const&)
   Used By:
     construction.cc: Generator::construction(States const&)
 
+operator=(std::pair<unsigned int, unsigned int> const&)
+  Full name: Pattern::operator=(std::pair<unsigned int, unsigned int> const&)
+  Source:    operatorassign.cc 
+  Used By:
+    rawtext.cc: Pattern::rawText(States&, std::string const&)
+
 operator==(DFARow const&) const
   Full name: DFARow::operator==(DFARow const&) const
   Source:    operatorequal.cc 
@@ -932,37 +1007,48 @@ outDFAbase(std::string const&, unsigned int)
   Used By:
     dfabases.cc: Generator::DFAbases(std::ostream&) const
 
-outRFC(Generator::RuleFlagCount const&, std::ostream&, unsigned int&)
-  Full name: Generator::outRFC(Generator::RuleFlagCount const&, std::ostream&, unsigned int&)
-  Source:    outrfc.cc 
-  Used By:
-    rfcs.cc: Generator::rfcs(std::ostream&) const
-
 ParserBase()
   Full name: ParserBase::ParserBase()
   Source:    parse.cc 
   Used By:
     parser1.cc: Parser::Parser(Rules&, States&)
 
+Pattern(States&, Pattern const&, Pattern const&, unsigned int)
+  Full name: Pattern::Pattern(States&, Pattern const&, Pattern const&, unsigned int)
+  Source:    pattern2.cc 
+  Used By:
+    lookahead.cc: Parser::lookahead(Pattern const&, Pattern const&)
+
+Pattern(States&, unsigned int, Pattern const&, Pattern const&)
+  Full name: Pattern::Pattern(States&, unsigned int, Pattern const&, Pattern const&)
+  Source:    pattern3.cc 
+  Used By:
+    lookahead.cc: Parser::lookahead(Pattern const&, Pattern const&)
+
 Pattern(std::pair<unsigned int, unsigned int> const&)
   Full name: Pattern::Pattern(std::pair<unsigned int, unsigned int> const&)
   Source:    pattern1.cc 
   Used By:
-    parse.cc: ParserBase::pushToken__(int)
     alternatives.cc: Pattern::alternatives(States&, Pattern const&, Pattern const&)
     characterclass.cc: Pattern::characterClass(States&, CharClass const&)
     concatenate.cc: Pattern::concatenate(States&, Pattern const&, Pattern const&)
+    duplicate.cc: Pattern::duplicate(States&) const
     eof.cc: Pattern::eof(States&)
     escape.cc: Pattern::escape(States&, std::string const&)
     interval.cc: Pattern::interval(States&, Pattern&, Interval const&)
     join.cc: Pattern::join(States&, Pattern&, unsigned int, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > > const&)
     optionalpatterns.cc: Pattern::optionalPatterns(States&, Pattern&, unsigned int, unsigned int, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >&)
     optrepeatlastpattern.cc: Pattern::optRepeatLastPattern(States&, Pattern&, unsigned int, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >&)
+    pattern3.cc: Pattern::Pattern(States&, unsigned int, Pattern const&, Pattern const&)
     plus.cc: Pattern::plus(States&, Pattern const&)
     quantifier.cc: Pattern::quantifier(States&, Pattern const&, unsigned int)
     questionmark.cc: Pattern::questionMark(States&, Pattern const&)
     rawtext.cc: Pattern::rawText(States&, std::string const&)
     star.cc: Pattern::star(States&, Pattern const&)
+    handleloprule.cc: Rules::handleLopRule(unsigned int)
+    rules1.cc: Rules::Rules(States&)
+    lookahead.cc: Parser::lookahead(Pattern const&, Pattern const&)
+    parse.cc: ParserBase::pushToken__(int)
 
 pLex()
   Full name: Scanner::pLex()
@@ -985,29 +1071,30 @@ popSc(int)
     lex.cc: Scanner::executeAction__(unsigned int)
 
 popStream()
-  Full name: Scanner::popStream()
-  Source:    popstream.cc 
-  Used By:
-    lex.cc: Scanner::lex__()
-
-popStream()
   Full name: ScannerBase::popStream()
   Source:    lex.cc 
   Used By:
     popstream.cc: Scanner::popStream()
+
+popStream()
+  Full name: Scanner::popStream()
+  Source:    popstream.cc 
+  Used By:
+    lex.cc: Scanner::lex__()
+    moreinput.cc: Scanner::moreInput()
+
+predefined(std::string const&)
+  Full name: CharClass::predefined(std::string const&)
+  Source:    predefined.cc 
+  Used By:
+    dot.cc: Pattern::dot(States&)
+    parse.cc: Parser::executeAction(int)
 
 predefined(std::string const&)
   Full name: CharRange::predefined(std::string const&)
   Source:    predefined.cc 
   Used By:
     predefined.cc: CharClass::predefined(std::string const&)
-
-predefined(std::string const&)
-  Full name: CharClass::predefined(std::string const&)
-  Source:    predefined.cc 
-  Used By:
-    parse.cc: Parser::executeAction(int)
-    dot.cc: Pattern::dot(States&)
 
 print()
   Full name: Parser::print()
@@ -1020,19 +1107,20 @@ print(std::ostream&) const
   Full name: Generator::print(std::ostream&) const
   Source:    print.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
-probeTailCount(unsigned int)
-  Full name: DFARow::probeTailCount(unsigned int)
-  Source:    probetailcount.cc 
+processCatchAllRule()
+  Full name: Rules::processCatchAllRule()
+  Source:    processcatchallrule.cc 
   Used By:
-    dfarow1.cc: DFARow::DFARow(Rules&, States&, std::vector<std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> >, std::allocator<std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> > > >&, unsigned int, Ranges&)
+    addlopstartconditions.cc: Parser::addLopStartConditions()
 
 push(ScannerBase::StartCondition__)
   Full name: Scanner::push(ScannerBase::StartCondition__)
   Source:    push.cc 
   Used By:
     handledquote.cc: Scanner::handleDquote()
+    handlerawstring.cc: Scanner::handleRawString()
     handlestdcomment.cc: Scanner::handleStdComment()
     newdefinition.cc: Scanner::newDefinition()
     scanner1.cc: Scanner::Scanner(std::string const&)
@@ -1091,7 +1179,20 @@ ranges(std::ostream&) const
   Full name: Generator::ranges(std::ostream&) const
   Source:    ranges.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
+
+rawString()
+  Full name: Parser::rawString()
+  Source:    rawstring.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+
+rawStringContents() const
+  Full name: Scanner::rawStringContents() const
+  Source:    rawstringcontents.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+    rawstring.cc: Parser::rawString()
 
 rawText(States&, std::string const&)
   Full name: Pattern::rawText(States&, std::string const&)
@@ -1109,10 +1210,17 @@ redo(unsigned int)
   Used By:
     handlecharafterblanks.cc: Scanner::handleCharAfterBlanks()
 
+remove(unsigned int)
+  Full name: StartConditions::remove(unsigned int)
+  Source:    remove.cc 
+  Used By:
+    processcatchallrule.cc: Rules::processCatchAllRule()
+
 reRead(std::string const&, unsigned int)
   Full name: ScannerBase::Input::reRead(std::string const&, unsigned int)
   Source:    lex.cc 
   Used By:
+    insertedcatchall.cc: Scanner::insertedCatchAll()
     pushnameexpansion.cc: Scanner::pushNameExpansion()
     eolndollar.cc: Parser::eolnDollar()
 
@@ -1122,23 +1230,23 @@ reset()
   Used By:
     parse.cc: Parser::executeAction(int)
 
-rfcs(std::ostream&) const
-  Full name: Generator::rfcs(std::ostream&) const
-  Source:    rfcs.cc 
-  Used By:
-    data.cc: GLOBALS data.cc 21data.o
-
-Rule(States const&, bool, std::pair<unsigned int, unsigned int>, Block const&)
-  Full name: Rule::Rule(States const&, bool, std::pair<unsigned int, unsigned int>, Block const&)
+Rule(States&, bool, Pattern const&, Block const&, FlexTypes::RuleType)
+  Full name: Rule::Rule(States&, bool, Pattern const&, Block const&, FlexTypes::RuleType)
   Source:    rule1.cc 
   Used By:
-    add.cc: Rules::add(bool, Pattern const&, Block const&)
+    add.cc: Rules::add(bool, Pattern const&, Block const&, FlexTypes::RuleType)
 
-ruleAction(Block const&, std::ostream&, unsigned int&) const
-  Full name: Generator::ruleAction(Block const&, std::ostream&, unsigned int&) const
+ruleAction(Block const&, std::ostream&, unsigned int) const
+  Full name: Generator::ruleAction(Block const&, std::ostream&, unsigned int) const
   Source:    ruleaction.cc 
   Used By:
     actions.cc: Generator::actions(std::ostream&) const
+
+ruleFromFinalState(unsigned int) const
+  Full name: Rules::ruleFromFinalState(unsigned int) const
+  Source:    rulefromfinalstate.cc 
+  Used By:
+    transit.cc: DFARow::transit(unsigned int, unsigned int, std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> >&)
 
 s_baseFlag
   Full name: Generator::s_baseFlag
@@ -1239,13 +1347,13 @@ s_regexCall
   Full name: Options::s_regexCall
   Source:    data.cc 
   Used By:
-    interval.cc: Parser::interval(Pattern&, Interval const&)
-    lookahead.cc: Parser::lookahead(Pattern const&, Pattern const&)
-    parse.cc: Parser::executeAction(int)
     options1.cc: Options::Options()
     alternatives.cc: Pattern::alternatives(States&, Pattern const&, Pattern const&)
     concatenate.cc: Pattern::concatenate(States&, Pattern const&, Pattern const&)
     quantifier.cc: Pattern::quantifier(States&, Pattern const&, unsigned int)
+    interval.cc: Parser::interval(Pattern&, Interval const&)
+    lookahead.cc: Parser::lookahead(Pattern const&, Pattern const&)
+    parse.cc: Parser::executeAction(int)
 
 s_verbose
   Full name: DFA::s_verbose
@@ -1261,13 +1369,13 @@ s_warnOptions
   Full name: Options::s_warnOptions
   Source:    data.cc 
   Used By:
-    assign.cc: Options::assign(std::string*, Options::PathType, char const*)
+    assign.cc: Options::assign(FlexTypes::TextType, std::string*, Options::PathType, char const*)
     setaccessorvariables.cc: Options::setAccessorVariables()
-    setclassname.cc: Options::setClassName()
+    setclassname.cc: Options::setClassName(FlexTypes::TextType)
     setoptionpath.cc: Options::setOptionPath(std::string*, int, std::string const&, char const*, char const*)
 
-sameTransits(std::unordered_map<unsigned int, unsigned int, std::hash<unsigned int>, std::equal_to<unsigned int>, std::allocator<std::pair<unsigned int const, unsigned int> > > const&, std::unordered_map<unsigned int, unsigned int, std::hash<unsigned int>, std::equal_to<unsigned int>, std::allocator<std::pair<unsigned int const, unsigned int> > > const&)
-  Full name: DFARow::sameTransits(std::unordered_map<unsigned int, unsigned int, std::hash<unsigned int>, std::equal_to<unsigned int>, std::allocator<std::pair<unsigned int const, unsigned int> > > const&, std::unordered_map<unsigned int, unsigned int, std::hash<unsigned int>, std::equal_to<unsigned int>, std::allocator<std::pair<unsigned int const, unsigned int> > > const&)
+sameTransits(FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > > const&, FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > > const&)
+  Full name: DFARow::sameTransits(FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > > const&, FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > > const&)
   Source:    sametransits.cc 
   Used By:
     operatorequal.cc: DFARow::operator==(DFARow const&) const
@@ -1288,7 +1396,13 @@ scannerConstructors(std::ostream&) const
   Full name: Generator::scannerConstructors(std::ostream&) const
   Source:    scannerconstructors.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
+
+secondSectionDelimiter()
+  Full name: Scanner::secondSectionDelimiter()
+  Source:    secondsectiondelimiter.cc 
+  Used By:
+    lex.cc: Scanner::executeAction__(unsigned int)
 
 set() const
   Full name: CharClass::set() const
@@ -1311,44 +1425,20 @@ setCaseSensitive()
   Used By:
     reset.cc: Parser::reset()
 
-setClassName()
-  Full name: Options::setClassName()
+setClassName(FlexTypes::TextType)
+  Full name: Options::setClassName(FlexTypes::TextType)
   Source:    setclassname.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
 
-setFilenames()
-  Full name: Options::setFilenames()
+setFilenames(FlexTypes::TextType)
+  Full name: Options::setFilenames(FlexTypes::TextType)
   Source:    setfilenames.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
 
-setFinal(unsigned int)
-  Full name: DFARow::setFinal(unsigned int)
-  Source:    setfinal.cc 
-  Used By:
-    transit.cc: DFARow::transit(unsigned int, unsigned int, std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> >&)
-
-setFlags(unsigned int, State::Flag)
-  Full name: Parser::setFlags(unsigned int, State::Flag)
-  Source:    setflags.cc 
-  Used By:
-    lookahead.cc: Parser::lookahead(Pattern const&, Pattern const&)
-
-setIncTailCount(TailCount::Type, TailCount&)
-  Full name: DFA::setIncTailCount(TailCount::Type, TailCount&)
-  Source:    setinctailcount.cc 
-  Used By:
-    settailcount.cc: DFA::setTailCount(TailCount&, unsigned int, TailCount*, unsigned int)
-
-setInitTailCount(TailCount::Type, TailCount&)
-  Full name: DFA::setInitTailCount(TailCount::Type, TailCount&)
-  Source:    setinittailcount.cc 
-  Used By:
-    settailcount.cc: DFA::setTailCount(TailCount&, unsigned int, TailCount*, unsigned int)
-
-setLexFunctionName()
-  Full name: Options::setLexFunctionName()
+setLexFunctionName(FlexTypes::TextType)
+  Full name: Options::setLexFunctionName(FlexTypes::TextType)
   Source:    setlexfunctionname.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
@@ -1361,17 +1451,23 @@ setLineTags(std::string const&) const
     popstream.cc: Scanner::popStream()
     scanner1.cc: Scanner::Scanner(std::string const&)
 
-setNextTailCount(TailCount::Type, TailCount&, unsigned int, TailCount&, unsigned int)
-  Full name: DFA::setNextTailCount(TailCount::Type, TailCount&, unsigned int, TailCount&, unsigned int)
-  Source:    setnexttailcount.cc 
+setLopBlocks()
+  Full name: Rules::setLopBlocks()
+  Source:    setlopblocks.cc 
   Used By:
-    settailcount.cc: DFA::setTailCount(TailCount&, unsigned int, TailCount*, unsigned int)
+    handleloprules.cc: Rules::handleLopRules()
 
 setOptionPath(std::string*, int, std::string const&, char const*, char const*)
   Full name: Options::setOptionPath(std::string*, int, std::string const&, char const*, char const*)
   Source:    setoptionpath.cc 
   Used By:
     setpathstrings.cc: Options::setPathStrings()
+
+setParserInfo(std::string const&, std::string const&)
+  Full name: Options::setParserInfo(std::string const&, std::string const&)
+  Source:    setparserinfo.cc 
+  Used By:
+    parser1.cc: Parser::Parser(Rules&, States&)
 
 setPathStrings()
   Full name: Options::setPathStrings()
@@ -1383,13 +1479,13 @@ setRule(unsigned int, unsigned int)
   Full name: Rules::setRule(unsigned int, unsigned int)
   Source:    setrule.cc 
   Used By:
-    add.cc: Rules::add(bool, Pattern const&, Block const&)
+    add.cc: Rules::add(bool, Pattern const&, Block const&, FlexTypes::RuleType)
 
-setTailCount(TailCount&, unsigned int, TailCount*, unsigned int)
-  Full name: DFA::setTailCount(TailCount&, unsigned int, TailCount*, unsigned int)
-  Source:    settailcount.cc 
+setViable(unsigned int*, unsigned int)
+  Full name: DFARow::setViable(unsigned int*, unsigned int)
+  Source:    setviable.cc 
   Used By:
-    determinetailcount.cc: DFA::determineTailCount(TailCount&, unsigned int, TailCount*, unsigned int)
+    updateviable.cc: DFARow::updateViable(unsigned int*, unsigned int)
 
 showFilenames() const
   Full name: Options::showFilenames() const
@@ -1420,29 +1516,57 @@ startCondNames(std::ostream&) const
   Full name: Generator::startCondNames(std::ostream&) const
   Source:    startcondnames.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
+    data.cc: GLOBALS data.cc 10data.o
 
 State()
   Full name: State::State()
   Source:    state1.cc 
   Used By:
-    next.cc: GLOBALS next.cc 11next.o
+    next.cc: GLOBALS next.cc 19next.o
     states1.cc: States::States()
+
+State(unsigned char, unsigned int)
+  Full name: State::State(unsigned char, unsigned int)
+  Source:    state6.cc 
+  Used By:
+    escape.cc: Pattern::escape(States&, std::string const&)
+    rawtext.cc: Pattern::rawText(States&, std::string const&)
 
 State(unsigned int, StateData*)
   Full name: State::State(unsigned int, StateData*)
   Source:    state3.cc 
   Used By:
-    factory1.cc: State::factory(unsigned int, unsigned int, unsigned int)
-    factory2.cc: State::factory(unsigned int, std::string const&, unsigned int, unsigned int)
-    factory3.cc: State::factory(unsigned char, unsigned int)
+    state4.cc: State::State(unsigned int, unsigned int, unsigned int)
+    state5.cc: State::State(unsigned int, std::string const&, unsigned int, unsigned int)
+    state6.cc: State::State(unsigned char, unsigned int)
+
+State(unsigned int, std::string const&, unsigned int, unsigned int)
+  Full name: State::State(unsigned int, std::string const&, unsigned int, unsigned int)
+  Source:    state5.cc 
+  Used By:
+    characterclass.cc: Pattern::characterClass(States&, CharClass const&)
+
+State(unsigned int, unsigned int, unsigned int)
+  Full name: State::State(unsigned int, unsigned int, unsigned int)
+  Source:    state4.cc 
+  Used By:
+    alternatives.cc: Pattern::alternatives(States&, Pattern const&, Pattern const&)
+    eof.cc: Pattern::eof(States&)
+    interval.cc: Pattern::interval(States&, Pattern&, Interval const&)
+    jumptoend.cc: Pattern::jumpToEnd(States&, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >&, unsigned int, unsigned int, FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > >&)
+    plus.cc: Pattern::plus(States&, Pattern const&)
+    questionmark.cc: Pattern::questionMark(States&, Pattern const&)
+    rawtext.cc: Pattern::rawText(States&, std::string const&)
+    star.cc: Pattern::star(States&, Pattern const&)
+    next2.cc: States::next2()
+    next3.cc: States::next(unsigned int)
 
 StateData(unsigned int, unsigned int)
   Full name: StateData::StateData(unsigned int, unsigned int)
   Source:    statedata1.cc 
   Used By:
-    factory1.cc: State::factory(unsigned int, unsigned int, unsigned int)
-    factory3.cc: State::factory(unsigned char, unsigned int)
+    state4.cc: State::State(unsigned int, unsigned int, unsigned int)
+    state6.cc: State::State(unsigned char, unsigned int)
     vclone.cc: StateData::v_clone() const
     statestring1.cc: StateString::StateString(std::string const&, unsigned int, unsigned int)
 
@@ -1450,14 +1574,8 @@ StateString(std::string const&, unsigned int, unsigned int)
   Full name: StateString::StateString(std::string const&, unsigned int, unsigned int)
   Source:    statestring1.cc 
   Used By:
-    factory2.cc: State::factory(unsigned int, std::string const&, unsigned int, unsigned int)
+    state5.cc: State::State(unsigned int, std::string const&, unsigned int, unsigned int)
     vclone.cc: StateString::v_clone() const
-
-storeRFC(TailCount const&, std::pair<unsigned int, unsigned int>&, std::vector<Generator::RuleFlagCount, std::allocator<Generator::RuleFlagCount> >&)
-  Full name: Generator::storeRFC(TailCount const&, std::pair<unsigned int, unsigned int>&, std::vector<Generator::RuleFlagCount, std::allocator<Generator::RuleFlagCount> >&)
-  Source:    storerfc.cc 
-  Used By:
-    dfarfcs.cc: Generator::dfaRFCs(DFARow const&, std::ostream&, std::vector<Generator::RuleFlagCount, std::allocator<Generator::RuleFlagCount> >&)
 
 str() const
   Full name: CharClass::str() const
@@ -1489,12 +1607,6 @@ tabulate(FBB::Table&) const
   Used By:
     operatorinsert.cc: operator<<(FBB::Table&, DFARow const&)
 
-tabulateAccepts(FBB::Table&) const
-  Full name: DFARow::tabulateAccepts(FBB::Table&) const
-  Source:    tabulateaccepts.cc 
-  Used By:
-    tabulate.cc: DFARow::tabulate(FBB::Table&) const
-
 tabulateFinals(FBB::Table&) const
   Full name: DFARow::tabulateFinals(FBB::Table&) const
   Source:    tabulatefinals.cc 
@@ -1507,17 +1619,14 @@ tabulateTransitions(FBB::Table&) const
   Used By:
     tabulate.cc: DFARow::tabulate(FBB::Table&) const
 
-tailCount(std::ostream&) const
-  Full name: Generator::tailCount(std::ostream&) const
-  Source:    tailcount.cc 
+textOf(FlexTypes::TextType)
+  Full name: Options::textOf(FlexTypes::TextType)
+  Source:    textof.cc 
   Used By:
-    data.cc: GLOBALS data.cc 21data.o
-
-TailCount(unsigned int, State::Flag)
-  Full name: TailCount::TailCount(unsigned int, State::Flag)
-  Source:    tailcount1.cc 
-  Used By:
-    probetailcount.cc: DFARow::probeTailCount(unsigned int)
+    assign.cc: Options::assign(FlexTypes::TextType, std::string*, Options::PathType, char const*)
+    setclassname.cc: Options::setClassName(FlexTypes::TextType)
+    setfilenames.cc: Options::setFilenames(FlexTypes::TextType)
+    setlexfunctionname.cc: Options::setLexFunctionName(FlexTypes::TextType)
 
 transit(unsigned int, unsigned int, std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> >&)
   Full name: DFARow::transit(unsigned int, unsigned int, std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> >&)
@@ -1530,21 +1639,6 @@ transitions()
   Source:    transitions.cc 
   Used By:
     build.cc: DFA::build(std::string const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
-
-transitTailCount(std::pair<unsigned int const, unsigned int> const&, TailCount*, unsigned int)
-  Full name: DFA::transitTailCount(std::pair<unsigned int const, unsigned int> const&, TailCount*, unsigned int)
-  Source:    transittailcount.cc 
-  Used By:
-    determinetailcount.cc: DFA::determineTailCount(TailCount&, unsigned int, TailCount*, unsigned int)
-
-undelimit(std::string const&)
-  Full name: Options::undelimit(std::string const&)
-  Source:    undelimit.cc 
-  Used By:
-    assign.cc: Options::assign(std::string*, Options::PathType, char const*)
-    setclassname.cc: Options::setClassName()
-    setfilenames.cc: Options::setFilenames()
-    setlexfunctionname.cc: Options::setLexFunctionName()
 
 uniqueMap(std::vector<unsigned int, std::allocator<unsigned int> > const&)
   Full name: DFARow::uniqueMap(std::vector<unsigned int, std::allocator<unsigned int> > const&)
@@ -1564,6 +1658,12 @@ update(std::string const&, unsigned int const*)
   Used By:
     add.cc: Ranges::add(std::string const&)
 
+updateViable(unsigned int*, unsigned int)
+  Full name: DFARow::updateViable(unsigned int*, unsigned int)
+  Source:    updateviable.cc 
+  Used By:
+    transit.cc: DFARow::transit(unsigned int, unsigned int, std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> >&)
+
 useAll()
   Full name: StartConditions::useAll()
   Source:    useall.cc 
@@ -1571,29 +1671,13 @@ useAll()
     parse.cc: Parser::executeAction(int)
 
 v_clone() const
-  Full name: StateData::v_clone() const
-  Source:    vclone.cc 
-  Used By:
-    destructor.cc: StateData::~StateData()
-
-v_clone() const
   Full name: StateString::v_clone() const
   Source:    vclone.cc 
   Used By:
-    contains.cc: State::contains(unsigned int) const
-    dup.cc: State::dup(State const&, unsigned int, unsigned int)
-    factory1.cc: State::factory(unsigned int, unsigned int, unsigned int)
-    factory2.cc: State::factory(unsigned int, std::string const&, unsigned int, unsigned int)
-    factory3.cc: State::factory(unsigned char, unsigned int)
-    operatorinsert.cc: operator<<(std::ostream&, State const&)
-    state1.cc: State::State()
-    state2.cc: State::State(unsigned int)
-    state3.cc: State::State(unsigned int, StateData*)
     add.cc: Ranges::add(std::string const&)
     add3.cc: Ranges::add(unsigned int)
     charsettoranges.cc: Ranges::charsetToRanges(StateData&, unsigned int*)
     chcollision.cc: Ranges::chCollision(unsigned char, unsigned char&, unsigned int const*)
-    clearused.cc: Ranges::clearUsed()
     collision.cc: Ranges::collision(std::string const&, unsigned int const*)
     countranges.cc: Ranges::countRanges(unsigned int&, std::vector<unsigned int, std::allocator<unsigned int> >&)
     destructor.cc: Ranges::~Ranges()
@@ -1601,7 +1685,6 @@ v_clone() const
     finalizestate.cc: Ranges::finalizeState(State&)
     finalizestates.cc: Ranges::finalizeStates()
     inspectstate.cc: Ranges::inspectState(State const&)
-    nused.cc: Ranges::nUsed() const
     operatorassign.cc: Ranges::operator=(Ranges const&)
     operatorassign2.cc: Ranges::operator=(Ranges&&)
     operatorinsert.cc: operator<<(std::ostream&, Ranges const&)
@@ -1612,7 +1695,22 @@ v_clone() const
     reassign.cc: Ranges::reassign(unsigned int&, std::vector<unsigned int, std::allocator<unsigned int> >&)
     subsetcount.cc: Ranges::subsetCount()
     update.cc: Ranges::update(std::string const&, unsigned int const*)
+    contains.cc: State::contains(unsigned int) const
+    dup.cc: State::dup(State const&, unsigned int, unsigned int)
+    operatorinsert.cc: operator<<(std::ostream&, State const&)
+    state1.cc: State::State()
+    state2.cc: State::State(unsigned int)
+    state3.cc: State::State(unsigned int, StateData*)
+    state4.cc: State::State(unsigned int, unsigned int, unsigned int)
+    state5.cc: State::State(unsigned int, std::string const&, unsigned int, unsigned int)
+    state6.cc: State::State(unsigned char, unsigned int)
     statestring1.cc: StateString::StateString(std::string const&, unsigned int, unsigned int)
+
+v_clone() const
+  Full name: StateData::v_clone() const
+  Source:    vclone.cc 
+  Used By:
+    destructor.cc: StateData::~StateData()
 
 validRange(unsigned int) const
   Full name: CharClass::validRange(unsigned int) const
@@ -1626,12 +1724,6 @@ version
   Used By:
     usage.cc: usage(std::string const&)
     filter.cc: Generator::filter(std::istream&, std::ostream&) const
-
-visitTailCount(TailCount&)
-  Full name: DFA::visitTailCount(TailCount&)
-  Source:    visittailcount.cc 
-  Used By:
-    computetailcounts.cc: DFA::computeTailCounts()
 
 warnExisting(std::string const&, std::string const&, std::string const&, std::string const&) const
   Full name: Generator::warnExisting(std::string const&, std::string const&, std::string const&, std::string const&) const
@@ -1657,39 +1749,37 @@ year
   Full name: StateData::~StateData()
   Source:    destructor.cc 
   Used By:
-    contains.cc: GLOBALS contains.cc 10contains.o
-    dup.cc: GLOBALS dup.cc 10dup.o
-    factory1.cc: GLOBALS factory1.cc 10factory1.o
-    factory2.cc: GLOBALS factory2.cc 10factory2.o
-    factory3.cc: GLOBALS factory3.cc 10factory3.o
-    operatorinsert.cc: GLOBALS operatorinsert.cc 10operatorinsert.o
-    state1.cc: GLOBALS state1.cc 10state1.o
-    state2.cc: GLOBALS state2.cc 10state2.o
-    state3.cc: GLOBALS state3.cc 10state3.o
-    add.cc: GLOBALS add.cc 17add.o
-    add3.cc: GLOBALS add3.cc 17add3.o
-    charsettoranges.cc: GLOBALS charsettoranges.cc 17charsettoranges.o
-    chcollision.cc: GLOBALS chcollision.cc 17chcollision.o
-    clearused.cc: GLOBALS clearused.cc 17clearused.o
-    collision.cc: GLOBALS collision.cc 17collision.o
-    countranges.cc: GLOBALS countranges.cc 17countranges.o
-    destructor.cc: GLOBALS destructor.cc 17destructor.o
-    determinesubsets.cc: GLOBALS determinesubsets.cc 17determinesubsets.o
-    finalizestate.cc: GLOBALS finalizestate.cc 17finalizestate.o
-    finalizestates.cc: GLOBALS finalizestates.cc 17finalizestates.o
-    inspectstate.cc: GLOBALS inspectstate.cc 17inspectstate.o
-    nused.cc: GLOBALS nused.cc 17nused.o
-    operatorassign.cc: GLOBALS operatorassign.cc 17operatorassign.o
-    operatorassign2.cc: GLOBALS operatorassign2.cc 17operatorassign2.o
-    operatorinsert.cc: GLOBALS operatorinsert.cc 17operatorinsert.o
-    outchar.cc: GLOBALS outchar.cc 17outchar.o
-    ranges1.cc: GLOBALS ranges1.cc 17ranges1.o
-    ranges2.cc: GLOBALS ranges2.cc 17ranges2.o
-    ranges3.cc: GLOBALS ranges3.cc 17ranges3.o
-    reassign.cc: GLOBALS reassign.cc 17reassign.o
-    subsetcount.cc: GLOBALS subsetcount.cc 17subsetcount.o
-    update.cc: GLOBALS update.cc 17update.o
-    statestring1.cc: GLOBALS statestring1.cc 9statestring1.o
+    add.cc: GLOBALS add.cc 14add.o
+    add3.cc: GLOBALS add3.cc 14add3.o
+    charsettoranges.cc: GLOBALS charsettoranges.cc 14charsettoranges.o
+    chcollision.cc: GLOBALS chcollision.cc 14chcollision.o
+    collision.cc: GLOBALS collision.cc 14collision.o
+    countranges.cc: GLOBALS countranges.cc 14countranges.o
+    destructor.cc: GLOBALS destructor.cc 14destructor.o
+    determinesubsets.cc: GLOBALS determinesubsets.cc 14determinesubsets.o
+    finalizestate.cc: GLOBALS finalizestate.cc 14finalizestate.o
+    finalizestates.cc: GLOBALS finalizestates.cc 14finalizestates.o
+    inspectstate.cc: GLOBALS inspectstate.cc 14inspectstate.o
+    operatorassign.cc: GLOBALS operatorassign.cc 14operatorassign.o
+    operatorassign2.cc: GLOBALS operatorassign2.cc 14operatorassign2.o
+    operatorinsert.cc: GLOBALS operatorinsert.cc 14operatorinsert.o
+    outchar.cc: GLOBALS outchar.cc 14outchar.o
+    ranges1.cc: GLOBALS ranges1.cc 14ranges1.o
+    ranges2.cc: GLOBALS ranges2.cc 14ranges2.o
+    ranges3.cc: GLOBALS ranges3.cc 14ranges3.o
+    reassign.cc: GLOBALS reassign.cc 14reassign.o
+    subsetcount.cc: GLOBALS subsetcount.cc 14subsetcount.o
+    update.cc: GLOBALS update.cc 14update.o
+    contains.cc: GLOBALS contains.cc 18contains.o
+    dup.cc: GLOBALS dup.cc 18dup.o
+    operatorinsert.cc: GLOBALS operatorinsert.cc 18operatorinsert.o
+    state1.cc: GLOBALS state1.cc 18state1.o
+    state2.cc: GLOBALS state2.cc 18state2.o
+    state3.cc: GLOBALS state3.cc 18state3.o
+    state4.cc: GLOBALS state4.cc 18state4.o
+    state5.cc: GLOBALS state5.cc 18state5.o
+    state6.cc: GLOBALS state6.cc 18state6.o
+    statestring1.cc: GLOBALS statestring1.cc 21statestring1.o
     vclone.cc: StateString::v_clone() const
 
 

@@ -6,6 +6,7 @@ void clean(int dist)
             "tmp/*.o" + 
             " o */o release.yo tmp/lib*.a "    
             "parser/grammar.output "
+            "regression/out regression/lexer.output "
             "*/a"
     );
 

@@ -41,10 +41,13 @@ executed.
 Implementation (assuming b does not allow an empty match):
 
 Parser::lookahead(Pattern left, Pattern right) duplicates left and stores rule
-number, a duplicate of the left pattern's states, initial state of the right pattern, and
-current start condition in a vector of LOPinfo objects.
+number, a duplicate of the left pattern's states, initial state of the right
+pattern, and current start condition in a vector of LOPinfo objects.
 
-Once action blocks are written, the action blocks of ...
+Once action blocks are written, the action blocks of 
+
+(TO DO)
+
 
 
 When the parser detects 
