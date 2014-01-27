@@ -1,0 +1,7 @@
+// preventing lookahead continuous loop, returns 2, then sequences of 1, 2
+
+%%
+//%nowarn
+a*/b         d_p = "a*/b"; return 1;
+.            d_p = ". single char"; return 2;
+\n

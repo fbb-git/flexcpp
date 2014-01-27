@@ -1,0 +1,8 @@
+// lookahead continuous loop: intended behavior, p15 doesn't
+
+%%
+//%nowarn
+a*/b         d_p = "a*/b"; return 1;
+
+\n
+
