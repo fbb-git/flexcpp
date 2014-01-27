@@ -10,7 +10,8 @@ void Generator::lop4(ostream &out) const
     if (d_debug)
         out << 
 R"(
-    s_out__ << "lop4__ matched head `" << d_matched << "'\n"
+    if (s_debug__)
+        s_out__ << "lop4__ matched head `" << d_matched << "'\n"
                 "       re-scan `" << 
                 d_lopMatched.substr(length(), std::string::npos) << "'\n" << 
                 dflush__;

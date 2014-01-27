@@ -353,7 +353,3 @@ inline void \@Base::noReturn__()
 $insert namespace-close
 
 #endif //  \@BASE_H_INCLUDED
-
-
-
-

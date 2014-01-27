@@ -292,10 +292,16 @@ void \@Base::updateFinals__()
     int const *rf = d_dfaBase__[d_state] + s_finIdx__;
 
     if (rf[0] != -1)        // update to the latest std rule
+    {
+$insert 4 debug "latest std rule: " << rf[0] << ", len = " << len
         d_final.std = FinalData { as<size_t>(rf[0]), len };
+    }
 
     if (rf[1] != -1)        // update to the latest bol rule
+    {
+$insert 4 debug "latest BOL rule: " << rf[0] << ", len = " << len
         d_final.bol = FinalData { as<size_t>(rf[1]), len };
+    }
 }
 
 void \@Base::reset__()

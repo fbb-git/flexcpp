@@ -1,11 +1,13 @@
 // Using indeterminate head and tail length pattern a*/a+b
 // flex reports: `warning, dangerous trailing context'
-
 %%
 
 [[:space:]]+
 
-a*/a+b              d_p = "a*/a+b"; return 1;
+//%allow
+a*
+//%allow
+a*/a+b              d_p = "a+/a+b"; return 1;
 
 ab                  d_p = "ab";     return 2;
 

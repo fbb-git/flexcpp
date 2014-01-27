@@ -12,7 +12,8 @@ void Generator::lop2(ostream &out) const
     if (d_debug)
         out << 
 R"(
-    s_out__ << "lop2__ matched tail `" << d_matched << "\'\n" << dflush__;
+    if (s_debug__)
+        s_out__ << "lop2__ matched tail `" << d_matched << "\'\n" << dflush__;
 )";
                                             
         out << 

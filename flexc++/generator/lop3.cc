@@ -11,7 +11,8 @@ void Generator::lop3(ostream &out) const
     if (d_debug)
         out <<
 R"(
-    s_out__ << "lop3__: trying to match tail `" << 
+    if (s_debug__)
+        s_out__ << "lop3__: trying to match tail `" << 
                std::string(d_lopIter, d_lopEnd) << "'\n" << dflush__;
 )";
 

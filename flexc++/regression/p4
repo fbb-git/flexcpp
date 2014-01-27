@@ -6,10 +6,10 @@
 %%
 
 "#include"[ \t]+"\""        d_p = "\"#include\"[ \\t]+\"\\\"";  begin(StartCondition__::inc); return 1;
-<inc>[^"]+"\""              d_p = "<inc>[^\"]+\"\\\"\""; begin(StartCondition__::INITIAL);pushStream(); return 2;
+<inc>[^"]+"\""              d_p = "<inc>[^\"]+\"\\\"\""; begin(StartCondition__::INITIAL);pushStream(matched().substr(0, length()-1)); return 2;
 
 .                           more();
-\n                          less(1); begin(StartCondition__::eoln); return 4;
+\n                          redo(1); begin(StartCondition__::eoln); return 4;
 
 [[:space:]]+
 

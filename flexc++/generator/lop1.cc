@@ -15,7 +15,9 @@ void Generator::lop1(ostream &out) const
 
     if (d_debug)
         out << 
-R"(    s_out__ << "lop1__ received `" << )"
+R"(     
+    if (s_debug__)
+        s_out__ << "lop1__ received `" << )"
                                 R"(d_lopMatched << "\'\n" << dflush__;
 )";
 

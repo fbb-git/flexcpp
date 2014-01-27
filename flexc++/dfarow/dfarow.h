@@ -75,6 +75,10 @@ class DFARow: private FlexTypes
 
         std::string const &action(size_t idx) const;  // only for FINAL rows
 
+            // Rules matched when this row represents a final state are set
+            // in `transitions'. It calls the reverse mapping
+            // Rules:ruleFromFinalState to find the rule for which this is a
+            // final state.
         std::pair<size_t, size_t> const &final() const; // final state for 
                                         // which rules? the 1st value is a 
                                         // non-BOL rule, the 2nd a BOL-rule
@@ -86,7 +90,8 @@ class DFARow: private FlexTypes
         void uniqueMap(std::vector<size_t> const &xlat);
 
     private:
-        void updateViable(size_t &destIdx, size_t ruleIdx); // in setfinal.cc
+        void setViable(size_t *destIdx, size_t ruleIdx);
+        void updateViable(size_t *destIdx, size_t ruleIdx); // in setfinal.cc
 
         void tabulateTransitions(FBB::Table &table) const;
         void tabulateFinals(FBB::Table &table) const;
