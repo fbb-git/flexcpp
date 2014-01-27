@@ -4,7 +4,7 @@ bool Scanner::handleEOLNcomment()
 {
     if (not d_inCharClass)
     {
-        if (matched() == "//%allow")
+        if (matched() == "//%nowarn")
             d_allowNullMatches = true;
         return false;
     }

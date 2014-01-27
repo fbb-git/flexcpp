@@ -14,11 +14,9 @@ void Parser::addRule(Pattern const &pattern, bool reset)
     if (not d_scanner.allowNullMatches() && pattern.canBeEmpty(d_states))
     {
         d_nullMatchingRules = true;
-        emsg << 
-            "null-matching regular expressions by default not allowed" << 
-            endl;
-        return;
+        wmsg << "null-matching regular expression" << endl;
     }
+
     Block block(d_scanner.lineNr() - 1, d_scanner.filename());
     d_rules.add(d_boln, pattern, block, pattern.type());
 

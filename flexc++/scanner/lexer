@@ -194,7 +194,7 @@ OPTBL                   [[:blank:]]*
     .                           return matched()[0];
 }
 
-//%allow
+//%nowarn
 <line>.*                        return Parser::STRING;
 <line>\n                        return popSc('\n');
 

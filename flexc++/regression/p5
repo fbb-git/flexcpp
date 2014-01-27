@@ -1,11 +1,12 @@
-// Using ^, $, and //%allow to trim begin/end-of line blanks from input lines
+// Using ^, $, and //%nowarn to trim begin/end-of line blanks from input lines
 
 %%
 
-//%allow
+//%nowarn
 ^[ \t]*
 
-[ \t]+$
+//%nowarn
+[ \t]*$
 
 [^ \t\n](.*[^ \t\n])?       return 2;
 \n                          return 3;

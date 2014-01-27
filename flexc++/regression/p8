@@ -1,8 +1,9 @@
 // BOL patterns
 %%
-a\n/b           return 1;
-b               return 3;
-^b              return 2;
+a\n/b           d_p = "a\\n\\b"; return 1;
 
-.               return 3;
-\n              return 4;
+^b              d_p = "^\\b";   return 2;
+b               d_p = "b";      return 3;
+
+.               d_p = ".";      return 3;
+\n              d_p = "\\n";    return 4;
