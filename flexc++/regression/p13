@@ -1,0 +1,8 @@
+// lookahead full line contents
+
+%%
+//%nowarn
+.*$         d_p = ".*$"; return 1;
+
+\n
+
