@@ -1,0 +1,9 @@
+// jurjen-bug, i12 returns 1 (matching 832) and 11 times 2.
+
+int   [[:digit:]]+
+
+%%
+
+{int}/(' '+'<'[0-9]+'.'[0-9]+'>'\n)     d_p = "{int}/(' '+'<'[0-9]+'.'[0-9]+'>'\n)"; return 1;
+.                   d_p = ".";              return 2;
+\n
