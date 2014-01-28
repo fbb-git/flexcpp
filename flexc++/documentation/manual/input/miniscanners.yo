@@ -1,7 +1,7 @@
 Since the scanner has full control over what happens before and after
 determining the next token, the lexical scanner's rules can be designed so
 that it always first reads a line, and then re-reads that line in another
-mini-scanner. The tt(Scanner) object keeps the last-read line, a column
+start condition. The tt(Scanner) object keeps the last-read line, a column
 indicator, and a reset flag, which is initially set to tt(true) and also after
 reading a newline. If the reset flag is true, the column indicator is set to
 0, otherwise it is updated to the length of the currently matched text. Here
@@ -39,7 +39,7 @@ The scanner's default rule (the tt(StartCondition__::INITIAL) scanner simply
 reads the initial line, and then pushes the line back onto the scanner's
 queue. A simple tt(.*) will ensure that all the line's characters are
 read. Having matched a line it must still be broken down into tokens, for
-which the tt(%x main) mini-scanner is used. The default (tt(INITIAL))
+which the tt(%x main) start condition is used. The default (tt(INITIAL))
 scanner's rule looks like this:
 
         verb(
@@ -52,7 +52,7 @@ scanner's rule looks like this:
         )
 
 Now that the line has been stored, it's time to obtain its tokens, which is
-the responsibility of the tt(StartCondition__::main) mini scanner:
+the responsibility of the tt(StartCondition__::main) start condition:
 
         verb(
     <main>{

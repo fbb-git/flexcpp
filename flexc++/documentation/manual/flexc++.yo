@@ -64,7 +64,6 @@ includefile(lexer/intro)
     lsect(definitionsection)(Definitions section)
     includefile(lexer/definitions)
 
-COMMENT(WIP: DONE UNTIL HERE)
         lsubsect(DIRECTIVES)(Directives)
         includefile(lexer/directives)
 
@@ -80,7 +79,7 @@ COMMENT(WIP: DONE UNTIL HERE)
     lsect(actions)(Actions)
     includefile(lexer/actions)
     
-    lsect(STARTCONDITIONS)(Startconditions (Miniscanners))
+    lsect(STARTCONDITIONS)(Start conditions (Mini scanners))
     includefile(lexer/startconditions)
     
         subsect(Notation details)
@@ -101,7 +100,7 @@ includefile(files/intro)
 chapter(Pre-loading input lines)
 includefile(input/intro)
 
-    sect(Using mini-scanners to pre-load input lines)
+    sect(Using start conditions to pre-load input lines)
     includefile(input/miniscanners)
     
     sect(Wrapping input streams)
@@ -113,18 +112,19 @@ includefile(input/intro)
         subsect(Illustration)
         includefile(input/illustrationwrap)
 
-
-chapter(Technical documentation (PIPETHROUGH(date -R)()))
+chapter(Technical documentation) COMMENT( (PIPETHROUGH(date -R)()) )
 includefile(technical/intro)
     
     lsect(NOTATION)(Notation, Terminology)
     includefile(technical/notations)
+
+COMMENT(TO DO)
     
     lsect(PARSER)(The parser)
     includefile(technical/parser)
 
-    lsect(SEMVAL)(Semantic Data, struct DataType and the class SemUnion)
-    TODO
+    lsect(SEMVAL)(Semantic Data and struct DataType)
+COMMENT( TODO: intro?)
 
         lsubsect(PATTERNVAL)(The class Pattern)
         includefile(technical/patternval)    

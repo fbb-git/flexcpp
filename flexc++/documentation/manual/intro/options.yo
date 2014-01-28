@@ -28,10 +28,12 @@ and hand-editing may then be required to effectuate the option.
            A warning is issued if this option is used and an already
             existing scanner-class header file does not include
             tt(`filename'). 
+
     it() lsoption(baseclass-skeleton)(C)(pathname)nl() 
            Use tt(pathname) as the path to the file containing the skeleton of
             the scanner class's base class. Its filename defaults to
             tt(flexc++base.h).
+
     it() loption(case-insensitive)nl()
            Use this option to generate a scanner em(case insensitively)
             matching regular expressions. All regular expressions specified in
@@ -59,10 +61,12 @@ and hand-editing may then be required to effectuate the option.
             always contains the original, unmodified text. So, with the above
             input tt(matched()) returns, respectively tt(first, First, FIRST)
             and tt(firST), while matching the rule tt(First).
+
     it() lsoption(class-header)(c)(filename)nl()
            Use tt(filename) as the name of the file to contain the scanner
             class. Defaults to the name of the scanner class plus the suffix
             tt(.h)
+
     it() laoption(class-name)(className)nl()
            Use tt(className) (rather than tt(Scanner)) as the name of the
             scanner class. Unless overridden by other options generated files
@@ -72,14 +76,17 @@ and hand-editing may then be required to effectuate the option.
            A warning is issued if this option is used and an already
             existing scanner-class header file does not define tt(class
             `className')
+
     it() lsoption(class-skeleton)(C)(pathname)nl()
            Use tt(pathname) as the path to the file containing the skeleton of
             the scanner class. Its filename defaults to tt(flexc++.h).
+
     it() loption(construction) (soption(K))nl()
            Write details about the lexical scanner to the file
             tt(`rules-file'.output). Details cover the used character ranges,
             information about the regexes, the raw NFA states, and the final
             DFAs.
+
     it() loption(debug) (soption(d))nl() 
            Provide tt(lex) and its support functions with debugging code,
             showing the actual parsing process on the standard output
@@ -89,14 +96,17 @@ and hand-editing may then be required to effectuate the option.
             anymore. By rerunning flc() without the bf(--debug) option an
             equivalent scanner is generated not containing the debugging
             code. 
+
     it() lsoption(filenames)(f)(genericName)nl()
            Generic name of generated files (header files, not the
             tt(lex)-function source file, see the tt(--lex-source) option for
             that). By default the header file names will be equal to the name
             of the generated class.
+
     it() loption(help) (soption(h))nl()
             Write basic usage information to the standard output stream and
             terminate. 
+
     it() lsoption(implementation-header)(i)(filename)nl() 
            Use tt(filename) as the name of the file to contain the
             implementation header. Defaults to the name of the generated
@@ -113,20 +123,25 @@ and hand-editing may then be required to effectuate the option.
            A warning is issued if this option is used and an already existing
             tt('filename') file does not include the scanner class header
             file.
+
     it() lsoption(implementation-skeleton)(I)(pathname)nl()
            Use tt(pathname) as the path to the file containing the skeleton of
             the implementation header. Its filename defaults to
             tt(flexc++.ih).
+
     it() lsoption(lex-skeleton)(L)(pathname)nl()
            Use tt(pathname) as the path to the file containing the
             tt(lex()) member function's skeleton. Its filename defaults to
             tt(flexc++.cc).
+
     it() laoption(lex-function-name)(funname)nl()
            Use tt(funname) rather than tt(lex) as the name of the member
             function performing the lexical scanning.
+
     it() lsoption(lex-source)(l)(filename)nl()
            Define tt(filename) as the name of the source file to contain the
             scanner member function tt(lex). Defaults to tt(lex.cc).
+
     it() loption(matched-rules) (soption('R'))nl()
            The generated scanner will write the numbers of matched rules to 
             the standard output. It is implied by the tt(--debug) option.
@@ -134,12 +149,14 @@ and hand-editing may then be required to effectuate the option.
             generated  scanner's member tt(setDebug(false)) (or, of course, by
             re-generating the scanner without using specifying 
             tt(--matched-rules)).
+
     it() lsoption(max-depth)(m)(depth)nl()
            Set the maximum inclusion depth of the lexical scanner's
             specification files to tt(depth). By default the maximum depth is
             set to 10. When more than tt(depth) specification files are used
             the scanner throws a tt(Max stream stack size exceeded)
             tt(std::length_error) exception. 
+
     it() laoption(namespace)(identifier) nl()
            Define the scanner class in the namespace tt(identifier). By default
             no namespace is used. If this options is used the
@@ -151,11 +168,13 @@ and hand-editing may then be required to effectuate the option.
            A warning is issued if this option is used and an already existing
             scanner-class header file does not define tt(namespace
             identifier). 
+
     it() loption(no-baseclass-header)nl()
            Do not write the file containing the scanner's base class interface
             even if it doesn't yet exist. By default the file containing the
             scanner's base class interface is (re)written each time flc() is
             called.
+
     it() loption(no-lines)nl() 
            Do not put bf(#line) preprocessor directives in the file containing
             the scanner's tt(lex) function. By default tt(#line) directives
@@ -164,6 +183,7 @@ and hand-editing may then be required to effectuate the option.
             to associate errors with lines in your grammar specification
             file, rather than with the source file containing the tt(lex)
             function itself.
+
     it() loption(no-lex-source)nl()
            Do not write the file containing the scanner's predefined scanner
             member functions, even if that file doesn't yet exist. By default
@@ -172,6 +192,7 @@ and hand-editing may then be required to effectuate the option.
             should normally be avoided, as this file contains parsing
             tables which are altered whenever the grammar definition is
             modified. 
+
     it() loption(own-tokens) (soption(T))nl() 
            The tokens returned as well as the text matched when flc() reads
             its input files(s) are shown when this option is used.
@@ -179,6 +200,7 @@ and hand-editing may then be required to effectuate the option.
            This option does em(not) result in the generated program displaying
             returned tokens and matched text. If that is what you want, use
             the tt(--print-tokens) option.
+
     it() loption(print-tokens) (soption(t))nl() 
            The tokens returned as well as the text matched by the generated
             tt(lex) function are displayed on the standard output stream, just
@@ -194,28 +216,35 @@ and hand-editing may then be required to effectuate the option.
            This option does em(not) show the tokens returned and text matched
             by flc() itself when reading its input file(s). If that is what
             you want, use the tt(--own-tokens) option.
+
     it() loption(regex-calls)nl() 
            Show the function call order when parsing regular expressions (this
             option is normally not required. Its main purpose is to help
             developers understand what happens when regular expressions are
             parsed).
+
     it() loption(show-filenames) (soption(F))nl() 
            Write the names of the files that are generated to the 
             standard error stream.
+
     it() lsoption(skeleton-directory)(S)(pathname)nl() 
            Defines the directory containing the skeleton files. This option
             can be overridden by the specific skeleton-specifying options
             (tt(-B -C, -H,) and tt(-I)).
+
     it() laoption(target-directory)(pathname) nl() 
            Specifies the directory where generated files should be written.
             By default this is the directory where flc() is called.
+
     it() loption(usage) (soption(h))nl()
             Write basic usage information to the standard output stream and
             terminate. 
+
     it() loption(verbose)(soption(V))nl() 
            The verbose option generates on the standard output stream various
             pieces of additional information, not covered by the
             tt(--construction) and tt(--show-filenames) options.
-     it() loption(version) (soption(v))nl()
+
+    it() loption(version) (soption(v))nl()
             Display flc()'s version number and terminate.
     )

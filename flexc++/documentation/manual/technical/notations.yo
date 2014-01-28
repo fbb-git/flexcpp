@@ -1,8 +1,8 @@
 subsubsect(Notations)
 
     itemization(
-    itt(BOL): Begin-of-line is abbreviated to BOL.
-    itt(LOP): the lookahead operator (tt(/)) is abbreviated to LOP.
+    itt(BOL): Begin-of-line.
+    itt(LOP): the lookahead operator (tt(/)).
     itt(RE): A regular expression.
     itt(F): A final state.
     itt(x[y]): at state tt(x) an empty transition to state tt(y) is allowed.
@@ -33,7 +33,7 @@ subsubsect(Example of LOP-patterns)
     table(4)(llr)(
     rowline()
     row(cell()         cell(Input Ch)                                )
-    row(cell(StateSet) ccell(a)         cell(Fin) )
+    row(cell(StateSet) ccell(a)         cell(F) )
     rowline()
     row(
             cell(12)        cell(123)   rcell()                    )
@@ -42,10 +42,8 @@ subsubsect(Example of LOP-patterns)
     row(
             cell(1234)      cell(12345) rcell()       )
     row(
-            cell(12345)     cell(12345) rcell(F)   )
+            cell(12345)     cell(12345) rcell(0)   )
     rowline()
     ))
     
     )
-                
-

@@ -1,7 +1,7 @@
 Instead of using a mini scanner compound statement, it is also 
-possible to provide rules with explicit mini-scanner specifications
-(cf. section ref(patterns). Here is the tt(string) mini scanner once again,
-now using explicit mini-scanner specifications:
+possible to define rules using explicit start condition specifications
+(cf. section ref(patterns). Here is the tt(string) start condition once again,
+now using explicit start condition specifications:
     verb(
 %x string
     

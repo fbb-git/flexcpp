@@ -5,59 +5,70 @@ within actions (or by members called from
 those actions):
 
 itemization(
-    itb(void accept(size_t nChars = 0))
-       tt(accept(n)) returns all but the first `nChars' characters of the
-        current token back to the input stream, where they will be rescanned
-        when the scanner looks for the next match.  So, it matches `nChars' of
-        the characters in the input buffer, rescanning the rest. This function
-        effectively sets tt(length)'s return value to tt(nChars) (note: with
-        bf(flex++) this function was called tt(less));
-    itb(void begin(StartCondition__ startCondition))
-       activate the regular expression rules associated with
-        tt(StartCondition__ startCondition). As this enumeration is a strongly
-        typed enum the tt(StartCondition__) scope must be specified as
-        well. E.g., 
-            verb(
-        begin(StartCondition__::INITIAL);
-            )
-    itb(bool debug() const)
-       returns tt(true) if tt(--debug) or tt(%debug) was specified, otherwise
-        tt(false).
-    itb(void echo() const) 
-       The currently matched text (i.e., the text returned by the member
-        tt(matched)) is inserted into the scanner object's output stream;
-    itb(std::string const  &filename()  const)
-       returns the name of the file currently processed by the scanner object.
-    itb(size_t              length()    const)
-       returns the length of the text that was matched by tt(lex). With
-        bf(flex++) this function was called tt(leng).
-    itb(size_t              lineNr()    const)
-       returns the line number of the currently scanned line. This function is
-        always available (note: bf(flex++) only offered a similar function
-        (called tt(lineno)) after using the tt(%lineno) option).
-    itb(std::string const  &matched()   const)
-       returns the text matched by tt(lex) (note: bf(flex++) offers a similar
-        member called tt(YYText)).
-    itb(void more())
-       the matched text is kept and will be prefixed to the text that is
-        matched at the next lexical scan;
-    itb(std::ostream &out())
-       returns a reference to the scanner's output stream;
-    itb(bool popStream())
-       closes the currently processed input stream and continues to process
-        the most recently stacked input stream (removing it from the stack of
-        streams). If this switch was successfully performed tt(true) is
-        returned, otherwise (e.g., when the stream stack is empty) tt(false)
-        is returned;
-    itb(void preCode())
-        By default this function has an empty, inline implementation in
-tt(Scanner.h). It can safely be replaced by a user-defined
-implementation. This function is called by tt(lex__), just before it starts to
-match input characters against its rules: tt(preCode) is called by tt(lex__)
-when tt(lex__) is called and also after having executed the actions of a rule
-which did not execute a tt(return) statement. The outline of tt(lex__)'s
-implementation looks like this:
+itbn(void accept(size_t nChars = 0))
+   tt(accept(n)) returns all but the first `nChars' characters of the
+    current token back to the input stream, where they will be rescanned
+    when the scanner looks for the next match.  So, it matches `nChars' of
+    the characters in the input buffer, rescanning the rest. This function
+    effectively sets tt(length)'s return value to tt(nChars) (note: with
+    bf(flex++) this function was called tt(less));
+
+itbn(void begin(StartCondition__ startCondition))
+   activate the regular expression rules associated with
+    tt(StartCondition__ startCondition). As this enumeration is a strongly
+    typed enum the tt(StartCondition__) scope must be specified as
+    well. E.g., 
         verb(
+    begin(StartCondition__::INITIAL);
+        )
+
+itbn(bool debug() const)
+   returns tt(true) if tt(--debug) or tt(%debug) was specified, otherwise
+    tt(false).
+
+itbn(void echo() const) 
+   The currently matched text (i.e., the text returned by the member
+    tt(matched)) is inserted into the scanner object's output stream;
+
+itbn(std::string const  &filename()  const)
+   returns the name of the file currently processed by the scanner object.
+
+itbn(size_t              length()    const)
+   returns the length of the text that was matched by tt(lex). With
+    bf(flex++) this function was called tt(leng).
+
+itbn(size_t              lineNr()    const)
+   returns the line number of the currently scanned line. This function is
+    always available (note: bf(flex++) only offered a similar function
+    (called tt(lineno)) after using the tt(%lineno) option).
+
+itbn(std::string const  &matched()   const)
+   returns the text matched by tt(lex) (note: bf(flex++) offers a similar
+    member called tt(YYText)).
+
+itbn(void more())
+   the matched text is kept and will be prefixed to the text that is
+    matched at the next lexical scan;
+
+itbn(std::ostream &out())
+   returns a reference to the scanner's output stream;
+
+itbn(bool popStream())
+   closes the currently processed input stream and continues to process
+    the most recently stacked input stream (removing it from the stack of
+    streams). If this switch was successfully performed tt(true) is
+    returned, otherwise (e.g., when the stream stack is empty) tt(false)
+    is returned;
+
+itbn(void preCode())
+   By default this function has an empty, inline implementation in
+    tt(Scanner.h). It can safely be replaced by a user-defined
+    implementation. This function is called by tt(lex__), just before it
+    starts to match input characters against its rules: tt(preCode) is called
+    by tt(lex__) when tt(lex__) is called and also after having executed the
+    actions of a rule which did not execute a tt(return) statement. The
+    outline of tt(lex__)'s implementation looks like this: 
+   verb(
 int Scanner::lex__()
 {
     ...
@@ -76,12 +87,13 @@ int Scanner::lex__()
     } // while
 }
         )
-    itb(void postCode(PostEnum__ type))
-        By default this function has an empty, inline implementation in
-tt(Scanner.h). It can safely be replaced by a user-defined
-implementation. This function is called by tt(lex__), just after a rule has
-been matched, where tt(PostEnum__)'s value indicates the characteristic of the
-matched rule. tt(PostEnum__) has four values:
+
+itbn(void postCode(PostEnum__ type))
+   By default this function has an empty, inline implementation in
+    tt(Scanner.h). It can safely be replaced by a user-defined
+    implementation. This function is called by tt(lex__), just after a rule
+    has been matched, where tt(PostEnum__)'s value indicates the
+    characteristic of the matched rule. tt(PostEnum__) has four values:
         itemization(
         itb(PostEnum__::END): the function tt(lex__)  immediately returns 0
             once tt(postCode) returns, indicating the end of the input was
@@ -95,72 +107,80 @@ matched rule. tt(PostEnum__) has four values:
         itb(PostEnum__::WIP): the function tt(lex__) has matched a
             non-returning rule, and continues its rule-matching process.
         )
-    itb(void push(size_t ch))
-       character tt(ch) is pushed back onto the input stream. I.e., it will be
-        the character that is retrieved at the next attempt to obtain a
-        character from the input stream;
-    itb(void push(std::string const &txt))
-       the characters in the string tt(txt) are pushed back onto the input
-        stream. I.e., they will be the characters that are retrieved at the
-        next attempt to obtain characters from the input stream. The
-        characters in tt(txt) are retrieved from the first character to the
-        last. So if tt(txt == "hello") then the tt('h') will be the character
-        that's retrieved next, followed by tt('e'), etc, until tt('o');
-    itb(void pushStream(std::istream &curStream))
-        this function pushes tt(curStream) on the stream stack;
-        bf(This member is not available with interactive scanners.)
-    itb(void pushStream(std::string const &curName))
-       same, but the stream tt(curName) is opened first, and the resulting
-        tt(istream) is pushed on the stream stack;
-        bf(This member is not available with interactive scanners.)
-    itb(void redo(size_t nChars = 0))
-       this member acts like tt(accept) but its argument counts backward from
-        the end of the matched text. All but these tt(nChars) characters are
-        kept and the last tt(nChar) characters are rescanned. This function
-        effectively reduces tt(length)'s return value by tt(nChars);
-    itb(void setDebug(bool onOff))
-       Switches on/off  debugging output by providing the argument tt(true)
-        or tt(false). Switching on debugging output only has visible effects
-        if the tt(debug) option was specified.
-    itb(void setFilename(std::string const &name))
-       this function sets the name of the stream returned by tt(filename) to
-        tt(name);
-    itb(void setMatched(std::string const &text))
-       this function stores tt(text) in the matched text buffer. Following a
-        call to this function tt(matched) returns tt(text).
-    itb(void switchStreams(std::istream &in,
-                                      std::ostream &out = std::cout))
-       The currently processed input and output streams are closed, and
-        processing continues at tt(in), writing output to tt(out). This is
-        em(not) a stack-operation: after processing tt(in) processing
-        does not return to the original stream.
 
-        When flc() generates an interactive scanner, this member is 
-        available (as a protected member). However, it should be considered an
-        internal use only member.
+itbn(void push(size_t ch))
+   character tt(ch) is pushed back onto the input stream. I.e., it will be
+    the character that is retrieved at the next attempt to obtain a
+    character from the input stream;
 
-    itb(void switchStreams(std::string const &infilename))
-       The currently processed input stream is closed, and processing
-        continues at the stream whose name is specified as the function's
-        argument. This is em(not) a stack-operation: after processing
-        tt(infilename) processing does not return to the original stream.
+itbn(void push(std::string const &txt))
+   the characters in the string tt(txt) are pushed back onto the input
+    stream. I.e., they will be the characters that are retrieved at the
+    next attempt to obtain characters from the input stream. The
+    characters in tt(txt) are retrieved from the first character to the
+    last. So if tt(txt == "hello") then the tt('h') will be the character
+    that's retrieved next, followed by tt('e'), etc, until tt('o');
 
-        bf(This member is not available with interactive scanners.)
+itbn(void pushStream(std::istream &curStream))
+    this function pushes tt(curStream) on the stream stack;
+    bf(This member is not available with interactive scanners.)
 
-    itb(void switchStreams(std::string const &infilename,
-                                      std::string const &outfilename))
-       The currently processed input and output streams are closed, and
-        processing continues at the stream whose name is specified as the
-        function's first argument, writing output to the file whose name is
-        specified as the function's second argument. This latter file is
-        rewritten. This is em(not) a stack-operation: after processing
-        tt(infilename) processing does not return to the original stream.
+itbn(void pushStream(std::string const &curName))
+   same, but the stream tt(curName) is opened first, and the resulting
+    tt(istream) is pushed on the stream stack;
+    bf(This member is not available with interactive scanners.)
 
-        bf(This member is not available with interactive scanners.)
+itbn(void redo(size_t nChars = 0))
+   this member acts like tt(accept) but its argument counts backward from
+    the end of the matched text. All but these tt(nChars) characters are
+    kept and the last tt(nChar) characters are rescanned. This function
+    effectively reduces tt(length)'s return value by tt(nChars);
 
-    itb(StartCondition__  startCondition() const)
-       returns the currently active start condition (mini scanner);
-    )
+itbn(void setDebug(bool onOff))
+   Switches on/off debugging output by providing the argument tt(true) or
+    tt(false). Switching on debugging output only has visible effects if the
+    tt(debug) option has been specified when generating tt(lex.cc);
+
+itbn(void setFilename(std::string const &name))
+   this function sets the name of the stream returned by tt(filename) to
+    tt(name);
+
+itbn(void setMatched(std::string const &text))
+   this function stores tt(text) in the matched text buffer. Following a
+    call to this function tt(matched) returns tt(text);
+
+itbn(void switchStreams(std::istream &in,
+                                  std::ostream &out = std::cout))
+   The currently processed input and output streams are closed, and
+    processing continues at tt(in), writing output to tt(out). This is
+    em(not) a stack-operation: after processing tt(in) processing
+    does not return to the original stream.
+
+    When flc() generates an interactive scanner, this member is 
+    available (as a protected member). However, it should be considered an
+    internal use only member;
+
+itbn(void switchStreams(std::string const &infilename))
+   The currently processed input stream is closed, and processing
+    continues at the stream whose name is specified as the function's
+    argument. This is em(not) a stack-operation: after processing
+    tt(infilename) processing does not return to the original stream.nl()
+    bf(This member is not available with interactive scanners.)
+
+
+itbn(void switchStreams(std::string const &infilename,
+                                  std::string const &outfilename))
+   The currently processed input and output streams are closed, and
+    processing continues at the stream whose name is specified as the
+    function's first argument, writing output to the file whose name is
+    specified as the function's second argument. This latter file is
+    rewritten. This is em(not) a stack-operation: after processing
+    tt(infilename) processing does not return to the original stream.nl()
+    bf(This member is not available with interactive scanners.)
+
+itbn(StartCondition__  startCondition() const)
+   returns the currently active start condition (mini scanner).
+)
 
 
 

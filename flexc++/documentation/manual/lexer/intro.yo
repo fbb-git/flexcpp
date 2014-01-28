@@ -10,5 +10,6 @@ definitions
 rules
     )
 
-Below, these sections are described in more detail.
+Optionally, a final line containing `tt(%%)' may follow the rules.  The
+following sections cover the `definitions' and `rules' sections.
 

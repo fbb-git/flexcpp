@@ -1,28 +1,26 @@
-
 As described in Section ref(rulessection), the second section of the flc()
-input file contains series of rules: pairs of patterns and actions.
+input file contains rules: pairs of patterns and (optional) actions.
 
 Specifications of patterns end at the first unescaped white space character;
 the action then starts at the first non-white space character. It usually
 contains bf(C++) code, with two exceptions: the empty and the bar (tt(|))
 action (see below). If the Cpp() code starts with a brace (tt({)), the action
 can span multiple lines until the matching closing brace (tt(})) is
-encountered. Flc() will correctly handle braces in strings and comments.
+encountered. Flc() correctly handles braces in strings and comments.
 
 Actions can be empty (omitted). Empty actions discard the matched pattern. To
 avoid confusion it is advised to provide at least a simple comment stating
 that the matched input is ignored.
 
-The bar action is an action containing only a single vertical bar (tt(|)).
-This tells flc() to use the action of the next rule. This can be repeated
-so the following rules all use the same action:
+The em(bar action) is an action containing only a single vertical bar (tt(|)).
+This tells flc() to use the action of the next rule. This can be repeated so
+the following rules all use the same action:
         verb(
     a   |
     b   |
     c   std::cout << "Matched " << match() << "\n";
         )
-    Actions can return an tt(int) value, which is usually interpreted as
-a em(token) by the program calling the lexical scanning function 
-tt(lex), called by, e.g., a em(parser). When tt(lex) is called again it
-continues just beyond the last-matched point in the input stream.
-
+    Actions can return an tt(int) value, which is usually interpreted as a
+em(token) by the program calling the scanner's tt(lex) member. When tt(lex) is
+called after it has returned it continues its pattern-matching process just
+beyond the last-matched point in the input stream.

@@ -1,13 +1,12 @@
-The rules section of the flc() input file contains a series of rules of the
+The rules section of the flc() input file contains rules of the
 form:
 
 verb(pattern    action)
 
-The em(action) is optional, and is separated from the em(pattern) by spaces
-and/or tabs. It consists of a single-line bf(C++)-statement, or of a compound
-statement that may span several lines.
+em(Action) is optional, and is separated from em(pattern) by spaces and/or
+tabs. It consists of a single-line bf(C++)-statement, or it consists of a
+compound statement that may span several lines.
 
-Alternatively, an action may consist of a vertical bar (`|').  In that case no
-blank is required between em(pattern) and tt(|). A vertical bar indicates that
-em(pattern) uses the same action as the next rule.
+Alternatively, an action may consist of a vertical bar (`|').  A vertical bar
+indicates that em(pattern) uses the same action as the next rule.
 
