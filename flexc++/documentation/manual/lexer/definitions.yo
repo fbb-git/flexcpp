@@ -8,14 +8,15 @@ this:
 
 verb(name   pattern)
 
-Here, tt(name) is is an identfier, that may also contain the hyphen (tt(-)).
-The `tt(pattern)' is a regular expression, see section ref(patterns). Patterns
+Here, tt(name) is an identfier, which may also contain hyphens (tt(-));
+`tt(pattern)' is a regular expression, see section ref(patterns). Patterns
 start at the first non-blank character following the name, and end at the
-line's last non-blank character. Consequently, a named regular expression
-itself cannot contain comment.
+line's last non-blank character. A named regular expression cannot contain
+comment.
 
 Finally, the definitions section may be used to declare em(mini-scanners)
-(a.k.a.  em(start conditions)), cf. section ref(STARTCONDITIONS).
-Mini-scanners are very useful for scanning small `sub-languages' in the
-language you want to scan. A commonly encountered example is the mini-scanner
-recognizing bf(C) style multi-line comment.
+(a.k.a.  em(start conditions)), cf. section ref(STARTCONDITIONS).  Start
+conditions are very useful for defining small `sub-languages' inside the
+language whose tokens must be recognized by the scanner. A commonly
+encountered example is the start condition recognizing bf(C) style multi-line
+comment.

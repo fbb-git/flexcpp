@@ -1,0 +1,19 @@
+In bf(flex)(1) initializating code can be provided in the definition section
+(see section ref(definitionsection)), and pre-match code can be provided as
+the first lines in the rules section.
+
+Flc() does not support code blocks. Since flc() generates a class with
+appropriate header files, initialization code can be activated bij flc()'s
+constructor, code to be executed when tt(lex) is called can be placed in the
+member tt(lex)'s body, just before calling tt(lex__), and tt(Scanner::preCode)
+can be provided with any required pre-match code. See also lref(generated
+files)(files) below.
+
+Flc() also does not support a trailing `user code' section, where additional
+code can be placed to be copied verbatim to the source file. Again, the
+tt(Scanner) class approach offers preferable means for adding user code to the
+scanner. 
+
+Sections ref(diffdef), ref(diffrules) and ref(diffusercode) cover 
+items which are no longer supported in flc(), offering alternatives.
+

@@ -14,10 +14,10 @@ COMMENT(
 END)
 
 Some options may generate warnings. This happens when an option conflicts with
-the contents of a file which flc() cannot modify (e.g., a scanner
+the contents of an existing file which flc() cannot modify (e.g., a scanner
 class header file exists, but doesn't define a name space, but a
-tt(--namespace) option was provided). In those cases the option is
-ignored, and hand-editing may then be required to effectuate the option.
+tt(--namespace) option was provided). In those cases the option is ignored,
+and hand-editing may then be required to effectuate the option.
 
     itemization(
     it() lsoption(baseclass-header)(b)(filename)nl()

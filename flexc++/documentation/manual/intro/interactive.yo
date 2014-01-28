@@ -1,11 +1,12 @@
-The bf(flexc++)(1) manual page contains an example of an interactive
+The bf(flexc++)(1) manual page contains an example of an em(interactive)
 scanner. Let's add command-line editing and command-line history to that
 scanner. 
 
 Command-line editing and history is provided by the Gnu readline library. The
-bobcat library offers a class tt(FBB::ReadLineStream) encapsulating Gnu's
-readline library's facilities, and this class is used to implement the
-requested features. 
+url(bobcat)(http://bobcat.sourceforge.net/) library offers a class
+tt(FBB::ReadLineStream) encapsulating Gnu's readline library's facilities.
+This class wass used by the following example to implement the required
+features.
 
 The lexical scanner is a simple one. It recognizes bf(C++) identifiers and
 tt(\n) characters, and ignores all other characters. Here is its
@@ -13,7 +14,9 @@ specification:
     verb(
 %class-name Scanner
 %interactive
+
 %%
+
 [[:alpha:]_][[:alnum:]_]*   return 1;
 \n                          return '\n';
 .
@@ -27,10 +30,10 @@ specification:
 contains the file tt(main.cc) whose implementation is shown below, then
 execute the following command to create the interactive scanner program:
         verb(
-    g++ --std=c++0x *.cc -lbobcat
+    g++ --std=c++11 *.cc -lbobcat
         )
     This completes the construction of the interactive scanner. Here is
-tt(main.cc)'s source:
+the file tt(main.cc):
         verb(
 #include <iostream>
 #include <bobcat/readlinestream>
@@ -60,8 +63,9 @@ int main()
     }
 }
     )
-    Here is an example of some interaction with the program. End-of-line
-comment is not entered, but was added by us for documentary purposes:
+    An interactive session with the above program might look like this
+(end-of-line comment is not entered, but was added by us for documentary
+purposes):
         verb(   
     $ a.out
     ? hello world               // enter some words
@@ -75,10 +79,10 @@ comment is not entered, but was added by us for documentary purposes:
     $
         )
     The interactive scanner only supports one constructor, by default using
-tt(std::cin) to read from and tt(std::cout) to write to:
+tt(std::cin), to read from, and by default using tt(std::cout) to write to:
         verb(
     explicit Scanner(std::istream &in = std::cin,
                      std::ostream &out = std::cout);
         )
-    Furthmore, interactive scanners only support switching output streams
-(through tt(switchOstream) members).
+    Interactive scanners only support switching output streams (through
+tt(switchOstream) members).

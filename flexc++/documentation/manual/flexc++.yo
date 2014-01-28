@@ -32,7 +32,7 @@ lchapter(differences)(Differences between flex and flexc++)
     includefile(differences/intro.yo)
     
     lsect(code_blocks)(Format of the input file)
-    includefile(differences/codeblocks.yo)
+    includefile(differences/format.yo)
     
         lsubsect(diffdef)(Definition section)
         includefile(differences/definitions.yo)
@@ -64,6 +64,7 @@ includefile(lexer/intro)
     lsect(definitionsection)(Definitions section)
     includefile(lexer/definitions)
 
+COMMENT(WIP: DONE UNTIL HERE)
         lsubsect(DIRECTIVES)(Directives)
         includefile(lexer/directives)
 

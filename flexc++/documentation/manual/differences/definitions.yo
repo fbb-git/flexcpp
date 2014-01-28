@@ -7,7 +7,7 @@ itemization(
     nosupport(Indented text or tt(`%{ ... %}') blocks copied verbatim to
             yylex.cc)
         (Can be used for helper code)
-        (Member functions and data members of scanner class may be defined.)
+        (Use member functions and/or data members of the tt(Scanner) class.)
 
     nosupport(An unindented c-comment (tt(`/* ... */')) is copied to yylex.cc)
         (Commenting helper code.)

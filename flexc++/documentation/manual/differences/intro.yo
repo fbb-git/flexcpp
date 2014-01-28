@@ -1,4 +1,4 @@
-Although flc() tries to be as much compatible with flex as possible, there are
-some differences. This chapter provides a quick overview for the users already
-familiar with flex.
+Although flc() tries to be as compatible as possible with bf(flex)(1), there
+are some noteworthy differences. This chapter provides a quick overview for
+the users already familiar with flex.
 

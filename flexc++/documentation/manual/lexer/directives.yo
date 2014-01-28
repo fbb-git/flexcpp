@@ -1,10 +1,13 @@
     Some directives require arguments, which are usually provided following
-separating (but optional) tt(=) characters. Arguments of directives, are text,
-surrounded by double quotes (strings). If a string must itself contain a
-double quote or a backslash, then precede these characters by a backslash. The
-exceptions are the tt(%s) and tt(%x) directives, which are immediately
-followed by name lists, consisting of identifiers separated by blanks.  Here
-is an example of the definition of a directive:
+separating (but optional) tt(=) characters. Arguments of directives are text,
+surrounded by double quotes (strings), or embedded in raw string literals
+(rawstrings).  Double quotes or backslashes inside strings must themselves be
+preceded by backslashes; these backslashes are not required when rawstrings
+are used. 
+
+    The tt(%s) and tt(%x) directives are immediately followed by name lists,
+consisting of identifiers separated by blanks.  Here is an example of the
+definition of a directive:
         verb(
     %class-name = "MyScanner"
         )
@@ -31,7 +34,7 @@ ignored, and hand-editing may then be required to effectuate the directive.
             existing scanner-class header file does not include
             tt(`filename'). 
     it() bf(%case-insensitive)nl()
-           Generates a scanner em(case insensitively) matching regular
+           Generates a scanner which em(case insensitively) matches regular
             expressions. All regular expressions specified in flc()'s input
             file are interpreted case insensitively and the resulting scanner
             object will case insensitively interpret its input.

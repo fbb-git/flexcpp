@@ -10,8 +10,8 @@ itemization(
             to the output, but meaning is ill-defined and compiler errors may
             result.)
         (POSIX compliance)
-        (As of now, for the format of the input file we are not fully POSIX
-            compliant.)
+        (A user code section is superfluous. User code should be provided as
+         member functions.)
 )
 
 

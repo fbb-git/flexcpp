@@ -1,13 +1,12 @@
+Not all patterns supported by bf(flex)(1) are supported by flc().  Notably,
+flc() does not yet support certain flags in regular expressions, like the flag
+to define case-insensitive regular expressions, or the flag allowing white
+space in regular expressions.
 
-Not all patterns that are supported by flex are supported by flc().
-Notably, flc() does not yet support certain flags in regular expressions,
-like the flag that makes the regular expression case insensitive, or the flag
-that allows whitespace in regular expressions.
-
-Another small difference in the patterns is that in a named pattern, defined
-in the definion section, the lookahead operator (`/') cannot be used.  This is
-the result of name expansions being handled as a parenthesized regular
-expression (a group). Since groups may occur any number of times in a regular
-expression but a lookahead operator only once, the look-ahead operator is not
-accepted in a named pattern.
+Another minor difference is that named patterns, defined in the definion
+section, cannot be used if they contain the lookahead operator (`/').  This is
+the result of the way name expansions are handled by flc(). Flc() handles name
+expansions as a parenthesized regular expression (a group). Since groups may
+occur any number of times in a regular expression but a lookahead operator
+only once, the look-ahead operator is not accepted in a named pattern.
 
