@@ -44,8 +44,8 @@ parser for the next rule, resetting various data members to their original,
 begin-of-line states. See tt(parser/reset.cc) for details.
 
 A tt(_rule_definition) may be empty, but usually it consists of a rule
-optionally valid for a set of mini-scanners (tt(optMs_rule), or it is a
-rule or series of rules embedded in a mini-scanner compound (tt(msComound)):
+optionally valid for a set of start conditions (tt(optMs_rule), or it is a
+rule or series of rules embedded in a start condition compound (tt(msComound)):
         verb(
     _rule_def:
         // only an empty line is OK
@@ -59,7 +59,7 @@ rule or series of rules embedded in a mini-scanner compound (tt(msComound)):
     ;
         )
     The tt(msCompund) isn't interesting by itself, as it repeats
-tt(optMs_rule), but without the mini-scanner specifications for the individual
+tt(optMs_rule), but without the start condition specifications for the individual
 rules. 
     
     An tt(optMs_rule) is a rule (tt(_optMs_rule)), optionally followed by an
@@ -94,7 +94,7 @@ block:
     ;
         )
     And an tt(_optMS_regex), finally, is a regular expression or EOF-pattern,
-optionally prefixed by a mini scanner specification:
+optionally prefixed by a start condition specification:
         verb(
     _optMs_regex:       
         ms_spec regexOrEOF

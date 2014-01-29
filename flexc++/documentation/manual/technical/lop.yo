@@ -13,7 +13,7 @@ expressions, the scanner must at least be able to match tt({head}{tail}): the
 concatenation of tt({head}) and tt({tail}). 
 
 Lookahead tail patterns, however, must match input strings which should be as
-short as possible. To find this shortest tail pattern the scanner will try to
+short as possible. To find this shortest tail pattern the scanner tries to
 match the last character of the text that matched tt({head}/{tail}) with the
 tt({tail}) pattern. If this succeeds, then the shortest tail was found. If the
 last character didn't already match tt({tail}) then the last two characters

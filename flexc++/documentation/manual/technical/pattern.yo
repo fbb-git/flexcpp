@@ -25,14 +25,12 @@ The following patterns are defined (more extensive descriptions follow):
 two patterns have the precedence of tt(CHARACTER), and are combined 
 left-associatively.
     itt(pattern '|' pattern)  Two alternative continuations.
-    itt(pattern quantifier): quantifiers are tt(*, +) and tt(?).
+    itt(pattern multiplier): multipliers are tt(*, +) and tt(?).
     itt('(' incParen pattern ')' decParen) a pattern nested in parentheses
     itt(pattern '{' start_interval_m  interval '}' regex_block_m) a repetition
         using curly braces (an interval repetition)
     itt(pattern '/' pattern) a lookahead pattern ($ is handled by the scanner)
     )
-
-
 
 tt(Pattern) objects contain (and offer, through the members tt(begin) and
 tt(end)) index values in the tt(States::d_states) of tt(State) objects. The
@@ -52,8 +50,9 @@ basic patterns illustrate how the vector of tt(State) objects in tt(States) is
 filled. Based on this description other pattern's implementations should be
 evident.
 
-A basic pattern is the plain character. The plain character pattern is
-processed as follows:
+A basic pattern is the plain character (tt(parser/inc/regexoreof:
+_single_char), processed by the tt(Pattern::rawText) factory function). The
+plain character pattern is processed as follows:
     itemization(
     it() First the indices of two free tt(State) vector locations are
 requested (see link(the tt(next2) description)(STATESNEXTTWO) in the
@@ -61,10 +60,8 @@ link(tt(States) clas)(STATES)).
     it() The tt(State) at the first state index is then set to a state
 containing the plain character, linking to the next free state which has been
 initialized to the tt(FINAL) state by tt(States::next2).
-    it() Then the tt(PatternVal) is embedded in a tt(SemVal) (see the
-link(tt(SemVal) class)(SEMVAL) description).
-    it() The tt(SemVal) is then returned in a
-tt(std::shared_ptr) (cf. figure ref(PATTERNVALPLAIN)).
+    it() Then s tt(Pattern), storing the begin and end tt(State) indices, is
+returned (cf. figure ref(PATTERNVALPLAIN)).
     )
 
     figure(images/patternvalplain)(A plain character pattern)(PATTERNVALPLAIN)
@@ -91,7 +88,7 @@ state's accepting flag.
     it() The tt(lhs.end()) state is assigned the value of the tt(rhs.begin())
 state
     it() The tt(rhs.begin()) state is marked as free
-    it() A new tt(PatternVal) is returned as tt(SemVal *) having its
+    it() A new tt(Pattern) is returned, having its
 tt(begin) index set to tt(lhs.begin()) and its tt(end) idex set to
 tt(rhs.end()). 
     )

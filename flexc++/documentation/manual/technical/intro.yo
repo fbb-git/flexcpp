@@ -12,7 +12,7 @@ block (plus maybe a begin-of-line indicator) becomes a rule which
 is added to the tt(Rules) object. The first regular expression in the input
 file becomes rule 0.
     itt(addLopStartConditions): once the input has been parsed, and LOP-rules
-were recognized the LOP mini scanners need a catch-all rule. The catch-all
+were recognized the LOP start conditions need a catch-all rule. The catch-all
 rule looks like this:
         verb(
     .|\n        lop3__();
@@ -38,7 +38,7 @@ completed its work.
 
 Once the ranges and the states of the regular expressions have been
 determined, the DFAs can be constructed. A DFA is constructed for each start
-condition (i.e. mini scanner) by the tt(DFAs) object.
+condition (i.e. start condition) by the tt(DFAs) object.
 
 Finally, a tt(Generator) generates the output files. The tt(Generator) reads
 the skeleton files, copying them to their destinations which inserting

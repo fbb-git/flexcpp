@@ -64,7 +64,7 @@ calling tt(std::find).
 
     If this DFA has not yet entered the tt(s_dfa[]) array then
         itemization(
-        it() The name of the current mini scanner is stored in tt(startStates)
+        it() The name of the current start condition is stored in tt(startStates)
 (to allow checking for repetitive handling);
         it() The row number of the first row of the current DFA in tt(s_dfa)
 is saved in the vector tt(dfaOffsets);

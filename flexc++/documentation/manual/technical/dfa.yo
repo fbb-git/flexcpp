@@ -19,7 +19,7 @@ the matching tt(DFARow) object.
 Building the DFA from the NFA is the task of tt(DFA::build). 
 
 Each row of tt(d_row) defines a state in the DFA. The Rule numbers of the
-Rules defining a mini scanner received as tt(build)'s tt(vector<size_t>)
+Rules defining a start condition received as tt(build)'s tt(vector<size_t>)
 parameter. 
 
 tt(DFA::build) initially stores the start states of the rules of its mini

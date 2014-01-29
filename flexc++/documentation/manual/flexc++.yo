@@ -158,10 +158,11 @@ includefile(technical/intro)
         subsect(The parser recognizing LOP patterns)
         includefile(technical/lopparser)
 
-            lsubsubsect(LOPSCs)(Startconditions used by standard LOP patterns)
+            lsubsubsect(LOPSCs)(Start conditions used by standard 
+                                LOP patterns)
             includefile(technical/lopscs)
 
-        lsubsect(LOPPATTERN)(The Pattern constructors used with LOP patterns)
+        lsubsect(LOPPATTERN)(Pattern constructors used with LOP patterns)
         includefile(technical/loppatterns)
 
         subsect(Adding (LOP-)rules)

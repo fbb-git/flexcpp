@@ -1,7 +1,7 @@
 After parsing tt(Parser::addLopStartConditions) is called.
 
 If no variable tail LOP rules were encountered, this function immediately
-returns. Otherwise, there are tail matching mini scanners, which
+returns. Otherwise, there are tail matching start conditions, which
 need a catch-all rule, and for each variable tail LOP rule two start
 conditions are defined. 
 
@@ -24,7 +24,7 @@ defined.
 These start conditions are for internal use only. Their names are not made
 available in the generated tt(ScannerBase.h) header file. They start with a
 blank space, which can therefore not be specified in user-defined input
-files. Furthermore, the code generator will only add the user-defined start
+files. Furthermore, the code generator only adds the user-defined start
 condition names to the tt(enum class StartCondition__), defined in
 tt(ScannerBase.h), so the variable tail LOP rules' start conditions cannot be
 specified by user-called tt(begin) statements.

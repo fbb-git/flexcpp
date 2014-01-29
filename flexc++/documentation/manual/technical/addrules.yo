@@ -1,6 +1,6 @@
 Once tt(parser/inc/regexoreof) has recognized a pattern (whether or not a
 LOP-expression) it is further processed by either tt(optMs_rule) (optional
-mini-scanner rule) in tt(parser/inc/optmsrule), or by tt(msCompound) (mini
+start condition rule) in tt(parser/inc/optmsrule), or by tt(msCompound) (mini
 scanner compound) in tt(parser/inc/mscompound). 
 
 In both cases the actions that are associated with the regular expressions are
@@ -21,7 +21,8 @@ Adding a rule (cf. tt(rules/add.cc)) means:
         construction knows which rule is matched when this state is
         reached. This rule-index is used as a case label in the scanner's
         tt(executeAction__) member;
-    it() tt(setRule(pair.first, ruleIdx)) (TO DO);
+    it() calling tt(setRule(pair.first, ruleIdx)) to associate the rule's
+        states with the rule's index;
     it() adding the rule index to the currently active set of start
         conditions.
     )

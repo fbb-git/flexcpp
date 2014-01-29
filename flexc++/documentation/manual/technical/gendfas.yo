@@ -6,7 +6,7 @@ columns of the DFA matrices.
 em(All) DFAs are accessed through this single tt(s_dfa) matrix. Each
 individual DFA starts at a specific row of tt(s_dfa). The first DFA to be
 written is associated with the tt(INITIAL) scanner: tt(INITIAL) is always
-defined and contains all rules not explicitly associated with a mini scanner.
+defined and contains all rules not explicitly associated with a start condition.
 
 The matrix tt(s_dfa) contains the rows of em(all) DFAs ordered by start state.
 
@@ -20,7 +20,7 @@ two. These final elements represent the begin and end indices in the array
 tt(s_accept), holding information about a row's accept state (see the next
 section).
 
-The em(base locations) for the various mini scanners are defined in the static
+The em(base locations) for the various start conditions are defined in the static
 array tt(s_dfaBase). Its initial value matches the tt(INITIAL) scanner, and
 points to the first tt(s_dfa) row. Additional values are defined if mini
 scanners were used and point at the initial rows in tt(s_dfa) for these mini
