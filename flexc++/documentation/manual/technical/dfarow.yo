@@ -3,19 +3,19 @@ transit to (see figure ref(DFAROWFIG)).
 
     figure(images/dfarow)(The data of the class DFARow)(DFAROWFIG)
 
-The tt(DFARow)'s row specification itself is defined by a set of states
+A tt(DFARow) row specification is defined by a set of states
 accessible as tt(d_stateSets[d_thisIdx]). The values of this set define the
 (e-closure of the) states of this row (see section ref(DFA)).
 
-Each of these states may have a transition to another state when observing a
-character from one of the input ranges. These states to transit to in turn
-define a set of states. 
+Each of these states may result in a transition to another state when
+observing a character from one of the DFA's input ranges. These `states to
+transit to' in turn define another set of states (possibly identical to the
+set of states defining the current row).
 
-Transitions from this row are probed for each of the character ranges
-(in tt(Ranges), see ref(RANGES)) by tt(DFARow::transitions). See section
-ref(DFAROW) for a description of this function. What it boils down to:
-tt(transitions) may add new elements to tt(d_stateSet), causing the iteration
-to continue until eventually there are as many tt(d_row) elements as there are
+Transitions from this row are probed for each of the character ranges (in
+tt(Ranges), see ref(RANGES)) by tt(DFARow::transitions). The member
+tt(DFARow::transitions) may add new elements to tt(d_stateSet), continuing the
+iteration until eventually there are as many tt(d_row) elements as there are
 tt(d_transitions) elements.
 
 If this set of states to transit to is not yet present in the tt(DFA) then a
@@ -27,12 +27,12 @@ itemization(
     itt(d_map): the tt(DFARow)'s tt(unordered_map d_map) defines the
 relationship between an input character range (the map's key) and the row to
 transit to when a character from that input range has been observed.
-    itt(d_finalRule): the elements of the pair tt(d_finalRule) are
-indices of the tt(Rules) for which this tt(DFARow) represents a final
-state. The em(first) element of the pair refers to a rule whose RE starts at
-BOL, the em(second) element refers to a rule whose RE does not explicitly
-start at BOL. When a value equals tt(UINT_MAX) then the current row is no
-final state for such a rule (BOL or not BOL).
+    itt(d_finalRule): the elements of the pair tt(d_finalRule) are indices of
+rules in tt(Rules) for which this tt(DFARow) represents a final state. The
+em(first) element of the pair refers to a rule whose RE not necessarily starts
+at BOL, the em(second) element refers to a rule whose RE must start at
+BOL. When a value equals tt(UINT_MAX) then the current row is not a final
+state for such a rule.
     itt(d_thisIdx): the index of the current tt(DFARow) element in its tt(DFA)
 matrix.
     itt(d_stateSets): this data member is a pointer to a vector containing
@@ -40,3 +40,6 @@ sets of states represented by the rows of the DFA. Element
 tt(d_stateSets[d_thisIdx]) is the set of states represented by the current DFA
 row. 
     )
+
+
+

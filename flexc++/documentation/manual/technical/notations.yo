@@ -1,5 +1,3 @@
-subsubsect(Notations)
-
     itemization(
     itt(BOL): Begin-of-line.
     itt(LOP): the lookahead operator (tt(/)).

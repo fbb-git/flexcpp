@@ -180,12 +180,21 @@ includefile(technical/intro)
     sect(The class DFAs)
     includefile(technical/dfas)
     
-        lsect(DFA)(The DFA)
+    lsect(DFA)(The DFA)
     includefile(technical/dfa)
+    
+        subsect(DFA::build: From NFA to DFA)
+        includefile(technical/dfabuild)
+    
+        subsect(Removing duplicate rows)
+        includefile(technical/keepunique)
     
     lsect(DFAROW)(The rows of the DFA: DFAROW)
     includefile(technical/dfarow)
     
+        subsect(Associating a DFARow with a Rule)
+        includefile(technical/ruletocall)
+
     sect(Generating Code)
     includefile(technical/gencode)
     

@@ -1,0 +1,21 @@
+The values in tt(d_final) are set by tt(setFinal), called from
+tt(DFARow::transit). It receives the  the rule index
+given the index of the row's tt(State). 
+
+If the rule index refers to a BOL rule tt(d_finalRule.second) is inspected,
+otherwise tt(d_finalRule.first) is inspected.
+
+If the inspected value doesn't refer to a rule yet, the current rule index is
+assigned. Otherwise, if the current rule type (NORMAL or LOP-rule)
+equals the rule index's type, and the rule index is smaller than the
+inspected element's value, or if the rule index refers to a NORMAL rule, but
+the inspected element doesn't, then the rule index is assigned to the
+inspected element.
+
+Thus a DFA row will always be associated with the first rule that reaches its
+final state at the current DFA row if both rules are of identical types, and
+it will be associated with the NORMAL rule if the other rule is not a NORMAL
+rule. 
+
+
+

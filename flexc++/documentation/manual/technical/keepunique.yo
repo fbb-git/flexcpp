@@ -1,0 +1,61 @@
+    Having determined the transitions tt(build) proceeds to remove
+implied/identical rows, calling tt(DFA::keepUniqueRows). This latter function
+visits each of the rows of the DFA, testing whether an existing row has the
+same transitions and final state information as the current row. `Same
+transitions' means that the transitions of the current (under inspection) row
+are present in an earlier row; `same final state information' means that the
+current row is a final state for the same rule(s) as an earlier row. In such
+situations the current row can be merged with the earlier row, keeping the
+earlier row. The (later) row can then be removed as transitions from it are
+identical to those from the earlier row. This may happen, as the NFA
+construction algorithm may define more empty edges than strictly necessary,
+sometimes resulting in additional rows in the DFAs. As an example, consider
+the pattern tt((a|ab)+/(a|ba)+), producing the DFA
+    center(
+    table(4)(llrc)(
+    rowline()
+    row(cell()cells(2)(Input Chars))
+    row(cell(StateSet) ccell(a) ccell(b) ccell(Final) )
+    rowline(cell()cellsline(2)(3))
+
+    row(cell(0)ccell(1))
+    row(cell(1)ccell(2)ccell(3))
+    row(cell(2)ccell(2)ccell(3)   cell(0))
+    row(cell(3)ccell(4)ccell(5))
+    row(cell(4)ccell(2)ccell(3)   cell(0))
+    row(cell(5)ccell(6)cell()     cell() )
+    row(cell(6)ccell(7)ccell(5)   cell(0))
+    row(cell(7)ccell(7)ccell(5)   cell(0))
+    rowline()
+    ))
+    Rows 6 and 7 are identical, as are rows 2 and 4. For row 4 the (erroneous,
+if |TAIL| should be as short as possible) |TAIL| = 2 is shown, resulting from
+tt(aba) being interpreted as HEAD: tt(a) and TAIL: tt(ba). 
+
+But when |TAIL| should be minimized tt(aba) should be interpreted as HEAD:
+tt(ab) and TAIL tt(a), resulting in transitions 0 -> 1 -> 3 -> 2, with |TAIL|
+= 1. This happens when row 4 is merged to row 2. Having merged the rows,
+former transitions to the now removed rows must of course be updated to the
+merging row. So row 3 must transit to 2 when receiving input symbol tt(a). The
+member tt(shrinkDFA) handles the shrinkage of the DFA. In this example the
+final DFA becomes:
+    center(
+    table(4)(llrc)(
+    rowline()
+    row(cell()cells(2)(Input Chars))
+    row(cell(StateSet) ccell(a) ccell(b) ccell(Final))
+    rowline(cellsline(2)(4))
+
+    row(cell(0)ccell(1))
+    row(cell(1)ccell(2)ccell(3))
+    row(cell(2)ccell(2)ccell(3) cell(0))
+    row(cell(3)ccell(2)ccell(4))
+    row(cell(4)ccell(5)cell()   cell())
+    row(cell(5)ccell(5)ccell(4) cell(0))
+    rowline()
+    ))
+
+
+
+
+

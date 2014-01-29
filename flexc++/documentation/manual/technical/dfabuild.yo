@@ -1,0 +1,24 @@
+Building the DFA from the NFA is the task of tt(DFA::build). 
+
+Each row of tt(d_row) defines a state in the DFA. The Rule numbers of the
+Rules defining a start condition received as tt(build)'s tt(vector<size_t>)
+parameter. 
+
+tt(DFA::build) initially stores the start states of the rules of its start
+condition in its tt(d_stateSet[0])sups(th) element, which is a set (cf. figure
+ref(DFAFIG1)). This is done by tt(DFA::fillStartSet)
+
+    figure(images/dfa1)(Creating the start states for row 0)(DFAFIG1)
+
+Next, the e-closure of this initial set of states is computed. The e-closure
+algorithm is described in ASU's dragon book (1986, figure 3.26). It
+essentially adds all states that can be reached from each element in the
+current set of states on an empty transition. The e-closure is computed by
+tt(States::eClosure).
+
+At this point there is an element in tt(DFA::d_stateSet), but not yet an
+element in tt(DFA::d_row). By adding a tt(DFARow) (see section ref(DFAROW)) to
+tt(d_row) we associate a tt(DFARow) with an initial set of states. 
+
+Once the new DFA has been added to tt(d_row) its transitions are probed by
+tt(DFARow::transitions) (see section ref(DFAROW)).
