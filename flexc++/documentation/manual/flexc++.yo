@@ -118,24 +118,12 @@ includefile(technical/intro)
     lsect(NOTATION)(Notation, Terminology)
     includefile(technical/notations)
 
-COMMENT(TO DO)
-    
+        subsect(Example of LOP-patterns)
+        includefile(technical/lopexamples)
+
     lsect(PARSER)(The parser)
     includefile(technical/parser)
 
-    lsect(SEMVAL)(Semantic Data and struct DataType)
-COMMENT( TODO: intro?)
-
-        lsubsect(PATTERNVAL)(The class Pattern)
-        includefile(technical/patternval)    
-    
-        lsubsect(CHARCLASS)(The class CharClass)
-        TODO
-    
-        lsubsect(INTERVAL)(The class Interval)
-        TODO
-    
-    
     lsect(STARTCOND)(Start Conditions and the class StartConditions)
     TODO
     
@@ -151,21 +139,19 @@ COMMENT( TODO: intro?)
     lsect(RULES)(Rules and the class Rule)
     includefile(technical/rules)
     
+    lsect(SEMVAL)(Converting REs to Patterns)
+    includefile(technical/semantic)
+
+        lsubsect(CHARCLASS)(The class CharClass)
+        TODO
+    
+        lsubsect(INTERVAL)(The class Interval)
+        TODO
+    
+    
     lsect(PATTERNS)(Patterns)
     includefile(technical/pattern)
-    
-    lsect(RANGES)(Ranges)
-    includefile(technical/ranges)
-    
-    sect(The class DFAs)
-    includefile(technical/dfas)
-    
-        lsect(DFA)(The DFA)
-    includefile(technical/dfa)
-    
-    lsect(DFAROW)(The rows of the DFA: DFAROW)
-    includefile(technical/dfarow)
-    
+
     lsect(LOOKAHEAD)(Patterns using the lookahead operator (LOP))
     includefile(technical/lop)
 
@@ -187,25 +173,17 @@ COMMENT( TODO: intro?)
         subsect(After parsing: handling LOP rules)
         includefile(technical/loprules)
 
-    lsect(LOPRUNTIME)(Run-time handling of LOP-patterns)
-    includefile(technical/lopruntime)
-
-COMMENT(                
-        subsect(The LOP handling algorithm)
-        includefile(technical/lopalgo)
+    lsect(RANGES)(Ranges)
+    includefile(technical/ranges)
     
-        subsect(LOP handling: a more extensive example)
-        includefile(technical/abbaabba)
+    sect(The class DFAs)
+    includefile(technical/dfas)
     
-        lsubsect(LOPPROBLEM)(LOP handling: a problem case)
-        includefile(technical/lopproblem)
+        lsect(DFA)(The DFA)
+    includefile(technical/dfa)
     
-        subsect(The steps of the LOP handling algorithm)
-        includefile(technical/lopalgosteps)
-    
-    lsect(FINALSTATE)(Final states and ^xyz vs. xyz patterns)
-    includefile(technical/bolrules)
-END)
+    lsect(DFAROW)(The rows of the DFA: DFAROW)
+    includefile(technical/dfarow)
     
     sect(Generating Code)
     includefile(technical/gencode)
@@ -216,17 +194,12 @@ END)
         subsect(The DFAs)
         includefile(technical/gendfas)
 
-COMMENT(    
-        lsubsect(SFINACINFO)(The Final-Accept info array)
-        includefile(technical/finac)
-END)
-    
     lsect(RUNTIME)(Run-time operations)
     includefile(technical/runtime)
     
-    sect(Generating code)
-    includefile(technical/codegeneration)
-    
+    lsect(LOPRUNTIME)(Run-time handling of LOP-patterns)
+    includefile(technical/lopruntime)
+
     sect(Reflex: refreshing flexc++)
     includefile(technical/reflex)
     

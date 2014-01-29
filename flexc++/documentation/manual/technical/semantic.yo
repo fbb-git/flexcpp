@@ -1,0 +1,31 @@
+The various types of REs are converted to tt(Pattern) objects (cf. section
+ref(PATTERNS)). Basically, a tt(Pattern) contains the begin- and end-states
+of a RE. 
+
+Various types of REs are processed by various class-type factory functions,
+constructing tt(Pattern) objects. The file tt(parser/inc/regexoreof) uses
+these factory functions when their type of RE has been recognized. 
+
+    itemization(
+    it() Character class type of REs (e.g., tt([[:digit:]])) are handled by
+        tt(class CharClass) (cf. section ref(CHARCLASS));
+    it() Interval-type of REs (e.g., tt({1, 3})) are handled by tt(class
+        Interval) (cf. section ref(INTERVAL));
+    it() Single characters and characters in (raw)strings are directly handled
+        by tt(Pattern::rawText) factory functions. Strings are received
+        as-is, and their surrounding double quotes are removed before
+        tt(rawText) is called. The contents of rawstrings is directly received
+        from the scanner. Escaped characters in strings are unescaped before
+        they are processed by tt(Pattern::rawText).
+    it() Multipliers (tt(*, +, ?)) are directly handled by tt(Pattern) factory
+        functions, receiving the regular expression and the multiplier, and
+        returning a new tt(Pattern) incorporating the multiplication.
+    it() Concatenation is handled by the tt(Pattern::concatenate) factory
+        function;
+    it() Alternatives (operator tt(|)) are handled by the
+        tt(Pattern::alternatives) factory function;
+    it() LOP REs are handled by the parser's tt(lookahead) member, calling
+        tt(Pattern) constructors defining lookahead patterns.
+    it() The tt(<<EOF>>) end-of-file pattern is handled by the
+        tt(Pattern::eof) factory function.
+    )

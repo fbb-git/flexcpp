@@ -1,0 +1,36 @@
+    When an tt(F) state of a LOP pattern is reached and there is no
+continuation at that point then the pattern until the A0 state is considered
+matched and is returned.
+
+    itemization(
+    it() The pattern tt(a/a+):
+
+            figure(images/NFA1)(The pattern a/a+)(NFA1FIG)
+
+        Here, State 2 is the Final state
+    
+    it() The pattern tt(a*/aaa): All tt(a) symbols until
+        the F-state (state 5) has been reached are counted:
+
+            figure(images/NFA2)(The pattern a*/aaa)(NFA2FIG)
+    
+    The resulting DFA becomes:
+        center(
+   
+    table(4)(llr)(
+    rowline()
+    row(cell()         cell(Input Ch)                                )
+    row(cell(StateSet) ccell(a)         cell(F) )
+    rowline()
+    row(
+            cell(12)        cell(123)   rcell()                    )
+    row(
+            cell(123)       cell(1234)  rcell()      )
+    row(
+            cell(1234)      cell(12345) rcell()       )
+    row(
+            cell(12345)     cell(12345) rcell(0)   )
+    rowline()
+    ))
+    
+    )

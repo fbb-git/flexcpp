@@ -1,4 +1,4 @@
-Objects of the class tt(State) contain one single element of a
+Objects of the class tt(State) describe one single state of a RE
 link(pattern)(PATTERNS). A tt(State) contains/offers:
     itemization(
     itt(d_type): the type represented by the State (EMPTY, FINAL, CHARSET,
@@ -8,12 +8,12 @@ link(pattern)(PATTERNS). A tt(State) contains/offers:
         the program terminates in a fatal exception.
     itt(d_rule): an index into the link(Rules)(RULES) object to the
         link(rule)(RULE) object defining the pattern;
-    it() A shared pointer to tt(StateData). The class tt(StateData) is derived
-        from link(SemVal)(SEMVAL), and contains two indices: the tt(State)
-        indices of the states following the current tt(State). The second
+    it() A shared pointer to tt(StateData). The class tt(StateData) contains
+        two indices: the tt(State) indices of the states following the current
+        tt(State) (or 0 if this state represents a final state). The second
         index (tt(d_next2)) may be 0, indicating that there is no second
-        continuation state. A second continuation state occurs when the
-        em(alternate) operator (tt('|')) is used in a pattern.
+        continuation state. It is unequal 0 when the
+        em(alternate) operator (tt('|')) is used in a RE.
     )
 
 Starting from a pattern's initial state all its subsequent states can

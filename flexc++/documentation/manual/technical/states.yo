@@ -1,6 +1,6 @@
-The tt(States) class object holds all the states defining all patterns
-(tt(d_states)). When a new pattern is requested the member tt(next) or
-tt(next2) can be invoked to retrieve the next or next two free states. Since
+The tt(States) class object stores all the states defined by all tt(Pattern)
+objects (tt(d_states)). When a new pattern is requested the member tt(next) or
+tt(next2) can be invoked to obtain the next or next two free states. Since
 concatenating pattern produces free states (cf. the description of the
 link(pattern concatenation)(CONCAT)) a vector of free state indices is
 maintained by the tt(States) class as well (tt(d_free)).
@@ -13,7 +13,7 @@ fields are set to 0, indicating that there is no continuation from this state.
 
 Patterns consisting of multiple states (like the pattern tt(ab), consisting of
 the state holding tt(a) and the state holding tt(b)) are stored in a
-linked-list like structure, defined in the tt(States)'s tt(d_state)
+linked-list like structure, implemented using the tt(States)'s tt(d_state)
 vector. Its representation is as follows (cf. figure ref(STATECATFIG):
 
 itemization(

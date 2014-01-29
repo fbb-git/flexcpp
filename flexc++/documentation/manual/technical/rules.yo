@@ -1,12 +1,14 @@
-All rules are accessible from the tt(Rules) object. It contains a reference to
-the em(states) (see link(here)(STATES)), and a vector tt(d_rules) containing
-the information of each of the rules, and a hash table linking a final state
-index back to its rule number (see figure ref(RULESFIG))
+All rules (combinations of RE describing tt(Pattern) objects and associated
+action blocks) are accessible from the tt(Rules) object. The tt(Rules) object
+contains a reference to the em(states) (see link(here)(STATES)), and a vector
+tt(d_rules) containing the information about each of the rules, and a hash
+table linking a final state index back to its rule number (see figure
+ref(RULESFIG))
 
             figure(images/rules)(The Rules class)(RULESFIG)
 
-When the parser has detected a rule it calls tt(Rules::add). A tt(Rule) object
-is added to tt(d_rules), storing begin and end state indices, a flag
+When the parser has recognized a rule it calls tt(Rules::add). A tt(Rule)
+object is added to tt(d_rules), storing begin and end state indices, a flag
 indicating whether or not this rule's RE started at BOL and a em(viable) flag,
 indicating whether the rule can at all be matched. This flag is initially
 tt(false), but it is set to tt(true) if the rule is mentioned in at least one
