@@ -2,7 +2,7 @@
 
 // this function returns the set of characters that are defined by a
 // predefined setname.
-// To determine the set of characters s_hash is used. It is an unordered_map
+// To determine the set of characters s_hash is used. It is an FBB::LinearMap
 // initialized to an empty set in `data.cc', and it is filled with its
 // characters the first time it is used. At the same time the negated set is
 // filled. 

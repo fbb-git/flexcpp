@@ -26,10 +26,10 @@ struct StartConditions
         Type d_type;
         std::vector<size_t> d_rules;        // rules of this SC.
 
-        public:
-            StartCondition() = default;
-            StartCondition(Type type);
+        StartCondition() = default;
+        StartCondition(Type type);
 
+        public:
             std::vector<size_t> const &rules() const;            
     };
     

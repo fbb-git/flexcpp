@@ -1,0 +1,2 @@
+The characters of a character class are made available through tt(CharClass)
+objects. A tt(CharClass) object stores all characters of its set

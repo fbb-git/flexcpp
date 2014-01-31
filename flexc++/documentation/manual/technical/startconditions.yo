@@ -1,0 +1,30 @@
+Start conditions are handled by a tt(StartConditions) object. Each start
+condition's name and start condition information is stored in tt(d_sc), an
+tt(FBB::LinearMap), the first one being the tt(INITIAL) start condition.
+
+Start condition information consists of the start condition's type and a
+vector of tt(size_t) values, being the rule indices of the rules that were
+defined for this start condition.
+
+Additional members are tt(d_endUserSC), storing tt(d_sc's) size after all user
+defined start conditions have been inserted into tt(d_sc). As all user-defined
+start conditions must have been declared in the declaration section, this
+value is known before start conditions are created by flc() when encountering
+LOP-rules.
+
+Furthermore, a member tt(d_active) hold pointers to all currently active start
+conditions. E.g., when specifying tt(<INITIAL,str>) then the rules defined for
+this tag are active are added to the set if rules defined for
+tt(StartConditions__::INITIAL) and tt(StartConditions__::str).
+
+When LOP-rules having variable sized tails are used, flc() defines a catch-all
+rule which is mathed while tt(lex__) is trying to match the LOP-rule's tail,
+but as yet failed to do so. When it is defined this catch-all rule does not
+belong to a particular start condition. This is relized through the member
+tt(StartConditions::acceptRule), expecting a tt(bool) argument. By default
+recognized rules are added to the current set of active start conditions, but
+the catch-all rule should not be added to any active set. Instead it is
+added to the DFAs calling tt(lop3__). Once the input files have been
+processed, tt(Rules::handleLopRules) is called, and this member adds the final
+(catch-all) rule to tt(d_rules), without adding it to any of the available
+start conditions.
