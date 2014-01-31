@@ -9,13 +9,11 @@ it() In a loop (until EOF) characters are retrieved until a rule is matched
 it() Once a rule has been matched its matching code block is executed.
 )
 
-Processing characters:
+Characters from the input are assigned to tt(d_char). At the beginning of the
+character processing loop tt(d_char) already has received a value.  At EOF the
+character is given the (pseudo) character value tt(AT_EOF). 
 
-The next character from the input is obtained in tt(d_char). At the beginning
-of the character processing loop tt(d_char) must have received a value.
-At EOF the character is given the (pseudo) character value tt(AT_EOF). 
-
-Next, the associated range (tt(d_range)) is determined as
+Next, the character's range (tt(d_range)) is determined from
 tt(s_ranges[d_char]).
 
 The variable tt(d_dfaBase) points at the dfa currently used. The variable
@@ -75,104 +73,25 @@ itemization(
     itt(MATCH:) push the just read char back to the input, copy the non-pseudo
         character (i.e., other than AT_EOF) to the match-buffer, set
         tt(d_atBOL) to tt(true) if the last character in the tt(d_matched)
-        buffer is tt('\n'), execute the rule's actions, continue scanning (but
-        the action may end tt(lex)'s call).
+        buffer is tt('\n'), execute tt(postCode(PostEnum__::RETURN)), execute
+        the rule's actions, continue scanning (but the action may end
+        tt(lex)'s call).
     itt(ECHO1ST:) echo the 1st char. of the buffer to stderr, set tt(d_atBOL)
         to tt(true) if that character equals tt('\n'), otherwise to tt(false),
         return all but the first character in the buffer back to the input,
-        continue scanning.
+        call tt(postCode(PostEnum__::WIP)), continue scanning.
     itt(ECHOCHAR:) echo the just read character to stderr, set tt(d_atBOL)
         to tt(true) if that character equals tt('\n'), otherwise to tt(false),
         continue scanning.
-    itt(RETURN:) the function tt(lex) returns with token value 0.
+    itt(RETURN:) if tt(popStream) returns false, then execute
+        tt(postCode(PostEnum__::END)) and member tt(lex__) returns with token
+        value 0; otherwise tt(postCode(PostEnum__::POP)) is called and
+        processing continues.
 )
 
-The data member tt(d_atBOL) is also set to tt(true) at a stream-switch: when
-switching to another stream or returning to a stacked stream. This handles the
-borderline case where a file's last line is not properly terminated with a
-tt('\n') character.
+The data member tt(d_atBOL) is also set to tt(true) when tt(lex__) switches to
+another input stream (either a new one, or returning to a previously stacked
+one). This handles the borderline case where a file's last line is not
+properly terminated with a tt('\n') character.
 
-quote(TODO: Subsequent text of this section may require extensive
-editing/rewriting) 
-
-
-In em(all) case where the last two elements of the current  tt(s_dfa) row
-are unequal special actions must be performed. Using the last but one's value
-as tt(d_finAcIdx) do as follows:
-    itemization(
-    it() If there is a continuation for the current character range (so
-tt((d_dfaBase + d_dfaIdx)[d_charRange]) is unequal -1) then inspect the
-tt(s_finAcInfo + d_finAcIdx)'s A and I values.
-    itemization(
-    it() If I equals 1 store A's value and increment it at each next
-        transition until a rule has been matched. This determines the LA
-        tail-length;
-    )
-    it() Otherwise (no continuation):
-        itemization(
-        it() If I equals 1 then the A count incremented so far is the LA's
-            tail length.
-        it() If I equals 0 and A is non-negative then A's value is the LA's
-            tail length
-        it() If F is positive then it is the accept count of the current rule
-            quote(TODO: 
-                maybe this and the previous option are mutually exclusive and
-                only one of them occurs in practice.
-            )
-            If F equals -1 then accept the matched text as is.nl()
-            If it equals -2 we're not at a final state. If there's no
-            continuation, push back all but the first character, echo the 1st
-            char and continue scanning with the INITAL scanner at state 0.
-        )
-    )
-If a final state has been reached then possibly push back the LA tail and
-execute the actions of the rule that was matched. Using the currently active
-miniscanner, start matching the next rule.
-
-        
     
-Handling BOL rules (TO ELABORATE)
-
-ScannerBase::knownFinalState returns    
-
-        verb(
-    (d_atBOL && available(d_final.atBOL.rule)) 
-    || 
-    available(d_final.notAtBOL.rule);
-        )
-
-Only if this is true, ScannerBase::actionType__ returns ActionType__::MATCH,
-
-Three variables are used, resulting in 8 possibilities:
-    verb(
-    --------------------------------------------------------------------
-                       available rule
-                      ---------------
-     nr   d_atBOL      std       bol                action
-    --------------------------------------------------------------------
-      1       0         0         0         prevented by knownFinalState
-      2       0         0         1         prevented by knownFinalState
-
-      3       0         1         0         use the std. rule
-      4       0         1         1         use the std. rule
-
-      5       1         0         0         prevented by knownFinalState
-      6       1         0         1         use the BOL rule
-
-      7       1         1         0         use the std rule
-      8       1         1         1         different match lengths: use
-                                            the rule matching the longest 
-                                            text;
-                                            equal match lengths: use the 
-                                            earlier rule.
-    --------------------------------------------------------------------
-)
-    The numbers in this table are referred to by skeleton/flexc++.cc's
-matched__ member.
-
-
-
-
-
-
-

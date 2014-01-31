@@ -1,30 +1,40 @@
-Patterns starting with tt(^) and not starting with tt(^) are different
-rules. A rules like tt(^a) and tt(a) can both be matched, depending on whether
-the tt(a) is found at begin of line (BOL) or not.
+The member tt(ScannerBase::knownFinalState) (implemented in tt(ScannerBase.h)
+returns
+        verb(
+    (d_atBOL && available(d_final.atBOL.rule)) 
+    || 
+    available(d_final.notAtBOL.rule);
+        )
+    only if this is true, tt(ScannerBase::actionType__) returns
+tt(ActionType__::MATCH).
 
-Generally, when two DFA rows represent the final states of multiple REs (in
-the extreme case: rule 1 could be tt(a) and rule 2 could also be tt(a)) then
-the lexical scanner generator abandons rule 2 for that DFA row. 
-
-If one of the two rules start with a BOL-marker (tt(^)), however, then then
-DFA row can be used for both rules. This is the single exception to the rule
-that a DFA row can only be associated with a single RE's final state. 
-
-This affects the implementation of the DFA rows: it's only necessary to store
-two indices indicating the rules for which the DFA row represents a final
-state. 
-
-By default the indices are 0, indicating that the DFA row is not a final state
-for an RE. At most two rules can be used in a particular state: a rule 
-starting at BOL and a rule not starting at BOL. The tt(first) element of the
-pair indicates the index for rules starting at BOL, the tt(second) element of
-the pair is used for rules not starting at BOL. When a DFA state could be the
-final state for multiple rules of the same type (BOL or not BOL), then the
-rule having the lowest index is used. By default the elements of the
-tt(d_finalRule) pair are initialized to tt(UINT_MAX), indicating that this row
-does not represent a final state.
-
-When a regular expression has been matched at a DFA row having two rule
-indices then the runtime implementation checks it tt(d_atBOL) member to see if
-the matched RE started at BOL. If so, the BOL-RE is matched; otherwise the
-non-BOL rule is matched. See also section ref(RUNTIME).
+Three variables are used here, resulting in 8 possibilities:
+    center(
+    table(6)(cccccl)(
+    rowline()
+    row(cells(3)() cells(2)(available rule))
+                    columnline(4)(5)
+    row(cell(nr)cell()cell(d_atBOL)cells(1)(std)cells(1)(bol)cell(action))
+    rowline()
+    row(cell(1)cell()cells(1)(0)cells(1)(0)cells(1)(0)
+                                cell(prevented by knownFinalState))
+    row(cell(2)cell()cells(1)(0)cells(1)(0)cells(1)(1)
+                                cell(prevented by knownFinalState))
+    row()
+    row(cell(3)cell()cells(1)(0)cells(1)(1)cells(1)(0)cell(use the std. rule))
+    row(cell(4)cell()cells(1)(0)cells(1)(1)cells(1)(1)cell(use the std. rule))
+    row()
+    row(cell(5)cell()cells(1)(1)cells(1)(0)cells(1)(0)
+                                cell(prevented by knownFinalState))
+    row(cell(6)cell()cells(1)(1)cells(1)(0)cells(1)(1)cell(use the BOL rule))
+    row()
+    row(cell(7)cell()cells(1)(1)cells(1)(1)cells(1)(0)cell(use the std rule))
+    row(cell(8)cell()cells(1)(1)cells(1)(1)cells(1)(1)
+                                cell(different match lengths: use))
+    row(cells(5)()cell(the rule matching the longest text;))
+    row(cells(5)()cell(equal match lengths: use the earlier rule.))
+    rowline()
+    )
+    )
+    The numbers in this table are referred to by tt(skeleton/flexc++.cc's)
+ member tt(matched__).

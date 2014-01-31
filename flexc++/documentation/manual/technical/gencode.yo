@@ -21,8 +21,8 @@ any support functions it may need. This file is always rewritten.
 
 Each of these files has a skeleton, found in tt(/usr/share/flexc++) (the
 development header files are in the tt(skeletons/) subdirectory of the source
-package). The skeletons are the templates (molds) which are used to create the
-files matching the requirements as defined in flc()'s input file(s):
+package). The skeletons are the templates (molds) from which the files
+matching the requirements as defined in flc()'s input file(s) are created:
     itemization( 
     it() em(Static data) are inserted into the generated tt(lex.cc) file;
     it() em(Actions) are inserted into the generated tt(lex.cc);
@@ -79,7 +79,12 @@ providing these declarations with their required (higher order) dimension
 values. 
 
     The function tt(Generator::actions) inserts the actions in the function
-tt(ScannerBase::executeAction__()), implemented in tt(lex.cc). 
+tt(ScannerBase::executeAction__), implemented in tt(lex.cc). Actions are
+inserted separately for each tt(RuleType) that was used. Each tt(NORMAL,
+LOP_1, LOP_4) and tt(LOP_FIXED) (fixed-tail LOP rule) type of rule has its own
+action block, and their action blocks are inserted first. tt(LOP_2) and
+tt(LOP_3) actions are all identical, and flc() creates a set of fall-through
+case labels for these actions. 
 
 
 

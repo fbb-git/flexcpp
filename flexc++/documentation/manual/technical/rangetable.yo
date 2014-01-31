@@ -1,4 +1,4 @@
-    The character-table translates input characters to ranges.  Each input
+    The character-table translates input characters into ranges.  Each input
 character (by default the 256 extended ascii-characters) is associated with a
 character em(range). Character em(range) indices are then used as column
 indices of the DFA tables (see sections ref(RANGES) and ref(DFA)).

@@ -207,6 +207,9 @@ includefile(technical/intro)
     lsect(RUNTIME)(Run-time operations)
     includefile(technical/runtime)
     
+        subsect(Handling BOL-rules)
+        includefile(technical/bolrules)
+    
     lsect(LOPRUNTIME)(Run-time handling of LOP-patterns)
     includefile(technical/lopruntime)
 
