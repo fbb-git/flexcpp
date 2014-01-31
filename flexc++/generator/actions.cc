@@ -47,9 +47,6 @@ void Generator::actions(ostream &out) const
 
     for (RuleType type: fallThroughTypes)
     {
-        if (type == RuleType::LOP_4)
-            d_lineDirectives = lineDirectives;
-
         auto rule = find_if(first, end, 
             [&](Rule const &rule)
             {
