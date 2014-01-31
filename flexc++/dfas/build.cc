@@ -3,14 +3,14 @@
 void DFAs::build()
 {
     size_t scIndex = 0;
-    for (auto &nameVector: d_rules)
+    for (auto &sc: d_rules)
     {
         d_rules.checkUserSC(scIndex++);
 
         d_dfa.push_back( 
-            {nameVector.name(), new DFA(d_ranges, d_rules, d_states)} );
+            {sc.first, new DFA(d_ranges, d_rules, d_states)} );
 
         // calls DFA::build
-        d_dfa.back().second->build(nameVector.name(), nameVector.rules());
+        d_dfa.back().second->build(sc.first, sc.second.rules());
     }
 }

@@ -2,6 +2,10 @@
 
 StartConditions::StartConditions()
 :
-    d_scVector(1, KeyValue("INITIAL", {INCLUSIVE}))
+    d_sc(
+        {
+            {"INITIAL", StartCondition(INCLUSIVE) } 
+        } 
+    )
 {}
 

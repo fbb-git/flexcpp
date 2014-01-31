@@ -5,8 +5,8 @@ void StartConditions::define(string const &name)
     if (not d_acceptRules)
         return;
 
-    if (find(name) != d_scVector.end())
+    if (d_sc.find(name) != d_sc.end())
         emsg << "start condition `" << name << "' multiply defined" << endl; 
     else 
-        d_scVector.push_back(KeyValue(name, {d_type}));
+        d_sc.insert( {name, StartCondition(d_type)} );
 }

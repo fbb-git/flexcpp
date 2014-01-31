@@ -39,7 +39,6 @@ class Rules: public FlexTypes
 
     public:
         typedef StartConditions::const_iterator const_iterator;
-        typedef StartConditions::NameVector NameVector;
         typedef std::vector<Rule>::const_iterator rule_const_iterator;
 
         Rules(States &states);

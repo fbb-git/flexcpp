@@ -5,36 +5,37 @@
 #include <vector>
 #include <string>
 #include <iterator>
+#include <bobcat/linearmap>
 
-class SemVal;
-
-class StartConditions
+struct StartConditions
 {
     friend std::ostream &operator<<(std::ostream &out, 
                                     StartConditions const &startConditions);
+    enum Type
+    {
+        EXCLUSIVE,
+        INCLUSIVE,
+    };
 
-    public:
-        enum Type
-        {
-            EXCLUSIVE,
-            INCLUSIVE,
-        };
+    class StartCondition
+    {
+        friend class StartConditions;
+        friend std::ostream &operator<<(std::ostream &out, 
+                                    StartConditions const &startConditions);
 
-    private:
-        struct StartCondition
-        {
-            Type d_type;
-            std::vector<size_t> d_rules;        // rules of this SC.
-    
+        Type d_type;
+        std::vector<size_t> d_rules;        // rules of this SC.
+
+        public:
             StartCondition() = default;
             StartCondition(Type type);
-        };
+
+            std::vector<size_t> const &rules() const;            
+    };
     
-        typedef std::pair<std::string, StartCondition> KeyValue;
-        typedef std::vector<KeyValue> SCVector;
-        
+    private:
         Type d_type = EXCLUSIVE;
-        SCVector d_scVector;
+        FBB::LinearMap<std::string, StartCondition> d_sc;
         size_t d_endUserSC;
 
         std::vector<StartCondition *> d_active; // first is INITIAL per def.
@@ -42,43 +43,6 @@ class StartConditions
         bool d_acceptRules = true;
 
     public:
-        class const_iterator;
-        class NameVector                        // used and returned by
-        {                                       // const_iterator below
-            friend class const_iterator;
-
-            std::string const *d_name;
-            std::vector<size_t> const *d_rules;
-
-            NameVector();
-            NameVector(std::string const &str, 
-                            std::vector<size_t> const &vect);
-
-            public:
-                std::string const &name() const;
-                std::vector<size_t> const &rules() const;
-        };
-
-        class const_iterator: 
-                    public std::iterator<std::input_iterator_tag, NameVector>
-        {
-            friend class StartConditions;
-
-            SCVector::const_iterator d_iter;
-            mutable NameVector d_nameVector;
-
-            public:
-                bool operator!=(const_iterator const &rhs);
-                const_iterator &operator++();
-                NameVector const &operator*() const;
-
-            private:
-                                        // initialize a const iterator with
-                                        // an iterator to the name and rules
-                                        // of a SC.
-                const_iterator(SCVector::const_iterator const &iter);
-        };
-
         StartConditions();
 
         void acceptRules(bool ok);          // may suppres additions of rules
@@ -97,6 +61,9 @@ class StartConditions
         void addSC(std::string const &name); // adds name to a set of SCs
         void activate(size_t scIndex);          // activates just this SC
 
+        typedef FBB::LinearMap<std::string, StartCondition>::const_iterator
+                                                            const_iterator;
+
         const_iterator begin() const;
         const_iterator end() const;
         const_iterator endUserSC() const;
@@ -109,14 +76,6 @@ class StartConditions
         void remove(size_t ruleIndex);  // remove ruleIndex from all the SC
                                         // vectors
         size_t nUserSCs() const;
-
-    private:
-        SCVector::iterator find(std::string const &key);
-        SCVector::const_iterator find(std::string const &key) const;
-
-        KeyValue *findKV(std::string const &key) const;
-
-//        static std::string const &strOf(SemVal const &nameVal);
 };
 
 inline size_t StartConditions::nUserSCs() const
@@ -131,19 +90,7 @@ inline void StartConditions::acceptRules(bool ok)
 
 inline void StartConditions::setEndUserSC()
 {
-    d_endUserSC = d_scVector.size();
-}
-
-inline StartConditions::SCVector::const_iterator 
-        StartConditions::find(std::string const &key) const
-{
-    return SCVector::const_iterator(findKV(key));
-}
-
-inline StartConditions::SCVector::iterator 
-        StartConditions::find(std::string const &key)
-{
-    return SCVector::iterator(findKV(key));
+    d_endUserSC = d_sc.size();
 }
 
 inline void StartConditions::setType(Type type)
@@ -159,69 +106,33 @@ inline void StartConditions::reset()
 inline std::vector<size_t> const &StartConditions::operator()
                                             (std::string const &name) const
 {
-    return find(name)->second.d_rules;
+    return d_sc.find(name)->second.d_rules;
 }
 
-inline StartConditions::const_iterator::const_iterator(
-                                      SCVector::const_iterator const &iter)
-:
-    d_iter(iter)
-{}
-
-inline  bool StartConditions::const_iterator::operator!=(
-                                                const_iterator const &rhs)
-{
-    return d_iter != rhs.d_iter;
-}
-
-inline StartConditions::const_iterator 
-        &StartConditions::const_iterator::operator++()
-{
-    ++d_iter;
-    return *this;
-}
-            
 inline StartConditions::const_iterator StartConditions::begin() const
 {
-    return const_iterator(d_scVector.begin());
+    return d_sc.cbegin();
 }
 
 inline StartConditions::const_iterator StartConditions::end() const
 {
-    return const_iterator(d_scVector.end());
+    return d_sc.cend();
 }
 
 inline StartConditions::const_iterator StartConditions::endUserSC() const
 {
-    return const_iterator(d_scVector.begin() + d_endUserSC);
-}
-
-inline StartConditions::NameVector::NameVector()
-:
-    d_name(0),
-    d_rules(0)
-{}
-
-inline StartConditions::NameVector::NameVector(std::string const &str, 
-                            std::vector<size_t> const &vect)
-:
-    d_name(&str),
-    d_rules(&vect)
-{}
-
-inline std::string const &StartConditions::NameVector::name() const
-{
-    return *d_name;
-}
-
-inline std::vector<size_t> const &StartConditions::NameVector::rules() const
-{
-    return *d_rules;
+    return d_sc.cbegin() + d_endUserSC;
 }
 
 inline size_t StartConditions::size() const
 {
-    return d_scVector.size();
+    return d_sc.size();
+}
+
+inline std::vector<size_t> const &StartConditions::StartCondition::rules() 
+                                                                        const
+{
+    return d_rules;
 }
 
 #endif
