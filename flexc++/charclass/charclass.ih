@@ -14,16 +14,11 @@ using namespace std;
 using namespace FBB;
 
 
-inline CharClass::CharClass(char ch)
+inline CharClass::CharClass(char ch, CharType type)
 :
-    d_chars(1, {ch, false})
+    d_chars(1, {ch, type})
 {}
 
-inline CharClass::CharClass(string const &str)
-{
-    for (auto ch: str)
-        d_chars.push_back({ch, false});
-}
 
 inline CharClass::CharClass(std::set<char> const &charSet)
 {

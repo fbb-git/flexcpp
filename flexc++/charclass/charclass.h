@@ -10,6 +10,14 @@ class CharClass
 {
     friend std::ostream &operator<<(std::ostream &out, CharClass const &cc);
 
+    enum CharType
+    {
+        CHAR,
+        PREDEF,
+        RANGE,
+        MINUS           // is converted to either CHAR or RANGE
+    };
+
         // the bool indicates that the char belongs to a predefined range.
         // this is used when merging elements of the set: a '-' cannot follow 
         // or be followed by characters from a predefined range.
