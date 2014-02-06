@@ -1,2 +1,40 @@
 The characters of a character class are made available through tt(CharClass)
-objects. A tt(CharClass) object stores all characters of its set
+objects. A tt(CharClass) object stores all characters of its set in a vector
+of pairs of tt(char) and tt(CharType) values. tt(CharType) is an enum having
+values tt(CHAR), indicating a plain character; tt(PREDEF), indicating a
+character in a predefined range; tt(RANGE), indicating a minus character used
+for defining an inclusive character range (like tt(a-k)); and tt(MINUS), which
+is used as a temporary value for a minus character. tt(MINUS) type of
+characters are eventually converted to either tt(RANGE) or tt(CHAR) values.
+
+Once the beginning of a character class is recognized a character class object
+is constructed. Elements inside a character class are also defined as
+tt(CharClass) objects, and are combined with existing tt(CharClass) objects
+using tt(CharClass::concatenate). Here, escape characters are supported, with
+tt(\-) being recognized as a literal tt(-), rather than an inclusive range
+operator. 
+
+Eventually the set's characters are returned as a tt(std::string) by
+tt(CharClass::str). This member calls tt(CharClass::set) to compute the string
+that is returned. 
+
+As a minus character at the begin or end of a character class specification is
+a literal minus, rather than a range-defining operator, tt(CharClass::set)
+converts initial or ending minus characters to tt(CHAR) types if their types
+are tt(MINUS). Next, all tt(RANGE) character locations are sequentially
+located and their validity is verified (by
+tt(CharClass::validRange)). Verifying the validity of tt(RANGE)-type
+characters entails verifying that a range minus character is not bordering a
+predefined character set; that next to the character bordering a tt(RANGE)
+character no other tt(RANGE) character (like tt(a-e-h)) is encountered; and
+that the range defines an tt(increasing) character range (e.g., tt(a-f) is OK,
+tt(f-a) isn't). 
+
+Next, all characters before the character range are added to a tt(set<char>)
+set of characters, followed by the characters of the character range itself. 
+
+Eventually, any characters following the last character range are added to the
+set. 
+
+The set's characters are then converted to a tt(std::string), which is
+returned by tt(CharClass::str).
