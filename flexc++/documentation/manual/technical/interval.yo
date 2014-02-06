@@ -1,0 +1,8 @@
+The class tt(Interval) is a simple support class defining the lower and upper
+bounds of an interval as tt(size_t) values. It uses tt(std::string) conversion
+functions to convert values stored in text format in tt(std::string) arguments
+to tt(size_t) values.
+
+The class defines two tt(size_t) values (tt(d_lower) and tt(d_upper)) and
+several factory members as well as members to access tt(d_lower) and
+tt(d_upper)'s values.

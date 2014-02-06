@@ -1,9 +1,9 @@
 #ifndef INCLUDED_INTERVAL_
 #define INCLUDED_INTERVAL_
 
-#include <string>
+#include <iosfwd>
 
-class Interval: private std::pair<size_t, size_t>
+class Interval
 {
     size_t d_lower;
     size_t d_upper;

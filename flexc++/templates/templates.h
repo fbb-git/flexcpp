@@ -1,7 +1,6 @@
 #ifndef INCLUDED_TEMPLATES_
 #define INCLUDED_TEMPLATES_
 
-
 #include <limits>
 
 template <typename Type>

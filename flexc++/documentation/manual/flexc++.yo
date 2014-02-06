@@ -146,7 +146,7 @@ includefile(technical/intro)
         inlcudefile(technical/charclass)
     
         lsubsect(INTERVAL)(The class Interval)
-        TODO
+        includefile(technical/interval)
     
     
     lsect(PATTERNS)(Patterns)

@@ -32,16 +32,6 @@ set<char> CharClass::set() const
 
     addChars(dest, start, d_chars.size());      // add the remaining chars
 
-//cout << "SET OUT\n";
-//for (char ch: dest)
-//    if (isprint(ch))
-//        cout << ch;
-//cout << ' ';
-//for (char ch: dest)
-//    if (not isprint(ch))
-//        cout << (int)ch;
-//cout << '\n';
-
     return dest;
 }
 
