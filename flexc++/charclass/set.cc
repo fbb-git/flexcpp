@@ -4,25 +4,27 @@ set<char> CharClass::set() const
 {
     std::set<char> dest;
 
-    size_t start = 0;
-    while (true)
+    if (d_chars.empty() == 0)
+        return dest;
+
+    if (d_chars.front().second == MINUS)        // first/last chars are never
+        d_chars.front().second = CHAR;          // RANGE minuses.
+
+    if (d_chars.back().second == MINUS)
+        d_chars.back().second = CHAR;
+
+    size_t start = 1;
+    while (size_t idx = findRange(start))       // find the next RANGE 
     {
-        size_t idx = findRange(start);  // at idx-1: 'a-b' (beyond 'start')
-
-//    cout << "CharClass::set:  findRange returns " << idx << endl;
-
-        if (idx == 0)                           // no 'a-b' range found
-            break;
-
-        if (!validRange(idx))                   // Error pattern a-b-c or 
+        if (not validRange(idx))                // Error pattern a-b-c or 
             return dest;                        // bordering predefined
 
-        addIndices(dest, start, idx - 1);       // add fm 'start' to 'idx - 1'
+        addChars(dest, start, idx - 1);         // add fm 'start' to 'idx - 1'
         addRange(dest, idx);                    // add the range of chars
 
         start = min(d_chars.size(), idx + 2);   // continue beyond the range
     }
-    addIndices(dest, start, d_chars.size());    // add the remaining chars
+    addChars(dest, start, d_chars.size());      // add the remaining chars
 
 //    cout << "SET OUT\n";
 

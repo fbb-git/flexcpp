@@ -18,11 +18,11 @@ class CharClass
         MINUS           // is converted to either CHAR or RANGE
     };
 
-        // the bool indicates that the char belongs to a predefined range.
-        // this is used when merging elements of the set: a '-' cannot follow 
-        // or be followed by characters from a predefined range.
-    typedef std::vector<std::pair<char, bool>> Vector;
-    Vector d_chars;
+    typedef std::vector<std::pair<char, CharType>> Vector;
+
+        // mutable to allow set() to change the type of the first/last entry
+        // of d_chars from MINUS to CHAR
+    mutable Vector d_chars; 
 
     public:
         CharClass() = default;
@@ -41,7 +41,7 @@ class CharClass
 
                                         // Call unescape on match, and return
                                         // the CharClass containing the 
-                                        // resulting characters
+                                        // resulting character
         static CharClass escape(std::string const &match);
 
                                         // use CharRange to determine the set
@@ -71,19 +71,34 @@ class CharClass
         bool empty() const;             // true if the set is empty.
 
     private:
-        CharClass(char ch);
+        CharClass(char ch, CharType type);
         CharClass(std::string const &str);
         CharClass(std::set<char> const &charSet);
 
         std::set<char> set() const;                 // create a set (or F)
 
+                                                    // add the offsets of '-'
+                                                    // chars in str to 'minus'
+        void addSet(std::vector<size_t> &minus, size_t offset, 
+                    std::string const &str);
 
-        void addRange(std::set<char> &charSet, size_t idx) const;
-        void addIndices(std::set<char> &dest, size_t begin, size_t end) const;
-        void addChars(std::set<char> &dest, size_t begin, size_t end) const;
         size_t findRange(size_t from) const;        // find a range fm 'from'
         bool validRange(size_t idx) const;          // T if valid range,
                                                     // idx at '-'
+        bool predefinedBefore(size_t idx) const;
+        bool predefinedAfter(size_t idx) const;
+
+        bool predefined(size_t idx) const;          // true if at idx a PREDEF
+                                                    // char is found
+        bool rangeAfterRange(size_t idx) const;
+        bool inversedRange(size_t idx) const;
+
+        std::string rangeString(size_t idx) const;
+
+        void addRange(std::set<char> &charSet, size_t idx) const;
+        void addChars(std::set<char> &dest, size_t begin, size_t end) const;
+
+
 };
 
 inline bool CharClass::empty() const
