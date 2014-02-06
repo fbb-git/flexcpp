@@ -4,7 +4,18 @@ set<char> CharClass::set() const
 {
     std::set<char> dest;
 
-    if (d_chars.empty() == 0)
+cerr << "SET IN\n";
+for (auto pair: d_chars)
+    if (isprint(pair.first))
+        cout << pair.first << " (" << pair.second << ") ";
+cout << ' ';
+for (auto pair: d_chars)
+    if (not isprint(pair.first))
+        cout << (int)pair.first << " (" << pair.second << ") ";
+cout << '\n';
+
+
+    if (d_chars.empty())
         return dest;
 
     if (d_chars.front().second == MINUS)        // first/last chars are never
@@ -26,7 +37,15 @@ set<char> CharClass::set() const
     }
     addChars(dest, start, d_chars.size());      // add the remaining chars
 
-//    cout << "SET OUT\n";
+    cout << "SET OUT\n";
+    for (char ch: dest)
+        if (isprint(ch))
+            cout << ch;
+    cout << ' ';
+    for (char ch: dest)
+        if (not isprint(ch))
+            cout << (int)ch;
+    cout << '\n';
 
     return dest;
 }

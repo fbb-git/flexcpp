@@ -79,8 +79,8 @@ class CharClass
 
                                                     // add the offsets of '-'
                                                     // chars in str to 'minus'
-        void addSet(std::vector<size_t> &minus, size_t offset, 
-                    std::string const &str);
+        void addMinuses(std::vector<size_t> &minus, size_t offset, 
+                        std::string const &str);
 
         size_t findRange(size_t from) const;        // find a range fm 'from'
         bool validRange(size_t idx) const;          // T if valid range,

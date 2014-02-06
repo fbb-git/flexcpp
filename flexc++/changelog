@@ -23,6 +23,9 @@ flexc++ (2.00.00)
             nPending() to setPending(), without calling Input::get() in
             between.
 
+        - Character classes support escape sequences. A \- indicates a
+          litteral - and is not used to define a character range.
+
   * A second %% line in flexc++'s input file ends input file processing.
     To specify a regex starting with %% surround it with double quotes or 
     indent it by at least one blank space.

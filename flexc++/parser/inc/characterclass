@@ -81,7 +81,7 @@ _cc_escape:
 _cc_element:
     _cc_escape
     {
-        $$ = CharClass::escapeSequence(d_matched);
+        $$ = CharClass::escape(d_matched);
     }
 |
     PREDEFINED_CLASS
