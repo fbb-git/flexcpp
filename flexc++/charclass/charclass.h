@@ -12,10 +12,10 @@ class CharClass
 
     enum CharType
     {
-        CHAR,
-        PREDEF,
-        RANGE,
-        MINUS           // is converted to either CHAR or RANGE
+        CHAR,           // any plain character
+        PREDEF,         // characters in a predefined range
+        RANGE,          // a minus acting as a range operator (e.g., a-z)
+        MINUS           // to be converted to either CHAR or RANGE
     };
 
     typedef std::vector<std::pair<char, CharType>> Vector;

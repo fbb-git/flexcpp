@@ -6,8 +6,6 @@ CharClass::CharClass(string const &match)
     size_t length = 0;
     vector <size_t> minus;
 
-cout << "CharClass IN: " << match << "\n";
-
     size_t begin = 0;
     size_t idx = 0;                       // push \- delimited substrings
     while ((idx = match.find("\\", idx)) != string::npos)
@@ -37,16 +35,14 @@ cout << "CharClass IN: " << match << "\n";
         d_chars[idx].second = MINUS;
 
 
-cout << "CharClass OUT\n";
-for (auto pair: d_chars)
-    if (isprint(pair.first))
-        cout << pair.first << " (" << pair.second << ") ";
-cout << ' ';
-for (auto pair: d_chars)
-    if (not isprint(pair.first))
-        cout << (int)pair.first << " (" << pair.second << ") ";
-cout << '\n';
+//cout << "CharClass OUT\n";
+//for (auto pair: d_chars)
+//    if (isprint(pair.first))
+//        cout << pair.first << " (" << pair.second << ") ";
+//cout << ' ';
+//for (auto pair: d_chars)
+//    if (not isprint(pair.first))
+//        cout << (int)pair.first << " (" << pair.second << ") ";
+//cout << '\n';
 
 }
-
-
