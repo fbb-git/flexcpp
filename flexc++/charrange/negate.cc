@@ -1,26 +1,15 @@
 #include "charrange.ih"
 
-//#include <iostream>
-//#include <algorithm>
-//#include <iterator>
-
-set<char> CharRange::negate(set<char> const &cSet)
+string CharRange::negate(string const &str)
 {
-    AllChars begin(0);
-    AllChars end(max<unsigned char>());
+    static string  
+            all(numeric_limits<char>::min(), numeric_limits<char>::max());
 
-//std::cerr << "IN-SET: ";
-//copy(cSet.begin(), cSet.end(), ostream_iterator<int>(std::cerr, ", "));
-//std::cerr << "\n";
+    string ret(FlexTypes::NCHARS, 0);
 
-    set<char> ret;
+    auto end = set_difference(all.begin(), all.end(), str.begin(), str.end(),
+                              ret.begin());
 
-    set_difference(begin, end, cSet.begin(), cSet.end(), 
-                                                inserter(ret, ret.end()));
-
-//std::cerr << "NEGATED-SET: ";
-//copy(ret.begin(), ret.end(), ostream_iterator<int>(std::cerr, ", "));
-//std::cerr << "\n";
-
+    ret.resize(end - ret.begin());
     return ret;
 }

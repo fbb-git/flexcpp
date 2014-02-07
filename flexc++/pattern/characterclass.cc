@@ -1,6 +1,6 @@
 #include "pattern.ih"
 
-Pattern Pattern::characterClass(States &states, CharClass const &charClass)
+Pattern Pattern::characterClass(States &states, CharClass &charClass)
 {
     Pair pair = states.next2();
 

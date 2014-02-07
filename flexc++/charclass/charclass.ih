@@ -14,19 +14,25 @@ using namespace std;
 using namespace FBB;
 
 
-inline bool CharClass::predefined(size_t idx) const
+inline bool CharClass::isPredefined(size_t idx) const
 {
     return d_chars[idx].second == PREDEF;
 }
 
-inline CharClass::CharClass(char ch, CharType type)
-:
-    d_chars(1, {ch, type})
-{}
+//inline CharClass::CharClass(char ch, CharType type)
+//:
+//    d_chars(1, {ch, type})
+//{}
 
 
 inline CharClass::CharClass(std::set<char> const &charSet)
 {
     for (auto ch: charSet)
-        d_chars.push_back({ch, PREDEF});
+        d_chars.push_back({ch, CHAR});
 }
+
+
+
+
+
+

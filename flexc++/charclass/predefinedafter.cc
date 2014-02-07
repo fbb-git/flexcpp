@@ -2,7 +2,7 @@
 
 bool CharClass::predefinedAfter(size_t idx) const
 {
-    if (predefined(idx + 1))            // predefined range beyond '-' ?
+    if (isPredefined(idx + 1))            // predefined range beyond '-' ?
     {
         emsg << "predefined set cannot follow '-'" << endl;
         return true;

@@ -1,11 +1,13 @@
 #include "charclass.ih"
 
-set<char> CharClass::set() const
+set<char> CharClass::set()
 {
     std::set<char> dest;
 
-    if (d_chars.empty())
+    if (d_str.empty())
         return dest;
+
+    handleMinusAndEscape();
 
     if (d_chars.front().second == MINUS)        // first/last chars are never
         d_chars.front().second = CHAR;          // RANGE minuses.
@@ -31,6 +33,8 @@ set<char> CharClass::set() const
     }
 
     addChars(dest, start, d_chars.size());      // add the remaining chars
+
+    showChars("set");
 
     return dest;
 }

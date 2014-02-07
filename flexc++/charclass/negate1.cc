@@ -1,7 +1,7 @@
 #include "charclass.ih"
 
-CharClass CharClass::negate() const
+void CharClass::negate()
 {
-    CharClass ret( CharRange::negate(set()) );
-    return ret;
+    d_str = CharRange::negate(str());
+    d_state = NEGATED;
 }

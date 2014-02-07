@@ -65,13 +65,15 @@
                 PATTERN:        Pattern;
                 CHARCLASS:      CharClass;
                 INTERVAL:       Interval;
+                VECTOR:         std::vector<std::string>
 
 %type <TEXTTYPE>    _stringOrIdent _stringType
-%type <STRING>      identifier _name_def _decimal
+%type <STRING>      identifier _name_def _decimal _cc_element
 %type <CHARCLASS>   characterclass 
-                    _cc_set _cc_start _cc_contents _cc_negated _cc_element
+                    _cc_set _cc_start _cc_negated
 %type <INTERVAL>    _interval
 %type <PATTERN>     _unit _regex _optMs_regex regexOrEOF
+%type <VECTOR>      _cc_contents 
 
 %%
 

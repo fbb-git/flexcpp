@@ -1,37 +1,9 @@
 #include "charrange.h"
 
 #include <cctype>
-#include <iterator>
 #include <algorithm>
 
-#include "../templates/templates.h"
-
-struct AllChars: public std::iterator<std::input_iterator_tag, char>
-{
-    size_t d_value;
-
-    AllChars(size_t value)
-    :
-        d_value(value)
-    {}
-
-    bool operator!=(AllChars const &rhs)
-    {
-        return d_value != rhs.d_value;
-    }
-
-    AllChars &operator++()
-    {
-        ++d_value;
-        return *this;
-    }
-
-    char operator *()
-    {
-        return d_value;
-    }
-};
-    
+#include "../flextypes/flextypes.h"
 
 using namespace std;
 

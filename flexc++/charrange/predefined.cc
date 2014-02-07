@@ -7,19 +7,22 @@
 // characters the first time it is used. At the same time the negated set is
 // filled. 
 
-set<char> const &CharRange::predefined(std::string const &setName)
+string const &CharRange::predefined(std::string const &setName)
 {
-    size_t const beyond = max<unsigned char>() + 1;
+    size_t const beyond = FlexTypes::NCHARS;
 
-    auto &chSet = s_hash[setName];
+    auto &str = s_hash[setName];
 
-    if (chSet.empty())
+    if (str.empty())
     {
         if (setName == ".")
         {
-            copy(AllChars(0), AllChars(beyond), inserter(chSet, chSet.end()));
-            chSet.erase('\n');
-            return chSet;
+            for (size_t begin = 0; begin != '\n'; ++begin)
+                str += begin;
+            for (size_t begin = '\n' + 1; begin != beyond; ++begin)
+                str += begin;
+
+            return str;
         }
 
         string setToFill = setName;
@@ -35,9 +38,9 @@ set<char> const &CharRange::predefined(std::string const &setName)
 
         for (size_t idx = 0; idx != beyond; ++idx)
             if (fillFun(idx))
-                fillSet.insert(idx);
+                fillSet += idx;
 
         s_hash[complementedSet] = negate(fillSet);
     }
-    return chSet;
+    return str;
 }

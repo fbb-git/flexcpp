@@ -1,12 +1,14 @@
 #include "charclass.ih"
 
-string CharClass::str() const
+string const &CharClass::str()
 {
 //    cout << "CHARCLASS: str.cc RAW: " << *this << '\n';
-        
-    std::set<char> const &tmp = set();
 
-    string ret(tmp.begin(), tmp.end());
+    if (d_state != FINAL)        
+    {
+        std::set<char> const &tmp = set();
+        d_str.assign(tmp.begin(), tmp.end());
+    }
 
-    return ret;
+    return d_str;
 }

@@ -7,6 +7,8 @@ class FlexTypes
     typedef char Alphabet;
 
     public:
+        static size_t const NCHARS =   1 << (8 * sizeof(Alphabet));
+
         enum class TextType
         {
             IDENT,
@@ -16,7 +18,7 @@ class FlexTypes
             
         enum Type       // values in the Alphabet range are simple characters
         {
-            UNDETERMINED__ =  1 << (8 * sizeof(Alphabet)),
+            UNDETERMINED__ =  NCHARS,
             EMPTY,                              
             FINAL,
             CHARSET,                            // string contents of [ ... ]
@@ -35,3 +37,7 @@ class FlexTypes
 };
         
 #endif
+
+
+
+

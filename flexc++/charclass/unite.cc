@@ -1,6 +1,6 @@
 #include "charclass.ih"
 
-CharClass CharClass::unite(CharClass const &lhs, CharClass const &rhs)
+CharClass CharClass::unite(CharClass &lhs, CharClass &rhs)
 {
     std::set<char> const &lset = lhs.set();
     std::set<char> const &rset = rhs.set();

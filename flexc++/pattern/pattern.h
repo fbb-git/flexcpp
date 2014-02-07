@@ -66,8 +66,7 @@ class Pattern: private FlexTypes
                                      size_t type);
         static Pattern interval(States &states, Pattern &regex, 
                                                    Interval const &interval);
-        static Pattern characterClass(States &states, 
-                                      CharClass const &charClass);
+        static Pattern characterClass(States &states, CharClass &charClass);
 
         RuleType type() const;
         bool fixedLength() const;

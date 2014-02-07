@@ -8,7 +8,7 @@ _cc_start:
     CC_START
     _m_contents
     {
-        $$ = CharClass::elements(d_matched, 1); // skips the opening bracket
+        $$ = CharClass(d_matched, 1);   // skips the opening bracket
     }
 ;
 
@@ -16,7 +16,7 @@ _cc_negated:
     CC_NEGATED
     _m_contents
     {                                   // skips bracked and negation caret
-        $$ = CharClass::elements(d_matched, 2); 
+        $$ = CharClass(d_matched, 2); 
     }
 ;
 
@@ -81,7 +81,7 @@ _cc_escape:
 _cc_element:
     _cc_escape
     {
-        $$ = CharClass::escape(d_matched);
+        $$ = CharClass::chars(d_matched);
     }
 |
     PREDEFINED_CLASS
@@ -91,17 +91,20 @@ _cc_element:
 |
     _cc_literal
     {
-        $$ = CharClass::elements(d_matched, 0);
+        $$ = CharClass::chars(d_matched);
     }
 ;
 
 _cc_contents:
     _cc_contents _cc_element
     {
-        $<CHARCLASS>1.concatenate($2);
+        $<VECTOR>1.push_back($2);
     }
 |
     _cc_element
+    {
+        $$ = vector<string>(1, $1);
+    }
 ;
 
 _cc_set:
@@ -114,12 +117,12 @@ _cc_set:
 |    
     _cc_start _cc_contents _cc_end
     {
-        $<CHARCLASS>1.concatenate($2);
+        $<CHARCLASS>1.append($2);
     }
 |
     _cc_negated _cc_contents _cc_end
     {
-        $$ = $<CHARCLASS>1.negate($2);
+        $<CHARCLASS>1.negate($2);
     }
 ;
 

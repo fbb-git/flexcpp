@@ -2,7 +2,10 @@
 
 Pattern Pattern::dot(States &states)
 {
-    Pattern ret = characterClass(states, CharClass::predefined("."));
+    CharClass charClass;
+    charClass.append(vector<string>(1, CharClass::predefined(".")));
+
+    Pattern ret = characterClass(states, charClass);
     ret.d_length = 1;
     return ret;
 }
