@@ -34,6 +34,8 @@ class CharClass
                                 // begin index and lengths of predefined 
                                 // ranges.
     TypeVector d_type;
+    std::vector<size_t> d_tag;  // locations of - chars that could be range
+                                // operators.
 
     public:
         CharClass() = default;
@@ -90,6 +92,9 @@ class CharClass
 
         std::set<char> set();                       // create a set (or F)
         void handleMinusAndEscape();
+        void inspect(TypeVector::iterator iter);
+        void addMinuses(size_t offset, std::string const &str);
+
         size_t findRange(size_t from) const;        // find a range fm 'from'
         bool validRange(size_t idx) const;          // T if valid range,
                                                     // idx at '-'

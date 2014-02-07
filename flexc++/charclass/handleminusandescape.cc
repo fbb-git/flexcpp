@@ -2,10 +2,6 @@
 
 void CharClass::handleMinusAndEscape()
 {
-    string str;
-    size_t length = 0;
-    vector <size_t> tag;
-
     if (d_state == RAW)
         d_type.push_back({d_str.length(), END});
 
@@ -14,27 +10,12 @@ void CharClass::handleMinusAndEscape()
             begin != end; 
                 ++begin
     )
-        inspect(tag, begin);
+        inspect(begin);
 
-
-
-
-    for (auto &pair: d_
-    size_t begin = 0;
-    size_t idx = 0;                       // push \- delimited substrings
-
-
-
-
-
-
-                                            // add any trailing chars fm match
-    str += String::unescape(match.substr(begin, string::npos));
-    addMinuses(tag, length, str);           // and store their - locations
-
-    for (char ch: str)                      // add all chars in str to d_chars
-        d_chars.push_back({ch, CHAR});
-
-    for (size_t idx: tag)                   // change tagged - chars to MINUS
-        d_chars[idx].second = MINUS;
+    if (d_tag.size() && d_tag.front() == 0) // 1st char is not a range op.
+        d_tag.pop_front();
+    
+                                            // last char is not a range op.
+    if (d_tag.size() && d_tag.back() == d_str.length() - 1) 
+        d_tag.pop_front();                  
 }
