@@ -43,7 +43,7 @@ void CharClass::inspect(TypeVector::iterator iter)
     str += String::unescape(d_str.substr(nextIdx, end - nextIdx));
     addMinuses(lengthSoFar, str);           // and store their - locations
 
-    size_t reduction = orgLen - str.len();  
+    size_t reduction = orgLen - str.length();  
     if (reduction > 0)
     {
         d_str.replace(begin, orgLen, str);  // replace the original str by the

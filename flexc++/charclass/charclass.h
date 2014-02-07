@@ -14,26 +14,27 @@ class CharClass
     {
         CHAR,           // any plain character
         PREDEF,         // characters in a predefined range
-        RANGE,          // a minus acting as a range operator (e.g., a-z)
-        MINUS,          // to be converted to either CHAR or RANGE
         END,            // end marker for handleMinusAndEscape
     };
 
     enum State
     {
-        RAW,
-        PROCESSED,
-        NEGATED,
-        FINAL
+        RAW,            // while d_str is initially filled
+        PROCESSED,      // when escape chars etc. have been processes
+        NEGATED,        // then negate has been called
+        FINAL           // at the end of the set-member.
     };
     State d_state = RAW;
 
     std::string d_str;          // all received (and final) characters 
 
     typedef std::vector<std::pair<size_t, CharType>> TypeVector;
+//    typedef TypeVector::iterator TypeVectorIter;
                                 // begin index and lengths of predefined 
                                 // ranges.
     TypeVector d_type;
+
+    typedef std::vector<size_t>::iterator TagIter;
     std::vector<size_t> d_tag;  // locations of - chars that could be range
                                 // operators.
 
@@ -83,33 +84,33 @@ class CharClass
         bool empty() const;             // true if the set is empty.
                                         // (used by Pattern::characterClass)
     private:
-                                        // inserts the chars as CHAR
-                                        // (used by unite/difference
-        CharClass(std::set<char> const &charSet);   
-
-                                        // append str's chars to d_chars
-        void appendChars(std::string const &str, CharType type);
+//                                        // inserts the chars as CHAR
+//                                        // (used by unite/difference
+//        CharClass(std::set<char> const &charSet);   
+//
+//                                        // append str's chars to d_chars
+//        void appendChars(std::string const &str, CharType type);
 
         std::set<char> set();                       // create a set (or F)
         void handleMinusAndEscape();
         void inspect(TypeVector::iterator iter);
         void addMinuses(size_t offset, std::string const &str);
 
-        size_t findRange(size_t from) const;        // find a range fm 'from'
-        bool validRange(size_t idx) const;          // T if valid range,
+//        size_t findRange(size_t from) const;      // find a range fm 'from'
+        bool validRange(TagIter iter) const;        // T if valid range,
                                                     // idx at '-'
         bool predefinedBefore(size_t idx) const;
         bool predefinedAfter(size_t idx) const;
         bool isPredefined(size_t idx) const;        // true if at idx a PREDEF
                                                     // char is found
-        bool rangeAfterRange(size_t idx) const;
+        bool rangeAfterRange(TagIter iter) const;
         bool inversedRange(size_t idx) const;
         std::string rangeString(size_t idx) const;
         void addChars(std::set<char> &dest, size_t begin, size_t end) const;
         void addRange(std::set<char> &charSet, size_t idx) const;
 
 
-        void showChars(char const *label) const;        // IUO
+//        void showChars(char const *label) const;        // IUO
         void showString(std::string const &str, char const *label) const;
 };
 

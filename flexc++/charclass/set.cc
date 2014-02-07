@@ -9,32 +9,18 @@ set<char> CharClass::set()
 
     handleMinusAndEscape();
 
-    if (d_chars.front().second == MINUS)        // first/last chars are never
-        d_chars.front().second = CHAR;          // RANGE minuses.
-
-    if (d_chars.back().second == MINUS)
-        d_chars.back().second = CHAR;
-
-    size_t start = 0;
-    while (true)
+    size_t from = 0;
+    for (auto iter = d_tag.begin(), end = d_tag.end(); iter != end; ++iter)
     {
-        size_t idx = findRange(start);          // find the next RANGE 
-
-        if (idx == d_chars.size())              // not found: done.
-            break;
-
-        if (not validRange(idx))                // Error pattern a-b-c or 
+        if (not validRange(iter))               // Error pattern a-b-c or 
             return dest;                        // bordering predefined
 
-        addChars(dest, start, idx - 1);         // add fm 'start' to 'idx - 1'
-        addRange(dest, idx);                    // add the range of chars
-
-        start = min(d_chars.size(), idx + 2);   // continue beyond the range
+        addChars(dest, from, *iter - 1);        // add fm 'from' to 'idx - 1'
+        addRange(dest, *iter);                  // add the range of chars
+        from = *iter + 2;
     }
 
-    addChars(dest, start, d_chars.size());      // add the remaining chars
-
-    showChars("set");
+    addChars(dest, from, d_str.size());         // add the remaining chars
 
     return dest;
 }

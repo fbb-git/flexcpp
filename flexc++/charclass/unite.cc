@@ -5,11 +5,11 @@ CharClass CharClass::unite(CharClass &lhs, CharClass &rhs)
     std::set<char> const &lset = lhs.set();
     std::set<char> const &rset = rhs.set();
 
-    std::set<char> dest;
+    CharClass ret;
+    ret.d_state = FINAL;
 
     set_union(lset.begin(), lset.end(), rset.begin(), rset.end(),
-              inserter(dest, dest.begin()));
+              back_inserter(ret.d_str));
 
-    CharClass ret(dest);
     return ret;
 }

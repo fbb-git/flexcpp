@@ -4,9 +4,9 @@ bool CharClass::inversedRange(size_t idx) const
 {
     if 
     (                                       // first char must be <= last ch.
-        static_cast<unsigned char>(d_chars[idx - 1].first) 
+        static_cast<unsigned char>(d_str[idx - 1]) 
         > 
-        static_cast<unsigned char>(d_chars[idx + 1].first)
+        static_cast<unsigned char>(d_str[idx + 1])
     )
     {
         emsg << "lllegal range: `" << rangeString(idx) << '\'' << endl;

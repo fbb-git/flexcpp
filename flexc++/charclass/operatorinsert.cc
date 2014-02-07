@@ -2,13 +2,12 @@
 
 std::ostream &operator<<(std::ostream &out, CharClass const &cc)
 {
-    for (auto &cb: cc.d_chars)
+    for (char ch: cc.d_str)
     {
-        char c = cb.first;
-        if (isprint(c))
-            out << c;
+        if (isprint(ch))
+            out << ch;
         else
-            out << ' ' << (int)c << ' ';
+            out << ' ' << (int)ch << ' ';
     }
     return out;
 }

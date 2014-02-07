@@ -4,7 +4,7 @@ string CharClass::rangeString(size_t idx) const
 {
     string ret;
 
-    char ch = d_chars[idx - 1].first;
+    char ch = d_str[idx - 1];
 
     if (isprint(ch))
         ret = ch;
@@ -13,7 +13,7 @@ string CharClass::rangeString(size_t idx) const
 
     ret += '-';
 
-    ch = d_chars[idx + 1].first;
+    ch = d_str[idx + 1];
 
     if (isprint(ch))
         ret += ch;

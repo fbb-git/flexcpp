@@ -1,16 +1,16 @@
 #include "charclass.ih"
 
-bool CharClass::rangeAfterRange(size_t idx) const
+bool CharClass::rangeAfterRange(TagIter iter) const
 {
     if 
     (
-        idx + 2 < d_chars.size()            // 'X' in 'a-bX' exists
+        iter + 1  != d_tag.end()            // another - exists
         && 
-        d_chars[idx + 2].second == RANGE    // saw 'a-b-': illegal pattern
+        *iter + 2 == *(iter + 1)    // saw 'a-b-': illegal pattern
     )
     {
         emsg << "range '-' cannot follow range `" << 
-                                        rangeString(idx) << '\'' << endl;
+                                        rangeString(*iter) << '\'' << endl;
         return true;
     }
 
