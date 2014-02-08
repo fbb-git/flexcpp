@@ -6,15 +6,15 @@ void CharClass::append(vector<string> const &strings)
     {
         if (str[0] == 'p')
         {
-            if (d_type.back().second != 'p')
+            if (d_type.back().second != PREDEF)
                d_type.push_back({d_str.length(), PREDEF});
         }
         else
         {
-            if (d_type.back().second != 'n')
+            if (d_type.back().second != CHAR)
                 d_type.push_back({d_str.length(), CHAR});
         }
-        d_str += str;
+        d_str.append(str.begin() + 1, str.end());   // add all but the 1st
     }
 }
 

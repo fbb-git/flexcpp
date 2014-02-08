@@ -28,6 +28,8 @@ string const &CharRange::predefined(std::string const &setName)
         string setToFill = setName;
         string complementedSet = setToFill;
 
+//cerr << "Range: predef\n";
+
         if (setToFill[2] != '^')
             complementedSet.insert(2, 1, '^');
         else
@@ -36,11 +38,18 @@ string const &CharRange::predefined(std::string const &setName)
         auto &fillSet = s_hash[setToFill];
         auto fillFun = s_funHash[setToFill];
 
+//cerr << "Range: predef\n";
+
         for (size_t idx = 0; idx != beyond; ++idx)
             if (fillFun(idx))
                 fillSet += idx;
 
+//cerr << "Range: predef\n";
+
         s_hash[complementedSet] = negate(fillSet);
+
+//cerr << "Range: predef\n";
     }
     return str;
 }
+

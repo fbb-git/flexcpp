@@ -94,7 +94,9 @@ class CharClass
         std::set<char> set();                       // create a set (or F)
         void handleMinusAndEscape();
         void inspect(TypeVector::iterator iter);
-        void addMinuses(size_t offset, std::string const &str);
+        void tagMinuses(size_t offset, std::string const &str, size_t from);
+        void replace(std::string newStr, TypeVector::iterator iter, 
+                     size_t end);
 
 //        size_t findRange(size_t from) const;      // find a range fm 'from'
         bool validRange(TagIter iter) const;        // T if valid range,

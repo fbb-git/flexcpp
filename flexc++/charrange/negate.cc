@@ -2,8 +2,10 @@
 
 string CharRange::negate(string const &str)
 {
-    static string  
-            all(numeric_limits<char>::min(), numeric_limits<char>::max());
+    string all(FlexTypes::NCHARS, 0);
+    char ch = numeric_limits<char>::min();
+    for (char &c: all)
+        c = ch++;
 
     string ret(FlexTypes::NCHARS, 0);
 
@@ -11,5 +13,6 @@ string CharRange::negate(string const &str)
                               ret.begin());
 
     ret.resize(end - ret.begin());
+
     return ret;
 }
