@@ -37,6 +37,17 @@ runflexcpp()
     cat preamble patterns > lexer
     echo "Running ../tmp/bin/binary -K lexer > out"
     ../tmp/bin/binary -K lexer > out
+
+    if [ -s out ] ; then
+	echo "flexc++ (binary) reports:"
+	echo "========================="
+	echo
+	cat out
+	echo
+	echo "========================="
+	echo "To continue press Enter";
+	read
+    fi
 }
 
 makeprogram()
