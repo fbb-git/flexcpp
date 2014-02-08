@@ -29,9 +29,7 @@ class CharClass
     std::string d_str;          // all received (and final) characters 
 
     typedef std::vector<std::pair<size_t, CharType>> TypeVector;
-//    typedef TypeVector::iterator TypeVectorIter;
-                                // begin index and lengths of predefined 
-                                // ranges.
+                                // begin index of characters of type CharType
     TypeVector d_type;
 
     typedef std::vector<size_t>::iterator TagIter;
@@ -84,13 +82,6 @@ class CharClass
         bool empty() const;             // true if the set is empty.
                                         // (used by Pattern::characterClass)
     private:
-//                                        // inserts the chars as CHAR
-//                                        // (used by unite/difference
-//        CharClass(std::set<char> const &charSet);   
-//
-//                                        // append str's chars to d_chars
-//        void appendChars(std::string const &str, CharType type);
-
         std::set<char> set();                       // create a set (or F)
         void handleMinusAndEscape();
         void inspect(TypeVector::iterator iter);
@@ -98,7 +89,6 @@ class CharClass
         void replace(std::string newStr, TypeVector::iterator iter, 
                      size_t end);
 
-//        size_t findRange(size_t from) const;      // find a range fm 'from'
         bool validRange(TagIter iter) const;        // T if valid range,
                                                     // idx at '-'
         bool predefinedBefore(size_t idx) const;
@@ -110,27 +100,12 @@ class CharClass
         std::string rangeString(size_t idx) const;
         void addChars(std::set<char> &dest, size_t begin, size_t end) const;
         void addRange(std::set<char> &charSet, size_t idx) const;
-
-
-//        void showChars(char const *label) const;        // IUO
-        void showString(std::string const &str, char const *label) const;
 };
 
 inline bool CharClass::empty() const
 {
     return d_str.empty();
 }
-
-/*
-
-    private:
-        CharClass(char ch, CharType type);
-        CharClass(std::string const &str);
-                                                    // add the offsets of '-'
-                                                    // chars in str to 'minus'
-        void addMinuses(std::vector<size_t> &minus, size_t offset, 
-                        std::string const &str);
-*/
 
 #endif
 

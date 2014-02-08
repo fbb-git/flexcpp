@@ -9,9 +9,6 @@ set<char> CharClass::set()
 
     handleMinusAndEscape();
 
-//cerr << "# tags: " << d_tag.size() << " 1st: " << d_tag.front() << " last " 
-//<< d_tag.back() << '\n';
-
     size_t from = 0;
     for (auto iter = d_tag.begin(), end = d_tag.end(); iter != end; ++iter)
     {

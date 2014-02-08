@@ -1,40 +1,52 @@
 The characters of a character class are made available through tt(CharClass)
-objects. A tt(CharClass) object stores all characters of its set in a vector
-of pairs of tt(char) and tt(CharType) values. tt(CharType) is an enum having
-values tt(CHAR), indicating a plain character; tt(PREDEF), indicating a
-character in a predefined range; tt(RANGE), indicating a minus character used
-for defining an inclusive character range (like tt(a-k)); and tt(MINUS), which
-is used as a temporary value for a minus character. tt(MINUS) type of
-characters are eventually converted to either tt(RANGE) or tt(CHAR) values.
+objects. A tt(CharClass) object initially stores all characters of its set in
+a tt(string), while remembering the offsets where series of ordinary
+characters or predefined character ranges start in a vector of tt(pair<size_t,
+CharType>) objects. Their tt(first) members are indices in the object's
+tt(string) data member where one or more characters of type tt(CharType)
+start. 
 
-Once the beginning of a character class is recognized a character class object
-is constructed. Elements inside a character class are also defined as
-tt(CharClass) objects, and are combined with existing tt(CharClass) objects
-using tt(CharClass::concatenate). Here, escape characters are supported, with
-tt(\-) being recognized as a literal tt(-), rather than an inclusive range
-operator. 
+tt(CharType) is an enum having values tt(CHAR), indicating a plain character;
+tt(PREDEF), indicating a character in a predefined range; and tt(END), which
+is used for offset tt(d_str.length()).
 
-Eventually the set's characters are returned as a tt(std::string) by
-tt(CharClass::str). This member calls tt(CharClass::set) to compute the string
-that is returned. 
+Once all elements of a character class have thus been collected, the member
+tt(str) may be called to create the final character set.
 
-As a minus character at the begin or end of a character class specification is
-a literal minus, rather than a range-defining operator, tt(CharClass::set)
-converts initial or ending minus characters to tt(CHAR) types if their types
-are tt(MINUS). Next, all tt(RANGE) character locations are sequentially
-located and their validity is verified (by
-tt(CharClass::validRange)). Verifying the validity of tt(RANGE)-type
-characters entails verifying that a range minus character is not bordering a
-predefined character set; that next to the character bordering a tt(RANGE)
-character no other tt(RANGE) character (like tt(a-e-h)) is encountered; and
-that the range defines an tt(increasing) character range (e.g., tt(a-f) is OK,
-tt(f-a) isn't). 
+The member tt(set) creates the final set of characters. It calls
+tt(handleMinusAndEscapes) to find (tag) all minus characters in tt(d_str), and
+to process any escape sequence that may have been used in the set. Since flc()
+2.00.00 escape sequences inside character sets are supported. Thus, to
+represent a literal minus character tt(\-) can be used. The member
+tt(handleMinusAndEscapes) passes each of the sub-strings in tt(d_str)
+(starting at the elements in tt(d_type)) to tt(inspect). tt(Inspect) only
+inspects tt(CHAR) ranges. It processes all escape-sequences in the tt(CHAR)
+range, and stores the locations of unescaped minuses in tt(d_tag), thus
+tagging the locations of potential character-range operators. The tags of minus
+characters that are used as the first or last character in tt(d_str) are
+removed, as initial or final minus characters do not define a range.
 
-Next, all characters before the character range are added to a tt(set<char>)
-set of characters, followed by the characters of the character range itself. 
+Next, the tagged minus characters are inspected. These minuses must define
+valid ranges, which means:
+        itemization(
+        it() They are not bordered, either to the left or to the right, by
+            predefined character ranges;
+        it() The next range tag does not refer to two character locations
+            further (i.e., tt(a-c-g) is an invalid range: two ranges may not
+            share a common boundary);
+        it() The position of the first character of a character range may not
+            exceed the second character's position in the tt(char) collating
+            sequence. Here, flc() uses the standard (signed) 8-bit tt(char)
+            type. 
+        )
 
-Eventually, any characters following the last character range are added to the
-set. 
+All characters found in tt(d_str) to the left of a range are then inserted
+into a tt(set<char>). Next the characters of the character range are
+inserted. Once all character ranges have thus been processed, any trailing
+characters are added to tt(d_str). 
 
-The set's characters are then converted to a tt(std::string), which is
-returned by tt(CharClass::str).
+The member tt(str()) receives the set, stores its elements in tt(d_str), and
+returns tt(d_str). Although currently not used by flc()'s implementation,
+tt(str) also sets the tt(CharClass) object's tt(d_state) to tt(FINAL): once a
+tt(CharClass)'s state is tt(FINAL) its tt(d_str) is not modified anymore, and
+tt(str) will return tt(d_str) without calling tt(set).
