@@ -39,7 +39,7 @@ class CharClass
                                 // operators.
 
     public:
-        CharClass() = default;
+        CharClass();
                                         // create a class containing the 
                                         // the raw series of chars defined by
                                         // 'chars', starting at idx 'skip'

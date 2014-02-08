@@ -1,11 +1,10 @@
 #include "charrange.ih"
 
+#include "../valueiterator/valueiterator.h"
+
 string CharRange::negate(string const &str)
 {
-    string all(FlexTypes::NCHARS, 0);
-    char ch = numeric_limits<char>::min();
-    for (char &c: all)
-        c = ch++;
+    static string all(ValueIterator<char>::min(), ValueIterator<char>::max());
 
     string ret(FlexTypes::NCHARS, 0);
 
