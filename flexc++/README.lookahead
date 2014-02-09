@@ -2,3 +2,5 @@ Look-ahead operator handling
 ============================
 
 See section `Patterns using the lookahead operator' in flexc++'s manual.
+
+There's also a brief (Dutch) description in documentation/lop[Dutch].txt

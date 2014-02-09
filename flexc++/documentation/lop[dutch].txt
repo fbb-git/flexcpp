@@ -1,0 +1,57 @@
+Hoi Jurjen/JP,
+
+Mooi plan, maar 't werkt niet goed. Hier is 't tegenvoorbeeld:
+
+    a+/aaa
+
+Wanneer je 1 ch. van de gematchte tekst afhaalt (input bv. 5xa: aaaaa)
+dan matcht de lhs (a+) dus aaaa, maar de rest matcht de rhs (aaa) niet meer.
+
+Kortom, de uitvoering moet iets anders.
+
+Hier is 't alternatief, dat tegelijkertijd per def. recht doet aan de eis voor
+een `minimal match' voor de tail.
+
+Regex is a/b. Net zoals bij 't voorstel van gisteren: match de input met ab.
+
+    ab  matcht XaXb, waarbij Xa de tekst is die correspondeert met a, Xb de
+                     tekst die correspondeert met b
+
+
+Bewaar de volledig gematchte tekst (S = XaXb), en plaats successief 
+
+    S_tail = S.substr(S.length() - size, string::npos) [size = 0, 1, 2, ...] 
+
+terug in de input, totdat b is gematcht.
+
+    1. Dat lukt gegarandeerd, want S matcht al met ab
+    2. Het levert ook de kortste match, want het is de eerste, dus kortste,
+        S_tail die matcht op b.
+    3. Plaats S_head = S.substr(0, size) terug in de input, en match a. Dat
+        lukt, want S matcht ab, en we hebben een minimale match voor b in
+        S_tail. Bij 't matchen van S_head aan a vinden we S_a: de feitelijk
+        gematchte tekst. 
+        Vooorbeeld: match a+/(ba)+ aan aababa. S_tail is ba, S_head is aaba,
+        en S_a is aa.
+    4. Plaats S - S_a terug in de input, en retournerd de gematchte tekst S_a.
+
+De initiele size = 0 waarde begint dus met 't matchen van een lege string aan
+b. Dat maakt 't mogelijk om bv * patronen als a+/a* te matchen: de kortste
+tail is een lege string. Een alternatief is te kijken of b een lege transitie
+naar z'n final state heeft, en dan b gewoon te negeren. Dat maakt de
+implementatie in de gegenereerde code een stuk(je) kleiner.
+
+Deze procedure lijkt misschien een beetje omslachtig, maar 't is bekend dat de
+LOP duur is. Zo duur is-ie ook weer niet, en de ombouw van flexc++ zou
+redelijk snel moeten kunnen worden uitgevoerd, terwijl we voldoen aan de eis
+dat de |S_tail| minimaal moet zijn.
+
+Finesse: bij 't matchen van de tail moet ervoor worden gewaakt dat er geen
+nieuwe chars. uit de input worden gelezen, en dat alleen substrings van 
+de oorspronkelijk gematchte tekst S worden gebruikt. 
+
+Schiet 't maar lek.
+
+Op naar flexc++ 2.00 !
+
+F.
