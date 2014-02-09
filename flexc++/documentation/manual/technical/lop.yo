@@ -17,10 +17,10 @@ short as possible. To find this shortest tail pattern the scanner tries to
 match the last character of the text that matched tt({head}/{tail}) with the
 tt({tail}) pattern. If this succeeds, then the shortest tail was found. If the
 last character didn't already match tt({tail}) then the last two characters
-are matched against tt(({tail}). This process (i.e., increasing the length of
+are matched against tt({tail}). This process (i.e., increasing the length of
 the final substring of the input matching tt({head}{tail})) is continued until
 tt({tail}) is eventually matched. This must succeed since, after all, the full
-input matched tt({head}{tail})). Thus a short tail was found matching
+input matched tt({head}{tail}). Thus a short tail was found matching
 tt({tail}).
 
 After matching the tail pattern, the matching final substring is removed from
