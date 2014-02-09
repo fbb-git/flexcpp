@@ -1,3 +1,4 @@
+NOUSERMACRO(nPending setPending)
 
 manpagesection(17. THE CLASS INPUT)
 

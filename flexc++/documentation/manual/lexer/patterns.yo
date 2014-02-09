@@ -6,96 +6,96 @@ ittn(x)
     match the character `x'
 
 it() bf(.)nl()
-    any character except newline
+    any character except newline;
 
 ittn([xyz])
    a character class; in this case, the pattern matches either an `x', a `y',
-    or a `z'. The characters in a character class may be any (escaped)
-    character, except for the tt(]) character, which must be specified
-    immmediately following the open-bracket, as follows: tt([]) or tt([^]). In
-    all other specifications the closing bracket ends the character set
-    specification.
+    or a `z'.  See also the paragraph about character classes below;
 
 ittn([abj-oZ])
     a ``character class'' with a range in it; matches an `a', a `b', any
-    letter from `j' through `o', or a `Z'
+    letter from `j' through `o', or a `Z'.  See also the paragraph about
+    character classes below; 
 
 ittn([^A-Z])
    a ``negated character class'', i.e., any character but those in the class.
-    In this case, any character EXCEPT an uppercase letter.
+    In this case, any character EXCEPT an uppercase letter.  See also the
+    paragraph about character classes below; 
 
 ittn([^A-Z\n])
-   any character EXCEPT an uppercase letter or a newline
+   any character EXCEPT an uppercase letter or a newline.  See also the
+    paragraph about character classes below; 
 
 ittn([:predef:])
    a em(predefined) set of characters. See below for an overview. When used,
     it is interpreted as an element in a character class. Consequently, it is
     always embedded in a set of square brackets defining the character class
-    (e.g., tt([[:alnum:]])).
+    (e.g., tt([[:alnum:]]));
 
 ittn(s1{+}s2)
    If tt(s1) and tt(s2) are character classes: the union of the characters in
-    tt(s1) and tt(s2)
+    tt(s1) and tt(s2);
 
 ittn(s1{-}s2)
    If tt(s1) and tt(s2) are character classes: the set-difference of the
-    characters in tt(s1) minus the characters in tt(s2)
+    characters in tt(s1) minus the characters in tt(s2);
 
 ittn("[xyz]\"foo")
-    the literal string `tt([xyz]"foo)'
+    the literal string `tt([xyz]"foo)';
 
-ittn(R"([xyz]\"foo)")
-    the literal string  `tt([xyz]\"foo)' (using a rawstring)
+ittn(R"([xyz]\"foo)") the literal string `tt([xyz]\"foo)' (using a raw string
+    literal). Raw string literals using labels (which must be identifiers,
+    e.g., tt(R"label( labelled raw string )label") are also supported;
 
 ittn(R"label("(xyz"))label")
-    the literal string  `tt("(xyz"))' (using a labeled rawstring)
+    the literal string  `tt("(xyz"))' (using a labeled rawstring);
 
 ittn(\X)
    if X is `a', `b', `f', `n', `r', `t', or `v', then the ANSI-C
     interpretation of `\x'. Otherwise, a literal `X' (used to escape operators
-    such as `*')
+    such as `*');
 
 ittn(\0)
-    a NUL character (ASCII code 0)
+    a NUL character (ASCII code 0);
 
 ittn(\123)
-    the character with octal value 123 (i.e., decimal 83)
+    the character with octal value 123 (i.e., decimal 83);
 
 ittn(\x2a)
-    the character with hexadecimal value 2a (i.e, decimal 42)
+    the character with hexadecimal value 2a (i.e, decimal 42);
 
 ittn((r))
    a regular expression tt(r) by itself. It is used to override precedence
-    (see below)
+    (see below);
 
 ittn({name})
-   the expansion of the `name' definition (see also section ref(FILEFORMAT)).
+   the expansion of the `name' definition (see also section ref(FILEFORMAT));
 
 ittn(r*)
-    zero or more tt(r)s, where r is any regular expression.
+    zero or more tt(r)s, where r is any regular expression;
 
 ittn(r+)
-    one or more tt(r)s.
+    one or more tt(r)s;
 
 ittn(r?)
-    zero or one tt(r)s (that is, an optional r).
+    zero or one tt(r)s (that is, an optional r);
 
 ittn(rs)
    the regular expression `r' followed by the regular expression `s'. This is
-    called concatenation.
+    called concatenation;
 
 ittn(r{m, n})
    where tt(1 <= m <= n): match `r' at least m, but at most n times; called
-    interval expression.
+    interval expression;
 
 ittn(r{m,})
-    where tt(1 <= m): match `r' m or more times.
+    where tt(1 <= m): match `r' m or more times;
 
 ittn(r{m})
-    where tt(1 <= m): match `r' exactly m times.
+    where tt(1 <= m): match `r' exactly m times;
 
 ittn(r|s)
-    either an `r' or an `s'.
+    either an `r' or an `s';
 
 ittn(r/s)
    an `r' but only if it is followed by an `s'. The text matched by `s' is
@@ -124,14 +124,14 @@ ittn(r/s)
     //%nowarn
         )
    on the line just before a regular expression that potentially does not
-    match any text, the warning for that regular expression is suppressed.
+    match any text, the warning for that regular expression is suppressed;
 
 ittn(^r) 
    `r', if appearing at the beginning of a line (i.e., when just starting
     to scan, or right after a newline has been read). When tt(r) appears
     elsewhere on a line it isn't matched by this rule; if the tt(^)-character
     is not the first character of a regular expression it is interpreted as a
-    plain tt(^)-character.
+    plain tt(^)-character;
 
 ittn(r$)
    an `r', if it appears at the end of a line (i.e., the next character on the
@@ -141,34 +141,52 @@ ittn(r$)
     is not the last character of a regular expression it is interpreted as a
     plain tt($)-character. A dollar-terminated regular expression, however,
     may be followed by an action or vertical bar indicating that the regular
-    expression uses the same action as the next rule.
+    expression uses the same action as the next rule;
 
 ittn(<s>r)
-    an `r', but only in start condition s (cf. section ref(STARTCONDITIONS)).
+    an `r', but only in start condition s (cf. section ref(STARTCONDITIONS));
 
 ittn(<s1,s2,s3>r)
-    same, but in any of start conditions s1, s2, or s3.
+    same, but in any of start conditions s1, s2, or s3;
 
 ittn(<*>r)
-    same, but tt(r) is used in any start condition.
+    same, but tt(r) is used in any start condition;
 
 ittn(<sc-list>{compound rules})
    all rules defined in em(compound rules) are active in the set of start
     conditions specified at em(sc-list). Rules defined in em(compound rules)
     cannot themselves specify start conditions. em(Compound rules) may contain
-    empty lines.
+    empty lines;
 
 ittn(<<EOF>>)
-    matches `end-of-file'.
+    matches `end-of-file';
 
 ittn(<sc-list><<EOF>>)
     an end-of-file when in the start conditions specified at em(sc-list).
 )
 
-Inside of a character class all regular expression operators lose
-their special meaning except escape (tt(\)), the character class operator
-tt(-), and, at the beginning of the class, tt(^). To use a closing bracket in
-a character class either start the character class as  tt([]) or as tt([^]).
+bf(Character classes)
+
+Inside a character class all regular expression operators lose their special
+meanings, except for the escape character (tt(\)), the character range
+operator tt(-), the end of character class operator tt(]), and, at the
+beginning of the class, tt(^). All ordinary escape sequences are supported,
+all other escaped characters are interpreted as literal characters (e.g.,
+tt(\c) is a literal tt(c)).
+
+To add a closing bracket to a character class use tt([]) or tt(\]). To add a
+closing bracket to a negated character class use tt([^]) (or use tt([^)
+followed by tt(\]) somewhere within the character class). Minus characters are
+used to define character ranges (e.g., tt([a-d]), defining tt([abcd])) except
+in the following cases, where flc() recognizes a literal minus character:
+    tt([-), or tt([^-) (a minus at the very beginning of a character class); 
+    tt(-]) (a minus at the very end of a character class); 
+    or tt(\-) (an escaped minus character))
+ Once a character class has started, all
+subsequent character (ranges) are added to the set, until the final closing
+bracket (tt(])) has been reached.
+
+bf(Operator precedence)
 
 The operators used in specifying regular expressions have the following
 priorities (listed from lowest to highest):
@@ -181,7 +199,7 @@ itt(^r) and tt(r$):nl()
    tt(^): at the beginning of a regular expression tt(r): tt(r) only matches
     when encountered at the beginning of a line;nl()
    tt($): at the end of a regular expression tt(r): tt(r) only matches when
-    encountered at the end of a line.
+    encountered at the end of a line;
 
 ittn(/)
    the look ahead operator;
@@ -193,15 +211,15 @@ ittn(rs)
    concatenation of regular expressions tt(r) and tt(s);
 
 ittn(multipliers)
-    tt(*, +, ?) and the interval specification (i.e., tt({...})) 
+    tt(*, +, ?) and the interval specification (i.e., tt({...}));
 
 ittn({+}, {-}) 
    (In the context of character classes).  The set union and set difference
-    operators.
+    operators;
 
 ittn((r)) 
    (Parentheses). Here, r may be any regular expression (not containing the
-    look-ahead operator) 
+    look-ahead operator).
 )
 
 Different from the lex-standard, but in line with most other regular

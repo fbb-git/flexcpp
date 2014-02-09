@@ -143,7 +143,7 @@ includefile(technical/intro)
     includefile(technical/semantic)
 
         lsubsect(CHARCLASS)(The class CharClass)
-        inlcudefile(technical/charclass)
+        includefile(technical/charclass)
     
         lsubsect(INTERVAL)(The class Interval)
         includefile(technical/interval)

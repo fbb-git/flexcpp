@@ -143,83 +143,115 @@ regular expressions are created by combining them:
 
 description(
 dit(tt(x))
-    the character `x'
+    the character `x';
 dit(tt(.))
-    any character (byte) except newline
+    any character (byte) except newline;
 dit(tt([xyz]))
    a character class; in this case, the pattern matches either an `x',
-    a `y', or a `z'
+    a `y', or a `z'. See also the paragraph about character classes below;
 dit(tt([abj-oZ]))
    a character class containing a range; matches an `a', a `b', any
-    letter from `j' through `o', or a `Z'
+    letter from `j' through `o', or a `Z'. See also the paragraph about
+    character classes below;
 dit(tt([^A-Z])) a negated character class, i.e., any character except
-    for those in the class.  In this example, any non-capital character.
+    for those in the class.  In this example, any non-capital character. See
+    also the paragraph about character classes below; 
 dit(tt("[xyz]\"foo"))
-    text between double quotes matches the literal string: tt([xyz]"foo).
+    text between double quotes matches the literal string: tt([xyz]"foo);
+dit(R"([xyz]\"foo)")
+    the literal string  `tt([xyz]\"foo)' (using a raw string literal);
 dit(tt(\X))
    if X is `a', `b', `f', `n', `r', `t', or `v', then the ANSI-C
     interpretation of `\x' is matched. Otherwise, a literal `X' is matched
-    (this is used to escape operators such as `*').
+    (this is used to escape operators such as `*');
 dit(tt(\0))
-    a NUL character (ASCII code 0).
+    a NUL character (ASCII code 0);
 dit(tt(\123))
-    the character with octal value 123.
+    the character with octal value 123;
 dit(tt(\x2a))
-    the character with hexadecimal value 2a.
+    the character with hexadecimal value 2a;
 dit(tt((r)))
    the regular expression `r'; parentheses are used to override
-    precedence (see below)
+    precedence (see below);
 dit(tt({name}))
-   the expansion of the `name' definition.
+   the expansion of the `name' definition;
 dit(tt(r*)) 
    zero or more regular expressions `r'. This also matches the empty
-    string.
+    string;
 dit(tt(r+))
-   one or more regular expressions `r'.
+   one or more regular expressions `r';
 dit(tt(r?))
    zero or one regular expression `r'.  This also matches the empty
-    string.
+    string;
 dit(tt(rs))
    the regular expression `r' followed by the regular expression `s';
-    called concatenation
+    called concatenation;
 dit(tt(r{m, n})) 
    regular expression `r' at least m, but at most n times (tt(1 <= m
-    <= n)).
+    <= n));
 dit(tt(r{m,}))
    regular expression `r' m or more times (tt(1 <= m)). 
 dit(tt(r{m}))
-   regular expression `r' exactly m times (tt(1 <= m)).
+   regular expression `r' exactly m times (tt(1 <= m));
 dit(tt(r|s))
-   either regular expression `r' or regular expression `s'
+   either regular expression `r' or regular expression `s';
 dit(tt(r/s))
    regular expression `r' if it is followed by regular expression
     `s'. The text matched by `s' is included when determining whether this
     rule results in the longest match, but `s' is then returned to the input
     before the rule's action (if defined) is executed.
+
+   If flc() detects patterns potentially not matching any text it generates 
+    warnings like this:
+        verb(
+    [Warning] input, line 7: null-matching regular expression
+        )
+    By placing the comment
+        verb(
+    //%nowarn
+        )
+   on the line just before a regular expression that potentially does not
+    match any text, the warning for that regular expression is suppressed;
+
 dit(tt(^r))
-   a regular expression `r' at the beginning of a line or file.
+   a regular expression `r' at the beginning of a line or file;
 dit(tt(r$))
    a regular expression `r', occurring  at the end of a line. This
-    pattern is identical to `r/\n'.
+    pattern is identical to `r/\n';
 dit(tt(<s>r))
-   a regular exprression `r' in start condition `s'
+   a regular exprression `r' in start condition `s';
 dit(tt(<s1,s2,s3>r))
-   a regular exprression `r' in start conditions s1, s2, or s3.
+   a regular exprression `r' in start conditions s1, s2, or s3;
 dit(tt(<*>r))
-   a regular exprression `r' in all start conditions.
+   a regular exprression `r' in all start conditions;
 dit(tt(<)tt(<EOF>)tt(>))
-   an end-of-file.
+   an end-of-file;
 dit(tt(<s1,s2><)tt(<EOF>)tt(>))
-   an end-of-file when in start conditions s1 or s2 
+   an end-of-file when in start conditions s1 or s2 .
 )
 
+bf(Character classes)
+
 Inside a character class all regular expression operators lose their special
-meanings, except for the escape character (tt(\)) and the character class
-operators tt(-), tt(]]), and, at the beginning of the class, tt(^). To add a
-closing bracket to a character class use tt([]). To add a closing bracket to a
-negated character class use tt([^]). Once a character class has started, all
+meanings, except for the escape character (tt(\)), the character range
+operator tt(-), the end of character class operator tt(]), and, at the
+beginning of the class, tt(^). All ordinary escape sequences are supported,
+all other escaped characters are interpreted as literal characters (e.g.,
+tt(\c) is a literal tt(c)).
+
+To add a closing bracket to a character class use tt([]) or tt(\]). To add a
+closing bracket to a negated character class use tt([^]) (or use tt([^)
+followed by tt(\]) somewhere within the character class). Minus characters are
+used to define character ranges (e.g., tt([a-d]), defining tt([abcd])) except
+in the following cases, where flc() recognizes a literal minus character:
+    tt([-), or tt([^-) (a minus at the very beginning of a character class); 
+    tt(-]) (a minus at the very end of a character class); 
+    or tt(\-) (an escaped minus character))
+ Once a character class has started, all
 subsequent character (ranges) are added to the set, until the final closing
 bracket (tt(])) has been reached.
+
+bf(Operator precedence)
 
 The regular expressions listed above are grouped according to precedence, from
 highest precedence at the top to lowest at the bottom. From lowest to highest
@@ -257,6 +289,8 @@ influence the precedence of the other operators in the regular expression).
 Since the name expansion is treated as a group in flc(), it is not allowed to
 use the lookahead operator in a name definition (a named pattern, defined in
 the definition section).
+
+bf(Predefined sets of characters)
 
 Character classes can also contain character class expressions. These are
 expressions enclosed inside tt([:) and tt(:]) delimiters (which themselves
@@ -299,6 +333,8 @@ the POSIX character class name.
     [:^space:] [:^upper:] [:^xdigit:]
         )      
 
+bf(Combining character sets)
+
 The tt({-}) operator computes the difference of two character classes. For
 example, tt([a-c]{-}[b-z]) represents all the characters in the class
 tt([a-c]) that are not in the class tt([b-z]) (which in this case, is just the
@@ -310,6 +346,8 @@ tt([a-z]{+}[0-9]) is the same as tt([a-z0-9]). This operator is useful when
 preceded by the result of a difference operation, as in,
 tt([[:alpha:]]{-}[[:lower:]]{+}[q]), which is equivalent to tt([A-Zq]) in the
 bf(C) locale.
+
+bf(Trailing context)
 
 A rule can have at most one instance of trailing context (the tt(/) operator
 or the tt($) operator). The start condition, tt(^), and tt(<<EOF>>) patterns
