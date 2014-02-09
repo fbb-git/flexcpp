@@ -34,12 +34,7 @@ void CharClass::inspect(TypeVector::iterator iter)
             continue;
         }
 
-//cerr<<"substrbegin: "<< subStrBegin<<", minusIdx: "<<minusIdx<<", d_str: "<<
-//d_str<<endl;
-
         size_t destLen = destStr.length();
-//cerr << "unescaping " << d_str.substr(subStrBegin, 
-//minusIdx - subStrBegin)<<endl;
 
         destStr += String::unescape(d_str.substr(subStrBegin, 
                                                  minusIdx - subStrBegin));

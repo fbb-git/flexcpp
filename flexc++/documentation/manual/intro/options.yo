@@ -13,11 +13,15 @@ COMMENT(
     implementation header:  warn for not including the class header
 END)
 
-Some options may generate warnings. This happens when an option conflicts with
+Some options may generate errors. This happens when an option conflicts with
 the contents of an existing file which flc() cannot modify (e.g., a scanner
 class header file exists, but doesn't define a name space, but a
-tt(--namespace) option was provided). In those cases the option is ignored,
-and hand-editing may then be required to effectuate the option.
+tt(--namespace) option was provided). To solve the error the offending option
+could be omitted, the existing file could be removed, or the existing file
+could be hand-edited according to the option's specification. Note that flc()
+currently does not handle the opposite error condition: if a previously used
+option is omitted, then flc() does not detect the inconsistency. In those
+cases you may encounter compilation errors.
 
     itemization(
     it() lsoption(baseclass-header)(b)(filename)nl()
@@ -25,7 +29,7 @@ and hand-editing may then be required to effectuate the option.
            class's base class. Defaults to the name of the scanner class plus
            tt(base.h)
 
-           A warning is issued if this option is used and an already
+           It is an error if this option is used and an already
             existing scanner-class header file does not include
             tt(`filename'). 
 
@@ -73,7 +77,7 @@ and hand-editing may then be required to effectuate the option.
             will be given the (transformed to lower case) tt(className*) name
             instead of tt(scanner)*.
 
-           A warning is issued if this option is used and an already
+           It is an error if this option is used and an already
             existing scanner-class header file does not define tt(class
             `className')
 
@@ -120,7 +124,7 @@ and hand-editing may then be required to effectuate the option.
             of other source files belonging to the scanner class in one header
             file.
 
-           A warning is issued if this option is used and an already existing
+           It is an error if this option is used and an already
             tt('filename') file does not include the scanner class header
             file.
 
@@ -165,7 +169,7 @@ and hand-editing may then be required to effectuate the option.
             the scanner and scanner base class header files also use the 
             specified namespace to define their include guard directives.
 
-           A warning is issued if this option is used and an already existing
+           It is an error if this option is used and an already
             scanner-class header file does not define tt(namespace
             identifier). 
 

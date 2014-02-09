@@ -1,7 +1,7 @@
 oxref by Frank B. Brokken (f.b.brokken@rug.nl)
 oxref V1.00.01 2012-2013
 
-CREATED Mon, 27 Jan 2014 18:52:56 +0000
+CREATED Sun, 09 Feb 2014 12:09:53 +0000
 CROSS REFERENCE FOR: -fxs tmp/libmodules.a 
 ----------------------------------------------------------------------
 
@@ -72,7 +72,7 @@ addChars(std::set<char, std::less<char>, std::allocator<char> >&, unsigned int, 
   Full name: CharClass::addChars(std::set<char, std::less<char>, std::allocator<char> >&, unsigned int, unsigned int) const
   Source:    addchars.cc 
   Used By:
-    addrange.cc: CharClass::addRange(std::set<char, std::less<char>, std::allocator<char> >&, unsigned int) const
+    set.cc: CharClass::set()
 
 addDefinition(std::string const&, FlexTypes::TextType)
   Full name: Scanner::addDefinition(std::string const&, FlexTypes::TextType)
@@ -80,17 +80,11 @@ addDefinition(std::string const&, FlexTypes::TextType)
   Used By:
     parse.cc: Parser::executeAction(int)
 
-addIndices(std::set<char, std::less<char>, std::allocator<char> >&, unsigned int, unsigned int) const
-  Full name: CharClass::addIndices(std::set<char, std::less<char>, std::allocator<char> >&, unsigned int, unsigned int) const
-  Source:    addindices.cc 
-  Used By:
-    set.cc: CharClass::set() const
-
 addRange(std::set<char, std::less<char>, std::allocator<char> >&, unsigned int) const
   Full name: CharClass::addRange(std::set<char, std::less<char>, std::allocator<char> >&, unsigned int) const
   Source:    addrange.cc 
   Used By:
-    set.cc: CharClass::set() const
+    set.cc: CharClass::set()
 
 addRule(Pattern const&, bool)
   Full name: Parser::addRule(Pattern const&, bool)
@@ -115,6 +109,14 @@ alternatives(States&, Pattern const&, Pattern const&)
   Source:    alternatives.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
+
+append(std::vector<std::string, std::allocator<std::string> > const&)
+  Full name: CharClass::append(std::vector<std::string, std::allocator<std::string> > const&)
+  Source:    append.cc 
+  Used By:
+    dot.cc: Pattern::dot(States&)
+    parse.cc: Parser::executeAction(int)
+    negate2.cc: CharClass::negate(std::vector<std::string, std::allocator<std::string> > const&)
 
 assign(FlexTypes::TextType, std::string*, Options::PathType, char const*)
   Full name: Options::assign(FlexTypes::TextType, std::string*, Options::PathType, char const*)
@@ -178,11 +180,32 @@ caseCheck(std::ostream&) const
   Used By:
     data.cc: GLOBALS data.cc 10data.o
 
-characterClass(States&, CharClass const&)
-  Full name: Pattern::characterClass(States&, CharClass const&)
+characterClass(States&, CharClass&)
+  Full name: Pattern::characterClass(States&, CharClass&)
   Source:    characterclass.cc 
   Used By:
     dot.cc: Pattern::dot(States&)
+    parse.cc: Parser::executeAction(int)
+
+CharClass()
+  Full name: CharClass::CharClass()
+  Source:    charclass1.cc 
+  Used By:
+    dot.cc: Pattern::dot(States&)
+    parse.cc: ParserBase::pushToken__(int)
+    difference.cc: CharClass::difference(CharClass&, CharClass&)
+    unite.cc: CharClass::unite(CharClass&, CharClass&)
+
+CharClass(std::string const&, unsigned int)
+  Full name: CharClass::CharClass(std::string const&, unsigned int)
+  Source:    charclass3.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+
+chars(std::string const&)
+  Full name: CharClass::chars(std::string const&)
+  Source:    chars.cc 
+  Used By:
     parse.cc: Parser::executeAction(int)
 
 charsetToRanges(StateData&, unsigned int*)
@@ -247,12 +270,6 @@ collision(std::string const&, unsigned int const*)
   Source:    collision.cc 
   Used By:
     update.cc: Ranges::update(std::string const&, unsigned int const*)
-
-concatenate(CharClass const&)
-  Full name: CharClass::concatenate(CharClass const&)
-  Source:    concatenate.cc 
-  Used By:
-    parse.cc: Parser::executeAction(int)
 
 concatenate(States&, Pattern const&, Pattern const&)
   Full name: Pattern::concatenate(States&, Pattern const&, Pattern const&)
@@ -379,8 +396,8 @@ dflush__(std::ostream&)
     lookahead.cc: GLOBALS lookahead.cc 2lookahead.o
     quotes.cc: Parser::quotes()
 
-difference(CharClass const&, CharClass const&)
-  Full name: CharClass::difference(CharClass const&, CharClass const&)
+difference(CharClass&, CharClass&)
+  Full name: CharClass::difference(CharClass&, CharClass&)
   Source:    difference.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
@@ -424,12 +441,6 @@ eClosure(std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned
     build.cc: DFA::build(std::string const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
     transitions.cc: DFARow::transitions()
 
-elements(std::string const&, unsigned int)
-  Full name: CharClass::elements(std::string const&, unsigned int)
-  Source:    elements.cc 
-  Used By:
-    parse.cc: Parser::executeAction(int)
-
 empty(States const&, unsigned int)
   Full name: Pattern::empty(States const&, unsigned int)
   Source:    empty.cc 
@@ -454,6 +465,13 @@ eolnDollar()
   Used By:
     parse.cc: Parser::executeAction(int)
 
+errExisting(std::string const&, std::string const&, std::string const&) const
+  Full name: Generator::errExisting(std::string const&, std::string const&, std::string const&) const
+  Source:    errexisting.cc 
+  Used By:
+    classheader.cc: Generator::classHeader() const
+    implementationheader.cc: Generator::implementationHeader() const
+
 error(char const*)
   Full name: Parser::error(char const*)
   Source:    error.cc 
@@ -462,12 +480,6 @@ error(char const*)
 
 escape(States&, std::string const&)
   Full name: Pattern::escape(States&, std::string const&)
-  Source:    escape.cc 
-  Used By:
-    parse.cc: Parser::executeAction(int)
-
-escape(std::string const&)
-  Full name: CharClass::escape(std::string const&)
   Source:    escape.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
@@ -501,19 +513,6 @@ finalizeState(State&)
   Used By:
     finalizestates.cc: Ranges::finalizeStates()
 
-findKV(std::string const&) const
-  Full name: StartConditions::findKV(std::string const&) const
-  Source:    findkv.cc 
-  Used By:
-    addsc.cc: StartConditions::addSC(std::string const&)
-    define.cc: StartConditions::define(std::string const&)
-
-findRange(unsigned int) const
-  Full name: CharClass::findRange(unsigned int) const
-  Source:    findrange.cc 
-  Used By:
-    set.cc: CharClass::set() const
-
 getLOP(std::ostream&) const
   Full name: Generator::getLOP(std::ostream&) const
   Source:    getlop.cc 
@@ -524,7 +523,8 @@ grep(std::string const&, std::string const&) const
   Full name: Generator::grep(std::string const&, std::string const&) const
   Source:    grep.cc 
   Used By:
-    warnexisting.cc: Generator::warnExisting(std::string const&, std::string const&, std::string const&, std::string const&) const
+    warnexisting.cc: Generator::warnExisting(std::string const&, std::string const&, std::string const&) const
+    errexisting.cc: Generator::errExisting(std::string const&, std::string const&, std::string const&) const
 
 handleCharAfterBlanks()
   Full name: Scanner::handleCharAfterBlanks()
@@ -555,6 +555,12 @@ handleLopRule(unsigned int)
   Source:    handleloprule.cc 
   Used By:
     handleloprules.cc: Rules::handleLopRules()
+
+handleMinusAndEscape()
+  Full name: CharClass::handleMinusAndEscape()
+  Source:    handleminusandescape.cc 
+  Used By:
+    set.cc: CharClass::set()
 
 handleMulti(int)
   Full name: Scanner::handleMulti(int)
@@ -623,6 +629,12 @@ insertSstream(std::ostream&) const
   Used By:
     data.cc: GLOBALS data.cc 10data.o
 
+inspect(__gnu_cxx::__normal_iterator<std::pair<unsigned int, CharClass::CharType>*, std::vector<std::pair<unsigned int, CharClass::CharType>, std::allocator<std::pair<unsigned int, CharClass::CharType> > > >)
+  Full name: CharClass::inspect(__gnu_cxx::__normal_iterator<std::pair<unsigned int, CharClass::CharType>*, std::vector<std::pair<unsigned int, CharClass::CharType>, std::allocator<std::pair<unsigned int, CharClass::CharType> > > >)
+  Source:    inspect.cc 
+  Used By:
+    handleminusandescape.cc: CharClass::handleMinusAndEscape()
+
 inspectRows(std::vector<unsigned int, std::allocator<unsigned int> >&)
   Full name: DFA::inspectRows(std::vector<unsigned int, std::allocator<unsigned int> >&)
   Source:    inspectrows.cc 
@@ -673,6 +685,19 @@ interval(States&, Pattern&, Interval const&)
   Source:    interval.cc 
   Used By:
     interval.cc: Parser::interval(Pattern&, Interval const&)
+
+inversedRange(unsigned int) const
+  Full name: CharClass::inversedRange(unsigned int) const
+  Source:    inversedrange.cc 
+  Used By:
+    validrange.cc: CharClass::validRange(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >) const
+
+isPredefined(unsigned int) const
+  Full name: CharClass::isPredefined(unsigned int) const
+  Source:    ispredefined.cc 
+  Used By:
+    predefinedafter.cc: CharClass::predefinedAfter(unsigned int) const
+    predefinedbefore.cc: CharClass::predefinedBefore(unsigned int) const
 
 join(States&, Pattern&, unsigned int, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > > const&)
   Full name: Pattern::join(States&, Pattern&, unsigned int, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > > const&)
@@ -820,18 +845,25 @@ namespaceUse(std::ostream&) const
   Used By:
     data.cc: GLOBALS data.cc 10data.o
 
-negate() const
-  Full name: CharClass::negate() const
+negate()
+  Full name: CharClass::negate()
   Source:    negate1.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
+    negate2.cc: CharClass::negate(std::vector<std::string, std::allocator<std::string> > const&)
 
-negate(std::set<char, std::less<char>, std::allocator<char> > const&)
-  Full name: CharRange::negate(std::set<char, std::less<char>, std::allocator<char> > const&)
+negate(std::string const&)
+  Full name: CharRange::negate(std::string const&)
   Source:    negate.cc 
   Used By:
     predefined.cc: CharRange::predefined(std::string const&)
-    negate1.cc: CharClass::negate() const
+    negate1.cc: CharClass::negate()
+
+negate(std::vector<std::string, std::allocator<std::string> > const&)
+  Full name: CharClass::negate(std::vector<std::string, std::allocator<std::string> > const&)
+  Source:    negate2.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
 
 newDefinition()
   Full name: Scanner::newDefinition()
@@ -860,7 +892,7 @@ next2()
   Source:    next2.cc 
   Used By:
     alternatives.cc: Pattern::alternatives(States&, Pattern const&, Pattern const&)
-    characterclass.cc: Pattern::characterClass(States&, CharClass const&)
+    characterclass.cc: Pattern::characterClass(States&, CharClass&)
     eof.cc: Pattern::eof(States&)
     escape.cc: Pattern::escape(States&, std::string const&)
     interval.cc: Pattern::interval(States&, Pattern&, Interval const&)
@@ -895,13 +927,6 @@ operator()(int) const
     debugdecl.cc: Generator::debugDecl(std::ostream&) const
     debugfunctions.cc: Generator::debugFunctions(std::ostream&) const
     parser1.cc: Parser::Parser(Rules&, States&)
-
-operator*() const
-  Full name: StartConditions::const_iterator::operator*() const
-  Source:    operatorstar.cc 
-  Used By:
-    startcondnames.cc: Generator::startCondNames(std::ostream&) const
-    build.cc: DFAs::build()
 
 operator+=(std::string const&)
   Full name: Block::operator+=(std::string const&)
@@ -1030,7 +1055,7 @@ Pattern(std::pair<unsigned int, unsigned int> const&)
   Source:    pattern1.cc 
   Used By:
     alternatives.cc: Pattern::alternatives(States&, Pattern const&, Pattern const&)
-    characterclass.cc: Pattern::characterClass(States&, CharClass const&)
+    characterclass.cc: Pattern::characterClass(States&, CharClass&)
     concatenate.cc: Pattern::concatenate(States&, Pattern const&, Pattern const&)
     duplicate.cc: Pattern::duplicate(States&) const
     eof.cc: Pattern::eof(States&)
@@ -1084,17 +1109,29 @@ popStream()
     moreinput.cc: Scanner::moreInput()
 
 predefined(std::string const&)
+  Full name: CharRange::predefined(std::string const&)
+  Source:    predefined.cc 
+  Used By:
+    predefined.cc: CharClass::predefined(std::string const&)
+
+predefined(std::string const&)
   Full name: CharClass::predefined(std::string const&)
   Source:    predefined.cc 
   Used By:
     dot.cc: Pattern::dot(States&)
     parse.cc: Parser::executeAction(int)
 
-predefined(std::string const&)
-  Full name: CharRange::predefined(std::string const&)
-  Source:    predefined.cc 
+predefinedAfter(unsigned int) const
+  Full name: CharClass::predefinedAfter(unsigned int) const
+  Source:    predefinedafter.cc 
   Used By:
-    predefined.cc: CharClass::predefined(std::string const&)
+    validrange.cc: CharClass::validRange(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >) const
+
+predefinedBefore(unsigned int) const
+  Full name: CharClass::predefinedBefore(unsigned int) const
+  Source:    predefinedbefore.cc 
+  Used By:
+    validrange.cc: CharClass::validRange(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >) const
 
 print()
   Full name: Parser::print()
@@ -1163,6 +1200,12 @@ range(std::string const&, std::string const&)
   Used By:
     parse.cc: Parser::executeAction(int)
 
+rangeAfterRange(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >) const
+  Full name: CharClass::rangeAfterRange(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >) const
+  Source:    rangeafterrange.cc 
+  Used By:
+    validrange.cc: CharClass::validRange(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >) const
+
 Ranges(Ranges const&)
   Full name: Ranges::Ranges(Ranges const&)
   Source:    ranges2.cc 
@@ -1180,6 +1223,13 @@ ranges(std::ostream&) const
   Source:    ranges.cc 
   Used By:
     data.cc: GLOBALS data.cc 10data.o
+
+rangeString(unsigned int) const
+  Full name: CharClass::rangeString(unsigned int) const
+  Source:    rangestring.cc 
+  Used By:
+    inversedrange.cc: CharClass::inversedRange(unsigned int) const
+    rangeafterrange.cc: CharClass::rangeAfterRange(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >) const
 
 rawString()
   Full name: Parser::rawString()
@@ -1215,6 +1265,12 @@ remove(unsigned int)
   Source:    remove.cc 
   Used By:
     processcatchallrule.cc: Rules::processCatchAllRule()
+
+replace(std::string, __gnu_cxx::__normal_iterator<std::pair<unsigned int, CharClass::CharType>*, std::vector<std::pair<unsigned int, CharClass::CharType>, std::allocator<std::pair<unsigned int, CharClass::CharType> > > >, unsigned int)
+  Full name: CharClass::replace(std::string, __gnu_cxx::__normal_iterator<std::pair<unsigned int, CharClass::CharType>*, std::vector<std::pair<unsigned int, CharClass::CharType>, std::allocator<std::pair<unsigned int, CharClass::CharType> > > >, unsigned int)
+  Source:    replace.cc 
+  Used By:
+    inspect.cc: CharClass::inspect(__gnu_cxx::__normal_iterator<std::pair<unsigned int, CharClass::CharType>*, std::vector<std::pair<unsigned int, CharClass::CharType>, std::allocator<std::pair<unsigned int, CharClass::CharType> > > >)
 
 reRead(std::string const&, unsigned int)
   Full name: ScannerBase::Input::reRead(std::string const&, unsigned int)
@@ -1369,10 +1425,12 @@ s_warnOptions
   Full name: Options::s_warnOptions
   Source:    data.cc 
   Used By:
+    warnexisting.cc: Generator::warnExisting(std::string const&, std::string const&, std::string const&) const
     assign.cc: Options::assign(FlexTypes::TextType, std::string*, Options::PathType, char const*)
     setaccessorvariables.cc: Options::setAccessorVariables()
     setclassname.cc: Options::setClassName(FlexTypes::TextType)
     setoptionpath.cc: Options::setOptionPath(std::string*, int, std::string const&, char const*, char const*)
+    errexisting.cc: Generator::errExisting(std::string const&, std::string const&, std::string const&) const
 
 sameTransits(FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > > const&, FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > > const&)
   Full name: DFARow::sameTransits(FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > > const&, FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > > const&)
@@ -1404,14 +1462,13 @@ secondSectionDelimiter()
   Used By:
     lex.cc: Scanner::executeAction__(unsigned int)
 
-set() const
-  Full name: CharClass::set() const
+set()
+  Full name: CharClass::set()
   Source:    set.cc 
   Used By:
-    difference.cc: CharClass::difference(CharClass const&, CharClass const&)
-    negate1.cc: CharClass::negate() const
-    str.cc: CharClass::str() const
-    unite.cc: CharClass::unite(CharClass const&, CharClass const&)
+    difference.cc: CharClass::difference(CharClass&, CharClass&)
+    str.cc: CharClass::str()
+    unite.cc: CharClass::unite(CharClass&, CharClass&)
 
 setAccessorVariables()
   Full name: Options::setAccessorVariables()
@@ -1544,7 +1601,7 @@ State(unsigned int, std::string const&, unsigned int, unsigned int)
   Full name: State::State(unsigned int, std::string const&, unsigned int, unsigned int)
   Source:    state5.cc 
   Used By:
-    characterclass.cc: Pattern::characterClass(States&, CharClass const&)
+    characterclass.cc: Pattern::characterClass(States&, CharClass&)
 
 State(unsigned int, unsigned int, unsigned int)
   Full name: State::State(unsigned int, unsigned int, unsigned int)
@@ -1577,11 +1634,12 @@ StateString(std::string const&, unsigned int, unsigned int)
     state5.cc: State::State(unsigned int, std::string const&, unsigned int, unsigned int)
     vclone.cc: StateString::v_clone() const
 
-str() const
-  Full name: CharClass::str() const
+str()
+  Full name: CharClass::str()
   Source:    str.cc 
   Used By:
-    characterclass.cc: Pattern::characterClass(States&, CharClass const&)
+    characterclass.cc: Pattern::characterClass(States&, CharClass&)
+    negate1.cc: CharClass::negate()
 
 subsetCount()
   Full name: Ranges::subsetCount()
@@ -1619,6 +1677,12 @@ tabulateTransitions(FBB::Table&) const
   Used By:
     tabulate.cc: DFARow::tabulate(FBB::Table&) const
 
+tagMinuses(unsigned int, std::string const&, unsigned int)
+  Full name: CharClass::tagMinuses(unsigned int, std::string const&, unsigned int)
+  Source:    tagminuses.cc 
+  Used By:
+    inspect.cc: CharClass::inspect(__gnu_cxx::__normal_iterator<std::pair<unsigned int, CharClass::CharType>*, std::vector<std::pair<unsigned int, CharClass::CharType>, std::allocator<std::pair<unsigned int, CharClass::CharType> > > >)
+
 textOf(FlexTypes::TextType)
   Full name: Options::textOf(FlexTypes::TextType)
   Source:    textof.cc 
@@ -1646,8 +1710,8 @@ uniqueMap(std::vector<unsigned int, std::allocator<unsigned int> > const&)
   Used By:
     keepuniquerows.cc: DFA::keepUniqueRows()
 
-unite(CharClass const&, CharClass const&)
-  Full name: CharClass::unite(CharClass const&, CharClass const&)
+unite(CharClass&, CharClass&)
+  Full name: CharClass::unite(CharClass&, CharClass&)
   Source:    unite.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
@@ -1712,11 +1776,11 @@ v_clone() const
   Used By:
     destructor.cc: StateData::~StateData()
 
-validRange(unsigned int) const
-  Full name: CharClass::validRange(unsigned int) const
+validRange(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >) const
+  Full name: CharClass::validRange(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >) const
   Source:    validrange.cc 
   Used By:
-    set.cc: CharClass::set() const
+    set.cc: CharClass::set()
 
 version
   Full name: version
@@ -1724,13 +1788,6 @@ version
   Used By:
     usage.cc: usage(std::string const&)
     filter.cc: Generator::filter(std::istream&, std::ostream&) const
-
-warnExisting(std::string const&, std::string const&, std::string const&, std::string const&) const
-  Full name: Generator::warnExisting(std::string const&, std::string const&, std::string const&, std::string const&) const
-  Source:    warnexisting.cc 
-  Used By:
-    classheader.cc: Generator::classHeader() const
-    implementationheader.cc: Generator::implementationHeader() const
 
 year
   Full name: year

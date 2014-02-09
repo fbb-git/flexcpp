@@ -17,12 +17,15 @@ cannot contain directory separators (tt(/)); options accepting a 'pathname'
 may contain directory separators. A 'pathname' using blank characters should
 be surrounded by double quotes.
 
-
-Some directives may generate warnings. This happens when a directive
-conflicts with the contents of a file which flc() cannot modify (e.g., a
+Some directives may generate errors. This happens when a directive conflicts
+with the contents of an existing file which flc() cannot modify (e.g., a
 scanner class header file exists, but doesn't define a name space, but a
-tt(%namespace) directive was provided). In those cases the directive is
-ignored, and hand-editing may then be required to effectuate the directive.
+tt(%namespace) directive was provided). To solve the error the offending
+directive could be omitted, the existing file could be removed, or the
+existing file could be hand-edited according to the directive's specification.
+Note that flc() currently does not handle the opposite error condition: if a
+previously used directive is omitted, then flc() does not detect the
+inconsistency. In those cases you may encounter compilation errors.
 
     itemization(
     it() bf(%baseclass-header) tt(= "filename") nl()
@@ -30,7 +33,7 @@ ignored, and hand-editing may then be required to effectuate the directive.
             class interface. Corresponding command-line option:
             tt(--baseclass-header).
 
-           A warning is issued if this option is used and an already
+           It is an error if this option is used and an already
             existing scanner-class header file does not include
             tt(`filename'). 
 
@@ -77,7 +80,7 @@ ignored, and hand-editing may then be required to effectuate the directive.
             is used. Corresponding command-line option:
             tt(--class-name).
 
-           A warning is issued if this option is used and an already
+           It is an error if this option is used and an already
             existing scanner-class header file does not define tt(class
             `className').
 
@@ -105,7 +108,7 @@ ignored, and hand-editing may then be required to effectuate the directive.
            Defines the name of the file to contain the implementation header.
             Corresponding command-line option: tt(--implementation-header).
 
-           A warning is issued if this option is used and an already existing
+           It is an error if this option is used and an already
             tt('filename') file does not include the scanner class header
             file.
 
@@ -152,7 +155,7 @@ ignored, and hand-editing may then be required to effectuate the directive.
             the scanner and scanner base class header files also use the
             specified namespace to define their include guard directives.
 
-          A warning is issued if this option is used and an already existing
+           It is an error if this option is used and an already
             scanner-class header file does not define tt(namespace
             identifier).
 

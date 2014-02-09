@@ -14,10 +14,4 @@ void Ranges::charsetToRanges(StateData &data, size_t *ranges)
 
     data.set(next);                     // assign the string of range-nrs
                                         // to the state
-
-//    cout << "Ranges::charsetToRanges: ";
-//    copy(data.str().begin(), data.str().end(), 
-//                                    ostream_iterator<int>(cout, " "));
-//    cout << '\n';
-
 }

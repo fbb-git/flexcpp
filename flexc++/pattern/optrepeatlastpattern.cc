@@ -12,13 +12,6 @@ Pattern Pattern::optRepeatLastPattern(States &states,
 
     join(states, pattern, lower, beginEnd);
 
-//cout << "Last pattern repeatable: starts at " << rept.begin() << 
-//", ends at " << rept.end() << '\n';
-//
-//        
-//cout << "POST {x,}:\n" <<
-//        states << '\n';
-
     Pattern ret( {pattern.begin(), pattern.end()} );
     return ret;
 }

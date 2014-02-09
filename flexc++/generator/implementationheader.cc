@@ -15,8 +15,7 @@ void Generator::implementationHeader() const
 
     if (Stat(implementationHeader))
     {
-        warnExisting(implementationHeader, d_options.classHeaderSpec(), 
-                        d_options.classHeaderName(),
+        errExisting(implementationHeader, d_options.classHeaderSpec(), 
                         "^#include \"" + d_options.classHeaderName() + '"');
         return;
     }

@@ -1,7 +1,5 @@
 #include "charrange.h"
 
-#include <iostream> //TMP
-
 #include <cctype>
 #include <algorithm>
 

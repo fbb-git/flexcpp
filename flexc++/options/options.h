@@ -86,6 +86,8 @@ class Options: private FlexTypes
     static void (*s_regexCall)(char const *funName);
 
     public:
+        bool specified(std::string const &option) const;
+        
         static Options &instance();
 
         Options(Options const &other) = delete;
@@ -398,6 +400,12 @@ inline bool Options::debug() const
 {
     return d_debug;
 }
+
+inline bool Options::specified(std::string const &option) const
+{
+    return s_warnOptions.find(option) != s_warnOptions.end();
+}
+
 
 #endif
 

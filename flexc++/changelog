@@ -5,6 +5,16 @@ flexc++ (2.00.00)
     the tail count Flag enum are no longer required and were removed from the
     implementation. See also parser/README.grammar.
 
+  * Null-matching patterns using the look-ahead operator (e.g. a*/b) are
+    dangerous, and can take the generated scanner into a non-terminating loop.
+    When flexc++ detects such patterns it generates a warning. These warnings
+    can be suppressed by writing 
+    //%nowarn
+    on the line immediately preceding the potentially null-matching pattern
+    using the look-ahead operator.
+
+  * Raw string literals, as defined by C++11, are supported
+
   * NOTE WELL: 
 
         - when using flexc++ >= 2.00.00 to re-generate lex.cc and
@@ -14,21 +24,30 @@ flexc++ (2.00.00)
 
         - new Input-class requirements: 
             size_t Input::nPending() const 
-                must return the current number of pending (i.e., read and
-                pushed back) input characters;
+                must return the current number of pending (i.e., pushed back) 
+                input characters;
             void Input::setPending(size_t size) 
-                must remove the initial number of pending characters, reducing
+                must remove any initial number of pending characters, reducing
                 the number of pending characters to size.
             The lexical scanner always passes the value received from
             nPending() to setPending(), without calling Input::get() in
             between.
 
-        - Character classes support escape sequences. A \- indicates a
-          litteral - and is not used to define a character range.
+        - Character classes now fully support escape sequences. A \- inside a
+          character class indicates a litteral - and is not used to define a
+          character range. Refer to the man-page (flexc++input(7)) and/or to
+          the manual for further details.
 
-  * A second %% line in flexc++'s input file ends input file processing.
-    To specify a regex starting with %% surround it with double quotes or 
-    indent it by at least one blank space.
+  * A second (optional) %% line in flexc++'s input file ends input file
+    processing.  To specify a regex starting with %% surround it with double
+    quotes or indent it by at least one blank space.
+
+  * Warnings added in release 1.06.00 (issued when options or directives are
+    specified which are inconsistent with existing files, and which are issued
+    for the `baseclass-header', `class-name', `implementation-header', and
+    `namespace'options/directives) are now reported as errors, as flexc++
+    cannot simply ignore them since ignoring them may conflict with the
+    contents of the generated 'lex.cc' and 'Scannerbase.h' files.
 
   * Repaired a bug introduced in 1.02, causing parser failures for letter and
     digits in REs in the context of start conditions. Cause: after '>' in
@@ -36,17 +55,9 @@ flexc++ (2.00.00)
     characters. Realized by calling d_scanner.multiAsChar() at ms_spec's
     action block.
 
-  * Null-matching regular expressions (i.e., regular expressions that may not
-    match any characters) are potentially dangerous as they may cause
-    continuous loops (e.g. a*/b, with input b). A warning is generated when
-    such regexes are encountered. The warning can be prevented by preceding
-    them with a line merely containing //%nowarn. 
-
-  * Raw string literals, as defined by C++11, are supported
-
   * Added several new regression tests 
 
-
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 09 Feb 2014 13:32:22 +0100
     
 flexc++ (1.08.00)
 

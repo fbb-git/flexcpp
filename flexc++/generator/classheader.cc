@@ -12,15 +12,14 @@ void Generator::classHeader() const
     
     if (Stat(classHeaderPath))
     {
-        warnExisting(classHeaderPath, "class-name", d_options.className(),
+        errExisting(classHeaderPath, "class-name",
                                 "^class " + d_options.className() + "\\b");
 
         if (not d_options.nameSpace().empty())
-            warnExisting(classHeaderPath, "namespace", d_options.nameSpace(),
+            errExisting(classHeaderPath, "namespace",
                             "^namespace " + d_options.nameSpace() + "\\b");
 
-        warnExisting(classHeaderPath, Options::baseclassHeaderSpec(), 
-                    d_options.baseclassHeaderName(), 
+        errExisting(classHeaderPath, Options::baseclassHeaderSpec(), 
                     "^#include \"" + d_options.baseclassHeaderName() + '"');
 
         return;
