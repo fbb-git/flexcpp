@@ -24,13 +24,13 @@ class ValueIterator: public std::iterator<std::input_iterator_tag, Type>
 template <typename Type>
 inline ValueIterator<Type> ValueIterator<Type>::min()
 {
-    return ValueIterator<Type>(numeric_limits<Type>::min());
+    return ValueIterator<Type>(std::numeric_limits<Type>::min());
 }
 
 template <typename Type>
 inline ValueIterator<Type> ValueIterator<Type>::max()
 {
-    return ValueIterator<Type>(numeric_limits<Type>::max());
+    return ValueIterator<Type>(std::numeric_limits<Type>::max());
 }
 
 template <typename Type>
