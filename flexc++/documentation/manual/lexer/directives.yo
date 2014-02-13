@@ -33,7 +33,7 @@ inconsistency. In those cases you may encounter compilation errors.
             class interface. Corresponding command-line option:
             tt(--baseclass-header).
 
-           It is an error if this option is used and an already
+           It is an error if this directive is used and an already
             existing scanner-class header file does not include
             tt(`filename'). 
 
@@ -80,7 +80,7 @@ inconsistency. In those cases you may encounter compilation errors.
             is used. Corresponding command-line option:
             tt(--class-name).
 
-           It is an error if this option is used and an already
+           It is an error if this directive is used and an already
             existing scanner-class header file does not define tt(class
             `className').
 
@@ -108,7 +108,7 @@ inconsistency. In those cases you may encounter compilation errors.
            Defines the name of the file to contain the implementation header.
             Corresponding command-line option: tt(--implementation-header).
 
-           It is an error if this option is used and an already
+           It is an error if this directive is used and an already
             tt('filename') file does not include the scanner class header
             file.
 
@@ -149,29 +149,29 @@ inconsistency. In those cases you may encounter compilation errors.
 
     it() bf(%namespace) tt(= "identifer") nl()
            Define the scanner class in the namespace tt(identifier). By
-            default no namespace is used. If this options is used the
+            default no namespace is used. If this directives is used the
             implementation header is provided with a commented out tt(using
             namespace) declaration for the requested namespace.  In addition,
             the scanner and scanner base class header files also use the
             specified namespace to define their include guard directives.
 
-           It is an error if this option is used and an already
+           It is an error if this directive is used and an already
             scanner-class header file does not define tt(namespace
             identifier).
 
     it() bf(%print-tokens) nl() 
-           This option results in the tokens as well as the matched text to be
-            displayed on the standard output stream, just before returning the
-            token to tt(lex)'s caller. Displaying is suppressed again when the
-            tt(lex.cc) file is generated without using this directive. The
+           this directive results in the tokens as well as the matched text to
+            be displayed on the standard output stream, just before returning
+            the token to tt(lex)'s caller. Displaying is suppressed again when
+            the tt(lex.cc) file is generated without using this directive. The
             function showing the tokens (tt(ScannerBase::print__)) is called
             from tt(Scanner::print()), which is defined in-line in
             tt(Scanner.h). Calling tt(ScannerBase::print__), therefore, can
             also easily be controlled by an option controlled by the program
             using the scanner object.
-           This option does em(not) show the tokens returned and text matched
-            by flc() itself when reading its input file(s). If that is what
-            you want, use the tt(--own-tokens) option.
+           this directive does em(not) show the tokens returned and text
+            matched by flc() itself when reading its input file(s). If that is
+            what you want, use the tt(--own-tokens) option.
 
     it() bf(%s) tt(namelist) nl()
            The tt(%s) directive is followed by a list of one or more
