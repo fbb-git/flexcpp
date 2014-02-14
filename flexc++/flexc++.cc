@@ -83,7 +83,11 @@ try
     Generator generator(rules, ranges, dfas);
 
     if (generator.conflicts())
+    {
+        wmsg << "Option/directive conflic(s): "
+                    "no files were generated/modified" << endl;
         return 1;
+    }
 
     generator.construction(states);
 

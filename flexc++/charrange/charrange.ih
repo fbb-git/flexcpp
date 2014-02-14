@@ -4,6 +4,7 @@
 #include <algorithm>
 
 #include "../flextypes/flextypes.h"
+#include "../valueiterator/valueiterator.h"
 
 using namespace std;
 
