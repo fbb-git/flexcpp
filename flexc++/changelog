@@ -1,3 +1,12 @@
+flexc++ (2.01.00)
+
+  * Generating files is prevented when errors in option/declaration
+    specifications are encountered. All errors in option/declaration
+    specifications (instead of just the first error that is encountered) 
+    are now reported.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 14 Feb 2014 14:19:58 +0100
+
 flexc++ (2.00.00)
 
   * Completely re-implemented look-ahead operator (LOP) handling. The LOP is

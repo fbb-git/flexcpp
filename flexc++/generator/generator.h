@@ -75,6 +75,7 @@ class Generator: public FlexTypes
     public:
         Generator(Rules const &rules, Ranges const &ranges, DFAs const &dfas);
 
+        bool conflicts() const;
         void construction(States const &states);
         void baseclassHeader() const;
         void classHeader() const;
@@ -98,7 +99,7 @@ class Generator: public FlexTypes
         static std::string outDFAbase(std::string const &startState,
                                       size_t offset);
 
-        void errExisting(std::string const &fileName, 
+        bool errExisting(std::string const &fileName, 
                           std::string const &option,
                           std::string const &regex) const;
 

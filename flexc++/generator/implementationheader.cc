@@ -5,26 +5,13 @@
 // required preprocessor actions for the compilation of the Parser's class
 // members
 
-// Writing an implementation header header may be forced by the
-// --force-implementation-header option. Otherwise, it's not rewritten by
-// bisonc++ once it's available
-
 void Generator::implementationHeader() const
 {
-    string const &implementationHeader = d_options.implementationHeaderPath();
-
-    if (Stat(implementationHeader))
-    {
-        errExisting(implementationHeader, d_options.classHeaderSpec(), 
-                        "^#include \"" + d_options.classHeaderName() + '"');
-        return;
-    }
-
     ofstream out;
     ifstream in;
 
     Exception::open(in,  d_options.implementationSkeleton()); 
-    Exception::open(out, implementationHeader); 
+    Exception::open(out, d_options.implementationHeaderPath());
 
     filter(in, out);    
 }

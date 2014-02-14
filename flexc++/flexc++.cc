@@ -81,7 +81,11 @@ try
     rules.warnNonViable();
 
     Generator generator(rules, ranges, dfas);
-        generator.construction(states);
+
+    if (generator.conflicts())
+        return 1;
+
+    generator.construction(states);
 
     if (rules.size() == 0)
         wmsg << "No regular expressions were defined: source files not "

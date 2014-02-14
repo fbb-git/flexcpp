@@ -11,6 +11,5 @@ bool Generator::grep(string const &fileName, string const &regex) const
         if (pattern << line)
             return true;
     }
-
     return false;
 }

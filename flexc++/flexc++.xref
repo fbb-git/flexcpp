@@ -1,7 +1,7 @@
 oxref by Frank B. Brokken (f.b.brokken@rug.nl)
 oxref V1.00.01 2012-2013
 
-CREATED Sun, 09 Feb 2014 12:09:53 +0000
+CREATED Fri, 14 Feb 2014 11:01:23 +0000
 CROSS REFERENCE FOR: -fxs tmp/libmodules.a 
 ----------------------------------------------------------------------
 
@@ -141,7 +141,7 @@ baseclassHeaderName() const
   Source:    baseclassheadername.cc 
   Used By:
     baseclassh.cc: Generator::baseClassH(std::ostream&) const
-    classheader.cc: Generator::classHeader() const
+    conflicts.cc: Generator::conflicts() const
 
 baseIncludes(std::ostream&) const
   Full name: Generator::baseIncludes(std::ostream&) const
@@ -237,7 +237,7 @@ classHeaderName() const
   Source:    classheadername.cc 
   Used By:
     classh.cc: Generator::classH(std::ostream&) const
-    implementationheader.cc: Generator::implementationHeader() const
+    conflicts.cc: Generator::conflicts() const
 
 classIH(std::ostream&) const
   Full name: Generator::classIH(std::ostream&) const
@@ -469,8 +469,7 @@ errExisting(std::string const&, std::string const&, std::string const&) const
   Full name: Generator::errExisting(std::string const&, std::string const&, std::string const&) const
   Source:    errexisting.cc 
   Used By:
-    classheader.cc: Generator::classHeader() const
-    implementationheader.cc: Generator::implementationHeader() const
+    conflicts.cc: Generator::conflicts() const
 
 error(char const*)
   Full name: Parser::error(char const*)
@@ -523,7 +522,6 @@ grep(std::string const&, std::string const&) const
   Full name: Generator::grep(std::string const&, std::string const&) const
   Source:    grep.cc 
   Used By:
-    warnexisting.cc: Generator::warnExisting(std::string const&, std::string const&, std::string const&) const
     errexisting.cc: Generator::errExisting(std::string const&, std::string const&, std::string const&) const
 
 handleCharAfterBlanks()
@@ -1425,12 +1423,11 @@ s_warnOptions
   Full name: Options::s_warnOptions
   Source:    data.cc 
   Used By:
-    warnexisting.cc: Generator::warnExisting(std::string const&, std::string const&, std::string const&) const
+    errexisting.cc: Generator::errExisting(std::string const&, std::string const&, std::string const&) const
     assign.cc: Options::assign(FlexTypes::TextType, std::string*, Options::PathType, char const*)
     setaccessorvariables.cc: Options::setAccessorVariables()
     setclassname.cc: Options::setClassName(FlexTypes::TextType)
     setoptionpath.cc: Options::setOptionPath(std::string*, int, std::string const&, char const*, char const*)
-    errexisting.cc: Generator::errExisting(std::string const&, std::string const&, std::string const&) const
 
 sameTransits(FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > > const&, FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > > const&)
   Full name: DFARow::sameTransits(FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > > const&, FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > > const&)
@@ -1735,6 +1732,12 @@ useAll()
     parse.cc: Parser::executeAction(int)
 
 v_clone() const
+  Full name: StateData::v_clone() const
+  Source:    vclone.cc 
+  Used By:
+    destructor.cc: StateData::~StateData()
+
+v_clone() const
   Full name: StateString::v_clone() const
   Source:    vclone.cc 
   Used By:
@@ -1769,12 +1772,6 @@ v_clone() const
     state5.cc: State::State(unsigned int, std::string const&, unsigned int, unsigned int)
     state6.cc: State::State(unsigned char, unsigned int)
     statestring1.cc: StateString::StateString(std::string const&, unsigned int, unsigned int)
-
-v_clone() const
-  Full name: StateData::v_clone() const
-  Source:    vclone.cc 
-  Used By:
-    destructor.cc: StateData::~StateData()
 
 validRange(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >) const
   Full name: CharClass::validRange(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >) const
