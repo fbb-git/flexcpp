@@ -5,7 +5,10 @@ flexc++ (2.01.00)
     specifications (instead of just the first error that is encountered) 
     are now reported.
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 14 Feb 2014 14:19:58 +0100
+  * This version depends on bobcat 3.21.01, and uses Bobcat's Iterator class
+    template. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 15 Feb 2014 17:03:04 +0100
 
 flexc++ (2.00.00)
 

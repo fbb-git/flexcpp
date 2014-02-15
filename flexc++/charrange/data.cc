@@ -46,3 +46,5 @@ FBB::LinearMap<std::string, int (*)(int)> CharRange::s_funHash =
     { "[:upper:]" , isupper },
     { "[:xdigit:]", isxdigit },
 };
+
+string  CharRange::s_all = CharRange::AllString();

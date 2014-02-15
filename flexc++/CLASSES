@@ -6,57 +6,44 @@ block
 
 charrange       
 
-charclass   \            
-            charrange
+charclass   charrange
 
-dfa         \
-            dfarow rules states ranges options
+dfa         dfarow rules states ranges options
 
-dfarow      \
-            rules states flextypes
+dfarow      rules states flextypes
 
-dfas        \
-            rules dfa  
+dfas        rules dfa  
 
 flextypes
 
-generator   \
-            dfa dfas dfarow startconditions flextypes ranges states state \
+generator   dfa dfas dfarow startconditions flextypes ranges states state \
             options 
 
 interval
 
 options         
 
-parser      \
-            state block options flextypes scanner rules charclass interval \
+parser      state block options flextypes scanner rules charclass interval \
             pattern  
 
-pattern     \
-            flextypes interval charclass options states
+pattern     flextypes interval charclass options states
 
-ranges      \
-            flextypes states statestring
+ranges      flextypes states statestring
 
-rule        \
-            block pattern flextypes states 
+rule        block pattern flextypes states 
 
-rules       \
-            startconditions rule flextypes states pattern
+rules       startconditions rule flextypes states pattern
 
 scanner                 
 
 startconditions 
 
-state       \
-            statestring statedata flextypes
+state       statestring statedata flextypes
 
-states      \
-            state flextypes
+states      state flextypes
 
 statedata       
 
-statestring \
-            statedata
+statestring statedata
 
 

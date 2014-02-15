@@ -17,9 +17,9 @@ string const &CharRange::predefined(std::string const &setName)
     {
         if (setName == ".")
         {
-            str.append(ValueIterator<char>::min(), ValueIterator<char>('\n'));
-            str.append(ValueIterator<char>('\n' + 1), 
-                                            ValueIterator<char>::max());
+            str.append(Iterator<char>::min(), Iterator<char>('\n'));
+            str.append(Iterator<char>('\n' + 1), 
+                       Iterator<char>::last(*Iterator<char>::max()));
             return str;
         }
 

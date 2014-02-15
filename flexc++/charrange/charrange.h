@@ -6,8 +6,11 @@
 
 class CharRange
 {
+    struct AllString;
+
     static FBB::LinearMap<std::string, std::string>     s_hash;
     static FBB::LinearMap<std::string, int (*)(int)>    s_funHash;
+    static std::string s_all;
 
     public:
         static std::string const &predefined(std::string const &className);
