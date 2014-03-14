@@ -4,7 +4,7 @@ void Parser::block()
 {
     bool warnMissingEoln = false;
 
-    d_block.open(d_scanner.lineNr() - 1, d_scanner.filename());
+    d_block.open(d_scanner.lineNr(), d_scanner.filename());
 
     while (true)
     {
@@ -26,7 +26,7 @@ void Parser::block()
             return;
             
             case '{':
-                d_block.open(d_scanner.lineNr() - 1, d_scanner.filename());
+                d_block.open(d_scanner.lineNr(), d_scanner.filename());
             break;
             
             case '}':

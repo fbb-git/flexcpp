@@ -1,5 +1,7 @@
 #include "dfarow.h"
 
+#include <iostream>     //TMP
+
 #include <sstream>
 #include <iterator>
 #include <sstream>

@@ -48,7 +48,7 @@ size_t Rules::handleLopRule(size_t idx)
     workBlock += "\n";                  // input stream.
     workBlock.addContents(action);
 
-    workBlock.setLineNr(workBlock.lineNr() - 1);  // compensate for the
+    workBlock.setLineNr(workBlock.lineNr());    // compensate for the
                                                 // lop4__() line.
 
                                         // add this rule to the 2nd SC

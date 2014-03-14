@@ -7,11 +7,16 @@
 
 void Generator::implementationHeader() const
 {
+    string const &implementationHeader = d_options.implementationHeaderPath();
+
+    if (Stat(implementationHeader))
+        return;
+
     ofstream out;
     ifstream in;
 
     Exception::open(in,  d_options.implementationSkeleton()); 
-    Exception::open(out, d_options.implementationHeaderPath());
+    Exception::open(out, implementationHeader);
 
     filter(in, out);    
 }

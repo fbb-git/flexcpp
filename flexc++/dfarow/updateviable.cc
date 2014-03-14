@@ -2,6 +2,14 @@
 
 void DFARow::updateViable(size_t *destIdx, size_t ruleIdx)
 {
+//
+//    if (
+//        ruleIdx < *destIdx                          // current rule before
+//        ||                                          // other rule
+//        *destIdx == max<size_t>()                   // rule not yet set
+//    ) 
+//        setViable(destIdx, ruleIdx);
+
     if (*destIdx == max<size_t>())               // rule not yet set
         setViable(destIdx, ruleIdx);
     else
@@ -16,4 +24,11 @@ void DFARow::updateViable(size_t *destIdx, size_t ruleIdx)
         )
             setViable(destIdx, ruleIdx);
     }
+
 }
+
+
+
+
+
+

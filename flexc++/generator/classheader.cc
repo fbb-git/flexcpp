@@ -5,11 +5,16 @@
 
 void Generator::classHeader() const
 {
+    string const &classHeaderPath = d_options.classHeaderPath();
+
+    if (Stat(classHeaderPath))
+        return;
+
     ofstream out;
     ifstream in;
 
     Exception::open(in,  d_options.classSkeleton()); 
-    Exception::open(out, d_options.classHeaderPath()); 
+    Exception::open(out, classHeaderPath); 
 
     filter(in, out);    
 }
