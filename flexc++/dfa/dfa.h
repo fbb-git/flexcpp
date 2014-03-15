@@ -42,11 +42,12 @@ class DFA
 
         std::vector<DFARow>::const_iterator begin() const;
         std::vector<DFARow>::const_iterator end() const;
+        std::vector<DFARow> const &rows() const;
 
         size_t size() const;
 
         static void setVerbose(bool on);
-
+        
     private:
         void keepUniqueRows();
         void inspectRows(std::vector<size_t> &unique);
@@ -64,6 +65,11 @@ inline std::vector<DFARow>::const_iterator DFA::begin() const
 inline std::vector<DFARow>::const_iterator DFA::end() const
 {
     return d_row.end();
+}
+
+inline std::vector<DFARow> const &DFA::rows() const
+{
+    return d_row;
 }
 
 inline size_t DFA::size() const

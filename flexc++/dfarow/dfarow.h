@@ -90,9 +90,6 @@ class DFARow: private FlexTypes
         void uniqueMap(std::vector<size_t> const &xlat);
 
     private:
-        void setViable(size_t *destIdx, size_t ruleIdx);
-        void updateViable(size_t *destIdx, size_t ruleIdx); // in setfinal.cc
-
         void tabulateTransitions(FBB::Table &table) const;
         void tabulateFinals(FBB::Table &table) const;
 

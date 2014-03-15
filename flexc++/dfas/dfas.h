@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <set>
 #include <iosfwd>
 
 #include "../rules/rules.h"
@@ -31,11 +32,14 @@ class DFAs
         ~DFAs();
 
         void build();
+        void warnNonViable() const;
         DFAInfo::const_iterator begin() const;
         DFAInfo::const_iterator end() const;
         DFAInfo::const_iterator find(std::string const &key) const;
 
     private:
+        void removeRules(DFA const &dfa, std::set<size_t> &nonViable) const;
+
 };
 
 inline DFAs::DFAInfo::const_iterator DFAs::begin() const

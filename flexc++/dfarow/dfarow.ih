@@ -1,6 +1,6 @@
 #include "dfarow.h"
 
-#include <iostream>     //TMP
+//#include <iostream>     //TMP
 
 #include <sstream>
 #include <iterator>
@@ -23,13 +23,6 @@ inline bool DFARow::stateOfRule(size_t state, vector<size_t> const &haystack)
     return find(haystack.begin(), haystack.end(), state) != haystack.end();
 }
 
-inline void DFARow::setFinal(size_t ruleIdx)
-{
-    updateViable(
-        (*d_rules)[ruleIdx].bol() ? &d_finalRule.second : &d_finalRule.first, 
-        ruleIdx
-    );
-}
 
 
 

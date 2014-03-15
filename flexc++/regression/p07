@@ -5,8 +5,9 @@
 
 [[:space:]]+
 
-a*/a*b              d_p = "a*/a*b"; return 1;
+ab                  d_p = "ab";     return 1;
 
-ab                  d_p = "ab";     return 2;
+.                   d_p = ".";      return 2;
 
-.                   d_p = ".";      return 3;
+a*/a*b              d_p = "a*/a*b"; return 3;
+

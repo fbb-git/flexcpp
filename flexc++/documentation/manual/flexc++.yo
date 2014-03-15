@@ -185,7 +185,7 @@ includefile(technical/intro)
     
         subsect(DFA::build: From NFA to DFA)
         includefile(technical/dfabuild)
-    
+
         subsect(Removing duplicate rows)
         includefile(technical/keepunique)
     
@@ -195,6 +195,9 @@ includefile(technical/intro)
         subsect(Associating a DFARow with a Rule)
         includefile(technical/ruletocall)
 
+    sect(Finding non-viable rules)
+    inludefile(technical/nonviable)
+   
     sect(Generating Code)
     includefile(technical/gencode)
     

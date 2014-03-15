@@ -8,6 +8,8 @@
 
 void Parser::addLopStartConditions()
 {
+    d_rules.setNuserRules();
+
     size_t nRules = d_rules.startConditions().size();
 
     if (nRules == d_nLOPstartConditions)    // no LOP rules encountered

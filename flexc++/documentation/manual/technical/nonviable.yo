@@ -1,0 +1,68 @@
+The following procedure determines which rules can be matched (are viable) and
+which rules aren't:
+
+    itemization(
+    it() From tt(DFA::build) transitions are determined for each new row;
+    it() Transitions are determined by tt(DFARow::transitions);
+    it() From tt(DFARow::transitions) tt(DFARow::transit) transitions on the
+        current input character are determined
+    it() At tt(DFARow::transit), if the current state is a tt(FINAL) state,
+        the rule that is matched is determined by tt(DFARow::setFinal)
+    )
+
+Each tt(DFARow) has a tt(std::pair<size_t, size_t> d_finalRule) data
+member. In tt(setFinal) a rule index is received. If the matching rule is a
+BOL-rule then tt(d_finalRule.second) is determined, otherwise
+tt(d_finalRule.first).
+
+When multiple rules could match at a final state, then the rule mentioned
+first takes precedence. Since the elements of tt(d_finalRule) are initialized
+at tt(max<size_t>()), the received rule index is assigned to the appropriate
+tt(d_finalRule) field if it's smaller than the currently stored value.
+
+Once the DFAs have been constructed, the viability of the rules is determined
+by tt(DFAs::warnNonViable). This function is called from tt(main).
+
+tt(DFAs::warnNonViable) first defines the set of all user-defined rule
+indices. Next it visits all DFAs not having numeric names (as these are
+internally defined DFAs added by the DFA construction process for LOP-rules),
+removing all rules that can be matched at their DFA rows from the set of rule
+indices. If any indices remain in this set then these rules cannot be matched,
+and a warning is issued for each of them.
+
+
+Be cautious when defining LOP patterns allowing empty head-matches. The
+following series of rules result in rule 2 never being matched: an tt(ab)
+sequence matches the tail of rule 1, with an empty head. Next, tt(ab) is
+re-scanned and the procedure repeats itself:
+        verb(
+    [[:blank:]]+
+    a*/a*b              d_p = "a*/a*b"; return 1;
+    ab                  d_p = "ab";     return 2;
+    .                   d_p = ".";      return 3;
+        )
+    The repair consists of reordering these rules, or disallowing an empty
+LOP-head. Reordering the rules solves the problem:
+        verb(
+    [[:blank:]]+
+    ab                  d_p = "ab";     return 1;
+    .                   d_p = ".";      return 2;
+    a*/a*b              d_p = "a*/a*b"; return 3;
+        )
+    Now rule 1 takes priority over rule 3: an tt(ab) sequence is matched by
+rule 1, rather than becoming rule 3's tail.
+
+Likewise, with the following set of rules rule 2 will never match, as the LOP
+rule recognizes the tt(\n) (realize that tt($) means: tt(/\n)):
+        verb(
+    //%nowarn
+    .*$         d_p = ".*$"; return 1;
+    \n
+        )
+    Again, reordering (or using a non-empty LOP head) solves the
+problem. E.g., using reordering:
+        verb(
+    \n
+    //%nowarn
+    .*$         d_p = ".*$"; return 1;
+        )

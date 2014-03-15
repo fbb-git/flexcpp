@@ -77,8 +77,8 @@ try
 
     DFAs dfas(rules, states, ranges);
         dfas.build();
-
-    rules.warnNonViable();
+        dfas.warnNonViable();
+//    rules.warnNonViable();
 
     Generator generator(rules, ranges, dfas);
 

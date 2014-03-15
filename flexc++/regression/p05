@@ -5,8 +5,7 @@
 //%nowarn
 ^[ \t]*
 
-//%nowarn
-[ \t]*$
+[ \t]+$
 
 [^ \t\n](.*[^ \t\n])?       return 2;
 \n                          return 3;

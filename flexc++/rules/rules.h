@@ -36,6 +36,7 @@ class Rules: public FlexTypes
     bool d_userSC = true;
     bool d_hasFixedTailLOPrules = false;      
     bool d_hasVariableTailLOPrules = false;      
+    size_t d_nUserRules = 0;
 
     public:
         typedef StartConditions::const_iterator const_iterator;
@@ -85,6 +86,7 @@ class Rules: public FlexTypes
         void handleLopRules();
 
         void setEndUserSC();
+        void setNuserRules();
 
         void processCatchAllRule();
 
@@ -96,6 +98,7 @@ class Rules: public FlexTypes
         bool hasLOPrules() const;
         bool hasFixedTailLOPrules() const;
         bool hasVariableTailLOPrules() const;
+        size_t nUserRules() const;
 
     private:
         void setRule(size_t state, size_t index);
@@ -110,6 +113,11 @@ class Rules: public FlexTypes
 
         static bool nonViable(Rule const &rule);
 };
+
+inline void Rules::setNuserRules()
+{
+    d_nUserRules = d_rules.size();
+}
 
 inline void Rules::setFixedTailLOPrules()
 {
@@ -166,6 +174,11 @@ inline size_t Rules::size() const
     return d_rules.size();
 }
         
+inline size_t Rules::nUserRules() const
+{
+    return d_nUserRules;
+}
+
 inline Rules::const_iterator Rules::begin() const
 {
     return d_startConditions.begin();

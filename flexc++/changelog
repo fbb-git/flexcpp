@@ -1,14 +1,28 @@
 flexc++ (2.01.00)
 
+  * The algorithm to determine which rules are viable was changed. Now a
+    rule's viability is determined from the generated DFAs: rules matched at
+    DFA rows are now removed from a set of all rule indices. If any elements
+    remain, then those rules cannot be matched. See also the section about
+    'Finding non-viable rules' in the manual's technical documentation.
+
   * Generating files is prevented when errors in option/declaration
     specifications are encountered. All errors in option/declaration
     specifications (instead of just the first error that is encountered) 
     are now reported.
 
+  * A warning is issued if an existing scanner.h file does not contain 
+    'void postCode(PostEnum__', suggesting that the header file was generated
+    before flexc++ 1.08. The declaration/definition to add to the scanner.h
+    file is also suggested. 
+
   * This version depends on bobcat 3.21.01, and uses Bobcat's Iterator class
     template. 
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 15 Feb 2014 17:03:04 +0100
+
+
+
+
 
 flexc++ (2.00.00)
 

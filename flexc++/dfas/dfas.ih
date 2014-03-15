@@ -1,8 +1,9 @@
 #include "dfas.h"
 
-#include <iostream>
+//#include <iostream>   //TMP
 
 #include <ostream>
+#include <bobcat/iterator>
 
 #include "../dfa/dfa.h"
 

@@ -8,7 +8,21 @@ void Generator::classHeader() const
     string const &classHeaderPath = d_options.classHeaderPath();
 
     if (Stat(classHeaderPath))
+    {
+        if (not grep(classHeaderPath, 
+          R"(void[[:blank:]]+postCode[[:blank:]]*\([[:blank:]]*PostEnum__)" ))
+            wmsg << "`void postCode' not found in " << 
+                                                    classHeaderPath << ".\n"
+                "       Advice: add the following member to the private "
+                                                        "section of the\n"
+                "       scanner class in " << classHeaderPath << 
+                                                " (cf.: man 3 flexc++api):\n"
+                "           void postCode(PostEnum__)\n"
+                "           {}\n" <<
+                endl;
+
         return;
+    }
 
     ofstream out;
     ifstream in;
