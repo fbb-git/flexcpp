@@ -1,7 +1,7 @@
 oxref by Frank B. Brokken (f.b.brokken@rug.nl)
 oxref V1.00.01 2012-2013
 
-CREATED Sat, 15 Feb 2014 14:55:23 +0000
+CREATED Sat, 15 Mar 2014 12:00:55 +0000
 CROSS REFERENCE FOR: -fxs tmp/libmodules.a 
 ----------------------------------------------------------------------
 
@@ -50,17 +50,17 @@ add(std::string const&)
     inspectstate.cc: Ranges::inspectState(State const&)
 
 add(unsigned int)
-  Full name: Ranges::add(unsigned int)
-  Source:    add3.cc 
-  Used By:
-    inspectstate.cc: Ranges::inspectState(State const&)
-
-add(unsigned int)
   Full name: StartConditions::add(unsigned int)
   Source:    add2.cc 
   Used By:
     add.cc: Rules::add(bool, Pattern const&, Block const&, FlexTypes::RuleType)
     addcatchall.cc: Rules::addCatchAll(unsigned int, unsigned int)
+
+add(unsigned int)
+  Full name: Ranges::add(unsigned int)
+  Source:    add3.cc 
+  Used By:
+    inspectstate.cc: Ranges::inspectState(State const&)
 
 addCatchAll(unsigned int, unsigned int)
   Full name: Rules::addCatchAll(unsigned int, unsigned int)
@@ -522,6 +522,7 @@ grep(std::string const&, std::string const&) const
   Full name: Generator::grep(std::string const&, std::string const&) const
   Source:    grep.cc 
   Used By:
+    classheader.cc: Generator::classHeader() const
     errexisting.cc: Generator::errExisting(std::string const&, std::string const&, std::string const&) const
 
 handleCharAfterBlanks()
@@ -1094,17 +1095,17 @@ popSc(int)
     lex.cc: Scanner::executeAction__(unsigned int)
 
 popStream()
-  Full name: ScannerBase::popStream()
-  Source:    lex.cc 
-  Used By:
-    popstream.cc: Scanner::popStream()
-
-popStream()
   Full name: Scanner::popStream()
   Source:    popstream.cc 
   Used By:
     lex.cc: Scanner::lex__()
     moreinput.cc: Scanner::moreInput()
+
+popStream()
+  Full name: ScannerBase::popStream()
+  Source:    lex.cc 
+  Used By:
+    popstream.cc: Scanner::popStream()
 
 predefined(std::string const&)
   Full name: CharRange::predefined(std::string const&)
@@ -1264,6 +1265,12 @@ remove(unsigned int)
   Used By:
     processcatchallrule.cc: Rules::processCatchAllRule()
 
+removeRules(DFA const&, std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> >&) const
+  Full name: DFAs::removeRules(DFA const&, std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> >&) const
+  Source:    removerules.cc 
+  Used By:
+    warnnonviable.cc: DFAs::warnNonViable() const
+
 replace(std::string, __gnu_cxx::__normal_iterator<std::pair<unsigned int, CharClass::CharType>*, std::vector<std::pair<unsigned int, CharClass::CharType>, std::allocator<std::pair<unsigned int, CharClass::CharType> > > >, unsigned int)
   Full name: CharClass::replace(std::string, __gnu_cxx::__normal_iterator<std::pair<unsigned int, CharClass::CharType>*, std::vector<std::pair<unsigned int, CharClass::CharType>, std::allocator<std::pair<unsigned int, CharClass::CharType> > > >, unsigned int)
   Source:    replace.cc 
@@ -1301,6 +1308,12 @@ ruleFromFinalState(unsigned int) const
   Source:    rulefromfinalstate.cc 
   Used By:
     transit.cc: DFARow::transit(unsigned int, unsigned int, std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> >&)
+
+s_all
+  Full name: CharRange::s_all
+  Source:    data.cc 
+  Used By:
+    negate.cc: CharRange::negate(std::string const&)
 
 s_baseFlag
   Full name: Generator::s_baseFlag
@@ -1491,6 +1504,12 @@ setFilenames(FlexTypes::TextType)
   Used By:
     parse.cc: Parser::executeAction(int)
 
+setFinal(unsigned int)
+  Full name: DFARow::setFinal(unsigned int)
+  Source:    setfinal.cc 
+  Used By:
+    transit.cc: DFARow::transit(unsigned int, unsigned int, std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> >&)
+
 setLexFunctionName(FlexTypes::TextType)
   Full name: Options::setLexFunctionName(FlexTypes::TextType)
   Source:    setlexfunctionname.cc 
@@ -1534,12 +1553,6 @@ setRule(unsigned int, unsigned int)
   Source:    setrule.cc 
   Used By:
     add.cc: Rules::add(bool, Pattern const&, Block const&, FlexTypes::RuleType)
-
-setViable(unsigned int*, unsigned int)
-  Full name: DFARow::setViable(unsigned int*, unsigned int)
-  Source:    setviable.cc 
-  Used By:
-    updateviable.cc: DFARow::updateViable(unsigned int*, unsigned int)
 
 showFilenames() const
   Full name: Options::showFilenames() const
@@ -1719,23 +1732,11 @@ update(std::string const&, unsigned int const*)
   Used By:
     add.cc: Ranges::add(std::string const&)
 
-updateViable(unsigned int*, unsigned int)
-  Full name: DFARow::updateViable(unsigned int*, unsigned int)
-  Source:    updateviable.cc 
-  Used By:
-    transit.cc: DFARow::transit(unsigned int, unsigned int, std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> >&)
-
 useAll()
   Full name: StartConditions::useAll()
   Source:    useall.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
-
-v_clone() const
-  Full name: StateData::v_clone() const
-  Source:    vclone.cc 
-  Used By:
-    destructor.cc: StateData::~StateData()
 
 v_clone() const
   Full name: StateString::v_clone() const
@@ -1772,6 +1773,12 @@ v_clone() const
     state5.cc: State::State(unsigned int, std::string const&, unsigned int, unsigned int)
     state6.cc: State::State(unsigned char, unsigned int)
     statestring1.cc: StateString::StateString(std::string const&, unsigned int, unsigned int)
+
+v_clone() const
+  Full name: StateData::v_clone() const
+  Source:    vclone.cc 
+  Used By:
+    destructor.cc: StateData::~StateData()
 
 validRange(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >) const
   Full name: CharClass::validRange(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >) const

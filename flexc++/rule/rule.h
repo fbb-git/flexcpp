@@ -25,7 +25,7 @@ class Rule: public FlexTypes
     Block d_block;              // action block
 
     bool d_bol;                 // this rule is matched if starting at BOL
-    bool d_viable;              // this rule is viable, i.e., it can be
+//    bool d_viable;              // this rule is viable, i.e., it can be
                                 // matched
 
     RuleType d_type;
@@ -41,11 +41,11 @@ class Rule: public FlexTypes
         size_t finalState() const;
         Block const &block() const;
 
-        void setViable(bool yes);
+//        void setViable(bool yes);
         void setBol();
 
         bool bol() const;
-        bool viable() const;
+//        bool viable() const;
 
         std::string const &source() const;
         size_t lineNr() const;
@@ -92,20 +92,20 @@ inline void Rule::setBol()
     d_bol = true;
 }
 
-inline void Rule::setViable(bool yes) 
-{
-    d_viable = yes;
-}
+//inline void Rule::setViable(bool yes) 
+//{
+//    d_viable = yes;
+//}
 
 inline bool Rule::bol() const
 {
     return d_bol;
 }
 
-inline bool Rule::viable() const
-{
-    return d_viable;
-}
+//inline bool Rule::viable() const
+//{
+//    return d_viable;
+//}
 
 inline Rule::Pair const &Rule::pair() const
 {

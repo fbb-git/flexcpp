@@ -72,7 +72,7 @@ class Rules: public FlexTypes
 
         size_t size() const;                    // # of rules
 
-        void warnNonViable();
+//        void warnNonViable();
         void setOrAction();         // set the previous rule's action to '|'
 
         void assignBlock(Block const &block);   // assign 'block' to the last
@@ -111,7 +111,7 @@ class Rules: public FlexTypes
 
         void addCatchAll(size_t scIndex, size_t catchAllRuleIndex);
 
-        static bool nonViable(Rule const &rule);
+//        static bool nonViable(Rule const &rule);
 };
 
 inline void Rules::setNuserRules()
