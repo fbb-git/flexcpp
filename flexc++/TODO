@@ -1,4 +1,5 @@
+To fix: Rule line numers refer to the next line if the rule has no action
+block 
 
-See documentation/manual/technical/loppatterns.yo's Note at the end:
-optimization possible?
+Remove old d_viable handling code.
 
