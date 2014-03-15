@@ -195,8 +195,8 @@ includefile(technical/intro)
         subsect(Associating a DFARow with a Rule)
         includefile(technical/ruletocall)
 
-    sect(Finding non-viable rules)
-    inludefile(technical/nonviable)
+    lsect(VIABLE)(Finding non-viable rules)
+    includefile(technical/nonviable)
    
     sect(Generating Code)
     includefile(technical/gencode)

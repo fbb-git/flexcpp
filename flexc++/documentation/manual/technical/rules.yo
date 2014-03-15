@@ -9,12 +9,9 @@ ref(RULESFIG))
 
 When the parser has recognized a rule it calls tt(Rules::add). A tt(Rule)
 object is added to tt(d_rules), storing begin and end state indices, a flag
-indicating whether or not this rule's RE started at BOL and a em(viable) flag,
-indicating whether the rule can at all be matched. This flag is initially
-tt(false), but it is set to tt(true) if the rule is mentioned in at least one
-of the final states of any of the DFAs. A rule also contains the code of any
-action block that's associated with it (empty if there are no actions), see
-also section ref(BLOCKS).
+indicating whether or not this rule's RE started at BOL. A rule also contains
+the code of any action block that's associated with it (empty if there are no
+actions), see also section ref(BLOCKS).
 
 tt(Rules::add) also stores the association between the rule's final state and
 rule index in its tt(unordered_map d_finalToRule). Furthermore, it calls
@@ -34,14 +31,14 @@ Rules starting with tt(^) can only be matched at em(begin-of-line)
 (BOL). The data member tt(d_bol) of such rules is set to tt(true).
 
 Rules that are matched in some DFA state are em(viable): such rules can be
-matched. The tt(d_viable) data member of such rules is set to tt(true). A
-rule's tt(d_viable) data member may be set to true at some point during a DFA
-construction, but during the DFA construction another (earlier) rule might
-be matched in the same DFA state. In those cases the viable state of the later
-rule is reset to tt(false). Once all DFAs have been constructed a simple visit
-of the tt(Rules) provides information about their viability.
+matched. See section ref(VIABLE) for a description of the algorithm that is
+used for finding (non)viable rules.
 
             figure(images/rule)(The Rule class data members)(RULEFIG)
+
+
+
+
 
 
 
