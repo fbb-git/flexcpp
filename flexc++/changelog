@@ -11,18 +11,18 @@ flexc++ (2.01.00)
     specifications (instead of just the first error that is encountered) 
     are now reported.
 
-  * A warning is issued if an existing scanner.h file does not contain 
-    'void postCode(PostEnum__', suggesting that the header file was generated
-    before flexc++ 1.08. The declaration/definition to add to the scanner.h
-    file is also suggested. 
+  * A warning is issued if an existing scanner.h file does not contain 'void
+    postCode(PostEnum__'. The warning also offers an advice to add the
+    required declaration/definition (showing the required code) to the
+    scanner.h file.
+    
+  * References to line numbers of rules should now be correct, and should
+    refer to the line number where the rule's regex is specified.
 
   * This version depends on bobcat 3.21.01, and uses Bobcat's Iterator class
     template. 
 
-
-
-
-
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 15 Mar 2014 17:08:47 +0100
 
 flexc++ (2.00.00)
 

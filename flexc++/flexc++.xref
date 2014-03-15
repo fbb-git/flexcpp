@@ -1,7 +1,7 @@
 oxref by Frank B. Brokken (f.b.brokken@rug.nl)
 oxref V1.00.01 2012-2013
 
-CREATED Sat, 15 Mar 2014 12:00:55 +0000
+CREATED Sat, 15 Mar 2014 15:55:05 +0000
 CROSS REFERENCE FOR: -fxs tmp/libmodules.a 
 ----------------------------------------------------------------------
 
@@ -249,8 +249,8 @@ clear()
   Full name: Block::clear()
   Source:    clear.cc 
   Used By:
+    noaction.cc: Rule::noAction()
     handleloprule.cc: Rules::handleLopRule(unsigned int)
-    noactions.cc: Rules::noActions()
     open.cc: Block::open(unsigned int, std::string const&)
 
 close()
@@ -899,6 +899,12 @@ next2()
     rawtext.cc: Pattern::rawText(States&, std::string const&)
     star.cc: Pattern::star(States&, Pattern const&)
 
+noAction()
+  Full name: Rule::noAction()
+  Source:    noaction.cc 
+  Used By:
+    noactions.cc: Rules::noActions()
+
 noActions()
   Full name: Rules::noActions()
   Source:    noactions.cc 
@@ -1108,17 +1114,17 @@ popStream()
     popstream.cc: Scanner::popStream()
 
 predefined(std::string const&)
-  Full name: CharRange::predefined(std::string const&)
-  Source:    predefined.cc 
-  Used By:
-    predefined.cc: CharClass::predefined(std::string const&)
-
-predefined(std::string const&)
   Full name: CharClass::predefined(std::string const&)
   Source:    predefined.cc 
   Used By:
     dot.cc: Pattern::dot(States&)
     parse.cc: Parser::executeAction(int)
+
+predefined(std::string const&)
+  Full name: CharRange::predefined(std::string const&)
+  Source:    predefined.cc 
+  Used By:
+    predefined.cc: CharClass::predefined(std::string const&)
 
 predefinedAfter(unsigned int) const
   Full name: CharClass::predefinedAfter(unsigned int) const

@@ -72,7 +72,6 @@ class Rules: public FlexTypes
 
         size_t size() const;                    // # of rules
 
-//        void warnNonViable();
         void setOrAction();         // set the previous rule's action to '|'
 
         void assignBlock(Block const &block);   // assign 'block' to the last

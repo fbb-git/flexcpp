@@ -142,9 +142,4 @@ inline void Rule::setOrAction()
     return d_block.setOrAction();
 }
 
-inline void Rule::noAction()
-{
-    d_block.clear();
-}
-
 #endif

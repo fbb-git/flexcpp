@@ -17,5 +17,5 @@ void DFAs::warnNonViable() const
 
     for(size_t rule: nonViable)
         wmsg << "Rule " << rule << " (" << d_rules[rule].source() << ": " <<
-                    d_rules[rule].lineNr() << ") can never be matched" << endl;
+                    d_rules[rule].lineNr() << ") is never matched" << endl;
 }

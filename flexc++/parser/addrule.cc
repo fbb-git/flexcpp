@@ -17,7 +17,10 @@ void Parser::addRule(Pattern const &pattern, bool reset)
         wmsg << "null-matching regular expression" << endl;
     }
 
-    Block block(d_scanner.lineNr(), d_scanner.filename());
+    Block block(d_scanner.lineNr() - 1, d_scanner.filename()); // see the
+                                                    // comment at the top of 
+                                                    // this file
+
     d_rules.add(d_boln, pattern, block, pattern.type());
 
     if (reset)
