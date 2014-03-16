@@ -19,10 +19,10 @@ flexc++ (2.01.00)
   * References to line numbers of rules should now be correct, and should
     refer to the line number where the rule's regex is specified.
 
-  * This version depends on bobcat 3.21.01, and uses Bobcat's Iterator class
-    template. 
+  * This version depends on bobcat >= 3.21.01, and uses Bobcat's Iterator
+    class template. 
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 15 Mar 2014 17:08:47 +0100
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 16 Mar 2014 10:14:15 +0100
 
 flexc++ (2.00.00)
 
