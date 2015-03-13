@@ -4,7 +4,10 @@ flexc++ (2.02.00)
     the last line of a rule definition does not end in a newline. This bug was
     fixed in this release. 
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 13 Mar 2015 14:53:50 +0100
+  * Added the file 'required' to the source distribution summarizing the
+    required software for building flexc++, dropped the file 'build-depends'.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 13 Mar 2015 16:40:13 +0100
 
 flexc++ (2.01.00)
 

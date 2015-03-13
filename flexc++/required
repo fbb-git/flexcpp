@@ -1,0 +1,17 @@
+This file lists non-standard software only. Thus, standard utilities like cp,
+mv, sed, etc, etc, are not explicitly mentioned. Neither is the gcc compiler
+explicitly mentioned, but a fairly recent one is assumed.
+
+Required software for building Flexc++ 2.02.00
+----------------------------------------------
+
+libbobcat-dev (>= 3.25.01),
+
+
+To use the provided build-script:
+
+    icmake (>= 7.22.00)         
+
+To construct the manual and map-page:
+        
+    yodl (>= 3.05.0)

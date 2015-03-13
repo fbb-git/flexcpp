@@ -1,7 +1,7 @@
 oxref by Frank B. Brokken (f.b.brokken@rug.nl)
-oxref V1.00.01 2012-2013
+oxref V1.00.02 2012-2015
 
-CREATED Sat, 15 Mar 2014 15:55:05 +0000
+CREATED Fri, 13 Mar 2015 16:08:28 +0000
 CROSS REFERENCE FOR: -fxs tmp/libmodules.a 
 ----------------------------------------------------------------------
 
@@ -50,17 +50,17 @@ add(std::string const&)
     inspectstate.cc: Ranges::inspectState(State const&)
 
 add(unsigned int)
+  Full name: Ranges::add(unsigned int)
+  Source:    add3.cc 
+  Used By:
+    inspectstate.cc: Ranges::inspectState(State const&)
+
+add(unsigned int)
   Full name: StartConditions::add(unsigned int)
   Source:    add2.cc 
   Used By:
     add.cc: Rules::add(bool, Pattern const&, Block const&, FlexTypes::RuleType)
     addcatchall.cc: Rules::addCatchAll(unsigned int, unsigned int)
-
-add(unsigned int)
-  Full name: Ranges::add(unsigned int)
-  Source:    add3.cc 
-  Used By:
-    inspectstate.cc: Ranges::inspectState(State const&)
 
 addCatchAll(unsigned int, unsigned int)
   Full name: Rules::addCatchAll(unsigned int, unsigned int)
