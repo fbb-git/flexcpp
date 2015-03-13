@@ -65,7 +65,9 @@ try
     Rules rules(states);
 
     Parser parser(rules, states);
-        parser.parse();
+        if (parser.parse() != 0)
+            return 1;
+
         parser.addLopStartConditions();
         parser.cleanup();
 
@@ -78,7 +80,6 @@ try
     DFAs dfas(rules, states, ranges);
         dfas.build();
         dfas.warnNonViable();
-//    rules.warnNonViable();
 
     Generator generator(rules, ranges, dfas);
 

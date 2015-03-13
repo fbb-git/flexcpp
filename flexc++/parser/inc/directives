@@ -75,6 +75,13 @@ _directive:
 
 _directive_line:
     _directive '\n'
+    {
+        if (d_scanner.endOfInput())
+        {
+            emsg << "Section delimiter %% expected" << endl;
+            ABORT();
+        }
+    }
 ;
 
 opt_directives:
@@ -82,8 +89,3 @@ opt_directives:
 |
     // empty
 ;
-
-
-
-
-

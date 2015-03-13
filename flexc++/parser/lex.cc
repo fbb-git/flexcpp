@@ -5,6 +5,13 @@ int Parser::lex()
     print();
     ++d_tokenCount;
 
-    return d_scanner.pLex();
+    int token = d_scanner.pLex();
+    if (token == 0)
+    {
+        token = '\n';
+        d_scanner.atEndOfInput();
+    }
+
+    return token;
 }
 

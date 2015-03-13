@@ -12,6 +12,10 @@ _rule_def:
     // each rule ends in a '\n'
 _rule:                      
     _rule_def '\n' reset
+    {
+        if (d_scanner.endOfInput())
+            ACCEPT();
+    }
 ;                               
                                 
     // there may be no rules
