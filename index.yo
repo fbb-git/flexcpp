@@ -1,0 +1,79 @@
+SUBST(_project_)(flexcpp)
+SUBST(_Product_)(Flexc++)
+SUBST(_product_)(flexc++)
+SUBST(_image_)(flex.jpg)
+
+includefile(../wip/release.yo)
+
+
+mailto(f.b.brokken@rug.nl)
+
+affiliation(Center for Information Technology, University of Groningen)
+
+notableofcontents()
+
+htmlstyle(.centered)(margin:0px auto;display:block)
+htmlstyle(body)(color: #27408B; background: #FFFAF0)
+
+report(_Product_ V _CurVers_)
+      (Frank B. Brokken (f.b.brokken@rug.nl)nl())
+      (_CurYrs_)
+
+htmlcommand(
+    <img class="centered", src="_image_" border="0" alt="_Product_ Image" />
+)
+
+This is the main page of the _Product_ project hosted at GitHub.com.
+
+
+The project's repository can be reached at 
+lurl(https://github.com/fbb-git/_project_).
+
+
+The five most recent releases are (to obtain, either check out a release
+by its tag or download the matching tt(.zip) or tt(.tar.gz) from
+lurl(https://github.com/fbb-git/_project_/releases) or direct from its 
+release page):
+
+        itemization(
+        it() url(4.02.00)
+                (https://github.com/fbb-git/_project_/releases/tag/4.02.00)
+Mar 13, 2015;
+        it() url(2.01.00)
+                (https://github.com/fbb-git/_project_/releases/tag/2.01.00)
+Mar 16, 2014;
+        it() url(2.00.00)
+                (https://github.com/fbb-git/_project_/releases/tag/2.00.00)
+Feb 9, 2014;
+        it() url(1.07.00)
+                (https://github.com/fbb-git/_project_/releases/tag/1.07.00)
+Aug 11, 2013;
+        it() url(1.06.00)
+                (https://github.com/fbb-git/_project_/releases/tag/1.06.00)
+Aug 6, 2013.
+        )
+    COMMENT(NOTE: LAST ITEM SHOULD END IN . )
+
+    Additional information about _product_:
+    itemization(
+    it() Here is url(the Flexc++ userguide)(manual/flexc++.html).
+    it() Here is the url(html-version of the main Flexc++ man-page)
+                (manhtml/flexc++.1.html).
+    it() Here is the url(html-version of the Flexc++ API man-page)
+                (manhtml/flexc++api.3.html).
+    it() Here is the url(html-version of the Flexc++ input files man-page)
+                (manhtml/flexc++input.7.html).
+    it() The complete url(_Product_ changelog)(changelog.txt).
+    )
+
+Enjoy _Product_ !
+
+COMMENT(
+includefile(/home/frank/git/GITPROJECTS.yo)
+)
+
+Contact the author through url(his e-mail address)(mailto:f.b.brokken@rug.nl)
+
+
+
+

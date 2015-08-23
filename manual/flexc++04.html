@@ -1,0 +1,124 @@
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<title> Flexc++ (Version 2.02.00) User Guide </title>
+<style type="text/css">
+    figure {text-align: center;}
+    img {vertical-align: center;}
+</style>
+</head>
+<body text="#27408B" bgcolor="#FFFAF0">
+<hr>
+<ul>
+    <li> <a href="flexc++.html">Table of Contents</a>
+    <li> <a href="flexc++03.html">Previous Chapter</a>
+    <li> <a href="flexc++05.html">Next Chapter</a>
+</ul>
+<hr>
+<a name="generated-files"></a><a name="l28"></a>
+<h1>Chapter 4: Generated files</h1>
+<strong>Flexc++</strong> generates four files from a well-formed input file:
+    <ul>
+    <li> A file containing the implementation of the <code>lex</code> member function
+and its support functions. By default this file is named <code>lex.cc</code>.
+<p>
+<li> A file containing the scanner's class interface. By default this file
+is named <code>Scanner.h</code>. The scanner class itself is generated once and is
+thereafter `owned' by the programmer, who may change it <em>ad-lib</em>. Newly
+added members (data members, function members) will survive future <strong>flexc++</strong> runs
+as <strong>flexc++</strong> will never rewrite an existing scanner class interface file, unless
+explicitly ordered to do so.
+<p>
+<li> A file containing the interface of the scanner class's <em>base
+class</em>. The scanner class is publicly derived from this base class. It is used
+to minimize the size of the scanner interface itself. The scanner base class
+is `owned' by <strong>flexc++</strong> and should never be hand-modified. By
+default the scanner's base class is provided in the file
+<code>Scannerbase.h</code>. At each new <strong>flexc++</strong> run this file is rewritten unless <strong>flexc++</strong>
+is explicitly ordered <em>not</em> to do so.
+<p>
+<li> A file containing the <em>implementation header</em>. This file should
+contain includes and declarations that are only required when compiling the
+members of the scanner class. By default this file is named
+<code>Scanner.ih</code>. This file, like the file containing the scanner class's
+interface is never rewritten by <strong>flexc++</strong> unless <strong>flexc++</strong> is explicitly ordered to do
+so.
+    </ul>
+<p>
+The first file, <code>lex.cc</code> contains lookup tables, the code to walk through
+the lookup tables and the actions specified in the lexer file. Since the
+lookup tables and actions (possibly) change every time <strong>flexc++</strong> is called,
+<code>lex.cc</code> is rewritten at each new <strong>flexc++</strong> run.
+<p>
+The file <code>Scannerbase.h</code> contains the <code>Scanner</code>'s base class The
+<code>Scanner</code> class is derived from <code>ScannerBase</code>. The <code>Scannerbase.h</code> is
+`owned' by <strong>flexc++</strong>, and <strong>flexc++</strong> reqrites <code>Scannerbase.h</code> at each new <strong>flexc++</strong> run.
+<p>
+The other two files <code>Scanner.h</code> and <code>Scanner.ih</code> are created only once,
+and can safely be edited by the programmer. The <code>Scanner.h</code> header file
+contains the final <code>Scanner</code> class, to which new members may be added. These
+members may be called from the actions defined in <strong>flexc++</strong>'s input file
+(<code>lexer</code>).
+<p>
+Finally, <code>Scanner.ih</code> contains declarations which are used by the
+implementations of the <code>Scanner</code> members. One can place <code>using</code> statements
+here as well as includes which are only required by member implementations. In
+a well-designed classq, source files defining new members of the class
+<code>Scanner</code> should only have to include <code>Scanner.ih</code>.
+<p>
+<a name="multiplestreams"></a><a name="l29"></a>
+<h2>4.1: Multiple input streams</h2>
+    Some scanners (such as those which support `include' files) require reading
+from several input streams. Usually, a directive like <code>#include</code> is defined
+controlling stack-wise stream switching. Alternatively, direct switches to
+other streams can be requested.  <strong>Flexc++</strong> offers both ways to switch streams.
+<p>
+<ul>
+    <li> For stack-wise stream switching, a directive like <code>#include</code> is
+usually defined. When encountered, processing of the current stream is
+suspended and the scanning process continues at the stream whose name is
+specified at the <code>#include</code> directive. When reaching a stream's end-of-file
+the scanner switches back to the suspended input stream. In this case streams
+are pushed on a stack when encountering a stream switching directive and
+popped off the stack once the current file has completely been processed.
+    <li> Second, the user may request the scanner to switch to another stream.
+Optionally, the user may request to switch back. In this case, the user is
+completely responsible for all stream-related bookkeeping. The scanner merely
+provides a means to switch from one stream to another.  
+    </ul>
+<p>
+The members <code>void pushStream(std::istream &amp;curStream)</code> and <code>void
+pushStream(std::string const &amp;curName)</code> are provided for stack-wise stream
+switching. By default, at a stream's end-of-file the member <code>bool
+popStream()</code> is automatically called by <strong>flexc++</strong>, closing the currently processed
+input stream and continuing the processing of the most recently stacked input
+stream (removing it from the stack of streams). If this switch was
+successfully performed <code>true</code> is returned, otherwise (e.g., when the stream
+stack is empty) <code>false</code> is returned. 
+<p>
+Returning to the previously stacked stream is handled automatically and
+does not require the use of a <code>&lt;&lt;EOF&gt;&gt;</code> rule. If an <code>&lt;&lt;EOF&gt;&gt;</code> rule is
+defined, however, previously pushed streams are <em>not</em> automatically
+re-activated. In that case, returning to previously pushed streams is the
+responsibility of the programmer.
+<p>
+When switching to another stream the line number counter and file name are
+reset to, respectively, 1 and the new file's name. When returning to a
+previously suspended (stacked) stream that stream's line number and file name
+are restored. 
+<p>
+Direct, non-stack based stream switching can be realized by the <code>void
+switchStreams(std::string const &amp;infilename), void switchStreams(std::string
+const &amp;infilename, std::string const &amp;outfilename)</code> and <code>void
+switchStreams(std::istream &amp;in, std::ostream &amp;out)</code> members. Processing of the
+current input file ends, and continues at the file or stream specified as
+<code>switchStream</code>'s first argument.
+<p>
+<hr>
+<ul>
+    <li> <a href="flexc++.html">Table of Contents</a>
+    <li> <a href="flexc++03.html">Previous Chapter</a>
+    <li> <a href="flexc++05.html">Next Chapter</a>
+</ul>
+<hr>
+</body>
+</html>

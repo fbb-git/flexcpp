@@ -1,0 +1,44 @@
+#!/bin/bash
+
+_project_=flexcpp
+_product_=flexc++
+
+echo -n "Need to (re)create ${_project_}'s wip files for gh-pages [y/n] ? "
+read yesno
+
+if [ "$yesno" == "y" ] ; then
+    git co master
+
+    cd ${_product_}		    # check
+    ./build man
+    ./build manual
+
+    ./build github
+    ./build distclean
+    cd ..    
+    git co gh-pages
+fi
+
+cp -r ../wip/changelog.txt ../wip/manhtml ../wip/manual .
+
+yodl2html index.yo || exit 1
+
+echo "Running 'git st': no untracked files or ignorable files should be shown"
+git st
+
+echo
+
+echo -n "git ci changes to index.html etc., push the result and \
+git co master [y/n] ? "
+
+read yesno
+
+if [ "$yesno" == "y" ] ; then
+    RELEASE=`head -n1 ../wip/release.yo | 
+		sed 's/SUBST(_CurVers_)(\(.*\))/\1/'`
+    git ci -am "updated index.html for gh-pages, release $RELEASE"
+    git push
+    git co master
+fi
+
+

@@ -1,0 +1,134 @@
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<title>Flexc++ (Version 2.02.00) User Guide</title>
+<style type="text/css">
+    figure {text-align: center;}
+    img {vertical-align: center;}
+</style>
+<link rev="made" href="mailto:Frank B. Brokken: f.b.brokken@rug.nl">
+</head>
+<body text="#27408B" bgcolor="#FFFAF0">
+<hr>
+<h1>Flexc++ (Version 2.02.00) User Guide</h1>
+<h2>
+        <a href="mailto:f.b.brokken@rug.nl">Frank B. Brokken</a>, 
+        <a href="mailto:j.p.van.oosten@rug.nl">Jean-Paul van Oosten</a>, and
+        (until 0.5.3) Richard Berendsen</h2>
+
+<h2><a href="http://www.rug.nl/">University of Groningen</a></h2><h2>2008-2015</h2>
+
+<h1>Table of Contents</h1>
+<dl><dt><h2><a href="flexc++01.html#l1">Chapter 1: Introduction</a></h2></dt>
+<dd><dl>
+<dt><h3><a href="flexc++01.html#l2">1.1: Running Flexc++</a></h3></dt>
+<dd><dl>
+<dt><a href="flexc++01.html#l3">1.1.1: Flexc++ options</a></dt>
+</dl></dd>
+<dt><h3><a href="flexc++01.html#l4">1.2: Some simple examples</a></h3></dt>
+<dd><dl>
+<dt><a href="flexc++01.html#l5">1.2.1: A simple lexer file and main function</a></dt>
+<dt><a href="flexc++01.html#l6">1.2.2: An interactive scanner supporting command-line editing</a></dt>
+</dl></dd>
+</dl></dd>
+<dt><h2><a href="flexc++02.html#l7">Chapter 2: Differences between flex and flexc++</a></h2></dt>
+<dd><dl>
+<dt><h3><a href="flexc++02.html#l8">2.1: Format of the input file</a></h3></dt>
+<dd><dl>
+<dt><a href="flexc++02.html#l9">2.1.1: Definition section</a></dt>
+<dt><a href="flexc++02.html#l10">2.1.2: Rules section</a></dt>
+<dt><a href="flexc++02.html#l11">2.1.3: User code section</a></dt>
+</dl></dd>
+<dt><h3><a href="flexc++02.html#l12">2.2: Patterns</a></h3></dt>
+<dt><h3><a href="flexc++02.html#l13">2.3: Generated files</a></h3></dt>
+<dt><h3><a href="flexc++02.html#l14">2.4: Comment</a></h3></dt>
+<dt><h3><a href="flexc++02.html#l15">2.5: Members and macros</a></h3></dt>
+<dt><h3><a href="flexc++02.html#l16">2.6: Multiple input streams</a></h3></dt>
+</dl></dd>
+<dt><h2><a href="flexc++03.html#l17">Chapter 3: Format of the input file</a></h2></dt>
+<dd><dl>
+<dt><h3><a href="flexc++03.html#l18">3.1: Definitions section</a></h3></dt>
+<dd><dl>
+<dt><a href="flexc++03.html#l19">3.1.1: Directives</a></dt>
+</dl></dd>
+<dt><h3><a href="flexc++03.html#l20">3.2: Rules section</a></h3></dt>
+<dt><h3><a href="flexc++03.html#l21">3.3: Comment</a></h3></dt>
+<dt><h3><a href="flexc++03.html#l22">3.4: Patterns</a></h3></dt>
+<dt><h3><a href="flexc++03.html#l23">3.5: Actions</a></h3></dt>
+<dt><h3><a href="flexc++03.html#l24">3.6: Start conditions (Mini scanners)</a></h3></dt>
+<dd><dl>
+<dt><a href="flexc++03.html#l25">3.6.1: Notation details</a></dt>
+</dl></dd>
+<dt><h3><a href="flexc++03.html#l26">3.7: Members</a></h3></dt>
+<dt><h3><a href="flexc++03.html#l27">3.8: Handling input your own way</a></h3></dt>
+</dl></dd>
+<dt><h2><a href="flexc++04.html#l28">Chapter 4: Generated files</a></h2></dt>
+<dd><dl>
+<dt><h3><a href="flexc++04.html#l29">4.1: Multiple input streams</a></h3></dt>
+</dl></dd>
+<dt><h2><a href="flexc++05.html#l30">Chapter 5: Pre-loading input lines</a></h2></dt>
+<dd><dl>
+<dt><h3><a href="flexc++05.html#l31">5.1: Using start conditions to pre-load input lines</a></h3></dt>
+<dt><h3><a href="flexc++05.html#l32">5.2: Wrapping input streams</a></h3></dt>
+<dd><dl>
+<dt><a href="flexc++05.html#l33">5.2.1: The class ScannerStreambuf</a></dt>
+<dt><a href="flexc++05.html#l34">5.2.2: Illustration</a></dt>
+</dl></dd>
+</dl></dd>
+<dt><h2><a href="flexc++06.html#l35">Chapter 6: Technical documentation</a></h2></dt>
+<dd><dl>
+<dt><h3><a href="flexc++06.html#l36">6.1: Notation, Terminology</a></h3></dt>
+<dd><dl>
+<dt><a href="flexc++06.html#l37">6.1.1: Example of LOP-patterns</a></dt>
+</dl></dd>
+<dt><h3><a href="flexc++06.html#l38">6.2: The parser</a></h3></dt>
+<dt><h3><a href="flexc++06.html#l39">6.3: Start Conditions and the class StartConditions</a></h3></dt>
+<dt><h3><a href="flexc++06.html#l40">6.4: Code (action)  blocks</a></h3></dt>
+<dt><h3><a href="flexc++06.html#l41">6.5: The class State</a></h3></dt>
+<dt><h3><a href="flexc++06.html#l42">6.6: States</a></h3></dt>
+<dt><h3><a href="flexc++06.html#l43">6.7: Rules and the class Rule</a></h3></dt>
+<dt><h3><a href="flexc++06.html#l44">6.8: Converting REs to Patterns</a></h3></dt>
+<dd><dl>
+<dt><a href="flexc++06.html#l45">6.8.1: The class CharClass</a></dt>
+<dt><a href="flexc++06.html#l46">6.8.2: The class Interval</a></dt>
+</dl></dd>
+<dt><h3><a href="flexc++06.html#l47">6.9: Patterns</a></h3></dt>
+<dt><h3><a href="flexc++06.html#l48">6.10: Patterns using the lookahead operator (LOP)</a></h3></dt>
+<dd><dl>
+<dt><a href="flexc++06.html#l49">6.10.1: The parser recognizing LOP patterns</a></dt>
+<dd><dl>
+<dt><a href="flexc++06.html#l50">6.10.1.1: Start conditions used by standard                                  LOP patterns</a></dt>
+</dl></dd>
+<dt><a href="flexc++06.html#l51">6.10.2: Pattern constructors used with LOP patterns</a></dt>
+<dt><a href="flexc++06.html#l52">6.10.3: Adding (LOP-)rules</a></dt>
+<dt><a href="flexc++06.html#l53">6.10.4: After parsing: adding LOP start conditions</a></dt>
+<dt><a href="flexc++06.html#l54">6.10.5: After parsing: handling LOP rules</a></dt>
+</dl></dd>
+<dt><h3><a href="flexc++06.html#l55">6.11: Ranges</a></h3></dt>
+<dt><h3><a href="flexc++06.html#l56">6.12: The class DFAs</a></h3></dt>
+<dt><h3><a href="flexc++06.html#l57">6.13: The DFA</a></h3></dt>
+<dd><dl>
+<dt><a href="flexc++06.html#l58">6.13.1: DFA::build: From NFA to DFA</a></dt>
+<dt><a href="flexc++06.html#l59">6.13.2: Removing duplicate rows</a></dt>
+</dl></dd>
+<dt><h3><a href="flexc++06.html#l60">6.14: The rows of the DFA: DFAROW</a></h3></dt>
+<dd><dl>
+<dt><a href="flexc++06.html#l61">6.14.1: Associating a DFARow with a Rule</a></dt>
+</dl></dd>
+<dt><h3><a href="flexc++06.html#l62">6.15: Finding non-viable rules</a></h3></dt>
+<dt><h3><a href="flexc++06.html#l63">6.16: Generating Code</a></h3></dt>
+<dd><dl>
+<dt><a href="flexc++06.html#l64">6.16.1: The range-table</a></dt>
+<dt><a href="flexc++06.html#l65">6.16.2: The DFAs</a></dt>
+</dl></dd>
+<dt><h3><a href="flexc++06.html#l66">6.17: Run-time operations</a></h3></dt>
+<dd><dl>
+<dt><a href="flexc++06.html#l67">6.17.1: Handling BOL-rules</a></dt>
+</dl></dd>
+<dt><h3><a href="flexc++06.html#l68">6.18: Run-time handling of LOP-patterns</a></h3></dt>
+<dt><h3><a href="flexc++06.html#l69">6.19: Reflex: refreshing flexc++</a></h3></dt>
+</dl></dd></dl>
+
+<p><hr><p>
+<p>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html><html><head>
+<meta charset="UTF-8">
+<title> Flexc++ (Version 2.02.00) User Guide </title>
+<style type="text/css">
+    figure {text-align: center;}
+    img {vertical-align: center;}
+</style>
+</head>
+<body text="#27408B" bgcolor="#FFFAF0">
+<hr>
+<ul>
+    <li> <a href="flexc++.html">Table of Contents</a>
+    <li> <a href="flexc++01.html">Previous Chapter</a>
+    <li> <a href="flexc++03.html">Next Chapter</a>
+</ul>
+<hr>
+<a name="differences"></a><a name="l7"></a>
+<h1>Chapter 2: Differences between flex and flexc++</h1>
+<p>
+Although <strong>flexc++</strong> tries to be as compatible as possible with <strong>flex</strong>(1), there
+are some noteworthy differences. This chapter provides a quick overview for
+the users already familiar with flex.
+<p>
+<a name="code_blocks"></a><a name="l8"></a>
+<h2>2.1: Format of the input file</h2>
+    In <strong>flex</strong>(1) initializating code can be provided in the definition section
+(see section <a href="flexc++03.html#definitionsection">3.1</a>), and pre-match code can be provided as
+the first lines in the rules section.
+<p>
+<strong>Flexc++</strong> does not support code blocks. Since <strong>flexc++</strong> generates a class with
+appropriate header files, initialization code can be activated bij <strong>flexc++</strong>'s
+constructor, code to be executed when <code>lex</code> is called can be placed in the
+member <code>lex</code>'s body, just before calling <code>lex__</code>, and <code>Scanner::preCode</code>
+can be provided with any required pre-match code. See also <a href="flexc++02.html#files">generated
+files 2.3</a> below.
+<p>
+<strong>Flexc++</strong> also does not support a trailing `user code' section, where additional
+code can be placed to be copied verbatim to the source file. Again, the
+<code>Scanner</code> class approach offers preferable means for adding user code to the
+scanner. 
+<p>
+Sections <a href="flexc++02.html#diffdef">2.1.1</a>, <a href="flexc++02.html#diffrules">2.1.2</a> and <a href="flexc++02.html#diffusercode">2.1.3</a> cover 
+items which are no longer supported in <strong>flexc++</strong>, offering alternatives.
+<p>
+<a name="diffdef"></a><a name="l9"></a>
+<h3>2.1.1: Definition section</h3>
+        
+<ul>
+    <li> Supported by <strong>flex</strong>(1), not supported by <strong>flexc++</strong>: <code>%top</code> block, copies code to top of yylex.cc.
+        <blockquote>
+        <ul>
+        <li> Purpose: Define macros or include files.
+        <li> <strong>Flexc++</strong>'s alternative: Include header files in Scanner.ih.
+        </ul>
+    </blockquote>
+<p>
+<li> Supported by <strong>flex</strong>(1), not supported by <strong>flexc++</strong>: Indented text or <code>`%{ ... %}'</code> blocks copied verbatim to
+            yylex.cc
+        <blockquote>
+        <ul>
+        <li> Purpose: Can be used for helper code
+        <li> <strong>Flexc++</strong>'s alternative: Use member functions and/or data members of the <code>Scanner</code> class.
+        </ul>
+    </blockquote>
+<p>
+<li> Supported by <strong>flex</strong>(1), not supported by <strong>flexc++</strong>: An unindented c-comment (<code>`/* ... */'</code>) is copied to yylex.cc
+        <blockquote>
+        <ul>
+        <li> Purpose: Commenting helper code.
+        <li> <strong>Flexc++</strong>'s alternative: Comment outside of actions is ignored, and is considered part of
+         <strong>flexc++</strong>'s input file.
+        </ul>
+    </blockquote>
+</ul>
+<p>
+<a name="diffrules"></a><a name="l10"></a>
+<h3>2.1.2: Rules section</h3>
+        <ul>
+    <li> Supported by <strong>flex</strong>(1), not supported by <strong>flexc++</strong>: Indented text or <code>`%{ ... %}'</code> blocks before first rule copied
+            to the top of the function body of yylex.cc
+        <blockquote>
+        <ul>
+        <li> Purpose: Declare local variables for yylex().
+        <li> <strong>Flexc++</strong>'s alternative: Use data members to keep track of state, or if you want to execute
+            some code everytime lex() is called, redefine
+            lex() to do more than just call the generated function
+            lex__().
+        </ul>
+    </blockquote>
+    <li> Supported by <strong>flex</strong>(1), not supported by <strong>flexc++</strong>: Other indented text or <code>`%{ ... %}'</code> blocks are copied
+            to the output, but meaning is ill-defined and compiler errors may
+            result.
+        <blockquote>
+        <ul>
+        <li> Purpose: POSIX compliance
+        <li> <strong>Flexc++</strong>'s alternative: A user code section is superfluous. User code should be provided as
+         member functions.
+        </ul>
+    </blockquote>
+</ul>
+<p>
+<a name="diffusercode"></a><a name="l11"></a>
+<h3>2.1.3: User code section</h3>
+        <ul>
+    <li> Supported by <strong>flex</strong>(1), not supported by <strong>flexc++</strong>: The entire last section is copied to yylex.cc verbatim
+        <blockquote>
+        <ul>
+        <li> Purpose: defining companion routines
+        <li> <strong>Flexc++</strong>'s alternative: define member functions in scanner class
+        </ul>
+    </blockquote>
+</ul>
+<p>
+<a name="diffpatterns"></a><a name="l12"></a>
+<h2>2.2: Patterns</h2>
+    Not all patterns supported by <strong>flex</strong>(1) are supported by <strong>flexc++</strong>.  Notably,
+<strong>flexc++</strong> does not yet support certain flags in regular expressions, like the flag
+to define case-insensitive regular expressions, or the flag allowing white
+space in regular expressions.
+<p>
+Another minor difference is that named patterns, defined in the definion
+section, cannot be used if they contain the lookahead operator (`/').  This is
+the result of the way name expansions are handled by <strong>flexc++</strong>. <strong>Flexc++</strong> handles name
+expansions as a parenthesized regular expression (a group). Since groups may
+occur any number of times in a regular expression but a lookahead operator
+only once, the look-ahead operator is not accepted in a named pattern.
+<p>
+<a name="files"></a><a name="l13"></a>
+<h2>2.3: Generated files</h2>
+    While <strong>flex</strong>(1) only generates a file <code>lex.yy.cc</code>, <strong>flexc++</strong> generates several
+files: several header files and a source file.  By default <strong>flexc++</strong> generates a
+class header file (<code>Scanner.h</code>), and internal header file (<code>Scanner.ih</code>),
+a base class header file (<code>Scannerbase.h</code>), and the file <code>lex.cc</code>
+containing the implementation of the required members of the <code>class
+Scanner</code>.  <code>Scannerbase.h</code> and <code>lex.cc</code> should not be edited: they are
+overwritten whenever <strong>flexc++</strong> is invoked. The other files (<code>Scanner.h</code> and
+<code>Scanner.ih</code>) are generated only once, and can thereafter be modified by the
+user (e.g., to add members to the <code>Scanner</code> class).
+<p>
+<a name="l14"></a>
+<h2>2.4: Comment</h2>
+    <strong>Flexc++</strong> supports traditional <strong>C</strong> and <strong>C++</strong> style end-of-line comment. <strong>Flexc++</strong>
+handles comment more flexible than <code>flex</code>. Cf. section  <a href="flexc++03.html#comments">3.3</a> for
+details.
+<p>
+<a name="functions"></a><a name="l15"></a>
+<h2>2.5: Members and macros</h2>
+    As <strong>C++</strong> supports namespaces, the <code>yy</code>-prefix is no longer needed. In
+addition, as <strong>flexc++</strong> generates a scanner class, member functions rather than
+macros can (should) be used.  See the conversion table below.
+<p>
+<table>
+
+    
+<tr>
+<td> <strong>flex</strong></td>
+        <td> <strong><strong>flexc++</strong></strong></td>
+        <td> <strong><strong>flexc++</strong></strong> alternative</td>
+
+     
+</tr>
+
+    
+<tr>
+<td> <code>yylex()</code></td>
+        <td> <code>lex()</code></td>
+     
+</tr>
+
+    
+<tr>
+<td> <code>YYText()</code></td>
+        <td> <code>matched()</code></td>
+     
+</tr>
+
+    
+<tr>
+<td> <code>YYLeng()</code></td>
+        <td> <code>length()</code></td>
+     
+</tr>
+
+    
+<tr>
+<td> <code>ECHO</code></td>
+        <td> <code>echo()</code></td>
+     
+</tr>
+
+    
+<tr>
+<td> <code>yymore()</code></td>
+        <td> <code>more()</code></td>
+     
+</tr>
+
+    
+<tr>
+<td> <code>yyless()</code></td>
+        <td> <code>redo()</code></td>
+        <td> <code>accept()</code></td>
+
+     
+</tr>
+
+    
+<tr>
+<td> <code>BEGIN startcondition</code></td>
+        <td> <code>begin(StartCondition__::startcondition)</code></td>
+     
+</tr>
+
+    
+<tr>
+<td> <code>YY_AT_BOL</code></td>
+        <td> n.a.</td>
+     
+</tr>
+
+    
+<tr>
+<td> <code>yy_set_bol(at_bol)</code></td>
+        <td> n.a.</td>
+     
+</tr>
+
+
+</table>
+<p>
+The member functions in the <strong>flexc++</strong> column above are either members of
+<code>Scanner</code> or of its base class. <strong>Flexc++</strong> does not use macros. All member
+functions can be used from within actions or by other member functions.
+<p>
+<a name="l16"></a>
+<h2>2.6: Multiple input streams</h2>
+    Multiple input files can easily be handled by <strong>flexc++</strong>. See section
+<a href="flexc++04.html#multiplestreams">4.1</a> for details.
+<p>
+<hr>
+<ul>
+    <li> <a href="flexc++.html">Table of Contents</a>
+    <li> <a href="flexc++01.html">Previous Chapter</a>
+    <li> <a href="flexc++03.html">Next Chapter</a>
+</ul>
+<hr>
+</body>
+</html>
