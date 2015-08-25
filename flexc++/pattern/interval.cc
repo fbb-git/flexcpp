@@ -8,11 +8,32 @@ Pattern Pattern::interval(States &states, Pattern &regex,
     size_t lower = interval.lower();
     size_t upper = interval.upper();
 
-    if (lower == 0 && upper == max<size_t>())
-        ret = star(states, regex);
+    if (lower == 0)
+    {
+        switch (upper)
+        {
+            case 0:
+                wmsg << "ignoring regex{0, 0}" << endl;
+            return regex;
 
-    else if (lower == 0 && upper == 1)
-        ret = questionMark(states, regex);
+            case 1:
+                ret = questionMark(states, regex);
+            break;
+
+            case numeric_limits<size_t>::max():
+                ret = star(states, regex);
+            break;
+
+            default:        // {0, x}, with 1 < x < size_t::max
+            {
+                Interval oneUp(1, upper);
+                
+                Pattern tmp = Pattern::interval(states, regex, oneUp);
+                ret = questionMark(states, tmp);
+            }                                
+            break;
+        }
+    }
 
     else if (lower == 1 && upper == max<size_t>())
         ret = plus(states, regex);
@@ -31,6 +52,7 @@ Pattern Pattern::interval(States &states, Pattern &regex,
 
         ret = Pattern(pair);
     }
+
     return ret;
 }
 

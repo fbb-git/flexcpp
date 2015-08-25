@@ -19,7 +19,6 @@ class Interval
         size_t lower() const;
         size_t upper() const;
 
-    private:
         Interval(size_t lower, size_t upper);        
 };
 

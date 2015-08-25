@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include <algorithm>
 
+#include <bobcat/mstream>
 #include <bobcat/string>
 
 #include "../interval/interval.h"

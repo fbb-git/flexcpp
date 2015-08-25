@@ -1,3 +1,6 @@
+  * Fixed a bug in handling {0, x} intervals: encountered by Guillaume
+    Endignoux. 
+
 flexc++ (2.02.00)
 
   * Wopke Hellinga and Mark Redeman noticed that flexc++ reported an error if
