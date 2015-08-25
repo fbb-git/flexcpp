@@ -34,9 +34,13 @@ git co master [y/n] ? "
 read yesno
 
 if [ "$yesno" == "y" ] ; then
+    echo -n "Enter the ci message: "
+    read msg;
+
     RELEASE=`head -n1 ../wip/release.yo | 
 		sed 's/SUBST(_CurVers_)(\(.*\))/\1/'`
-    git ci -am "updated index.html for gh-pages, release $RELEASE"
+    git ci -am "$msg"
+
     git push
     git co master
 fi
