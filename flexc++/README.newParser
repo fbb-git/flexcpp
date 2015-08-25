@@ -1,0 +1,15 @@
+If the parser (grammar specification) must be modified follow these steps:
+
+1. modify the grammar specification
+2. in parser/ run bisonc++ grammar 
+        This creates a new parserbase.h
+3. in scanner/ run flexc++ lexer
+        This creates a new scanner, using the definitions in
+            ../parser/parserbase.h 
+4. touch scanner/a parser/a
+        To recompile the full scanner and parser classes
+5. build program
+
+6. reflex
+        To verify that the new flexc++ (= tmp/bin/binary) can recreate itself
+
