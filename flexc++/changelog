@@ -18,6 +18,9 @@ flexc++ (2.03.00)   *********** ISN ***********
   * The //include filename facility was not recognized in previous
     releases. It's now supported (cf. man flexc++input, FILE SWITCHING)
 
+  * Added a directory `pathes/' containing patches for non-compliant
+    compilers. 
+
 flexc++ (2.02.00)
 
   * Wopke Hellinga and Mark Redeman noticed that flexc++ reported an error if
