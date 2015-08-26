@@ -1,5 +1,8 @@
+flexc++ (2.03.00)   *********** ISN ***********
+
   * Fixed a bug in handling {0, x} intervals: encountered by Guillaume
     Endignoux. 
+
   * Guillaume also detected a bug in handling \x escape sequences in character
     classes, e.g., [\x30-\x38]. That problem was not caused by handling the
     escape sequence, but by handling concatenation of regular expressions. The
@@ -7,6 +10,9 @@
     which handles the regex _units, possibly quantified, and their
     concatenations, while _regex handles a _regex_unit and the operators | and
     / that can be used to combine regular expressions. 
+
+  * The //include filename facility was not recognized in previous
+    releases. It's now supported (cf. man flexc++input, FILE SWITCHING)
 
 flexc++ (2.02.00)
 

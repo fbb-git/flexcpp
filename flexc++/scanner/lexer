@@ -41,11 +41,12 @@ OPTBL                   [[:blank:]]*
                                 }
 
 <INITIAL,pre>{
+    ^"//include"[[:blank:]]+.*  maybeSwitchStream();
+
     {OPTBL}"//".*               {   // in a charclass: return blanks + //
                                     if (handleEOLNcomment())
                                         return Parser::IDENTIFIER;
                                 }
-    ^"//include"[[:blank:]].*   maybeSwitchStream();
 
     {OPTBL}"/*"                 {   // in a charclass: return blanks + /*
                                     if (handleStdComment())
