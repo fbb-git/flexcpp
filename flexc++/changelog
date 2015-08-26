@@ -11,6 +11,10 @@ flexc++ (2.03.00)   *********** ISN ***********
     concatenations, while _regex handles a _regex_unit and the operators | and
     / that can be used to combine regular expressions. 
 
+  * Guillame found an input file causing a continuous loop within
+    flexc++. This bug was fixed by terminating flexc++ at the final end of its
+    input streams.
+
   * The //include filename facility was not recognized in previous
     releases. It's now supported (cf. man flexc++input, FILE SWITCHING)
 

@@ -42,6 +42,7 @@ class Parser: public ParserBase, public FlexTypes
 
     size_t d_parentheses = 0;
     size_t d_tokenCount = 0;
+    size_t d_atEOF          = 0;        // counts 0-tokens in sequence
 
     std::string d_expect;
 
