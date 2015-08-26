@@ -109,23 +109,18 @@ _quantifier:
     '?'
 ;
 
-    // a regex is a regex, possibly with LA operator
-    // the handler must verify whether the regex contains ^ and $ symbols
-    // within the regex, for which a warning must be issue: ^, $ treated as
-    // normal characters
-    // regex returns a Pattern, embedded in a spSemUnion
-_regex:
+_regex_unit:
     _unit
     {
         Options::regexCall("unit");
     }
 |
-    _regex _open_curly _interval '}'
+    _regex_unit _open_curly _interval '}'
     {
         $$ = interval($1, $3);
     }
 |
-    _regex _quantifier
+    _regex_unit _quantifier
     {
         $$ = Pattern::quantifier(d_states, $1, d_matched[0]);
     }
@@ -135,9 +130,21 @@ _regex:
         $$ = $2;
     }
 |
-    _regex _regex                     %prec CHAR
+    _regex_unit _regex_unit                     %prec CHAR
     {
         $$ = Pattern::concatenate(d_states, $1, $2);
+    }
+;
+
+    // a regex is a regex, possibly with LA operator
+    // the handler must verify whether the regex contains ^ and $ symbols
+    // within the regex, for which a warning must be issue: ^, $ treated as
+    // normal characters
+    // regex returns a Pattern, embedded in a spSemUnion
+_regex:
+    _regex_unit
+    {
+        Options::regexCall("regex-unit");
     }
 |
     _regex '|' _regex

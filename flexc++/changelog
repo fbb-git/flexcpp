@@ -1,5 +1,12 @@
   * Fixed a bug in handling {0, x} intervals: encountered by Guillaume
     Endignoux. 
+  * Guillaume also detected a bug in handling \x escape sequences in character
+    classes, e.g., [\x30-\x38]. That problem was not caused by handling the
+    escape sequence, but by handling concatenation of regular expressions. The
+    parser/inc/regexoreof file now contains an additional rule _regex_unit,
+    which handles the regex _units, possibly quantified, and their
+    concatenations, while _regex handles a _regex_unit and the operators | and
+    / that can be used to combine regular expressions. 
 
 flexc++ (2.02.00)
 

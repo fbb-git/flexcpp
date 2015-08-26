@@ -1,0 +1,12 @@
+#!/bin/bash
+
+cd parser
+bisonc++ grammar
+touch a
+
+cd ../scanner
+flexc++ lexer
+touch a
+
+cd ..
+build program

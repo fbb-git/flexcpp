@@ -13,3 +13,4 @@ If the parser (grammar specification) must be modified follow these steps:
 6. reflex
         To verify that the new flexc++ (= tmp/bin/binary) can recreate itself
 
+The first 5 steps were implemented in the newly added script ./newgrammar.

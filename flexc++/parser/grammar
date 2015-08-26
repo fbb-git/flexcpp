@@ -72,7 +72,7 @@
 %type <CHARCLASS>   characterclass 
                     _cc_set _cc_start _cc_negated
 %type <INTERVAL>    _interval
-%type <PATTERN>     _unit _regex _optMs_regex regexOrEOF
+%type <PATTERN>     _unit _regex _optMs_regex _regex_unit regexOrEOF
 %type <VECTOR>      _cc_contents 
 
 %%
