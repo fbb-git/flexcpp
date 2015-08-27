@@ -7,6 +7,4 @@ void logFiles(string source, string dest)
 
     for (idx = sizeof(files); idx--; )
         log(dest + "/" + files[idx]);
-
-    writeLog();
 }

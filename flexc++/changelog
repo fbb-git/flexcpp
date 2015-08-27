@@ -24,7 +24,7 @@ flexc++ (2.03.00)   *********** ISN ***********
     of a file on which installed files and directories are logged.
     Note that 'build (dist)clean' does not remove the file pointed at by the
     FLEXCPP environment variable, unless that file happpens to be in a
-    directory removed by 'build (dist)clean'.
+    directory removed by 'build (dist)clean'. See also the file INSTALL.
     Defining the FLEXCPP environment variable as ~/.flexcpp usually works
     well. 
 

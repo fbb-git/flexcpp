@@ -7,6 +7,8 @@ void writeLog()
 
     for (idx = sizeof(g_log); idx--; )
         fprintf(g_logPath, g_log[idx], "\n");
+
+    exit(0);
 }
 
 

@@ -11,19 +11,27 @@ void install(string what, string where)
 {
     list files;
     int idx;
+    string target;
 
     if (what == "program")
     {
         if (where == "")
             where = BINARY;
 
-        md(get_path(where));
+                            // 'where' exists, but is no regular file
+        if (exists(where) && ((int)stat(where)[0] & S_IFREG) == 0)
+        {
+                printf("'build install program path': path must be a "
+                        "regular file\n");
+                exit(0);
+        }
 
+        md(get_path(where));
         printf("  INSTALLING the executable `", where, "'\n");
         run("icmbuild install program " + where);
         log(where);
-        writeLog();
-        exit(0);
+
+        writeLog();     // exits
     }
 
     if (what == "skel")
@@ -34,7 +42,8 @@ void install(string what, string where)
         md(where);
         run("cp skeletons/* " + where);
         logFiles("skeletons", where);
-        exit(0);
+
+        writeLog();
     }
 
     if (what == "man")
@@ -43,33 +52,33 @@ void install(string what, string where)
         printf("  INSTALLING the manual pages below `", where, "'\n");
 
         md(where + "/man1");
-        run("gzip -9 -n < tmp/man/" PROGRAM ".1 > " + where + 
-                                            "/man1/" PROGRAM ".1.gz");
-        log(where + "/man1/" PROGRAM ".1.gz");
+        target = where + "/man1/" PROGRAM ".1.gz";
+        run("gzip -9 -n < tmp/man/" PROGRAM ".1 > " + target);
+        log(target);
 
         md(where + "/man3");
-        run("gzip -9 -n < tmp/man/" PROGRAM "api.3 > " + where + 
-                                            "/man3/" PROGRAM "api.3.gz");
-        log(where + "/man3/" PROGRAM "api.3.gz");
+        target = where + "/man3/" PROGRAM "api.3.gz";
+        run("gzip -9 -n < tmp/man/" PROGRAM "api.3 > " + target);
+        log(target);
 
         md(where + "/man7");
-        run("gzip -9 -n < tmp/man/" PROGRAM "input.7 > " + where + 
-                                            "/man7/" PROGRAM "input.7.gz");
-        log(where + "/man7/" PROGRAM "input.7.gz");
+        target = where + "/man7/" PROGRAM "input.7.gz";
+        run("gzip -9 -n < tmp/man/" PROGRAM "input.7 > " + target);
+        log(target);
 
         writeLog();
-        exit(0);
     }
 
     if (what == "manual")
     {
         where = setWhere(where, MANUAL);
-        md(where + "/images");
 
+        md(where + "/images");
         printf("  INSTALLING the manual at `", where, "'\n");
         run("cp -r tmp/manual/* " + where);
         logFiles("tmp/manual", where);
-        exit(0);
+
+        writeLog();
     }
 
     if (what == "std")
@@ -77,24 +86,26 @@ void install(string what, string where)
         where = setWhere(where, STD);
 
         printf("  INSTALLING the changelog at `", where, "\n");
-        run("gzip -9 -n < changelog > " + where + "/changelog.gz");
-        log(where + "/changelog.gz");
+        target = where + "/changelog.gz";
+        run("gzip -9 -n < changelog > " + target);
+        log(target);
 
         printf("  INSTALLING the html-manual pages at `", where, "\n");
         run("cp tmp/manhtml/" PROGRAM ".1.html " + where);
-        run("cp tmp/manhtml/" PROGRAM "api.3.html " + where);
-        run("cp tmp/manhtml/" PROGRAM "input.7.html " + where);
-
         log(where + "/" PROGRAM ".1.html");
+
+        run("cp tmp/manhtml/" PROGRAM "api.3.html " + where);
         log(where + "/" PROGRAM "api.3.html");
+
+        run("cp tmp/manhtml/" PROGRAM "input.7.html " + where);
         log(where + "/" PROGRAM "input.7.html");
 
         writeLog();
-        exit(0);
     }
 
     exit(0);
 }
+
 
 
 

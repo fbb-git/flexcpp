@@ -19,14 +19,6 @@ void removeDir(string dir)
         {
             if (warn)
                 printf("not removing non-empty dir ", dir, "\n");
-            else
-            {
-                printf("rmdir -r ");
-                
-                for (dirIdx = 0; dirIdx != idx + 2; ++dirIdx)
-                    printf("/", parts[dirIdx]);
-                printf("\n");
-            }
             return;
         }
 
