@@ -19,7 +19,7 @@ struct StartConditions
 
     class StartCondition
     {
-        friend class StartConditions;
+        friend struct StartConditions;  // To satisfy Clang...
         friend std::ostream &operator<<(std::ostream &out, 
                                     StartConditions const &startConditions);
 

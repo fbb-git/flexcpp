@@ -85,14 +85,16 @@ ittn(rs)
     called concatenation;
 
 ittn(r{m, n})
-   where tt(1 <= m <= n): match `r' at least m, but at most n times; called
-    interval expression;
+   where tt(0 <= m <= n): match `r' at least m, but at most n times; called
+    interval expression; A regular expression to which tt({0, 0}) is appended
+    is ignored, and a warning message is shown;
 
 ittn(r{m,})
-    where tt(1 <= m): match `r' m or more times;
+    where tt(0 <= m): match `r' m or more times;
 
 ittn(r{m})
-    where tt(1 <= m): match `r' exactly m times;
+    where tt(0 <= m): match `r' exactly m times; A regular expression to which
+    tt({0}) is appended is ignored, and a warning message is shown;
 
 ittn(r|s)
     either an `r' or an `s';
