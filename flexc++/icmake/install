@@ -9,19 +9,20 @@ string setWhere(string where, string defaultWhere)
 
 void install(string what, string where)
 {
-    string path;
+    list files;
+    int idx;
 
     if (what == "program")
     {
         if (where == "")
             where = BINARY;
 
-        path = get_path(where);
-        if (path != "")
-            md(path);
+        md(get_path(where));
 
         printf("  INSTALLING the executable `", where, "'\n");
         run("icmbuild install program " + where);
+        log(where);
+        writeLog();
         exit(0);
     }
 
@@ -32,6 +33,7 @@ void install(string what, string where)
         printf("  INSTALLING skeleton files at `" + where + "'\n");
         md(where);
         run("cp skeletons/* " + where);
+        logFiles("skeletons", where);
         exit(0);
     }
 
@@ -43,23 +45,30 @@ void install(string what, string where)
         md(where + "/man1");
         run("gzip -9 -n < tmp/man/" PROGRAM ".1 > " + where + 
                                             "/man1/" PROGRAM ".1.gz");
+        log(where + "/man1/" PROGRAM ".1.gz");
 
         md(where + "/man3");
         run("gzip -9 -n < tmp/man/" PROGRAM "api.3 > " + where + 
                                             "/man3/" PROGRAM "api.3.gz");
+        log(where + "/man3/" PROGRAM "api.3.gz");
 
         md(where + "/man7");
         run("gzip -9 -n < tmp/man/" PROGRAM "input.7 > " + where + 
                                             "/man7/" PROGRAM "input.7.gz");
+        log(where + "/man7/" PROGRAM "input.7.gz");
+
+        writeLog();
         exit(0);
     }
 
     if (what == "manual")
     {
         where = setWhere(where, MANUAL);
+        md(where + "/images");
 
         printf("  INSTALLING the manual at `", where, "'\n");
-        run("cp -r tmp/manual " + where);
+        run("cp -r tmp/manual/* " + where);
+        logFiles("tmp/manual", where);
         exit(0);
     }
 
@@ -69,11 +78,18 @@ void install(string what, string where)
 
         printf("  INSTALLING the changelog at `", where, "\n");
         run("gzip -9 -n < changelog > " + where + "/changelog.gz");
-    
+        log(where + "/changelog.gz");
+
         printf("  INSTALLING the html-manual pages at `", where, "\n");
         run("cp tmp/manhtml/" PROGRAM ".1.html " + where);
         run("cp tmp/manhtml/" PROGRAM "api.3.html " + where);
         run("cp tmp/manhtml/" PROGRAM "input.7.html " + where);
+
+        log(where + "/" PROGRAM ".1.html");
+        log(where + "/" PROGRAM "api.3.html");
+        log(where + "/" PROGRAM "input.7.html");
+
+        writeLog();
         exit(0);
     }
 

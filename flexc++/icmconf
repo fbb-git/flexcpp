@@ -6,7 +6,7 @@
 #define SCANNER_DIR         "scanner"  
 #define PARSER_DIR          "parser"
 #define REFRESH
-#define LIBRARY           "modules"
+#define LIBRARY             "modules"
 #define SHAREDREQ           ""
 #define USE_ALL             "a"
 #define SOURCES             "*.cc"
