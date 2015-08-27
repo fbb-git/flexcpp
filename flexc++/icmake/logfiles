@@ -1,0 +1,10 @@
+void logFiles(string source, string dest)
+{
+    list files;
+    int idx;
+
+    files = `"(cd " + source + ";find . -type f)"`;
+
+    for (idx = sizeof(files); idx--; )
+        log(dest + "/" + files[idx]);
+}

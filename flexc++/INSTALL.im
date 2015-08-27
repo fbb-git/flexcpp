@@ -1,24 +1,25 @@
     // Specify the name of the program created by this project:
 #define PROGRAM             "flexc++"
 
-#define CXX                 "g++"
+
 //#define CXX                 "g++-5"
+#define CXX                 "g++"
     // the compiler to use. 
 
-//#define CXXFLAGS            "--std=c++0x -Wall -O2 -g"
+//#define CXXFLAGS            "--std=c++14 -Wall -O2 -g"
 #define CXXFLAGS            "--std=c++14 -Wall -O2"
     // the compiler options to use.
 
 #define LDFLAGS             ""
     // flags passed to the linker
 
-#define SKEL    "/usr/share/" ${PROGRAM}
-    // the directory where the skeleton files are installed
-
 // The following locations are overruled by `build install' arguments
 
 #define BINARY     "/usr/bin/"${PROGRAM}
     // the full path of the final program
+
+#define SKEL    "/usr/share/"${PROGRAM}
+    // the directory where the skeleton files are installed
 
 #define MAN     "/usr/share/man"
     // the directory below whre the manual pages are stored (below 
@@ -29,9 +30,6 @@
 
 #define STD     "/usr/share/doc/"${PROGRAM}
     // the directory where the standard documentation is stored 
-
-#define EXTRA   "/usr/share/doc/"${PROGRAM}
-    // the directory where the extra documentation is stored 
 
 
 

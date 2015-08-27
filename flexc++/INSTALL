@@ -3,7 +3,7 @@ the following steps:
 
     0. Flexc++ and its construction depends, in addition to the normally
         standard available system software on specific software and versions 
-        documented in the file `build-depends'.
+        which is documented in the file `required'.
 
        (If you compile the bobcat library yourself, note that flexc++ does not
         use the SSL, Milter and Xpointer classes; they may --as far as flexc++
@@ -14,37 +14,91 @@ the following steps:
         directory are available. Icmake is available on a great many
         architectures. See also the file INSTALL.im for additional details.
 
-    1. Inspect the values of the variables in the file INSTALL.im Modify these
+    2. Inspect the values of the variables in the file INSTALL.im Modify these
        when necessary to suit your own local situation. In particular, check
        the skeletons (SKEL) and program (BINARY) specifications.
 
-    4. Run 
+    3. Run 
             ./build program [strip]
         to compile flexc++. The argument `strip' is optional and will strip
         symbolic information from the final executable.
 
-    5. To install the program, run (probably as root):
-            ./build install program       
-        
-        And to install the skeleton files, run:
-            ./build install skel
-
-        If you also installed Yodl you can also do:
-            ./build man
-        followed by
-            ./build install man
-        to install flexc++'s man-page, and
+    4. If you installed Yodl then you can create the documentation:
+            ./build man 
+        builds the man-pages, and
             ./build manual
-        followed by
-            ./build install manual
-        to install flexc++'s manual.
+        builds the manual.
 
-        Additionally, 
-            ./build install std
-        installs some additional documentation
+    5. Installation of the software in the default locations probably requires
+        root permissions.
 
-        Just run ./build to see the actual locations that will be used.
+        Before installing the components of Flexc++, consider defining the
+        environment variable FLEXCPP, defining its value as the (preferably
+        absolute) filename of a file on which installed files and directories
+        are logged.
+        Defining the FLEXCPP environment variable as ~/.flexcpp usually works
+        well.
+
+        To install the program, run:
+
+            ./build install program [fullpath]
+
+        This installs flexc++ as fullpath. By default the BINARY specification
+        in INSTALL.im is used.
         
-    Following the installation nothing below ./tmp is required
-    for the proper functioning of flexc++, so consider removing it.
+        To install the skeleton files. run :
+
+            ./build install skel [base]
+
+        This installs the skeleton files under the directory `base'. By
+        default the SKEL specification in INSTALL.im is used.
+        
+
+    6. If you created the man-pages and manual you can also do:
+
+            ./build man [base]
+
+        This installs the man pages under the directory `base'. By
+        default the MAN specification in INSTALL.im is used.
+
+        To install the manual, do:
+
+            ./build manual [base]
+
+        This installs the manual in the directory `base'. By
+        default the MANUAL specification in INSTALL.im is used.
+
+    7. Optionally you can install some additional documentation by running
+
+            ./build install std [base]
+
+        The additional documentation is installed in the directory `base'. By
+        default the STD specification in INSTALL.im is used.
+
+    8. Following the installation nothing below ./tmp is required for the
+        proper functioning of flexc++, so consider removing it by running
+
+            ./build distclean
+
+        Note that 'build (dist)clean' does not remove the file pointed at by
+        the FLEXCPP environment variable (assuming that file is not located
+        under ./tmp)
+
+    9.  Uninstalling previously installed components of Flexc++ (using
+        ./build install ...) is easy if the environment variable FLEXCPP was
+        defined when issuing the `./build install ...' commands. In that case,
+        run the command
+
+            ./build uninstall
+
+        This command only works if the environment variable FLEXCPP has the
+        same value as used with the `./build install' commands, and the file
+        to which it refers still exists. In that case `./build install'
+        removes all installed files (unless they were modified) and removes
+        all empty directories created by the various `./build install ...'
+        commands. 
+
+
+
+
 

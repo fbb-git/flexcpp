@@ -18,6 +18,16 @@ flexc++ (2.03.00)   *********** ISN ***********
   * The //include filename facility was not recognized in previous
     releases. It's now supported (cf. man flexc++input, FILE SWITCHING)
 
+  * Added 'build uninstall'. This command only works if, when calling one of
+    the 'build install' alternatives and when calling 'build uninstall' the
+    environment variable FLEXCPP contains the (preferably absolute) filename
+    of a file on which installed files and directories are logged.
+    Note that 'build (dist)clean' does not remove the file pointed at by the
+    FLEXCPP environment variable, unless that file happpens to be in a
+    directory removed by 'build (dist)clean'. See also the file INSTALL.
+    Defining the FLEXCPP environment variable as ~/.flexcpp usually works
+    well. 
+
 flexc++ (2.02.00)
 
   * Wopke Hellinga and Mark Redeman noticed that flexc++ reported an error if
