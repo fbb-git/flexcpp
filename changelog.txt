@@ -1,3 +1,35 @@
+flexc++ (2.03.00)
+
+  * Fixed a bug in handling {0, x} intervals: encountered by Guillaume
+    Endignoux. 
+
+  * Guillaume also detected a bug in handling \x escape sequences in character
+    classes, e.g., [\x30-\x38]. That problem was not caused by handling the
+    escape sequence, but by handling concatenation of regular expressions. The
+    parser/inc/regexoreof file now contains an additional rule _regex_unit,
+    which handles the regex _units, possibly quantified, and their
+    concatenations, while _regex handles a _regex_unit and the operators | and
+    / that can be used to combine regular expressions. 
+
+  * Guillame found an input file causing a continuous loop within
+    flexc++. This bug was fixed by terminating flexc++ at the final end of its
+    input streams.
+
+  * The //include filename facility was not recognized in previous
+    releases. It's now supported (cf. man flexc++input, FILE SWITCHING)
+
+  * Added 'build uninstall'. This command only works if, when calling one of
+    the 'build install' alternatives and when calling 'build uninstall' the
+    environment variable FLEXCPP contains the (preferably absolute) filename
+    of a file on which installed files and directories are logged.
+    Note that 'build (dist)clean' does not remove the file pointed at by the
+    FLEXCPP environment variable, unless that file happpens to be in a
+    directory removed by 'build (dist)clean'. See also the file INSTALL.
+    Defining the FLEXCPP environment variable as ~/.flexcpp usually works
+    well. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 28 Aug 2015 09:38:44 +0200
+
 flexc++ (2.02.00)
 
   * Wopke Hellinga and Mark Redeman noticed that flexc++ reported an error if

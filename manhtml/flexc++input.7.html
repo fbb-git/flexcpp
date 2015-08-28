@@ -10,7 +10,7 @@
 <body text="#27408B" bgcolor="#FFFAF0">
 <hr>
 <h1>flexc++input</h1>
-<h2>flexc++.2.02.00.tar.gz</h2>
+<h2>flexc++.2.03.00.tar.gz</h2>
 <h2>2008-2015</h2>
 
 <!DOCTYPE html><html><head>
@@ -43,7 +43,7 @@
 <body text="#27408B" bgcolor="#FFFAF0">
 <hr>
 <h1>flexc++input(7)</h1>
-<h2>flexc++.2.02.00.tar.gz flexc++ input file organization</h2>
+<h2>flexc++.2.03.00.tar.gz flexc++ input file organization</h2>
 <h2>2008-2015</h2>
 
 
@@ -486,12 +486,14 @@ regular expressions are created by combining them:
    the regular expression `r' followed by the regular expression `s';
     called concatenation;
 <dt><strong><em>r{m, n}</em></strong></dt> 
-   regular expression `r' at least m, but at most n times (<em>1 &lt;= m
-    &lt;= n</em>);
+   regular expression `r' at least m, but at most n times (<em>0 &lt;= m
+    &lt;= n</em>).  A regular expression to which <em>{0, 0}</em> is appended
+    is ignored, and a warning message is shown.
 <dt><strong><em>r{m,}</em></strong></dt>
-   regular expression `r' m or more times (<em>1 &lt;= m</em>). 
+   regular expression `r' m or more times (<em>0 &lt;= m</em>);
 <dt><strong><em>r{m}</em></strong></dt>
-   regular expression `r' exactly m times (<em>1 &lt;= m</em>);
+   regular expression `r' exactly m times (<em>0 &lt;= m</em>).  A regular expression
+    to which <em>{0}</em> is appended is ignored, and a warning message is shown; 
 <dt><strong><em>r|s</em></strong></dt>
    either regular expression `r' or regular expression `s';
 <dt><strong><em>r/s</em></strong></dt>

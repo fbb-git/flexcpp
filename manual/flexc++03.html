@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> Flexc++ (Version 2.02.00) User Guide </title>
+<title> Flexc++ (Version 2.03.00) User Guide </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -390,14 +390,16 @@ written using an extended set of regular expressions. These are:
     called concatenation;
 <p>
 <li><code>r{m, n}</code><br>
-   where <code>1 &lt;= m &lt;= n</code>: match `r' at least m, but at most n times; called
-    interval expression;
+   where <code>0 &lt;= m &lt;= n</code>: match `r' at least m, but at most n times; called
+    interval expression; A regular expression to which <code>{0, 0}</code> is appended
+    is ignored, and a warning message is shown;
 <p>
 <li><code>r{m,}</code><br>
-    where <code>1 &lt;= m</code>: match `r' m or more times;
+    where <code>0 &lt;= m</code>: match `r' m or more times;
 <p>
 <li><code>r{m}</code><br>
-    where <code>1 &lt;= m</code>: match `r' exactly m times;
+    where <code>0 &lt;= m</code>: match `r' exactly m times; A regular expression to which
+    <code>{0}</code> is appended is ignored, and a warning message is shown;
 <p>
 <li><code>r|s</code><br>
     either an `r' or an `s';
