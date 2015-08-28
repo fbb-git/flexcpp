@@ -36,6 +36,9 @@ lurl(https://github.com/fbb-git/_project_/releases) or direct from its
 release page):
 
         itemization(
+        it() url(2.03.00)
+                (https://github.com/fbb-git/_project_/releases/tag/2.03.00)
+Aug 28, 2015;
         it() url(2.02.00)
                 (https://github.com/fbb-git/_project_/releases/tag/2.02.00)
 Aug 23, 2015 (originally this tag was named 4.02.00 on Mar 13, 2015, which
@@ -49,10 +52,7 @@ Mar 16, 2014;
 Feb 9, 2014;
         it() url(1.07.00)
                 (https://github.com/fbb-git/_project_/releases/tag/1.07.00)
-Aug 11, 2013;
-        it() url(1.06.00)
-                (https://github.com/fbb-git/_project_/releases/tag/1.06.00)
-Aug 6, 2013.
+Aug 11, 2013.
         )
     COMMENT(NOTE: LAST ITEM SHOULD END IN . )
 
