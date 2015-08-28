@@ -187,12 +187,14 @@ dit(tt(rs))
    the regular expression `r' followed by the regular expression `s';
     called concatenation;
 dit(tt(r{m, n})) 
-   regular expression `r' at least m, but at most n times (tt(1 <= m
-    <= n));
+   regular expression `r' at least m, but at most n times (tt(0 <= m
+    <= n)).  A regular expression to which tt({0, 0}) is appended
+    is ignored, and a warning message is shown.
 dit(tt(r{m,}))
-   regular expression `r' m or more times (tt(1 <= m)). 
+   regular expression `r' m or more times (tt(0 <= m));
 dit(tt(r{m}))
-   regular expression `r' exactly m times (tt(1 <= m));
+   regular expression `r' exactly m times (tt(0 <= m)).  A regular expression
+    to which tt({0}) is appended is ignored, and a warning message is shown; 
 dit(tt(r|s))
    either regular expression `r' or regular expression `s';
 dit(tt(r/s))

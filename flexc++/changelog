@@ -1,4 +1,4 @@
-flexc++ (2.03.00)   *********** ISN ***********
+flexc++ (2.03.00)
 
   * Fixed a bug in handling {0, x} intervals: encountered by Guillaume
     Endignoux. 
@@ -27,6 +27,8 @@ flexc++ (2.03.00)   *********** ISN ***********
     directory removed by 'build (dist)clean'. See also the file INSTALL.
     Defining the FLEXCPP environment variable as ~/.flexcpp usually works
     well. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 28 Aug 2015 09:38:44 +0200
 
 flexc++ (2.02.00)
 
