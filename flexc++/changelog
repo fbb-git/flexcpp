@@ -1,3 +1,6 @@
+  * 'build manual' creates the manual when its called. If the manual already
+    exists, it is recreated. Same holds true for 'build man'
+
 flexc++ (2.03.00)
 
   * Fixed a bug in handling {0, x} intervals: encountered by Guillaume

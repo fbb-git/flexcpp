@@ -1,13 +1,9 @@
 
 void _manpage(string dest, string manpage, string source)
 {
-
-    if (source younger dest + manpage || "release.yo" younger dest + manpage)
-    {
-        run("yodl2man  -o " + dest + manpage + " "  + source);
-        run("yodl2html  "
-                "-o ../../tmp/manhtml/" + manpage + ".html " + source);
-    }
+    run("yodl2man  -o " + dest + manpage + " "  + source);
+    run("yodl2html  "
+            "-o ../../tmp/manhtml/" + manpage + ".html " + source);
 }
 
 void manpage()

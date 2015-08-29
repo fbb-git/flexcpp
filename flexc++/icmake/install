@@ -73,8 +73,8 @@ void install(string what, string where)
     {
         where = setWhere(where, MANUAL);
 
-        md(where + "/images");
         printf("  INSTALLING the manual at `", where, "'\n");
+        logDirs("tmp/manual", where);   // md(where + "/images");
         run("cp -r tmp/manual/* " + where);
         logFiles("tmp/manual", where);
 

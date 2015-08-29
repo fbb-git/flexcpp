@@ -15,6 +15,7 @@ string  g_logPath = getenv(LOGENV)[1];
 #include "icmake/md5sum"
 #include "icmake/log"
 #include "icmake/writelog"
+#include "icmake/logdirs"
 #include "icmake/logfiles"
 #include "icmake/readlog"
 #include "icmake/adddir"
