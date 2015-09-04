@@ -1,35 +1,47 @@
-    // Specify the name of the program created by this project:
+    // The name of the program created by this project:
 #define PROGRAM             "flexc++"
 
-
+    // the compiler to use. 
 //#define CXX                 "g++-5"
 #define CXX                 "g++"
-    // the compiler to use. 
 
-//#define CXXFLAGS            "--std=c++14 -Wall -O2 -g"
-#define CXXFLAGS            "--std=c++14 -Wall -O2"
     // the compiler options to use.
+//#define CXXFLAGS            "--std=c++14 -Wall -O2 -g"
+#define CXXFLAGS            "--std=c++14 -Wall -O2 -fdiagnostics-color=never"
 
-#define LDFLAGS             ""
     // flags passed to the linker
+#define LDFLAGS             ""
 
-// The following locations are overruled by `build install' arguments
+    // The following /bin/cp options are used to keep, rather than follow
+    // symbolic references. If your installation doesn't support these flags,
+    // then change them into available ones.
+    //   -P, --no-dereference
+    //            never follow symbolic links in SOURCE
+    //   --preserve[=ATTR_LIST]
+    //          preserve   the   specified   attributes   (default:  
+    //          mode,ownership,timestamps), if possible  additional  
+    //          attributes:  context, links, all
+    //   -d     same as --no-dereference --preserve=links
+#define CPOPTS  "-d"
 
-#define BINARY     "/usr/bin/"${PROGRAM}
-    // the full path of the final program
 
-#define SKEL    "/usr/share/"${PROGRAM}
+
+
+    // the path for the final program
+#define BINARY     "/usr/bin"
+
     // the directory where the skeleton files are installed
+#define SKEL    "/usr/share/"${PROGRAM}
 
-#define MAN     "/usr/share/man"
     // the directory below whre the manual pages are stored (below 
     //                                          /man1, /man3 and /man7)
+#define MAN     "/usr/share/man"
 
-#define MANUAL   "/usr/share/doc/"${PROGRAM}"/manual"
     // the directory whre the manual page is stored
+#define MANUAL   "/usr/share/doc/"${PROGRAM}"/manual"
 
-#define STD     "/usr/share/doc/"${PROGRAM}
     // the directory where the standard documentation is stored 
+#define STD     "/usr/share/doc/"${PROGRAM}
 
 
 

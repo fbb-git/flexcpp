@@ -3,107 +3,56 @@ string setWhere(string where, string defaultWhere)
     if (where == "")
         where = defaultWhere;
 
-    md(where);
     return where;
 }
 
-void install(string what, string where)
+void install(string base)
 {
     list files;
     int idx;
     string target;
 
-    if (what == "program")
-    {
-        if (where == "")
-            where = BINARY;
+    g_installing = 1;
 
-                            // 'where' exists, but is no regular file
-        if (exists(where) && ((int)stat(where)[0] & S_IFREG) == 0)
-        {
-                printf("'build install program path': path must be a "
-                        "regular file\n");
-                exit(0);
-        }
+#ifdef BINARY
+    target = base + BINARY "/";
+    printf("  installing the executable `", target + PROGRAM "'\n");
+    logFile("tmp/bin", "binary", target, PROGRAM);
+#endif
 
-        md(get_path(where));
-        printf("  INSTALLING the executable `", where, "'\n");
-        run("icmbuild install program " + where);
-        log(where);
+#ifdef SKEL
+    target = base + SKEL;
+    printf("  installing skeleton files at `", target + "'\n");
+    logInstall("skeletons", "", target);
+#endif
 
-        writeLog();     // exits
-    }
+#ifdef MAN
+    target = base + MAN;
+    printf("  installing the manual pages below `", target, "'\n");
+    
+    logZip("tmp/man", "flexc++.1", target + "/man1");
+    logZip("tmp/man", "flexc++api.3", target + "/man3");
+    logZip("tmp/man", "flexc++input.7", target + "/man7");
+#endif
 
-    if (what == "skel")
-    {
-        where = setWhere(where, SKEL);
+#ifdef MANUAL
+    target = base + MANUAL;
+    printf("  installing the manual at `", target, "'\n");
+    logInstall("tmp/manual", "", target);
+    target += "/images";
+    logInstall("tmp/manual/images", "", target);
+#endif
 
-        printf("  INSTALLING skeleton files at `" + where + "'\n");
-        md(where);
-        run("cp skeletons/* " + where);
-        logFiles("skeletons", where);
+#ifdef STD
+    target = base + STD;
+    printf("  installing the changelog at `", target, "\n");
+    logZip("", "changelog", target);
 
-        writeLog();
-    }
+    printf("  installing the html-manual pages at `", target, "\n");
+    logInstall("tmp/manhtml", "", target);
+#endif
 
-    if (what == "man")
-    {
-        where = setWhere(where, MAN);
-        printf("  INSTALLING the manual pages below `", where, "'\n");
-
-        md(where + "/man1");
-        target = where + "/man1/" PROGRAM ".1.gz";
-        run("gzip -9 -n < tmp/man/" PROGRAM ".1 > " + target);
-        log(target);
-
-        md(where + "/man3");
-        target = where + "/man3/" PROGRAM "api.3.gz";
-        run("gzip -9 -n < tmp/man/" PROGRAM "api.3 > " + target);
-        log(target);
-
-        md(where + "/man7");
-        target = where + "/man7/" PROGRAM "input.7.gz";
-        run("gzip -9 -n < tmp/man/" PROGRAM "input.7 > " + target);
-        log(target);
-
-        writeLog();
-    }
-
-    if (what == "manual")
-    {
-        where = setWhere(where, MANUAL);
-
-        printf("  INSTALLING the manual at `", where, "'\n");
-        logDirs("tmp/manual", where);   // md(where + "/images");
-        run("cp -r tmp/manual/* " + where);
-        logFiles("tmp/manual", where);
-
-        writeLog();
-    }
-
-    if (what == "std")
-    {
-        where = setWhere(where, STD);
-
-        printf("  INSTALLING the changelog at `", where, "\n");
-        target = where + "/changelog.gz";
-        run("gzip -9 -n < changelog > " + target);
-        log(target);
-
-        printf("  INSTALLING the html-manual pages at `", where, "\n");
-        run("cp tmp/manhtml/" PROGRAM ".1.html " + where);
-        log(where + "/" PROGRAM ".1.html");
-
-        run("cp tmp/manhtml/" PROGRAM "api.3.html " + where);
-        log(where + "/" PROGRAM "api.3.html");
-
-        run("cp tmp/manhtml/" PROGRAM "input.7.html " + where);
-        log(where + "/" PROGRAM "input.7.html");
-
-        writeLog();
-    }
-
-    exit(0);
+    writeLog();
 }
 
 

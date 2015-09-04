@@ -16,18 +16,13 @@ void manual()
 
     chdir("manual");
 
-    files = makelist("*.yo") + makelist("*/*.yo");
-    for (idx = sizeof(files); idx--; )
-    {
-        file = element(idx, files);
-
-        run("yodl2html -l3 " PROGRAM ".yo");
-        run("mv *.html ../../tmp/manual");
-        run("cp -r images/*.jpg ../../tmp/manual/images");
-    }
-
+    run("yodl2html -l3 " PROGRAM ".yo");
+    run("mv *.html ../../tmp/manual");
+    run("cp -r images/*.jpg ../../tmp/manual/images");
+    
     exit(0);
 }
+
 
 
 
