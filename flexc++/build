@@ -135,9 +135,6 @@ void main(int argc, list argv)
         "   github               - prepare github's gh-pages update\n"
         "                          (internal use only)\n"
         "\n"
-        "If the environment variable DRYRUN is defined, no commands are\n"
-        "actually executed\n"
-        "\n"
     );
     exit(0);
 }
