@@ -1,16 +1,7 @@
-    // The name of the program created by this project:
+    // The name of the program and the support directories as installed by
+    // the 'build install' command. Normally there is no reason for changing
+    // this #define
 #define PROGRAM             "flexc++"
-
-    // the compiler to use. 
-//#define CXX                 "g++-5"
-#define CXX                 "g++"
-
-    // the compiler options to use.
-//#define CXXFLAGS            "--std=c++14 -Wall -O2 -g"
-#define CXXFLAGS            "--std=c++14 -Wall -O2 -fdiagnostics-color=never"
-
-    // flags passed to the linker
-#define LDFLAGS             ""
 
     // The following /bin/cp options are used to keep, rather than follow
     // symbolic references. If your installation doesn't support these flags,
@@ -25,9 +16,31 @@
 #define CPOPTS  "-d"
 
 
+    // The CXX, CXXFLAGS, and LDFLAGS #defines are overruled by identically
+    // named environment variables:
+
+    // the compiler to use. 
+#define CXX                 "g++"
+
+    // the compiler options to use.
+//#define CXXFLAGS            "--std=c++14 -Wall -O2 -g"
+#define CXXFLAGS            "--std=c++14 -Wall -O2 -fdiagnostics-color=never"
+
+    // flags passed to the linker
+#define LDFLAGS             ""
 
 
-    // the path for the final program
+
+// =========================================================================
+// Deactivate (e.g., use //#define ...) the following #defines to prevent
+// installation of the indicated component by 'build install'
+// 'build install base' can be used to specify a base directory below which
+// all components are installed (e.g., flexc++  is then installed in
+// 'base + BINARY')
+// =========================================================================
+
+
+    // the directory where Flexc++ is installed
 #define BINARY     "/usr/bin"
 
     // the directory where the skeleton files are installed
@@ -42,9 +55,3 @@
 
     // the directory where the standard documentation is stored 
 #define STD     "/usr/share/doc/"${PROGRAM}
-
-
-
-
-
-

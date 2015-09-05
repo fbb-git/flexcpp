@@ -1,11 +1,3 @@
-string setWhere(string where, string defaultWhere)
-{
-    if (where == "")
-        where = defaultWhere;
-
-    return where;
-}
-
 void install(string base)
 {
     list files;

@@ -114,7 +114,7 @@ void main(int argc, list argv)
 
     printf("Usage: build [-q] what\n"
         "Where\n"
-        "   [-q]:   run quietly, do not show executed commands\n"
+        "   -q:   run quietly, do not show executed commands\n"
         "`what' is one of:\n"
         "   clean                - clean up remnants of previous "
                                                             "compilations\n"
