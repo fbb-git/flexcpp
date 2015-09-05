@@ -9,8 +9,6 @@ void logInstall(string src, string pattern, string dest)
     list entries;
     int idx;
 
-    mark();
-
     chdir(g_cwd);
 
     md(dest);
@@ -37,3 +35,7 @@ void logInstall(string src, string pattern, string dest)
     for (idx = sizeof(entries); idx--; )
         logLink(entries[idx]);
 }
+
+
+        
+
