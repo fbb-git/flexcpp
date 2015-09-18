@@ -1,4 +1,4 @@
-#include "rules.ih"
+#include "rules.hh"
 
 void Rules::add(bool bol, Pattern const &pattern, Block const &block,
                 RuleType type) 

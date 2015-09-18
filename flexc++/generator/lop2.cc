@@ -1,4 +1,4 @@
-#include "generator.ih"
+#include "generator.hh"
 
 void Generator::lop2(ostream &out) const
 {

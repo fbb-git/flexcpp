@@ -1,4 +1,4 @@
-#include "options.ih"
+#include "options.hh"
 
 string const &Options::textOf(TextType type)
 {

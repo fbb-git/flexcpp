@@ -1,4 +1,4 @@
-#include "charclass.ih"
+#include "charclass.hh"
 
 void CharClass::addRange(std::set<char> &dest, size_t idx) const
 {

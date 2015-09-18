@@ -1,4 +1,4 @@
-#include "state.ih"
+#include "state.hh"
 
 State::State(unsigned char ch, size_t next1)
 :

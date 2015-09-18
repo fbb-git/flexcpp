@@ -1,4 +1,4 @@
-#include "rule.ih"
+#include "rule.hh"
 
 Rule::Rule(States &states, bool bol, Pattern const &pattern,
            Block const &block, RuleType type)

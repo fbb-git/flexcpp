@@ -1,4 +1,4 @@
-#include "ranges.ih"
+#include "ranges.hh"
 
 // And individual element in the current d_alphabet array is replaced by 
 // its index in the rangeNr vector

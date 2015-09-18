@@ -1,4 +1,4 @@
-#include "ranges.ih"
+#include "ranges.hh"
 
 void Ranges::inspectState(State const &state)
 {

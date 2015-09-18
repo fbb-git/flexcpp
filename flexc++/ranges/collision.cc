@@ -1,4 +1,4 @@
-#include "ranges.ih"
+#include "ranges.hh"
 
 // Collision test: a number indicates a character to test. Series of x chars
 // indicate a range. p,q,r,s indicate char-values before and after a (series

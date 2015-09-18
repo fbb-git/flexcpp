@@ -1,4 +1,4 @@
-#include "options.ih"
+#include "options.hh"
 
 bool Options::operator()(int opt) const
 {   

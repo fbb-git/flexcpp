@@ -1,4 +1,4 @@
-#include "states.ih"
+#include "states.hh"
 
 // Starting at a state, if it has two edges, and an e-transition reaches an
 // accept-state then that set becomes an inheriting accept set

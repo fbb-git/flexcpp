@@ -1,4 +1,4 @@
-#include "rules.ih"
+#include "rules.hh"
 
     // returns the index of the SC to receive the catch-all rule
 size_t Rules::handleLopRule(size_t idx)

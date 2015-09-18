@@ -1,3 +1,3 @@
-#include "scanner.ih"
+#include "scanner.hh"
 
 #include "../../tmp/bin/STATICS"

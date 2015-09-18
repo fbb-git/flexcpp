@@ -1,4 +1,4 @@
-#include "charclass.ih"
+#include "charclass.hh"
 
 void CharClass::append(vector<string> const &strings)
 {

@@ -1,4 +1,4 @@
-#include "charclass.ih"
+#include "charclass.hh"
 
 std::ostream &operator<<(std::ostream &out, CharClass const &cc)
 {

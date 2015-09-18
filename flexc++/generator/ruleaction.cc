@@ -1,4 +1,4 @@
-#include "generator.ih"
+#include "generator.hh"
 
 void Generator::ruleAction(Block const &block, ostream &out, size_t idx) 
                                                                         const

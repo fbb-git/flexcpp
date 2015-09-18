@@ -1,4 +1,4 @@
-#include "parser.ih"
+#include "parser.hh"
 
 Pattern Parser::lookahead(Pattern const &left, Pattern const &right)
 {

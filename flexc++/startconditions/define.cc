@@ -1,4 +1,4 @@
-#include "startconditions.ih"
+#include "startconditions.hh"
 
 void StartConditions::define(string const &name)
 {

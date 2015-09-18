@@ -1,4 +1,4 @@
-#include "charrange.ih"
+#include "charrange.hh"
 
 // this function returns the set of characters that are defined by a
 // predefined setname.

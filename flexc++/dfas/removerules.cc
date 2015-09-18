@@ -1,4 +1,4 @@
-#include "dfas.ih"
+#include "dfas.hh"
 
 void DFAs::removeRules(DFA const &dfa, set<size_t> &nonViable) const
 {

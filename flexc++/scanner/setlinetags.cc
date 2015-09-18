@@ -1,4 +1,4 @@
-#include "scanner.ih"
+#include "scanner.hh"
 
 void Scanner::setLineTags(std::string const &filename) const
 {

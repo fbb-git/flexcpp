@@ -1,4 +1,4 @@
-#include "options.ih"
+#include "options.hh"
 
 void Options::setParserInfo(string const &matched, string const &rawString)
 {

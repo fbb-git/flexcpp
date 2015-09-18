@@ -1,4 +1,4 @@
-#include "options.ih"
+#include "options.hh"
 
     // called by parser.cleanup()
 
@@ -16,7 +16,7 @@ void Options::setPathStrings()
     setOptionPath(&d_classHeader, 'c', filenames, ".h", 
                                                 classHeaderSpec());
 
-    setOptionPath(&d_implementationHeader, 'i', filenames, ".ih",
+    setOptionPath(&d_implementationHeader, 'i', filenames, ".hh",
                                                 implementationHeaderSpec());
 
     setOptionPath(&d_lexSource, 'l', String::lc(d_lexFunctionName), ".cc",

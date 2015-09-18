@@ -1,4 +1,4 @@
-#include "charclass.ih"
+#include "charclass.hh"
 
 void CharClass::tagMinuses(size_t offset, string const &str, size_t from)
 {

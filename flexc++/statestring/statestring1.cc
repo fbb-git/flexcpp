@@ -1,4 +1,4 @@
-#include "statestring.ih"
+#include "statestring.hh"
 
 StateString::StateString(std::string const &str, size_t next1, size_t next2)
 :

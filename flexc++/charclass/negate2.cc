@@ -1,4 +1,4 @@
-#include "charclass.ih"
+#include "charclass.hh"
 
 void CharClass::negate(vector<string> const &strings)
 {

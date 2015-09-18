@@ -1,4 +1,4 @@
-#include "scannerbase.ih"
+#include "scannerbase.hh"
 
 int ScannerBase::selectRule() const
 {

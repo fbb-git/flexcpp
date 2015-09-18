@@ -1,4 +1,4 @@
-#include "dfarow.ih"
+#include "dfarow.hh"
 
 void DFARow::uniqueMap(vector<size_t> const &xlat)
 {

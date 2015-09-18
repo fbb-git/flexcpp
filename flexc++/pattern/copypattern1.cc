@@ -1,4 +1,4 @@
-#include "pattern.ih"
+#include "pattern.hh"
 
 void Pattern::copyPattern(States &states, size_t count, 
                                                 PairVector &beginEnd)

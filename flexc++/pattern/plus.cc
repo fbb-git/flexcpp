@@ -1,4 +1,4 @@
-#include "pattern.ih"
+#include "pattern.hh"
 
 Pattern Pattern::plus(States &states, Pattern const &pattern)
 {

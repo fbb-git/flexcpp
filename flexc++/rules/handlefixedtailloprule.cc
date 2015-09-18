@@ -1,4 +1,4 @@
-#include "rules.ih"
+#include "rules.hh"
 
 void Rules::handleFixedTailLopRule(Rule &rule)
 {

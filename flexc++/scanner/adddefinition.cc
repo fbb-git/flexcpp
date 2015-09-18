@@ -1,4 +1,4 @@
-#include "scanner.ih"
+#include "scanner.hh"
 
 void Scanner::addDefinition(string const &name, TextType textType)
 {

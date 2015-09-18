@@ -1,5 +1,10 @@
+flexc++ (2.04.00)       TO BE TAGGED
+
   * 'build manual' creates the manual when its called. If the manual already
     exists, it is recreated. Same holds true for 'build man'
+
+  * using precompiled headers (see also this changelog item in bobcat)
+
 
 flexc++ (2.03.00)
 

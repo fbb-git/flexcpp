@@ -1,4 +1,4 @@
-#include "ranges.ih"
+#include "ranges.hh"
 
 Ranges::Ranges(States &states, size_t size)
 :

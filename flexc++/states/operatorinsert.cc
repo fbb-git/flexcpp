@@ -1,4 +1,4 @@
-#include "states.ih"
+#include "states.hh"
 
 #include <ostream>
 #include <iomanip>

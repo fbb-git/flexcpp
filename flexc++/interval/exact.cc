@@ -1,4 +1,4 @@
-#include "interval.ih"
+#include "interval.hh"
 
 Interval Interval::exact(std::string const &text)
 {

@@ -1,4 +1,4 @@
-#include "scannerbase.ih"
+#include "scannerbase.hh"
 
 bool ScannerBase::ruleMatched()
 {

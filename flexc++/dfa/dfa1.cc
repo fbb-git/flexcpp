@@ -1,4 +1,4 @@
-#include "dfa.ih"
+#include "dfa.hh"
 
 DFA::DFA(Ranges &ranges, Rules &rules, States &states)
 :

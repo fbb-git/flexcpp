@@ -1,4 +1,4 @@
-#include "pattern.ih"
+#include "pattern.hh"
 
 // This is a fixed-sized tail.
 

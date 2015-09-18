@@ -1,4 +1,4 @@
-#include "pattern.ih"
+#include "pattern.hh"
 
 // Returns a Pattern which is a duplicate of the current pattern. It's a
 // self-supporting pattern, i.e., in the returned pattern all its next1/next2

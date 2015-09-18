@@ -1,4 +1,4 @@
-#include "pattern.ih"
+#include "pattern.hh"
 
 bool Pattern::empty(States const &states, size_t idx)
 {

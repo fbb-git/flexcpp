@@ -1,4 +1,4 @@
-//#include "scannerbase.ih"
+//#include "scannerbase.hh"
 //
 //void ScannerBase::nextState()
 //{

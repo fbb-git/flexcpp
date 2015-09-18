@@ -1,4 +1,4 @@
-#include "dfarow.ih"
+#include "dfarow.hh"
 
 void DFARow::setFinal(size_t ruleIdx)
 {

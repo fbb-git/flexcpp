@@ -1,4 +1,4 @@
-#include "generator.ih"
+#include "generator.hh"
 
 string Generator::outDFAbase(string const &startState, size_t offset)
 {

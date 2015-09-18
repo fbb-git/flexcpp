@@ -1,4 +1,4 @@
-#include "dfa.ih"
+#include "dfa.hh"
 
 // See technical/dfa.yo
 

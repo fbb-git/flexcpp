@@ -1,4 +1,4 @@
-#include "generator.ih"
+#include "generator.hh"
 
     // show one row of a DFA
 void Generator::dfaRow(DFARow const &row, size_t &index, ostream &out)

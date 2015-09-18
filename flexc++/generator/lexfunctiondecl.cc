@@ -1,4 +1,4 @@
-#include "generator.ih"
+#include "generator.hh"
 
 void Generator::lexFunctionDecl(std::ostream &out) const
 {

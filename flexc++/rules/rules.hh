@@ -9,7 +9,7 @@
 #include <bobcat/ranger>
 
 #include "../states/states.h"
-#include "../pattern/pattern.ih"
+#include "../pattern/pattern.h"
 
 using namespace std;
 using namespace FBB;

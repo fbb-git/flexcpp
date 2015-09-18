@@ -1,4 +1,4 @@
-#include "ranges.ih"
+#include "ranges.hh"
 
 void Ranges::charsetToRanges(StateData &data, size_t *ranges)
 {

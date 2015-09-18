@@ -1,4 +1,4 @@
-#include "charclass.ih"
+#include "charclass.hh"
 
 string CharClass::chars(string const &matched)
 {

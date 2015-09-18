@@ -1,4 +1,4 @@
-#include "options.ih"
+#include "options.hh"
 
 // called by the generator, possibly overruling directives by options
 

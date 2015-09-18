@@ -1,4 +1,4 @@
-#include "charrange.ih"
+#include "charrange.hh"
 
 FBB::LinearMap<std::string, string> CharRange::s_hash =
 {

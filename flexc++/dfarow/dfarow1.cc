@@ -1,4 +1,4 @@
-#include "dfarow.ih"
+#include "dfarow.hh"
 
 DFARow::DFARow(Rules &rules, 
                States &states, StateSetVector &stateSets, 

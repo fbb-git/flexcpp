@@ -1,4 +1,4 @@
-#include "dfarow.ih"
+#include "dfarow.hh"
 
 // Visit all ranges of input characters
 // For each range value visit all states of the current set

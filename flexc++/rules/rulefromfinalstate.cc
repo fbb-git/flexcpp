@@ -1,4 +1,4 @@
-#include "rules.ih"
+#include "rules.hh"
 
 size_t Rules::ruleFromFinalState(size_t stateIdx) const
 {

@@ -1,4 +1,4 @@
-#include "startconditions.ih"
+#include "startconditions.hh"
 
 ostream &operator<<(ostream &out, StartConditions const &startConditions)
 {

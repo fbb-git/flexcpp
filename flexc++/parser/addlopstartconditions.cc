@@ -1,4 +1,4 @@
-#include "parser.ih"
+#include "parser.hh"
 
 // this function is called after parse(), when all rules have been parsed. 
 // if at least one LOP rule was found, the currently last rule in d_rules

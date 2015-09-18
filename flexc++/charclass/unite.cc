@@ -1,4 +1,4 @@
-#include "charclass.ih"
+#include "charclass.hh"
 
 CharClass CharClass::unite(CharClass &lhs, CharClass &rhs)
 {

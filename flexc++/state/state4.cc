@@ -1,4 +1,4 @@
-#include "state.ih"
+#include "state.hh"
 
 State::State(size_t type, size_t next1, size_t next2)
 :

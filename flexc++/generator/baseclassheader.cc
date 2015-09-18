@@ -1,4 +1,4 @@
-#include "generator.ih"
+#include "generator.hh"
 
 // Writing a base class header may be prevented by the --no-baseclass-header
 // option. Otherwise, it's rewritten each time flexc++ is called to process a

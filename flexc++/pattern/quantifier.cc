@@ -1,4 +1,4 @@
-#include "pattern.ih"
+#include "pattern.hh"
 
 Pattern Pattern::quantifier(States &states, Pattern const &pat, 
                                                   size_t type)

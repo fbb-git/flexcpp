@@ -1,4 +1,4 @@
-#include "pattern.ih"
+#include "pattern.hh"
 
     // text without (d)quotes, accepted as-is
 Pattern Pattern::rawText(States &states, std::string const &str)

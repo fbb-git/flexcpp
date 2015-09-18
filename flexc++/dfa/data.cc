@@ -1,3 +1,3 @@
-#include "dfa.ih"
+#include "dfa.hh"
 
 Mstream DFA::s_verbose;

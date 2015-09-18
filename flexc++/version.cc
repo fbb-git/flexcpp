@@ -1,4 +1,4 @@
-#include "flexc++.ih"
+#include "flexc++.hh"
 #include "VERSION"
 
 char version[] = VERSION;

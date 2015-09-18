@@ -1,4 +1,4 @@
-#include "statedata.ih"
+#include "statedata.hh"
 
 StateData::StateData(size_t next1, size_t next2)
 :

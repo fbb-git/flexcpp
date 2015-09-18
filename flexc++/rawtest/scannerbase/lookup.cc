@@ -1,4 +1,4 @@
-#include "scannerbase.ih"
+#include "scannerbase.hh"
 
 // Three variables play a role here:
 //     1. The nextstate: if 0 then there is no transition

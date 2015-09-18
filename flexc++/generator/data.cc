@@ -1,4 +1,4 @@
-#include "generator.ih"
+#include "generator.hh"
 
 Generator::Map Generator::s_insert =
 {

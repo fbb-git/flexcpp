@@ -1,4 +1,4 @@
-#include "ranges.ih"
+#include "ranges.hh"
 
 // All states are visited. 
 //  If a state holds a plain character it is changed to

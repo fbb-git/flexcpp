@@ -1,4 +1,4 @@
-#include "pattern.ih"
+#include "pattern.hh"
 
 // States:
 //          B1 -> E1  and B2 -> E2

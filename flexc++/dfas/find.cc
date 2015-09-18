@@ -1,4 +1,4 @@
-#include "dfas.ih"
+#include "dfas.hh"
 
 DFAs::DFAInfo::const_iterator DFAs::find(std::string const &key) const
 {

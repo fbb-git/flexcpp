@@ -34,6 +34,7 @@ int g_lognr;            // unique-marker number counter for g_log entries
 #include "icmake/remove"
 #include "icmake/removedir"
 #include "icmake/uninstall"
+#include "icmake/precompileheaders"
 
 #include "icmake/clean"
 #include "icmake/manpage"
@@ -83,6 +84,7 @@ void main(int argc, list argv)
 
     if (option == "library")
     {
+        precompileHeaders();
         run("icmbuild library");
         exit(0);
     }
@@ -92,6 +94,7 @@ void main(int argc, list argv)
     
     if (option == "program")
     {
+        precompileHeaders();
         run("icmbuild program " + strip);
         exit(0);
     }

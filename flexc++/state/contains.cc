@@ -1,4 +1,4 @@
-#include "state.ih"
+#include "state.hh"
 
 bool State::contains(size_t rangeChar) const
 {

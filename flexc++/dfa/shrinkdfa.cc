@@ -1,4 +1,4 @@
-#include "dfa.ih"
+#include "dfa.hh"
 
 void DFA::shrinkDFA(vector<size_t> &unique)
 {

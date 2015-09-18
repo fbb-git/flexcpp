@@ -1,4 +1,4 @@
-#include "charclass.ih"
+#include "charclass.hh"
 
 string CharClass::predefined(string const &predef)
 {

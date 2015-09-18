@@ -1,4 +1,4 @@
-#include "generator.ih"
+#include "generator.hh"
 
 void Generator::inputImplementation(ostream &out) const
 {

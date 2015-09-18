@@ -1,4 +1,4 @@
-#include "scanner.ih"
+#include "scanner.hh"
 
 Scanner::Scanner(std::istream &in, std::ostream &out)
 :

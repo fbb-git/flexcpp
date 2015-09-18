@@ -1,4 +1,4 @@
-#include "pattern.ih"
+#include "pattern.hh"
 
 Pattern Pattern::alternatives(States &states, 
                                     Pattern const &lhs, 

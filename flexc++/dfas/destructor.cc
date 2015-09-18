@@ -1,4 +1,4 @@
-#include "dfas.ih"
+#include "dfas.hh"
 
 DFAs::~DFAs()
 {

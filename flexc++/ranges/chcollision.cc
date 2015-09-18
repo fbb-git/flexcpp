@@ -1,4 +1,4 @@
-#include "ranges.ih"
+#include "ranges.hh"
 
 bool Ranges::chCollision(unsigned char ch, unsigned char &pre, 
                                         size_t const *next)

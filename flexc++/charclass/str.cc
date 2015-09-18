@@ -1,4 +1,4 @@
-#include "charclass.ih"
+#include "charclass.hh"
 
 string const &CharClass::str()
 {

@@ -1,4 +1,4 @@
-#include "dfarow.ih"
+#include "dfarow.hh"
 
 Table &operator<<(Table &table, DFARow const &row)
 {
