@@ -3,8 +3,25 @@ flexc++ (2.04.00)       TO BE TAGGED
   * 'build manual' creates the manual when its called. If the manual already
     exists, it is recreated. Same holds true for 'build man'
 
-  * using precompiled headers (see also this changelog item in bobcat)
+  * The .ih internal headers were renamed to .hh, allowing g++ to
+    automatically recognize them as header files, so they can easily be
+    converted to precompiled headers, following a suggestion by Bram
+    Neijt. The build script now creates precompiled headers which are used
+    during the compilation phase, speeding up Flexc++'s compilation. They are
+    removed again by ./build distclean.
 
+  * Flexc++ itself now generates a class internal header file having the .hh
+    rather than .ih extension.
+    NOTE: this may interfere with existing projects in which Flexc++ was used
+    to generate the initial sources of the lexical scanner. For those projects
+    you can
+        - (preferred approach) rename scanner.ih to scanner.hh, and include
+          scanner.hh in your scanner's source files (a bash-script
+          'convert2hh' is provided to assist in performing the conversion)
+
+        - (alternate approach) define a soft-link accessing the existing .ih
+          file (e.g., scanner.ih) via scanner.hh:
+                ln -s scanner.ih scanner.hh
 
 flexc++ (2.03.00)
 
