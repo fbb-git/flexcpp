@@ -1,4 +1,4 @@
-#include "statestring.ih"
+#include "statestring.hh"
 
 StateString::
 {

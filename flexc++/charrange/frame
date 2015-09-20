@@ -1,4 +1,4 @@
-#include "charrange.ih"
+#include "charrange.hh"
 
 CharRange::
 {
