@@ -9,6 +9,8 @@ void Generator::implementationHeader() const
 {
     string const &implementationHeader = d_options.implementationHeaderPath();
 
+    warnOldImpHeader(implementationHeader);
+
     if (Stat(implementationHeader))
         return;
 
