@@ -21,7 +21,9 @@ void precompileHeaders()
     g_compiler = setOpt(CXX, "CXX") + " " + 
                                     setOpt(CXXFLAGS, "CXXFLAGS") + " ";
 
-    _precompile("bisonc++");
+
+    _precompile("flexc++");         // precompile the main program .hh file
+
 
     for (idx = sizeof(classes); idx--; )
     {

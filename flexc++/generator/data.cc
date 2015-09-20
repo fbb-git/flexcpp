@@ -11,7 +11,7 @@ Generator::Map Generator::s_insert =
     {"caseCheck",               &Generator::caseCheck},
     {"classHead",               &Generator::classHead},
     {"class_h",                 &Generator::classH},
-    {"class_ih",                &Generator::classIH},
+    {"class_hh",                &Generator::classHH},
     {"inputInterface",          &Generator::inputInterface},
     {"inputImplementation",     &Generator::inputImplementation},
     {"debug",                   &Generator::debug},

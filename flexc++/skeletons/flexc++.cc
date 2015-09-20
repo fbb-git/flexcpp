@@ -3,7 +3,7 @@
 #include <sstream>
 #include <stdexcept>
 
-$insert class_ih
+$insert class_hh
 
 $insert namespace-open
 

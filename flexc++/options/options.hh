@@ -15,6 +15,6 @@ using namespace FBB;
 
 #define FLEXCPPBASE_H  "/flexc++base.h"
 #define FLEXCPP_H      "/flexc++.h"
-#define FLEXCPP_IH     "/flexc++.ih"
+#define FLEXCPP_HH     "/flexc++.hh"
 #define FLEXCPP_CC     "/flexc++.cc"
 
