@@ -114,7 +114,7 @@ cases you may encounter compilation errors.
     it() lsoption(implementation-header)(i)(filename)nl() 
            Use tt(filename) as the name of the file to contain the
             implementation header. Defaults to the name of the generated
-            scanner class plus the suffix tt(.ih). The implementation header
+            scanner class plus the suffix tt(.hh). The implementation header
             should contain all directives and declarations em(only) used by
             the implementations of the scanner's member functions. It is the
             only header file that is included by the source file containing
@@ -131,7 +131,7 @@ cases you may encounter compilation errors.
     it() lsoption(implementation-skeleton)(I)(pathname)nl()
            Use tt(pathname) as the path to the file containing the skeleton of
             the implementation header. Its filename defaults to
-            tt(flexc++.ih).
+            tt(flexc++.hh).
 
     it() lsoption(lex-skeleton)(L)(pathname)nl()
            Use tt(pathname) as the path to the file containing the

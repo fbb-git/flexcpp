@@ -2,7 +2,7 @@
 itemization(
     nosupport(tt(%top) block, copies code to top of yylex.cc.)
         (Define macros or include files.)
-        (Include header files in Scanner.ih.)
+        (Include header files in Scanner.hh.)
 
     nosupport(Indented text or tt(`%{ ... %}') blocks copied verbatim to
             yylex.cc)

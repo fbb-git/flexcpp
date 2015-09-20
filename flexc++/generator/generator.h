@@ -151,6 +151,9 @@ class Generator: public FlexTypes
         static void outStartState(std::string const &name, std::ostream &out);
         void ruleAction(Block const &block, std::ostream &out, size_t idx)
                                                                     const;
+
+        void warnOldImpHeader(std::string const &newIH);
+
 };
 
 #endif
