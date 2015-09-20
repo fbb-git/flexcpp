@@ -8,7 +8,7 @@ flexc++ (2.04.00)       TO BE TAGGED
 
     | NOTE: this may interfere with existing projects in which Flexc++ was
     | used to generate the initial sources of the lexical scanner. For those
-    | projects you can:
+    | projects you can (assuming generated files start with 'scanner'):
     |
     |   - (preferred approach) rename scanner.ih to scanner.hh, and include
     |     scanner.hh in your scanner's source files (a bash-script
