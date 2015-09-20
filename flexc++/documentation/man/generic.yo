@@ -203,10 +203,10 @@ manpagesection(4. PRECOMPILED HEADERS)
 
     Starting with flc() version 2.04.00 the default extension of internal
 header files changed from tt(.ih) to tt(.hh). This simplifies the construction
-of em(precompiled headers), which in turn noticeably speed up the compilation
+of em(precompiled headers), which in turn noticeably speeds up the compilation
 of source files. 
 
-    Flc()'s own compilation uses precompiled header for all its classes, which
+    Flc()'s own compilation uses precompiled headers for all its classes, which
 reduces flc()'s compilation time by more than 50%. Since the construction of
 precompiled headers doesn't overly tax the compilation process they are
 created at the beginning of flc()'s compilation process, and they can safely
