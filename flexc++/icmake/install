@@ -18,7 +18,7 @@ void install(string base)
 
 #ifdef MAN
     target = base + MAN;
-    printf("  installing the manual pages below `", target, "'\n");
+    printf("  installing the man pages below `", target, "'\n");
     
     logZip("tmp/man", "flexc++.1", target + "/man1");
     logZip("tmp/man", "flexc++api.3", target + "/man3");
