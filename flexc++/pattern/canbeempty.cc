@@ -1,4 +1,4 @@
-#include "pattern.hh"
+#include "pattern.ih"
 
 bool Pattern::canBeEmpty(States const &states) const
 {

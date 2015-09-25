@@ -1,4 +1,4 @@
-#include "pattern.hh"
+#include "pattern.ih"
 
 Pattern Pattern::optRepeatLastPattern(States &states, 
                         Pattern &pattern,

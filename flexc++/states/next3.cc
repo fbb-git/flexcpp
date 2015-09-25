@@ -1,4 +1,4 @@
-#include "states.hh"
+#include "states.ih"
 
 size_t *States::next(size_t nStates)
 {

@@ -1,4 +1,4 @@
-#include "charclass.hh"
+#include "charclass.ih"
 
 CharClass CharClass::difference(CharClass &lhs, CharClass &rhs)
 {

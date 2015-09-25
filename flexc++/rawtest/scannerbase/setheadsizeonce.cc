@@ -1,4 +1,4 @@
-#include "scannerbase.hh"
+#include "scannerbase.ih"
 
 void ScannerBase::setHeadSizeOnce()
 {

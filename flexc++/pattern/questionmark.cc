@@ -1,4 +1,4 @@
-#include "pattern.hh"
+#include "pattern.ih"
 
 Pattern Pattern::questionMark(States &states, Pattern const &pattern)
 {

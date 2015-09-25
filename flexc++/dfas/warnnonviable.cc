@@ -1,4 +1,4 @@
-#include "dfas.hh"
+#include "dfas.ih"
 
 void DFAs::warnNonViable() const
 {

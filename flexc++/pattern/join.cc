@@ -1,4 +1,4 @@
-#include "pattern.hh"
+#include "pattern.ih"
 
 void Pattern::join(States &states, Pattern &pattern, size_t upper,
                         PairVector const &beginEnd)

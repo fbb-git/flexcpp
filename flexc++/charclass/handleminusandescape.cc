@@ -1,4 +1,4 @@
-#include "charclass.hh"
+#include "charclass.ih"
 
 void CharClass::handleMinusAndEscape()
 {

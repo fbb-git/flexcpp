@@ -1,4 +1,4 @@
-#include "dfarow.hh"
+#include "dfarow.ih"
 
 // unordered maps do not support operator==, we have to do it ourselves.
 // The transitions are only stored if available, so the sizes of the

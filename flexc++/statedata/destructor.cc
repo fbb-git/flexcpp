@@ -1,4 +1,4 @@
-#include "statedata.hh"
+#include "statedata.ih"
 
 StateData::~StateData()
 {}

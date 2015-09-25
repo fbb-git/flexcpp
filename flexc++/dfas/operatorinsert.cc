@@ -1,4 +1,4 @@
-#include "dfas.hh"
+#include "dfas.ih"
 
 ostream &operator<<(ostream &out, DFAs const &dfas)
 {

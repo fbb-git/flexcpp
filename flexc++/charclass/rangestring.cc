@@ -1,4 +1,4 @@
-#include "charclass.hh"
+#include "charclass.ih"
 
 string CharClass::rangeString(size_t idx) const
 {

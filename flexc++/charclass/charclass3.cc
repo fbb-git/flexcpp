@@ -1,4 +1,4 @@
-#include "charclass.hh"
+#include "charclass.ih"
 
 CharClass::CharClass(string const &chars, size_t skip)
 :

@@ -1,4 +1,4 @@
-#include "rules.hh"
+#include "rules.ih"
 
 void Rules::setRule(size_t stateIdx, size_t ruleIdx)
 {

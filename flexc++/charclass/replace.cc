@@ -1,4 +1,4 @@
-#include "charclass.hh"
+#include "charclass.ih"
 
 void CharClass::replace(string newStr, TypeVector::iterator iter, size_t end)
 {

@@ -1,4 +1,4 @@
-#include "pattern.hh"
+#include "pattern.ih"
 
 Pattern::Pattern(States &states, Pattern const &lopLhs, Pattern const &lopRhs, 
                  size_t startCondition)

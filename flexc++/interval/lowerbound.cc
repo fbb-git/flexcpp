@@ -1,4 +1,4 @@
-#include "interval.hh"
+#include "interval.ih"
 
 Interval Interval::lowerBound(std::string const &lower)
 {

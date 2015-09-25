@@ -1,4 +1,4 @@
-#include "parser.hh"
+#include "parser.ih"
 
 Pattern Parser::interval(Pattern &regex, Interval const &interval)
 {

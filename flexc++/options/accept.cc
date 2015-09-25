@@ -1,4 +1,4 @@
-#include "options.hh"
+#include "options.ih"
 
 void Options::accept(string const &text, 
                      PathType pathType, char const *declTxt)

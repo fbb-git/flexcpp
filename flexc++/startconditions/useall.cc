@@ -1,4 +1,4 @@
-#include "startconditions.hh"
+#include "startconditions.ih"
     
 void StartConditions::useAll()
 {

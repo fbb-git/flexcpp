@@ -1,4 +1,4 @@
-#include "pattern.hh"
+#include "pattern.ih"
 
 Pattern Pattern::escape(States &states, std::string const &ch)
 {

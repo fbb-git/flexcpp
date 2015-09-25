@@ -1,4 +1,4 @@
-#include "rule.hh"
+#include "rule.ih"
 
 void Rule::noAction()
 {

@@ -1,4 +1,4 @@
-#include "dfa.hh"
+#include "dfa.ih"
 
 DFA::
 {

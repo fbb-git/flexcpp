@@ -1,4 +1,4 @@
-#include "rule.hh"
+#include "rule.ih"
 
 void Rule::setStates(vector<size_t> &prePostA, 
                      States const &states, size_t begin, size_t end)

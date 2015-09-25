@@ -1,4 +1,4 @@
-#include "scannerbase.hh"
+#include "scannerbase.ih"
 
 void ScannerBase::retain(size_t nChars)
 {

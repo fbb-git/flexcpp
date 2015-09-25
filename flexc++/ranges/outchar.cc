@@ -1,4 +1,4 @@
-#include "ranges.hh"
+#include "ranges.ih"
 
 void Ranges::outChar(std::ostream &out, size_t idx)
 {

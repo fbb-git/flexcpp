@@ -1,4 +1,4 @@
-#include "state.hh"
+#include "state.ih"
 
 ostream &operator<<(ostream &out, State const &state)
 {

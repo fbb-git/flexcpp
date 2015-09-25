@@ -1,4 +1,4 @@
-#include "dfarow.hh"
+#include "dfarow.ih"
 
 void DFARow::tabulateTransitions(Table &table) const
 {

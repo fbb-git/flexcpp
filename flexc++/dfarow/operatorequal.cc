@@ -1,4 +1,4 @@
-#include "dfarow.hh"
+#include "dfarow.ih"
 
 bool DFARow::operator==(DFARow const &rhs) const
 {

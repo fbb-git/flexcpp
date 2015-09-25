@@ -1,4 +1,4 @@
-#include "generator.hh"
+#include "generator.ih"
 
 void Generator::inlineLexFunction(std::ostream &out) const
 {

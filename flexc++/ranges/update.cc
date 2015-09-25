@@ -1,4 +1,4 @@
-#include "ranges.hh"
+#include "ranges.ih"
 
 // update receives in next the new count of character occurrences.
 // after correcting for collisions ...

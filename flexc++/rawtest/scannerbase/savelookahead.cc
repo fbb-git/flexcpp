@@ -1,4 +1,4 @@
-#include "scannerbase.hh"
+#include "scannerbase.ih"
 
     // d_ruleIndex holds the index of the matched rule
 void ScannerBase::saveLookahead()

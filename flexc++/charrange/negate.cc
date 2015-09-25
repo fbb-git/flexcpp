@@ -1,4 +1,4 @@
-#include "charrange.hh"
+#include "charrange.ih"
 
 string CharRange::negate(string const &str)
 {

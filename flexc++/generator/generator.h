@@ -112,7 +112,7 @@ class Generator: public FlexTypes
         void caseCheck(std::ostream &out) const;
         void classH(std::ostream &out) const;
         void classHead(std::ostream &out) const;
-        void classHH(std::ostream &out) const;
+        void classIH(std::ostream &out) const;
         bool debugCodeRequired() const;
         void debug(std::ostream &out) const;
         void debugDecl(std::ostream &out) const;
@@ -151,9 +151,6 @@ class Generator: public FlexTypes
         static void outStartState(std::string const &name, std::ostream &out);
         void ruleAction(Block const &block, std::ostream &out, size_t idx)
                                                                     const;
-
-        void warnOldImpHeader(std::string const &newIH) const;
-
 };
 
 #endif

@@ -1,4 +1,4 @@
-#include "charclass.hh"
+#include "charclass.ih"
 
     // begin = *iter is the index of the 1st char in the current section of
     //               d_str 

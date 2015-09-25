@@ -82,16 +82,10 @@ manpagefiles()
             interface. 
         itt(Scannerbase.h): the header file containing the interface of the 
             scanner class's base class.
-        itt(Scanner.hh): the internal header file that is meant to be included
+        itt(Scanner.ih): the internal header file that is meant to be included
             by the scanner class's source files (e.g., it is included by
             tt(lex.cc), see the next item's file), and that should contain all
             declarations required for compiling the scanner class's sources.
-
-            Note that the default file extension of this file changed from
-            tt(.ih) to tt(.hh) to simplify the use of precompiled headers. See
-            also the section em(Precompiled Headers) in the bf(flexc++)(1)
-            man-page. 
-
         itt(lex.cc): the source file implementing the scanner class member
             function tt(lex) (and support functions), performing the lexical
             scan.

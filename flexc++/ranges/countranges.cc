@@ -1,4 +1,4 @@
-#include "ranges.hh"
+#include "ranges.ih"
 
 void Ranges::countRanges(size_t &count, vector<size_t> &ranges)
 {

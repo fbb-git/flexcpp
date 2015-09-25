@@ -1,4 +1,4 @@
-#include "pattern.hh"
+#include "pattern.ih"
 
 Pattern Pattern::optionalPatterns(States &states, Pattern &pattern,
                                         size_t lower, size_t upper, 

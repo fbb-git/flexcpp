@@ -1,4 +1,4 @@
-#include "pattern.hh"
+#include "pattern.ih"
 
 size_t Pattern::dupPattern(Map &map, States &states, size_t idx)
 {

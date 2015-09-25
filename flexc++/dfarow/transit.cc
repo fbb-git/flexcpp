@@ -1,4 +1,4 @@
-#include "dfarow.hh"
+#include "dfarow.ih"
 
 void DFARow::transit(size_t stateIdx, size_t rangeChar, StateSet &nextSet)
 {

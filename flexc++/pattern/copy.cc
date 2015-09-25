@@ -1,4 +1,4 @@
-#include "pattern.hh"
+#include "pattern.ih"
 
 // Data:   pattern: the initial pattern
 //         begin, end: the begin/end state indices of the initial pattern

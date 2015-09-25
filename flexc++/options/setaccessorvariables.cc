@@ -1,4 +1,4 @@
-#include "options.hh"
+#include "options.ih"
 
 // called by the generator, possibly overruling directives by options
 
@@ -42,7 +42,7 @@ void Options::setAccessorVariables()
         d_classSkeleton          = d_skeletonDirectory + FLEXCPP_H;
 
     if (!arg.option(&d_implementationSkeleton, 'I'))
-        d_implementationSkeleton = d_skeletonDirectory + FLEXCPP_HH;
+        d_implementationSkeleton = d_skeletonDirectory + FLEXCPP_IH;
 
     if (!arg.option(&d_lexSkeleton, 'L'))
         d_lexSkeleton            = d_skeletonDirectory + FLEXCPP_CC;

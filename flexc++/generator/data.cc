@@ -1,4 +1,4 @@
-#include "generator.hh"
+#include "generator.ih"
 
 Generator::Map Generator::s_insert =
 {
@@ -11,7 +11,7 @@ Generator::Map Generator::s_insert =
     {"caseCheck",               &Generator::caseCheck},
     {"classHead",               &Generator::classHead},
     {"class_h",                 &Generator::classH},
-    {"class_hh",                &Generator::classHH},
+    {"class_ih",                &Generator::classIH},
     {"inputInterface",          &Generator::inputInterface},
     {"inputImplementation",     &Generator::inputImplementation},
     {"debug",                   &Generator::debug},

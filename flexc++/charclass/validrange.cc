@@ -1,4 +1,4 @@
-#include "charclass.hh"
+#include "charclass.ih"
 
     // got a pattern 'a-b', idx at '-'
 bool CharClass::validRange(TagIter iter) const 

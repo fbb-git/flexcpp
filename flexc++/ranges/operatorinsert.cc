@@ -1,4 +1,4 @@
-#include "ranges.hh"
+#include "ranges.ih"
 
 ostream &operator<<(ostream &out, Ranges const &rangesObj)
 {

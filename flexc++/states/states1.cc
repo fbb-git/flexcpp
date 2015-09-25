@@ -1,4 +1,4 @@
-#include "states.hh"
+#include "states.ih"
 
 States::States()
 :

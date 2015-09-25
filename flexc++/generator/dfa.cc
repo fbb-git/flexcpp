@@ -1,4 +1,4 @@
-#include "generator.hh"
+#include "generator.ih"
 
     // Generate a DFA in the lex.cc file.
 

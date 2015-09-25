@@ -1,7 +1,7 @@
 #!/bin/bash
 
-OLD=ih
-NEW=hh
+OLD=hh
+NEW=ih
 
 sedPattern='s/\(^\s*#include\s\+"[^.]\+\.\)'${OLD}'\(.*\)/\1'${NEW}'\2/'
 grepPattern='^\s*#include\s\+"[^.]\+\.'${OLD}'"'

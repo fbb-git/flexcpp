@@ -1,4 +1,4 @@
-#include "startconditions.hh"
+#include "startconditions.ih"
 
 void StartConditions::remove(size_t ruleIndex)
 {

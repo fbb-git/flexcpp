@@ -1,4 +1,4 @@
-#include "parser.hh"
+#include "parser.ih"
 
     // lineNr is always 1 too large as the parser detects the end of the rule
     // at the line following the rule's definition. Therefore lineNr is

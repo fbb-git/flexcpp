@@ -1,4 +1,4 @@
-#include "charclass.hh"
+#include "charclass.ih"
 
 set<char> CharClass::set()
 {

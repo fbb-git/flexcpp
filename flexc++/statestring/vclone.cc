@@ -1,4 +1,4 @@
-#include "statestring.hh"
+#include "statestring.ih"
 
 StateData *StateString::v_clone() const
 {

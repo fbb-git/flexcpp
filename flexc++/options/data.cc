@@ -1,6 +1,6 @@
 // Recompile this file if the skeleton locations in INSTALL.im change
 
-#include "options.hh"
+#include "options.ih"
 #include "SKEL"
 
 char Options::s_defaultSkeletonDirectory[]       = _Skel_;

@@ -1,4 +1,4 @@
-#include "pattern.hh"
+#include "pattern.ih"
 
 Pattern Pattern::interval(States &states, Pattern &regex,
                                 Interval const &interval)

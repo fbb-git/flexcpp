@@ -1,4 +1,4 @@
-#include "rules.hh"
+#include "rules.ih"
 
 ostream &operator<<(ostream &out, Rules const &rules)
 {

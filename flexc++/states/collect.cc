@@ -1,4 +1,4 @@
-#include "states.hh"
+#include "states.ih"
 
 void States::collect(size_t idx)
 {

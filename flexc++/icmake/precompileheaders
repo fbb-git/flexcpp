@@ -2,11 +2,11 @@ string g_compiler;
 
 void _precompile(string class)
 {
-    string classHH;
+    string classIH;
 
-    classHH = class + ".hh";
-    if (classHH younger class + ".hh.gch")
-        run(g_compiler + " " + classHH);
+    classIH = class + ".ih";
+    if (classIH younger class + ".ih.gch")
+        run(g_compiler + " -x c++-header " + classIH);
 }
 
 void precompileHeaders()
@@ -22,7 +22,7 @@ void precompileHeaders()
                                     setOpt(CXXFLAGS, "CXXFLAGS") + " ";
 
 
-    _precompile("flexc++");         // precompile the main program .hh file
+    _precompile("flexc++");         // precompile the main program .ih file
 
 
     for (idx = sizeof(classes); idx--; )

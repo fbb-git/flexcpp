@@ -1,4 +1,4 @@
-#include "flexc++.hh"
+#include "flexc++.ih"
 
 namespace
 {

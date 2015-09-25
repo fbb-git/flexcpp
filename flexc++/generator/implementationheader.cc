@@ -1,4 +1,4 @@
-#include "generator.hh"
+#include "generator.ih"
 
 // All members of the parser class should include the implementation header as
 // the only #included file. The implementation header should perform all
@@ -8,8 +8,6 @@
 void Generator::implementationHeader() const
 {
     string const &implementationHeader = d_options.implementationHeaderPath();
-
-    warnOldImpHeader(implementationHeader);
 
     if (Stat(implementationHeader))
         return;

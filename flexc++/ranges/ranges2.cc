@@ -1,4 +1,4 @@
-#include "ranges.hh"
+#include "ranges.ih"
 
 Ranges::Ranges(Ranges const &other)
 :

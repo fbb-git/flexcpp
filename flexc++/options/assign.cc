@@ -1,4 +1,4 @@
-#include "options.hh"
+#include "options.ih"
 
 void Options::assign(TextType textType, std::string *target, 
                      PathType pathType, char const *declTxt)

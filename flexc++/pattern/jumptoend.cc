@@ -1,4 +1,4 @@
-#include "pattern.hh"
+#include "pattern.ih"
 
 void Pattern::jumpToEnd(States &states, PairVector &beginEnd, 
                                 size_t lower, size_t upper, Map &eject)

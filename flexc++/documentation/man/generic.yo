@@ -199,38 +199,14 @@ interface is never rewritten by flc() unless flc() is explicitly ordered to do
 so.
     )
 
-manpagesection(4. PRECOMPILED HEADERS)
-
-    Starting with flc() version 2.04.00 the default extension of internal
-header files changed from tt(.ih) to tt(.hh). This simplifies the construction
-of em(precompiled headers), which in turn noticeably speeds up the compilation
-of source files. 
-
-    Flc()'s own compilation uses precompiled headers for all its classes, which
-reduces flc()'s compilation time by more than 50%. Since the construction of
-precompiled headers doesn't overly tax the compilation process they are
-created at the beginning of flc()'s compilation process, and they can safely
-be removed again once flc() has been compiled. 
-
-    To compile a header file simply call the compiler passing it the name of a
-header file. E.g.,
-        verb(
-    g++ --std=c++14 someheader.hh
-        )
-    Classes' internal header files are good candidates for precompilation as
-they are included by all of the classes' sources, and they always include their
-own class's main header file.
-
-    Flc()'s distribution contains a script tt(convert2hh) that can optionally
-be used to convert the extensions of internal header files of existing
-projects to tt(.hh), and to include tt(.hh) files rather than tt(.ih) files in
-bf(C++) source files. This script converts all tt(#include "xxx.ih")
-directives in bf(C++) source files in and below the current working directory
-to tt(#include "xxx.hh") directives, and renames all files having tt(.ih)
-extensions to files having tt(.hh) extensions. If these files are part of a
-bf(git)(1) archive then the script can also use tt(git) to rename the files
-having tt(.ih) extensions.
-
-manpagesection(5. OPTIONS)
+manpagesection(4. OPTIONS)
 
     includefile(../manual/intro/options)
+
+
+
+
+
+
+
+

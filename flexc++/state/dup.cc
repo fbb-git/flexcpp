@@ -1,4 +1,4 @@
-#include "state.hh"
+#include "state.ih"
 
 void State::dup(State const &src, size_t next1, size_t next2)
 {

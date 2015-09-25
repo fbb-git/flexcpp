@@ -1,4 +1,4 @@
-#include "generator.hh"
+#include "generator.ih"
 
     // see also: insert.cc
 

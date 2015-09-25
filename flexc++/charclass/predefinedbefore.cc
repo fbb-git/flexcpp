@@ -1,4 +1,4 @@
-#include "charclass.hh"
+#include "charclass.ih"
 
 bool CharClass::predefinedBefore(size_t idx) const
 {

@@ -1,4 +1,4 @@
-#include "interval.hh"
+#include "interval.ih"
 
 Interval Interval::range(string const &lower, string const &upper)
 {

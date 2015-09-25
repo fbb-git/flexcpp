@@ -1,4 +1,4 @@
-#include "generator.hh"
+#include "generator.ih"
 
 Generator::Generator(Rules const &rules, Ranges const &ranges, 
                     DFAs const & dfas)

@@ -1,4 +1,4 @@
-#include "charclass.hh"
+#include "charclass.ih"
 
 bool CharClass::rangeAfterRange(TagIter iter) const
 {
