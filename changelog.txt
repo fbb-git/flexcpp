@@ -1,3 +1,12 @@
+flexc++ (2.03.01)
+
+  * 'build manual' creates the manual when its called. If the manual already
+    exists, it is recreated. Same holds true for 'build man'
+
+  * Flexc++'s compilation now uses precompiled headers
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 28 Sep 2015 18:48:43 +0200
+
 flexc++ (2.03.00)
 
   * Fixed a bug in handling {0, x} intervals: encountered by Guillaume

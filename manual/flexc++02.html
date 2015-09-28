@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> Flexc++ (Version 2.03.00) User Guide </title>
+<title> Flexc++ (Version 2.03.01) User Guide </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -50,7 +50,7 @@ items which are no longer supported in <strong>flexc++</strong>, offering altern
         <blockquote>
         <ul>
         <li> Purpose: Define macros or include files.
-        <li> <strong>Flexc++</strong>'s alternative: Include header files in Scanner.ih.
+        <li> <strong>Flexc++</strong>'s alternative: Include header files in Scanner.hh.
         </ul>
     </blockquote>
 <p>
@@ -129,12 +129,12 @@ only once, the look-ahead operator is not accepted in a named pattern.
 <h2>2.3: Generated files</h2>
     While <strong>flex</strong>(1) only generates a file <code>lex.yy.cc</code>, <strong>flexc++</strong> generates several
 files: several header files and a source file.  By default <strong>flexc++</strong> generates a
-class header file (<code>Scanner.h</code>), and internal header file (<code>Scanner.ih</code>),
+class header file (<code>Scanner.h</code>), and internal header file (<code>Scanner.hh</code>),
 a base class header file (<code>Scannerbase.h</code>), and the file <code>lex.cc</code>
 containing the implementation of the required members of the <code>class
 Scanner</code>.  <code>Scannerbase.h</code> and <code>lex.cc</code> should not be edited: they are
 overwritten whenever <strong>flexc++</strong> is invoked. The other files (<code>Scanner.h</code> and
-<code>Scanner.ih</code>) are generated only once, and can thereafter be modified by the
+<code>Scanner.hh</code>) are generated only once, and can thereafter be modified by the
 user (e.g., to add members to the <code>Scanner</code> class).
 <p>
 <a name="l14"></a>
