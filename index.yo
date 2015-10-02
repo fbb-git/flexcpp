@@ -36,6 +36,9 @@ lurl(https://github.com/fbb-git/_project_/releases) or direct from its
 release page):
 
         itemization(
+        it() url(2.03.02)
+                (https://github.com/fbb-git/_project_/releases/tag/2.03.01)
+Oct  2, 2015;
         it() url(2.03.01)
                 (https://github.com/fbb-git/_project_/releases/tag/2.03.01)
 Sep 28, 2015;
@@ -49,10 +52,7 @@ probably was a typo. Tag 4.02.00 was removed, and 2.02.00 was installed
 instead); 
         it() url(2.01.00)
                 (https://github.com/fbb-git/_project_/releases/tag/2.01.00)
-Mar 16, 2014;
-        it() url(2.00.00)
-                (https://github.com/fbb-git/_project_/releases/tag/2.00.00)
-Feb 9, 2014.
+Mar 16, 2014.
         )
     COMMENT(NOTE: LAST ITEM SHOULD END IN . )
 
