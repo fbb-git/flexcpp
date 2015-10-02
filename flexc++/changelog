@@ -1,3 +1,9 @@
+flexc++ (2.03.02)
+
+  * Reimplemented the (un)installation procedures
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 02 Oct 2015 11:03:20 +0200
+
 flexc++ (2.03.01)
 
   * 'build manual' creates the manual when its called. If the manual already

@@ -89,6 +89,7 @@ void main(int argc, list argv)
 
     if (option == "oxref")
     {
+        precompileHeaders();
         run("icmbuild program " + strip);
         run("oxref -fxs tmp/lib" LIBRARY ".a > " PROGRAM ".xref");
         exit(0);

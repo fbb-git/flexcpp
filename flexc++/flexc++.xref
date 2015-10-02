@@ -1,15 +1,15 @@
 oxref by Frank B. Brokken (f.b.brokken@rug.nl)
 oxref V1.00.02 2012-2015
 
-CREATED Fri, 13 Mar 2015 16:08:28 +0000
+CREATED Fri, 02 Oct 2015 09:27:34 +0000
 CROSS REFERENCE FOR: -fxs tmp/libmodules.a 
 ----------------------------------------------------------------------
 
-accept(std::string const&, Options::PathType, char const*)
-  Full name: Options::accept(std::string const&, Options::PathType, char const*)
+accept(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Options::PathType, char const*)
+  Full name: Options::accept(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, Options::PathType, char const*)
   Source:    accept.cc 
   Used By:
-    assign.cc: Options::assign(FlexTypes::TextType, std::string*, Options::PathType, char const*)
+    assign.cc: Options::assign(FlexTypes::TextType, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, Options::PathType, char const*)
 
 accept(unsigned int)
   Full name: ScannerBase::accept(unsigned int)
@@ -42,17 +42,11 @@ add(bool, Pattern const&, Block const&, FlexTypes::RuleType)
     handleloprules.cc: Rules::handleLopRules()
     addrule.cc: Parser::addRule(Pattern const&, bool)
 
-add(std::string const&)
-  Full name: Ranges::add(std::string const&)
+add(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Ranges::add(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    add.cc 
   Used By:
     add3.cc: Ranges::add(unsigned int)
-    inspectstate.cc: Ranges::inspectState(State const&)
-
-add(unsigned int)
-  Full name: Ranges::add(unsigned int)
-  Source:    add3.cc 
-  Used By:
     inspectstate.cc: Ranges::inspectState(State const&)
 
 add(unsigned int)
@@ -61,6 +55,12 @@ add(unsigned int)
   Used By:
     add.cc: Rules::add(bool, Pattern const&, Block const&, FlexTypes::RuleType)
     addcatchall.cc: Rules::addCatchAll(unsigned int, unsigned int)
+
+add(unsigned int)
+  Full name: Ranges::add(unsigned int)
+  Source:    add3.cc 
+  Used By:
+    inspectstate.cc: Ranges::inspectState(State const&)
 
 addCatchAll(unsigned int, unsigned int)
   Full name: Rules::addCatchAll(unsigned int, unsigned int)
@@ -74,8 +74,8 @@ addChars(std::set<char, std::less<char>, std::allocator<char> >&, unsigned int, 
   Used By:
     set.cc: CharClass::set()
 
-addDefinition(std::string const&, FlexTypes::TextType)
-  Full name: Scanner::addDefinition(std::string const&, FlexTypes::TextType)
+addDefinition(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, FlexTypes::TextType)
+  Full name: Scanner::addDefinition(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, FlexTypes::TextType)
   Source:    adddefinition.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
@@ -92,8 +92,8 @@ addRule(Pattern const&, bool)
   Used By:
     parse.cc: Parser::executeAction(int)
 
-addSC(std::string const&)
-  Full name: StartConditions::addSC(std::string const&)
+addSC(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: StartConditions::addSC(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    addsc.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
@@ -110,16 +110,16 @@ alternatives(States&, Pattern const&, Pattern const&)
   Used By:
     parse.cc: Parser::executeAction(int)
 
-append(std::vector<std::string, std::allocator<std::string> > const&)
-  Full name: CharClass::append(std::vector<std::string, std::allocator<std::string> > const&)
+append(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&)
+  Full name: CharClass::append(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&)
   Source:    append.cc 
   Used By:
     dot.cc: Pattern::dot(States&)
     parse.cc: Parser::executeAction(int)
-    negate2.cc: CharClass::negate(std::vector<std::string, std::allocator<std::string> > const&)
+    negate2.cc: CharClass::negate(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&)
 
-assign(FlexTypes::TextType, std::string*, Options::PathType, char const*)
-  Full name: Options::assign(FlexTypes::TextType, std::string*, Options::PathType, char const*)
+assign(FlexTypes::TextType, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, Options::PathType, char const*)
+  Full name: Options::assign(FlexTypes::TextType, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, Options::PathType, char const*)
   Source:    assign.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
@@ -135,13 +135,6 @@ baseClassH(std::ostream&) const
   Source:    baseclassh.cc 
   Used By:
     data.cc: GLOBALS data.cc 10data.o
-
-baseclassHeaderName() const
-  Full name: Options::baseclassHeaderName() const
-  Source:    baseclassheadername.cc 
-  Used By:
-    baseclassh.cc: Generator::baseClassH(std::ostream&) const
-    conflicts.cc: Generator::conflicts() const
 
 baseIncludes(std::ostream&) const
   Full name: Generator::baseIncludes(std::ostream&) const
@@ -161,8 +154,8 @@ boln()
   Used By:
     parse.cc: Parser::executeAction(int)
 
-build(std::string const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
-  Full name: DFA::build(std::string const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
+build(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
+  Full name: DFA::build(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
   Source:    build.cc 
   Used By:
     build.cc: DFAs::build()
@@ -192,18 +185,18 @@ CharClass()
   Source:    charclass1.cc 
   Used By:
     dot.cc: Pattern::dot(States&)
-    parse.cc: ParserBase::pushToken__(int)
+    parse.cc: Parser::lookup(bool)
     difference.cc: CharClass::difference(CharClass&, CharClass&)
     unite.cc: CharClass::unite(CharClass&, CharClass&)
 
-CharClass(std::string const&, unsigned int)
-  Full name: CharClass::CharClass(std::string const&, unsigned int)
+CharClass(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int)
+  Full name: CharClass::CharClass(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int)
   Source:    charclass3.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
 
-chars(std::string const&)
-  Full name: CharClass::chars(std::string const&)
+chars(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: CharClass::chars(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    chars.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
@@ -218,7 +211,7 @@ chCollision(unsigned char, unsigned char&, unsigned int const*)
   Full name: Ranges::chCollision(unsigned char, unsigned char&, unsigned int const*)
   Source:    chcollision.cc 
   Used By:
-    collision.cc: Ranges::collision(std::string const&, unsigned int const*)
+    collision.cc: Ranges::collision(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int const*)
 
 classH(std::ostream&) const
   Full name: Generator::classH(std::ostream&) const
@@ -232,13 +225,6 @@ classHead(std::ostream&) const
   Used By:
     data.cc: GLOBALS data.cc 10data.o
 
-classHeaderName() const
-  Full name: Options::classHeaderName() const
-  Source:    classheadername.cc 
-  Used By:
-    classh.cc: Generator::classH(std::ostream&) const
-    conflicts.cc: Generator::conflicts() const
-
 classIH(std::ostream&) const
   Full name: Generator::classIH(std::ostream&) const
   Source:    classih.cc 
@@ -251,7 +237,7 @@ clear()
   Used By:
     noaction.cc: Rule::noAction()
     handleloprule.cc: Rules::handleLopRule(unsigned int)
-    open.cc: Block::open(unsigned int, std::string const&)
+    open.cc: Block::open(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
 close()
   Full name: Block::close()
@@ -265,11 +251,11 @@ collect(unsigned int)
   Used By:
     concatenate.cc: Pattern::concatenate(States&, Pattern const&, Pattern const&)
 
-collision(std::string const&, unsigned int const*)
-  Full name: Ranges::collision(std::string const&, unsigned int const*)
+collision(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int const*)
+  Full name: Ranges::collision(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int const*)
   Source:    collision.cc 
   Used By:
-    update.cc: Ranges::update(std::string const&, unsigned int const*)
+    update.cc: Ranges::update(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int const*)
 
 concatenate(States&, Pattern const&, Pattern const&)
   Full name: Pattern::concatenate(States&, Pattern const&, Pattern const&)
@@ -308,7 +294,111 @@ countRanges(unsigned int&, std::vector<unsigned int, std::allocator<unsigned int
   Full name: Ranges::countRanges(unsigned int&, std::vector<unsigned int, std::allocator<unsigned int> >&)
   Source:    countranges.cc 
   Used By:
-    update.cc: Ranges::update(std::string const&, unsigned int const*)
+    update.cc: Ranges::update(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int const*)
+
+cxx11]
+  Full name: Options::s_warnOptions[abi:cxx11]
+  Source:    data.cc 
+  Used By:
+    errexisting.cc: Generator::errExisting(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
+    assign.cc: Options::assign(FlexTypes::TextType, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, Options::PathType, char const*)
+    setaccessorvariables.cc: Options::setAccessorVariables()
+    setclassname.cc: Options::setClassName(FlexTypes::TextType)
+    setoptionpath.cc: Options::setOptionPath(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, char const*, char const*)
+
+cxx11]
+  Full name: CharRange::s_funHash[abi:cxx11]
+  Source:    data.cc 
+  Used By:
+    predefined.cc: CharRange::predefined(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+
+cxx11]
+  Full name: CharRange::s_all[abi:cxx11]
+  Source:    data.cc 
+  Used By:
+    negate.cc: CharRange::negate(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+
+cxx11]
+  Full name: CharRange::s_hash[abi:cxx11]
+  Source:    data.cc 
+  Used By:
+    predefined.cc: CharRange::predefined(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+
+cxx11]
+  Full name: Generator::s_insert[abi:cxx11]
+  Source:    data.cc 
+  Used By:
+    insert.cc: Generator::insert(std::ostream&) const
+
+cxx11]
+  Full name: Parser::s_lastMsg[abi:cxx11]
+  Source:    data.cc 
+  Used By:
+    error.cc: Parser::error(char const*)
+    reset.cc: Parser::reset()
+
+cxx11]
+  Full name: ParserBase::s_out__[abi:cxx11]
+  Source:    parse.cc 
+  Used By:
+    lookahead.cc: GLOBALS lookahead.cc 2lookahead.o
+    quotes.cc: Parser::quotes()
+
+cxx11]()
+  Full name: CharClass::str[abi:cxx11]()
+  Source:    str.cc 
+  Used By:
+    characterclass.cc: Pattern::characterClass(States&, CharClass&)
+    negate1.cc: CharClass::negate()
+
+cxx11]() const
+  Full name: Scanner::rawStringContents[abi:cxx11]() const
+  Source:    rawstringcontents.cc 
+  Used By:
+    parse.cc: Parser::executeAction(int)
+    rawstring.cc: Parser::rawString()
+
+cxx11]() const
+  Full name: Options::implementationHeaderName[abi:cxx11]() const
+  Source:    implementationheadername.cc 
+  Used By:
+    classih.cc: Generator::classIH(std::ostream&) const
+
+cxx11]() const
+  Full name: Options::classHeaderName[abi:cxx11]() const
+  Source:    classheadername.cc 
+  Used By:
+    classh.cc: Generator::classH(std::ostream&) const
+    conflicts.cc: Generator::conflicts() const
+
+cxx11]() const
+  Full name: Options::baseclassHeaderName[abi:cxx11]() const
+  Source:    baseclassheadername.cc 
+  Used By:
+    baseclassh.cc: Generator::baseClassH(std::ostream&) const
+    conflicts.cc: Generator::conflicts() const
+
+cxx11](FlexTypes::TextType)
+  Full name: Options::textOf[abi:cxx11](FlexTypes::TextType)
+  Source:    textof.cc 
+  Used By:
+    assign.cc: Options::assign(FlexTypes::TextType, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, Options::PathType, char const*)
+    setclassname.cc: Options::setClassName(FlexTypes::TextType)
+    setfilenames.cc: Options::setFilenames(FlexTypes::TextType)
+    setlexfunctionname.cc: Options::setLexFunctionName(FlexTypes::TextType)
+
+cxx11](int) const
+  Full name: ParserBase::symbol__[abi:cxx11](int) const
+  Source:    parse.cc 
+  Used By:
+    print.cc: Parser::print()
+
+cxx11](unsigned int) const
+  Full name: CharClass::rangeString[abi:cxx11](unsigned int) const
+  Source:    rangestring.cc 
+  Used By:
+    inversedrange.cc: CharClass::inversedRange(unsigned int) const
+    rangeafterrange.cc: CharClass::rangeAfterRange(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >) const
 
 debug(std::ostream&) const
   Full name: Generator::debug(std::ostream&) const
@@ -334,8 +424,8 @@ declarations(std::ostream&) const
   Used By:
     data.cc: GLOBALS data.cc 10data.o
 
-define(std::string const&)
-  Full name: StartConditions::define(std::string const&)
+define(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: StartConditions::define(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    define.cc 
   Used By:
     addlopstartconditions.cc: Parser::addLopStartConditions()
@@ -347,8 +437,8 @@ DFA(Ranges&, Rules&, States&)
   Used By:
     build.cc: DFAs::build()
 
-dfa(std::pair<std::string, DFA*> const&, std::ostream&, std::vector<std::string, std::allocator<std::string> >&, std::vector<unsigned int, std::allocator<unsigned int> >&)
-  Full name: Generator::dfa(std::pair<std::string, DFA*> const&, std::ostream&, std::vector<std::string, std::allocator<std::string> >&, std::vector<unsigned int, std::allocator<unsigned int> >&)
+dfa(std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, DFA*> const&, std::ostream&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >&, std::vector<unsigned int, std::allocator<unsigned int> >&)
+  Full name: Generator::dfa(std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, DFA*> const&, std::ostream&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >&, std::vector<unsigned int, std::allocator<unsigned int> >&)
   Source:    dfa.cc 
   Used By:
     dfas.cc: Generator::dfas(std::ostream&) const
@@ -363,13 +453,13 @@ dfaRow(DFARow const&, unsigned int&, std::ostream&)
   Full name: Generator::dfaRow(DFARow const&, unsigned int&, std::ostream&)
   Source:    dfarow.cc 
   Used By:
-    dfa.cc: Generator::dfa(std::pair<std::string, DFA*> const&, std::ostream&, std::vector<std::string, std::allocator<std::string> >&, std::vector<unsigned int, std::allocator<unsigned int> >&)
+    dfa.cc: Generator::dfa(std::pair<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, DFA*> const&, std::ostream&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >&, std::vector<unsigned int, std::allocator<unsigned int> >&)
 
 DFARow(Rules&, States&, std::vector<std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> >, std::allocator<std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> > > >&, unsigned int, unsigned int, std::vector<bool, std::allocator<bool> >*)
   Full name: DFARow::DFARow(Rules&, States&, std::vector<std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> >, std::allocator<std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> > > >&, unsigned int, unsigned int, std::vector<bool, std::allocator<bool> >*)
   Source:    dfarow1.cc 
   Used By:
-    build.cc: DFA::build(std::string const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
+    build.cc: DFA::build(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
 
 dfaRules(DFARow const&, std::ostream&)
   Full name: Generator::dfaRules(DFARow const&, std::ostream&)
@@ -438,7 +528,7 @@ eClosure(std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned
   Full name: States::eClosure(std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> >&) const
   Source:    eclosure.cc 
   Used By:
-    build.cc: DFA::build(std::string const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
+    build.cc: DFA::build(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
     transitions.cc: DFARow::transitions()
 
 empty(States const&, unsigned int)
@@ -465,8 +555,8 @@ eolnDollar()
   Used By:
     parse.cc: Parser::executeAction(int)
 
-errExisting(std::string const&, std::string const&, std::string const&) const
-  Full name: Generator::errExisting(std::string const&, std::string const&, std::string const&) const
+errExisting(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
+  Full name: Generator::errExisting(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
   Source:    errexisting.cc 
   Used By:
     conflicts.cc: Generator::conflicts() const
@@ -477,20 +567,20 @@ error(char const*)
   Used By:
     parse.cc: Parser::errorRecovery()
 
-escape(States&, std::string const&)
-  Full name: Pattern::escape(States&, std::string const&)
+escape(States&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Pattern::escape(States&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    escape.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
 
-exact(std::string const&)
-  Full name: Interval::exact(std::string const&)
+exact(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Interval::exact(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    exact.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
 
-filename(std::string const&)
-  Full name: Generator::filename(std::string const&)
+filename(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Generator::filename(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    filename.cc 
   Used By:
     baseclassh.cc: Generator::baseClassH(std::ostream&) const
@@ -518,12 +608,12 @@ getLOP(std::ostream&) const
   Used By:
     lopimplementation.cc: Generator::lopImplementation(std::ostream&) const
 
-grep(std::string const&, std::string const&) const
-  Full name: Generator::grep(std::string const&, std::string const&) const
+grep(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
+  Full name: Generator::grep(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
   Source:    grep.cc 
   Used By:
     classheader.cc: Generator::classHeader() const
-    errexisting.cc: Generator::errExisting(std::string const&, std::string const&, std::string const&) const
+    errexisting.cc: Generator::errExisting(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
 
 handleCharAfterBlanks()
   Full name: Scanner::handleCharAfterBlanks()
@@ -584,12 +674,6 @@ handleStdComment()
   Source:    handlestdcomment.cc 
   Used By:
     lex.cc: Scanner::executeAction__(unsigned int)
-
-implementationHeaderName() const
-  Full name: Options::implementationHeaderName() const
-  Source:    implementationheadername.cc 
-  Used By:
-    classih.cc: Generator::classIH(std::ostream&) const
 
 inlineLexFunction(std::ostream&) const
   Full name: Generator::inlineLexFunction(std::ostream&) const
@@ -715,7 +799,7 @@ keepUniqueRows()
   Full name: DFA::keepUniqueRows()
   Source:    keepuniquerows.cc 
   Used By:
-    build.cc: DFA::build(std::string const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
+    build.cc: DFA::build(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
 
 key(std::ostream&) const
   Full name: Generator::key(std::ostream&) const
@@ -808,8 +892,8 @@ lopImplementation(std::ostream&) const
   Used By:
     data.cc: GLOBALS data.cc 10data.o
 
-lowerBound(std::string const&)
-  Full name: Interval::lowerBound(std::string const&)
+lowerBound(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Interval::lowerBound(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    lowerbound.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
@@ -849,17 +933,17 @@ negate()
   Source:    negate1.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
-    negate2.cc: CharClass::negate(std::vector<std::string, std::allocator<std::string> > const&)
+    negate2.cc: CharClass::negate(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&)
 
-negate(std::string const&)
-  Full name: CharRange::negate(std::string const&)
+negate(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: CharRange::negate(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    negate.cc 
   Used By:
-    predefined.cc: CharRange::predefined(std::string const&)
+    predefined.cc: CharRange::predefined(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
     negate1.cc: CharClass::negate()
 
-negate(std::vector<std::string, std::allocator<std::string> > const&)
-  Full name: CharClass::negate(std::vector<std::string, std::allocator<std::string> > const&)
+negate(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&)
+  Full name: CharClass::negate(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&)
   Source:    negate2.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
@@ -884,7 +968,7 @@ next(unsigned int)
   Full name: States::next(unsigned int)
   Source:    next3.cc 
   Used By:
-    rawtext.cc: Pattern::rawText(States&, std::string const&)
+    rawtext.cc: Pattern::rawText(States&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
 next2()
   Full name: States::next2()
@@ -893,10 +977,10 @@ next2()
     alternatives.cc: Pattern::alternatives(States&, Pattern const&, Pattern const&)
     characterclass.cc: Pattern::characterClass(States&, CharClass&)
     eof.cc: Pattern::eof(States&)
-    escape.cc: Pattern::escape(States&, std::string const&)
+    escape.cc: Pattern::escape(States&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
     interval.cc: Pattern::interval(States&, Pattern&, Interval const&)
     plus.cc: Pattern::plus(States&, Pattern const&)
-    rawtext.cc: Pattern::rawText(States&, std::string const&)
+    rawtext.cc: Pattern::rawText(States&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
     star.cc: Pattern::star(States&, Pattern const&)
 
 noAction()
@@ -911,8 +995,8 @@ noActions()
   Used By:
     parse.cc: Parser::executeAction(int)
 
-open(unsigned int, std::string const&)
-  Full name: Block::open(unsigned int, std::string const&)
+open(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Block::open(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    open.cc 
   Used By:
     block.cc: Parser::block()
@@ -933,8 +1017,8 @@ operator()(int) const
     debugfunctions.cc: Generator::debugFunctions(std::ostream&) const
     parser1.cc: Parser::Parser(Rules&, States&)
 
-operator+=(std::string const&)
-  Full name: Block::operator+=(std::string const&)
+operator+=(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Block::operator+=(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    operatorplusis.cc 
   Used By:
     handlefixedtailloprule.cc: Rules::handleFixedTailLopRule(Rule&)
@@ -999,7 +1083,7 @@ operator=(std::pair<unsigned int, unsigned int> const&)
   Full name: Pattern::operator=(std::pair<unsigned int, unsigned int> const&)
   Source:    operatorassign.cc 
   Used By:
-    rawtext.cc: Pattern::rawText(States&, std::string const&)
+    rawtext.cc: Pattern::rawText(States&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
 operator==(DFARow const&) const
   Full name: DFARow::operator==(DFARow const&) const
@@ -1031,8 +1115,8 @@ outChar(std::ostream&, unsigned int)
   Used By:
     operatorinsert.cc: operator<<(std::ostream&, Ranges const&)
 
-outDFAbase(std::string const&, unsigned int)
-  Full name: Generator::outDFAbase(std::string const&, unsigned int)
+outDFAbase(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int)
+  Full name: Generator::outDFAbase(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int)
   Source:    outdfabase.cc 
   Used By:
     dfabases.cc: Generator::DFAbases(std::ostream&) const
@@ -1064,7 +1148,7 @@ Pattern(std::pair<unsigned int, unsigned int> const&)
     concatenate.cc: Pattern::concatenate(States&, Pattern const&, Pattern const&)
     duplicate.cc: Pattern::duplicate(States&) const
     eof.cc: Pattern::eof(States&)
-    escape.cc: Pattern::escape(States&, std::string const&)
+    escape.cc: Pattern::escape(States&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
     interval.cc: Pattern::interval(States&, Pattern&, Interval const&)
     join.cc: Pattern::join(States&, Pattern&, unsigned int, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > > const&)
     optionalpatterns.cc: Pattern::optionalPatterns(States&, Pattern&, unsigned int, unsigned int, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >&)
@@ -1073,12 +1157,12 @@ Pattern(std::pair<unsigned int, unsigned int> const&)
     plus.cc: Pattern::plus(States&, Pattern const&)
     quantifier.cc: Pattern::quantifier(States&, Pattern const&, unsigned int)
     questionmark.cc: Pattern::questionMark(States&, Pattern const&)
-    rawtext.cc: Pattern::rawText(States&, std::string const&)
+    rawtext.cc: Pattern::rawText(States&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
     star.cc: Pattern::star(States&, Pattern const&)
     handleloprule.cc: Rules::handleLopRule(unsigned int)
     rules1.cc: Rules::Rules(States&)
     lookahead.cc: Parser::lookahead(Pattern const&, Pattern const&)
-    parse.cc: ParserBase::pushToken__(int)
+    parse.cc: Parser::lookup(bool)
 
 pLex()
   Full name: Scanner::pLex()
@@ -1101,30 +1185,30 @@ popSc(int)
     lex.cc: Scanner::executeAction__(unsigned int)
 
 popStream()
+  Full name: ScannerBase::popStream()
+  Source:    lex.cc 
+  Used By:
+    popstream.cc: Scanner::popStream()
+
+popStream()
   Full name: Scanner::popStream()
   Source:    popstream.cc 
   Used By:
     lex.cc: Scanner::lex__()
     moreinput.cc: Scanner::moreInput()
 
-popStream()
-  Full name: ScannerBase::popStream()
-  Source:    lex.cc 
+predefined(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: CharRange::predefined(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Source:    predefined.cc 
   Used By:
-    popstream.cc: Scanner::popStream()
+    predefined.cc: CharClass::predefined(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
-predefined(std::string const&)
-  Full name: CharClass::predefined(std::string const&)
+predefined(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: CharClass::predefined(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    predefined.cc 
   Used By:
     dot.cc: Pattern::dot(States&)
     parse.cc: Parser::executeAction(int)
-
-predefined(std::string const&)
-  Full name: CharRange::predefined(std::string const&)
-  Source:    predefined.cc 
-  Used By:
-    predefined.cc: CharClass::predefined(std::string const&)
 
 predefinedAfter(unsigned int) const
   Full name: CharClass::predefinedAfter(unsigned int) const
@@ -1165,7 +1249,7 @@ push(ScannerBase::StartCondition__)
     handlerawstring.cc: Scanner::handleRawString()
     handlestdcomment.cc: Scanner::handleStdComment()
     newdefinition.cc: Scanner::newDefinition()
-    scanner1.cc: Scanner::Scanner(std::string const&)
+    scanner1.cc: Scanner::Scanner(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
     parse.cc: Parser::executeAction(int)
 
 pushNameExpansion()
@@ -1174,8 +1258,8 @@ pushNameExpansion()
   Used By:
     lex.cc: Scanner::executeAction__(unsigned int)
 
-pushStream(std::string const&)
-  Full name: ScannerBase::pushStream(std::string const&)
+pushStream(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: ScannerBase::pushStream(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    lex.cc 
   Used By:
     maybeswitchstream.cc: Scanner::maybeSwitchStream()
@@ -1199,8 +1283,8 @@ quotes()
   Used By:
     parse.cc: Parser::executeAction(int)
 
-range(std::string const&, std::string const&)
-  Full name: Interval::range(std::string const&, std::string const&)
+range(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Interval::range(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    range.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
@@ -1229,28 +1313,14 @@ ranges(std::ostream&) const
   Used By:
     data.cc: GLOBALS data.cc 10data.o
 
-rangeString(unsigned int) const
-  Full name: CharClass::rangeString(unsigned int) const
-  Source:    rangestring.cc 
-  Used By:
-    inversedrange.cc: CharClass::inversedRange(unsigned int) const
-    rangeafterrange.cc: CharClass::rangeAfterRange(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >) const
-
 rawString()
   Full name: Parser::rawString()
   Source:    rawstring.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
 
-rawStringContents() const
-  Full name: Scanner::rawStringContents() const
-  Source:    rawstringcontents.cc 
-  Used By:
-    parse.cc: Parser::executeAction(int)
-    rawstring.cc: Parser::rawString()
-
-rawText(States&, std::string const&)
-  Full name: Pattern::rawText(States&, std::string const&)
+rawText(States&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Pattern::rawText(States&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    rawtext.cc 
   Used By:
     boln.cc: Parser::boln()
@@ -1277,14 +1347,14 @@ removeRules(DFA const&, std::set<unsigned int, std::less<unsigned int>, std::all
   Used By:
     warnnonviable.cc: DFAs::warnNonViable() const
 
-replace(std::string, __gnu_cxx::__normal_iterator<std::pair<unsigned int, CharClass::CharType>*, std::vector<std::pair<unsigned int, CharClass::CharType>, std::allocator<std::pair<unsigned int, CharClass::CharType> > > >, unsigned int)
-  Full name: CharClass::replace(std::string, __gnu_cxx::__normal_iterator<std::pair<unsigned int, CharClass::CharType>*, std::vector<std::pair<unsigned int, CharClass::CharType>, std::allocator<std::pair<unsigned int, CharClass::CharType> > > >, unsigned int)
+replace(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, __gnu_cxx::__normal_iterator<std::pair<unsigned int, CharClass::CharType>*, std::vector<std::pair<unsigned int, CharClass::CharType>, std::allocator<std::pair<unsigned int, CharClass::CharType> > > >, unsigned int)
+  Full name: CharClass::replace(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, __gnu_cxx::__normal_iterator<std::pair<unsigned int, CharClass::CharType>*, std::vector<std::pair<unsigned int, CharClass::CharType>, std::allocator<std::pair<unsigned int, CharClass::CharType> > > >, unsigned int)
   Source:    replace.cc 
   Used By:
     inspect.cc: CharClass::inspect(__gnu_cxx::__normal_iterator<std::pair<unsigned int, CharClass::CharType>*, std::vector<std::pair<unsigned int, CharClass::CharType>, std::allocator<std::pair<unsigned int, CharClass::CharType> > > >)
 
-reRead(std::string const&, unsigned int)
-  Full name: ScannerBase::Input::reRead(std::string const&, unsigned int)
+reRead(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int)
+  Full name: ScannerBase::Input::reRead(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int)
   Source:    lex.cc 
   Used By:
     insertedcatchall.cc: Scanner::insertedCatchAll()
@@ -1314,12 +1384,6 @@ ruleFromFinalState(unsigned int) const
   Source:    rulefromfinalstate.cc 
   Used By:
     transit.cc: DFARow::transit(unsigned int, unsigned int, std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> >&)
-
-s_all
-  Full name: CharRange::s_all
-  Source:    data.cc 
-  Used By:
-    negate.cc: CharRange::negate(std::string const&)
 
 s_baseFlag
   Full name: Generator::s_baseFlag
@@ -1359,37 +1423,12 @@ s_dfaBase__
     push.cc: Scanner::push(ScannerBase::StartCondition__)
     switchtoinitial.cc: Scanner::switchToINITIAL()
 
-s_funHash
-  Full name: CharRange::s_funHash
-  Source:    data.cc 
-  Used By:
-    predefined.cc: CharRange::predefined(std::string const&)
-
-s_hash
-  Full name: CharRange::s_hash
-  Source:    data.cc 
-  Used By:
-    predefined.cc: CharRange::predefined(std::string const&)
-
 s_ignoreToken
   Full name: Parser::s_ignoreToken
   Source:    data.cc 
   Used By:
     parser1.cc: Parser::Parser(Rules&, States&)
     print.cc: Parser::print()
-
-s_insert
-  Full name: Generator::s_insert
-  Source:    data.cc 
-  Used By:
-    insert.cc: Generator::insert(std::ostream&) const
-
-s_lastMsg
-  Full name: Parser::s_lastMsg
-  Source:    data.cc 
-  Used By:
-    error.cc: Parser::error(char const*)
-    reset.cc: Parser::reset()
 
 s_namespaceBaseFlag
   Full name: Generator::s_namespaceBaseFlag
@@ -1409,13 +1448,6 @@ s_options
   Used By:
     instance.cc: Options::instance()
 
-s_out__
-  Full name: ParserBase::s_out__
-  Source:    parse.cc 
-  Used By:
-    lookahead.cc: GLOBALS lookahead.cc 2lookahead.o
-    quotes.cc: Parser::quotes()
-
 s_regexCall
   Full name: Options::s_regexCall
   Source:    data.cc 
@@ -1432,21 +1464,11 @@ s_verbose
   Full name: DFA::s_verbose
   Source:    data.cc 
   Used By:
-    build.cc: DFA::build(std::string const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
+    build.cc: DFA::build(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
     dfa1.cc: DFA::DFA(Ranges&, Rules&, States&)
     keepuniquerows.cc: DFA::keepUniqueRows()
     setverbose.cc: DFA::setVerbose(bool)
     shrinkdfa.cc: DFA::shrinkDFA(std::vector<unsigned int, std::allocator<unsigned int> >&)
-
-s_warnOptions
-  Full name: Options::s_warnOptions
-  Source:    data.cc 
-  Used By:
-    errexisting.cc: Generator::errExisting(std::string const&, std::string const&, std::string const&) const
-    assign.cc: Options::assign(FlexTypes::TextType, std::string*, Options::PathType, char const*)
-    setaccessorvariables.cc: Options::setAccessorVariables()
-    setclassname.cc: Options::setClassName(FlexTypes::TextType)
-    setoptionpath.cc: Options::setOptionPath(std::string*, int, std::string const&, char const*, char const*)
 
 sameTransits(FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > > const&, FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > > const&)
   Full name: DFARow::sameTransits(FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > > const&, FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > > const&)
@@ -1454,17 +1476,17 @@ sameTransits(FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair
   Used By:
     operatorequal.cc: DFARow::operator==(DFARow const&) const
 
-Scanner(std::string const&)
-  Full name: Scanner::Scanner(std::string const&)
+Scanner(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Scanner::Scanner(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    scanner1.cc 
   Used By:
     parser1.cc: Parser::Parser(Rules&, States&)
 
-ScannerBase(std::string const&, std::string const&)
-  Full name: ScannerBase::ScannerBase(std::string const&, std::string const&)
+ScannerBase(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: ScannerBase::ScannerBase(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    lex.cc 
   Used By:
-    scanner1.cc: Scanner::Scanner(std::string const&)
+    scanner1.cc: Scanner::Scanner(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
 scannerConstructors(std::ostream&) const
   Full name: Generator::scannerConstructors(std::ostream&) const
@@ -1483,7 +1505,7 @@ set()
   Source:    set.cc 
   Used By:
     difference.cc: CharClass::difference(CharClass&, CharClass&)
-    str.cc: CharClass::str()
+    str.cc: CharClass::str[abi:cxx11]()
     unite.cc: CharClass::unite(CharClass&, CharClass&)
 
 setAccessorVariables()
@@ -1522,13 +1544,13 @@ setLexFunctionName(FlexTypes::TextType)
   Used By:
     parse.cc: Parser::executeAction(int)
 
-setLineTags(std::string const&) const
-  Full name: Scanner::setLineTags(std::string const&) const
+setLineTags(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
+  Full name: Scanner::setLineTags(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
   Source:    setlinetags.cc 
   Used By:
     maybeswitchstream.cc: Scanner::maybeSwitchStream()
     popstream.cc: Scanner::popStream()
-    scanner1.cc: Scanner::Scanner(std::string const&)
+    scanner1.cc: Scanner::Scanner(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
 setLopBlocks()
   Full name: Rules::setLopBlocks()
@@ -1536,14 +1558,14 @@ setLopBlocks()
   Used By:
     handleloprules.cc: Rules::handleLopRules()
 
-setOptionPath(std::string*, int, std::string const&, char const*, char const*)
-  Full name: Options::setOptionPath(std::string*, int, std::string const&, char const*, char const*)
+setOptionPath(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, char const*, char const*)
+  Full name: Options::setOptionPath(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, char const*, char const*)
   Source:    setoptionpath.cc 
   Used By:
     setpathstrings.cc: Options::setPathStrings()
 
-setParserInfo(std::string const&, std::string const&)
-  Full name: Options::setParserInfo(std::string const&, std::string const&)
+setParserInfo(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  Full name: Options::setParserInfo(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    setparserinfo.cc 
   Used By:
     parser1.cc: Parser::Parser(Rules&, States&)
@@ -1602,19 +1624,19 @@ State(unsigned char, unsigned int)
   Full name: State::State(unsigned char, unsigned int)
   Source:    state6.cc 
   Used By:
-    escape.cc: Pattern::escape(States&, std::string const&)
-    rawtext.cc: Pattern::rawText(States&, std::string const&)
+    escape.cc: Pattern::escape(States&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+    rawtext.cc: Pattern::rawText(States&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
 State(unsigned int, StateData*)
   Full name: State::State(unsigned int, StateData*)
   Source:    state3.cc 
   Used By:
     state4.cc: State::State(unsigned int, unsigned int, unsigned int)
-    state5.cc: State::State(unsigned int, std::string const&, unsigned int, unsigned int)
+    state5.cc: State::State(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int, unsigned int)
     state6.cc: State::State(unsigned char, unsigned int)
 
-State(unsigned int, std::string const&, unsigned int, unsigned int)
-  Full name: State::State(unsigned int, std::string const&, unsigned int, unsigned int)
+State(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int, unsigned int)
+  Full name: State::State(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int, unsigned int)
   Source:    state5.cc 
   Used By:
     characterclass.cc: Pattern::characterClass(States&, CharClass&)
@@ -1629,7 +1651,7 @@ State(unsigned int, unsigned int, unsigned int)
     jumptoend.cc: Pattern::jumpToEnd(States&, std::vector<std::pair<unsigned int, unsigned int>, std::allocator<std::pair<unsigned int, unsigned int> > >&, unsigned int, unsigned int, FBB::LinearMap<unsigned int, unsigned int, std::allocator<std::pair<unsigned int const, unsigned int> > >&)
     plus.cc: Pattern::plus(States&, Pattern const&)
     questionmark.cc: Pattern::questionMark(States&, Pattern const&)
-    rawtext.cc: Pattern::rawText(States&, std::string const&)
+    rawtext.cc: Pattern::rawText(States&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
     star.cc: Pattern::star(States&, Pattern const&)
     next2.cc: States::next2()
     next3.cc: States::next(unsigned int)
@@ -1641,39 +1663,26 @@ StateData(unsigned int, unsigned int)
     state4.cc: State::State(unsigned int, unsigned int, unsigned int)
     state6.cc: State::State(unsigned char, unsigned int)
     vclone.cc: StateData::v_clone() const
-    statestring1.cc: StateString::StateString(std::string const&, unsigned int, unsigned int)
+    statestring1.cc: StateString::StateString(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int, unsigned int)
 
-StateString(std::string const&, unsigned int, unsigned int)
-  Full name: StateString::StateString(std::string const&, unsigned int, unsigned int)
+StateString(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int, unsigned int)
+  Full name: StateString::StateString(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int, unsigned int)
   Source:    statestring1.cc 
   Used By:
-    state5.cc: State::State(unsigned int, std::string const&, unsigned int, unsigned int)
+    state5.cc: State::State(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int, unsigned int)
     vclone.cc: StateString::v_clone() const
-
-str()
-  Full name: CharClass::str()
-  Source:    str.cc 
-  Used By:
-    characterclass.cc: Pattern::characterClass(States&, CharClass&)
-    negate1.cc: CharClass::negate()
 
 subsetCount()
   Full name: Ranges::subsetCount()
   Source:    subsetcount.cc 
   Used By:
-    update.cc: Ranges::update(std::string const&, unsigned int const*)
+    update.cc: Ranges::update(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int const*)
 
 switchToINITIAL()
   Full name: Scanner::switchToINITIAL()
   Source:    switchtoinitial.cc 
   Used By:
     lex.cc: Scanner::executeAction__(unsigned int)
-
-symbol__(int) const
-  Full name: ParserBase::symbol__(int) const
-  Source:    parse.cc 
-  Used By:
-    print.cc: Parser::print()
 
 tabulate(FBB::Table&) const
   Full name: DFARow::tabulate(FBB::Table&) const
@@ -1693,20 +1702,11 @@ tabulateTransitions(FBB::Table&) const
   Used By:
     tabulate.cc: DFARow::tabulate(FBB::Table&) const
 
-tagMinuses(unsigned int, std::string const&, unsigned int)
-  Full name: CharClass::tagMinuses(unsigned int, std::string const&, unsigned int)
+tagMinuses(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int)
+  Full name: CharClass::tagMinuses(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int)
   Source:    tagminuses.cc 
   Used By:
     inspect.cc: CharClass::inspect(__gnu_cxx::__normal_iterator<std::pair<unsigned int, CharClass::CharType>*, std::vector<std::pair<unsigned int, CharClass::CharType>, std::allocator<std::pair<unsigned int, CharClass::CharType> > > >)
-
-textOf(FlexTypes::TextType)
-  Full name: Options::textOf(FlexTypes::TextType)
-  Source:    textof.cc 
-  Used By:
-    assign.cc: Options::assign(FlexTypes::TextType, std::string*, Options::PathType, char const*)
-    setclassname.cc: Options::setClassName(FlexTypes::TextType)
-    setfilenames.cc: Options::setFilenames(FlexTypes::TextType)
-    setlexfunctionname.cc: Options::setLexFunctionName(FlexTypes::TextType)
 
 transit(unsigned int, unsigned int, std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> >&)
   Full name: DFARow::transit(unsigned int, unsigned int, std::set<unsigned int, std::less<unsigned int>, std::allocator<unsigned int> >&)
@@ -1718,7 +1718,7 @@ transitions()
   Full name: DFARow::transitions()
   Source:    transitions.cc 
   Used By:
-    build.cc: DFA::build(std::string const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
+    build.cc: DFA::build(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::vector<unsigned int, std::allocator<unsigned int> > const&)
 
 uniqueMap(std::vector<unsigned int, std::allocator<unsigned int> > const&)
   Full name: DFARow::uniqueMap(std::vector<unsigned int, std::allocator<unsigned int> > const&)
@@ -1732,11 +1732,11 @@ unite(CharClass&, CharClass&)
   Used By:
     parse.cc: Parser::executeAction(int)
 
-update(std::string const&, unsigned int const*)
-  Full name: Ranges::update(std::string const&, unsigned int const*)
+update(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int const*)
+  Full name: Ranges::update(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int const*)
   Source:    update.cc 
   Used By:
-    add.cc: Ranges::add(std::string const&)
+    add.cc: Ranges::add(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
 useAll()
   Full name: StartConditions::useAll()
@@ -1748,11 +1748,11 @@ v_clone() const
   Full name: StateString::v_clone() const
   Source:    vclone.cc 
   Used By:
-    add.cc: Ranges::add(std::string const&)
+    add.cc: Ranges::add(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
     add3.cc: Ranges::add(unsigned int)
     charsettoranges.cc: Ranges::charsetToRanges(StateData&, unsigned int*)
     chcollision.cc: Ranges::chCollision(unsigned char, unsigned char&, unsigned int const*)
-    collision.cc: Ranges::collision(std::string const&, unsigned int const*)
+    collision.cc: Ranges::collision(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int const*)
     countranges.cc: Ranges::countRanges(unsigned int&, std::vector<unsigned int, std::allocator<unsigned int> >&)
     destructor.cc: Ranges::~Ranges()
     determinesubsets.cc: Ranges::determineSubsets()
@@ -1768,7 +1768,7 @@ v_clone() const
     ranges3.cc: Ranges::Ranges(Ranges&&)
     reassign.cc: Ranges::reassign(unsigned int&, std::vector<unsigned int, std::allocator<unsigned int> >&)
     subsetcount.cc: Ranges::subsetCount()
-    update.cc: Ranges::update(std::string const&, unsigned int const*)
+    update.cc: Ranges::update(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int const*)
     contains.cc: State::contains(unsigned int) const
     dup.cc: State::dup(State const&, unsigned int, unsigned int)
     operatorinsert.cc: operator<<(std::ostream&, State const&)
@@ -1776,9 +1776,9 @@ v_clone() const
     state2.cc: State::State(unsigned int)
     state3.cc: State::State(unsigned int, StateData*)
     state4.cc: State::State(unsigned int, unsigned int, unsigned int)
-    state5.cc: State::State(unsigned int, std::string const&, unsigned int, unsigned int)
+    state5.cc: State::State(unsigned int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int, unsigned int)
     state6.cc: State::State(unsigned char, unsigned int)
-    statestring1.cc: StateString::StateString(std::string const&, unsigned int, unsigned int)
+    statestring1.cc: StateString::StateString(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned int, unsigned int)
 
 v_clone() const
   Full name: StateData::v_clone() const
@@ -1796,14 +1796,14 @@ version
   Full name: version
   Source:    version.cc 
   Used By:
-    usage.cc: usage(std::string const&)
+    usage.cc: usage(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
     filter.cc: Generator::filter(std::istream&, std::ostream&) const
 
 year
   Full name: year
   Source:    version.cc 
   Used By:
-    usage.cc: usage(std::string const&)
+    usage.cc: usage(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
 ~Ranges()
   Full name: Ranges::~Ranges()
