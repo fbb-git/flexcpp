@@ -30,28 +30,34 @@
 #define LDFLAGS             ""
 
 
+// COMPONENTS TO INSTALL
+// =====================
 
-// =========================================================================
-// Deactivate (e.g., use //#define ...) the following #defines to prevent
-// installation of the indicated component by 'build install'
-// 'build install base' can be used to specify a base directory below which
-// all components are installed (e.g., flexc++  is then installed in
-// 'base + BINARY')
-// =========================================================================
+    // For an operational non-Debian installation, you probably must be
+    // `root'.
 
+    // If necessary, adapt DOC, HDR, LIB and MAN (below) to your situation.
+    // The provided locations are used by Debian Linux.
 
-    // the directory where Flexc++ is installed
-#define BINARY     "/usr/bin"
+    // With 'build install' you can dynamically specify a location to prepend
+    // to the locations configured here, and select which components you want 
+    // to install
 
-    // the directory where the skeleton files are installed
-#define SKEL    "/usr/share/"${PROGRAM}
+// ONLY USE ABSOLUTE DIRECTORY NAMES:
+
+    // the final program
+#define BINARY  "/usr/bin/"${PROGRAM}
+
+    // the directory where the standard documentation is stored 
+#define DOC    "/usr/share/doc/"${PROGRAM}
 
     // the directory below whre the manual pages are stored (below 
     //                                          /man1, /man3 and /man7)
 #define MAN     "/usr/share/man"
 
-    // the directory whre the manual page is stored
-#define MANUAL   "/usr/share/doc/"${PROGRAM}"/manual"
+    // the directory where the skeleton files are installed
+#define SKEL    "/usr/share/"${PROGRAM}
 
-    // the directory where the standard documentation is stored 
-#define STD     "/usr/share/doc/"${PROGRAM}
+    // the directory where the user guide is stored
+#define UGUIDE   "/usr/share/doc/"${PROGRAM}"/manual"
+
