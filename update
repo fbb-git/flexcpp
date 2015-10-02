@@ -3,6 +3,13 @@
 _project_=flexcpp
 _product_=flexc++
 
+echo if any modified or untracked files are shown, handle these first:
+echo
+git st
+echo -n "Continue [y/n] ? "
+read yesno
+[ "$yesno" == "y" ] || exit 0
+
 echo -n "Need to (re)create ${_project_}'s wip files for gh-pages [y/n] ? "
 read yesno
 
@@ -42,11 +49,17 @@ git co master [y/n] ? "
 read yesno
 
 if [ "$yesno" == "y" ] ; then
-    echo -n "Enter the ci message: "
+    RELEASE=`head -n1 ../wip/release.yo | 
+                sed 's/SUBST(_CurVers_)(\(.*\))/\1/'`
+
+    msgDefault="gh-pages for release ${RELEASE}"
+
+    echo -n "Enter the ci message [default: $msgDefault]"
+
     read msg;
 
-    RELEASE=`head -n1 ../wip/release.yo | 
-		sed 's/SUBST(_CurVers_)(\(.*\))/\1/'`
+    [ "$msg" == "" ] && msg=$msgDefault
+
     git ci -am "$msg"
 
     git push
