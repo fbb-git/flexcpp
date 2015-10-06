@@ -6,9 +6,9 @@ _product_=flexc++
 echo if any modified or untracked files are shown, handle these first:
 echo
 git st
-echo -n "Continue [y/n] ? "
+echo -n "Continue [Yn] ? "
 read yesno
-[ "$yesno" == "y" ] || exit 0
+[ "$yesno" == "y" -o "$yesno" == "" ]   ||   exit 0
 
 echo -n "Need to (re)create ${_project_}'s wip files for gh-pages [y/n] ? "
 read yesno
@@ -24,31 +24,32 @@ if [ "$yesno" == "y" ] ; then
     ./build distclean
     cd ..    
     git co gh-pages
-fi
 
-cp -r ../wip/changelog.txt ../wip/manhtml ../wip/manual .
+    cp -r ../wip/changelog.txt ../wip/manhtml ../wip/manual .
+fi
 
 echo
 echo -n "Check index.yo: version and last 5 releases [y/n] ? "
 read yesno
 
 if [ "$yesno" == "y" ] ; then
+    cat ../wip/release.yo
     emacs index.yo
 fi
 
 yodl2html index.yo || exit 1
+
 
 echo "Running 'git st': check for unexpected files"
 git st
 
 echo
 
-echo -n "git ci changes to index.html etc., push the result and \
-git co master [y/n] ? "
-
+echo -n "ci change to index.html etc., push the result and co master [y/n] ? "
 read yesno
 
 if [ "$yesno" == "y" ] ; then
+
     RELEASE=`head -n1 ../wip/release.yo | 
                 sed 's/SUBST(_CurVers_)(\(.*\))/\1/'`
 
@@ -61,9 +62,6 @@ if [ "$yesno" == "y" ] ; then
     [ "$msg" == "" ] && msg=$msgDefault
 
     git ci -am "$msg"
-
     git push
     git co master
 fi
-
-
