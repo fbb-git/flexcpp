@@ -31,54 +31,56 @@ the following steps:
             ./build manual
         builds the manual.
 
-    6. Run (probably as root) 
+    5. Run (probably as root) 
 
-            ./build install 'what' 'base'
+            ./build install 'LOG:path' 'what' 'base'
 
-        to install. Here, 'what' specifies what you want to install.
-        Specify:
-                  x, to install all components,
-        or specify a combination of:
-                  b (binary program),
-                  d (standard documentation),
-                  m (man-pages)
-                  s (skeleton files)
-                  u (user guide)
+        to install components of Flexc++. 
 
-        E.g., use 
-            ./build install bs 'base'
-        if you only want to be able to run flexc++, and want it to be
-        installed below 'base'. 
+        Here, 
+            'LOG:path' is an optional item specifying the absolute or relative
+                path of a log file to contain a log of all installed files (see
+                also the next item). Using LOG:~/.flexcpp usually works
+                well. Do not put any blanks between LOG: and the path
+                specification, or protect the LOG: specification by quotes.
 
-        ./build install's last argument 'base' is optional: the base directory
-        below which the requested files are installed. This base directory is
-        prepended to the paths #defined in the INSTALL.im file. If 'base' is
-        not specified, then INSTALL.im's #defined paths are used as-is.
+            'what' specifies what you want to install.
+                Specify:
+                          x, to install all components,
+                or specify a combination of:
+                          b (binary program),
+                          d (standard documentation),
+                          m (man-pages)
+                          s (skeleton files)
+                          u (user guide)
+                E.g., use 
+                    ./build install bs 'base'
+                if you only want to be able to run flexc++, and want it to be
+                installed below 'base'. 
 
-        When requesting non-existing elements (e.g., ./build install x was
-        requested, but the man-pages weren't constructed) then these
-        non-existing elements are silently ignored by the installation
-        process.
+                When requesting non-existing elements (e.g., ./build install x
+                was requested, but the man-pages weren't constructed) then
+                these non-existing elements are silently ignored by the
+                installation process.
+    
+            'base' is optional and specifies the base directory below which
+                the requested files are installed. This base directory is
+                prepended to the paths #defined in the INSTALL.im file. If
+                'base' is not specified, then INSTALL.im's #defined paths are
+                used as-is.
 
-        If the environment variable FLEXCPP was defined when issuing the
-        `./build install ...' command then a log of all installed files is
-        written to the file indicated by the FLEXCPP environment variable
-        (see also the next item).
+    6.  Uninstalling previously installed components of Flexc++ is easy if a
+        log path (LOG:...) was specified at the `./build install ...'
+        command. In that case, run the command
 
-        Defining the FLEXCPP environment variable as ~/.flexcpp usually
-        works well.
+            ./build uninstall logpath
 
-    7.  Uninstalling previously installed components of Flexc++ is easy if the
-        environment variable FLEXCPP was defined before issuing the 
-        `./build install ...' command. In that case, run the command
+        where 'logpath' specifies the location of the logfile that was
+        written by ./build install.  Modified files and non-empty directories
+        are not removed, but the logfile itself is removed following the
+        uninstallation.
 
-            ./build uninstall logfile
-
-        where 'logfile' is the file that was written by ./build install.
-        Modified files and non-empty directories are not removed, but the
-        logfile itself is removed following the uninstallation.
-
-    8. Following the installation nothing in the directory tree which contains
+    7. Following the installation nothing in the directory tree which contains
         this file (i.e., INSTALL) is required for the proper functioning of
         flexc++, so consider removing it. If you only want to remove
         left-over files from the build-process, just run
