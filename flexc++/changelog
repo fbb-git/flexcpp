@@ -1,9 +1,16 @@
 flexc++ (2.03.04) NOT YET TAGGED
 
-  * 'build install' uses an optional -l argument: the (relative or
-    absolute) path to the logfile to use. The environment variable BISONCPP is
-    no longer used.
+  * Fixed a memory leak reported by gendx caused by the missing ScannerBase
+    destructor.
 
+  * 'build install' supports an optional LOG: argument: the (relative or
+    absolute) path to a installation log file. The environment variable
+    FLEXCPP is no longer used.
+
+  * Updated the usage info displayed by `./build', altered the procedure to
+    install the files at their final destinations.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 28 Oct 2015 14:39:40 +0100
 
 flexc++ (2.03.03)
 

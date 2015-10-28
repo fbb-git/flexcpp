@@ -152,6 +152,7 @@ protected:
 $ignoreInteractive BEGIN    this section is ignored by generator/filter.cc
     \@Base(std::string const &infilename, std::string const &outfilename);
 $ignoreInteractive END      end ignored section by generator/filter.cc
+    ~\@Base();
 
     StartCondition__  startCondition() const;   // current start condition
     bool            popStream();
@@ -225,6 +226,11 @@ private:
     static StartCondition__ constexpr SC(int sc);
     static int constexpr SC(StartCondition__ sc);
 };
+
+inline \@Base::~\@Base()
+{
+    d_input.close();
+}
 
 template <typename ReturnType, typename ArgType>
 inline ReturnType constexpr \@Base::as(ArgType value)
