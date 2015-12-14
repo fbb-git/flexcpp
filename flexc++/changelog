@@ -1,4 +1,4 @@
-flexc++ (2.03.04) NOT YET TAGGED
+flexc++ (2.03.04)
 
   * Fixed a memory leak reported by gendx caused by the missing ScannerBase
     destructor.
@@ -10,7 +10,9 @@ flexc++ (2.03.04) NOT YET TAGGED
   * Updated the usage info displayed by `./build', altered the procedure to
     install the files at their final destinations.
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 28 Oct 2015 14:39:40 +0100
+  * Icmake files adapted to icmake 8.00.04
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 14 Dec 2015 15:37:58 +0100
 
 flexc++ (2.03.03)
 
