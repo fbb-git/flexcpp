@@ -1,3 +1,19 @@
+flexc++ (2.03.04)
+
+  * Fixed a memory leak reported by gendx caused by the missing ScannerBase
+    destructor.
+
+  * 'build install' supports an optional LOG: argument: the (relative or
+    absolute) path to a installation log file. The environment variable
+    FLEXCPP is no longer used.
+
+  * Updated the usage info displayed by `./build', altered the procedure to
+    install the files at their final destinations.
+
+  * Icmake files adapted to icmake 8.00.04
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 14 Dec 2015 15:37:58 +0100
+
 flexc++ (2.03.03)
 
   * Kevin Brodsky observed that the installation scripts used 'chdir' rather

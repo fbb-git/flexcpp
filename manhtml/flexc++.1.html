@@ -8,10 +8,10 @@
 <link rev="made" href="mailto:Frank B. Brokken: f.b.brokken@rug.nl">
 </head>
 <body text="#27408B" bgcolor="#FFFAF0">
-<hr>
-<h1>flexc++</h1>
-<h2>flexc++.2.03.03.tar.gz</h2>
-<h2>2008-2015</h2>
+<hr/>
+<h1 id="title">flexc++</h1>
+<h2 id="author">flexc++.2.03.04.tar.gz</h2>
+<h2 id="date">2008-2015</h2>
 
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
@@ -24,8 +24,8 @@
 <link rev="made" href="mailto:Frank B. Brokken: f.b.brokken@rug.nl">
 </head>
 <body text="#27408B" bgcolor="#FFFAF0">
-<hr>
-<h1></h1>
+<hr/>
+<h1 id="title"></h1>
 
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
@@ -41,10 +41,10 @@
 <link rev="made" href="mailto:Frank B. Brokken: f.b.brokken@rug.nl">
 </head>
 <body text="#27408B" bgcolor="#FFFAF0">
-<hr>
-<h1>flexc++(1)</h1>
-<h2>flexc++.2.03.03.tar.gz flexc++ scanner generator</h2>
-<h2>2008-2015</h2>
+<hr/>
+<h1 id="title">flexc++(1)</h1>
+<h2 id="author">flexc++.2.03.04.tar.gz flexc++ scanner generator</h2>
+<h2 id="date">2008-2015</h2>
 
 
 <p>
@@ -437,7 +437,7 @@ option is omitted, then <strong>flexc++</strong> does not detect the inconsisten
 cases you may encounter compilation errors.
 <p>
 <ul>
-    <li> <strong>--baseclass-header</strong>=<em>filename</em> (<strong>-b</strong>)<br>
+    <li> <strong>--baseclass-header</strong>=<em>filename</em> (<strong>-b</strong>)<br/>
           Use <em>filename</em> as the name of the file to contain the scanner
            class's base class. Defaults to the name of the scanner class plus
            <em>base.h</em>
@@ -446,12 +446,12 @@ It is an error if this option is used and an already
             existing scanner-class header file does not include
             <em>`filename'</em>. 
 <p>
-<li> <strong>--baseclass-skeleton</strong>=<em>pathname</em> (<strong>-C</strong>)<br> 
+<li> <strong>--baseclass-skeleton</strong>=<em>pathname</em> (<strong>-C</strong>)<br/> 
            Use <em>pathname</em> as the path to the file containing the skeleton of
             the scanner class's base class. Its filename defaults to
             <em>flexc++base.h</em>.
 <p>
-<li> <strong>--case-insensitive</strong><br>
+<li> <strong>--case-insensitive</strong><br/>
            Use this option to generate a scanner <em>case insensitively</em>
             matching regular expressions. All regular expressions specified in
             <strong>flexc++</strong>'s input file are interpreted case insensitively and the
@@ -482,12 +482,12 @@ Although the matching process proceeds case insensitively, the
             input <em>matched()</em> returns, respectively <em>first, First, FIRST</em>
             and <em>firST</em>, while matching the rule <em>First</em>.
 <p>
-<li> <strong>--class-header</strong>=<em>filename</em> (<strong>-c</strong>)<br>
+<li> <strong>--class-header</strong>=<em>filename</em> (<strong>-c</strong>)<br/>
            Use <em>filename</em> as the name of the file to contain the scanner
             class. Defaults to the name of the scanner class plus the suffix
             <em>.h</em>
 <p>
-<li> <strong>--class-name</strong>=<em>className</em><br>
+<li> <strong>--class-name</strong>=<em>className</em><br/>
            Use <em>className</em> (rather than <em>Scanner</em>) as the name of the
             scanner class. Unless overridden by other options generated files
             will be given the (transformed to lower case) <em>className*</em> name
@@ -497,17 +497,17 @@ It is an error if this option is used and an already
             existing scanner-class header file does not define <em>class
             `className'</em>
 <p>
-<li> <strong>--class-skeleton</strong>=<em>pathname</em> (<strong>-C</strong>)<br>
+<li> <strong>--class-skeleton</strong>=<em>pathname</em> (<strong>-C</strong>)<br/>
            Use <em>pathname</em> as the path to the file containing the skeleton of
             the scanner class. Its filename defaults to <em>flexc++.h</em>.
 <p>
-<li> <strong>--construction</strong> (<strong>-K</strong>)<br>
+<li> <strong>--construction</strong> (<strong>-K</strong>)<br/>
            Write details about the lexical scanner to the file
             <em>`rules-file'.output</em>. Details cover the used character ranges,
             information about the regexes, the raw NFA states, and the final
             DFAs.
 <p>
-<li> <strong>--debug</strong> (<strong>-d</strong>)<br> 
+<li> <strong>--debug</strong> (<strong>-d</strong>)<br/> 
            Provide <em>lex</em> and its support functions with debugging code,
             showing the actual parsing process on the standard output
             stream. When included, the debugging output is active by default,
@@ -517,17 +517,17 @@ It is an error if this option is used and an already
             equivalent scanner is generated not containing the debugging
             code. 
 <p>
-<li> <strong>--filenames</strong>=<em>genericName</em> (<strong>-f</strong>)<br>
+<li> <strong>--filenames</strong>=<em>genericName</em> (<strong>-f</strong>)<br/>
            Generic name of generated files (header files, not the
             <em>lex</em>-function source file, see the <em>--lex-source</em> option for
             that). By default the header file names will be equal to the name
             of the generated class.
 <p>
-<li> <strong>--help</strong> (<strong>-h</strong>)<br>
+<li> <strong>--help</strong> (<strong>-h</strong>)<br/>
             Write basic usage information to the standard output stream and
             terminate. 
 <p>
-<li> <strong>--implementation-header</strong>=<em>filename</em> (<strong>-i</strong>)<br> 
+<li> <strong>--implementation-header</strong>=<em>filename</em> (<strong>-i</strong>)<br/> 
            Use <em>filename</em> as the name of the file to contain the
             implementation header. Defaults to the name of the generated
             scanner class plus the suffix <em>.hh</em>. The implementation header
@@ -544,25 +544,25 @@ It is an error if this option is used and an already
             <em>'filename'</em> file does not include the scanner class header
             file.
 <p>
-<li> <strong>--implementation-skeleton</strong>=<em>pathname</em> (<strong>-I</strong>)<br>
+<li> <strong>--implementation-skeleton</strong>=<em>pathname</em> (<strong>-I</strong>)<br/>
            Use <em>pathname</em> as the path to the file containing the skeleton of
             the implementation header. Its filename defaults to
             <em>flexc++.hh</em>.
 <p>
-<li> <strong>--lex-skeleton</strong>=<em>pathname</em> (<strong>-L</strong>)<br>
+<li> <strong>--lex-skeleton</strong>=<em>pathname</em> (<strong>-L</strong>)<br/>
            Use <em>pathname</em> as the path to the file containing the
             <em>lex()</em> member function's skeleton. Its filename defaults to
             <em>flexc++.cc</em>.
 <p>
-<li> <strong>--lex-function-name</strong>=<em>funname</em><br>
+<li> <strong>--lex-function-name</strong>=<em>funname</em><br/>
            Use <em>funname</em> rather than <em>lex</em> as the name of the member
             function performing the lexical scanning.
 <p>
-<li> <strong>--lex-source</strong>=<em>filename</em> (<strong>-l</strong>)<br>
+<li> <strong>--lex-source</strong>=<em>filename</em> (<strong>-l</strong>)<br/>
            Define <em>filename</em> as the name of the source file to contain the
             scanner member function <em>lex</em>. Defaults to <em>lex.cc</em>.
 <p>
-<li> <strong>--matched-rules</strong> (<strong>-'R'</strong>)<br>
+<li> <strong>--matched-rules</strong> (<strong>-'R'</strong>)<br/>
            The generated scanner will write the numbers of matched rules to 
             the standard output. It is implied by the <em>--debug</em> option.
             Displaying the matched rules can be suppressed by calling the
@@ -570,14 +570,14 @@ It is an error if this option is used and an already
             re-generating the scanner without using specifying 
             <em>--matched-rules</em>).
 <p>
-<li> <strong>--max-depth</strong>=<em>depth</em> (<strong>-m</strong>)<br>
+<li> <strong>--max-depth</strong>=<em>depth</em> (<strong>-m</strong>)<br/>
            Set the maximum inclusion depth of the lexical scanner's
             specification files to <em>depth</em>. By default the maximum depth is
             set to 10. When more than <em>depth</em> specification files are used
             the scanner throws a <em>Max stream stack size exceeded</em>
             <em>std::length_error</em> exception. 
 <p>
-<li> <strong>--namespace</strong>=<em>identifier</em> <br>
+<li> <strong>--namespace</strong>=<em>identifier</em> <br/>
            Define the scanner class in the namespace <em>identifier</em>. By default
             no namespace is used. If this options is used the
             implementation header is provided with a commented out <em>using
@@ -589,13 +589,13 @@ It is an error if this option is used and an already
             scanner-class header file does not define <em>namespace
             identifier</em>. 
 <p>
-<li> <strong>--no-baseclass-header</strong><br>
+<li> <strong>--no-baseclass-header</strong><br/>
            Do not write the file containing the scanner's base class interface
             even if it doesn't yet exist. By default the file containing the
             scanner's base class interface is (re)written each time <strong>flexc++</strong> is
             called.
 <p>
-<li> <strong>--no-lines</strong><br> 
+<li> <strong>--no-lines</strong><br/> 
            Do not put <strong>#line</strong> preprocessor directives in the file containing
             the scanner's <em>lex</em> function. By default <em>#line</em> directives
             are entered at the beginning of the action statements in the
@@ -604,7 +604,7 @@ It is an error if this option is used and an already
             file, rather than with the source file containing the <em>lex</em>
             function itself.
 <p>
-<li> <strong>--no-lex-source</strong><br>
+<li> <strong>--no-lex-source</strong><br/>
            Do not write the file containing the scanner's predefined scanner
             member functions, even if that file doesn't yet exist. By default
             the file containing the scanner's <em>lex</em> member function is
@@ -613,7 +613,7 @@ It is an error if this option is used and an already
             tables which are altered whenever the grammar definition is
             modified. 
 <p>
-<li> <strong>--own-tokens</strong> (<strong>-T</strong>)<br> 
+<li> <strong>--own-tokens</strong> (<strong>-T</strong>)<br/> 
            The tokens returned as well as the text matched when <strong>flexc++</strong> reads
             its input files(s) are shown when this option is used.
 <p>
@@ -621,7 +621,7 @@ This option does <em>not</em> result in the generated program displaying
             returned tokens and matched text. If that is what you want, use
             the <em>--print-tokens</em> option.
 <p>
-<li> <strong>--print-tokens</strong> (<strong>-t</strong>)<br> 
+<li> <strong>--print-tokens</strong> (<strong>-t</strong>)<br/> 
            The tokens returned as well as the text matched by the generated
             <em>lex</em> function are displayed on the standard output stream, just
             before returning the token to <em>lex</em>'s caller. Displaying tokens
@@ -637,41 +637,41 @@ This option does <em>not</em> show the tokens returned and text matched
             by <strong>flexc++</strong> itself when reading its input <strong>s</strong>. If that is what
             you want, use the <em>--own-tokens</em> option.
 <p>
-<li> <strong>--regex-calls</strong><br> 
+<li> <strong>--regex-calls</strong><br/> 
            Show the function call order when parsing regular expressions (this
             option is normally not required. Its main purpose is to help
             developers understand what happens when regular expressions are
             parsed).
 <p>
-<li> <strong>--show-filenames</strong> (<strong>-F</strong>)<br> 
+<li> <strong>--show-filenames</strong> (<strong>-F</strong>)<br/> 
            Write the names of the files that are generated to the 
             standard error stream.
 <p>
-<li> <strong>--skeleton-directory</strong>=<em>pathname</em> (<strong>-S</strong>)<br> 
+<li> <strong>--skeleton-directory</strong>=<em>pathname</em> (<strong>-S</strong>)<br/> 
            Defines the directory containing the skeleton files. This option
             can be overridden by the specific skeleton-specifying options
             (<em>-B -C, -H,</em> and <em>-I</em>).
 <p>
-<li> <strong>--target-directory</strong>=<em>pathname</em> <br> 
+<li> <strong>--target-directory</strong>=<em>pathname</em> <br/> 
            Specifies the directory where generated files should be written.
             By default this is the directory where <strong>flexc++</strong> is called.
 <p>
-<li> <strong>--usage</strong> (<strong>-h</strong>)<br>
+<li> <strong>--usage</strong> (<strong>-h</strong>)<br/>
             Write basic usage information to the standard output stream and
             terminate. 
 <p>
-<li> <strong>--verbose</strong>(<strong>-V</strong>)<br> 
+<li> <strong>--verbose</strong>(<strong>-V</strong>)<br/> 
            The verbose option generates on the standard output stream various
             pieces of additional information, not covered by the
             <em>--construction</em> and <em>--show-filenames</em> options.
 <p>
-<li> <strong>--version</strong> (<strong>-v</strong>)<br>
+<li> <strong>--version</strong> (<strong>-v</strong>)<br/>
             Display <strong>flexc++</strong>'s version number and terminate.
     </ul>
 <p>
 <h2>FILES</h2>
 <p>
-<strong>Flexc++</strong>'s default skeleton files are in <em>/usr/share/flexc++</em>.<br>
+<strong>Flexc++</strong>'s default skeleton files are in <em>/usr/share/flexc++</em>.<br/>
     By default, <strong>flexc++</strong> generates the following files:
         <ul>
         <li> <em>Scanner.h</em>: the header file containing the scanner class's
@@ -715,7 +715,7 @@ stage; it will remain that way until we decide to move its version from the
     GNU General Public License (GPL).
 <p>
 <h2>AUTHOR</h2>
-    Frank B. Brokken (<strong>f.b.brokken@rug.nl</strong>),<br>
-    Jean-Paul van Oosten (<strong>j.p.van.oosten@rug.nl</strong>),<br>
-    Richard Berendsen (<strong>richardberendsen@xs4all.nl</strong>) (until 2010).<br>
+    Frank B. Brokken (<strong>f.b.brokken@rug.nl</strong>),<br/>
+    Jean-Paul van Oosten (<strong>j.p.van.oosten@rug.nl</strong>),<br/>
+    Richard Berendsen (<strong>richardberendsen@xs4all.nl</strong>) (until 2010).<br/>
 <p>

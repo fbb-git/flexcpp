@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> Flexc++ (Version 2.03.03) User Guide </title>
+<title> Flexc++ (Version 2.03.04) User Guide </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -85,7 +85,7 @@ matched and is returned.
 <ul>
     <li> The pattern <code>a/a+</code>:
 <p>
-<a name="NFA1FIG"></a><p><figure><img src="images/NFA1.jpg" alt="Figure 2 is shown here."/><br>
+<a name="NFA1FIG"></a><p><figure><img src="images/NFA1.jpg" alt="Figure 2 is shown here."/><br/>
 <figcaption>Figure 2: The pattern a/a+</figcaption>
 </figure></p>
 
@@ -95,7 +95,7 @@ Here, State 2 is the Final state
 <li> The pattern <code>a*/aaa</code>: All <code>a</code> symbols until
         the F-state (state 5) has been reached are counted:
 <p>
-<a name="NFA2FIG"></a><p><figure><img src="images/NFA2.jpg" alt="Figure 3 is shown here."/><br>
+<a name="NFA2FIG"></a><p><figure><img src="images/NFA2.jpg" alt="Figure 3 is shown here."/><br/>
 <figcaption>Figure 3: The pattern a*/aaa</figcaption>
 </figure></p>
 
@@ -105,7 +105,7 @@ The resulting DFA becomes:
 <p>
 <table>
 
-    <td colspan=4><hr></td>
+    <td colspan=4><hr/></td>
 
     
 <tr>
@@ -117,7 +117,7 @@ The resulting DFA becomes:
 <td> StateSet</td> <td align="center">a</td>         <td> F</td>  
 </tr>
 
-    <td colspan=4><hr></td>
+    <td colspan=4><hr/></td>
 
     
 <tr>
@@ -143,7 +143,7 @@ The resulting DFA becomes:
             <td> 12345</td>     <td> 12345</td> <td align="right">0</td>    
 </tr>
 
-    <td colspan=4><hr></td>
+    <td colspan=4><hr/></td>
 
     
 </table></div>
@@ -372,7 +372,7 @@ Starting from a pattern's initial state all its subsequent states can
 therefore be reached by visiting  the indices stored in
 <code>StateData</code>. 
 <p>
-<a name="STATEFIG"></a><p><figure><img src="images/state.jpg" alt="Figure 4 is shown here."/><br>
+<a name="STATEFIG"></a><p><figure><img src="images/state.jpg" alt="Figure 4 is shown here."/><br/>
 <figcaption>Figure 4: The State class</figcaption>
 </figure></p>
 
@@ -408,7 +408,7 @@ pattern</code>) all <code>next2</code> members return 0. The implementation of t
 <code>|</code>-operator is described <a href="flexc++06.html#PATTERNVALOR">here</a>.
     </ul>
 <p>
-<a name="STATECATFIG"></a><p><figure><img src="images/statecat.jpg" alt="Figure 5 is shown here."/><br>
+<a name="STATECATFIG"></a><p><figure><img src="images/statecat.jpg" alt="Figure 5 is shown here."/><br/>
 <figcaption>Figure 5: Catenating States</figcaption>
 </figure></p>
 
@@ -422,7 +422,7 @@ contains a reference to the <em>states</em> (see <a href="flexc++06.html#STATES"
 table linking a final state index back to its rule number (see figure
 <a href="flexc++06.html#RULESFIG">6</a>)
 <p>
-<a name="RULESFIG"></a><p><figure><img src="images/rules.jpg" alt="Figure 6 is shown here."/><br>
+<a name="RULESFIG"></a><p><figure><img src="images/rules.jpg" alt="Figure 6 is shown here."/><br/>
 <figcaption>Figure 6: The Rules class</figcaption>
 </figure></p>
 
@@ -454,7 +454,7 @@ Rules that are matched in some DFA state are <em>viable</em>: such rules can be
 matched. See section <a href="flexc++06.html#VIABLE">6.15</a> for a description of the algorithm that is
 used for finding (non)viable rules.
 <p>
-<a name="RULEFIG"></a><p><figure><img src="images/rule.jpg" alt="Figure 7 is shown here."/><br>
+<a name="RULEFIG"></a><p><figure><img src="images/rule.jpg" alt="Figure 7 is shown here."/><br/>
 <figcaption>Figure 7: The Rule class data members</figcaption>
 </figure></p>
 
@@ -605,7 +605,7 @@ defining the pattern, the value returned by <code>Pattern::end()</code> is the i
 of the last (so: <code>State::FINAL</code>) <code>State</code> of the pattern (cf. figure
 <a href="flexc++06.html#PATTERN">8</a>).
 <p>
-<a name="PATTERN"></a><p><figure><img src="images/pattern.jpg" alt="Figure 8 is shown here."/><br>
+<a name="PATTERN"></a><p><figure><img src="images/pattern.jpg" alt="Figure 8 is shown here."/><br/>
 <figcaption>Figure 8: Pattern objects</figcaption>
 </figure></p>
 
@@ -633,7 +633,7 @@ initialized to the <code>FINAL</code> state by <code>States::next2</code>.
 returned (cf. figure <a href="flexc++06.html#PATTERNVALPLAIN">9</a>).
     </ul>
 <p>
-<a name="PATTERNVALPLAIN"></a><p><figure><img src="images/patternvalplain.jpg" alt="Figure 9 is shown here."/><br>
+<a name="PATTERNVALPLAIN"></a><p><figure><img src="images/patternvalplain.jpg" alt="Figure 9 is shown here."/><br/>
 <figcaption>Figure 9: A plain character pattern</figcaption>
 </figure></p>
 
@@ -663,7 +663,7 @@ state
 <code>rhs.end()</code>. 
     </ul>
 <p>
-<a name="CONCATFIG"></a><p><figure><img src="images/concatfig.jpg" alt="Figure 10 is shown here."/><br>
+<a name="CONCATFIG"></a><p><figure><img src="images/concatfig.jpg" alt="Figure 10 is shown here."/><br/>
 <figcaption>Figure 10: Concatenating Patterns</figcaption>
 </figure></p>
 
@@ -701,7 +701,7 @@ the original input string, and the initial substring is passed to the
 remaining characters of the matched text still match <code>{tail}</code>. Figure
 <a href="flexc++06.html#LOPPROCEDURE">11</a> illustrates the algorithm.
 <p>
-<a name="LOPPROCEDURE"></a><p><figure><img src="images/lopprocedure.jpg" alt="Figure 11 is shown here."/><br>
+<a name="LOPPROCEDURE"></a><p><figure><img src="images/lopprocedure.jpg" alt="Figure 11 is shown here."/><br/>
 <figcaption>Figure 11: Look-ahead matching algorithm</figcaption>
 </figure></p>
 
@@ -855,7 +855,7 @@ As the pattern to match is <code>{head}{tail}</code>, the states of the <code>lh
 <code>rhs</code> expressions are concatenated, and the concatenated states are accessed
 though the object's <code>d_pair</code> member.
 <p>
-<a name="LOPDATA"></a><p><figure><img src="images/lopdata.jpg" alt="Figure 12 is shown here."/><br>
+<a name="LOPDATA"></a><p><figure><img src="images/lopdata.jpg" alt="Figure 12 is shown here."/><br/>
 <figcaption>Figure 12: Pattern data organization for LOP-expressions</figcaption>
 </figure></p>
 
@@ -978,7 +978,7 @@ appended to the rule's <code>lopf__(size_t tailLength)</code> call.
 To prepare the rules for their appropriate actions, consider figure
 <a href="flexc++06.html#LOPRULES">13</a>. 
 <p>
-<a name="LOPRULES"></a><p><figure><img src="images/setlopblocks.jpg" alt="Figure 13 is shown here."/><br>
+<a name="LOPRULES"></a><p><figure><img src="images/setlopblocks.jpg" alt="Figure 13 is shown here."/><br/>
 <figcaption>Figure 13: Providing rules with action blocks</figcaption>
 </figure></p>
 
@@ -1045,7 +1045,7 @@ than individual characters.
 The <code>Ranges</code> object takes care of defining and manipulating the actual 
 subsets. Its data organization is given in figure <a href="flexc++06.html#RANGESFIG">14</a>.
 <p>
-<a name="RANGESFIG"></a><p><figure><img src="images/ranges.jpg" alt="Figure 14 is shown here."/><br>
+<a name="RANGESFIG"></a><p><figure><img src="images/ranges.jpg" alt="Figure 14 is shown here."/><br/>
 <figcaption>Figure 14: The class Ranges data members</figcaption>
 </figure></p>
 
@@ -1072,7 +1072,7 @@ each of the start conditions. The DFA construction needs access to the rules,
 states and character ranges, which are available to the <code>DFAs</code> object)
 (cf. figure <a href="flexc++06.html#DFASFIG">15</a>)
 <p>
-<a name="DFASFIG"></a><p><figure><img src="images/dfas.jpg" alt="Figure 15 is shown here."/><br>
+<a name="DFASFIG"></a><p><figure><img src="images/dfas.jpg" alt="Figure 15 is shown here."/><br/>
 <figcaption>Figure 15: The DFAs class organization</figcaption>
 </figure></p>
 
@@ -1103,7 +1103,7 @@ scanner. <code>Build</code> constructs the start condition's DFA, see section <a
     The conversion from NFA to DFA is the job of the class <code>DFA</code> object
 (cf. figure <a href="flexc++06.html#DFAFIG">16</a>)
 <p>
-<a name="DFAFIG"></a><p><figure><img src="images/dfa.jpg" alt="Figure 16 is shown here."/><br>
+<a name="DFAFIG"></a><p><figure><img src="images/dfa.jpg" alt="Figure 16 is shown here."/><br/>
 <figcaption>Figure 16: The DFA class data members</figcaption>
 </figure></p>
 
@@ -1133,7 +1133,7 @@ parameter.
 condition in its <code>d_stateSet[0]</code><sup>th</sup> element, which is a set (cf. figure
 <a href="flexc++06.html#DFAFIG1">17</a>). This is done by <code>DFA::fillStartSet</code>
 <p>
-<a name="DFAFIG1"></a><p><figure><img src="images/dfa1.jpg" alt="Figure 17 is shown here."/><br>
+<a name="DFAFIG1"></a><p><figure><img src="images/dfa1.jpg" alt="Figure 17 is shown here."/><br/>
 <figcaption>Figure 17: Creating the start states for row 0</figcaption>
 </figure></p>
 
@@ -1169,7 +1169,7 @@ the pattern <code>(a|ab)+/(a|ba)+</code>, producing the DFA
     <div style="text-align: center">
     <table>
 
-    <td colspan=4><hr></td>
+    <td colspan=4><hr/></td>
 
     
 <tr>
@@ -1181,7 +1181,7 @@ the pattern <code>(a|ab)+/(a|ba)+</code>, producing the DFA
 <td> StateSet</td> <td align="center">a</td> <td align="center">b</td> <td align="center">Final</td>  
 </tr>
 
-    <td colspan=4><hr></td>
+    <td colspan=4><hr/></td>
 
 <p>
 
@@ -1224,7 +1224,7 @@ the pattern <code>(a|ab)+/(a|ba)+</code>, producing the DFA
 <td> 7</td><td align="center">7</td><td align="center">5</td>   <td> 0</td> 
 </tr>
 
-    <td colspan=4><hr></td>
+    <td colspan=4><hr/></td>
 
     
 </table></div>
@@ -1242,7 +1242,7 @@ final DFA becomes:
     <div style="text-align: center">
     <table>
 
-    <td colspan=4><hr></td>
+    <td colspan=4><hr/></td>
 
     
 <tr>
@@ -1254,7 +1254,7 @@ final DFA becomes:
 <td> StateSet</td> <td align="center">a</td> <td align="center">b</td> <td align="center">Final</td> 
 </tr>
 
-    <td colspan=4><hr></td>
+    <td colspan=4><hr/></td>
 
 <p>
 
@@ -1287,7 +1287,7 @@ final DFA becomes:
 <td> 5</td><td align="center">5</td><td align="center">4</td> <td> 0</td> 
 </tr>
 
-    <td colspan=4><hr></td>
+    <td colspan=4><hr/></td>
 
     
 </table></div>
@@ -1297,7 +1297,7 @@ final DFA becomes:
     Rows of DFA matrices relate (ranges of) input characters to rows (states) to
 transit to (see figure <a href="flexc++06.html#DFAROWFIG">18</a>). 
 <p>
-<a name="DFAROWFIG"></a><p><figure><img src="images/dfarow.jpg" alt="Figure 18 is shown here."/><br>
+<a name="DFAROWFIG"></a><p><figure><img src="images/dfarow.jpg" alt="Figure 18 is shown here."/><br/>
 <figcaption>Figure 18: The data of the class DFARow</figcaption>
 </figure></p>
 
@@ -1678,7 +1678,7 @@ stops as soon as a condition hold true, returning the action type:
  
 </tr>
 
-    <td colspan=3><hr></td>
+    <td colspan=3><hr/></td>
 
     
 <tr>
@@ -1686,7 +1686,7 @@ stops as soon as a condition hold true, returning the action type:
  
 </tr>
 
-    <tr><td colspan=1</td><td colspan=1><hr></td></tr>
+    <tr><td colspan=1</td><td colspan=1><hr/></td></tr>
 
     
 <tr>
@@ -1694,7 +1694,7 @@ stops as soon as a condition hold true, returning the action type:
  
 </tr>
 
-    <td colspan=3><hr></td>
+    <td colspan=3><hr/></td>
 
     
 <tr>
@@ -1720,7 +1720,7 @@ stops as soon as a condition hold true, returning the action type:
  
 </tr>
 
-    <td colspan=3><hr></td>
+    <td colspan=3><hr/></td>
 
     
 </table></div>
@@ -1773,14 +1773,14 @@ Three variables are used here, resulting in 8 possibilities:
     <div style="text-align: center">
     <table>
 
-    <td colspan=6><hr></td>
+    <td colspan=6><hr/></td>
 
     
 <tr>
 <td colspan=3 style="text-align: center"></td> <td colspan=2 style="text-align: center">available rule</td> 
 </tr>
 
-                    <tr><td colspan=3</td><td colspan=2><hr></td></tr>
+                    <tr><td colspan=3</td><td colspan=2><hr/></td></tr>
 
     
 <tr>
@@ -1788,7 +1788,7 @@ Three variables are used here, resulting in 8 possibilities:
  
 </tr>
 
-    <td colspan=6><hr></td>
+    <td colspan=6><hr/></td>
 
     
 <tr>
@@ -1869,7 +1869,7 @@ Three variables are used here, resulting in 8 possibilities:
  
 </tr>
 
-    <td colspan=6><hr></td>
+    <td colspan=6><hr/></td>
 
     
 </table>
@@ -2046,12 +2046,12 @@ separate <code>lex.cc</code> and <code>Scannerbase.h</code>.
 </pre>
 
         by which the new <strong>flexc++</strong> program creates a scanner from its own scanner
-specification file.<br>
+specification file.<br/>
         At this point realize that the new <strong>flexc++</strong> program still uses a
 <code>lex()</code> function that was created by an older scanner generator.
 <p>
 <li> Before taking this step <em>make sure that the original <code>lex.cc</code> and
-<code>scannerbase.h</code> files were properly backed up</em>.<br>
+<code>scannerbase.h</code> files were properly backed up</em>.<br/>
     The files <code>lex.cc</code> and <code>Scannerbase.h</code>, created in the previous step
 are now copied to the <code>./scanner</code> directory.
 <p>
@@ -2059,7 +2059,7 @@ are now copied to the <code>./scanner</code> directory.
 as <code>flexc++.cc</code> itself must now be recompiled, unless absolutely no changes
 were made to the <code>Scanner</code>'s internal data organization were made, in which
 case <code>build program</code> will only recompile the modified source file
-<code>./scanner/lex.cc</code>.<br>
+<code>./scanner/lex.cc</code>.<br/>
     At this point a new <strong>flexc++</strong> program has been created, using a <code>lex.cc</code>
 implementation generated by the latest release of <strong>flexc++</strong>.
 <p>
