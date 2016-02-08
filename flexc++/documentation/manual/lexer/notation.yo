@@ -16,5 +16,4 @@ now using explicit start condition specifications:
                     return Token::STRING;
                 }
 <string>\\.|.   more();
-}
     )
