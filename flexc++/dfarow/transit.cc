@@ -27,3 +27,4 @@ void DFARow::transit(size_t stateIdx, size_t rangeChar, StateSet &nextSet)
         break;
     }
 }
+

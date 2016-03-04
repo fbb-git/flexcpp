@@ -1,3 +1,19 @@
+flexc++ (2.04.00)
+
+  * Carlos Bril and Micha de Rijk detected a curious bug resulting in flexc++
+    never recognizing its initial character range. E.g, these two rules
+        a
+        .|\n
+
+    place \t into the 0th character range containing the characters \0 through
+    \t. A scanner generated for these two rules echoed \t to cout as an
+    unrecognized character when running
+        echo '\t' | a.out
+    The bug was caused by flexc++ using range numbers rather than offsets in
+    dfarow/transitions.cc and dfarow/transit.cc (and related files)
+        
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 04 Mar 2016 23:18:54 +0100
+
 flexc++ (2.03.04)
 
   * Fixed a memory leak reported by gendx caused by the missing ScannerBase

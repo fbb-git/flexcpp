@@ -8,17 +8,20 @@
 // Add the input character and the just determined index to the current row's
 // d_map. 
 
+#include <iostream>
+
 void DFARow::transitions()
 {
         // visit all ranges of input characters
-    for (size_t nr = 0; nr++ != d_nRanges; )    
+    for (size_t nr = 0; nr != d_nRanges; ++nr)    
     {
+            // do this again because this set may receive new states
         StateSet &thisSet = (*d_stateSets)[d_thisIdx];
 
         StateSet nextSet;               // start a new set
 
             // visit all states of thisSet. Add the sets to transit to on the
-            // current input character `nr' to the next set
+            // current range index `nr' to the next set
         for (auto stateIdx: thisSet)
             transit(stateIdx, nr, nextSet);
 
@@ -27,7 +30,7 @@ void DFARow::transitions()
         if (nextSet.empty())
             continue;
 
-        (*d_usedRanges)[nr - 1] = true;
+        (*d_usedRanges)[nr] = true;
 
         auto iter = find(d_stateSets->begin(), d_stateSets->end(), nextSet);
 

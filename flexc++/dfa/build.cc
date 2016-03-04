@@ -4,6 +4,9 @@
 
 void DFA::build(std::string const &name, vector<size_t> const &active)    
 {
+        // prepare d_usedRanges by initializing its elements to 'false' for 
+        // all available character ranges (i.e., Ranges's nRanges()):
+
     d_usedRanges.assign(d_usedRanges.size(), false);
 
         // start with the initial states of all rules that are active in this 
@@ -19,8 +22,8 @@ void DFA::build(std::string const &name, vector<size_t> const &active)
         // compute the e-closure of the start-set
     d_stateSet[0] = d_states->eClosure(d_stateSet[0]);  
 
-    s_verbose << "States defining the initial rows of the `" << name << 
-                                                                "' DFA:\n";
+    s_verbose << "The initial rows of the `" << name << 
+           "' DFA and their defining States:\n";
 
     while (d_row.size() != d_stateSet.size())       // as long as we haven't
     {                                               // checked all state sets
@@ -44,9 +47,5 @@ void DFA::build(std::string const &name, vector<size_t> const &active)
 
     d_nUsedRanges = count(d_usedRanges.begin(), d_usedRanges.end(), true);
 }
-
-
-
-
 
 

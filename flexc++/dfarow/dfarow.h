@@ -89,6 +89,10 @@ class DFARow: private FlexTypes
 
         void uniqueMap(std::vector<size_t> const &xlat);
 
+            // rename 'insertinto.xx' to 'insertinto.cc' to make this 
+            // member available.
+        std::ostream &insertInto(std::ostream &out) const;
+
     private:
         void tabulateTransitions(FBB::Table &table) const;
         void tabulateFinals(FBB::Table &table) const;

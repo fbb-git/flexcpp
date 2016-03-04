@@ -14,7 +14,7 @@ ostream &operator<<(ostream &out, DFA const &dfa)
     TableLines support;
     support << 0;
 
-    for (size_t idx = 0; idx !=  nCols - 3; ++idx)   // set separator widths
+    for (size_t idx = 0; idx !=  nCols - 2; ++idx)   // set separator widths
         support << 2;
 
     support << 3 << 3 << 2;                         // F column stands out
@@ -27,9 +27,9 @@ ostream &operator<<(ostream &out, DFA const &dfa)
 
 
     table << "   ";                                // char-ranges display
-    for (size_t idx = 0, end = dfa.d_ranges->nRanges(); idx++ != end; )
+    for (size_t idx = 0, end = dfa.d_ranges->nRanges(); idx != end; ++idx)
     {
-        if (dfa.d_usedRanges[idx - 1])
+        if (dfa.d_usedRanges[idx])
             table << idx;
     }
     table << 'F';

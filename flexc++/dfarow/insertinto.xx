@@ -1,0 +1,19 @@
+#include "dfarow.ih"
+
+// put this function into dfarow.h to make the insertion operator available.
+// 
+inline std::ostream &operator<<(std::ostream &out, DFARow const &row)
+{
+    return row.insertInto(out);
+}
+
+
+std::ostream &DFARow::insertInto(std::ostream &out) const
+{
+    out << "Row " << d_thisIdx << '\n';
+    for (auto &el: d_map)
+        out << "    on " << el.first << " to row " << el.second << '\n';
+    out << "final rule for " << d_finalRule.first << ", " <<
+        d_finalRule.second << '\n';
+    return out;
+}
