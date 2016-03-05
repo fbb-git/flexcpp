@@ -90,7 +90,7 @@ do
     if [ "$YES" != n ]
     then
         data=`echo $file | sed 's/p/i/'`
-        runflex 
+#        runflex 
         runflexcpp
         runprogram $data
     fi

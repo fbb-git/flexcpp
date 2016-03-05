@@ -2,30 +2,30 @@
 
 int Parser::lex()
 {
-    static bool nlAfterBlock = false;        // to compensate for  missing \n at
-                                        // the end of crippled input files
-
-    static bool nlAtEOF = false;
+//    static bool nlAfterBlock = false;        // to compensate for  missing \n at
+//                                        // the end of crippled input files
+//
+//    static bool nlAtEOF = false;
 
     print();
     ++d_tokenCount;
 
-    if (nlAtEOF)
+    if (d_nlAtEOF)
         return 0;
 
-    if (nlAfterBlock)
+    if (d_nlAfterBlock)
     {
-        nlAfterBlock = false;
+        d_nlAfterBlock = false;
         return '\n';
     }
 
     int token = d_scanner.pLex();
 
     if (token == BLOCK) 
-       nlAfterBlock = true;
+       d_nlAfterBlock = true;
     else if (token == 0)
     {
-        nlAtEOF = true;
+        d_nlAtEOF = true;
         return '\n';
     }
 

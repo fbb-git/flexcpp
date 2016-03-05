@@ -31,6 +31,9 @@ class Parser: public ParserBase, public FlexTypes
                                         // returned 
     Block   d_block;
 
+    bool d_nlAfterBlock     = false;    // used in lex.cc
+    bool d_nlAtEOF          = false;    // same
+
     bool d_boln             = false;    // rule starts at boln
     bool d_doError          = true;     // use the error() function at ERRORs
     bool d_warnCarets       = false;    // carets in a RE
