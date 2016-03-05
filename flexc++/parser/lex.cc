@@ -2,26 +2,26 @@
 
 int Parser::lex()
 {
+    static bool nlAtEOF = false;        // to compensate for  missing \n at
+                                        // the end of crippled input files
+
     print();
     ++d_tokenCount;
 
+    if (nlAtEOF)
+        return 0;        
+
     int token = d_scanner.pLex();
 
-    if (token != 0)
-        d_atEOF = 0;
-    else
-    {
-        ++d_atEOF;
-        token = '\n';
-        d_scanner.atEndOfInput();
-    }
+    if (token != 0)                     // not yet at eof
+        return token;
 
-    if (d_atEOF > 1)
-    {
-        emsg << "Unexpected End Of Input" << endl;
-        return -1;      // recognized by parse.cc's nextToken, which is there
-                        // converted to _EOF_, terminating flexc++
-    }
-    return token;
+    nlAtEOF = true;                     // here we're at EOF: by returning a
+                                        // \n the parser is fooled into 
+                                        // believing that a \n was seen
+                                        // just before the real EOF
+    return '\n';
 }
+
+
 

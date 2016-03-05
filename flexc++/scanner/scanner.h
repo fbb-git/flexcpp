@@ -14,7 +14,6 @@
 
 class Scanner: public ScannerBase, private FlexTypes
 {
-    bool d_endOfInput = false;
     bool d_allowNullMatches = false;  // allow a null-matching RE
     bool d_inBlock;             // when in-block return ' ' on blanks
     bool d_inCharClass;         // in a char-class return sequences as
@@ -59,9 +58,6 @@ class Scanner: public ScannerBase, private FlexTypes
 
         void ignoreWS();
         bool allowNullMatches();
-
-        bool endOfInput() const;
-        void atEndOfInput();
 
         std::string rawStringContents() const;
 
@@ -122,16 +118,6 @@ inline void Scanner::needCatchAll()
 {
     d_catchAll = "\n"
                  ".|\\n  lop3__();\n";    
-}
-
-inline bool Scanner::endOfInput() const
-{
-    return d_endOfInput;
-}
-
-inline void Scanner::atEndOfInput()
-{
-    d_endOfInput = true;
 }
 
 inline void Scanner::forceCaseSensitive()
