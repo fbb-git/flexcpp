@@ -3,10 +3,15 @@ link(pattern)(PATTERNS). A tt(State) contains/offers:
     itemization(
     itt(d_type): the type represented by the State (EMPTY, FINAL, CHARSET,
         BOL), the internally used tt(UNDETERMINED__) and tt(EOF__) types, or
-        the ascii-value of a single character (note that this is indeed a
-        character, and not a character-range index); No other type may
-        occur. If another type is encountered flc() contains an internal logic
-        error and the program terminates in a fatal exception.
+        (initially) the ascii-value of a single character. Once the character
+        ranges have been determined (see section ref(RANGES)), which happens
+        in ./main.cc `ranges.determineSubsets()' the type contains the
+        (0-based) range index, and states reprenting character sets also
+        contain the set of character range-indices that apply to those sets
+        (this is implemented in ./main.cc's line ranges.finalizeStates()').
+        No other type may occur (if another type is encountered flc() contains
+        an internal logic error and the program terminates in a fatal
+        exception).
     itt(d_rule): an index into the link(Rules)(RULES) object to the
         link(rule)(RULE) object defining the pattern;
     it() A shared pointer to tt(StateData). The class tt(StateData) contains

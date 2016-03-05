@@ -11,8 +11,13 @@ flexc++ (2.04.00)
         echo '\t' | a.out
     The bug was caused by flexc++ using range numbers rather than offsets in
     dfarow/transitions.cc and dfarow/transit.cc (and related files)
-        
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 04 Mar 2016 23:18:54 +0100
+
+  * Several inconsistencies in the manual were fixed.
+
+  * The source file containing main() was renamed to main.cc (was: flexc++.cc);
+    the internal header file for the main program was renamed to main.ih.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 05 Mar 2016 11:56:37 +0100
 
 flexc++ (2.03.04)
 

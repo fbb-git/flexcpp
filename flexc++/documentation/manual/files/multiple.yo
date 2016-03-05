@@ -37,12 +37,15 @@ reset to, respectively, 1 and the new file's name. When returning to a
 previously suspended (stacked) stream that stream's line number and file name
 are restored. 
 
-    Direct, non-stack based stream switching can be realized by the tt(void
-switchStreams(std::string const &infilename), void switchStreams(std::string
-const &infilename, std::string const &outfilename)) and tt(void
-switchStreams(std::istream &in, std::ostream &out)) members. Processing of the
-current input file ends, and continues at the file or stream specified as
-tt(switchStream)'s first argument.
+    Direct, non-stack based stream switching is handled by various public
+support member functions of the Scanner class (actually, the functions are
+implemented as members of the ScannerBase base class):
+    itemization(
+#includefile(../../man/streamswitching.yo)
+    )
+    When switching streams using the above input-stream switching members
+processing of the current input file ends, and continues at the file or stream
+specified when calling these members.
 
 
 

@@ -91,50 +91,7 @@ manpagesection(12. PUBLIC MEMBER FUNCTIONS)
         or tt(false). Switching on debugging output only has visible effects
         if the tt(debug) option was specified.
 
-    itb(void switchIstream(std::string const &infilename))
-       The currently processed input stream is closed, and processing
-        continues at the stream whose name is specified as the function's
-        argument. This is em(not) a stack-operation: after processing
-        tt(infilename) processing does not return to the original stream.
-
-        bf(This member is not available with interactive scanners.)
-
-    itb(void switchOstream(std::ostream &out))
-       The currently processed output stream is closed, and
-        new output is written to tt(out). 
-
-    itb(void switchOstream(std::string const &outfilename))
-
-       The current output stream is closed, and output is written to
-        tt(outfilename). If this file already exists, it is rewritten.
-
-    itb(void switchStreams(std::istream &in,
-                                      std::ostream &out = std::cout))
-       The currently processed input and output streams are closed, and
-        processing continues at tt(in), writing output to tt(out). This is
-        em(not) a stack-operation: after processing tt(in) processing
-        does not return to the original stream.
-
-        bf(This member is not available with interactive scanners.)
-
-    itb(void switchStreams(std::string const &infilename,
-                                      std::string const &outfilename))
-       The currently processed input and output streams are closed, and
-        processing continues at the stream whose name is specified as the
-        function's first argument, writing output to the file whose name is
-        specified as the function's second argument. This latter file is
-        rewritten. This is em(not) a stack-operation: after processing
-        tt(infilename) processing does not return to the original stream.
-        If tt(outfilename == "-") then the standard output stream
-        is used as the scanner's output medium; if tt(outfilename == "") then
-        the standard error stream is used as the scanner's output medium.
-
-        If tt(outfilename == "-") then the standard output stream
-        is used as the scanner's output medium; if tt(outfilename == "") then
-        the standard error stream is used as the scanner's output medium.
-
-        bf(This member is not available with interactive scanners.)
-
+includefile(streamswitching.yo)
     )
 
 manpagesection(13. PROTECTED CONSTRUCTORS)

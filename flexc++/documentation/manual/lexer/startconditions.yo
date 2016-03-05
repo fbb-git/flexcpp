@@ -53,3 +53,30 @@ scanner. Now, only the rules that are defined for the tt(string) start
 condition are active. Once flc() encounters an unescaped double quote, it
 switches back to the tt(StartCondition__::INITIAL) start condition and returns
 tt(Token::STRING) to its called, indicating that it has seen a bf(C) string.
+
+There is nothing special to either the function tt(begin(StartCondition__)) or
+to the tt(StartCondition__) enum itself. They can be used anywhere within the
+Scanner class. E.g., after providing the Scanner class with a
+tt(std::stack<StartCondition__> d_scStack) start conditions can be
+stacked. Calling member tt(begin) could be embedded in a member
+tt(Scanner::push(StartCondition__)) like this:
+        verb(
+    void Scanner::push(StartCondition__ next)
+    {
+        d_scStack.push(startCondition()); // push the current SC.
+        begin(next);                      // switch to the next
+    }
+        )
+    In addition, for returning to the start condition currently on top of the
+stack simply call a member tt(Scanner::popStartCondition()), implemented like
+this: 
+        verb(
+    void Scanner::popStartCondition()
+    {
+        begin(d_scStack.top());
+        d_scStack.pop();
+    }
+        )
+    tt(push) and tt(popStartCondition) should be given the same access rights
+as tt(begin): they should be defined in the private section of the Scanner
+class.

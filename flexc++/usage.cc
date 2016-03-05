@@ -1,4 +1,4 @@
-#include "flexc++.ih"
+#include "main.ih"
 
     // Cf bisonc++'s usage.cc for an example of how to write usage().
 

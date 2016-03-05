@@ -1,6 +1,6 @@
 #include "INSTALL.im"
 
-#define MAIN                "flexc++.cc"
+#define MAIN                "main.cc"
 #define ADD_LIBRARIES       "bobcat"
 #define ADD_LIBRARY_PATHS  ""
 #define SCANNER_DIR         "scanner"  

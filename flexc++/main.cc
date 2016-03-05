@@ -1,4 +1,4 @@
-#include "flexc++.ih"
+#include "main.ih"
 
 namespace
 {
