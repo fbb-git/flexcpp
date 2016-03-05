@@ -1,0 +1,8 @@
+// Test handling lexer files w/o trailing \n. Program run-test not relevant
+
+%%
+\n
+.           {
+                d_p = ". single char"; 
+                return 1;
+            }

@@ -1,5 +1,5 @@
 // Test handling lexer files w/o trailing \n. Program run-test not relevant
 
 %%
-.            d_p = ". single char"; return 1;
 \n
+.            d_p = ". single char"; return 1;

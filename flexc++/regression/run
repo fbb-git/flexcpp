@@ -16,6 +16,9 @@ showinfo()
     grep "^//[^%]" $1 | sed 's,^//[[:space:]]*,,'
     echo
     grep -v "^//[^%]" $1 > patterns
+    if [ "`tail -c 1 $1`" != "`echo`" ] ; then
+        truncate -s-1 patterns
+    fi
 }
 
 runflex()
@@ -93,4 +96,5 @@ do
     fi
 done
 
-rm -f a.out lex.cc lex.yy.c lexer main.o patterns scannerbase.h
+rm -f a.out lex.cc lex.yy.c lexer main.o patterns scannerbase.h lexer.output out
+
