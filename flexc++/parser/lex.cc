@@ -2,25 +2,34 @@
 
 int Parser::lex()
 {
-    static bool nlAtEOF = false;        // to compensate for  missing \n at
+    static bool nlAfterBlock = false;        // to compensate for  missing \n at
                                         // the end of crippled input files
+
+    static bool nlAtEOF = false;
 
     print();
     ++d_tokenCount;
 
     if (nlAtEOF)
-        return 0;        
+        return 0;
+
+    if (nlAfterBlock)
+    {
+        nlAfterBlock = false;
+        return '\n';
+    }
 
     int token = d_scanner.pLex();
 
-    if (token != 0)                     // not yet at eof
-        return token;
+    if (token == BLOCK) 
+       nlAfterBlock = true;
+    else if (token == 0)
+    {
+        nlAtEOF = true;
+        return '\n';
+    }
 
-    nlAtEOF = true;                     // here we're at EOF: by returning a
-                                        // \n the parser is fooled into 
-                                        // believing that a \n was seen
-                                        // just before the real EOF
-    return '\n';
+    return token;
 }
 
 
