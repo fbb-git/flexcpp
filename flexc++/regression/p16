@@ -1,16 +1,4 @@
-// non-greedy matches finding house in houseboat/houshold. 
-// returning 2, 1, 2, 2, 1, 2
-
-%x keyword
+// no input required: make sure there is no trailing newline after the regex
 
 %%
-
-house/(boat|hold)               d_p = "house/boat|hold"; return 1;
-
-[[:alpha:]]+                    d_p = "[[:alpha:]]+";    return 2;
-
-.|\n
-
-
-
-
+.            d_p = ". single char"; return 1;
