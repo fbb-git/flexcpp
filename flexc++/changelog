@@ -12,18 +12,21 @@ flexc++ (2.04.00)
     The bug was caused by flexc++ using range numbers rather than offsets in
     dfarow/transitions.cc and dfarow/transit.cc (and related files)
 
-  * Several inconsistencies in the manual were fixed.
-
-  * The source file containing main() was renamed to main.cc (was: flexc++.cc);
-    the internal header file for the main program was renamed to main.ih.
+  * Added regression test p19 (regression/p19) to test recurrence of the
+    abovementioned bug.
 
   * The bugfix on Fri Mar 13 (!) 2015 of a bug reported by Wopke Hellinga and
     Mark Redeman reintroduced a problem with handling the lookahead operator,
     causing regression test p02 to fail since then. This version implements an
     alternative fix for the bug reported by Wopke and Mark, which does not
-    cause p02 to fail.
+    cause p02 to fail (see parser/lex.cc).
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 05 Mar 2016 23:19:52 +0100
+  * Several inconsistencies in the manual were fixed.
+
+  * The source file containing main() was renamed to main.cc (was: flexc++.cc);
+    the internal header file for the main program was renamed to main.ih.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 06 Mar 2016 18:30:37 +0100
 
 flexc++ (2.03.04)
 

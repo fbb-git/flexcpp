@@ -1,0 +1,6 @@
+// Checking recognition of char-range 0: a \t must return 2
+
+%%
+a               d_p = "a (single char)"; return 1;
+.               d_p = ". (single char)"; return 2;
+\n              d_p = "\\n (newline)";   return 3;
