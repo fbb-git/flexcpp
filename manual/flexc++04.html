@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> Flexc++ (Version 2.03.04) User Guide </title>
+<title> Flexc++ (Version 2.04.00) User Guide </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -106,12 +106,58 @@ reset to, respectively, 1 and the new file's name. When returning to a
 previously suspended (stacked) stream that stream's line number and file name
 are restored. 
 <p>
-Direct, non-stack based stream switching can be realized by the <code>void
-switchStreams(std::string const &amp;infilename), void switchStreams(std::string
-const &amp;infilename, std::string const &amp;outfilename)</code> and <code>void
-switchStreams(std::istream &amp;in, std::ostream &amp;out)</code> members. Processing of the
-current input file ends, and continues at the file or stream specified as
-<code>switchStream</code>'s first argument.
+Direct, non-stack based stream switching is handled by various public
+support member functions of the Scanner class (actually, the functions are
+implemented as members of the ScannerBase base class):
+    <ul>
+#    <li><strong>void switchIstream(std::string const &amp;infilename)</strong>
+       The currently processed input stream is closed, and processing
+        continues at the stream whose name is specified as the function's
+        argument. This is <em>not</em> a stack-operation: after processing
+        <code>infilename</code> processing does not return to the original stream.
+<p>
+<strong>This member is not available with interactive scanners.</strong>
+<p>
+<li><strong>void switchOstream(std::ostream &amp;out)</strong>
+       The currently processed output stream is closed, and
+        new output is written to <code>out</code>. 
+<p>
+<li><strong>void switchOstream(std::string const &amp;outfilename)</strong>
+<p>
+The current output stream is closed, and output is written to
+        <code>outfilename</code>. If this file already exists, it is rewritten.
+<p>
+<li><strong>void switchStreams(std::istream &amp;in,
+                                      std::ostream &amp;out = std::cout)</strong>
+       The currently processed input and output streams are closed, and
+        processing continues at <code>in</code>, writing output to <code>out</code>. This is
+        <em>not</em> a stack-operation: after processing <code>in</code> processing
+        does not return to the original stream.
+<p>
+<strong>This member is not available with interactive scanners.</strong>
+<p>
+<li><strong>void switchStreams(std::string const &amp;infilename,
+                                      std::string const &amp;outfilename)</strong>
+       The currently processed input and output streams are closed, and
+        processing continues at the stream whose name is specified as the
+        function's first argument, writing output to the file whose name is
+        specified as the function's second argument. This latter file is
+        rewritten. This is <em>not</em> a stack-operation: after processing
+        <code>infilename</code> processing does not return to the original stream.
+        If <code>outfilename == "-"</code> then the standard output stream
+        is used as the scanner's output medium; if <code>outfilename == ""</code> then
+        the standard error stream is used as the scanner's output medium.
+<p>
+If <code>outfilename == "-"</code> then the standard output stream
+        is used as the scanner's output medium; if <code>outfilename == ""</code> then
+        the standard error stream is used as the scanner's output medium.
+<p>
+<strong>This member is not available with interactive scanners.</strong>
+<p>
+</ul>
+    When switching streams using the above input-stream switching members
+processing of the current input file ends, and continues at the file or stream
+specified when calling these members.
 <p>
 <hr>
 <ul>

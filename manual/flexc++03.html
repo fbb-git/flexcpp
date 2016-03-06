@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> Flexc++ (Version 2.03.04) User Guide </title>
+<title> Flexc++ (Version 2.04.00) User Guide </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -738,6 +738,39 @@ condition are active. Once <strong>flexc++</strong> encounters an unescaped doub
 switches back to the <code>StartCondition__::INITIAL</code> start condition and returns
 <code>Token::STRING</code> to its called, indicating that it has seen a <strong>C</strong> string.
 <p>
+There is nothing special to either the function <code>begin(StartCondition__)</code> or
+to the <code>StartCondition__</code> enum itself. They can be used anywhere within the
+Scanner class. E.g., after providing the Scanner class with a
+<code>std::stack&lt;StartCondition__&gt; d_scStack</code> start conditions can be
+stacked. Calling member <code>begin</code> could be embedded in a member
+<code>Scanner::push(StartCondition__)</code> like this:
+        <pre>
+
+    void Scanner::push(StartCondition__ next)
+    {
+        d_scStack.push(startCondition()); // push the current SC.
+        begin(next);                      // switch to the next
+    }
+        
+</pre>
+
+    In addition, for returning to the start condition currently on top of the
+stack simply call a member <code>Scanner::popStartCondition()</code>, implemented like
+this: 
+        <pre>
+
+    void Scanner::popStartCondition()
+    {
+        begin(d_scStack.top());
+        d_scStack.pop();
+    }
+        
+</pre>
+
+    <code>push</code> and <code>popStartCondition</code> should be given the same access rights
+as <code>begin</code>: they should be defined in the private section of the Scanner
+class.
+<p>
 <a name="l25"></a>
 <h3>3.6.1: Notation details</h3>
         Instead of using a mini scanner compound statement, it is also 
@@ -759,7 +792,6 @@ now using explicit start condition specifications:
                     return Token::STRING;
                 }
 &lt;string&gt;\\.|.   more();
-}
     
 </pre>
 
