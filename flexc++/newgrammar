@@ -3,10 +3,12 @@
 cd parser
 bisonc++ grammar
 touch a
+rm -f parser.ih.gch
 
 cd ../scanner
 flexc++ lexer
 touch a
+rm -f scanner.ih.gch
 
 cd ..
 build program
