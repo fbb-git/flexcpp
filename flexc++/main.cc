@@ -65,6 +65,8 @@ try
     Rules rules(states);
 
     Parser parser(rules, states);
+//        parser.setDebug(true);
+
         if (parser.parse() != 0)
             return 1;
 

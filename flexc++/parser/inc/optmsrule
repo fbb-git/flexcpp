@@ -6,6 +6,9 @@ _optMs_regex:
     }
 |
     regexOrEOF
+    {
+        $$ = $1;
+    }
 ;
 
     // series of _optMs_regexes, separated by '|' at the end of lines. E.g.,

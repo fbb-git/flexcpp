@@ -113,6 +113,7 @@ _regex_unit:
     _unit
     {
         Options::regexCall("unit");
+        $$ = $1;    //FBB
     }
 |
     _regex_unit _open_curly _interval '}'
@@ -145,6 +146,7 @@ _regex:
     _regex_unit
     {
         Options::regexCall("regex-unit");
+        $$ = $1;
     }
 |
     _regex '|' _regex
@@ -160,6 +162,9 @@ _regex:
 
 regexOrEOF:
     _regex
+    {
+        $$ = $1;
+    }
 |
     EOF_PATTERN
     {

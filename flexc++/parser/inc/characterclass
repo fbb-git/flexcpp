@@ -98,7 +98,8 @@ _cc_element:
 _cc_contents:
     _cc_contents _cc_element
     {
-        $<VECTOR>1.push_back($2);
+        $$ = $1;
+        $<VECTOR>$.push_back($2);
     }
 |
     _cc_element
@@ -109,20 +110,26 @@ _cc_contents:
 
 _cc_set:
     _cc_start _cc_end
+    {
+        $$ = $1;
+    }
 |
     _cc_negated _cc_end
     {
-        $<CHARCLASS>1.negate();
+        $$ = $1;
+        $<CHARCLASS>$.negate();
     }
 |    
     _cc_start _cc_contents _cc_end
     {
-        $<CHARCLASS>1.append($2);
+        $$ = $1;
+        $<CHARCLASS>$.append($2);
     }
 |
     _cc_negated _cc_contents _cc_end
     {
-        $<CHARCLASS>1.negate($2);
+        $$ = $1;
+        $<CHARCLASS>$.negate($2);
     }
 ;
 
@@ -138,5 +145,8 @@ characterclass:
     }
 |
     _cc_set
+    {
+        $$ = $1;
+    }
 ;
 

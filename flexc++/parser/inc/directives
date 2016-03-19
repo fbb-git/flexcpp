@@ -39,6 +39,7 @@ _name_def:
     identifier
     {
         d_scanner.newDefinition();  // briefly switches to 'line'
+        $$ = d_scanner.matched();
     }
 ;
 
