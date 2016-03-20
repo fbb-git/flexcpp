@@ -28,7 +28,7 @@ void usage(string const &program_name)
     "   --class-skeleton=<path> (-C):\n"
     "            location of the class header skeleton.\n"
     "   --construction (-K):\n"
-    "           write information about the rules and DFA-creation on\n"
+    "           write information about the rules and DFA-construction on\n"
     "           'infile'.output.\n"
     "   --debug (-d):\n"
     "           provides the generated lex function with debug statements\n"
