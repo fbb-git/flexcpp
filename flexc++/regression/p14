@@ -1,4 +1,4 @@
-// lookahead continuous loop: intended behavior, p15 doesn't
+// lookahead CONTINUOUS LOOP (intended behavior), do NOT run. Run p15 instead
 
 %%
 //%nowarn
