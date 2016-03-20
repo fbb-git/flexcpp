@@ -7,7 +7,8 @@ Options::Options()
     d_lines(not d_arg.option(0, "no-lines")),
     d_matchedRules(d_arg.option('R')),
     d_verbose(d_arg.option('V')),
-    d_caseSensitive(not d_arg.option(0, "case-insensitive"))
+    d_caseSensitive(not d_arg.option(0, "case-insensitive")),
+    d_ownParser(d_arg.option('P'))
 {
     if (d_arg.option(0, "regex-calls"))
         s_regexCall = show;

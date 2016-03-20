@@ -1,6 +1,9 @@
-flexc++ (2.04.01)
+flexc++ (2.05.00)
 
   * Precompiled headers are rebuilt when their .h or .ih file have changed.
+
+  * Added option --own-parser (-P) showing the actions of flexc++'s own parser
+    when parsing a lexer-specification file.
 
   * New parser, built by bisonc++ V4.14.00.
 

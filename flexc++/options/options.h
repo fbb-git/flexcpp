@@ -58,6 +58,7 @@ class Options: private FlexTypes
     bool d_matchedRules;
     bool d_verbose;
     bool d_caseSensitive;
+    bool d_ownParser = false;
 
         // contains the names of used options/directives.  
         // Generator may warn if specified for already existing .h or .ih
@@ -105,6 +106,7 @@ class Options: private FlexTypes
         bool lines() const;
         bool print() const;
         bool verbose() const;
+        bool ownParserDebug() const;
         bool operator()(int opt) const;
         bool operator()(char const *opt) const;
 
@@ -399,6 +401,11 @@ inline bool Options::lines() const
 inline bool Options::debug() const
 {
     return d_debug;
+}
+
+inline bool Options::ownParserDebug() const
+{
+    return d_ownParser;
 }
 
 inline bool Options::specified(std::string const &option) const

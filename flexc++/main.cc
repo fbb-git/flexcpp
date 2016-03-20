@@ -41,6 +41,7 @@ namespace
         {"matched-rules",               'R'},
         {"max-depth",                   'm'},
         {"print-tokens",                't'},
+        {"own-parser",                  'P'},
         {"own-tokens",                  'T'},
         {"show-filenames",              'F'},
         {"verbose",                     'V'},
@@ -54,7 +55,7 @@ namespace
 int main(int argc, char **argv)
 try
 {
-    Arg &arg = Arg::initialize("b:B:c:C:df:Fhi:I:Kl:L:m:n:RS:TtvV",
+    Arg &arg = Arg::initialize("b:B:c:C:df:Fhi:I:Kl:L:m:n:PRS:TtvV",
                     longOptions, longEnd, argc, argv);
     arg.versionHelp(usage, version, 1);
 
@@ -65,7 +66,6 @@ try
     Rules rules(states);
 
     Parser parser(rules, states);
-//        parser.setDebug(true);
 
         if (parser.parse() != 0)
             return 1;
