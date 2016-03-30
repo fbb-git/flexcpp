@@ -89,8 +89,6 @@ section_delimiter:
         d_nLOPstartConditions = d_rules.startConditions().size();
         d_rules.setEndUserSC();
         reset();
-//        if (d_scanner.endOfInput())
-//            ACCEPT();
     }
 ;
 
