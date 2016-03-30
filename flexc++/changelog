@@ -5,9 +5,9 @@ flexc++ (2.05.00)
   * Added option --own-parser (-P) showing the actions of flexc++'s own parser
     when parsing a lexer-specification file.
 
-  * New parser, built by bisonc++ V4.14.00.
+  * New parser, built by bisonc++ V5.00.00.
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Sun, 20 Mar 2016 13:10:05 +0100
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 30 Mar 2016 11:52:14 +0200
 
 flexc++ (2.04.00)
 
