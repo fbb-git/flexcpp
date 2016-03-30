@@ -99,7 +99,7 @@ _cc_contents:
     _cc_contents _cc_element
     {
         $$ = $1;
-        $<VECTOR>$.push_back($2);
+        $$.push_back($2);
     }
 |
     _cc_element
@@ -117,19 +117,19 @@ _cc_set:
     _cc_negated _cc_end
     {
         $$ = $1;
-        $<CHARCLASS>$.negate();
+        $$.negate();
     }
 |    
     _cc_start _cc_contents _cc_end
     {
         $$ = $1;
-        $<CHARCLASS>$.append($2);
+        $$.append($2);
     }
 |
     _cc_negated _cc_contents _cc_end
     {
         $$ = $1;
-        $<CHARCLASS>$.negate($2);
+        $$.negate($2);
     }
 ;
 
