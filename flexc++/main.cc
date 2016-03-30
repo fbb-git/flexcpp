@@ -7,45 +7,50 @@ namespace
         // options to set filenames
 
         // options setting filenames
-        {Options::baseclassHeaderSpec(),      'b'}, // Options members also
-        {Options::classHeaderSpec(),          'c'}, // used by Options::
-        {Options::implementationHeaderSpec(), 'i'}, // setAccessorVariables()
-        {Options::lexSourceSpec(),            'l'},
-        {"target-directory",                  Arg::Required},
-        {"filenames",                         'f'},
-                                        
-        // skeleton options             
-        {"skeleton-directory",          'S'},
-        {"baseclass-skeleton",          'B'},
-        {"class-skeleton",              'C'},
-        {"implementation-skeleton",     'I'},
-        {"lex-skeleton",                'L'},
+                                                    // Options members also:
+        Arg::LongOption{Options::baseclassHeaderSpec(),      'b'}, 
 
-        // options preventing overwriting
-        {"no-baseclass-header",         Arg::None},
-        {"no-lex-source",               Arg::None},
+                                                    // used by Options::
+                                                    // setAccessorVariables()
+        Arg::LongOption{Options::classHeaderSpec(),          'c'}, 
+        Arg::LongOption{Options::implementationHeaderSpec(), 'i'}, 
 
-        {"namespace",                   'n'},
+        Arg::LongOption{Options::lexSourceSpec(),      'l'},
+        Arg::LongOption{"target-directory",            Arg::Required},
+        Arg::LongOption{"filenames",                   'f'},
 
-        {"class-name",                  Arg::Required},
-        {"lex-function-name",           Arg::Required},
-        {"no-lines",                    Arg::None},
+            // skeleton options             
+        Arg::LongOption{"skeleton-directory",          'S'},
+        Arg::LongOption{"baseclass-skeleton",          'B'},
+        Arg::LongOption{"class-skeleton",              'C'},
+        Arg::LongOption{"implementation-skeleton",     'I'},
+        Arg::LongOption{"lex-skeleton",                'L'},
 
-        {"help",                        'h'},
-        {"usage",                       'h'},
-        {"version",                     'v'},
+            // options preventing overwriting
+        Arg::LongOption{"no-baseclass-header",         Arg::None},
+        Arg::LongOption{"no-lex-source",               Arg::None},
 
-        {"case-insensitive",            Arg::None},
-        {"debug",                       'd'},
-        {"construction",                'K'}, 
-        {"matched-rules",               'R'},
-        {"max-depth",                   'm'},
-        {"print-tokens",                't'},
-        {"own-parser",                  'P'},
-        {"own-tokens",                  'T'},
-        {"show-filenames",              'F'},
-        {"verbose",                     'V'},
-        {"regex-calls",                 Arg::None},
+        Arg::LongOption{"namespace",                   'n'},
+
+        Arg::LongOption{"class-name",                  Arg::Required},
+        Arg::LongOption{"lex-function-name",           Arg::Required},
+        Arg::LongOption{"no-lines",                    Arg::None},
+
+        Arg::LongOption{"help",                        'h'},
+        Arg::LongOption{"usage",                       'h'},
+        Arg::LongOption{"version",                     'v'},
+
+        Arg::LongOption{"case-insensitive",            Arg::None},
+        Arg::LongOption{"debug",                       'd'},
+        Arg::LongOption{"construction",                'K'}, 
+        Arg::LongOption{"matched-rules",               'R'},
+        Arg::LongOption{"max-depth",                   'm'},
+        Arg::LongOption{"print-tokens",                't'},
+        Arg::LongOption{"own-parser",                  'P'},
+        Arg::LongOption{"own-tokens",                  'T'},
+        Arg::LongOption{"show-filenames",              'F'},
+        Arg::LongOption{"verbose",                     'V'},
+        Arg::LongOption{"regex-calls",                 Arg::None},
     };
 
     auto longEnd = longOptions +
