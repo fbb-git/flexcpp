@@ -1,7 +1,7 @@
 oxref by Frank B. Brokken (f.b.brokken@rug.nl)
 oxref V1.00.06 2012-2015
 
-CREATED Sun, 20 Mar 2016 12:10:25 +0000
+CREATED Wed, 13 Apr 2016 09:32:30 +0000
 CROSS REFERENCE FOR: -fxs tmp/libmodules.a 
 ----------------------------------------------------------------------
 
@@ -50,17 +50,17 @@ add(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char
     inspectstate.cc: Ranges::inspectState(State const&)
 
 add(unsigned long)
-  Full name: Ranges::add(unsigned long)
-  Source:    add3.cc 
-  Used By:
-    inspectstate.cc: Ranges::inspectState(State const&)
-
-add(unsigned long)
   Full name: StartConditions::add(unsigned long)
   Source:    add2.cc 
   Used By:
     add.cc: Rules::add(bool, Pattern const&, Block const&, FlexTypes::RuleType)
     addcatchall.cc: Rules::addCatchAll(unsigned long, unsigned long)
+
+add(unsigned long)
+  Full name: Ranges::add(unsigned long)
+  Source:    add3.cc 
+  Used By:
+    inspectstate.cc: Ranges::inspectState(State const&)
 
 addCatchAll(unsigned long, unsigned long)
   Full name: Rules::addCatchAll(unsigned long, unsigned long)
@@ -184,7 +184,6 @@ CharClass()
   Full name: CharClass::CharClass()
   Source:    charclass1.cc 
   Used By:
-    parse.cc: Parser::lookup(bool)
     difference.cc: CharClass::difference(CharClass&, CharClass&)
     unite.cc: CharClass::unite(CharClass&, CharClass&)
     dot.cc: Pattern::dot(States&)
@@ -297,42 +296,10 @@ countRanges(unsigned long&, std::vector<unsigned long, std::allocator<unsigned l
     update.cc: Ranges::update(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned long const*)
 
 cxx11]
-  Full name: CharRange::s_all[abi:cxx11]
-  Source:    data.cc 
-  Used By:
-    negate.cc: CharRange::negate(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-
-cxx11]
-  Full name: ParserBase::s_out__[abi:cxx11]
-  Source:    parse.cc 
-  Used By:
-    lookahead.cc: GLOBALS lookahead.cc 10lookahead.o
-    quotes.cc: Parser::quotes()
-
-cxx11]
-  Full name: CharRange::s_hash[abi:cxx11]
-  Source:    data.cc 
-  Used By:
-    predefined.cc: CharRange::predefined(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-
-cxx11]
   Full name: Generator::s_insert[abi:cxx11]
   Source:    data.cc 
   Used By:
     insert.cc: Generator::insert(std::ostream&) const
-
-cxx11]
-  Full name: CharRange::s_funHash[abi:cxx11]
-  Source:    data.cc 
-  Used By:
-    predefined.cc: CharRange::predefined(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-
-cxx11]
-  Full name: Parser::s_lastMsg[abi:cxx11]
-  Source:    data.cc 
-  Used By:
-    error.cc: Parser::error(char const*)
-    reset.cc: Parser::reset()
 
 cxx11]
   Full name: Options::s_warnOptions[abi:cxx11]
@@ -344,12 +311,50 @@ cxx11]
     setoptionpath.cc: Options::setOptionPath(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, char const*, char const*)
     errexisting.cc: Generator::errExisting(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
 
+cxx11]
+  Full name: Parser::s_lastMsg[abi:cxx11]
+  Source:    data.cc 
+  Used By:
+    error.cc: Parser::error(char const*)
+    reset.cc: Parser::reset()
+
+cxx11]
+  Full name: CharRange::s_all[abi:cxx11]
+  Source:    data.cc 
+  Used By:
+    negate.cc: CharRange::negate(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+
+cxx11]
+  Full name: CharRange::s_hash[abi:cxx11]
+  Source:    data.cc 
+  Used By:
+    predefined.cc: CharRange::predefined(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+
+cxx11]
+  Full name: CharRange::s_funHash[abi:cxx11]
+  Source:    data.cc 
+  Used By:
+    predefined.cc: CharRange::predefined(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+
+cxx11]
+  Full name: ParserBase::s_out__[abi:cxx11]
+  Source:    parse.cc 
+  Used By:
+    lookahead.cc: GLOBALS lookahead.cc 10lookahead.o
+    quotes.cc: Parser::quotes()
+
 cxx11]()
   Full name: CharClass::str[abi:cxx11]()
   Source:    str.cc 
   Used By:
     negate1.cc: CharClass::negate()
     characterclass.cc: Pattern::characterClass(States&, CharClass&)
+
+cxx11]() const
+  Full name: Options::implementationHeaderName[abi:cxx11]() const
+  Source:    implementationheadername.cc 
+  Used By:
+    classih.cc: Generator::classIH(std::ostream&) const
 
 cxx11]() const
   Full name: Scanner::rawStringContents[abi:cxx11]() const
@@ -359,13 +364,6 @@ cxx11]() const
     rawstring.cc: Parser::rawString()
 
 cxx11]() const
-  Full name: Options::baseclassHeaderName[abi:cxx11]() const
-  Source:    baseclassheadername.cc 
-  Used By:
-    baseclassh.cc: Generator::baseClassH(std::ostream&) const
-    conflicts.cc: Generator::conflicts() const
-
-cxx11]() const
   Full name: Options::classHeaderName[abi:cxx11]() const
   Source:    classheadername.cc 
   Used By:
@@ -373,10 +371,11 @@ cxx11]() const
     conflicts.cc: Generator::conflicts() const
 
 cxx11]() const
-  Full name: Options::implementationHeaderName[abi:cxx11]() const
-  Source:    implementationheadername.cc 
+  Full name: Options::baseclassHeaderName[abi:cxx11]() const
+  Source:    baseclassheadername.cc 
   Used By:
-    classih.cc: Generator::classIH(std::ostream&) const
+    baseclassh.cc: Generator::baseClassH(std::ostream&) const
+    conflicts.cc: Generator::conflicts() const
 
 cxx11](FlexTypes::TextType)
   Full name: Options::textOf[abi:cxx11](FlexTypes::TextType)
@@ -1144,7 +1143,6 @@ Pattern(std::pair<unsigned long, unsigned long> const&)
   Source:    pattern1.cc 
   Used By:
     lookahead.cc: Parser::lookahead(Pattern const&, Pattern const&)
-    parse.cc: Parser::lookup(bool)
     handleloprule.cc: Rules::handleLopRule(unsigned long)
     rules1.cc: Rules::Rules(States&)
     alternatives.cc: Pattern::alternatives(States&, Pattern const&, Pattern const&)
@@ -1526,6 +1524,12 @@ setClassName(FlexTypes::TextType)
   Used By:
     parse.cc: Parser::executeAction(int)
 
+setDebug(bool)
+  Full name: ParserBase::setDebug(bool)
+  Source:    parse.cc 
+  Used By:
+    parser1.cc: Parser::Parser(Rules&, States&)
+
 setFilenames(FlexTypes::TextType)
   Full name: Options::setFilenames(FlexTypes::TextType)
   Source:    setfilenames.cc 
@@ -1745,12 +1749,6 @@ useAll()
     parse.cc: Parser::executeAction(int)
 
 v_clone() const
-  Full name: StateData::v_clone() const
-  Source:    vclone.cc 
-  Used By:
-    destructor.cc: StateData::~StateData()
-
-v_clone() const
   Full name: StateString::v_clone() const
   Source:    vclone.cc 
   Used By:
@@ -1785,6 +1783,12 @@ v_clone() const
     state4.cc: State::State(unsigned long, unsigned long, unsigned long)
     state5.cc: State::State(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned long, unsigned long)
     state6.cc: State::State(unsigned char, unsigned long)
+
+v_clone() const
+  Full name: StateData::v_clone() const
+  Source:    vclone.cc 
+  Used By:
+    destructor.cc: StateData::~StateData()
 
 validRange(__gnu_cxx::__normal_iterator<unsigned long*, std::vector<unsigned long, std::allocator<unsigned long> > >) const
   Full name: CharClass::validRange(__gnu_cxx::__normal_iterator<unsigned long*, std::vector<unsigned long, std::allocator<unsigned long> > >) const
