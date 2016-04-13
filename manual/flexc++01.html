@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> Flexc++ (Version 2.04.00) User Guide </title>
+<title> Flexc++ (Version 2.05.00) User Guide </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -35,7 +35,7 @@ in <strong>C++</strong>, and merely generating <strong>C++</strong> code. Most f
 be usable with <strong>flexc++</strong>, with minor adjustments (see also `<a href="flexc++02.html#differences">differences
 with flex/flex++ 2</a>').
 <p>
-This edition of the manual documents version 2.04.00 and provides detailed
+This edition of the manual documents version 2.05.00 and provides detailed
 information on <strong>flexc++</strong>'s use and inner workings. Some texts are adapted from the
 <a href="http://flex.sourceforge.net/manual/index.html">flex manual</a>.  The manual
 page <strong>flexc++</strong>(1) provides an overview of the command line options and
@@ -174,7 +174,9 @@ It is an error if this option is used and an already
             on-off)</code> member. Note that <code>#ifdef DEBUG</code> macros are not used
             anymore. By rerunning <strong>flexc++</strong> without the <strong>--debug</strong> option an
             equivalent scanner is generated not containing the debugging
-            code. 
+            code. This option does not provide debug information about <strong>flexc++</strong>
+            itself. For that use the options <code>--own-parser</code> and/or
+            <code>--own-tokens</code> (see below). 
 <p>
 <li> <strong>--filenames</strong>=<code>genericName</code> (<strong>-f</strong>)<br/>
            Generic name of generated files (header files, not the
@@ -272,23 +274,31 @@ It is an error if this option is used and an already
             tables which are altered whenever the grammar definition is
             modified. 
 <p>
+<li> <strong>--own-parser</strong> (<strong>-P</strong>)<br/> 
+           The actions performed by <strong>flexc++</strong>'s own parser are written to the
+            standard output stream.
+<p>
+This option does <em>not</em> result in the generated program optionally
+            displaying the actions of its <code>lex</code> function. If that is what
+            you want, use the <code>--debug</code> option.
+<p>
 <li> <strong>--own-tokens</strong> (<strong>-T</strong>)<br/> 
-           The tokens returned as well as the text matched when <strong>flexc++</strong> reads
-            its input files(s) are shown when this option is used.
+           The tokens returned as well as the text matched by <strong>flexc++</strong> are
+            written to the standard output stream when this option is used.
 <p>
 This option does <em>not</em> result in the generated program displaying
             returned tokens and matched text. If that is what you want, use
             the <code>--print-tokens</code> option.
 <p>
 <li> <strong>--print-tokens</strong> (<strong>-t</strong>)<br/> 
-           The tokens returned as well as the text matched by the generated
-            <code>lex</code> function are displayed on the standard output stream, just
-            before returning the token to <code>lex</code>'s caller. Displaying tokens
-            and matched text is suppressed again when the <code>lex.cc</code> file is
-            generated without using this option. The function showing the
-            tokens (<code>ScannerBase::print__</code>) is called from
-            <code>Scanner::printTokens</code>, which is defined in-line in
-            <code>Scanner.h</code>. Calling <code>ScannerBase::print__</code>, therefore, can
+           The tokens returned as well as the text matched by the
+            <em>generated</em> <code>lex</code> function are displayed on the standard
+            output stream, just before returning the token to <code>lex</code>'s
+            caller. Displaying tokens and matched text is suppressed again
+            when the <code>lex.cc</code> file is generated without using this
+            option. The function showing the tokens (<code>ScannerBase::print__</code>)
+            is called from <code>Scanner::printTokens</code>, which is defined in-line
+            in <code>Scanner.h</code>. Calling <code>ScannerBase::print__</code>, therefore, can
             also easily be controlled by an option controlled by the program
             using the scanner object.
 <p>

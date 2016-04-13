@@ -10,7 +10,7 @@
 <body text="#27408B" bgcolor="#FFFAF0">
 <hr/>
 <h1 id="title">flexc++</h1>
-<h2 id="author">flexc++.2.04.00.tar.gz</h2>
+<h2 id="author">flexc++.2.05.00.tar.gz</h2>
 <h2 id="date">2008-2016</h2>
 
 <!DOCTYPE html><html><head>
@@ -43,7 +43,7 @@
 <body text="#27408B" bgcolor="#FFFAF0">
 <hr/>
 <h1 id="title">flexc++(1)</h1>
-<h2 id="author">flexc++.2.04.00.tar.gz flexc++ scanner generator</h2>
+<h2 id="author">flexc++.2.05.00.tar.gz flexc++ scanner generator</h2>
 <h2 id="date">2008-2016</h2>
 
 
@@ -515,7 +515,9 @@ It is an error if this option is used and an already
             on-off)</em> member. Note that <em>#ifdef DEBUG</em> macros are not used
             anymore. By rerunning <strong>flexc++</strong> without the <strong>--debug</strong> option an
             equivalent scanner is generated not containing the debugging
-            code. 
+            code. This option does not provide debug information about <strong>flexc++</strong>
+            itself. For that use the options <em>--own-parser</em> and/or
+            <em>--own-tokens</em> (see below). 
 <p>
 <li> <strong>--filenames</strong>=<em>genericName</em> (<strong>-f</strong>)<br/>
            Generic name of generated files (header files, not the
@@ -613,23 +615,31 @@ It is an error if this option is used and an already
             tables which are altered whenever the grammar definition is
             modified. 
 <p>
+<li> <strong>--own-parser</strong> (<strong>-P</strong>)<br/> 
+           The actions performed by <strong>flexc++</strong>'s own parser are written to the
+            standard output stream.
+<p>
+This option does <em>not</em> result in the generated program optionally
+            displaying the actions of its <em>lex</em> function. If that is what
+            you want, use the <em>--debug</em> option.
+<p>
 <li> <strong>--own-tokens</strong> (<strong>-T</strong>)<br/> 
-           The tokens returned as well as the text matched when <strong>flexc++</strong> reads
-            its input files(s) are shown when this option is used.
+           The tokens returned as well as the text matched by <strong>flexc++</strong> are
+            written to the standard output stream when this option is used.
 <p>
 This option does <em>not</em> result in the generated program displaying
             returned tokens and matched text. If that is what you want, use
             the <em>--print-tokens</em> option.
 <p>
 <li> <strong>--print-tokens</strong> (<strong>-t</strong>)<br/> 
-           The tokens returned as well as the text matched by the generated
-            <em>lex</em> function are displayed on the standard output stream, just
-            before returning the token to <em>lex</em>'s caller. Displaying tokens
-            and matched text is suppressed again when the <em>lex.cc</em> file is
-            generated without using this option. The function showing the
-            tokens (<em>ScannerBase::print__</em>) is called from
-            <em>Scanner::printTokens</em>, which is defined in-line in
-            <em>Scanner.h</em>. Calling <em>ScannerBase::print__</em>, therefore, can
+           The tokens returned as well as the text matched by the
+            <em>generated</em> <em>lex</em> function are displayed on the standard
+            output stream, just before returning the token to <em>lex</em>'s
+            caller. Displaying tokens and matched text is suppressed again
+            when the <em>lex.cc</em> file is generated without using this
+            option. The function showing the tokens (<em>ScannerBase::print__</em>)
+            is called from <em>Scanner::printTokens</em>, which is defined in-line
+            in <em>Scanner.h</em>. Calling <em>ScannerBase::print__</em>, therefore, can
             also easily be controlled by an option controlled by the program
             using the scanner object.
 <p>

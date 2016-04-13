@@ -1,3 +1,17 @@
+flexc++ (2.05.00)
+
+  * Precompiled headers are rebuilt when their .h or .ih file have changed.
+
+  * Added option --own-parser (-P) showing the actions of flexc++'s own parser
+    when parsing a lexer-specification file.
+
+  * New parser, built by bisonc++ V5.00.00.
+
+  * Repaired the faulty long-option definitions in main.cc, due to which
+    long options were not properly recognized
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 13 Apr 2016 12:37:09 +0530
+
 flexc++ (2.04.00)
 
   * Carlos Bril and Micha de Rijk detected a curious bug resulting in flexc++
