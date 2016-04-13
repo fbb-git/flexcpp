@@ -10,7 +10,7 @@ flexc++ (2.05.00)
   * Repaired the faulty long-option definitions in main.cc, due to which
     long options were not properly recognized
 
- -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 30 Mar 2016 17:24:52 +0200
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Wed, 13 Apr 2016 12:37:09 +0530
 
 flexc++ (2.04.00)
 

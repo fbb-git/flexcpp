@@ -55,17 +55,18 @@ runflexcpp()
 
 makeprogram()
 {
-    g++ --std=c++0x -Wall main.cc lex.cc 
+    echo compiling test $1
+    g++ --std=c++14 -Wall main.cc lex.cc 
 }
 
 runprogram()
 {
     echo 
-    echo "Running the regression tests using input file \`$1':"
+    echo "Test $2: running the regression tests using input file \`$1':"
     echo "(compiling)..."
     echo
 
-    makeprogram
+    makeprogram $2
 
     echo "Press Enter to start the regression test"
     read
@@ -92,7 +93,7 @@ do
         data=`echo $file | sed 's/p/i/'`
 #        runflex 
         runflexcpp
-        runprogram $data
+        runprogram $data $file
     fi
 done
 
