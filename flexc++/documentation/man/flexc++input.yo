@@ -46,7 +46,7 @@ manpagename(flexc++input)(Organization of flexc++'s input file(s))
 manpagedescription()
 
     Flc()(1) was designed after bf(flex)(1) and bf(flex++)(1). Like these
-latter two programs flc() generates code performing pattern-matching on text,
+two programs flc() generates code performing pattern-matching on text,
 possibly executing actions when certain em(regular expressions) are
 recognized.
 
