@@ -1,5 +1,5 @@
 %class-name Parser
-%default-actions quiet
+%default-actions off
 %filenames parser
 %parsefun-source parse.cc
 %scanner ../scanner/scanner.h
