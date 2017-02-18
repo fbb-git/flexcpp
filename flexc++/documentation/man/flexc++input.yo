@@ -100,9 +100,11 @@ manpagebugs()
     itemization(
     it() The priority of interval expressions (tt({...})) equals the priority
 of other multiplicative operators (like tt(*)).
+COMMENT(
     it() All tt(INITIAL) rules apply to inclusive mini scanners, also those
 tt(INITIAL) rules that were explicitly associated with the tt(INITIAL) mini
 scanner.
+END)
     )
 
 includefile(include/trailer.yo)
