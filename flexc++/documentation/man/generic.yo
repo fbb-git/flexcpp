@@ -70,7 +70,7 @@ int main()
         )
     it() Compile all tt(.cc) files:
         verb(
-    g++ --std=c++11 *.cc
+    g++ *.cc
         )
     
     it() To `tokenize' tt(main.cc), execute:
@@ -159,7 +159,7 @@ bisonc++ grammar
     
     it() Compile all sources:
     verb(
-g++ --std=c++0x *.cc */*.cc
+g++ *.cc */*.cc
     )
 
     it() Execute the program, providing it some source file to be processed:

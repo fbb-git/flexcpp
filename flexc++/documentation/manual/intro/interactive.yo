@@ -30,7 +30,7 @@ specification:
 contains the file tt(main.cc) whose implementation is shown below, then
 execute the following command to create the interactive scanner program:
         verb(
-    g++ --std=c++11 *.cc -lbobcat
+    g++ *.cc -lbobcat
         )
     This completes the construction of the interactive scanner. Here is
 the file tt(main.cc):

@@ -371,10 +371,10 @@ NAME    [[:alpha:]][_[:alnum:]]*
 
 "//".*          // ignore
 
-"/*"            begin(comment);
+"/*"            begin(StartCondition__::comment);
 
 <comment>.|\n   // ignore
-<comment>"*/"   begin(INITIAL);
+<comment>"*/"   begin(StartCondition__::INITIAL);
 
 ^a              return 1;
 a               return 2;
