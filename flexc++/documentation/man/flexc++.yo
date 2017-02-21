@@ -201,10 +201,9 @@ Richard left the project and moved to Amsterdam. Jean-Paul remained in
 Groningen, and after on-and-off activities on the project, in close
 cooperation with Frank B. Brokken, Frank undertook a rewrite of the project's
 code around 2010. During the development of flc(), the lookahead-operator
-handling continuously threatened the completion of the project. By now, the
-project has evolved to a level that we feel it's defensible to publish the
-program, although we still tend to consider the program in its experimental
-stage; it will remain that way until we decide to move its version from the
-0.9x.xx series to the 1.xx.xx series.
+handling continuously threatened the completion of the project. But in
+version 2.00.00 the lookahead operator received a completely new
+implementation (with a bug fix in version 2.04.00), which solved previously
+encountered problems with the lookahead-operator.
 
 includefile(include/trailer.yo)
