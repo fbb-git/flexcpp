@@ -35,6 +35,21 @@ _start_condition_directive:
     _start_condition_names
 ;
 
+_start_condition_name_msg:
+    {
+        d_expect = "start condition enum name";
+    }
+;
+
+_start_condition_name_directive:
+    STARTCONDITION
+    _start_condition_name_msg
+    IDENTIFIER
+    {
+        d_options.setStartConditionName(d_scanner.matched());
+    }
+;
+    
 _name_def:
     identifier
     {
@@ -68,6 +83,8 @@ _directive:
     _start_condition_directive
 |
     _name_definition
+|
+    _start_condition_name_directive
 |
     error
 |

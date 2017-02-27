@@ -50,6 +50,7 @@ class Options: private FlexTypes
     std::string d_skeletonDirectory;
     std::string d_targetDirectory;
     std::string d_infile;
+    std::string d_startConditionName;
 
     bool d_interactive = false;
     bool d_lines;
@@ -82,6 +83,7 @@ class Options: private FlexTypes
     static char s_defaultSkeletonDirectory[];
     static char s_defaultClassName[];
     static char s_defaultLexfunSource[];
+    static char s_defaultStartConditionName[];
 
     static Options *s_options;
     static void (*s_regexCall)(char const *funName);
@@ -134,6 +136,7 @@ class Options: private FlexTypes
         std::string const &nameSpace() const;
         std::string const &infile() const;
         std::string const &constructionPath() const;
+        std::string const &startConditionName() const;
         std::string implementationHeaderName() const;
 
         void setBaseClassHeader(TextType textType);
@@ -152,6 +155,7 @@ class Options: private FlexTypes
         void setNameSpace(TextType textType);
         void setPrint();
         void setSkeletonDirectory(TextType textType);
+        void setStartConditionName(std::string const &newName);
         void setTargetDirectory(TextType textType);
 
         static void regexCall(char const *funname);
@@ -171,10 +175,6 @@ class Options: private FlexTypes
         void accept(std::string const &text, 
                     PathType pathType, char const *declTxt);
 
-
-//        static void setPath(std::string *target, std::string const &name);
-//        static void setPath(std::string *target, std::string const &name,
-//                            char const *warnOption);
         void setOptionPath(std::string *dest, int optChar, 
                            std::string const &defaultFile, 
                            char const *defaultSuffix,
@@ -303,6 +303,16 @@ inline std::string const &Options::nameSpace() const
 inline std::string const &Options::infile() const
 {
     return d_infile;
+}
+
+inline std::string const &Options::startConditionName() const
+{
+    return d_startConditionName;
+}
+
+inline void Options::setStartConditionName(std::string const &newName)
+{
+    d_startConditionName = newName;
 }
 
 inline void Options::setSkeletonDirectory(TextType textType)

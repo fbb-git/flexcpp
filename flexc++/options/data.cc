@@ -6,6 +6,7 @@
 char Options::s_defaultSkeletonDirectory[]       = _Skel_;
 char Options::s_defaultLexFunctionName[]        = "lex";
 char Options::s_defaultClassName[]              = "Scanner";
+char Options::s_defaultStartConditionName[]     = "StartCondition__";
 
 void (*Options::s_regexCall)(char const *funName) = Options::nop;
 

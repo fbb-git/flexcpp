@@ -30,7 +30,10 @@ Generator::Map Generator::s_insert =
     {"print",                   &Generator::print},
     {"ranges",                  &Generator::ranges},
     {"scannerConstructors",     &Generator::scannerConstructors},
-    {"startCondNames",          &Generator::startCondNames},
+    {"startconddecl",           &Generator::startCondDecl},
+    {"startcondenum",           &Generator::startCondEnum},
+    {"startcondimpl",           &Generator::startCondImpl},
+    {"startcondinfo",           &Generator::startCondInfo},
     {"sstream",                 &Generator::insertSstream},
 };
 

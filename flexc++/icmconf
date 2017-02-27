@@ -9,6 +9,8 @@
 #define LIBRARY             "modules"
 #define SHAREDREQ           ""
 #define USE_ALL             "a"
+#define IH                  ".ih"
+#define PRECOMP             "-x c++-header"
 #define SOURCES             "*.cc"
 #define SCANGEN             "flexc++"
 #define SCANFLAGS           ""
@@ -23,3 +25,5 @@
 #define TMP_DIR             "tmp"
 #define OBJ_EXT             ".o"
 #define USE_VERSION
+
+#define DEFCOM              "program"

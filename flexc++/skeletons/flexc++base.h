@@ -47,9 +47,7 @@ protected:
     };
 
 public:
-    enum class StartCondition__ {
-$insert 8 startCondNames
-    };
+$insert 4 startcondenum
 
 private:
     struct FinalData
@@ -154,10 +152,8 @@ $ignoreInteractive BEGIN    this section is ignored by generator/filter.cc
 $ignoreInteractive END      end ignored section by generator/filter.cc
     ~\@Base();
 
-    StartCondition__  startCondition() const;   // current start condition
     bool            popStream();
     std::ostream   &out();
-    void            begin(StartCondition__ startCondition);
     void            echo() const;
     void            leave(int retValue) const;
 
@@ -213,7 +209,8 @@ $ignoreInteractive END      end ignored section by generator/filter.cc
     void            lop3__();                   // catch-all while matching b
     void            lop4__();                   // matches the LOP's a head
 
-private:
+$insert startconddecl
+
     size_t getInput();
     size_t getLOP();
     void p_pushStream(std::string const &name, std::istream *streamPtr);
@@ -223,14 +220,14 @@ private:
     template <typename ReturnType, typename ArgType>
     static ReturnType constexpr as(ArgType value);
     static bool constexpr available(size_t value);
-    static StartCondition__ constexpr SC(int sc);
-    static int constexpr SC(StartCondition__ sc);
 };
 
 inline \@Base::~\@Base()
 {
     d_input.close();
 }
+
+$insert startcondimpl
 
 template <typename ReturnType, typename ArgType>
 inline ReturnType constexpr \@Base::as(ArgType value)
@@ -247,16 +244,6 @@ inline bool \@Base::knownFinalState()
 inline bool constexpr \@Base::available(size_t value)
 {   
     return value != std::numeric_limits<size_t>::max();
-}
-
-inline \@Base::StartCondition__ constexpr \@Base::SC(int sc)
-{
-    return as<StartCondition__>(sc);
-}
-
-inline int constexpr \@Base::SC(StartCondition__ sc)
-{
-    return as<int>(sc);
 }
 
 inline std::ostream &\@Base::out()
@@ -289,11 +276,6 @@ inline std::string const &\@Base::matched() const
     return d_matched;
 }
 
-inline \@Base::StartCondition__ \@Base::startCondition() const
-{
-    return SC(d_startCondition);
-}
-
 inline std::string const &\@Base::filename() const
 {
     return d_filename;
@@ -322,13 +304,6 @@ inline size_t \@Base::lineNr() const
 inline void \@Base::more()
 {
     d_more = true;
-}
-
-inline void \@Base::begin(StartCondition__ startCondition)
-{
-$insert 4 debug "Switching to StartCondition__ # " << as<int>(startCondition)
-    // d_state is reset to 0 by reset__()
-    d_dfaBase__ = s_dfaBase__[d_startCondition = SC(startCondition)];
 }
 
 inline size_t \@Base::state__() const

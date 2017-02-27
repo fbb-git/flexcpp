@@ -4,15 +4,7 @@
 
 void Generator::debug(ostream &out) const
 {
-    if 
-    (
-        not
-        (
-            d_debug 
-            || 
-            (d_field == "R" && d_options('R'))
-        )
-    )
+    if (not debugTest())
         return;
 
     key(out);

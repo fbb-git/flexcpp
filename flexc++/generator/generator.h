@@ -103,6 +103,8 @@ class Generator: public FlexTypes
                           std::string const &option,
                           std::string const &regex) const;
 
+        bool debugTest() const;
+
         bool grep(std::string const &fileName, std::string const &regex) 
                                                                         const;
 
@@ -137,7 +139,10 @@ class Generator: public FlexTypes
         void print(std::ostream &out) const;
         void ranges(std::ostream &out) const;
         void scannerConstructors(std::ostream &out) const;
-        void startCondNames(std::ostream &out) const;
+        void startCondDecl(std::ostream &out) const;
+        void startCondEnum(std::ostream &out) const;
+        void startCondImpl(std::ostream &out) const;
+        void startCondInfo(std::ostream &out) const;
 
         size_t dfaCols() const;
 

@@ -13,9 +13,7 @@ $insert namespace-open
     //           class header file
 $insert ranges
 
-    // s_dfa__ contains the rows of *all* DFAs ordered by start state.  The
-    // enum class StartCondition__ is defined in the baseclass header
-    // StartCondition__::INITIAL is always 0.  Each entry defines the row to
+$insert startcondinfo
     // transit to if the column's character range was sensed. Row numbers are
     // relative to the used DFA, and d_dfaBase__ is set to the first row of
     // the subset to use.  The row's final two values are respectively the

@@ -29,6 +29,7 @@
         NOLINES
         PRINT
         SKELETON_DIRECTORY
+        STARTCONDITION
         TARGET_DIRECTORY
  
 // rules

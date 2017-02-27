@@ -187,6 +187,7 @@ OPTBL                   [[:blank:]]*
     %namespace                  return Parser::NAMESPACE;
     %print-tokens               return Parser::PRINT;
     %skeleton-directory         return Parser::SKELETON_DIRECTORY;
+    %startcondition-name        return Parser::STARTCONDITION;
     %target-directory           return Parser::TARGET_DIRECTORY;
 
     "%s"                        return Parser::INCL_START_CONDITION;

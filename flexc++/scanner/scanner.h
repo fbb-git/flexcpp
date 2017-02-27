@@ -55,6 +55,7 @@ class Scanner: public ScannerBase, private FlexTypes
 
         void forceCaseSensitive();
         void setCaseSensitive();
+        void setStartConditionName();
 
         void ignoreWS();
         bool allowNullMatches();
