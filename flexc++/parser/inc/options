@@ -75,6 +75,13 @@ _skeleton_directory:
     }
 ;
 
+_startcondition_name:
+    STARTCONDITION
+    {
+        d_expect = "start-condition enum name";
+    }
+;
+
 _target_directory:
     TARGET_DIRECTORY
     {
@@ -154,6 +161,11 @@ option:
     _skeleton_directory _opt_is _stringOrIdent
     {
         d_options.setSkeletonDirectory($3);
+    }
+|
+    _startcondition_name _opt_is _stringOrIdent
+    {
+        d_options.setStartConditionName($3);
     }
 |
     _target_directory _opt_is _stringOrIdent

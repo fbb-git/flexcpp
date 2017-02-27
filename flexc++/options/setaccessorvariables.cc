@@ -22,6 +22,9 @@ void Options::setAccessorVariables()
     if (d_lexFunctionName.empty())
         d_lexFunctionName = s_defaultLexFunctionName;
 
+    if (d_startConditionName.empty())       // not a program option
+        d_startConditionName = s_defaultStartConditionName;
+
     string value;
     d_maxDepth = arg.option(&value, 'm') ? 
                     stoul(value)

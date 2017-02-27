@@ -155,7 +155,7 @@ class Options: private FlexTypes
         void setNameSpace(TextType textType);
         void setPrint();
         void setSkeletonDirectory(TextType textType);
-        void setStartConditionName(std::string const &newName);
+        void setStartConditionName(TextType newName);
         void setTargetDirectory(TextType textType);
 
         static void regexCall(char const *funname);
@@ -308,11 +308,6 @@ inline std::string const &Options::infile() const
 inline std::string const &Options::startConditionName() const
 {
     return d_startConditionName;
-}
-
-inline void Options::setStartConditionName(std::string const &newName)
-{
-    d_startConditionName = newName;
 }
 
 inline void Options::setSkeletonDirectory(TextType textType)

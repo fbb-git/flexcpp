@@ -1,7 +1,7 @@
 %class-name = "Scanner" 
 %lex-source = "lex.cc"
 //%skeleton-directory = "../skeletons"
-
+//%startcondition-name Mimi
 %filenames scanner
 
 // %debug
