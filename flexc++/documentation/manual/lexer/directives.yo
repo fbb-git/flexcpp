@@ -184,6 +184,25 @@ inconsistency. In those cases you may encounter compilation errors.
             files. Corresponding command-line option:
             tt(--skeleton-directory).
 
+
+    it() bf(startcondition-name) tt( = "startconditionName") nl()
+           By default, flc() defines the enum tt(StartCondition__) defining
+            the names of start-conditions. The tt(%startcondition-name)
+            directive can be used to configure another name for the enum
+            containing the names of the start-conditions.  It may be defined
+            only once. 
+
+           The name of the startcondition-enum may be modified, and the
+            directive can also be omitted again after it has been specified
+            before. When changing the name of the startcondition-enum or when
+            reverting to the default name newly generated tt(lex.cc) and
+            tt(ScannerBase.h) files will use the currently defined
+            startcondition-enum name. Be advised, though, that the
+            startcondition-enum name may also be used in user-defined members
+            of the scanner-class, or in the scanner's header and internal
+            header files. If so, the user is responsible for updating those
+            files to the currently defined name of the startcondition-enum.
+
     it() bf(%target-directory) tt(= "pathname") nl()
            tt(Pathname) defines the directory where generated files should be
             written.  By default this is the directory where flc() is

@@ -1,3 +1,12 @@
+flexc++ (2.06.00)
+
+  * Added directive %startcondition-name specifying a non-default name for the
+    StartCondition__ enum.
+
+  * Updated the man-pages/manual.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Mon, 27 Feb 2017 12:33:58 +0100
+
 flexc++ (2.05.00)
 
   * Precompiled headers are rebuilt when their .h or .ih file have changed.
