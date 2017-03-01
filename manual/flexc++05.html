@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> Flexc++ (Version 2.05.00) User Guide </title>
+<title> Flexc++ (Version 2.06.00) User Guide </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -15,31 +15,31 @@
 </ul>
 <hr>
 <a name="l30"></a>
-<h1>Chapter 5: Pre-loading input lines</h1>
+<h1 >Chapter 5: Pre-loading input lines</h1>
 In some programs it may be desirable to have the currently scanned line
-available, even though all its contents hasn't been read yet by <strong>flexc++</strong>.
+available, even though all its contents hasn't been read yet by <strong >flexc++</strong>.
 <p>
-E.g., when the <code>g++</code> compiler detects an error or warning it displays the
+E.g., when the <code >g++</code> compiler detects an error or warning it displays the
 full line in which the error or warning condition arose, as well as a column
 indicator indicating where the condition was observed (below, a condition
 where the current input line should be displayed is simply called a
 `condition').
 <p>
-<strong>Flexc++</strong> could use one of the following approaches to provide the required
+<strong >Flexc++</strong> could use one of the following approaches to provide the required
 condition information:
     <ul>
-    <li> At each end of line <strong>flexc++</strong> could store the current offset of the file
-        it is reading. Furthermore, each rule adds <code>length()</code> to a data
+    <li> At each end of line <strong >flexc++</strong> could store the current offset of the file
+        it is reading. Furthermore, each rule adds <code >length()</code> to a data
         member keeping track of the length of the line read so far, making
         this data member's value available through an accessor (e.g.,
-        <code>column()</code>). After each newline this data member is reset to zero.
+        <code >column()</code>). After each newline this data member is reset to zero.
 <p>
-The code calling the scanner's <code>lex</code> member maintains a data
+The code calling the scanner's <code >lex</code> member maintains a data
         member holding the offset that was last returned by the scanner, as
         well as a `condition vector' whose elements contain column numbers and
         messages describing the nature of the conditions. 
 <p>
-When the code calling the scanner's <code>lex</code> member observes a
+When the code calling the scanner's <code >lex</code> member observes a
         condition it compares the offset returned by the scanner to its
         own offset data member. 
 <p>
@@ -52,13 +52,13 @@ If the two offset values differ the source file's line that begins at
         member.
 <p>
 If the two offset values are equal the scanner's 
-        <code>column</code> value and the nature of the condition are added to a
+        <code >column</code> value and the nature of the condition are added to a
         `condition vector'.
 <p>
 This approach has the advantage of being relatively simple. A
         disadvantage could be that it can only be used for seekable media, or
         that the overhead of seeking and reading lines of the file that is
-        processed by <strong>flexc++</strong> is considered impractical.
+        processed by <strong >flexc++</strong> is considered impractical.
 <p>
 The implementation of this approach is left as an exercise to the
         reader.
@@ -73,15 +73,15 @@ The implementation of this approach is left as an exercise to the
     </ul>
 <p>
 <a name="l31"></a>
-<h2>5.1: Using start conditions to pre-load input lines</h2>
+<h2 >5.1: Using start conditions to pre-load input lines</h2>
     Since the scanner has full control over what happens before and after
 determining the next token, the lexical scanner's rules can be designed so
 that it always first reads a line, and then re-reads that line in another
-start condition. The <code>Scanner</code> object keeps the last-read line, a column
-indicator, and a reset flag, which is initially set to <code>true</code> and also after
+start condition. The <code >Scanner</code> object keeps the last-read line, a column
+indicator, and a reset flag, which is initially set to <code >true</code> and also after
 reading a newline. If the reset flag is true, the column indicator is set to
 0, otherwise it is updated to the length of the currently matched text. Here
-is the initial section of the class <code>Scanner</code>, showing the new data members:
+is the initial section of the class <code >Scanner</code>, showing the new data members:
         <pre>
 
     class Scanner: public ScannerBase
@@ -98,7 +98,7 @@ is the initial section of the class <code>Scanner</code>, showing the new data m
 
 <p>
 Of course, the lexer won't return for all matched text, but once a rule has
-been matched the <code>posCode</code> member is called, so this function can update the
+been matched the <code >posCode</code> member is called, so this function can update the
 column and reset indicators:
 <p>
 <pre>
@@ -117,11 +117,11 @@ column and reset indicators:
 </pre>
 
 <p>
-The scanner's default rule (the <code>StartCondition__::INITIAL</code> scanner simply
+The scanner's default rule (the <code >StartCondition__::INITIAL</code> scanner simply
 reads the initial line, and then pushes the line back onto the scanner's
-queue. A simple <code>.*</code> will ensure that all the line's characters are
+queue. A simple <code >.*</code> will ensure that all the line's characters are
 read. Having matched a line it must still be broken down into tokens, for
-which the <code>%x main</code> start condition is used. The default (<code>INITIAL</code>)
+which the <code >%x main</code> start condition is used. The default (<code >INITIAL</code>)
 scanner's rule looks like this:
 <p>
 <pre>
@@ -137,7 +137,7 @@ scanner's rule looks like this:
 
 <p>
 Now that the line has been stored, it's time to obtain its tokens, which is
-the responsibility of the <code>StartCondition__::main</code> start condition:
+the responsibility of the <code >StartCondition__::main</code> start condition:
 <p>
 <pre>
 
@@ -154,19 +154,19 @@ the responsibility of the <code>StartCondition__::main</code> start condition:
 
 <p>
 Identifiers and numbers are returned as tokens, square brackets are returned
-as <code>SIGNAL</code> tokens, indicating that we would like to see the lines and
+as <code >SIGNAL</code> tokens, indicating that we would like to see the lines and
 columns in which they were found, white space characters are ignored, and 
 all other characters are returned as-is.
 <p>
-Once a token is returned, <code>d_column</code> is updated to indicate the column
+Once a token is returned, <code >d_column</code> is updated to indicate the column
 number of the last-matched character. To obtain the matched text's 
-initial column number, subtract <code>length() - 1</code>.
+initial column number, subtract <code >length() - 1</code>.
 <p>
-Here is a simple <code>main</code> function, reading its <code>cin</code> stream, and showing
+Here is a simple <code >main</code> function, reading its <code >cin</code> stream, and showing
 lines, column indicators, line numbers, and column numbers of detected square
 brackets:
 <p>
-<pre>
+<pre >
 #include &lt;iostream&gt;
 #include &lt;iomanip&gt;
 #include "scanner.h"
@@ -213,20 +213,20 @@ int main()
 
 <p>
 <a name="l32"></a>
-<h2>5.2: Wrapping input streams</h2>
+<h2 >5.2: Wrapping input streams</h2>
     Streams offering the contents and last-read column positions of the
 currently scanned line could be passed to the scanner. The streams that are
-processed by the scanner become <em>wrapper streams</em> around the streams that
+processed by the scanner become <em >wrapper streams</em> around the streams that
 are actually processed by the scanner. 
 <p>
-This approach uses multiple inheritance to add <code>std::streambuf</code> and
-<code>std::istream</code> facilities to the <code>class Scanner</code>. However, these
+This approach uses multiple inheritance to add <code >std::streambuf</code> and
+<code >std::istream</code> facilities to the <code >class Scanner</code>. However, these
 facilities are for internal use only: they are merely used for wrapping the
-<code>std::istream</code> that is actually passed to the scanner.
+<code >std::istream</code> that is actually passed to the scanner.
 <p>
 Once the set of files have been generated from the rules file (e.g.,
-<code>lexer</code>) the file <code>Scanner.h</code> is available, and this file will be slightly
-modified: we'll use triple inheritance for the  <code>class Scanner</code>:
+<code >lexer</code>) the file <code >Scanner.h</code> is available, and this file will be slightly
+modified: we'll use triple inheritance for the  <code >class Scanner</code>:
 <p>
 <pre>
 
@@ -236,19 +236,19 @@ class Scanner: private ScannerStreambuf, private std::istream,
 </pre>
 
 <p>
-Only for the <code>ScannerBase</code> public inheritance is used: the initial two
-classes are used to implement <code>Scanner</code> in terms of these classes. The class
-<code>IStreambuf</code> is doing all the magic and is discussed below. The
-<code>std::istream</code> base class receives <code>ScannerStreambuf</code>'s address, turning
-<code>Scanner</code> objects into <code>std::istream</code> objects, but only so for the benefit
-of the <code>Scanner</code> object itself. <code>ScannerBase</code>, of course, is left
+Only for the <code >ScannerBase</code> public inheritance is used: the initial two
+classes are used to implement <code >Scanner</code> in terms of these classes. The class
+<code >IStreambuf</code> is doing all the magic and is discussed below. The
+<code >std::istream</code> base class receives <code >ScannerStreambuf</code>'s address, turning
+<code >Scanner</code> objects into <code >std::istream</code> objects, but only so for the benefit
+of the <code >Scanner</code> object itself. <code >ScannerBase</code>, of course, is left
 untouched. 
 <p>
-The class <code>ScannerStreambuf</code> maintains and offers the contents of the
+The class <code >ScannerStreambuf</code> maintains and offers the contents of the
 currently scanned line and column numbers of returned characters. The
-<code>Scanner</code>'s interface shares its members <code>line</code> and <code>column</code> to make
-this information available to any class that may access the <code>Scanner</code>
-object. To accomplish this the following declarations are added <code>Scanner</code>'s
+<code >Scanner</code>'s interface shares its members <code >line</code> and <code >column</code> to make
+this information available to any class that may access the <code >Scanner</code>
+object. To accomplish this the following declarations are added <code >Scanner</code>'s
 public interface:
         <pre>
 
@@ -258,18 +258,19 @@ public interface:
 </pre>
 
 <p>
-The member <code>explicit Scanner(std::istream &amp;in = std::cin, std::ostream &amp;out
-= std::cout)</code> now must make sure the <code>ScannerStreambuf</code> and <code>std::istream</code>
-are properly initialized before the <code>ScannerBase</code> can be initialized. 
-the <code>ScannerStreambuf</code> is a wrapper around the actual <code>std::istream</code>, and
+The member <code >explicit Scanner(std::istream &amp;in = std::cin, std::ostream &amp;out
+= std::cout)</code> now must make sure the <code >ScannerStreambuf</code> and <code >std::istream</code>
+are properly initialized before the <code >ScannerBase</code> can be initialized. 
+the <code >ScannerStreambuf</code> is a wrapper around the actual <code >std::istream</code>, and
 it receives the initial stream from the constructor's arguments. This
-completes the <code>ScannerStreambuf</code> construction, making <code>std::istream's
+completes the <code >ScannerStreambuf</code> construction, making <code >std::istream's
 std::streambuffer</code> available. The interesting part comes next: now that the
-<code>Scanner</code> is an <code>std::istream</code> it can simply be passed to <code>ScannerBase</code>
+<code >Scanner</code> is an <code >std::istream</code> it can simply be passed to <code >ScannerBase</code>
 as the input file to be processed (cf. figure <a href="flexc++05.html#inputwrapping">1</a>).
 <p>
-<a name="inputwrapping"></a><p><figure><img src="images/inputwrapping.jpg" alt="Figure 1 is shown here."/><br/>
-<figcaption>Figure 1: Scanner: triple inheritance</figcaption>
+<p><a name="inputwrapping"></a><figure >
+<img src="images/inputwrapping.jpg" >
+<figcaption >Figure 1: Scanner: triple inheritance</figcaption>
 </figure></p>
 
 <p>
@@ -288,18 +289,18 @@ The code implementing this organization looks like this:
 
 <p>
 <a name="l33"></a>
-<h3>5.2.1: The class ScannerStreambuf</h3>
-        The class <code>ScannerStreambuf</code> uses two data members (<code>d_line</code> and
-<code>d_column</code>) to store, respectively, the line that's currently being scanned
+<h3 >5.2.1: The class ScannerStreambuf</h3>
+        The class <code >ScannerStreambuf</code> uses two data members (<code >d_line</code> and
+<code >d_column</code>) to store, respectively, the line that's currently being scanned
 and the column to where the scanning process has proceeded. In addition it
 needs access to the actual input stream (in this example only one stream is
-used, so a <code>std::istream &amp;d_in</code> can be used; if stream-switching should be
-supported then use a <code>std::istream *d_inPtr</code>), and it uses a one-character
+used, so a <code >std::istream &amp;d_in</code> can be used; if stream-switching should be
+supported then use a <code >std::istream *d_inPtr</code>), and it uses a one-character
 buffer (there's no real need to use a bigger buffer, as the input stream may
 already define its own buffer, and the scanner merely reads its input one
-character at the time anyway (through <code>Input::get</code>).
+character at the time anyway (through <code >Input::get</code>).
 <p>
-<code>ScannerStreambuf</code> only needs a very basic interface:
+<code >ScannerStreambuf</code> only needs a very basic interface:
         <pre>
 
     class ScannerStreambuf: public std::streambuf
@@ -321,8 +322,8 @@ character at the time anyway (through <code>Input::get</code>).
         
 </pre>
 
-    The members <code>line</code> and <code>column</code> are simple accessors, returning,
-respectively <code>d_line</code> and <code>d_column</code>. The constructor initializes <code>d_in</code>
+    The members <code >line</code> and <code >column</code> are simple accessors, returning,
+respectively <code >d_line</code> and <code >d_column</code>. The constructor initializes <code >d_in</code>
 and installs an empty buffer:
         <pre>
 
@@ -336,12 +337,12 @@ and installs an empty buffer:
 </pre>
 
 <p>
-The member <code>underflow</code> isn't complicated either: if all characters in
-<code>d_line</code> have been processed (which is initially true) the next line is read
-into <code>d_line</code>, adding a newline character to <code>d_line</code>. 
+The member <code >underflow</code> isn't complicated either: if all characters in
+<code >d_line</code> have been processed (which is initially true) the next line is read
+into <code >d_line</code>, adding a newline character to <code >d_line</code>. 
 <p>
-Then the next character in <code>d_line</code> is assigned to <code>d_ch</code>, and the
-input buffer is defined to point at <code>d_ch</code>. Here is its implementation:
+Then the next character in <code >d_line</code> is assigned to <code >d_ch</code>, and the
+input buffer is defined to point at <code >d_ch</code>. Here is its implementation:
         <pre>
 
     int ScannerStreambuf::underflow()
@@ -363,11 +364,11 @@ input buffer is defined to point at <code>d_ch</code>. Here is its implementatio
 
 <p>
 <a name="l34"></a>
-<h3>5.2.2: Illustration</h3>
+<h3 >5.2.2: Illustration</h3>
         Here is a set of lexer-rules which is used to illustrate the various
 approaches with:
 <p>
-<pre>
+<pre >
 %filenames scanner
 
 %%
@@ -385,14 +386,14 @@ approaches with:
 
 <p>
 Identifiers and numbers are returned as tokens, square brackets are returned
-as <code>SIGNAL</code> tokens, indicating that we would like to see the lines and
+as <code >SIGNAL</code> tokens, indicating that we would like to see the lines and
 columns in which they were found, white space characters are ignored, and 
 all other characters are returned as-is.
 <p>
-The <code>main</code> function uses the <code>column</code> and <code>line</code> members, which were
-added to the <code>class Scanner</code>:
+The <code >main</code> function uses the <code >column</code> and <code >line</code> members, which were
+added to the <code >class Scanner</code>:
 <p>
-<pre>
+<pre >
 int main()
 {
     ScannerStreambuf buf(cin);
@@ -437,17 +438,17 @@ int main()
 </pre>
 
 <p>
-The <code>IStreambuf</code> wraps around <code>cin</code>, and is passed to an <code>istream</code>,
-which in turn is passed to the <code>Scanner</code> object. When the scanner returns
-<code>SIGNAL</code> tokens their lines, column indicators, line numbers and column
+The <code >IStreambuf</code> wraps around <code >cin</code>, and is passed to an <code >istream</code>,
+which in turn is passed to the <code >Scanner</code> object. When the scanner returns
+<code >SIGNAL</code> tokens their lines, column indicators, line numbers and column
 numbers are shown.
 <p>
-Members like <code>switchStream</code> and <code>pushStream</code>, expecting <code>std::istream</code>
+Members like <code >switchStream</code> and <code >pushStream</code>, expecting <code >std::istream</code>
 references can also be used, if the actual input streams are wrapped in
-<code>ScannerStreambuf</code> objects, which are passed to <code>istream</code> objects which
-are, in turn, passed to <code>switchStream</code> and <code>pushStream</code>. The members
+<code >ScannerStreambuf</code> objects, which are passed to <code >istream</code> objects which
+are, in turn, passed to <code >switchStream</code> and <code >pushStream</code>. The members
 expecting names of streams should of course not be used, since the scanner
-creates plain <code>std::ifstream</code> objects for them. 
+creates plain <code >std::ifstream</code> objects for them. 
 <p>
 <hr>
 <ul>

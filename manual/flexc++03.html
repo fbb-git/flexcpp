@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> Flexc++ (Version 2.05.00) User Guide </title>
+<title> Flexc++ (Version 2.06.00) User Guide </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -15,11 +15,11 @@
 </ul>
 <hr>
 <a name="FILEFORMAT"></a><a name="l17"></a>
-<h1>Chapter 3: Format of the input file</h1>
-The <strong>flexc++</strong> input file consists of two sections, separated by a line containing
-`<code>%%</code>'. The section above <code>%%</code> contains option specifications and
-definitions; the section below <code>%%</code> contains the regular expressions (and
-their (optional) actions). The general layout of <strong>flexc++</strong>'s input file,
+<h1 >Chapter 3: Format of the input file</h1>
+The <strong >flexc++</strong> input file consists of two sections, separated by a line containing
+`<code >%%</code>'. The section above <code >%%</code> contains option specifications and
+definitions; the section below <code >%%</code> contains the regular expressions (and
+their (optional) actions). The general layout of <strong >flexc++</strong>'s input file,
 therefore, looks like this:
 <p>
 <pre>
@@ -31,13 +31,13 @@ rules
 </pre>
 
 <p>
-Optionally, a final line containing `<code>%%</code>' may follow the rules.  The
+Optionally, a final line containing `<code >%%</code>' may follow the rules.  The
 following sections cover the `definitions' and `rules' sections.
 <p>
 <a name="definitionsection"></a><a name="l18"></a>
-<h2>3.1: Definitions section</h2>
-    <strong>Flexc++</strong> supports command-line <em>options</em> and input-file <em>directives</em>
-controlling <strong>flexc++</strong>'s behavior. Directives are covered in the next section
+<h2 >3.1: Definitions section</h2>
+    <strong >Flexc++</strong> supports command-line <em >options</em> and input-file <em >directives</em>
+controlling <strong >flexc++</strong>'s behavior. Directives are covered in the next section
 (<a href="flexc++03.html#DIRECTIVES">3.1.1</a>), options are covered in the section <a href="flexc++01.html#OPTIONS">1.1.1</a>.
 <p>
 The definitions section may also contain declarations of named regular
@@ -49,29 +49,29 @@ name   pattern
 </pre>
 
 <p>
-Here, <code>name</code> is an identfier, which may also contain hyphens (<code>-</code>);
-`<code>pattern</code>' is a regular expression, see section <a href="flexc++03.html#patterns">3.4</a>. Patterns
+Here, <code >name</code> is an identfier, which may also contain hyphens (<code >-</code>);
+`<code >pattern</code>' is a regular expression, see section <a href="flexc++03.html#patterns">3.4</a>. Patterns
 start at the first non-blank character following the name, and end at the
 line's last non-blank character. A named regular expression cannot contain
 comment.
 <p>
-Finally, the definitions section may be used to declare <em>mini-scanners</em>
-(a.k.a.  <em>start conditions</em>), cf. section <a href="flexc++03.html#STARTCONDITIONS">3.6</a>.  Start
+Finally, the definitions section may be used to declare <em >mini-scanners</em>
+(a.k.a.  <em >start conditions</em>), cf. section <a href="flexc++03.html#STARTCONDITIONS">3.6</a>.  Start
 conditions are very useful for defining small `sub-languages' inside the
 language whose tokens must be recognized by the scanner. A commonly
-encountered example is the start condition recognizing <strong>C</strong> style multi-line
+encountered example is the start condition recognizing <strong >C</strong> style multi-line
 comment.
 <p>
 <a name="DIRECTIVES"></a><a name="l19"></a>
-<h3>3.1.1: Directives</h3>
+<h3 >3.1.1: Directives</h3>
             Some directives require arguments, which are usually provided following
-separating (but optional) <code>=</code> characters. Arguments of directives are text,
+separating (but optional) <code >=</code> characters. Arguments of directives are text,
 surrounded by double quotes (strings), or embedded in raw string literals
 (rawstrings).  Double quotes or backslashes inside strings must themselves be
 preceded by backslashes; these backslashes are not required when rawstrings
 are used. 
 <p>
-The <code>%s</code> and <code>%x</code> directives are immediately followed by name lists,
+The <code >%s</code> and <code >%x</code> directives are immediately followed by name lists,
 consisting of identifiers separated by blanks.  Here is an example of the
 definition of a directive:
         <pre>
@@ -82,37 +82,37 @@ definition of a directive:
 
 <p>
 Directives accepting a `filename' do not accept path names, i.e., they
-cannot contain directory separators (<code>/</code>); options accepting a 'pathname'
+cannot contain directory separators (<code >/</code>); options accepting a 'pathname'
 may contain directory separators. A 'pathname' using blank characters should
 be surrounded by double quotes.
 <p>
 Some directives may generate errors. This happens when a directive conflicts
-with the contents of an existing file which <strong>flexc++</strong> cannot modify (e.g., a
+with the contents of an existing file which <strong >flexc++</strong> cannot modify (e.g., a
 scanner class header file exists, but doesn't define a name space, but a
-<code>%namespace</code> directive was provided). To solve the error the offending
+<code >%namespace</code> directive was provided). To solve the error the offending
 directive could be omitted, the existing file could be removed, or the
 existing file could be hand-edited according to the directive's specification.
-Note that <strong>flexc++</strong> currently does not handle the opposite error condition: if a
-previously used directive is omitted, then <strong>flexc++</strong> does not detect the
+Note that <strong >flexc++</strong> currently does not handle the opposite error condition: if a
+previously used directive is omitted, then <strong >flexc++</strong> does not detect the
 inconsistency. In those cases you may encounter compilation errors.
 <p>
 <ul>
-    <li> <strong>%baseclass-header</strong> <code>= "filename"</code> <br/>
+    <li> <strong >%baseclass-header</strong> <code >= "filename"</code> <br/>
            Defines the name of the file to contain the scanner class's base
             class interface. Corresponding command-line option:
-            <code>--baseclass-header</code>.
+            <code >--baseclass-header</code>.
 <p>
 It is an error if this directive is used and an already
             existing scanner-class header file does not include
-            <code>`filename'</code>. 
+            <code >`filename'</code>. 
 <p>
-<li> <strong>%case-insensitive</strong><br/>
-           Generates a scanner which <em>case insensitively</em> matches regular
-            expressions. All regular expressions specified in <strong>flexc++</strong>'s input
+<li> <strong >%case-insensitive</strong><br/>
+           Generates a scanner which <em >case insensitively</em> matches regular
+            expressions. All regular expressions specified in <strong >flexc++</strong>'s input
             file are interpreted case insensitively and the resulting scanner
             object will case insensitively interpret its input.
 <p>
-Corresponding command-line option: <code>--cases-insensitive</code>.
+Corresponding command-line option: <code >--cases-insensitive</code>.
 <p>
 When this directive is specified the resulting scanner does not
             distinguish between the following rules:
@@ -125,154 +125,172 @@ When this directive is specified the resulting scanner does not
 </pre>
 
            With a case-insensitive scanner only the first rule can be matched,
-            and <strong>flexc++</strong> will issue warnings for the second and third rule about
+            and <strong >flexc++</strong> will issue warnings for the second and third rule about
             rules that cannot be matched.
 <p>
 Input processed by a case-insensitive scanner is also handled case
-            insensitively. The above mentioned <code>First</code> rule is matched for
-            all of the following input words: <code>first First FIRST firST</code>. 
+            insensitively. The above mentioned <code >First</code> rule is matched for
+            all of the following input words: <code >first First FIRST firST</code>. 
 <p>
 Although the matching process proceeds case insensitively, the
-            matched text (as returned by the scanner's <code>matched()</code> member)
+            matched text (as returned by the scanner's <code >matched()</code> member)
             always contains the original, unmodified text. So, with the above
-            input <code>matched()</code> returns, respectively <code>first, First, FIRST</code>
-            and <code>firST</code>, while matching the rule <code>First</code>.
+            input <code >matched()</code> returns, respectively <code >first, First, FIRST</code>
+            and <code >firST</code>, while matching the rule <code >First</code>.
 <p>
-<li> <strong>%class-header</strong> <code>= "filename"</code> <br/>
+<li> <strong >%class-header</strong> <code >= "filename"</code> <br/>
            Defines the name of the file to contain the scanner class's
-            interface. Corresponding command-line option: <code>--class-header</code>.
+            interface. Corresponding command-line option: <code >--class-header</code>.
 <p>
-<li> <strong>%class-name</strong> <code> = "className"</code> <br/>
-           Declares the name of the scanner class generated by <strong>flexc++</strong>. This
-            directive corresponds to the <code>%name</code> directive used by
-            <strong>flex++</strong>(1). Contrary to <strong>flex++</strong>'s <code>%name</code> declaration,
-            <code>class-name</code> may appear anywhere in the first section of the
+<li> <strong >%class-name</strong> <code > = "className"</code> <br/>
+           Declares the name of the scanner class generated by <strong >flexc++</strong>. This
+            directive corresponds to the <code >%name</code> directive used by
+            <strong >flex++</strong>(1). Contrary to <strong >flex++</strong>'s <code >%name</code> declaration,
+            <code >class-name</code> may appear anywhere in the first section of the
             grammar specification file. It may be defined only once. If no
-            <code>class-name</code> is specified the default class name (<code>Scanner</code>)
+            <code >class-name</code> is specified the default class name (<code >Scanner</code>)
             is used. Corresponding command-line option:
-            <code>--class-name</code>.
+            <code >--class-name</code>.
 <p>
 It is an error if this directive is used and an already
-            existing scanner-class header file does not define <code>class
+            existing scanner-class header file does not define <code >class
             `className'</code>.
 <p>
-<li> <strong>%debug</strong> <br/> 
-           Provide <code>lex</code> and its support functions with debugging code,
+<li> <strong >%debug</strong> <br/> 
+           Provide <code >lex</code> and its support functions with debugging code,
             showing the actual parsing process on the standard output
             stream. When included, the debugging output is active by default,
-            but its activity may be controlled using the <code>setDebug(bool
-            on-off)</code> member. Note that no <code>#ifdef DEBUG</code> macros are used in
+            but its activity may be controlled using the <code >setDebug(bool
+            on-off)</code> member. Note that no <code >#ifdef DEBUG</code> macros are used in
             the generated code. 
 <p>
-<li> <strong>%filenames</strong> <code>= "basename"</code> <br/>
-           Defines the basename of the <code>Scanner.h, Scanner.hh,</code> and
-            <code>Scannerbase.h</code> files. E.g., when using the directive
+<li> <strong >%filenames</strong> <code >= "basename"</code> <br/>
+           Defines the basename of the <code >Scanner.h, Scanner.hh,</code> and
+            <code >Scannerbase.h</code> files. E.g., when using the directive
                 <pre>
 
     %filenames = "scanner"
                 
 </pre>
 
-           the names of the generated files are, respectively, <code>scanner.h,
-            scanner.hh,</code> and <code>scannerbase.h</code>.  Corresponding command-line
-            option: <code>--filenames</code>. The name of the source file (by default
-            <code>lex.cc</code>) is controlled by the <code>%lex-source</code> directive.
+           the names of the generated files are, respectively, <code >scanner.h,
+            scanner.hh,</code> and <code >scannerbase.h</code>.  Corresponding command-line
+            option: <code >--filenames</code>. The name of the source file (by default
+            <code >lex.cc</code>) is controlled by the <code >%lex-source</code> directive.
 <p>
-<li> <strong>%implementation-header</strong> <code>= "filename"</code> <br/>
+<li> <strong >%implementation-header</strong> <code >= "filename"</code> <br/>
            Defines the name of the file to contain the implementation header.
-            Corresponding command-line option: <code>--implementation-header</code>.
+            Corresponding command-line option: <code >--implementation-header</code>.
 <p>
 It is an error if this directive is used and an already
-            <code>'filename'</code> file does not include the scanner class header
+            <code >'filename'</code> file does not include the scanner class header
             file.
 <p>
-<li> <strong>%input-implementation</strong> <code>= "sourcefile"</code> <br/>
+<li> <strong >%input-implementation</strong> <code >= "sourcefile"</code> <br/>
            Defines the pathname of the file containing the implementation of a
-            user-defined <code>Input</code> class. 
+            user-defined <code >Input</code> class. 
 <p>
-<li> <strong>%input-interface</strong> <code>= "interface"</code> <br/>
+<li> <strong >%input-interface</strong> <code >= "interface"</code> <br/>
            Defines the pathname of the file containing the interface of a
-            user-defined <code>Input</code> class. See section <strong>17. THE CLASS INPUT</strong>
-            in the <strong>flexc++api</strong>(3) manual page for additional information
-            about user-defined <code>Input</code> classes.
+            user-defined <code >Input</code> class. See section <strong >17. THE CLASS INPUT</strong>
+            in the <strong >flexc++api</strong>(3) manual page for additional information
+            about user-defined <code >Input</code> classes.
 <p>
-<li> <strong>%interactive</strong><br/>
+<li> <strong >%interactive</strong><br/>
            Generate an interactive scanner. An interactive scanner reads lines
             from the input stream, and then returns the tokens encountered on
-            that line. The interactive scanner implemented by <strong>flexc++</strong> only
-            predefines the <code>Scanner(std::istream &amp;in, std::ostream &amp;out)</code>
+            that line. The interactive scanner implemented by <strong >flexc++</strong> only
+            predefines the <code >Scanner(std::istream &amp;in, std::ostream &amp;out)</code>
             constructor, by default assuming that input is read from
-            <code>std::cin</code>. See also section <code>1. INTERACTIVE SCANNER</code> section
-            in the <strong>flexc++api</strong>(3) manual page.
+            <code >std::cin</code>. See also section <code >1. INTERACTIVE SCANNER</code> section
+            in the <strong >flexc++api</strong>(3) manual page.
 <p>
-<li> <strong>%lex-function-name</strong> <code>= "funname"</code> <br/>
+<li> <strong >%lex-function-name</strong> <code >= "funname"</code> <br/>
            Defines the name of the scanner class's member to perform the
             lexical scanning. If this directive is omitted the default name
-            (<code>lex</code>) is used. Corresponding command-line option:
-            <code>--lex-function-name</code>.
+            (<code >lex</code>) is used. Corresponding command-line option:
+            <code >--lex-function-name</code>.
 <p>
-<li> <strong>%lex-source</strong> <code>= "filename"</code> <br/>
+<li> <strong >%lex-source</strong> <code >= "filename"</code> <br/>
            Defines the name of the file to contain the scanner member
-            <code>lex</code>. Corresponding command-line option: <code>--lex-source</code>.
+            <code >lex</code>. Corresponding command-line option: <code >--lex-source</code>.
 <p>
-<li> <strong>%no-lines</strong> <br/> 
-           Do not put <code>#line</code> preprocessor directives in the file containing
-            the scanner's <code>lex</code> function. If omitted <code>#line</code> directives
+<li> <strong >%no-lines</strong> <br/> 
+           Do not put <code >#line</code> preprocessor directives in the file containing
+            the scanner's <code >lex</code> function. If omitted <code >#line</code> directives
             are added to this file, unless overridden by the command line
-            options <code>--lines</code> and <code>--no-lines</code>.
+            options <code >--lines</code> and <code >--no-lines</code>.
 <p>
-<li> <strong>%namespace</strong> <code>= "identifer"</code> <br/>
-           Define the scanner class in the namespace <code>identifier</code>. By
+<li> <strong >%namespace</strong> <code >= "identifer"</code> <br/>
+           Define the scanner class in the namespace <code >identifier</code>. By
             default no namespace is used. If this directives is used the
-            implementation header is provided with a commented out <code>using
+            implementation header is provided with a commented out <code >using
             namespace</code> declaration for the requested namespace.  In addition,
             the scanner and scanner base class header files also use the
             specified namespace to define their include guard directives.
 <p>
 It is an error if this directive is used and an already
-            scanner-class header file does not define <code>namespace
+            scanner-class header file does not define <code >namespace
             identifier</code>.
 <p>
-<li> <strong>%print-tokens</strong> <br/> 
+<li> <strong >%print-tokens</strong> <br/> 
            this directive results in the tokens as well as the matched text to
             be displayed on the standard output stream, just before returning
-            the token to <code>lex</code>'s caller. Displaying is suppressed again when
-            the <code>lex.cc</code> file is generated without using this directive. The
-            function showing the tokens (<code>ScannerBase::print__</code>) is called
-            from <code>Scanner::print()</code>, which is defined in-line in
-            <code>Scanner.h</code>. Calling <code>ScannerBase::print__</code>, therefore, can
+            the token to <code >lex</code>'s caller. Displaying is suppressed again when
+            the <code >lex.cc</code> file is generated without using this directive. The
+            function showing the tokens (<code >ScannerBase::print__</code>) is called
+            from <code >Scanner::print()</code>, which is defined in-line in
+            <code >Scanner.h</code>. Calling <code >ScannerBase::print__</code>, therefore, can
             also easily be controlled by an option controlled by the program
             using the scanner object.
-           this directive does <em>not</em> show the tokens returned and text
-            matched by <strong>flexc++</strong> itself when reading its input <strong>s</strong>. If that is
-            what you want, use the <code>--own-tokens</code> option.
+           this directive does <em >not</em> show the tokens returned and text
+            matched by <strong >flexc++</strong> itself when reading its input <strong >s</strong>. If that is
+            what you want, use the <code >--own-tokens</code> option.
 <p>
-<li> <strong>%s</strong> <code>namelist</code> <br/>
-           The <code>%s</code> directive is followed by a list of one or more
+<li> <strong >%s</strong> <code >namelist</code> <br/>
+           The <code >%s</code> directive is followed by a list of one or more
             identifiers, separated by blanks. Each identifier is the name of
-            an <em>inclusive start condition</em>.
+            an <em >inclusive start condition</em>.
 <p>
-<li> <strong>%skeleton-directory</strong> <code>= "pathname"</code> <br/>
-           Use <code>pathname</code> rather than the default (e.g.,
-            <code>/usr/share/flexc++</code>) path when looking for <strong>flexc++</strong>'s skeleton
+<li> <strong >%skeleton-directory</strong> <code >= "pathname"</code> <br/>
+           Use <code >pathname</code> rather than the default (e.g.,
+            <code >/usr/share/flexc++</code>) path when looking for <strong >flexc++</strong>'s skeleton
             files. Corresponding command-line option:
-            <code>--skeleton-directory</code>.
+            <code >--skeleton-directory</code>.
 <p>
-<li> <strong>%target-directory</strong> <code>= "pathname"</code> <br/>
-           <code>Pathname</code> defines the directory where generated files should be
-            written.  By default this is the directory where <strong>flexc++</strong> is
-            called. This directive is overruled by the <code>--target-directory</code>
+<li> <strong >startcondition-name</strong> <code > = "startconditionName"</code> <br/>
+           By default, <strong >flexc++</strong> defines the enum <code >StartCondition__</code> defining
+            the names of start-conditions. The <code >%startcondition-name</code>
+            directive can be used to configure another name for the enum
+            containing the names of the start-conditions.  It may be defined
+            only once. 
+<p>
+The name of the startcondition-enum may be modified, and the
+            directive can also be omitted again after it has been specified
+            before. When changing the name of the startcondition-enum or when
+            reverting to the default name newly generated <code >lex.cc</code> and
+            <code >ScannerBase.h</code> files will use the currently defined
+            startcondition-enum name. Be advised, though, that the
+            startcondition-enum name may also be used in user-defined members
+            of the scanner-class, or in the scanner's header and internal
+            header files. If so, the user is responsible for updating those
+            files to the currently defined name of the startcondition-enum.
+<p>
+<li> <strong >%target-directory</strong> <code >= "pathname"</code> <br/>
+           <code >Pathname</code> defines the directory where generated files should be
+            written.  By default this is the directory where <strong >flexc++</strong> is
+            called. This directive is overruled by the <code >--target-directory</code>
             command-line option.
 <p>
-<li> <strong>%x</strong> <code>namelist</code> <br/>
-           The <code>%x</code> directive is followed by a list of one or more
+<li> <strong >%x</strong> <code >namelist</code> <br/>
+           The <code >%x</code> directive is followed by a list of one or more
             identifiers, separated by blanks. Each identifier is the name of
-            an <em>exclusive start condition</em>.
+            an <em >exclusive start condition</em>.
     </ul>
 <p>
 <a name="rulessection"></a><a name="l20"></a>
-<h2>3.2: Rules section</h2>
-    The rules section of the <strong>flexc++</strong> input file contains rules of the
+<h2 >3.2: Rules section</h2>
+    The rules section of the <strong >flexc++</strong> input file contains rules of the
 form:
 <p>
 <pre>
@@ -280,21 +298,21 @@ pattern    action
 </pre>
 
 <p>
-<em>Action</em> is optional, and is separated from <em>pattern</em> by spaces and/or
-tabs. It consists of a single-line <strong>C++</strong>-statement, or it consists of a
+<em >Action</em> is optional, and is separated from <em >pattern</em> by spaces and/or
+tabs. It consists of a single-line <strong >C++</strong>-statement, or it consists of a
 compound statement that may span several lines.
 <p>
 Alternatively, an action may consist of a vertical bar (`|').  A vertical bar
-indicates that <em>pattern</em> uses the same action as the next rule.
+indicates that <em >pattern</em> uses the same action as the next rule.
 <p>
 <a name="comments"></a><a name="l21"></a>
-<h2>3.3: Comment</h2>
-    Comment may be used almost everywhere in <strong>flexc++</strong>'s input file. 
-Both traditional <strong>C</strong>-style multi-line comment (i.e., <code>/* ... */</code>) and 
-<strong>C++</strong> style end-of-line comment (i.e., <code>// ...</code>) can be used. Indentation
+<h2 >3.3: Comment</h2>
+    Comment may be used almost everywhere in <strong >flexc++</strong>'s input file. 
+Both traditional <strong >C</strong>-style multi-line comment (i.e., <code >/* ... */</code>) and 
+<strong >C++</strong> style end-of-line comment (i.e., <code >// ...</code>) can be used. Indentation
 is optional.
 <p>
-When comment is encountered outside of an action, <strong>flexc++</strong> discards the comment,
+When comment is encountered outside of an action, <strong >flexc++</strong> discards the comment,
 while all comment provided in the contect of actions are copied verbatim to
 the generated source file. 
 <p>
@@ -302,117 +320,117 @@ Comment cannot be used when defining named regular expressions in the
 definitions section.
 <p>
 <a name="patterns"></a><a name="l22"></a>
-<h2>3.4: Patterns</h2>
+<h2 >3.4: Patterns</h2>
     The patterns in the input (see <a href="flexc++03.html#rulessection">Rules Section 3.2</a>) are
 written using an extended set of regular expressions. These are:
 <p>
 <ul>
-<li><code>x</code><br/>
+<li><code >x</code><br/>
     match the character `x'
 <p>
-<li> <strong>.</strong><br/>
+<li> <strong >.</strong><br/>
     any character except newline;
 <p>
-<li><code>[xyz]</code><br/>
+<li><code >[xyz]</code><br/>
    a character class; in this case, the pattern matches either an `x', a `y',
     or a `z'.  See also the paragraph about character classes below;
 <p>
-<li><code>[abj-oZ]</code><br/>
+<li><code >[abj-oZ]</code><br/>
     a ``character class'' with a range in it; matches an `a', a `b', any
     letter from `j' through `o', or a `Z'.  See also the paragraph about
     character classes below; 
 <p>
-<li><code>[^A-Z]</code><br/>
+<li><code >[^A-Z]</code><br/>
    a ``negated character class'', i.e., any character but those in the class.
     In this case, any character EXCEPT an uppercase letter.  See also the
     paragraph about character classes below; 
 <p>
-<li><code>[^A-Z\n]</code><br/>
+<li><code >[^A-Z\n]</code><br/>
    any character EXCEPT an uppercase letter or a newline.  See also the
     paragraph about character classes below; 
 <p>
-<li><code>[:predef:]</code><br/>
-   a <em>predefined</em> set of characters. See below for an overview. When used,
+<li><code >[:predef:]</code><br/>
+   a <em >predefined</em> set of characters. See below for an overview. When used,
     it is interpreted as an element in a character class. Consequently, it is
     always embedded in a set of square brackets defining the character class
-    (e.g., <code>[[:alnum:]]</code>);
+    (e.g., <code >[[:alnum:]]</code>);
 <p>
-<li><code>s1{+}s2</code><br/>
-   If <code>s1</code> and <code>s2</code> are character classes: the union of the characters in
-    <code>s1</code> and <code>s2</code>;
+<li><code >s1{+}s2</code><br/>
+   If <code >s1</code> and <code >s2</code> are character classes: the union of the characters in
+    <code >s1</code> and <code >s2</code>;
 <p>
-<li><code>s1{-}s2</code><br/>
-   If <code>s1</code> and <code>s2</code> are character classes: the set-difference of the
-    characters in <code>s1</code> minus the characters in <code>s2</code>;
+<li><code >s1{-}s2</code><br/>
+   If <code >s1</code> and <code >s2</code> are character classes: the set-difference of the
+    characters in <code >s1</code> minus the characters in <code >s2</code>;
 <p>
-<li><code>"[xyz]\"foo"</code><br/>
-    the literal string `<code>[xyz]"foo</code>';
+<li><code >"[xyz]\"foo"</code><br/>
+    the literal string `<code >[xyz]"foo</code>';
 <p>
-<li><code>R"([xyz]\"foo)"</code><br/> the literal string `<code>[xyz]\"foo</code>' (using a raw string
+<li><code >R"([xyz]\"foo)"</code><br/> the literal string `<code >[xyz]\"foo</code>' (using a raw string
     literal). Raw string literals using labels (which must be identifiers,
-    e.g., <code>R"label( labelled raw string )label"</code> are also supported;
+    e.g., <code >R"label( labelled raw string )label"</code> are also supported;
 <p>
-<li><code>R"label("(xyz"))label"</code><br/>
-    the literal string  `<code>"(xyz")</code>' (using a labeled rawstring);
+<li><code >R"label("(xyz"))label"</code><br/>
+    the literal string  `<code >"(xyz")</code>' (using a labeled rawstring);
 <p>
-<li><code>\X</code><br/>
+<li><code >\X</code><br/>
    if X is `a', `b', `f', `n', `r', `t', or `v', then the ANSI-C
     interpretation of `\x'. Otherwise, a literal `X' (used to escape operators
     such as `*');
 <p>
-<li><code>\0</code><br/>
+<li><code >\0</code><br/>
     a NUL character (ASCII code 0);
 <p>
-<li><code>\123</code><br/>
+<li><code >\123</code><br/>
     the character with octal value 123 (i.e., decimal 83);
 <p>
-<li><code>\x2a</code><br/>
+<li><code >\x2a</code><br/>
     the character with hexadecimal value 2a (i.e, decimal 42);
 <p>
-<li><code>(r)</code><br/>
-   a regular expression <code>r</code> by itself. It is used to override precedence
+<li><code >(r)</code><br/>
+   a regular expression <code >r</code> by itself. It is used to override precedence
     (see below);
 <p>
-<li><code>{name}</code><br/>
+<li><code >{name}</code><br/>
    the expansion of the `name' definition (see also section <a href="flexc++03.html#FILEFORMAT">3</a>);
 <p>
-<li><code>r*</code><br/>
-    zero or more <code>r</code>s, where r is any regular expression;
+<li><code >r*</code><br/>
+    zero or more <code >r</code>s, where r is any regular expression;
 <p>
-<li><code>r+</code><br/>
-    one or more <code>r</code>s;
+<li><code >r+</code><br/>
+    one or more <code >r</code>s;
 <p>
-<li><code>r?</code><br/>
-    zero or one <code>r</code>s (that is, an optional r);
+<li><code >r?</code><br/>
+    zero or one <code >r</code>s (that is, an optional r);
 <p>
-<li><code>rs</code><br/>
+<li><code >rs</code><br/>
    the regular expression `r' followed by the regular expression `s'. This is
     called concatenation;
 <p>
-<li><code>r{m, n}</code><br/>
-   where <code>0 &lt;= m &lt;= n</code>: match `r' at least m, but at most n times; called
-    interval expression; A regular expression to which <code>{0, 0}</code> is appended
+<li><code >r{m, n}</code><br/>
+   where <code >0 &lt;= m &lt;= n</code>: match `r' at least m, but at most n times; called
+    interval expression; A regular expression to which <code >{0, 0}</code> is appended
     is ignored, and a warning message is shown;
 <p>
-<li><code>r{m,}</code><br/>
-    where <code>0 &lt;= m</code>: match `r' m or more times;
+<li><code >r{m,}</code><br/>
+    where <code >0 &lt;= m</code>: match `r' m or more times;
 <p>
-<li><code>r{m}</code><br/>
-    where <code>0 &lt;= m</code>: match `r' exactly m times; A regular expression to which
-    <code>{0}</code> is appended is ignored, and a warning message is shown;
+<li><code >r{m}</code><br/>
+    where <code >0 &lt;= m</code>: match `r' exactly m times; A regular expression to which
+    <code >{0}</code> is appended is ignored, and a warning message is shown;
 <p>
-<li><code>r|s</code><br/>
+<li><code >r|s</code><br/>
     either an `r' or an `s';
 <p>
-<li><code>r/s</code><br/>
+<li><code >r/s</code><br/>
    an `r' but only if it is followed by an `s'. The text matched by `s' is
     included when determining whether this rule is the longest match, but is
     then returned to the input before the action is executed. So the action
     only sees the text matched by `r'. This type of pattern is called trailing
-    context. The <code>/</code>-character is commonly referred to as the <em>lookahead
+    context. The <code >/</code>-character is commonly referred to as the <em >lookahead
     operator</em>.
 <p>
-A warning is generated when the <code>r</code>-pattern may match no text. This is a
+A warning is generated when the <code >r</code>-pattern may match no text. This is a
     potentially dangerous situation. Consider this pattern
         <pre>
 
@@ -420,11 +438,11 @@ A warning is generated when the <code>r</code>-pattern may match no text. This i
         
 </pre>
 
-   with input <code>b</code>. This input matches <code>a*/b</code>, but <code>b</code> is pushed back on
+   with input <code >b</code>. This input matches <code >a*/b</code>, but <code >b</code> is pushed back on
     to the input stream. Then the process is repeated, resulting in a
     continuous loop. 
 <p>
-If <strong>flexc++</strong> detects patterns potentially not matching any text it generates 
+If <strong >flexc++</strong> detects patterns potentially not matching any text it generates 
     warnings like this:
         <pre>
 
@@ -442,107 +460,107 @@ If <strong>flexc++</strong> detects patterns potentially not matching any text i
    on the line just before a regular expression that potentially does not
     match any text, the warning for that regular expression is suppressed;
 <p>
-<li><code>^r</code><br/> 
+<li><code >^r</code><br/> 
    `r', if appearing at the beginning of a line (i.e., when just starting
-    to scan, or right after a newline has been read). When <code>r</code> appears
-    elsewhere on a line it isn't matched by this rule; if the <code>^</code>-character
+    to scan, or right after a newline has been read). When <code >r</code> appears
+    elsewhere on a line it isn't matched by this rule; if the <code >^</code>-character
     is not the first character of a regular expression it is interpreted as a
-    plain <code>^</code>-character;
+    plain <code >^</code>-character;
 <p>
-<li><code>r$</code><br/>
+<li><code >r$</code><br/>
    an `r', if it appears at the end of a line (i.e., the next character on the
-    input stream is a newline character). The expression <code>r$</code> is equivalent
-    to the expression `<code>r/\n</code>'. When <code>r</code> appears
-    elsewhere on a line it isn't matched by this rule; if the <code>$</code>-character
+    input stream is a newline character). The expression <code >r$</code> is equivalent
+    to the expression `<code >r/\n</code>'. When <code >r</code> appears
+    elsewhere on a line it isn't matched by this rule; if the <code >$</code>-character
     is not the last character of a regular expression it is interpreted as a
-    plain <code>$</code>-character. A dollar-terminated regular expression, however,
+    plain <code >$</code>-character. A dollar-terminated regular expression, however,
     may be followed by an action or vertical bar indicating that the regular
     expression uses the same action as the next rule;
 <p>
-<li><code>&lt;s&gt;r</code><br/>
+<li><code >&lt;s&gt;r</code><br/>
     an `r', but only in start condition s (cf. section <a href="flexc++03.html#STARTCONDITIONS">3.6</a>);
 <p>
-<li><code>&lt;s1,s2,s3&gt;r</code><br/>
+<li><code >&lt;s1,s2,s3&gt;r</code><br/>
     same, but in any of start conditions s1, s2, or s3;
 <p>
-<li><code>&lt;*&gt;r</code><br/>
-    same, but <code>r</code> is used in any start condition;
+<li><code >&lt;*&gt;r</code><br/>
+    same, but <code >r</code> is used in any start condition;
 <p>
-<li><code>&lt;sc-list&gt;{compound rules}</code><br/>
-   all rules defined in <em>compound rules</em> are active in the set of start
-    conditions specified at <em>sc-list</em>. Rules defined in <em>compound rules</em>
-    cannot themselves specify start conditions. <em>Compound rules</em> may contain
+<li><code >&lt;sc-list&gt;{compound rules}</code><br/>
+   all rules defined in <em >compound rules</em> are active in the set of start
+    conditions specified at <em >sc-list</em>. Rules defined in <em >compound rules</em>
+    cannot themselves specify start conditions. <em >Compound rules</em> may contain
     empty lines;
 <p>
-<li><code>&lt;&lt;EOF&gt;&gt;</code><br/>
+<li><code >&lt;&lt;EOF&gt;&gt;</code><br/>
     matches `end-of-file';
 <p>
-<li><code>&lt;sc-list&gt;&lt;&lt;EOF&gt;&gt;</code><br/>
-    an end-of-file when in the start conditions specified at <em>sc-list</em>.
+<li><code >&lt;sc-list&gt;&lt;&lt;EOF&gt;&gt;</code><br/>
+    an end-of-file when in the start conditions specified at <em >sc-list</em>.
 )
 <p>
-<strong>Character classes</strong>
+<strong >Character classes</strong>
 <p>
 Inside a character class all regular expression operators lose their special
-meanings, except for the escape character (<code>\</code>), the character range
-operator <code>-</code>, the end of character class operator <code>]</code>, and, at the
-beginning of the class, <code>^</code>. All ordinary escape sequences are supported,
+meanings, except for the escape character (<code >\</code>), the character range
+operator <code >-</code>, the end of character class operator <code >]</code>, and, at the
+beginning of the class, <code >^</code>. All ordinary escape sequences are supported,
 all other escaped characters are interpreted as literal characters (e.g.,
-<code>\c</code> is a literal <code>c</code>).
+<code >\c</code> is a literal <code >c</code>).
 <p>
-To add a closing bracket to a character class use <code>[]</code> or <code>\]</code>. To add a
-closing bracket to a negated character class use <code>[^]</code> (or use <code>[^</code>
-followed by <code>\]</code> somewhere within the character class). Minus characters are
-used to define character ranges (e.g., <code>[a-d]</code>, defining <code>[abcd]</code>) except
-in the following cases, where <strong>flexc++</strong> recognizes a literal minus character:
-    <code>[-</code>, or <code>[^-</code> (a minus at the very beginning of a character class); 
-    <code>-]</code> (a minus at the very end of a character class); 
-    or <code>\-</code> (an escaped minus character)</ul>
+To add a closing bracket to a character class use <code >[]</code> or <code >\]</code>. To add a
+closing bracket to a negated character class use <code >[^]</code> (or use <code >[^</code>
+followed by <code >\]</code> somewhere within the character class). Minus characters are
+used to define character ranges (e.g., <code >[a-d]</code>, defining <code >[abcd]</code>) except
+in the following cases, where <strong >flexc++</strong> recognizes a literal minus character:
+    <code >[-</code>, or <code >[^-</code> (a minus at the very beginning of a character class); 
+    <code >-]</code> (a minus at the very end of a character class); 
+    or <code >\-</code> (an escaped minus character)</ul>
  Once a character class has started, all
 subsequent character (ranges) are added to the set, until the final closing
-bracket (<code>]</code>) has been reached.
+bracket (<code >]</code>) has been reached.
 <p>
-<strong>Operator precedence</strong>
+<strong >Operator precedence</strong>
 <p>
 The operators used in specifying regular expressions have the following
 priorities (listed from lowest to highest):
 <p>
 <ul>
-<li><code>|</code><br/> 
+<li><code >|</code><br/> 
     when used to separate patterns sharing the second pattern's actions;
 <p>
-<li><code>^r</code> and <code>r$</code>:<br/>
-   <code>^</code>: at the beginning of a regular expression <code>r</code>: <code>r</code> only matches
+<li><code >^r</code> and <code >r$</code>:<br/>
+   <code >^</code>: at the beginning of a regular expression <code >r</code>: <code >r</code> only matches
     when encountered at the beginning of a line;<br/>
-   <code>$</code>: at the end of a regular expression <code>r</code>: <code>r</code> only matches when
+   <code >$</code>: at the end of a regular expression <code >r</code>: <code >r</code> only matches when
     encountered at the end of a line;
 <p>
-<li><code>/</code><br/>
+<li><code >/</code><br/>
    the look ahead operator;
 <p>
-<li><code>|</code><br/>
+<li><code >|</code><br/>
    the alternatives (`or') operator;
 <p>
-<li><code>rs</code><br/>
-   concatenation of regular expressions <code>r</code> and <code>s</code>;
+<li><code >rs</code><br/>
+   concatenation of regular expressions <code >r</code> and <code >s</code>;
 <p>
-<li><code>multipliers</code><br/>
-    <code>*, +, ?</code> and the interval specification (i.e., <code>{...}</code>);
+<li><code >multipliers</code><br/>
+    <code >*, +, ?</code> and the interval specification (i.e., <code >{...}</code>);
 <p>
-<li><code>{+}, {-}</code><br/> 
+<li><code >{+}, {-}</code><br/> 
    (In the context of character classes).  The set union and set difference
     operators;
 <p>
-<li><code>(r)</code><br/> 
+<li><code >(r)</code><br/> 
    (Parentheses). Here, r may be any regular expression (not containing the
     look-ahead operator).
 </ul>
 <p>
 Different from the lex-standard, but in line with most other regular
 expression engines the interval operator is given higher precedence than
-concatenation. To require two repetitions of the word <code>hello</code> use
-<code>(hello){2}</code> rather than <code>hello{2}</code>, which to <strong>flexc++</strong> is identical to the
-regular expression <code>helloo</code>.
+concatenation. To require two repetitions of the word <code >hello</code> use
+<code >(hello){2}</code> rather than <code >hello{2}</code>, which to <strong >flexc++</strong> is identical to the
+regular expression <code >helloo</code>.
 <p>
 Named regular expressions have the same precedence as parenthesized regular
 expressions. So after
@@ -554,11 +572,11 @@ expressions. So after
         
 </pre>
 
-    the input <code>xyzaxyzb</code> is matched, whereas <code>xyzab</code> isn't.
+    the input <code >xyzaxyzb</code> is matched, whereas <code >xyzab</code> isn't.
 <p>
 In addition to characters and ranges of characters, character classes can also
 contain predefined character sets. These consist of certain names between
-<code>[:</code> and <code>:]</code> delimiters. The predefined character sets are:
+<code >[:</code> and <code >:]</code> delimiters. The predefined character sets are:
 <pre>
      
          [:alnum:] [:alpha:] [:blank:]
@@ -569,8 +587,8 @@ contain predefined character sets. These consist of certain names between
 </pre>
 
     These predefined sets designate sets of characters equivalent to the
-corresponding standard <strong>C</strong> <code>isXXX</code> function. For example, <code>[:alnum:]</code>
-defines all  characters for which <code>isalnum</code> returns true.
+corresponding standard <strong >C</strong> <code >isXXX</code> function. For example, <code >[:alnum:]</code>
+defines all  characters for which <code >isalnum</code> returns true.
 <p>
 As an illustration, the following character classes are equivalent:
     <pre>
@@ -583,14 +601,14 @@ As an illustration, the following character classes are equivalent:
 </pre>
 
 <p>
-Note that a negated character class like <code>[^A-Z]</code> matches a newline unless
-<code>\n</code> (or an equivalent escape sequence) is one of the characters explicitly
-present in the negated character class (e.g., <code>[^A-Z\n]</code>). This differs from
+Note that a negated character class like <code >[^A-Z]</code> matches a newline unless
+<code >\n</code> (or an equivalent escape sequence) is one of the characters explicitly
+present in the negated character class (e.g., <code >[^A-Z\n]</code>). This differs from
 the way many other regular expression engines treat negated character classes.
-Matching newlines means that a pattern like <code>[^"]*</code> can match the entire
+Matching newlines means that a pattern like <code >[^"]*</code> can match the entire
 input unless there's another quote in the input.
 <p>
-<strong>Flexc++</strong> allows negation of character class expressions by prepending <code>^</code> to
+<strong >Flexc++</strong> allows negation of character class expressions by prepending <code >^</code> to
 the name of a predefined character set. Here are the negated predefined
 character sets:
     <pre>
@@ -603,19 +621,19 @@ character sets:
 </pre>
       
 <p>
-The `<code>{+}</code>' operator computes the union of two character classes. For
-example, <code>[a-z]{+}[0-9]</code> is the same as <code>[a-z0-9]</code>.
+The `<code >{+}</code>' operator computes the union of two character classes. For
+example, <code >[a-z]{+}[0-9]</code> is the same as <code >[a-z0-9]</code>.
 <p>
-The `<code>{-}</code>' operator computes the difference of two character classes. For
-example, <code>[a-c]{-}[b-z]</code> represents all the characters in the class
-<code>[a-c]</code> that are not in the class <code>[b-z]</code> (which in this case, is just the
-single character `<code>a</code>'). 
+The `<code >{-}</code>' operator computes the difference of two character classes. For
+example, <code >[a-c]{-}[b-z]</code> represents all the characters in the class
+<code >[a-c]</code> that are not in the class <code >[b-z]</code> (which in this case, is just the
+single character `<code >a</code>'). 
 <p>
-A rule can have at most one instance of trailing context (the <code>/</code> operator
-or the <code>$</code> operator). The start condition, <code>^</code>, and <code>&lt;&lt;EOF&gt;&gt;</code>
+A rule can have at most one instance of trailing context (the <code >/</code> operator
+or the <code >$</code> operator). The start condition, <code >^</code>, and <code >&lt;&lt;EOF&gt;&gt;</code>
 patterns can only occur at the beginning of a pattern, and, as well as with
-<code>/</code> and <code>$</code>, cannot be grouped inside parentheses. A <code>^</code> which does not
-occur at the beginning of a rule or a <code>$</code> which does not occur at the end of
+<code >/</code> and <code >$</code>, cannot be grouped inside parentheses. A <code >^</code> which does not
+occur at the beginning of a rule or a <code >$</code> which does not occur at the end of
 a rule loses its special properties and is treated as a normal character.
 <p>
 The following are invalid:
@@ -643,23 +661,23 @@ following could be used (the special | action is explained below, see section
 `bar'-at-the-beginning-of-a-line.
 <p>
 <a name="actions"></a><a name="l23"></a>
-<h2>3.5: Actions</h2>
-    As described in Section <a href="flexc++03.html#rulessection">3.2</a>, the second section of the <strong>flexc++</strong>
+<h2 >3.5: Actions</h2>
+    As described in Section <a href="flexc++03.html#rulessection">3.2</a>, the second section of the <strong >flexc++</strong>
 input file contains rules: pairs of patterns and (optional) actions.
 <p>
 Specifications of patterns end at the first unescaped white space character;
 the action then starts at the first non-white space character. It usually
-contains <strong>C++</strong> code, with two exceptions: the empty and the bar (<code>|</code>)
-action (see below). If the <strong>C++</strong> code starts with a brace (<code>{</code>), the action
-can span multiple lines until the matching closing brace (<code>}</code>) is
-encountered. <strong>Flexc++</strong> correctly handles braces in strings and comments.
+contains <strong >C++</strong> code, with two exceptions: the empty and the bar (<code >|</code>)
+action (see below). If the <strong >C++</strong> code starts with a brace (<code >{</code>), the action
+can span multiple lines until the matching closing brace (<code >}</code>) is
+encountered. <strong >Flexc++</strong> correctly handles braces in strings and comments.
 <p>
 Actions can be empty (omitted). Empty actions discard the matched pattern. To
 avoid confusion it is advised to provide at least a simple comment stating
 that the matched input is ignored.
 <p>
-The <em>bar action</em> is an action containing only a single vertical bar (<code>|</code>).
-This tells <strong>flexc++</strong> to use the action of the next rule. This can be repeated so
+The <em >bar action</em> is an action containing only a single vertical bar (<code >|</code>).
+This tells <strong >flexc++</strong> to use the action of the next rule. This can be repeated so
 the following rules all use the same action:
         <pre>
 
@@ -669,21 +687,21 @@ the following rules all use the same action:
         
 </pre>
 
-    Actions can return an <code>int</code> value, which is usually interpreted as a
-<em>token</em> by the program calling the scanner's <code>lex</code> member. When <code>lex</code> is
+    Actions can return an <code >int</code> value, which is usually interpreted as a
+<em >token</em> by the program calling the scanner's <code >lex</code> member. When <code >lex</code> is
 called after it has returned it continues its pattern-matching process just
 beyond the last-matched point in the input stream.
 <p>
 <a name="STARTCONDITIONS"></a><a name="l24"></a>
-<h2>3.6: Start conditions (Mini scanners)</h2>
-    <strong>Flexc++</strong> uses regular expressions to generically descibe textual patterns.  Often
-a <strong>flexc++</strong> specification file uses multiple `sub-languages' having specialized
+<h2 >3.6: Start conditions (Mini scanners)</h2>
+    <strong >Flexc++</strong> uses regular expressions to generically descibe textual patterns.  Often
+a <strong >flexc++</strong> specification file uses multiple `sub-languages' having specialized
 tasks. A sub-language to describe the normal structure of the input, a
 sub-language to describe comment, a sub-language to describe strings, etc.,
 etc.
 <p>
-For flexible handling of these sub-languages <strong>flexc++</strong>, like flex, offers <em>start
-conditions</em>, a.k.a. <em>mini scanners</em>. A start condition can be declared in
+For flexible handling of these sub-languages <strong >flexc++</strong>, like flex, offers <em >start
+conditions</em>, a.k.a. <em >mini scanners</em>. A start condition can be declared in
 the definition section of the lexer file:
     <pre>
 
@@ -693,12 +711,12 @@ the definition section of the lexer file:
     
 </pre>
  
-    A <code>%x</code> is used to declare <em>exclusive start conditions</em>. Following
-<code>%x</code> a list (no commas) of start condition names is expected. Rules
+    A <code >%x</code> is used to declare <em >exclusive start conditions</em>. Following
+<code >%x</code> a list (no commas) of start condition names is expected. Rules
 specified for exclusive start conditions only apply to that particular mini
-scanner. It is also possible to define <em>inclusive start condition</em> using
-<code>%s</code>. Rules not explicitly associated with a start condition (or with the
-(default) start condition <code>StartCondition__::INITIAL</code> also apply to
+scanner. It is also possible to define <em >inclusive start condition</em> using
+<code >%s</code>. Rules not explicitly associated with a start condition (or with the
+(default) start condition <code >StartCondition__::INITIAL</code> also apply to
 inclusive start conditions.
 <p>
 A start condition is used in the rules section of the lexical scanner
@@ -724,26 +742,26 @@ example:
     
 </pre>
 
-    This tells <strong>flexc++</strong> that the double quote starts (begins) the
-<code>StartCondition__::string</code> start condition. The <code>string</code> start condition's
+    This tells <strong >flexc++</strong> that the double quote starts (begins) the
+<code >StartCondition__::string</code> start condition. The <code >string</code> start condition's
 rules then define what happens to double quoted strings. All its characters
 are collected, and eventually the string's content is returned by
-<code>matched()</code>.
+<code >matched()</code>.
 <p>
-By default, scanners generated by <strong>flexc++</strong> start in the
-<code>StartCondition__::INITIAL</code> start condition. When encountering a double
-quote, the scanner switches to the <code>StartCondition__::string</code> mini
-scanner. Now, only the rules that are defined for the <code>string</code> start
-condition are active. Once <strong>flexc++</strong> encounters an unescaped double quote, it
-switches back to the <code>StartCondition__::INITIAL</code> start condition and returns
-<code>Token::STRING</code> to its called, indicating that it has seen a <strong>C</strong> string.
+By default, scanners generated by <strong >flexc++</strong> start in the
+<code >StartCondition__::INITIAL</code> start condition. When encountering a double
+quote, the scanner switches to the <code >StartCondition__::string</code> mini
+scanner. Now, only the rules that are defined for the <code >string</code> start
+condition are active. Once <strong >flexc++</strong> encounters an unescaped double quote, it
+switches back to the <code >StartCondition__::INITIAL</code> start condition and returns
+<code >Token::STRING</code> to its called, indicating that it has seen a <strong >C</strong> string.
 <p>
-There is nothing special to either the function <code>begin(StartCondition__)</code> or
-to the <code>StartCondition__</code> enum itself. They can be used anywhere within the
+There is nothing special to either the function <code >begin(StartCondition__)</code> or
+to the <code >StartCondition__</code> enum itself. They can be used anywhere within the
 Scanner class. E.g., after providing the Scanner class with a
-<code>std::stack&lt;StartCondition__&gt; d_scStack</code> start conditions can be
-stacked. Calling member <code>begin</code> could be embedded in a member
-<code>Scanner::push(StartCondition__)</code> like this:
+<code >std::stack&lt;StartCondition__&gt; d_scStack</code> start conditions can be
+stacked. Calling member <code >begin</code> could be embedded in a member
+<code >Scanner::push(StartCondition__)</code> like this:
         <pre>
 
     void Scanner::push(StartCondition__ next)
@@ -755,7 +773,7 @@ stacked. Calling member <code>begin</code> could be embedded in a member
 </pre>
 
     In addition, for returning to the start condition currently on top of the
-stack simply call a member <code>Scanner::popStartCondition()</code>, implemented like
+stack simply call a member <code >Scanner::popStartCondition()</code>, implemented like
 this: 
         <pre>
 
@@ -767,15 +785,15 @@ this:
         
 </pre>
 
-    <code>push</code> and <code>popStartCondition</code> should be given the same access rights
-as <code>begin</code>: they should be defined in the private section of the Scanner
+    <code >push</code> and <code >popStartCondition</code> should be given the same access rights
+as <code >begin</code>: they should be defined in the private section of the Scanner
 class.
 <p>
 <a name="l25"></a>
-<h3>3.6.1: Notation details</h3>
+<h3 >3.6.1: Notation details</h3>
         Instead of using a mini scanner compound statement, it is also 
 possible to define rules using explicit start condition specifications
-(cf. section <a href="flexc++03.html#patterns">3.4</a>. Here is the <code>string</code> start condition once again,
+(cf. section <a href="flexc++03.html#patterns">3.4</a>. Here is the <code >string</code> start condition once again,
 now using explicit start condition specifications:
     <pre>
 
@@ -797,26 +815,26 @@ now using explicit start condition specifications:
 
 <p>
 <a name="l26"></a>
-<h2>3.7: Members</h2>
+<h2 >3.7: Members</h2>
     
 <p>
-The <code>Scanner</code> class offers the following members, which  can be called from 
+The <code >Scanner</code> class offers the following members, which  can be called from 
 within actions (or by members called from
 those actions):
 <p>
 <ul>
-<li><strong>void accept(size_t nChars = 0)</strong><br/>
-   <code>accept(n)</code> returns all but the first `nChars' characters of the
+<li><strong >void accept(size_t nChars = 0)</strong><br/>
+   <code >accept(n)</code> returns all but the first `nChars' characters of the
     current token back to the input stream, where they will be rescanned
     when the scanner looks for the next match.  So, it matches `nChars' of
     the characters in the input buffer, rescanning the rest. This function
-    effectively sets <code>length</code>'s return value to <code>nChars</code> (note: with
-    <strong>flex++</strong> this function was called <code>less</code>);
+    effectively sets <code >length</code>'s return value to <code >nChars</code> (note: with
+    <strong >flex++</strong> this function was called <code >less</code>);
 <p>
-<li><strong>void begin(StartCondition__ startCondition)</strong><br/>
+<li><strong >void begin(StartCondition__ startCondition)</strong><br/>
    activate the regular expression rules associated with
-    <code>StartCondition__ startCondition</code>. As this enumeration is a strongly
-    typed enum the <code>StartCondition__</code> scope must be specified as
+    <code >StartCondition__ startCondition</code>. As this enumeration is a strongly
+    typed enum the <code >StartCondition__</code> scope must be specified as
     well. E.g., 
         <pre>
 
@@ -825,52 +843,52 @@ those actions):
 </pre>
 
 <p>
-<li><strong>bool debug() const</strong><br/>
-   returns <code>true</code> if <code>--debug</code> or <code>%debug</code> was specified, otherwise
-    <code>false</code>.
+<li><strong >bool debug() const</strong><br/>
+   returns <code >true</code> if <code >--debug</code> or <code >%debug</code> was specified, otherwise
+    <code >false</code>.
 <p>
-<li><strong>void echo() const</strong><br/> 
+<li><strong >void echo() const</strong><br/> 
    The currently matched text (i.e., the text returned by the member
-    <code>matched</code>) is inserted into the scanner object's output stream;
+    <code >matched</code>) is inserted into the scanner object's output stream;
 <p>
-<li><strong>std::string const  &amp;filename()  const</strong><br/>
+<li><strong >std::string const  &amp;filename()  const</strong><br/>
    returns the name of the file currently processed by the scanner object.
 <p>
-<li><strong>size_t              length()    const</strong><br/>
-   returns the length of the text that was matched by <code>lex</code>. With
-    <strong>flex++</strong> this function was called <code>leng</code>.
+<li><strong >size_t              length()    const</strong><br/>
+   returns the length of the text that was matched by <code >lex</code>. With
+    <strong >flex++</strong> this function was called <code >leng</code>.
 <p>
-<li><strong>size_t              lineNr()    const</strong><br/>
+<li><strong >size_t              lineNr()    const</strong><br/>
    returns the line number of the currently scanned line. This function is
-    always available (note: <strong>flex++</strong> only offered a similar function
-    (called <code>lineno</code>) after using the <code>%lineno</code> option).
+    always available (note: <strong >flex++</strong> only offered a similar function
+    (called <code >lineno</code>) after using the <code >%lineno</code> option).
 <p>
-<li><strong>std::string const  &amp;matched()   const</strong><br/>
-   returns the text matched by <code>lex</code> (note: <strong>flex++</strong> offers a similar
-    member called <code>YYText</code>).
+<li><strong >std::string const  &amp;matched()   const</strong><br/>
+   returns the text matched by <code >lex</code> (note: <strong >flex++</strong> offers a similar
+    member called <code >YYText</code>).
 <p>
-<li><strong>void more()</strong><br/>
+<li><strong >void more()</strong><br/>
    the matched text is kept and will be prefixed to the text that is
     matched at the next lexical scan;
 <p>
-<li><strong>std::ostream &amp;out()</strong><br/>
+<li><strong >std::ostream &amp;out()</strong><br/>
    returns a reference to the scanner's output stream;
 <p>
-<li><strong>bool popStream()</strong><br/>
+<li><strong >bool popStream()</strong><br/>
    closes the currently processed input stream and continues to process
     the most recently stacked input stream (removing it from the stack of
-    streams). If this switch was successfully performed <code>true</code> is
-    returned, otherwise (e.g., when the stream stack is empty) <code>false</code>
+    streams). If this switch was successfully performed <code >true</code> is
+    returned, otherwise (e.g., when the stream stack is empty) <code >false</code>
     is returned;
 <p>
-<li><strong>void preCode()</strong><br/>
+<li><strong >void preCode()</strong><br/>
    By default this function has an empty, inline implementation in
-    <code>Scanner.h</code>. It can safely be replaced by a user-defined
-    implementation. This function is called by <code>lex__</code>, just before it
-    starts to match input characters against its rules: <code>preCode</code> is called
-    by <code>lex__</code> when <code>lex__</code> is called and also after having executed the
-    actions of a rule which did not execute a <code>return</code> statement. The
-    outline of <code>lex__</code>'s implementation looks like this: 
+    <code >Scanner.h</code>. It can safely be replaced by a user-defined
+    implementation. This function is called by <code >lex__</code>, just before it
+    starts to match input characters against its rules: <code >preCode</code> is called
+    by <code >lex__</code> when <code >lex__</code> is called and also after having executed the
+    actions of a rule which did not execute a <code >return</code> statement. The
+    outline of <code >lex__</code>'s implementation looks like this: 
    <pre>
 
 int Scanner::lex__()
@@ -894,118 +912,118 @@ int Scanner::lex__()
 </pre>
 
 <p>
-<li><strong>void postCode(PostEnum__ type)</strong><br/>
+<li><strong >void postCode(PostEnum__ type)</strong><br/>
    By default this function has an empty, inline implementation in
-    <code>Scanner.h</code>. It can safely be replaced by a user-defined
-    implementation. This function is called by <code>lex__</code>, just after a rule
-    has been matched, where <code>PostEnum__</code>'s value indicates the
-    characteristic of the matched rule. <code>PostEnum__</code> has four values:
+    <code >Scanner.h</code>. It can safely be replaced by a user-defined
+    implementation. This function is called by <code >lex__</code>, just after a rule
+    has been matched, where <code >PostEnum__</code>'s value indicates the
+    characteristic of the matched rule. <code >PostEnum__</code> has four values:
         <ul>
-        <li><strong>PostEnum__::END</strong>: the function <code>lex__</code>  immediately returns 0
-            once <code>postCode</code> returns, indicating the end of the input was
+        <li><strong >PostEnum__::END</strong>: the function <code >lex__</code>  immediately returns 0
+            once <code >postCode</code> returns, indicating the end of the input was
             reached;
-        <li><strong>PostEnum__::POP</strong>: the end of an input stream was reached, and
+        <li><strong >PostEnum__::POP</strong>: the end of an input stream was reached, and
             processing continues with the previously pushed input stream. In
-            this case the function <code>lex__</code> doesn't return, it simply
+            this case the function <code >lex__</code> doesn't return, it simply
             coontinues processing the previously pushed stream;
-        <li><strong>PostEnum__::RETURN</strong>: the function <code>lex__</code> immediately returns 
-            once <code>postCode</code> returns, returning the next token;
-        <li><strong>PostEnum__::WIP</strong>: the function <code>lex__</code> has matched a
+        <li><strong >PostEnum__::RETURN</strong>: the function <code >lex__</code> immediately returns 
+            once <code >postCode</code> returns, returning the next token;
+        <li><strong >PostEnum__::WIP</strong>: the function <code >lex__</code> has matched a
             non-returning rule, and continues its rule-matching process.
         </ul>
 <p>
-<li><strong>void push(size_t ch)</strong><br/>
-   character <code>ch</code> is pushed back onto the input stream. I.e., it will be
+<li><strong >void push(size_t ch)</strong><br/>
+   character <code >ch</code> is pushed back onto the input stream. I.e., it will be
     the character that is retrieved at the next attempt to obtain a
     character from the input stream;
 <p>
-<li><strong>void push(std::string const &amp;txt)</strong><br/>
-   the characters in the string <code>txt</code> are pushed back onto the input
+<li><strong >void push(std::string const &amp;txt)</strong><br/>
+   the characters in the string <code >txt</code> are pushed back onto the input
     stream. I.e., they will be the characters that are retrieved at the
     next attempt to obtain characters from the input stream. The
-    characters in <code>txt</code> are retrieved from the first character to the
-    last. So if <code>txt == "hello"</code> then the <code>'h'</code> will be the character
-    that's retrieved next, followed by <code>'e'</code>, etc, until <code>'o'</code>;
+    characters in <code >txt</code> are retrieved from the first character to the
+    last. So if <code >txt == "hello"</code> then the <code >'h'</code> will be the character
+    that's retrieved next, followed by <code >'e'</code>, etc, until <code >'o'</code>;
 <p>
-<li><strong>void pushStream(std::istream &amp;curStream)</strong><br/>
-    this function pushes <code>curStream</code> on the stream stack;
-    <strong>This member is not available with interactive scanners.</strong>
+<li><strong >void pushStream(std::istream &amp;curStream)</strong><br/>
+    this function pushes <code >curStream</code> on the stream stack;
+    <strong >This member is not available with interactive scanners.</strong>
 <p>
-<li><strong>void pushStream(std::string const &amp;curName)</strong><br/>
-   same, but the stream <code>curName</code> is opened first, and the resulting
-    <code>istream</code> is pushed on the stream stack;
-    <strong>This member is not available with interactive scanners.</strong>
+<li><strong >void pushStream(std::string const &amp;curName)</strong><br/>
+   same, but the stream <code >curName</code> is opened first, and the resulting
+    <code >istream</code> is pushed on the stream stack;
+    <strong >This member is not available with interactive scanners.</strong>
 <p>
-<li><strong>void redo(size_t nChars = 0)</strong><br/>
-   this member acts like <code>accept</code> but its argument counts backward from
-    the end of the matched text. All but these <code>nChars</code> characters are
-    kept and the last <code>nChar</code> characters are rescanned. This function
-    effectively reduces <code>length</code>'s return value by <code>nChars</code>;
+<li><strong >void redo(size_t nChars = 0)</strong><br/>
+   this member acts like <code >accept</code> but its argument counts backward from
+    the end of the matched text. All but these <code >nChars</code> characters are
+    kept and the last <code >nChar</code> characters are rescanned. This function
+    effectively reduces <code >length</code>'s return value by <code >nChars</code>;
 <p>
-<li><strong>void setDebug(bool onOff)</strong><br/>
-   Switches on/off debugging output by providing the argument <code>true</code> or
-    <code>false</code>. Switching on debugging output only has visible effects if the
-    <code>debug</code> option has been specified when generating <code>lex.cc</code>;
+<li><strong >void setDebug(bool onOff)</strong><br/>
+   Switches on/off debugging output by providing the argument <code >true</code> or
+    <code >false</code>. Switching on debugging output only has visible effects if the
+    <code >debug</code> option has been specified when generating <code >lex.cc</code>;
 <p>
-<li><strong>void setFilename(std::string const &amp;name)</strong><br/>
-   this function sets the name of the stream returned by <code>filename</code> to
-    <code>name</code>;
+<li><strong >void setFilename(std::string const &amp;name)</strong><br/>
+   this function sets the name of the stream returned by <code >filename</code> to
+    <code >name</code>;
 <p>
-<li><strong>void setMatched(std::string const &amp;text)</strong><br/>
-   this function stores <code>text</code> in the matched text buffer. Following a
-    call to this function <code>matched</code> returns <code>text</code>;
+<li><strong >void setMatched(std::string const &amp;text)</strong><br/>
+   this function stores <code >text</code> in the matched text buffer. Following a
+    call to this function <code >matched</code> returns <code >text</code>;
 <p>
-<li><strong>void switchStreams(std::istream &amp;in,
+<li><strong >void switchStreams(std::istream &amp;in,
                                   std::ostream &amp;out = std::cout)</strong><br/>
    The currently processed input and output streams are closed, and
-    processing continues at <code>in</code>, writing output to <code>out</code>. This is
-    <em>not</em> a stack-operation: after processing <code>in</code> processing
+    processing continues at <code >in</code>, writing output to <code >out</code>. This is
+    <em >not</em> a stack-operation: after processing <code >in</code> processing
     does not return to the original stream.
 <p>
-When <strong>flexc++</strong> generates an interactive scanner, this member is 
+When <strong >flexc++</strong> generates an interactive scanner, this member is 
     available (as a protected member). However, it should be considered an
     internal use only member;
 <p>
-<li><strong>void switchStreams(std::string const &amp;infilename)</strong><br/>
+<li><strong >void switchStreams(std::string const &amp;infilename)</strong><br/>
    The currently processed input stream is closed, and processing
     continues at the stream whose name is specified as the function's
-    argument. This is <em>not</em> a stack-operation: after processing
-    <code>infilename</code> processing does not return to the original stream.<br/>
-    <strong>This member is not available with interactive scanners.</strong>
+    argument. This is <em >not</em> a stack-operation: after processing
+    <code >infilename</code> processing does not return to the original stream.<br/>
+    <strong >This member is not available with interactive scanners.</strong>
 <p>
-<li><strong>void switchStreams(std::string const &amp;infilename,
+<li><strong >void switchStreams(std::string const &amp;infilename,
                                   std::string const &amp;outfilename)</strong><br/>
    The currently processed input and output streams are closed, and
     processing continues at the stream whose name is specified as the
     function's first argument, writing output to the file whose name is
     specified as the function's second argument. This latter file is
-    rewritten. This is <em>not</em> a stack-operation: after processing
-    <code>infilename</code> processing does not return to the original stream.<br/>
-    <strong>This member is not available with interactive scanners.</strong>
+    rewritten. This is <em >not</em> a stack-operation: after processing
+    <code >infilename</code> processing does not return to the original stream.<br/>
+    <strong >This member is not available with interactive scanners.</strong>
 <p>
-<li><strong>StartCondition__  startCondition() const</strong><br/>
+<li><strong >StartCondition__  startCondition() const</strong><br/>
    returns the currently active start condition (mini scanner).
 </ul>
 <p>
 <a name="l27"></a>
-<h2>3.8: Handling input your own way</h2>
+<h2 >3.8: Handling input your own way</h2>
     Assuming that the scanner class is called `Scanner' the class Input is nested
-within the class `ScannerBase'. The stream from which <strong>flexc++</strong> retrieves
+within the class `ScannerBase'. The stream from which <strong >flexc++</strong> retrieves
 characters is completely decoupled from the pattern-matching algorithm
-implemented in the <code>ScannerBase</code> class. the pattern-matching algorithm
-retrieves the next character from a class <code>Input</code>, nested under
-<code>ScannerBase</code>. This class will usually provide all the required
-functionality, but users of <strong>flexc++</strong> may optionally provide their own <code>Input</code>
+implemented in the <code >ScannerBase</code> class. the pattern-matching algorithm
+retrieves the next character from a class <code >Input</code>, nested under
+<code >ScannerBase</code>. This class will usually provide all the required
+functionality, but users of <strong >flexc++</strong> may optionally provide their own <code >Input</code>
 class. 
 <p>
-In situations where the default <code>Input</code> implementation doesn't suffice
+In situations where the default <code >Input</code> implementation doesn't suffice
 simply `roll your own', implementing the following interface and use the
-<code>%option input-interface</code> and <code>%option input-implementation</code> options in
-the <code>lexer</code> file to include, respectively, your own class <code>Input</code>
-interface in the generated <code>Scannerbase.h</code> file and <code>Input</code> member
-function implementations in the generated <code>lex.cc</code> file.
+<code >%option input-interface</code> and <code >%option input-implementation</code> options in
+the <code >lexer</code> file to include, respectively, your own class <code >Input</code>
+interface in the generated <code >Scannerbase.h</code> file and <code >Input</code> member
+function implementations in the generated <code >lex.cc</code> file.
 <p>
-When implementing your own class <code>Input</code>, the following public interface
+When implementing your own class <code >Input</code>, the following public interface
 must at least be provided:
         <pre>
 
@@ -1013,7 +1031,8 @@ must at least be provided:
     {
         public:
             Input();
-            Input(std::istream *iStream);   // dynamically allocated iStream
+                                            // dynamically allocated iStream
+            Input(std::istream *iStream, size_t lineNr = 1);   
             size_t get();                   // the next character
             size_t lineNr() const;          
             size_t nPending() const;          
@@ -1028,65 +1047,70 @@ must at least be provided:
 </pre>
 
     This interface may be augmented with additional members, but the
-shown interface is used by <code>ScannerBase</code>. <strong>Flexc++</strong> places <code>Input</code> in
-<code>ScannerBase</code>'s private interface and all communication with <code>Input</code> is
-handled by <code>ScannerBase</code>. <code>Input</code>'s members must perform the following
+shown interface is used by <code >ScannerBase</code>. <strong >Flexc++</strong> places <code >Input</code> in
+<code >ScannerBase</code>'s private interface and all communication with <code >Input</code> is
+handled by <code >ScannerBase</code>. <code >Input</code>'s members must perform the following
 tasks:
     <ul>
-    <li><code>Input()</code>: the default constructor performs no special tasks, it
-ensures that an <code>Input</code> object is in a valid state, in particular allowing
-<code>close</code> to do its job.
+    <li><code >Input()</code>: the default constructor performs no special tasks, it
+ensures that an <code >Input</code> object is in a valid state, in particular allowing
+<code >close</code> to do its job.
 <p>
 <li> The copy constructor must be available. When necessary it can be
-added to <code>Input</code>'s interface. The default implementation uses <code>Input</code>'s
+added to <code >Input</code>'s interface. The default implementation uses <code >Input</code>'s
 default copy constructor so there was no need to add it explicitly to the
 interface.
 <p>
-<li><code>Input(std::istream *iStream)</code>: information is read from the
-<code>istream</code> which is passed to <code>Input</code>. The <code>istream iStream</code> points was
-dynamically allocated, is open and is ready for reading. Stream switching is
-not an act performed by <code>Input</code>, but by <code>ScannerBase</code>. Also the names of
-streams currently being read (e.g., when using <code>//include</code> directives in
-specification files) are administered and maintained by
-<code>ScannerBase</code>. Although <code>iStream</code> points to a dynamically allocated piece
-of memory <code>Input</code> should treat the pointer as plain old data (POD). <em>No</em>
-copy constructor, overloaded assignment operator or destructor is required to
-process the pointer. In the default implementation <code>iStream</code> is assigned to
-one of <code>Input</code>'s data members, and is simply copied when <code>Input</code>'s copy
-constructor or assignment operator is called, and ignored by its default
-destructor. Externally provided implementations may handle the pointer
-comparably.
+<li><code >Input(std::istream *iStream, size_t lineNr)</code>: information is read from
+the <code >istream</code> that is passed to <code >Input</code>. The <code >std::istream *iStream</code>
+already points at an open, dynamically allocated <code >istream</code>, and is ready for
+reading. Stream switching is not performed by <code >Input</code>, but by
+<code >ScannerBase</code>. Also the names of streams currently being read (e.g., when
+using <code >//include</code> directives in specification files) are administered and
+maintained by <code >ScannerBase</code>. <code >Input</code> should treat the pointer as plain old
+data (POD). The default implementation therefore can use the default copy
+constructor, overloaded assignment operator and destructor: <code >iStream</code> is
+simply assigned to one of <code >Input</code>'s data members, and is simply copied when
+<code >Input</code>'s copy constructor or assignment operator is called. Likewise,
+<code >lineNr</code> is assigned to <code >Input's</code> data member keeping track of the line
+number count. 
 <p>
-<li><code>size_t get()</code>: this member must return the next character as an
-<code>unsigned char</code>. At end-of-file is must return the value (predefined by
-<code>ScannerBase</code>) <code>AT_EOF</code>.
+<li><code >size_t get()</code>: this member must return the next character as an
+<code >unsigned char</code>. At end-of-file is must return the value (predefined by
+<code >ScannerBase</code>) <code >AT_EOF</code>. The default implementation is found in 
+<code >lex.cc</code>, generated by <strong >flexc++</strong>.
 <p>
-<li><code>size_t lineNr() const</code>: the line number of the currently processed
+<li><code >size_t lineNr() const</code>: the line number of the currently processed
 line should be returned. By convention these are numbers, so while processing
-the first line <code>lineNr</code> should return 1.
+the first line <code >lineNr</code> should return 1.
 <p>
-<li><code>size_t nPending() const</code>: should return the number of pending
+<li><code >size_t nPending() const</code>: should return the number of pending
 characters (i.e., the number of characters which were passed back to the
-<code>Input</code> object using its <code>reRead</code> members which were not yet retrieved
-again by its <code>get</code> member).
+<code >Input</code> object using its <code >reRead</code> members which were not yet retrieved
+again by its <code >get</code> member).
 <p>
-<li><code>void setPending(size_t nPending)</code>: should remove <code>nPending</code>
-characters from the head of the <code>Input</code> object's pending input queue. The
-lexical scanner always passes the value received from <code>nPending</code> to
-<code>setPending</code>, without calling <code>get</code> in between.
+<li><code >void setPending(size_t nPending)</code>: should keep <code >nPending</code> characters
+in the <code >Input</code> object's pending characters queue. The lexical scanner always
+passes the value received from <code >nPending</code> to <code >setPending</code>, without calling
+<code >get</code> in between. The default implementation uses an <code >std::deque</code> for
+storing pending characters, and is found in <code >lex.cc</code>, generated by <strong >flexc++</strong>.
 <p>
-<li><code>void reRead(size_t ch)</code>: the character stored in <code>ch</code> is pushed back
-into the <code>Input</code> object. The call should be ignored if <code>ch</code> exceeds the
-value <code>0xff</code>.
+<li><code >void reRead(size_t ch)</code>: the character stored in <code >ch</code> is pushed back
+into the <code >Input</code> object. The call should be ignored if <code >ch</code> exceeds the
+value <code >0xff</code>. The default implementation is found in <code >lex.cc</code>, generated
+by <strong >flexc++</strong>.
 <p>
-<li><code>void reRead(std::string const &amp;str, size_t fmIdx)</code>: the characters in
-<code>str</code> are pushed back into the <code>Input</code> object in reverse order from
-<code>str</code>'s final character down to (and including) the character at offset
-<code>fmIdx</code>.
+<li><code >void reRead(std::string const &amp;str, size_t fmIdx)</code>: the characters in
+<code >str</code> are pushed back into the <code >Input</code> object in reverse order from
+<code >str</code>'s final character down to (and including) the character at offset
+<code >fmIdx</code>.  The default implementation is found in <code >lex.cc</code>, generated
+by <strong >flexc++</strong>.
 <p>
-<li><code>void close()</code>: this member must delete the memory to which <code>iStream</code>
-points, <em>en passant</em> closing the stream. It is called by
-<code>ScannerBase::popStream</code> at end-of-file.
+<li><code >void close()</code>: this member must delete the memory to which <code >iStream</code>
+points, <em >en passant</em> closing the stream. It is called by
+<code >ScannerBase::popStream</code> at end-of-file.  The default implementation is
+found in <code >Scannerbase.h</code>, generated by <strong >flexc++</strong>. Note: <code >Input's</code> destructor
+should <em >not</em> delete the memory to which <code >iStream</code> points.
     </ul>
 <p>
 <hr>

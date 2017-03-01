@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> Flexc++ (Version 2.05.00) User Guide </title>
+<title> Flexc++ (Version 2.06.00) User Guide </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -14,21 +14,21 @@
 </ul>
 <hr>
 <a name="l35"></a>
-<h1>Chapter 6: Technical documentation</h1> 
+<h1 >Chapter 6: Technical documentation</h1> 
 Starting point of the analysis is the parser. The parser needs access to
-<code>States</code> and <code>Rules</code>. The parser is described <a href="flexc++06.html#PARSER">here</a>.
+<code >States</code> and <code >Rules</code>. The parser is described <a href="flexc++06.html#PARSER">here</a>.
 <p>
-After some preliminary definitions <strong>flexc++</strong> defines its <code>Parser</code>
+After some preliminary definitions <strong >flexc++</strong> defines its <code >Parser</code>
 object. The parser's main tasks are these:
     <ul>
-    <li><code>parse</code>: the input is analyzed, resulting in the definitions of
-<em>rules</em>. Each regular expression consists of a series of states, summarized
-by <code>Patterns</code> and an <em>action block</em>. Action blocks may be empty, and may
-be identical for subsequent regular expressions. A <code>Pattern</code> plus action
+    <li><code >parse</code>: the input is analyzed, resulting in the definitions of
+<em >rules</em>. Each regular expression consists of a series of states, summarized
+by <code >Patterns</code> and an <em >action block</em>. Action blocks may be empty, and may
+be identical for subsequent regular expressions. A <code >Pattern</code> plus action
 block (plus maybe a begin-of-line indicator) becomes a rule which 
-is added to the <code>Rules</code> object. The first regular expression in the input
+is added to the <code >Rules</code> object. The first regular expression in the input
 file becomes rule 0.
-    <li><code>addLopStartConditions</code>: once the input has been parsed, and LOP-rules
+    <li><code >addLopStartConditions</code>: once the input has been parsed, and LOP-rules
 were recognized the LOP start conditions need a catch-all rule. The catch-all
 rule looks like this:
         <pre>
@@ -42,61 +42,63 @@ processed. This rule is then used in the LOP-tail matching procedure,
 explained in section <a href="flexc++06.html#LOOKAHEAD">6.10</a>. 
     </ul>
 <p>
-After parsing the <code>Rules</code> object's <code>handleLopRules</code> adds a catch-all rule
-to the <code>LOP</code> rule processing code. This member also updates the LOP-rules
-action blocks, calling <code>lop1__, lop2__, lop3__</code> and <code>lop4__</code>. Again:
+After parsing the <code >Rules</code> object's <code >handleLopRules</code> adds a catch-all rule
+to the <code >LOP</code> rule processing code. This member also updates the LOP-rules
+action blocks, calling <code >lop1__, lop2__, lop3__</code> and <code >lop4__</code>. Again:
 refer to section <a href="flexc++06.html#LOOKAHEAD">6.10</a> for details.
 <p>
 Rather than using the characters groups of characters are combined, forming
 clusters or ranges. This way the DFAs do not need column entries representing
 the individual input characters, but only need columns representing the
 categories, usually resulting in strongly reduced column dimensions. The
-ranges are determined by the <code>Ranges</code> object. These ranges can only be
+ranges are determined by the <code >Ranges</code> object. These ranges can only be
 determined once the regular expressions have been analyzed, which is why the
-<code>Ranges</code> object is defined and performs its actions after the parser has
+<code >Ranges</code> object is defined and performs its actions after the parser has
 completed its work.
 <p>
 Once the ranges and the states of the regular expressions have been
 determined, the DFAs can be constructed. A DFA is constructed for each start
-condition (i.e. start condition) by the <code>DFAs</code> object.
+condition (i.e. start condition) by the <code >DFAs</code> object.
 <p>
-Finally, a <code>Generator</code> generates the output files. The <code>Generator</code> reads
+Finally, a <code >Generator</code> generates the output files. The <code >Generator</code> reads
 the skeleton files, copying them to their destinations which inserting
 information (like the range definitions and DFA tables) which was created
 before. 
 <p>
 <a name="NOTATION"></a><a name="l36"></a>
-<h2>6.1: Notation, Terminology</h2>
+<h2 >6.1: Notation, Terminology</h2>
         <ul>
-    <li><code>BOL</code>: Begin-of-line.
-    <li><code>LOP</code>: the lookahead operator (<code>/</code>).
-    <li><code>RE</code>: A regular expression.
-    <li><code>F</code>: A final state.
-    <li><code>x[y]</code>: at state <code>x</code> an empty transition to state <code>y</code> is allowed.
+    <li><code >BOL</code>: Begin-of-line.
+    <li><code >LOP</code>: the lookahead operator (<code >/</code>).
+    <li><code >RE</code>: A regular expression.
+    <li><code >F</code>: A final state.
+    <li><code >x[y]</code>: at state <code >x</code> an empty transition to state <code >y</code> is allowed.
         See figure <a href="flexc++06.html#NFA1FIG">2</a>.
     </ul>
 <p>
 <a name="l37"></a>
-<h3>6.1.1: Example of LOP-patterns</h3>
-            When an <code>F</code> state of a LOP pattern is reached and there is no
+<h3 >6.1.1: Example of LOP-patterns</h3>
+            When an <code >F</code> state of a LOP pattern is reached and there is no
 continuation at that point then the pattern until the A0 state is considered
 matched and is returned.
 <p>
 <ul>
-    <li> The pattern <code>a/a+</code>:
+    <li> The pattern <code >a/a+</code>:
 <p>
-<a name="NFA1FIG"></a><p><figure><img src="images/NFA1.jpg" alt="Figure 2 is shown here."/><br/>
-<figcaption>Figure 2: The pattern a/a+</figcaption>
+<p><a name="NFA1FIG"></a><figure >
+<img src="images/NFA1.jpg" >
+<figcaption >Figure 2: The pattern a/a+</figcaption>
 </figure></p>
 
 <p>
 Here, State 2 is the Final state
 <p>
-<li> The pattern <code>a*/aaa</code>: All <code>a</code> symbols until
+<li> The pattern <code >a*/aaa</code>: All <code >a</code> symbols until
         the F-state (state 5) has been reached are counted:
 <p>
-<a name="NFA2FIG"></a><p><figure><img src="images/NFA2.jpg" alt="Figure 3 is shown here."/><br/>
-<figcaption>Figure 3: The pattern a*/aaa</figcaption>
+<p><a name="NFA2FIG"></a><figure >
+<img src="images/NFA2.jpg" >
+<figcaption >Figure 3: The pattern a*/aaa</figcaption>
 </figure></p>
 
 <p>
@@ -108,39 +110,39 @@ The resulting DFA becomes:
     <td colspan=4><hr/></td>
 
     
-<tr>
-<td> </td>         <td> Input Ch</td>                                 
+<tr >
+<td > </td>         <td > Input Ch</td>                                 
 </tr>
 
     
-<tr>
-<td> StateSet</td> <td align="center">a</td>         <td> F</td>  
+<tr >
+<td > StateSet</td> <td align="center">a</td>         <td > F</td>  
 </tr>
 
     <td colspan=4><hr/></td>
 
     
-<tr>
+<tr >
 
-            <td> 12</td>        <td> 123</td>   <td align="right"></td>                     
+            <td > 12</td>        <td > 123</td>   <td align="right"></td>                     
 </tr>
 
     
-<tr>
+<tr >
 
-            <td> 123</td>       <td> 1234</td>  <td align="right"></td>       
+            <td > 123</td>       <td > 1234</td>  <td align="right"></td>       
 </tr>
 
     
-<tr>
+<tr >
 
-            <td> 1234</td>      <td> 12345</td> <td align="right"></td>        
+            <td > 1234</td>      <td > 12345</td> <td align="right"></td>        
 </tr>
 
     
-<tr>
+<tr >
 
-            <td> 12345</td>     <td> 12345</td> <td align="right">0</td>    
+            <td > 12345</td>     <td > 12345</td> <td align="right">0</td>    
 </tr>
 
     <td colspan=4><hr/></td>
@@ -151,7 +153,7 @@ The resulting DFA becomes:
 </ul>
 <p>
 <a name="PARSER"></a><a name="l38"></a>
-<h2>6.2: The parser</h2>
+<h2 >6.2: The parser</h2>
     The parser is called like this:
         <pre>
 
@@ -161,10 +163,10 @@ The resulting DFA becomes:
 </pre>
 
 The constructor performs no other tasks than initializing the Parser object.
-<code>Rules</code> and <code>states</code> are still empty at this point.
+<code >Rules</code> and <code >states</code> are still empty at this point.
 <p>
-The <code>parse</code> function was generated by <strong>bisonc++</strong>(1). It's better
-understood from the grammar description <code>parser/grammar</code>: The grammar's
+The <code >parse</code> function was generated by <strong >bisonc++</strong>(1). It's better
+understood from the grammar description <code >parser/grammar</code>: The grammar's
 start rule is
         <pre>
 
@@ -177,7 +179,7 @@ start rule is
 </pre>
 
 <p>
-<code>parser/inc/rules</code>: The directives are not covered yet in this section. A
+<code >parser/inc/rules</code>: The directives are not covered yet in this section. A
 rule is defined as:
         <pre>
 
@@ -195,7 +197,7 @@ which they are defined start with an underscore. Furthermore, wherever
 possible rules are defined before they are used. This cannot always be
 accomplished, e.g., when defining indirectly recursive rules.
 <p>
-A <code>_rule</code> is a rule definition followed by a newline:
+A <code >_rule</code> is a rule definition followed by a newline:
         <pre>
 
     _rule:                      
@@ -205,13 +207,13 @@ A <code>_rule</code> is a rule definition followed by a newline:
 </pre>
 
 <p>
-The <code>reset</code> non-terminal merely calls <code>Parser::reset</code>, preparing the
+The <code >reset</code> non-terminal merely calls <code >Parser::reset</code>, preparing the
 parser for the next rule, resetting various data members to their original,
-begin-of-line states. See <code>parser/reset.cc</code> for details.
+begin-of-line states. See <code >parser/reset.cc</code> for details.
 <p>
-A <code>_rule_definition</code> may be empty, but usually it consists of a rule
-optionally valid for a set of start conditions (<code>optMs_rule</code>, or it is a
-rule or series of rules embedded in a start condition compound (<code>msComound</code>):
+A <code >_rule_definition</code> may be empty, but usually it consists of a rule
+optionally valid for a set of start conditions (<code >optMs_rule</code>, or it is a
+rule or series of rules embedded in a start condition compound (<code >msComound</code>):
         <pre>
 
     _rule_def:
@@ -227,11 +229,11 @@ rule or series of rules embedded in a start condition compound (<code>msComound<
         
 </pre>
 
-    The <code>msCompund</code> isn't interesting by itself, as it repeats
-<code>optMs_rule</code>, but without the start condition specifications for the individual
+    The <code >msCompund</code> isn't interesting by itself, as it repeats
+<code >optMs_rule</code>, but without the start condition specifications for the individual
 rules. 
 <p>
-An <code>optMs_rule</code> is a rule (<code>_optMs_rule</code>), optionally followed by an
+An <code >optMs_rule</code> is a rule (<code >_optMs_rule</code>), optionally followed by an
 action:
         <pre>
 
@@ -250,7 +252,7 @@ action:
 </pre>
 
 <p>
-An <code>_optMS_rule</code> defines one or more rules, sharing the same action
+An <code >_optMS_rule</code> defines one or more rules, sharing the same action
 block: 
         <pre>
 
@@ -268,7 +270,7 @@ block:
         
 </pre>
 
-    And an <code>_optMS_regex</code>, finally, is a regular expression or EOF-pattern,
+    And an <code >_optMS_regex</code>, finally, is a regular expression or EOF-pattern,
 optionally prefixed by a start condition specification:
         <pre>
 
@@ -283,7 +285,7 @@ optionally prefixed by a start condition specification:
         
 </pre>
 
-    A <code>regexOrEOF</code> defines exactly that:
+    A <code >regexOrEOF</code> defines exactly that:
         <pre>
 
     regexOrEOF:
@@ -298,235 +300,239 @@ optionally prefixed by a start condition specification:
 </pre>
 
 <p>
-Actions are defined <a href="flexc++06.html#BLOCKS">here</a>; the <code>Rules</code> class is described
-<a href="flexc++06.html#RULES">here</a>; Regular expressions (i.e., <code>regex</code>) are described
+Actions are defined <a href="flexc++06.html#BLOCKS">here</a>; the <code >Rules</code> class is described
+<a href="flexc++06.html#RULES">here</a>; Regular expressions (i.e., <code >regex</code>) are described
 <a href="flexc++06.html#PATTERNS">here</a>.
 <p>
 <a name="STARTCOND"></a><a name="l39"></a>
-<h2>6.3: Start Conditions and the class StartConditions</h2>
-    Start conditions are handled by a <code>StartConditions</code> object. Each start
-condition's name and start condition information is stored in <code>d_sc</code>, an
-<code>FBB::LinearMap</code>, the first one being the <code>INITIAL</code> start condition.
+<h2 >6.3: Start Conditions and the class StartConditions</h2>
+    Start conditions are handled by a <code >StartConditions</code> object. Each start
+condition's name and start condition information is stored in <code >d_sc</code>, an
+<code >FBB::LinearMap</code>, the first one being the <code >INITIAL</code> start condition.
 <p>
 Start condition information consists of the start condition's type and a
-vector of <code>size_t</code> values, being the rule indices of the rules that were
+vector of <code >size_t</code> values, being the rule indices of the rules that were
 defined for this start condition.
 <p>
-Additional members are <code>d_endUserSC</code>, storing <code>d_sc's</code> size after all user
-defined start conditions have been inserted into <code>d_sc</code>. As all user-defined
+Additional members are <code >d_endUserSC</code>, storing <code >d_sc's</code> size after all user
+defined start conditions have been inserted into <code >d_sc</code>. As all user-defined
 start conditions must have been declared in the declaration section, this
-value is known before start conditions are created by <strong>flexc++</strong> when encountering
+value is known before start conditions are created by <strong >flexc++</strong> when encountering
 LOP-rules.
 <p>
-Furthermore, a member <code>d_active</code> hold pointers to all currently active start
-conditions. E.g., when specifying <code>&lt;INITIAL,str&gt;</code> then the rules defined for
+Furthermore, a member <code >d_active</code> hold pointers to all currently active start
+conditions. E.g., when specifying <code >&lt;INITIAL,str&gt;</code> then the rules defined for
 this tag are active are added to the set if rules defined for
-<code>StartConditions__::INITIAL</code> and <code>StartConditions__::str</code>.
+<code >StartConditions__::INITIAL</code> and <code >StartConditions__::str</code>.
 <p>
-When LOP-rules having variable sized tails are used, <strong>flexc++</strong> defines a catch-all
-rule which is mathed while <code>lex__</code> is trying to match the LOP-rule's tail,
+When LOP-rules having variable sized tails are used, <strong >flexc++</strong> defines a catch-all
+rule which is mathed while <code >lex__</code> is trying to match the LOP-rule's tail,
 but as yet failed to do so. When it is defined this catch-all rule does not
 belong to a particular start condition. This is relized through the member
-<code>StartConditions::acceptRule</code>, expecting a <code>bool</code> argument. By default
+<code >StartConditions::acceptRule</code>, expecting a <code >bool</code> argument. By default
 recognized rules are added to the current set of active start conditions, but
 the catch-all rule should not be added to any active set. Instead it is
-added to the DFAs calling <code>lop3__</code>. Once the input files have been
-processed, <code>Rules::handleLopRules</code> is called, and this member adds the final
-(catch-all) rule to <code>d_rules</code>, without adding it to any of the available
+added to the DFAs calling <code >lop3__</code>. Once the input files have been
+processed, <code >Rules::handleLopRules</code> is called, and this member adds the final
+(catch-all) rule to <code >d_rules</code>, without adding it to any of the available
 start conditions.
 <p>
 <a name="BLOCKS"></a><a name="l40"></a>
-<h2>6.4: Code (action)  blocks</h2>
-    The block of <strong>C++</strong> code is simply parsed from the first <code>{</code> until the
-final matching <code>}</code>, acknowledging comment, strings and character constants.
+<h2 >6.4: Code (action)  blocks</h2>
+    The block of <strong >C++</strong> code is simply parsed from the first <code >{</code> until the
+final matching <code >}</code>, acknowledging comment, strings and character constants.
 <p>
 The scanner merely recognizes the beginning of an action (block), returning
-<code>Parser::BLOCK</code> from its <code>handleCharAfterBlanks</code> member. Then,
-<code>Parser::block</code> calls <code>Scanner::lex()</code> until it observes the end of the
+<code >Parser::BLOCK</code> from its <code >handleCharAfterBlanks</code> member. Then,
+<code >Parser::block</code> calls <code >Scanner::lex()</code> until it observes the end of the
 action statement or block. 
 <p>
-The parser stores the block's content in its <code>d_block</code> member for later
-processing by <code>Rules::add</code>.
+The parser stores the block's content in its <code >d_block</code> member for later
+processing by <code >Rules::add</code>.
 <p>
 <a name="STATE"></a><a name="l41"></a>
-<h2>6.5: The class State</h2>
-    Objects of the class <code>State</code> describe one single state of a RE
-<a href="flexc++06.html#PATTERNS">pattern</a>. A <code>State</code> contains/offers:
+<h2 >6.5: The class State</h2>
+    Objects of the class <code >State</code> describe one single state of a RE
+<a href="flexc++06.html#PATTERNS">pattern</a>. A <code >State</code> contains/offers:
     <ul>
-    <li><code>d_type</code>: the type represented by the State (EMPTY, FINAL, CHARSET,
-        BOL), the internally used <code>UNDETERMINED__</code> and <code>EOF__</code> types, or
+    <li><code >d_type</code>: the type represented by the State (EMPTY, FINAL, CHARSET,
+        BOL), the internally used <code >UNDETERMINED__</code> and <code >EOF__</code> types, or
         (initially) the ascii-value of a single character. Once the character
         ranges have been determined (see section <a href="flexc++06.html#RANGES">6.11</a>), which happens
         in ./main.cc `ranges.determineSubsets()' the type contains the
         (0-based) range index, and states reprenting character sets also
         contain the set of character range-indices that apply to those sets
         (this is implemented in ./main.cc's line ranges.finalizeStates()').
-        No other type may occur (if another type is encountered <strong>flexc++</strong> contains
+        No other type may occur (if another type is encountered <strong >flexc++</strong> contains
         an internal logic error and the program terminates in a fatal
         exception).
-    <li><code>d_rule</code>: an index into the <a href="flexc++06.html#RULES">Rules</a> object to the
+    <li><code >d_rule</code>: an index into the <a href="flexc++06.html#RULES">Rules</a> object to the
         <a href="flexc++06.html#RULE">rule</a> object defining the pattern;
-    <li> A shared pointer to <code>StateData</code>. The class <code>StateData</code> contains
-        two indices: the <code>State</code> indices of the states following the current
-        <code>State</code> (or 0 if this state represents a final state). The second
-        index (<code>d_next2</code>) may be 0, indicating that there is no second
+    <li> A shared pointer to <code >StateData</code>. The class <code >StateData</code> contains
+        two indices: the <code >State</code> indices of the states following the current
+        <code >State</code> (or 0 if this state represents a final state). The second
+        index (<code >d_next2</code>) may be 0, indicating that there is no second
         continuation state. It is unequal 0 when the
-        <em>alternate</em> operator (<code>'|'</code>) is used in a RE.
+        <em >alternate</em> operator (<code >'|'</code>) is used in a RE.
     </ul>
 <p>
 Starting from a pattern's initial state all its subsequent states can
 therefore be reached by visiting  the indices stored in
-<code>StateData</code>. 
+<code >StateData</code>. 
 <p>
-<a name="STATEFIG"></a><p><figure><img src="images/state.jpg" alt="Figure 4 is shown here."/><br/>
-<figcaption>Figure 4: The State class</figcaption>
+<p><a name="STATEFIG"></a><figure >
+<img src="images/state.jpg" >
+<figcaption >Figure 4: The State class</figcaption>
 </figure></p>
 
 <p>
 <a name="STATES"></a><a name="l42"></a>
-<h2>6.6: States</h2>
-    The <code>States</code> class object stores all the states defined by all <code>Pattern</code>
-objects (<code>d_states</code>). When a new pattern is requested the member <code>next</code> or
-<code>next2</code> can be invoked to obtain the next or next two free states. Since
+<h2 >6.6: States</h2>
+    The <code >States</code> class object stores all the states defined by all <code >Pattern</code>
+objects (<code >d_states</code>). When a new pattern is requested the member <code >next</code> or
+<code >next2</code> can be invoked to obtain the next or next two free states. Since
 concatenating pattern produces free states (cf. the description of the
 <a href="flexc++06.html#CONCAT">pattern concatenation</a>) a vector of free state indices is
-maintained by the <code>States</code> class as well (<code>d_free</code>).
+maintained by the <code >States</code> class as well (<code >d_free</code>).
 <p>
 <a name="STATESNEXTTWO"></a>
-The member <code>next2</code> returns a pair of free state indices, the second state
-index refers to a <code>State</code> that has been initialized to the end-of-pattern
-state: its state type is <code>State::FINAL</code> and its two successor (next)
+The member <code >next2</code> returns a pair of free state indices, the second state
+index refers to a <code >State</code> that has been initialized to the end-of-pattern
+state: its state type is <code >State::FINAL</code> and its two successor (next)
 fields are set to 0, indicating that there is no continuation from this state.
 <p>
-Patterns consisting of multiple states (like the pattern <code>ab</code>, consisting of
-the state holding <code>a</code> and the state holding <code>b</code>) are stored in a
-linked-list like structure, implemented using the <code>States</code>'s <code>d_state</code>
+Patterns consisting of multiple states (like the pattern <code >ab</code>, consisting of
+the state holding <code >a</code> and the state holding <code >b</code>) are stored in a
+linked-list like structure, implemented using the <code >States</code>'s <code >d_state</code>
 vector. Its representation is as follows (cf. figure <a href="flexc++06.html#STATECATFIG">5</a>:
 <p>
 <ul>
-    <li> The <code>next1()</code> member of the state containing the <code>a</code> pattern
-returns the index of the state containing the <code>b</code> pattern.
-    <li> The <code>next1()</code> member of the state containing the <code>b</code> pattern
+    <li> The <code >next1()</code> member of the state containing the <code >a</code> pattern
+returns the index of the state containing the <code >b</code> pattern.
+    <li> The <code >next1()</code> member of the state containing the <code >b</code> pattern
 returns the index of the final state
-    <li> The final state's <code>next1</code> and <code>next2</code> members return 0
-    <li> Except for the pattern using the <code>|</code>-operator (<code>pattern |
-pattern</code>) all <code>next2</code> members return 0. The implementation of the
-<code>|</code>-operator is described <a href="flexc++06.html#PATTERNVALOR">here</a>.
+    <li> The final state's <code >next1</code> and <code >next2</code> members return 0
+    <li> Except for the pattern using the <code >|</code>-operator (<code >pattern |
+pattern</code>) all <code >next2</code> members return 0. The implementation of the
+<code >|</code>-operator is described <a href="flexc++06.html#PATTERNVALOR">here</a>.
     </ul>
 <p>
-<a name="STATECATFIG"></a><p><figure><img src="images/statecat.jpg" alt="Figure 5 is shown here."/><br/>
-<figcaption>Figure 5: Catenating States</figcaption>
+<p><a name="STATECATFIG"></a><figure >
+<img src="images/statecat.jpg" >
+<figcaption >Figure 5: Catenating States</figcaption>
 </figure></p>
 
 <p>
 <a name="RULES"></a><a name="l43"></a>
-<h2>6.7: Rules and the class Rule</h2>
-    All rules (combinations of RE describing <code>Pattern</code> objects and associated
-action blocks) are accessible from the <code>Rules</code> object. The <code>Rules</code> object
-contains a reference to the <em>states</em> (see <a href="flexc++06.html#STATES">here</a>), and a vector
-<code>d_rules</code> containing the information about each of the rules, and a hash
+<h2 >6.7: Rules and the class Rule</h2>
+    All rules (combinations of RE describing <code >Pattern</code> objects and associated
+action blocks) are accessible from the <code >Rules</code> object. The <code >Rules</code> object
+contains a reference to the <em >states</em> (see <a href="flexc++06.html#STATES">here</a>), and a vector
+<code >d_rules</code> containing the information about each of the rules, and a hash
 table linking a final state index back to its rule number (see figure
 <a href="flexc++06.html#RULESFIG">6</a>)
 <p>
-<a name="RULESFIG"></a><p><figure><img src="images/rules.jpg" alt="Figure 6 is shown here."/><br/>
-<figcaption>Figure 6: The Rules class</figcaption>
+<p><a name="RULESFIG"></a><figure >
+<img src="images/rules.jpg" >
+<figcaption >Figure 6: The Rules class</figcaption>
 </figure></p>
 
 <p>
-When the parser has recognized a rule it calls <code>Rules::add</code>. A <code>Rule</code>
-object is added to <code>d_rules</code>, storing begin and end state indices, a flag
+When the parser has recognized a rule it calls <code >Rules::add</code>. A <code >Rule</code>
+object is added to <code >d_rules</code>, storing begin and end state indices, a flag
 indicating whether or not this rule's RE started at BOL. A rule also contains
 the code of any action block that's associated with it (empty if there are no
 actions), see also section <a href="flexc++06.html#BLOCKS">6.4</a>.
 <p>
-<code>Rules::add</code> also stores the association between the rule's final state and
-rule index in its <code>unordered_map d_finalToRule</code>. Furthermore, it calls
-<code>d_startConditions.add(ruleIdx)</code> to store the rule index at the currently
+<code >Rules::add</code> also stores the association between the rule's final state and
+rule index in its <code >unordered_map d_finalToRule</code>. Furthermore, it calls
+<code >d_startConditions.add(ruleIdx)</code> to store the rule index at the currently
 active start conditions. See section <a href="flexc++06.html#STARTCOND">6.3</a> for the class
-<code>StartConditions</code>. 
+<code >StartConditions</code>. 
 <p>
 States of rules using the LOP need access to the rule to which they
-belong. For those rules <code>Rules::setRuleIndices</code> is called to assign the
-<a href="flexc++06.html#STATE">State's</a> <code>d_rule</code> field. 
+belong. For those rules <code >Rules::setRuleIndices</code> is called to assign the
+<a href="flexc++06.html#STATE">State's</a> <code >d_rule</code> field. 
 <p>
 <a name="RULE"></a>
-The <code>Rule</code> object themselves have an organization shown in figure
+The <code >Rule</code> object themselves have an organization shown in figure
 <a href="flexc++06.html#RULEFIG">7</a>. 
 <p>
-Rules starting with <code>^</code> can only be matched at <em>begin-of-line</em>
-(BOL). The data member <code>d_bol</code> of such rules is set to <code>true</code>.
+Rules starting with <code >^</code> can only be matched at <em >begin-of-line</em>
+(BOL). The data member <code >d_bol</code> of such rules is set to <code >true</code>.
 <p>
-Rules that are matched in some DFA state are <em>viable</em>: such rules can be
+Rules that are matched in some DFA state are <em >viable</em>: such rules can be
 matched. See section <a href="flexc++06.html#VIABLE">6.15</a> for a description of the algorithm that is
 used for finding (non)viable rules.
 <p>
-<a name="RULEFIG"></a><p><figure><img src="images/rule.jpg" alt="Figure 7 is shown here."/><br/>
-<figcaption>Figure 7: The Rule class data members</figcaption>
+<p><a name="RULEFIG"></a><figure >
+<img src="images/rule.jpg" >
+<figcaption >Figure 7: The Rule class data members</figcaption>
 </figure></p>
 
 <p>
 <a name="SEMVAL"></a><a name="l44"></a>
-<h2>6.8: Converting REs to Patterns</h2>
-    The various types of REs are converted to <code>Pattern</code> objects (cf. section
-<a href="flexc++06.html#PATTERNS">6.9</a>). Basically, a <code>Pattern</code> contains the begin- and end-states
+<h2 >6.8: Converting REs to Patterns</h2>
+    The various types of REs are converted to <code >Pattern</code> objects (cf. section
+<a href="flexc++06.html#PATTERNS">6.9</a>). Basically, a <code >Pattern</code> contains the begin- and end-states
 of a RE. 
 <p>
 Various types of REs are processed by various class-type factory functions,
-constructing <code>Pattern</code> objects. The file <code>parser/inc/regexoreof</code> uses
+constructing <code >Pattern</code> objects. The file <code >parser/inc/regexoreof</code> uses
 these factory functions when their type of RE has been recognized. 
 <p>
 <ul>
-    <li> Character class type of REs (e.g., <code>[[:digit:]]</code>) are handled by
-        <code>class CharClass</code> (cf. section <a href="flexc++06.html#CHARCLASS">6.8.1</a>);
-    <li> Interval-type of REs (e.g., <code>{1, 3}</code>) are handled by <code>class
+    <li> Character class type of REs (e.g., <code >[[:digit:]]</code>) are handled by
+        <code >class CharClass</code> (cf. section <a href="flexc++06.html#CHARCLASS">6.8.1</a>);
+    <li> Interval-type of REs (e.g., <code >{1, 3}</code>) are handled by <code >class
         Interval</code> (cf. section <a href="flexc++06.html#INTERVAL">6.8.2</a>);
     <li> Single characters and characters in (raw)strings are directly handled
-        by <code>Pattern::rawText</code> factory functions. Strings are received
+        by <code >Pattern::rawText</code> factory functions. Strings are received
         as-is, and their surrounding double quotes are removed before
-        <code>rawText</code> is called. The contents of rawstrings is directly received
+        <code >rawText</code> is called. The contents of rawstrings is directly received
         from the scanner. Escaped characters in strings are unescaped before
-        they are processed by <code>Pattern::rawText</code>.
-    <li> Multipliers (<code>*, +, ?</code>) are directly handled by <code>Pattern</code> factory
+        they are processed by <code >Pattern::rawText</code>.
+    <li> Multipliers (<code >*, +, ?</code>) are directly handled by <code >Pattern</code> factory
         functions, receiving the regular expression and the multiplier, and
-        returning a new <code>Pattern</code> incorporating the multiplication.
-    <li> Concatenation is handled by the <code>Pattern::concatenate</code> factory
+        returning a new <code >Pattern</code> incorporating the multiplication.
+    <li> Concatenation is handled by the <code >Pattern::concatenate</code> factory
         function;
-    <li> Alternatives (operator <code>|</code>) are handled by the
-        <code>Pattern::alternatives</code> factory function;
-    <li> LOP REs are handled by the parser's <code>lookahead</code> member, calling
-        <code>Pattern</code> constructors defining lookahead patterns.
-    <li> The <code>&lt;&lt;EOF&gt;&gt;</code> end-of-file pattern is handled by the
-        <code>Pattern::eof</code> factory function.
+    <li> Alternatives (operator <code >|</code>) are handled by the
+        <code >Pattern::alternatives</code> factory function;
+    <li> LOP REs are handled by the parser's <code >lookahead</code> member, calling
+        <code >Pattern</code> constructors defining lookahead patterns.
+    <li> The <code >&lt;&lt;EOF&gt;&gt;</code> end-of-file pattern is handled by the
+        <code >Pattern::eof</code> factory function.
     </ul>
 <p>
 <a name="CHARCLASS"></a><a name="l45"></a>
-<h3>6.8.1: The class CharClass</h3>
-        The characters of a character class are made available through <code>CharClass</code>
-objects. A <code>CharClass</code> object initially stores all characters of its set in
-a <code>string</code>, while remembering the offsets where series of ordinary
-characters or predefined character ranges start in a vector of <code>pair&lt;size_t,
-CharType&gt;</code> objects. Their <code>first</code> members are indices in the object's
-<code>string</code> data member where one or more characters of type <code>CharType</code>
+<h3 >6.8.1: The class CharClass</h3>
+        The characters of a character class are made available through <code >CharClass</code>
+objects. A <code >CharClass</code> object initially stores all characters of its set in
+a <code >string</code>, while remembering the offsets where series of ordinary
+characters or predefined character ranges start in a vector of <code >pair&lt;size_t,
+CharType&gt;</code> objects. Their <code >first</code> members are indices in the object's
+<code >string</code> data member where one or more characters of type <code >CharType</code>
 start. 
 <p>
-<code>CharType</code> is an enum having values <code>CHAR</code>, indicating a plain character;
-<code>PREDEF</code>, indicating a character in a predefined range; and <code>END</code>, which
-is used for offset <code>d_str.length()</code>.
+<code >CharType</code> is an enum having values <code >CHAR</code>, indicating a plain character;
+<code >PREDEF</code>, indicating a character in a predefined range; and <code >END</code>, which
+is used for offset <code >d_str.length()</code>.
 <p>
 Once all elements of a character class have thus been collected, the member
-<code>str</code> may be called to create the final character set.
+<code >str</code> may be called to create the final character set.
 <p>
-The member <code>set</code> creates the final set of characters. It calls
-<code>handleMinusAndEscapes</code> to find (tag) all minus characters in <code>d_str</code>, and
-to process any escape sequence that may have been used in the set. Since <strong>flexc++</strong>
+The member <code >set</code> creates the final set of characters. It calls
+<code >handleMinusAndEscapes</code> to find (tag) all minus characters in <code >d_str</code>, and
+to process any escape sequence that may have been used in the set. Since <strong >flexc++</strong>
 2.00.00 escape sequences inside character sets are supported. Thus, to
-represent a literal minus character <code>\-</code> can be used. The member
-<code>handleMinusAndEscapes</code> passes each of the sub-strings in <code>d_str</code>
-(starting at the elements in <code>d_type</code>) to <code>inspect</code>. <code>Inspect</code> only
-inspects <code>CHAR</code> ranges. It processes all escape-sequences in the <code>CHAR</code>
-range, and stores the locations of unescaped minuses in <code>d_tag</code>, thus
+represent a literal minus character <code >\-</code> can be used. The member
+<code >handleMinusAndEscapes</code> passes each of the sub-strings in <code >d_str</code>
+(starting at the elements in <code >d_type</code>) to <code >inspect</code>. <code >Inspect</code> only
+inspects <code >CHAR</code> ranges. It processes all escape-sequences in the <code >CHAR</code>
+range, and stores the locations of unescaped minuses in <code >d_tag</code>, thus
 tagging the locations of potential character-range operators. The tags of minus
-characters that are used as the first or last character in <code>d_str</code> are
+characters that are used as the first or last character in <code >d_str</code> are
 removed, as initial or final minus characters do not define a range.
 <p>
 Next, the tagged minus characters are inspected. These minuses must define
@@ -535,40 +541,40 @@ valid ranges, which means:
         <li> They are not bordered, either to the left or to the right, by
             predefined character ranges;
         <li> The next range tag does not refer to two character locations
-            further (i.e., <code>a-c-g</code> is an invalid range: two ranges may not
+            further (i.e., <code >a-c-g</code> is an invalid range: two ranges may not
             share a common boundary);
         <li> The position of the first character of a character range may not
-            exceed the second character's position in the <code>char</code> collating
-            sequence. Here, <strong>flexc++</strong> uses the standard (signed) 8-bit <code>char</code>
+            exceed the second character's position in the <code >char</code> collating
+            sequence. Here, <strong >flexc++</strong> uses the standard (signed) 8-bit <code >char</code>
             type. 
         </ul>
 <p>
-All characters found in <code>d_str</code> to the left of a range are then inserted
-into a <code>set&lt;char&gt;</code>. Next the characters of the character range are
+All characters found in <code >d_str</code> to the left of a range are then inserted
+into a <code >set&lt;char&gt;</code>. Next the characters of the character range are
 inserted. Once all character ranges have thus been processed, any trailing
-characters are added to <code>d_str</code>. 
+characters are added to <code >d_str</code>. 
 <p>
-The member <code>str()</code> receives the set, stores its elements in <code>d_str</code>, and
-returns <code>d_str</code>. Although currently not used by <strong>flexc++</strong>'s implementation,
-<code>str</code> also sets the <code>CharClass</code> object's <code>d_state</code> to <code>FINAL</code>: once a
-<code>CharClass</code>'s state is <code>FINAL</code> its <code>d_str</code> is not modified anymore, and
-<code>str</code> will return <code>d_str</code> without calling <code>set</code>.
+The member <code >str()</code> receives the set, stores its elements in <code >d_str</code>, and
+returns <code >d_str</code>. Although currently not used by <strong >flexc++</strong>'s implementation,
+<code >str</code> also sets the <code >CharClass</code> object's <code >d_state</code> to <code >FINAL</code>: once a
+<code >CharClass</code>'s state is <code >FINAL</code> its <code >d_str</code> is not modified anymore, and
+<code >str</code> will return <code >d_str</code> without calling <code >set</code>.
 <p>
 <a name="INTERVAL"></a><a name="l46"></a>
-<h3>6.8.2: The class Interval</h3>
-        The class <code>Interval</code> is a simple support class defining the lower and upper
-bounds of an interval as <code>size_t</code> values. It uses <code>std::string</code> conversion
-functions to convert values stored in text format in <code>std::string</code> arguments
-to <code>size_t</code> values.
+<h3 >6.8.2: The class Interval</h3>
+        The class <code >Interval</code> is a simple support class defining the lower and upper
+bounds of an interval as <code >size_t</code> values. It uses <code >std::string</code> conversion
+functions to convert values stored in text format in <code >std::string</code> arguments
+to <code >size_t</code> values.
 <p>
-The class defines two <code>size_t</code> values (<code>d_lower</code> and <code>d_upper</code>) and
-several factory members as well as members to access <code>d_lower</code> and
-<code>d_upper</code>'s values.
+The class defines two <code >size_t</code> values (<code >d_lower</code> and <code >d_upper</code>) and
+several factory members as well as members to access <code >d_lower</code> and
+<code >d_upper</code>'s values.
 <p>
 <a name="PATTERNS"></a><a name="l47"></a>
-<h2>6.9: Patterns</h2>
-    <code>parser/rules/pattern</code>: Patterns define the regular expressions that can be
-matched. All patterns start at <code>pattern_ws</code> and consist of:
+<h2 >6.9: Patterns</h2>
+    <code >parser/rules/pattern</code>: Patterns define the regular expressions that can be
+matched. All patterns start at <code >pattern_ws</code> and consist of:
         <pre>
 
     pattern_ws:
@@ -578,156 +584,160 @@ matched. All patterns start at <code>pattern_ws</code> and consist of:
 </pre>
 
     Following the recognition of a pattern, the scanner is reset to its
-<code>block</code> mode, allowing it to recognize a <strong>C++</strong> action block. Blocks are
+<code >block</code> mode, allowing it to recognize a <strong >C++</strong> action block. Blocks are
 defined <a href="flexc++06.html#BLOCKS">here</a>.
 <p>
 The following patterns are defined (more extensive descriptions follow):
     <ul>
-    <li><code>EOF_PATTERN</code>  - recognized by the lexer, matching <code>&lt;&lt;EOF&gt;&gt;</code>. 
-    <li><code>STRING</code> - recognized by the lexer, matching a literal string.
-    <li><code>SECTION_DELIMITER</code> - recognized by the lexer. The <code>%%</code> sequence in
+    <li><code >EOF_PATTERN</code>  - recognized by the lexer, matching <code >&lt;&lt;EOF&gt;&gt;</code>. 
+    <li><code >STRING</code> - recognized by the lexer, matching a literal string.
+    <li><code >SECTION_DELIMITER</code> - recognized by the lexer. The <code >%%</code> sequence in
         fact ends the rule section 
-    <li><code>character_class</code>: a self-defined or predefined character class like
-        <code>[a-c]</code> or <code>[[alpha]]</code>.
-    <li><code>plain_characters</code>: any plain character, like <code>a</code> in <code>ape</code>.
-    <li><code>ESCAPE_SEQUENCE</code>: characters defined by escape sequences, like
-        <code>\x2a</code>. To the parser they are plain characters. 
-    <li><code>'.'</code>: the any-character-but-newline matching pattern.
-    <li><code>pattern pattern</code>: two patterns immediately following each other. These
-two patterns have the precedence of <code>CHARACTER</code>, and are combined 
+    <li><code >character_class</code>: a self-defined or predefined character class like
+        <code >[a-c]</code> or <code >[[alpha]]</code>.
+    <li><code >plain_characters</code>: any plain character, like <code >a</code> in <code >ape</code>.
+    <li><code >ESCAPE_SEQUENCE</code>: characters defined by escape sequences, like
+        <code >\x2a</code>. To the parser they are plain characters. 
+    <li><code >'.'</code>: the any-character-but-newline matching pattern.
+    <li><code >pattern pattern</code>: two patterns immediately following each other. These
+two patterns have the precedence of <code >CHARACTER</code>, and are combined 
 left-associatively.
-    <li><code>pattern '|' pattern</code>  Two alternative continuations.
-    <li><code>pattern multiplier</code>: multipliers are <code>*, +</code> and <code>?</code>.
-    <li><code>'(' incParen pattern ')' decParen</code> a pattern nested in parentheses
-    <li><code>pattern '{' start_interval_m  interval '}' regex_block_m</code> a repetition
+    <li><code >pattern '|' pattern</code>  Two alternative continuations.
+    <li><code >pattern multiplier</code>: multipliers are <code >*, +</code> and <code >?</code>.
+    <li><code >'(' incParen pattern ')' decParen</code> a pattern nested in parentheses
+    <li><code >pattern '{' start_interval_m  interval '}' regex_block_m</code> a repetition
         using curly braces (an interval repetition)
-    <li><code>pattern '/' pattern</code> a lookahead pattern ($ is handled by the scanner)
+    <li><code >pattern '/' pattern</code> a lookahead pattern ($ is handled by the scanner)
     </ul>
 <p>
-<code>Pattern</code> objects contain (and offer, through the members <code>begin</code> and
-<code>end</code>) index values in the <code>States::d_states</code> of <code>State</code> objects. The
-value returned by <code>Pattern::begin()</code> is the index of the first <code>State</code>
-defining the pattern, the value returned by <code>Pattern::end()</code> is the index
-of the last (so: <code>State::FINAL</code>) <code>State</code> of the pattern (cf. figure
+<code >Pattern</code> objects contain (and offer, through the members <code >begin</code> and
+<code >end</code>) index values in the <code >States::d_states</code> of <code >State</code> objects. The
+value returned by <code >Pattern::begin()</code> is the index of the first <code >State</code>
+defining the pattern, the value returned by <code >Pattern::end()</code> is the index
+of the last (so: <code >State::FINAL</code>) <code >State</code> of the pattern (cf. figure
 <a href="flexc++06.html#PATTERN">8</a>).
 <p>
-<a name="PATTERN"></a><p><figure><img src="images/pattern.jpg" alt="Figure 8 is shown here."/><br/>
-<figcaption>Figure 8: Pattern objects</figcaption>
+<p><a name="PATTERN"></a><figure >
+<img src="images/pattern.jpg" >
+<figcaption >Figure 8: Pattern objects</figcaption>
 </figure></p>
 
 <p>
-<code>Pattern</code> objects also have a <code>d_lopData</code> data member, which is a pointer
-to an internally used <code>LopData</code> struct. This data member is only used with
+<code >Pattern</code> objects also have a <code >d_lopData</code> data member, which is a pointer
+to an internally used <code >LopData</code> struct. This data member is only used with
 LOP-patterns, and is covered in section <a href="flexc++06.html#LOPPATTERN">6.10.2</a>.
 <p>
-<code>parser/rules/pattern</code>: the following descriptions of the working of some
-basic patterns illustrate how the vector of <code>State</code> objects in <code>States</code> is
+<code >parser/rules/pattern</code>: the following descriptions of the working of some
+basic patterns illustrate how the vector of <code >State</code> objects in <code >States</code> is
 filled. Based on this description other pattern's implementations should be
 evident.
 <p>
-A basic pattern is the plain character (<code>parser/inc/regexoreof:
-_single_char</code>, processed by the <code>Pattern::rawText</code> factory function). The
+A basic pattern is the plain character (<code >parser/inc/regexoreof:
+_single_char</code>, processed by the <code >Pattern::rawText</code> factory function). The
 plain character pattern is processed as follows:
     <ul>
-    <li> First the indices of two free <code>State</code> vector locations are
-requested (see <a href="flexc++06.html#STATESNEXTTWO">the <code>next2</code> description</a> in the
-<a href="flexc++06.html#STATES"><code>States</code> clas</a>).
-    <li> The <code>State</code> at the first state index is then set to a state
+    <li> First the indices of two free <code >State</code> vector locations are
+requested (see <a href="flexc++06.html#STATESNEXTTWO">the <code >next2</code> description</a> in the
+<a href="flexc++06.html#STATES"><code >States</code> clas</a>).
+    <li> The <code >State</code> at the first state index is then set to a state
 containing the plain character, linking to the next free state which has been
-initialized to the <code>FINAL</code> state by <code>States::next2</code>.
-    <li> Then s <code>Pattern</code>, storing the begin and end <code>State</code> indices, is
+initialized to the <code >FINAL</code> state by <code >States::next2</code>.
+    <li> Then s <code >Pattern</code>, storing the begin and end <code >State</code> indices, is
 returned (cf. figure <a href="flexc++06.html#PATTERNVALPLAIN">9</a>).
     </ul>
 <p>
-<a name="PATTERNVALPLAIN"></a><p><figure><img src="images/patternvalplain.jpg" alt="Figure 9 is shown here."/><br/>
-<figcaption>Figure 9: A plain character pattern</figcaption>
+<p><a name="PATTERNVALPLAIN"></a><figure >
+<img src="images/patternvalplain.jpg" >
+<figcaption >Figure 9: A plain character pattern</figcaption>
 </figure></p>
 
 <p>
 <a name="PATTERNVALOR"></a>
-<a name="CONCAT"></a>Concatenation of two patterns always produces a free <code>State</code> that can be
-returned by, e.g., <code>State::nex2</code>. The states, defining a pattern, 
-therefore, do not have to be consecutively stored in the <code>States</code>'s vector
-of <code>State</code> objects (see figure <a href="flexc++06.html#CONCATFIG">10</a>).
+<a name="CONCAT"></a>Concatenation of two patterns always produces a free <code >State</code> that can be
+returned by, e.g., <code >State::nex2</code>. The states, defining a pattern, 
+therefore, do not have to be consecutively stored in the <code >States</code>'s vector
+of <code >State</code> objects (see figure <a href="flexc++06.html#CONCATFIG">10</a>).
 <p>
 <ul>
-    <li> Concatenation starts with two <code>SemVal</code> objects.
-    <li> The <code>SemVal</code> objects are downcast to,
-resp. a <code>lhs PatternVal</code> and a <code>rhs PatternVal</code>.
-    <li> With lookahead patterns, the <code>lhs</code> pattern may be an <em>accepting
+    <li> Concatenation starts with two <code >SemVal</code> objects.
+    <li> The <code >SemVal</code> objects are downcast to,
+resp. a <code >lhs PatternVal</code> and a <code >rhs PatternVal</code>.
+    <li> With lookahead patterns, the <code >lhs</code> pattern may be an <em >accepting
 state</em>. I.e., once the full pattern has been recognized only the lhs is
-actually matched. E.g., after recognizing <code>a/b</code> <code>a</code> is returned as
-matched, as <code>a</code> is the accepting pattern. When concatenating the lhs's end
+actually matched. E.g., after recognizing <code >a/b</code> <code >a</code> is returned as
+matched, as <code >a</code> is the accepting pattern. When concatenating the lhs's end
 state disappears and is replaced by the rhs's begin state. Therefore:
     <li> The rhs's begin state's accepting flag is set to the lhs's end
 state's accepting flag.
-    <li> The <code>lhs.end()</code> state is assigned the value of the <code>rhs.begin()</code>
+    <li> The <code >lhs.end()</code> state is assigned the value of the <code >rhs.begin()</code>
 state
-    <li> The <code>rhs.begin()</code> state is marked as free
-    <li> A new <code>Pattern</code> is returned, having its
-<code>begin</code> index set to <code>lhs.begin()</code> and its <code>end</code> idex set to
-<code>rhs.end()</code>. 
+    <li> The <code >rhs.begin()</code> state is marked as free
+    <li> A new <code >Pattern</code> is returned, having its
+<code >begin</code> index set to <code >lhs.begin()</code> and its <code >end</code> idex set to
+<code >rhs.end()</code>. 
     </ul>
 <p>
-<a name="CONCATFIG"></a><p><figure><img src="images/concatfig.jpg" alt="Figure 10 is shown here."/><br/>
-<figcaption>Figure 10: Concatenating Patterns</figcaption>
+<p><a name="CONCATFIG"></a><figure >
+<img src="images/concatfig.jpg" >
+<figcaption >Figure 10: Concatenating Patterns</figcaption>
 </figure></p>
 
 <p>
 <a name="LOOKAHEAD"></a><a name="l48"></a>
-<h2>6.10: Patterns using the lookahead operator (LOP)</h2>
-    The way the lookahead operator (LOP, <code>/</code>) is handled has
-completely changed at <strong>flexc++</strong>'s upgrade from version 1 to version 2. The
-LOP-handling algorithm used in <strong>flexc++</strong> versions before 2 worked correctly in
+<h2 >6.10: Patterns using the lookahead operator (LOP)</h2>
+    The way the lookahead operator (LOP, <code >/</code>) is handled has
+completely changed at <strong >flexc++</strong>'s upgrade from version 1 to version 2. The
+LOP-handling algorithm used in <strong >flexc++</strong> versions before 2 worked correctly in
 most situations, but we were unable to prove its correctness, and over time
 bugs in the algorithm were uncovered which often were very hard to squash. 
 <p>
-On the other hand, the algorithm implemented since <strong>flexc++</strong> version 2 is
+On the other hand, the algorithm implemented since <strong >flexc++</strong> version 2 is
 surprisingly simple and can be proven to work.
 <p>
 The philosophy underlying the current LOP algorithm is simply that, in order
-to match <code>{head}/{tail}</code>, where <code>{head}</code> and <code>{tail}</code> are regular
-expressions, the scanner must at least be able to match <code>{head}{tail}</code>: the
-concatenation of <code>{head}</code> and <code>{tail}</code>. 
+to match <code >{head}/{tail}</code>, where <code >{head}</code> and <code >{tail}</code> are regular
+expressions, the scanner must at least be able to match <code >{head}{tail}</code>: the
+concatenation of <code >{head}</code> and <code >{tail}</code>. 
 <p>
 Lookahead tail patterns, however, must match input strings which should be as
 short as possible. To find this shortest tail pattern the scanner tries to
-match the last character of the text that matched <code>{head}/{tail}</code> with the
-<code>{tail}</code> pattern. If this succeeds, then the shortest tail was found. If the
-last character didn't already match <code>{tail}</code> then the last two characters
-are matched against <code>{tail}</code>. This process (i.e., increasing the length of
-the final substring of the input matching <code>{head}{tail}</code>) is continued until
-<code>{tail}</code> is eventually matched. This must succeed since, after all, the full
-input matched <code>{head}{tail}</code>. Thus a short tail was found matching
-<code>{tail}</code>.
+match the last character of the text that matched <code >{head}/{tail}</code> with the
+<code >{tail}</code> pattern. If this succeeds, then the shortest tail was found. If the
+last character didn't already match <code >{tail}</code> then the last two characters
+are matched against <code >{tail}</code>. This process (i.e., increasing the length of
+the final substring of the input matching <code >{head}{tail}</code>) is continued until
+<code >{tail}</code> is eventually matched. This must succeed since, after all, the full
+input matched <code >{head}{tail}</code>. Thus a short tail was found matching
+<code >{tail}</code>.
 <p>
 After matching the tail pattern, the matching final substring is removed from
 the original input string, and the initial substring is passed to the
-<code>{head}</code> pattern, thus finding the <em>longest</em> match, given that the
-remaining characters of the matched text still match <code>{tail}</code>. Figure
+<code >{head}</code> pattern, thus finding the <em >longest</em> match, given that the
+remaining characters of the matched text still match <code >{tail}</code>. Figure
 <a href="flexc++06.html#LOPPROCEDURE">11</a> illustrates the algorithm.
 <p>
-<a name="LOPPROCEDURE"></a><p><figure><img src="images/lopprocedure.jpg" alt="Figure 11 is shown here."/><br/>
-<figcaption>Figure 11: Look-ahead matching algorithm</figcaption>
+<p><a name="LOPPROCEDURE"></a><figure >
+<img src="images/lopprocedure.jpg" >
+<figcaption >Figure 11: Look-ahead matching algorithm</figcaption>
 </figure></p>
 
 <p>
 Some minor optimizations handle potentially zero length tails and handle fixed
 tail lengths. With potentially zero length tail lengths (e.g.,
-<code>{head}/{tail}*</code>) the scanner ignores the tail and replaces
-<code>{head}/{tail}*</code>) by <code>{head}</code>). With fixed tail lengths the length of the
-tail (<code>|tail|</code> is known, and the final <code>|tail|</code> characters of the matched
+<code >{head}/{tail}*</code>) the scanner ignores the tail and replaces
+<code >{head}/{tail}*</code>) by <code >{head}</code>). With fixed tail lengths the length of the
+tail (<code >|tail|</code> is known, and the final <code >|tail|</code> characters of the matched
 input text can immediately be pushed back on to the input stream, returning
-the remaining text as the text matching <code>{head}</code>.
+the remaining text as the text matching <code >{head}</code>.
 <p>
-The following subsections describe how <strong>flexc++</strong> recognizes and handles
+The following subsections describe how <strong >flexc++</strong> recognizes and handles
 LOP-patterns. The next section (<a href="flexc++06.html#LOPRUNTIME">6.18</a>) describes the run-time
 handling of LOP-patterns.
 <p>
 <a name="l49"></a>
-<h3>6.10.1: The parser recognizing LOP patterns</h3>
+<h3 >6.10.1: The parser recognizing LOP patterns</h3>
         Regular expressions are parsed according to the rules in
-<code>parser/inc/regexoreof</code>. LOP-patterns are recognized using
+<code >parser/inc/regexoreof</code>. LOP-patterns are recognized using
         <pre>
 
     _regex '/' _regex
@@ -737,14 +747,14 @@ handling of LOP-patterns.
         
 </pre>
 
-    Here <code>_regex</code> represents a regular expression pattern, stored in 
-<code>Pattern</code> objects.
+    Here <code >_regex</code> represents a regular expression pattern, stored in 
+<code >Pattern</code> objects.
 <p>
-The parser's member <code>lookahead</code> verifies that a regular expression contains
+The parser's member <code >lookahead</code> verifies that a regular expression contains
 but one LOP, and that the LOP is not used in a parenthesized regular
 expression. If the rhs pattern can be empty the rhs is ignored and the lhs
 pattern is returned. If the rhs pattern has a fixed non-zero length the
-<code>Pattern</code> constructor 
+<code >Pattern</code> constructor 
         <pre>
 
     Pattern(States &amp;states, size_t tailLength,
@@ -755,20 +765,20 @@ pattern is returned. If the rhs pattern has a fixed non-zero length the
     is called to define a pattern having a fixed length tail. Otherwise a
 variable (standard) LOP-expression was encountered. 
 <p>
-Standard <code>LOP</code> expressions are handled according to the algorithm
+Standard <code >LOP</code> expressions are handled according to the algorithm
 illustrated in figure <a href="flexc++06.html#LOPPROCEDURE">11</a>. This is implemented using two
 separate startconditions (see the next section (<a href="flexc++06.html#LOPSCs">6.10.1.1</a>)).
 <p>
 Until the tail pattern is actually matched, its length is gradually
-increased. This is handled by a catch-all rule (using the pattern <code>.|\n</code>)
+increased. This is handled by a catch-all rule (using the pattern <code >.|\n</code>)
 which can be added to the scanner's input, and which is used as fall-back rule
 in tail-matching start conditions (see section <a href="flexc++06.html#LOPSCs">6.10.1.1</a>).
 <p>
 <a name="LOPSCs"></a><a name="l50"></a>
-<h4>6.10.1.1: Start conditions used by standard 
+<h4 >6.10.1.1: Start conditions used by standard 
                                 LOP patterns</h4>
             Standard LOP-patterns are handled through start conditions which are only
-referable by code generated by <strong>flexc++</strong> itself. Each regular (standard LOP)
+referable by code generated by <strong >flexc++</strong> itself. Each regular (standard LOP)
 expression of the form
         <pre>
 
@@ -776,10 +786,10 @@ expression of the form
         
 </pre>
 
-    results in two additional start conditions <code>x</code> and <code>x+1</code>, which are
-defined only for handling this LOP-pattern. <strong>Flexc++</strong> generates code in which the
+    results in two additional start conditions <code >x</code> and <code >x+1</code>, which are
+defined only for handling this LOP-pattern. <strong >Flexc++</strong> generates code in which the
 above regular expression is transformed into rules that would have looked like
-this in a <strong>flexc++</strong> specification file:
+this in a <strong >flexc++</strong> specification file:
         <pre>
 
     {head}{tail}       lop1__(x);
@@ -796,32 +806,32 @@ this in a <strong>flexc++</strong> specification file:
         
 </pre>
 
-    Once <code>{head}{tail}</code> is matched (see also figure <a href="flexc++06.html#LOPPROCEDURE">11</a>), an
-internally defined member <code>lop1__(x)</code> is called. This function prepares the
+    Once <code >{head}{tail}</code> is matched (see also figure <a href="flexc++06.html#LOPPROCEDURE">11</a>), an
+internally defined member <code >lop1__(x)</code> is called. This function prepares the
 scanner for matching the LOP-expression (cf. section <a href="flexc++06.html#LOPRUNTIME">6.18</a>), and
-switches to start condition <code>x</code>.
+switches to start condition <code >x</code>.
 <p>
-In start condition <code>x</code>, an attempt is made to match <code>{tail}</code>. If this
-does <em>not</em> succeed, the catch-all rule is matched, and <code>lop3__()</code>
+In start condition <code >x</code>, an attempt is made to match <code >{tail}</code>. If this
+does <em >not</em> succeed, the catch-all rule is matched, and <code >lop3__()</code>
 pushes two characters back on to the input stream: the character preceding the
 currently first character of the tail and the just-matched character. Thus the
 input now contains an incremented potential tail, and the scanner again tries
-to match <code>{tail}</code>. This eventually succeeds, and <code>lop2__()</code> is called. 
+to match <code >{tail}</code>. This eventually succeeds, and <code >lop2__()</code> is called. 
 <p>
-The member <code>lop2__()</code> pushes all characters initially matched for
-<code>{head}{tail}</code>, except for the final <code>|tail|</code> number of characters, on to
-the input stream, and switches to start condition <code>x+1</code>.
+The member <code >lop2__()</code> pushes all characters initially matched for
+<code >{head}{tail}</code>, except for the final <code >|tail|</code> number of characters, on to
+the input stream, and switches to start condition <code >x+1</code>.
 <p>
-At start condition <code>x+1</code> <code>lop4__()</code> is called, which pushes the characters
-of the originally matched input <em>beyond</em> the currently matched input
+At start condition <code >x+1</code> <code >lop4__()</code> is called, which pushes the characters
+of the originally matched input <em >beyond</em> the currently matched input
 characters back on the input stream. This returns the tail beyond the string
-matched for <code>{head}</code> on to the input. Next it resets the scanner to the
-start condition that was active when <code>{head}{tail}</code> was first
+matched for <code >{head}</code> on to the input. Next it resets the scanner to the
+start condition that was active when <code >{head}{tail}</code> was first
 matched. Finally the original action-block's statements (if any) are executed.
 <p>
 Fixed length LOP-expressions do not need additional start conditions, nor do
 they need catch-all rules. When the above LOP-expression uses a 
-fixed-length tail <code>t</code>, it is transformed to
+fixed-length tail <code >t</code>, it is transformed to
         <pre>
 
     {head}{tail}        {
@@ -831,18 +841,18 @@ fixed-length tail <code>t</code>, it is transformed to
         
 </pre>
 
-    The member <code>lopf__(t)</code> simply pushed the final <code>t</code> characters of the
-matched input back on to the input stream, resizing <code>d_matched</code> to
-<code>d_matched.length() - t</code>. 
+    The member <code >lopf__(t)</code> simply pushed the final <code >t</code> characters of the
+matched input back on to the input stream, resizing <code >d_matched</code> to
+<code >d_matched.length() - t</code>. 
 <p>
 <a name="LOPPATTERN"></a><a name="l51"></a>
-<h3>6.10.2: Pattern constructors used with LOP patterns</h3>
-        Two <code>Pattern</code> constructors are used to handle LOP-expressions (see also
-figure <a href="flexc++06.html#PATTERN">8</a>, showing the data-members of <code>Pattern</code>
-objects). <code>Pattern</code> constructors that are used to represent LOP-patterns use
-their <code>d_lopData</code> members. If this member is zero, the object does not
-represent a LOP-pattern; if it is non-zero it points to a <code>LopData</code> struct,
-and the object <em>does</em> represent a LOP-pattern. 
+<h3 >6.10.2: Pattern constructors used with LOP patterns</h3>
+        Two <code >Pattern</code> constructors are used to handle LOP-expressions (see also
+figure <a href="flexc++06.html#PATTERN">8</a>, showing the data-members of <code >Pattern</code>
+objects). <code >Pattern</code> constructors that are used to represent LOP-patterns use
+their <code >d_lopData</code> members. If this member is zero, the object does not
+represent a LOP-pattern; if it is non-zero it points to a <code >LopData</code> struct,
+and the object <em >does</em> represent a LOP-pattern. 
 <p>
 This is the constructor used to represent a LOP expression having a fixed
 non-zero length LOP-tail:
@@ -853,16 +863,17 @@ non-zero length LOP-tail:
         
 </pre>
 
-    In this case the <code>LopData's</code> <code>mid</code> and <code>lhs</code> fields are not used,
-and <code>scOrLength</code> stores the length of the fixed-length tail of the
+    In this case the <code >LopData's</code> <code >mid</code> and <code >lhs</code> fields are not used,
+and <code >scOrLength</code> stores the length of the fixed-length tail of the
 LOP-expression. 
 <p>
-As the pattern to match is <code>{head}{tail}</code>, the states of the <code>lhs</code> and
-<code>rhs</code> expressions are concatenated, and the concatenated states are accessed
-though the object's <code>d_pair</code> member.
+As the pattern to match is <code >{head}{tail}</code>, the states of the <code >lhs</code> and
+<code >rhs</code> expressions are concatenated, and the concatenated states are accessed
+though the object's <code >d_pair</code> member.
 <p>
-<a name="LOPDATA"></a><p><figure><img src="images/lopdata.jpg" alt="Figure 12 is shown here."/><br/>
-<figcaption>Figure 12: Pattern data organization for LOP-expressions</figcaption>
+<p><a name="LOPDATA"></a><figure >
+<img src="images/lopdata.jpg" >
+<figcaption >Figure 12: Pattern data organization for LOP-expressions</figcaption>
 </figure></p>
 
 <p>
@@ -877,270 +888,275 @@ constructor is used (cf. figure <a href="flexc++06.html#LOPDATA">12</a>):
 </pre>
 
     Here the pattern to match is, as before, the concatenated states of the
-lhs and rhs patterns, which are accessed though the object's <code>d_pair</code>
+lhs and rhs patterns, which are accessed though the object's <code >d_pair</code>
 member. 
 <p>
-Once <code>{head}{tail}</code> has been matched, the tail pattern must
+Once <code >{head}{tail}</code> has been matched, the tail pattern must
 be matched, using a separate start condition. The state number of the
-<code>{tail}</code> pattern's first state is stored in <code>d_lopData-&gt;mid</code>, and is
-used later (by the <code>Rules</code> object) to create a specific tail-matching
+<code >{tail}</code> pattern's first state is stored in <code >d_lopData-&gt;mid</code>, and is
+used later (by the <code >Rules</code> object) to create a specific tail-matching
 rule. 
 <p>
 The (number of the) start condition handling the tail-matching process is
-<code>lopStartCondition</code> which is stored in <code>d_lopData-&gt;scOrLength</code>. 
+<code >lopStartCondition</code> which is stored in <code >d_lopData-&gt;scOrLength</code>. 
 <p>
-Another rule must be available to match <code>{head}</code>, once <code>{tail}</code> has been
-matched. The states of this rule are accessed through <code>d_lopData-&gt;lhs</code>,
-which is a <code>Pattern</code> object initialized with the states of a duplicate of
-the lhs pattern. Once the <code>{tail}</code> has been matched, this duplicated pattern
-is used to match <code>{head}</code> in the next start condition.
+Another rule must be available to match <code >{head}</code>, once <code >{tail}</code> has been
+matched. The states of this rule are accessed through <code >d_lopData-&gt;lhs</code>,
+which is a <code >Pattern</code> object initialized with the states of a duplicate of
+the lhs pattern. Once the <code >{tail}</code> has been matched, this duplicated pattern
+is used to match <code >{head}</code> in the next start condition.
 <p>
-The <em>type</em> of a pattern is inferred from the pattern object's <code>d_lopData</code>
+The <em >type</em> of a pattern is inferred from the pattern object's <code >d_lopData</code>
 member. If zero, then the pattern does not represent a LOP-expression, and its
-type (returned by its <code>type()</code> member) is <code>RuleType::NORMAL</code>. Otherwise,
-if the LOP-expression has a fixed-size tail, then <code>d_lopData-&gt;mid</code> equals 0,
-and the pattern's type is <code>RuleType::LOP_FIXED</code>. If <code>d_lopData-&gt;mid</code> is
+type (returned by its <code >type()</code> member) is <code >RuleType::NORMAL</code>. Otherwise,
+if the LOP-expression has a fixed-size tail, then <code >d_lopData-&gt;mid</code> equals 0,
+and the pattern's type is <code >RuleType::LOP_FIXED</code>. If <code >d_lopData-&gt;mid</code> is
 unequal 0, then the pattern represent a standard LOP-expression, and its type
-is <code>RuleType::LOP_1</code>. 
+is <code >RuleType::LOP_1</code>. 
 <p>
 <a name="l52"></a>
-<h3>6.10.3: Adding (LOP-)rules</h3>
-        Once <code>parser/inc/regexoreof</code> has recognized a pattern (whether or not a
-LOP-expression) it is further processed by either <code>optMs_rule</code> (optional
-start condition rule) in <code>parser/inc/optmsrule</code>, or by <code>msCompound</code> (mini
-scanner compound) in <code>parser/inc/mscompound</code>. 
+<h3 >6.10.3: Adding (LOP-)rules</h3>
+        Once <code >parser/inc/regexoreof</code> has recognized a pattern (whether or not a
+LOP-expression) it is further processed by either <code >optMs_rule</code> (optional
+start condition rule) in <code >parser/inc/optmsrule</code>, or by <code >msCompound</code> (mini
+scanner compound) in <code >parser/inc/mscompound</code>. 
 <p>
 In both cases the actions that are associated with the regular expressions are
 determined (they may be `or-actions', in which case the action consists of a
-<code>|</code>-character, indicating that this rule uses the same action as the next
+<code >|</code>-character, indicating that this rule uses the same action as the next
 rule, or no actions may be defined, representing an empty action block).
 <p>
 Having determined a pattern and action block, the combination of pattern,
 action, possibly a begin-of-line requirement (i.e., a rule starting with
-<code>^</code>), and the pattern's type are passed to <code>d_rules.add</code>, adding another
+<code >^</code>), and the pattern's type are passed to <code >d_rules.add</code>, adding another
 rule to the set of available rules.
 <p>
-Adding a rule (cf. <code>rules/add.cc</code>) means:
+Adding a rule (cf. <code >rules/add.cc</code>) means:
     <ul>
-    <li> Add the rule's information to the <code>Rules</code> object's <code>d_rules</code>
+    <li> Add the rule's information to the <code >Rules</code> object's <code >d_rules</code>
         vector of rules;
-    <li> associate its end-state with its index in <code>d_rules</code>, so the DFA 
+    <li> associate its end-state with its index in <code >d_rules</code>, so the DFA 
         construction knows which rule is matched when this state is
         reached. This rule-index is used as a case label in the scanner's
-        <code>executeAction__</code> member;
-    <li> calling <code>setRule(pair.first, ruleIdx)</code> to associate the rule's
+        <code >executeAction__</code> member;
+    <li> calling <code >setRule(pair.first, ruleIdx)</code> to associate the rule's
         states with the rule's index;
     <li> adding the rule index to the currently active set of start
         conditions.
     </ul>
 <p>
 <a name="l53"></a>
-<h3>6.10.4: After parsing: adding LOP start conditions</h3>
-        After parsing <code>Parser::addLopStartConditions</code> is called.
+<h3 >6.10.4: After parsing: adding LOP start conditions</h3>
+        After parsing <code >Parser::addLopStartConditions</code> is called.
 <p>
 If no variable tail LOP rules were encountered, this function immediately
 returns. Otherwise, there are tail matching start conditions, which
 need a catch-all rule, and for each variable tail LOP rule two start
 conditions are defined. 
 <p>
-The catch-all rule is added to the <code>Rules</code> object by the
-<code>Rules::processCatchAllRule</code> member. The catch-all rule is the last rule,
+The catch-all rule is added to the <code >Rules</code> object by the
+<code >Rules::processCatchAllRule</code> member. The catch-all rule is the last rule,
 injected by the scanner once it has reached the end of its input. It is stored
-inside the <code>Rules</code> object in a separate <code>Rule d_catchAll</code> object.
+inside the <code >Rules</code> object in a separate <code >Rule d_catchAll</code> object.
 <p>
 Next the variable tail LOP rules' start conditions are defined.  At this point
 all user-defined rules are known, and the user-defined start conditions are
-also known (as the parser has processed the <code>%x</code> and <code>%s</code>
+also known (as the parser has processed the <code >%x</code> and <code >%s</code>
 directives). Therefore, all start conditions which are required for handling
 standard LOP-rules have index values exceeding the number of user-defined
 start conditions. When a standard LOP-rule was encountered by the parser,
-<code>Parser::lookahead</code> increased its <code>d_lopStartCondition</code> by 2, and so at
-this point <code>d_lopStartConditions - d_rules.size()</code> start conditions are
+<code >Parser::lookahead</code> increased its <code >d_lopStartCondition</code> by 2, and so at
+this point <code >d_lopStartConditions - d_rules.size()</code> start conditions are
 defined.
 <p>
 These start conditions are for internal use only. Their names are not made
-available in the generated <code>ScannerBase.h</code> header file. They start with a
+available in the generated <code >ScannerBase.h</code> header file. They start with a
 blank space, which can therefore not be specified in user-defined input
 files. Furthermore, the code generator only adds the user-defined start
-condition names to the <code>enum class StartCondition__</code>, defined in
-<code>ScannerBase.h</code>, so the variable tail LOP rules' start conditions cannot be
-specified by user-called <code>begin</code> statements.
+condition names to the <code >enum class StartCondition__</code>, defined in
+<code >ScannerBase.h</code>, so the variable tail LOP rules' start conditions cannot be
+specified by user-called <code >begin</code> statements.
 <p>
 <a name="l54"></a>
-<h3>6.10.5: After parsing: handling LOP rules</h3>
-        The function <code>Rules::handleLopRules</code> performs rule-finalization.
+<h3 >6.10.5: After parsing: handling LOP rules</h3>
+        The function <code >Rules::handleLopRules</code> performs rule-finalization.
 <p>
-Once the parser has completed its work, the <code>Rules</code> object finalizes its
-rules, adding additional rules for <code>LOP_1</code> type of rules. 
+Once the parser has completed its work, the <code >Rules</code> object finalizes its
+rules, adding additional rules for <code >LOP_1</code> type of rules. 
 <p>
-First <code>Rules::setLopBlocks</code> ensures that each variable length LOP rule has
+First <code >Rules::setLopBlocks</code> ensures that each variable length LOP rule has
 its own action block. The variable tail length LOP rules receive their own
-<code>lop1__(size_t sc)</code> action block, but their original action blocks must
-remain available, to be added eventually to the <code>lop4__()</code> action, after
-matching the LOP rule's <code>{head}</code> pattern. Comparable considerations hold
+<code >lop1__(size_t sc)</code> action block, but their original action blocks must
+remain available, to be added eventually to the <code >lop4__()</code> action, after
+matching the LOP rule's <code >{head}</code> pattern. Comparable considerations hold
 true for fixed-sized tail length LOP rules. Here the rule's original action is
-appended to the rule's <code>lopf__(size_t tailLength)</code> call.
+appended to the rule's <code >lopf__(size_t tailLength)</code> call.
 <p>
 To prepare the rules for their appropriate actions, consider figure
 <a href="flexc++06.html#LOPRULES">13</a>. 
 <p>
-<a name="LOPRULES"></a><p><figure><img src="images/setlopblocks.jpg" alt="Figure 13 is shown here."/><br/>
-<figcaption>Figure 13: Providing rules with action blocks</figcaption>
+<p><a name="LOPRULES"></a><figure >
+<img src="images/setlopblocks.jpg" >
+<figcaption >Figure 13: Providing rules with action blocks</figcaption>
 </figure></p>
 
 <p>
-Initially, <code>actionIdx</code> and <code>lopIdx</code> point beyond the last rule index. When
-a rule has an action block of its own <code>actionIdx</code> is given this rule's index
-value: <code>actionIdx</code> always holds the index of the most recent rule having an
-action block of its own. Likewise, <code>lopIdx</code> always holds the index of the
+Initially, <code >actionIdx</code> and <code >lopIdx</code> point beyond the last rule index. When
+a rule has an action block of its own <code >actionIdx</code> is given this rule's index
+value: <code >actionIdx</code> always holds the index of the most recent rule having an
+action block of its own. Likewise, <code >lopIdx</code> always holds the index of the
 most recent LOP rule. 
 <p>
 If a LOP rule has an or-action, then it receives a copy of the most recently
 seen action block. If a normal rule has an or-action then it receives a copy
-of the most recently seen action block <em>if</em> this happens to be a LOP rule's
+of the most recently seen action block <em >if</em> this happens to be a LOP rule's
 own action block.
 <p>
-After <code>setLopBlock</code> all LOP rules have their own true (i.e., not or-actions)
+After <code >setLopBlock</code> all LOP rules have their own true (i.e., not or-actions)
 action blocks.
 <p>
 Next, all fixed tail length LOP rules are processed: each fixed tail length
-LOP rule's action block receives an initial <code>lopf__(tailSize);</code> statement,
-where <code>tailSize</code> is obtained from the rule's <code>pattern.lopTailLength()</code>
+LOP rule's action block receives an initial <code >lopf__(tailSize);</code> statement,
+where <code >tailSize</code> is obtained from the rule's <code >pattern.lopTailLength()</code>
 member.
 <p>
 If there are variable tail length LOP rules then these are processed next (by
-<code>Rules::handleLopRule(idx)</code>). 
+<code >Rules::handleLopRule(idx)</code>). 
 <p>
-<code>Rules::handleLopRule</code> receives the index of a variable tail length LOP
-rule and changes its action block to <code>lop1__(scIndex)</code>, where <code>scIndex</code> is
-the start condition index matching this LOP rule's tail. <code>ScIndex</code> is
-obtained from the rule's <code>pattern-&gt;scIndex()</code> member. 
+<code >Rules::handleLopRule</code> receives the index of a variable tail length LOP
+rule and changes its action block to <code >lop1__(scIndex)</code>, where <code >scIndex</code> is
+the start condition index matching this LOP rule's tail. <code >ScIndex</code> is
+obtained from the rule's <code >pattern-&gt;scIndex()</code> member. 
 <p>
-Next, the lop rule's start condition is activated at <code>d_startConditions</code> and
-the LOP rule's <code>{tail}</code> pattern is added to this start condition, using
-<code>RuleType::LOP_2</code>. This start condition also needs a catch-all rule, using
-action block <code>lop3__()</code>, but as all variable tail length LOP rules share
+Next, the lop rule's start condition is activated at <code >d_startConditions</code> and
+the LOP rule's <code >{tail}</code> pattern is added to this start condition, using
+<code >RuleType::LOP_2</code>. This start condition also needs a catch-all rule, using
+action block <code >lop3__()</code>, but as all variable tail length LOP rules share
 this catch-all rule, they are handled separately, see below.
 <p>
 Finally, the lop rule's 2nd start condition is activated and
-the LOP rule's <code>{head}</code> pattern is added to this start condition, using
-<code>RuleType::LOP_4</code>, prefixing the original rule's action block by the
-statement <code>lop4__()</code> (see also section <a href="flexc++06.html#LOPSCs">6.10.1.1</a>).
+the LOP rule's <code >{head}</code> pattern is added to this start condition, using
+<code >RuleType::LOP_4</code>, prefixing the original rule's action block by the
+statement <code >lop4__()</code> (see also section <a href="flexc++06.html#LOPSCs">6.10.1.1</a>).
 <p>
 Once all variable tail length LOP rules have been processed the catch-all rule
-is added to the <code>Rules</code> object, using <code>RuleType::LOP_3</code>, and the catch-all
+is added to the <code >Rules</code> object, using <code >RuleType::LOP_3</code>, and the catch-all
 rule is added to each second start condition of each variable tail length LOP
-rule (by <code>Rules::addCatchAll</code>).
+rule (by <code >Rules::addCatchAll</code>).
 <p>
 <a name="RANGES"></a><a name="l55"></a>
-<h2>6.11: Ranges</h2>
+<h2 >6.11: Ranges</h2>
     When processing characters in regular expressions subranges are defined. An
-expression like `<code>am</code>' defines the ranges ascii-0 to (but not including)
-<code>'a'</code>; <code>'a'</code>; <code>'b'</code> through <code>'l'</code>; <code>'m'</code>; and <code>'n'</code> through
+expression like `<code >am</code>' defines the ranges ascii-0 to (but not including)
+<code >'a'</code>; <code >'a'</code>; <code >'b'</code> through <code >'l'</code>; <code >'m'</code>; and <code >'n'</code> through
 ascii-255. 
 <p>
-Likewise, sets may define ranges, like <code>[[:digits:]]</code>, defining all
+Likewise, sets may define ranges, like <code >[[:digits:]]</code>, defining all
 ascii characters preceding the digits; all decimal digits; and all ascii
 characters following the digits. 
 <p>
 Rather than having a NFA/DFA having entries for each of these characters the
 NFA/DFA's column-dimension (see section <a href="flexc++06.html#DFA">6.13</a>) can be reduced, often
-considerably, by letting each column refer to a <em>set</em> of characters, rather
+considerably, by letting each column refer to a <em >set</em> of characters, rather
 than individual characters. 
 <p>
-The <code>Ranges</code> object takes care of defining and manipulating the actual 
+The <code >Ranges</code> object takes care of defining and manipulating the actual 
 subsets. Its data organization is given in figure <a href="flexc++06.html#RANGESFIG">14</a>.
 <p>
-<a name="RANGESFIG"></a><p><figure><img src="images/ranges.jpg" alt="Figure 14 is shown here."/><br/>
-<figcaption>Figure 14: The class Ranges data members</figcaption>
+<p><a name="RANGESFIG"></a><figure >
+<img src="images/ranges.jpg" >
+<figcaption >Figure 14: The class Ranges data members</figcaption>
 </figure></p>
 
 <p>
-Initially <code>d_ranges</code> is filled with all zeroes. Once a range of characters
-or a single character is defined in a pattern, it is added to the <code>Ranges</code>
-object (functions <code>add</code> accepting single characters or strings). The
+Initially <code >d_ranges</code> is filled with all zeroes. Once a range of characters
+or a single character is defined in a pattern, it is added to the <code >Ranges</code>
+object (functions <code >add</code> accepting single characters or strings). The
 occurrence counts of the added characters are incremented if necessary. De
-functions <code>update</code>, <code>collision</code>, and <code>countRanges</code> handle the updating.
+functions <code >update</code>, <code >collision</code>, and <code >countRanges</code> handle the updating.
 <p>
 Details of the algorithm are not covered here, until the need for this arises.
 For the time being consult the sources for details. 
 <p>
-In the user interface the important members are <code>rangeOf, rangeOfBOL</code> and
-<code>rangeofEOF</code>, returning the column indices in DFAs to which input characters
+In the user interface the important members are <code >rangeOf, rangeOfBOL</code> and
+<code >rangeofEOF</code>, returning the column indices in DFAs to which input characters
 belong. 
 <p>
 <a name="l56"></a>
-<h2>6.12: The class DFAs</h2>
+<h2 >6.12: The class DFAs</h2>
     The regular expression patterns define non-finite state automata (NFA) which
 must be converted to deterministic finite state automata (DFA). Each mini
-scanner has its own DFA and the class <code>DFAs</code> builds the various DFAs for
+scanner has its own DFA and the class <code >DFAs</code> builds the various DFAs for
 each of the start conditions. The DFA construction needs access to the rules,
-states and character ranges, which are available to the <code>DFAs</code> object)
+states and character ranges, which are available to the <code >DFAs</code> object)
 (cf. figure <a href="flexc++06.html#DFASFIG">15</a>)
 <p>
-<a name="DFASFIG"></a><p><figure><img src="images/dfas.jpg" alt="Figure 15 is shown here."/><br/>
-<figcaption>Figure 15: The DFAs class organization</figcaption>
+<p><a name="DFASFIG"></a><figure >
+<img src="images/dfas.jpg" >
+<figcaption >Figure 15: The DFAs class organization</figcaption>
 </figure></p>
 
 <p>
-The <code>DFAs</code> object's real work is performed by its <code>build</code> member. The
-<code>build</code> member visits all the elements of <code>Rules</code>, passing each of the
-start conditions (stored in the <code>Rules</code> object) to <code>buildDFA</code>. For each of
+The <code >DFAs</code> object's real work is performed by its <code >build</code> member. The
+<code >build</code> member visits all the elements of <code >Rules</code>, passing each of the
+start conditions (stored in the <code >Rules</code> object) to <code >buildDFA</code>. For each of
 the start conditions, holding the indices of the rules that are defined for
 the various start conditions, a DFA is constructed for all of the rules of
 that start condition (cf. figure <a href="flexc++06.html#STARTCOND">6.3</a>).
 <p>
-The function <code>buildDFA</code> performs two tasks:
+The function <code >buildDFA</code> performs two tasks:
     <ul>
-    <li> It adds another element to its <code>d_dfa</code> vector. Each element of
-<code>d_dfa</code>  contains
+    <li> It adds another element to its <code >d_dfa</code> vector. Each element of
+<code >d_dfa</code>  contains
         <ul>
-            <li> the name of the start condition (obtained from the <code>Rules</code>'s
-                <code>NameVector</code>), and 
-            <li> an initialized <code>DFA</code> object (see section <a href="flexc++06.html#DFA">6.13</a>)
+            <li> the name of the start condition (obtained from the <code >Rules</code>'s
+                <code >NameVector</code>), and 
+            <li> an initialized <code >DFA</code> object (see section <a href="flexc++06.html#DFA">6.13</a>)
         </ul>
-    <li> Next it calls the <code>DFA</code> function <code>build</code> for the just initialized
-<code>DFA</code>, passing it the vector of indices of the start states for that mini
-scanner. <code>Build</code> constructs the start condition's DFA, see section <a href="flexc++06.html#DFA">6.13</a>.
+    <li> Next it calls the <code >DFA</code> function <code >build</code> for the just initialized
+<code >DFA</code>, passing it the vector of indices of the start states for that mini
+scanner. <code >Build</code> constructs the start condition's DFA, see section <a href="flexc++06.html#DFA">6.13</a>.
     </ul>
 <p>
 <a name="DFA"></a><a name="l57"></a>
-<h2>6.13: The DFA</h2>
-    The conversion from NFA to DFA is the job of the class <code>DFA</code> object
+<h2 >6.13: The DFA</h2>
+    The conversion from NFA to DFA is the job of the class <code >DFA</code> object
 (cf. figure <a href="flexc++06.html#DFAFIG">16</a>)
 <p>
-<a name="DFAFIG"></a><p><figure><img src="images/dfa.jpg" alt="Figure 16 is shown here."/><br/>
-<figcaption>Figure 16: The DFA class data members</figcaption>
+<p><a name="DFAFIG"></a><figure >
+<img src="images/dfa.jpg" >
+<figcaption >Figure 16: The DFA class data members</figcaption>
 </figure></p>
 
 <p>
 The DFA uses the externally available rules, states and character ranges
-and builds a vector of <code>DFARow</code>s, named <code>d_row</code>. It has the following data
+and builds a vector of <code >DFARow</code>s, named <code >d_row</code>. It has the following data
 members:
     <ul>
-    <li><code>d_row</code>: the vector of <code>DFARow</code> objects, defining the rows of the DFA
+    <li><code >d_row</code>: the vector of <code >DFARow</code> objects, defining the rows of the DFA
 (cf. section <a href="flexc++06.html#DFAROW">6.14</a>);
-    <li><code>d_stateSet</code>: a vector of sets of <code>State</code> indices. There are as many
-sets in this vector as there are elements in <code>d_row</code>, and each element holds
-the indices of the <code>State</code> objects in <code>d_states</code> that are represented by
-the matching <code>DFARow</code> object.
-    <li><code>d_verbose</code>: shadows the presence of the <code>--verbose</code> program flag.
+    <li><code >d_stateSet</code>: a vector of sets of <code >State</code> indices. There are as many
+sets in this vector as there are elements in <code >d_row</code>, and each element holds
+the indices of the <code >State</code> objects in <code >d_states</code> that are represented by
+the matching <code >DFARow</code> object.
+    <li><code >d_verbose</code>: shadows the presence of the <code >--verbose</code> program flag.
     </ul>
 <p>
 <a name="l58"></a>
-<h3>6.13.1: DFA::build: From NFA to DFA</h3>
-        Building the DFA from the NFA is the task of <code>DFA::build</code>. 
+<h3 >6.13.1: DFA::build: From NFA to DFA</h3>
+        Building the DFA from the NFA is the task of <code >DFA::build</code>. 
 <p>
-Each row of <code>d_row</code> defines a state in the DFA. The Rule numbers of the
-Rules defining a start condition received as <code>build</code>'s <code>vector&lt;size_t&gt;</code>
+Each row of <code >d_row</code> defines a state in the DFA. The Rule numbers of the
+Rules defining a start condition received as <code >build</code>'s <code >vector&lt;size_t&gt;</code>
 parameter. 
 <p>
-<code>DFA::build</code> initially stores the start states of the rules of its start
-condition in its <code>d_stateSet[0]</code><sup>th</sup> element, which is a set (cf. figure
-<a href="flexc++06.html#DFAFIG1">17</a>). This is done by <code>DFA::fillStartSet</code>
+<code >DFA::build</code> initially stores the start states of the rules of its start
+condition in its <code >d_stateSet[0]</code><sup >th</sup> element, which is a set (cf. figure
+<a href="flexc++06.html#DFAFIG1">17</a>). This is done by <code >DFA::fillStartSet</code>
 <p>
-<a name="DFAFIG1"></a><p><figure><img src="images/dfa1.jpg" alt="Figure 17 is shown here."/><br/>
-<figcaption>Figure 17: Creating the start states for row 0</figcaption>
+<p><a name="DFAFIG1"></a><figure >
+<img src="images/dfa1.jpg" >
+<figcaption >Figure 17: Creating the start states for row 0</figcaption>
 </figure></p>
 
 <p>
@@ -1148,19 +1164,19 @@ Next, the e-closure of this initial set of states is computed. The e-closure
 algorithm is described in ASU's dragon book (1986, figure 3.26). It
 essentially adds all states that can be reached from each element in the
 current set of states on an empty transition. The e-closure is computed by
-<code>States::eClosure</code>.
+<code >States::eClosure</code>.
 <p>
-At this point there is an element in <code>DFA::d_stateSet</code>, but not yet an
-element in <code>DFA::d_row</code>. By adding a <code>DFARow</code> (see section <a href="flexc++06.html#DFAROW">6.14</a>) to
-<code>d_row</code> we associate a <code>DFARow</code> with an initial set of states. 
+At this point there is an element in <code >DFA::d_stateSet</code>, but not yet an
+element in <code >DFA::d_row</code>. By adding a <code >DFARow</code> (see section <a href="flexc++06.html#DFAROW">6.14</a>) to
+<code >d_row</code> we associate a <code >DFARow</code> with an initial set of states. 
 <p>
-Once the new DFA has been added to <code>d_row</code> its transitions are probed by
-<code>DFARow::transitions</code> (see section <a href="flexc++06.html#DFAROW">6.14</a>).
+Once the new DFA has been added to <code >d_row</code> its transitions are probed by
+<code >DFARow::transitions</code> (see section <a href="flexc++06.html#DFAROW">6.14</a>).
 <p>
 <a name="l59"></a>
-<h3>6.13.2: Removing duplicate rows</h3>
-            Having determined the transitions <code>build</code> proceeds to remove
-implied/identical rows, calling <code>DFA::keepUniqueRows</code>. This latter function
+<h3 >6.13.2: Removing duplicate rows</h3>
+            Having determined the transitions <code >build</code> proceeds to remove
+implied/identical rows, calling <code >DFA::keepUniqueRows</code>. This latter function
 visits each of the rows of the DFA, testing whether an existing row has the
 same transitions and final state information as the current row. `Same
 transitions' means that the transitions of the current (under inspection) row
@@ -1171,63 +1187,63 @@ earlier row. The (later) row can then be removed as transitions from it are
 identical to those from the earlier row. This may happen, as the NFA
 construction algorithm may define more empty edges than strictly necessary,
 sometimes resulting in additional rows in the DFAs. As an example, consider
-the pattern <code>(a|ab)+/(a|ba)+</code>, producing the DFA
+the pattern <code >(a|ab)+/(a|ba)+</code>, producing the DFA
     <div style="text-align: center">
     <table>
 
     <td colspan=4><hr/></td>
 
     
-<tr>
-<td> </td><td colspan=2 style="text-align: center">Input Chars</td> 
+<tr >
+<td > </td><td colspan=2 style="text-align: center" >Input Chars</td> 
 </tr>
 
     
-<tr>
-<td> StateSet</td> <td align="center">a</td> <td align="center">b</td> <td align="center">Final</td>  
+<tr >
+<td > StateSet</td> <td align="center">a</td> <td align="center">b</td> <td align="center">Final</td>  
 </tr>
 
     <td colspan=4><hr/></td>
 
 <p>
 
-<tr>
-<td> 0</td><td align="center">1</td> 
+<tr >
+<td > 0</td><td align="center">1</td> 
 </tr>
 
     
-<tr>
-<td> 1</td><td align="center">2</td><td align="center">3</td> 
+<tr >
+<td > 1</td><td align="center">2</td><td align="center">3</td> 
 </tr>
 
     
-<tr>
-<td> 2</td><td align="center">2</td><td align="center">3</td>   <td> 0</td> 
+<tr >
+<td > 2</td><td align="center">2</td><td align="center">3</td>   <td > 0</td> 
 </tr>
 
     
-<tr>
-<td> 3</td><td align="center">4</td><td align="center">5</td> 
+<tr >
+<td > 3</td><td align="center">4</td><td align="center">5</td> 
 </tr>
 
     
-<tr>
-<td> 4</td><td align="center">2</td><td align="center">3</td>   <td> 0</td> 
+<tr >
+<td > 4</td><td align="center">2</td><td align="center">3</td>   <td > 0</td> 
 </tr>
 
     
-<tr>
-<td> 5</td><td align="center">6</td><td> </td>     <td> </td>  
+<tr >
+<td > 5</td><td align="center">6</td><td > </td>     <td > </td>  
 </tr>
 
     
-<tr>
-<td> 6</td><td align="center">7</td><td align="center">5</td>   <td> 0</td> 
+<tr >
+<td > 6</td><td align="center">7</td><td align="center">5</td>   <td > 0</td> 
 </tr>
 
     
-<tr>
-<td> 7</td><td align="center">7</td><td align="center">5</td>   <td> 0</td> 
+<tr >
+<td > 7</td><td align="center">7</td><td align="center">5</td>   <td > 0</td> 
 </tr>
 
     <td colspan=4><hr/></td>
@@ -1236,14 +1252,14 @@ the pattern <code>(a|ab)+/(a|ba)+</code>, producing the DFA
 </table></div>
     Rows 6 and 7 are identical, as are rows 2 and 4. For row 4 the (erroneous,
 if |TAIL| should be as short as possible) |TAIL| = 2 is shown, resulting from
-<code>aba</code> being interpreted as HEAD: <code>a</code> and TAIL: <code>ba</code>. 
+<code >aba</code> being interpreted as HEAD: <code >a</code> and TAIL: <code >ba</code>. 
 <p>
-But when |TAIL| should be minimized <code>aba</code> should be interpreted as HEAD:
-<code>ab</code> and TAIL <code>a</code>, resulting in transitions 0 -&gt; 1 -&gt; 3 -&gt; 2, with |TAIL|
+But when |TAIL| should be minimized <code >aba</code> should be interpreted as HEAD:
+<code >ab</code> and TAIL <code >a</code>, resulting in transitions 0 -&gt; 1 -&gt; 3 -&gt; 2, with |TAIL|
 = 1. This happens when row 4 is merged to row 2. Having merged the rows,
 former transitions to the now removed rows must of course be updated to the
-merging row. So row 3 must transit to 2 when receiving input symbol <code>a</code>. The
-member <code>shrinkDFA</code> handles the shrinkage of the DFA. In this example the
+merging row. So row 3 must transit to 2 when receiving input symbol <code >a</code>. The
+member <code >shrinkDFA</code> handles the shrinkage of the DFA. In this example the
 final DFA becomes:
     <div style="text-align: center">
     <table>
@@ -1251,46 +1267,46 @@ final DFA becomes:
     <td colspan=4><hr/></td>
 
     
-<tr>
-<td> </td><td colspan=2 style="text-align: center">Input Chars</td> 
+<tr >
+<td > </td><td colspan=2 style="text-align: center" >Input Chars</td> 
 </tr>
 
     
-<tr>
-<td> StateSet</td> <td align="center">a</td> <td align="center">b</td> <td align="center">Final</td> 
+<tr >
+<td > StateSet</td> <td align="center">a</td> <td align="center">b</td> <td align="center">Final</td> 
 </tr>
 
     <td colspan=4><hr/></td>
 
 <p>
 
-<tr>
-<td> 0</td><td align="center">1</td> 
+<tr >
+<td > 0</td><td align="center">1</td> 
 </tr>
 
     
-<tr>
-<td> 1</td><td align="center">2</td><td align="center">3</td> 
+<tr >
+<td > 1</td><td align="center">2</td><td align="center">3</td> 
 </tr>
 
     
-<tr>
-<td> 2</td><td align="center">2</td><td align="center">3</td> <td> 0</td> 
+<tr >
+<td > 2</td><td align="center">2</td><td align="center">3</td> <td > 0</td> 
 </tr>
 
     
-<tr>
-<td> 3</td><td align="center">2</td><td align="center">4</td> 
+<tr >
+<td > 3</td><td align="center">2</td><td align="center">4</td> 
 </tr>
 
     
-<tr>
-<td> 4</td><td align="center">5</td><td> </td>   <td> </td> 
+<tr >
+<td > 4</td><td align="center">5</td><td > </td>   <td > </td> 
 </tr>
 
     
-<tr>
-<td> 5</td><td align="center">5</td><td align="center">4</td> <td> 0</td> 
+<tr >
+<td > 5</td><td align="center">5</td><td align="center">4</td> <td > 0</td> 
 </tr>
 
     <td colspan=4><hr/></td>
@@ -1299,17 +1315,18 @@ final DFA becomes:
 </table></div>
 <p>
 <a name="DFAROW"></a><a name="l60"></a>
-<h2>6.14: The rows of the DFA: DFAROW</h2>
+<h2 >6.14: The rows of the DFA: DFAROW</h2>
     Rows of DFA matrices relate (ranges of) input characters to rows (states) to
 transit to (see figure <a href="flexc++06.html#DFAROWFIG">18</a>). 
 <p>
-<a name="DFAROWFIG"></a><p><figure><img src="images/dfarow.jpg" alt="Figure 18 is shown here."/><br/>
-<figcaption>Figure 18: The data of the class DFARow</figcaption>
+<p><a name="DFAROWFIG"></a><figure >
+<img src="images/dfarow.jpg" >
+<figcaption >Figure 18: The data of the class DFARow</figcaption>
 </figure></p>
 
 <p>
-A <code>DFARow</code> row specification is defined by a set of states
-accessible as <code>d_stateSets[d_thisIdx]</code>. The values of this set define the
+A <code >DFARow</code> row specification is defined by a set of states
+accessible as <code >d_stateSets[d_thisIdx]</code>. The values of this set define the
 (e-closure of the) states of this row (see section <a href="flexc++06.html#DFA">6.13</a>).
 <p>
 Each of these states may result in a transition to another state when
@@ -1318,42 +1335,42 @@ transit to' in turn define another set of states (possibly identical to the
 set of states defining the current row).
 <p>
 Transitions from this row are probed for each of the character ranges (in
-<code>Ranges</code>, see <a href="flexc++06.html#RANGES">6.11</a>) by <code>DFARow::transitions</code>. The member
-<code>DFARow::transitions</code> may add new elements to <code>d_stateSet</code>, continuing the
-iteration until eventually there are as many <code>d_row</code> elements as there are
-<code>d_transitions</code> elements.
+<code >Ranges</code>, see <a href="flexc++06.html#RANGES">6.11</a>) by <code >DFARow::transitions</code>. The member
+<code >DFARow::transitions</code> may add new elements to <code >d_stateSet</code>, continuing the
+iteration until eventually there are as many <code >d_row</code> elements as there are
+<code >d_transitions</code> elements.
 <p>
-If this set of states to transit to is not yet present in the <code>DFA</code> then a
-new row is added to the DFA. Adding rows is the task of <code>DFA::build</code>,
-defining and adding new sets of <code>State</code>s is the responsibility of
-<code>DFARow::transition</code>.
+If this set of states to transit to is not yet present in the <code >DFA</code> then a
+new row is added to the DFA. Adding rows is the task of <code >DFA::build</code>,
+defining and adding new sets of <code >State</code>s is the responsibility of
+<code >DFARow::transition</code>.
 <p>
 <ul>
-    <li><code>d_map</code>: the <code>DFARow</code>'s <code>unordered_map d_map</code> defines the
+    <li><code >d_map</code>: the <code >DFARow</code>'s <code >unordered_map d_map</code> defines the
 relationship between an input character range (the map's key) and the row to
 transit to when a character from that input range has been observed.
-    <li><code>d_finalRule</code>: the elements of the pair <code>d_finalRule</code> are indices of
-rules in <code>Rules</code> for which this <code>DFARow</code> represents a final state. The
-<em>first</em> element of the pair refers to a rule whose RE not necessarily starts
-at BOL, the <em>second</em> element refers to a rule whose RE must start at
-BOL. When a value equals <code>UINT_MAX</code> then the current row is not a final
+    <li><code >d_finalRule</code>: the elements of the pair <code >d_finalRule</code> are indices of
+rules in <code >Rules</code> for which this <code >DFARow</code> represents a final state. The
+<em >first</em> element of the pair refers to a rule whose RE not necessarily starts
+at BOL, the <em >second</em> element refers to a rule whose RE must start at
+BOL. When a value equals <code >UINT_MAX</code> then the current row is not a final
 state for such a rule.
-    <li><code>d_thisIdx</code>: the index of the current <code>DFARow</code> element in its <code>DFA</code>
+    <li><code >d_thisIdx</code>: the index of the current <code >DFARow</code> element in its <code >DFA</code>
 matrix.
-    <li><code>d_stateSets</code>: this data member is a pointer to a vector containing
+    <li><code >d_stateSets</code>: this data member is a pointer to a vector containing
 sets of states represented by the rows of the DFA. Element
-<code>d_stateSets[d_thisIdx]</code> is the set of states represented by the current DFA
+<code >d_stateSets[d_thisIdx]</code> is the set of states represented by the current DFA
 row. 
     </ul>
 <p>
 <a name="l61"></a>
-<h3>6.14.1: Associating a DFARow with a Rule</h3>
-        The values in <code>d_final</code> are set by <code>setFinal</code>, called from
-<code>DFARow::transit</code>. It receives the  the rule index
-given the index of the row's <code>State</code>. 
+<h3 >6.14.1: Associating a DFARow with a Rule</h3>
+        The values in <code >d_final</code> are set by <code >setFinal</code>, called from
+<code >DFARow::transit</code>. It receives the  the rule index
+given the index of the row's <code >State</code>. 
 <p>
-If the rule index refers to a BOL rule <code>d_finalRule.second</code> is inspected,
-otherwise <code>d_finalRule.first</code> is inspected.
+If the rule index refers to a BOL rule <code >d_finalRule.second</code> is inspected,
+otherwise <code >d_finalRule.first</code> is inspected.
 <p>
 If the inspected value doesn't refer to a rule yet, the current rule index is
 assigned. Otherwise, if the current rule type (NORMAL or LOP-rule)
@@ -1368,33 +1385,33 @@ it will be associated with the NORMAL rule if the other rule is not a NORMAL
 rule. 
 <p>
 <a name="VIABLE"></a><a name="l62"></a>
-<h2>6.15: Finding non-viable rules</h2>
+<h2 >6.15: Finding non-viable rules</h2>
     The following procedure determines which rules can be matched (are viable) and
 which rules aren't:
 <p>
 <ul>
-    <li> From <code>DFA::build</code> transitions are determined for each new row;
-    <li> Transitions are determined by <code>DFARow::transitions</code>;
-    <li> From <code>DFARow::transitions</code> <code>DFARow::transit</code> transitions on the
+    <li> From <code >DFA::build</code> transitions are determined for each new row;
+    <li> Transitions are determined by <code >DFARow::transitions</code>;
+    <li> From <code >DFARow::transitions</code> <code >DFARow::transit</code> transitions on the
         current input character are determined
-    <li> At <code>DFARow::transit</code>, if the current state is a <code>FINAL</code> state,
-        the rule that is matched is determined by <code>DFARow::setFinal</code>
+    <li> At <code >DFARow::transit</code>, if the current state is a <code >FINAL</code> state,
+        the rule that is matched is determined by <code >DFARow::setFinal</code>
     </ul>
 <p>
-Each <code>DFARow</code> has a <code>std::pair&lt;size_t, size_t&gt; d_finalRule</code> data
-member. In <code>setFinal</code> a rule index is received. If the matching rule is a
-BOL-rule then <code>d_finalRule.second</code> is determined, otherwise
-<code>d_finalRule.first</code>.
+Each <code >DFARow</code> has a <code >std::pair&lt;size_t, size_t&gt; d_finalRule</code> data
+member. In <code >setFinal</code> a rule index is received. If the matching rule is a
+BOL-rule then <code >d_finalRule.second</code> is determined, otherwise
+<code >d_finalRule.first</code>.
 <p>
 When multiple rules could match at a final state, then the rule mentioned
-first takes precedence. Since the elements of <code>d_finalRule</code> are initialized
-at <code>max&lt;size_t&gt;()</code>, the received rule index is assigned to the appropriate
-<code>d_finalRule</code> field if it's smaller than the currently stored value.
+first takes precedence. Since the elements of <code >d_finalRule</code> are initialized
+at <code >max&lt;size_t&gt;()</code>, the received rule index is assigned to the appropriate
+<code >d_finalRule</code> field if it's smaller than the currently stored value.
 <p>
 Once the DFAs have been constructed, the viability of the rules is determined
-by <code>DFAs::warnNonViable</code>. This function is called from <code>main</code>.
+by <code >DFAs::warnNonViable</code>. This function is called from <code >main</code>.
 <p>
-<code>DFAs::warnNonViable</code> first defines the set of all user-defined rule
+<code >DFAs::warnNonViable</code> first defines the set of all user-defined rule
 indices. Next it visits all DFAs not having numeric names (as these are
 internally defined DFAs added by the DFA construction process for LOP-rules),
 removing all rules that can be matched at their DFA rows from the set of rule
@@ -1402,8 +1419,8 @@ indices. If any indices remain in this set then these rules cannot be matched,
 and a warning is issued for each of them.
 <p>
 Be cautious when defining LOP patterns allowing empty head-matches. The
-following series of rules result in rule 2 never being matched: an <code>ab</code>
-sequence matches the tail of rule 1, with an empty head. Next, <code>ab</code> is
+following series of rules result in rule 2 never being matched: an <code >ab</code>
+sequence matches the tail of rule 1, with an empty head. Next, <code >ab</code> is
 re-scanned and the procedure repeats itself:
         <pre>
 
@@ -1425,11 +1442,11 @@ LOP-head. Reordering the rules solves the problem:
         
 </pre>
 
-    Now rule 1 takes priority over rule 3: an <code>ab</code> sequence is matched by
+    Now rule 1 takes priority over rule 3: an <code >ab</code> sequence is matched by
 rule 1, rather than becoming rule 3's tail.
 <p>
 Likewise, with the following set of rules rule 2 will never match, as the LOP
-rule recognizes the <code>\n</code> (realize that <code>$</code> means: <code>/\n</code>):
+rule recognizes the <code >\n</code> (realize that <code >$</code> means: <code >/\n</code>):
         <pre>
 
     //%nowarn
@@ -1450,48 +1467,48 @@ problem. E.g., using reordering:
 
 <p>
 <a name="l63"></a>
-<h2>6.16: Generating Code</h2>
-    Code is generated by an object of the class <code>Generator</code>.  The generator
+<h2 >6.16: Generating Code</h2>
+    Code is generated by an object of the class <code >Generator</code>.  The generator
 generates the following files (using default names, all defaults can be
 overruled by directives and options):
 <p>
 <ul>
-<li><code>Scannerbase.h.</code> This file defines the scanner's base class. It is always
+<li><code >Scannerbase.h.</code> This file defines the scanner's base class. It is always
 rewritten and declares data members used by the scanner.
 <p>
-<li><code>Scanner.h.</code> This file represents the generated scanner's interface. It
-inherits from <code>ScannerBase</code> and is written only if not existing. 
+<li><code >Scanner.h.</code> This file represents the generated scanner's interface. It
+inherits from <code >ScannerBase</code> and is written only if not existing. 
 <p>
-<li><code>Scanner.hh.</code> This file represents the generated scanner's <em>internal
+<li><code >Scanner.hh.</code> This file represents the generated scanner's <em >internal
 header file</em>. The internal header file is part of a design philosophy
 according to which all source files belonging to a class should merely include
 the internal header file, which declares all headers and other elements that
 are required for the correct compilation of the class's source files.
 <p>
-<li><code>lex.cc</code> This file contains the implementation of the scanner function and
+<li><code >lex.cc</code> This file contains the implementation of the scanner function and
 any support functions it may need. This file is always rewritten.
 </ul>
 <p>
-Each of these files has a skeleton, found in <code>/usr/share/flexc++</code> (the
-development header files are in the <code>skeletons/</code> subdirectory of the source
+Each of these files has a skeleton, found in <code >/usr/share/flexc++</code> (the
+development header files are in the <code >skeletons/</code> subdirectory of the source
 package). The skeletons are the templates (molds) from which the files
-matching the requirements as defined in <strong>flexc++</strong>'s input <strong>s</strong> are created:
+matching the requirements as defined in <strong >flexc++</strong>'s input <strong >s</strong> are created:
     <ul> 
-    <li> <em>Static data</em> are inserted into the generated <code>lex.cc</code> file;
-    <li> <em>Actions</em> are inserted into the generated <code>lex.cc</code>;
-    <li> <em>Declarations</em> are inserted into the generated <code>Scannerbase.h</code>
+    <li> <em >Static data</em> are inserted into the generated <code >lex.cc</code> file;
+    <li> <em >Actions</em> are inserted into the generated <code >lex.cc</code>;
+    <li> <em >Declarations</em> are inserted into the generated <code >Scannerbase.h</code>
         file. 
     </ul>
-    The member <code>genLex</code> generates the lexer file <code>lex.cc</code>. It recognizes
-<code>$insert</code> lines starting in column 1 and performs the matching action,
+    The member <code >genLex</code> generates the lexer file <code >lex.cc</code>. It recognizes
+<code >$insert</code> lines starting in column 1 and performs the matching action,
 inserting appropriate elements into the generated file.
 <p>
 Other generating members act similarly:
 <p>
-The member <code>genBase</code> generates the scanner base file <code>Scannerbase.h</code>, the
-member <code>genScanner</code> generates <code>Scanner.h</code>.
+The member <code >genBase</code> generates the scanner base file <code >Scannerbase.h</code>, the
+member <code >genScanner</code> generates <code >Scanner.h</code>.
 <p>
-The code generated by <code>flexc++</code> must read input, match the input with some
+The code generated by <code >flexc++</code> must read input, match the input with some
 regular expressin and return the associated token. A catch-all escape is
 provided by the implicitly provided rule echoing all non-matched input to the
 standard output stream.
@@ -1501,63 +1518,63 @@ The generated code consists of these parts:
     <li> The character-table (actually: range-table). See section
         <a href="flexc++06.html#RANGETAB">6.16.1</a>. 
 <p>
-<li> The DFAs are generated by <code>Generator::dfas</code>. 
+<li> The DFAs are generated by <code >Generator::dfas</code>. 
     </ul>
 <p>
-For each of the DFAs the function <code>Generator::dfa</code> is called. 
+For each of the DFAs the function <code >Generator::dfa</code> is called. 
 <p>
-The function <code>Generator::dfa</code> receives as its first argument a
-<code>DFAs::Pair</code> (see figure <a href="flexc++06.html#DFASFIG">15</a>), containing the name of the
+The function <code >Generator::dfa</code> receives as its first argument a
+<code >DFAs::Pair</code> (see figure <a href="flexc++06.html#DFASFIG">15</a>), containing the name of the
 start condition that is associated with the DFA and the DFA itself.
 The function performs the following tasks:
     <ul>
     <li> The name of the current start condition is stored in
-        <code>startStates</code> (to allow checking for repetitive handling);
-    <li> The row number of the first row of the current DFA in <code>s_dfa</code>
-        is saved in the vector <code>dfaOffsets</code>;
-    <li> <code>Generator::dfaRow</code> is called for each row of the DFA (see figure
+        <code >startStates</code> (to allow checking for repetitive handling);
+    <li> The row number of the first row of the current DFA in <code >s_dfa</code>
+        is saved in the vector <code >dfaOffsets</code>;
+    <li> <code >Generator::dfaRow</code> is called for each row of the DFA (see figure
         <a href="flexc++06.html#DFAROWFIG">18</a>). This latter function writes the vector of DFA rows to
         transit to (i.e., rows relative to the current DFA's start row, so not
-        the actual rows in <code>s_dfa</code>) for each of the character ranges
-        (calling <code>Generator::dfaTransitions</code>), followed by the number of the
+        the actual rows in <code >s_dfa</code>) for each of the character ranges
+        (calling <code >Generator::dfaTransitions</code>), followed by the number of the
         rule that is matched if the rule represents a final state not
         necessarily at BOL and the number of the rule that is matched if the
         rule represents a final state at BOL. Values -1 are used if no such
         rules exist for the state represented by the current row.  
     </ul>
 <p>
-The function <code>Generator::declarations</code> adds the declarations of
-<code>(*d_dfaBase__)[], s_dfa__[][], s_dfaBase__[][]</code> etc. to <code>ScannerBase.h</code>,
+The function <code >Generator::declarations</code> adds the declarations of
+<code >(*d_dfaBase__)[], s_dfa__[][], s_dfaBase__[][]</code> etc. to <code >ScannerBase.h</code>,
 providing these declarations with their required (higher order) dimension
 values. 
 <p>
-The function <code>Generator::actions</code> inserts the actions in the function
-<code>ScannerBase::executeAction__</code>, implemented in <code>lex.cc</code>. Actions are
-inserted separately for each <code>RuleType</code> that was used. Each <code>NORMAL,
-LOP_1, LOP_4</code> and <code>LOP_FIXED</code> (fixed-tail LOP rule) type of rule has its own
-action block, and their action blocks are inserted first. <code>LOP_2</code> and
-<code>LOP_3</code> actions are all identical, and <strong>flexc++</strong> creates a set of fall-through
+The function <code >Generator::actions</code> inserts the actions in the function
+<code >ScannerBase::executeAction__</code>, implemented in <code >lex.cc</code>. Actions are
+inserted separately for each <code >RuleType</code> that was used. Each <code >NORMAL,
+LOP_1, LOP_4</code> and <code >LOP_FIXED</code> (fixed-tail LOP rule) type of rule has its own
+action block, and their action blocks are inserted first. <code >LOP_2</code> and
+<code >LOP_3</code> actions are all identical, and <strong >flexc++</strong> creates a set of fall-through
 case labels for these actions. 
 <p>
 <a name="RANGETAB"></a><a name="l64"></a>
-<h3>6.16.1: The range-table</h3>
+<h3 >6.16.1: The range-table</h3>
             The character-table translates input characters into ranges.  Each input
 character (by default the 256 extended ascii-characters) is associated with a
-character <em>range</em>. Character <em>range</em> indices are then used as column
+character <em >range</em>. Character <em >range</em> indices are then used as column
 indices of the DFA tables (see sections <a href="flexc++06.html#RANGES">6.11</a> and <a href="flexc++06.html#DFA">6.13</a>).
 <p>
-The function <code>Generator::charTable</code> defines in <code>d_out</code> the static
-data member <code>size_t const ScannerBase::s_ranges[]</code>. This array has 256
-elements, so each character (cast to type <code>unsigned char</code>) can be used as
+The function <code >Generator::charTable</code> defines in <code >d_out</code> the static
+data member <code >size_t const ScannerBase::s_ranges[]</code>. This array has 256
+elements, so each character (cast to type <code >unsigned char</code>) can be used as
 an index into this array, returning its range-number.
 <p>
 In addition to real input characters, the scanner may return two pseudo
-range values: <code>rangeOfBOL</code> is the range matching the special `character'
-<code>BOL</code>, returned when a begin-of-line is sensed, and <code>rangeOfEOF</code> which is
-returned when EOF was sensed (e.g., when the <code>&lt;&lt;EOF&gt;&gt;</code> rule was used).
-These BOL and EOF tokens must be returned by <code>nextChar</code> when BOL or EOF was
-sensed, and the DFA's recognizes their ranges. The ranges <code>rangeEOF</code> and
-<code>rangeBOL</code> are declared in the scanner class's data members section.
+range values: <code >rangeOfBOL</code> is the range matching the special `character'
+<code >BOL</code>, returned when a begin-of-line is sensed, and <code >rangeOfEOF</code> which is
+returned when EOF was sensed (e.g., when the <code >&lt;&lt;EOF&gt;&gt;</code> rule was used).
+These BOL and EOF tokens must be returned by <code >nextChar</code> when BOL or EOF was
+sensed, and the DFA's recognizes their ranges. The ranges <code >rangeEOF</code> and
+<code >rangeBOL</code> are declared in the scanner class's data members section.
 <p>
 If DFA's don't recognize BOL or EOF characters then the default action is
 performed: BOL is ignored and EOF results in switching back to the previous
@@ -1567,37 +1584,37 @@ The code generator adds code handing BOL and EOF to scanners using these
 pseudo characters. The code is left out of the generated scanner if these
 pseudo characters are not used.
 <p>
-Range tables are generated by <code>generator/chartable.cc</code>.
+Range tables are generated by <code >generator/chartable.cc</code>.
 <p>
 <a name="l65"></a>
-<h3>6.16.2: The DFAs</h3>
-        The function <code>Generator::dfas</code>, defined in <code>generator/dfas</code> defines
-defines in <code>d_out</code> the static data member <code>int const
-ScannerBase::s_dfa[][dfaCols()]</code>, where <code>dfaCols</code> returns the number of
+<h3 >6.16.2: The DFAs</h3>
+        The function <code >Generator::dfas</code>, defined in <code >generator/dfas</code> defines
+defines in <code >d_out</code> the static data member <code >int const
+ScannerBase::s_dfa[][dfaCols()]</code>, where <code >dfaCols</code> returns the number of
 columns of the DFA matrices.
 <p>
-<em>All</em> DFAs are accessed through this single <code>s_dfa</code> matrix. Each
-individual DFA starts at a specific row of <code>s_dfa</code>. The first DFA to be
-written is associated with the <code>INITIAL</code> scanner: <code>INITIAL</code> is always
+<em >All</em> DFAs are accessed through this single <code >s_dfa</code> matrix. Each
+individual DFA starts at a specific row of <code >s_dfa</code>. The first DFA to be
+written is associated with the <code >INITIAL</code> scanner: <code >INITIAL</code> is always
 defined and contains all rules not explicitly associated with a start condition.
 <p>
-The matrix <code>s_dfa</code> contains the rows of <em>all</em> DFAs, including those that
-were generated by <strong>flexc++</strong> itself, with the start state <code>INITIAL</code> always
+The matrix <code >s_dfa</code> contains the rows of <em >all</em> DFAs, including those that
+were generated by <strong >flexc++</strong> itself, with the start state <code >INITIAL</code> always
 being the first DFA.
 <p>
 Each row contains the row to transit to if the column's character range was
 sensed. Row numbers are relative to the used DFA. There are as many elements
-in the rows of the <code>s_dfa</code> table as there are character ranges <em>plus</em>
+in the rows of the <code >s_dfa</code> table as there are character ranges <em >plus</em>
 two. These final elements represent rule indices of, respectively, the matched
 rule (normal case) and the matched rule in case of BOL. The value -1 is used
 if no such rule is associated with the DFA row.
 <p>
-The <em>base locations</em> for the various start conditions are defined in the
-static array <code>s_dfaBase</code>. Its initial value matches the <code>INITIAL</code> scanner,
-and points to the first <code>s_dfa</code> row. Additional values are defined for each
-additional start condition, and point to the initial rows in <code>s_dfa</code> for
-these start conditions. Here is an example of a <code>enum class Begin</code> and
-matching <code>s_dfaBase</code>:
+The <em >base locations</em> for the various start conditions are defined in the
+static array <code >s_dfaBase</code>. Its initial value matches the <code >INITIAL</code> scanner,
+and points to the first <code >s_dfa</code> row. Additional values are defined for each
+additional start condition, and point to the initial rows in <code >s_dfa</code> for
+these start conditions. Here is an example of a <code >enum class Begin</code> and
+matching <code >s_dfaBase</code>:
         <pre>
 
     enum class Begin
@@ -1614,31 +1631,31 @@ matching <code>s_dfaBase</code>:
         
 </pre>
 
-    The <code>INITIAL</code> scanner's dfa rows start at the top, the <code>str</code> mini
-scanner starts at row index 6 of <code>s_dfa</code>.
+    The <code >INITIAL</code> scanner's dfa rows start at the top, the <code >str</code> mini
+scanner starts at row index 6 of <code >s_dfa</code>.
 <p>
 <a name="RUNTIME"></a><a name="l66"></a>
-<h2>6.17: Run-time operations</h2>
-    The <code>lex</code> function works as follows:
+<h2 >6.17: Run-time operations</h2>
+    The <code >lex</code> function works as follows:
 <p>
 <ul>
 <li> All its variables have been initialized at construction time. In
-    particular, initially the run-time variable <code>d_atBOL</code> is set to
-    <code>true</code>. 
+    particular, initially the run-time variable <code >d_atBOL</code> is set to
+    <code >true</code>. 
 <li> In a loop (until EOF) characters are retrieved until a rule is matched
     (see below)
 <li> Once a rule has been matched its matching code block is executed.
 </ul>
 <p>
-Characters from the input are assigned to <code>d_char</code>. At the beginning of the
-character processing loop <code>d_char</code> already has received a value.  At EOF the
-character is given the (pseudo) character value <code>AT_EOF</code>. 
+Characters from the input are assigned to <code >d_char</code>. At the beginning of the
+character processing loop <code >d_char</code> already has received a value.  At EOF the
+character is given the (pseudo) character value <code >AT_EOF</code>. 
 <p>
-Next, the character's range (<code>d_range</code>) is determined from
-<code>s_ranges[d_char]</code>.
+Next, the character's range (<code >d_range</code>) is determined from
+<code >s_ranges[d_char]</code>.
 <p>
-The variable <code>d_dfaBase</code> points at the dfa currently used. The variable
-<code>d_dfaIdx</code> holds the index of the current row in the current dfa. 
+The variable <code >d_dfaBase</code> points at the dfa currently used. The variable
+<code >d_dfaIdx</code> holds the index of the current row in the current dfa. 
 <p>
 The expression 
         <pre>
@@ -1647,7 +1664,7 @@ The expression
         
 </pre>
  
-    provides the next <code>d_dfaIdx</code> value. If unequal -1 do:
+    provides the next <code >d_dfaIdx</code> value. If unequal -1 do:
         <pre>
 
     d_dfaIdx = nextIdx;
@@ -1658,71 +1675,71 @@ The expression
     If equal -1 then there is no continuation for the current rule. 
 <p>
 Depending on the current state and action several action types can be returned
-by the run-time function <code>actionType__</code>:
+by the run-time function <code >actionType__</code>:
     <ul>
-    <li><code>CONTINUE</code>: there exists a continuation from the current state/range
+    <li><code >CONTINUE</code>: there exists a continuation from the current state/range
             combination; 
-    <li><code>MATCH</code>: a final state has been reached and there's no continuation
+    <li><code >MATCH</code>: a final state has been reached and there's no continuation
             possible. In this case a rule has been matched
-    <li><code>ECHO1ST</code>: no continuation is possible for the current range, and no
+    <li><code >ECHO1ST</code>: no continuation is possible for the current range, and no
             final state was reached, the input buffer contains one or more
             characters.
-    <li><code>ECHOCHAR</code>: no continuation is possible for the current range, no
+    <li><code >ECHOCHAR</code>: no continuation is possible for the current range, no
             final state was reached and the input buffer is still empty
-    <li><code>RETURN</code>: input exhausted, <code>lex</code> returns 0.
+    <li><code >RETURN</code>: input exhausted, <code >lex</code> returns 0.
     </ul>
 <p>
-The following table shows how actions are determined by <code>actionType__</code>. The
-function <code>actionType__</code> starts it tests at the first row of the table, and
+The following table shows how actions are determined by <code >actionType__</code>. The
+function <code >actionType__</code> starts it tests at the first row of the table, and
 stops as soon as a condition hold true, returning the action type:
     <div style="text-align: center">
     <table>
 
     
-<tr>
-<td colspan=3 style="text-align: center">Action determined by <code>actionType__</code></td>
+<tr >
+<td colspan=3 style="text-align: center" >Action determined by <code >actionType__</code></td>
  
 </tr>
 
     <td colspan=3><hr/></td>
 
     
-<tr>
-<td> </td><td colspan=2 style="text-align: center">Input Character</td>
+<tr >
+<td > </td><td colspan=2 style="text-align: center" >Input Character</td>
  
 </tr>
 
     <tr><td colspan=1</td><td colspan=1><hr/></td></tr>
 
     
-<tr>
-<td> Performed Test&nbsp;&nbsp;&nbsp;</td><td> not AT_EOF</td><td> AT_EOF</td>
+<tr >
+<td > Performed Test&nbsp;&nbsp;&nbsp;</td><td > not AT_EOF</td><td > AT_EOF</td>
  
 </tr>
 
     <td colspan=3><hr/></td>
 
     
-<tr>
-<td> transition OK</td>     <td> CONTINUE</td>    <td> CONTINUE</td>
+<tr >
+<td > transition OK</td>     <td > CONTINUE</td>    <td > CONTINUE</td>
  
 </tr>
 
     
-<tr>
-<td> match found</td>       <td> MATCH</td>       <td> MATCH</td>
+<tr >
+<td > match found</td>       <td > MATCH</td>       <td > MATCH</td>
  
 </tr>
 
     
-<tr>
-<td> buffer size</td>       <td> ECHO1ST</td>     <td> ECHO1ST</td>
+<tr >
+<td > buffer size</td>       <td > ECHO1ST</td>     <td > ECHO1ST</td>
  
 </tr>
 
     
-<tr>
-<td> buffer empty</td>      <td> ECHOCHAR</td>    <td> RETURN</td>
+<tr >
+<td > buffer empty</td>      <td > ECHOCHAR</td>    <td > RETURN</td>
  
 </tr>
 
@@ -1734,35 +1751,35 @@ stops as soon as a condition hold true, returning the action type:
 For each of the returned action types actions must be performed:
 <p>
 <ul>
-    <li><code>CONTINUE:</code> store the input character (not being <code>AT_EOF</code>) in the
+    <li><code >CONTINUE:</code> store the input character (not being <code >AT_EOF</code>) in the
         buffer, continue scanning
-    <li><code>MATCH:</code> push the just read char back to the input, copy the non-pseudo
+    <li><code >MATCH:</code> push the just read char back to the input, copy the non-pseudo
         character (i.e., other than AT_EOF) to the match-buffer, set
-        <code>d_atBOL</code> to <code>true</code> if the last character in the <code>d_matched</code>
-        buffer is <code>'\n'</code>, execute <code>postCode(PostEnum__::RETURN)</code>, execute
+        <code >d_atBOL</code> to <code >true</code> if the last character in the <code >d_matched</code>
+        buffer is <code >'\n'</code>, execute <code >postCode(PostEnum__::RETURN)</code>, execute
         the rule's actions, continue scanning (but the action may end
-        <code>lex</code>'s call).
-    <li><code>ECHO1ST:</code> echo the 1st char. of the buffer to stderr, set <code>d_atBOL</code>
-        to <code>true</code> if that character equals <code>'\n'</code>, otherwise to <code>false</code>,
+        <code >lex</code>'s call).
+    <li><code >ECHO1ST:</code> echo the 1st char. of the buffer to stderr, set <code >d_atBOL</code>
+        to <code >true</code> if that character equals <code >'\n'</code>, otherwise to <code >false</code>,
         return all but the first character in the buffer back to the input,
-        call <code>postCode(PostEnum__::WIP)</code>, continue scanning.
-    <li><code>ECHOCHAR:</code> echo the just read character to stderr, set <code>d_atBOL</code>
-        to <code>true</code> if that character equals <code>'\n'</code>, otherwise to <code>false</code>,
+        call <code >postCode(PostEnum__::WIP)</code>, continue scanning.
+    <li><code >ECHOCHAR:</code> echo the just read character to stderr, set <code >d_atBOL</code>
+        to <code >true</code> if that character equals <code >'\n'</code>, otherwise to <code >false</code>,
         continue scanning.
-    <li><code>RETURN:</code> if <code>popStream</code> returns false, then execute
-        <code>postCode(PostEnum__::END)</code> and member <code>lex__</code> returns with token
-        value 0; otherwise <code>postCode(PostEnum__::POP)</code> is called and
+    <li><code >RETURN:</code> if <code >popStream</code> returns false, then execute
+        <code >postCode(PostEnum__::END)</code> and member <code >lex__</code> returns with token
+        value 0; otherwise <code >postCode(PostEnum__::POP)</code> is called and
         processing continues.
 </ul>
 <p>
-The data member <code>d_atBOL</code> is also set to <code>true</code> when <code>lex__</code> switches to
+The data member <code >d_atBOL</code> is also set to <code >true</code> when <code >lex__</code> switches to
 another input stream (either a new one, or returning to a previously stacked
 one). This handles the borderline case where a file's last line is not
-properly terminated with a <code>'\n'</code> character.
+properly terminated with a <code >'\n'</code> character.
 <p>
 <a name="l67"></a>
-<h3>6.17.1: Handling BOL-rules</h3>
-        The member <code>ScannerBase::knownFinalState</code> (implemented in <code>ScannerBase.h</code>
+<h3 >6.17.1: Handling BOL-rules</h3>
+        The member <code >ScannerBase::knownFinalState</code> (implemented in <code >ScannerBase.h</code>
 returns
         <pre>
 
@@ -1772,8 +1789,8 @@ returns
         
 </pre>
 
-    only if this is true, <code>ScannerBase::actionType__</code> returns
-<code>ActionType__::MATCH</code>.
+    only if this is true, <code >ScannerBase::actionType__</code> returns
+<code >ActionType__::MATCH</code>.
 <p>
 Three variables are used here, resulting in 8 possibilities:
     <div style="text-align: center">
@@ -1782,96 +1799,96 @@ Three variables are used here, resulting in 8 possibilities:
     <td colspan=6><hr/></td>
 
     
-<tr>
-<td colspan=3 style="text-align: center"></td> <td colspan=2 style="text-align: center">available rule</td> 
+<tr >
+<td colspan=3 style="text-align: center" ></td> <td colspan=2 style="text-align: center" >available rule</td> 
 </tr>
 
                     <tr><td colspan=3</td><td colspan=2><hr/></td></tr>
 
     
-<tr>
-<td> nr</td><td> </td><td> d_atBOL</td><td colspan=1 style="text-align: center">std</td><td colspan=1 style="text-align: center">bol</td><td> action</td>
+<tr >
+<td > nr</td><td > </td><td > d_atBOL</td><td colspan=1 style="text-align: center" >std</td><td colspan=1 style="text-align: center" >bol</td><td > action</td>
  
 </tr>
 
     <td colspan=6><hr/></td>
 
     
-<tr>
-<td> 1</td><td> </td><td colspan=1 style="text-align: center">0</td><td colspan=1 style="text-align: center">0</td><td colspan=1 style="text-align: center">0</td>
-                                <td> prevented by knownFinalState</td>
+<tr >
+<td > 1</td><td > </td><td colspan=1 style="text-align: center" >0</td><td colspan=1 style="text-align: center" >0</td><td colspan=1 style="text-align: center" >0</td>
+                                <td > prevented by knownFinalState</td>
  
 </tr>
 
     
-<tr>
-<td> 2</td><td> </td><td colspan=1 style="text-align: center">0</td><td colspan=1 style="text-align: center">0</td><td colspan=1 style="text-align: center">1</td>
-                                <td> prevented by knownFinalState</td>
+<tr >
+<td > 2</td><td > </td><td colspan=1 style="text-align: center" >0</td><td colspan=1 style="text-align: center" >0</td><td colspan=1 style="text-align: center" >1</td>
+                                <td > prevented by knownFinalState</td>
  
 </tr>
 
     
-<tr>
+<tr >
  
 </tr>
 
     
-<tr>
-<td> 3</td><td> </td><td colspan=1 style="text-align: center">0</td><td colspan=1 style="text-align: center">1</td><td colspan=1 style="text-align: center">0</td><td> use the std. rule</td>
+<tr >
+<td > 3</td><td > </td><td colspan=1 style="text-align: center" >0</td><td colspan=1 style="text-align: center" >1</td><td colspan=1 style="text-align: center" >0</td><td > use the std. rule</td>
  
 </tr>
 
     
-<tr>
-<td> 4</td><td> </td><td colspan=1 style="text-align: center">0</td><td colspan=1 style="text-align: center">1</td><td colspan=1 style="text-align: center">1</td><td> use the std. rule</td>
+<tr >
+<td > 4</td><td > </td><td colspan=1 style="text-align: center" >0</td><td colspan=1 style="text-align: center" >1</td><td colspan=1 style="text-align: center" >1</td><td > use the std. rule</td>
  
 </tr>
 
     
-<tr>
+<tr >
  
 </tr>
 
     
-<tr>
-<td> 5</td><td> </td><td colspan=1 style="text-align: center">1</td><td colspan=1 style="text-align: center">0</td><td colspan=1 style="text-align: center">0</td>
-                                <td> prevented by knownFinalState</td>
+<tr >
+<td > 5</td><td > </td><td colspan=1 style="text-align: center" >1</td><td colspan=1 style="text-align: center" >0</td><td colspan=1 style="text-align: center" >0</td>
+                                <td > prevented by knownFinalState</td>
  
 </tr>
 
     
-<tr>
-<td> 6</td><td> </td><td colspan=1 style="text-align: center">1</td><td colspan=1 style="text-align: center">0</td><td colspan=1 style="text-align: center">1</td><td> use the BOL rule</td>
+<tr >
+<td > 6</td><td > </td><td colspan=1 style="text-align: center" >1</td><td colspan=1 style="text-align: center" >0</td><td colspan=1 style="text-align: center" >1</td><td > use the BOL rule</td>
  
 </tr>
 
     
-<tr>
+<tr >
  
 </tr>
 
     
-<tr>
-<td> 7</td><td> </td><td colspan=1 style="text-align: center">1</td><td colspan=1 style="text-align: center">1</td><td colspan=1 style="text-align: center">0</td><td> use the std rule</td>
+<tr >
+<td > 7</td><td > </td><td colspan=1 style="text-align: center" >1</td><td colspan=1 style="text-align: center" >1</td><td colspan=1 style="text-align: center" >0</td><td > use the std rule</td>
  
 </tr>
 
     
-<tr>
-<td> 8</td><td> </td><td colspan=1 style="text-align: center">1</td><td colspan=1 style="text-align: center">1</td><td colspan=1 style="text-align: center">1</td>
-                                <td> different match lengths: use</td>
+<tr >
+<td > 8</td><td > </td><td colspan=1 style="text-align: center" >1</td><td colspan=1 style="text-align: center" >1</td><td colspan=1 style="text-align: center" >1</td>
+                                <td > different match lengths: use</td>
  
 </tr>
 
     
-<tr>
-<td colspan=5 style="text-align: center"></td><td> the rule matching the longest text;</td>
+<tr >
+<td colspan=5 style="text-align: center" ></td><td > the rule matching the longest text;</td>
  
 </tr>
 
     
-<tr>
-<td colspan=5 style="text-align: center"></td><td> equal match lengths: use the earlier rule.</td>
+<tr >
+<td colspan=5 style="text-align: center" ></td><td > equal match lengths: use the earlier rule.</td>
  
 </tr>
 
@@ -1880,12 +1897,12 @@ Three variables are used here, resulting in 8 possibilities:
     
 </table>
     </div>
-    The numbers in this table are referred to by <code>skeleton/flexc++.cc's</code>
- member <code>matched__</code>.
+    The numbers in this table are referred to by <code >skeleton/flexc++.cc's</code>
+ member <code >matched__</code>.
 <p>
 <a name="LOPRUNTIME"></a><a name="l68"></a>
-<h2>6.18: Run-time handling of LOP-patterns</h2>
-    <code>ScannerBase.h</code> adds the following data members to <code>ScannerBase.h</code>:
+<h2 >6.18: Run-time handling of LOP-patterns</h2>
+    <code >ScannerBase.h</code> adds the following data members to <code >ScannerBase.h</code>:
         <pre>
 
     int             d_lopSC = 0;        // the active SC when lop1__() 
@@ -1910,9 +1927,9 @@ Three variables are used here, resulting in 8 possibilities:
 
 <p>
 After matching tt{{head}{tail}) of fixed length tail LOP rules, the matched
-text is first processed by <code>lopf__(tailLength)</code>, before the LOP rule's
+text is first processed by <code >lopf__(tailLength)</code>, before the LOP rule's
 original action block is executed. If fixed length tail LOP rules are used,
-then <code>lopf__(tailLength)</code> is implemented in <code>lex.cc</code> and looks like this:
+then <code >lopf__(tailLength)</code> is implemented in <code >lex.cc</code> and looks like this:
         <pre>
 
     void ScannerBase::lopf__(size_t tail)
@@ -1924,11 +1941,11 @@ then <code>lopf__(tailLength)</code> is implemented in <code>lex.cc</code> and l
         
 </pre>
 
-    This member simply pushes the last <code>tail</code> number of characters back to
-the input stream, and removes them from <code>d_matched</code>.
+    This member simply pushes the last <code >tail</code> number of characters back to
+the input stream, and removes them from <code >d_matched</code>.
 <p>
 After matching tt{{head}{tail}) of variable length tail LOP rules,
-<code>lop1__(size_t lopSc)</code> is called. This member prepares the scanner for
+<code >lop1__(size_t lopSc)</code> is called. This member prepares the scanner for
 finding the shortest tail. It's implementation is:
         <pre>
 
@@ -1953,14 +1970,14 @@ finding the shortest tail. It's implementation is:
 </pre>
 
 <p>
-Note the used of the member <code>Input::nPending</code>. This member is added to
-the class <code>Input's</code> interface and should return the number of characters
-currently in the <code>Input</code> object's pending queue. In the default
-implementation it simply returns the <code>Input</code> object's <code>d_deque</code>'s length.
+Note the used of the member <code >Input::nPending</code>. This member is added to
+the class <code >Input's</code> interface and should return the number of characters
+currently in the <code >Input</code> object's pending queue. In the default
+implementation it simply returns the <code >Input</code> object's <code >d_deque</code>'s length.
 <p>
-To match the shortest tail <code>lop2__</code> and <code>lop3__</code> are used. The member
-<code>lop3__</code> is called when the current tail characters do not match
-<code>{tail}</code>. It increments the tail, and resets <code>d_lopIter</code>:
+To match the shortest tail <code >lop2__</code> and <code >lop3__</code> are used. The member
+<code >lop3__</code> is called when the current tail characters do not match
+<code >{tail}</code>. It increments the tail, and resets <code >d_lopIter</code>:
         <pre>
 
     void ScannerBase::lop3__()
@@ -1971,10 +1988,10 @@ To match the shortest tail <code>lop2__</code> and <code>lop3__</code> are used.
 </pre>
 
 <p>
-The member <code>lop2__</code> is called when <code>{tail}</code> has been matched. It defines
-the initial characters, up to <code>d_lopTail</code> as the characters to match agains
-<code>{head}</code> and starts the next next start condition, which handles the matched
-<code>{head}</code>. Here is <code>lop2__</code>'s implementation:
+The member <code >lop2__</code> is called when <code >{tail}</code> has been matched. It defines
+the initial characters, up to <code >d_lopTail</code> as the characters to match agains
+<code >{head}</code> and starts the next next start condition, which handles the matched
+<code >{head}</code>. Here is <code >lop2__</code>'s implementation:
         <pre>
 
     void ScannerBase::lop2__()
@@ -1989,8 +2006,8 @@ the initial characters, up to <code>d_lopTail</code> as the characters to match 
 </pre>
 
 <p>
-Finally, <code>lop4__</code> returns the scanner to its original state, having matched
-<code>{head}</code>, and pushes the remaining characters (the actual tail) on to the
+Finally, <code >lop4__</code> returns the scanner to its original state, having matched
+<code >{head}</code>, and pushes the remaining characters (the actual tail) on to the
 input stream:
         <pre>
 
@@ -2010,7 +2027,7 @@ input stream:
 </pre>
 
 <p>
-As stated in the code, the member <code>Input::setPending</code> resets the number
+As stated in the code, the member <code >Input::setPending</code> resets the number
 of pending characters to its original value. Its default implementation is
         <pre>
 
@@ -2023,66 +2040,66 @@ of pending characters to its original value. Its default implementation is
 
 <p>
 <a name="l69"></a>
-<h2>6.19: Reflex: refreshing flexc++</h2>
-    When a new <strong>flexc++</strong> release is prepared (resulting from 
+<h2 >6.19: Reflex: refreshing flexc++</h2>
+    When a new <strong >flexc++</strong> release is prepared (resulting from 
 a minor or major upgrade or even rewrite) several steps should be
-performed before the new version is released. <strong>Flexc++</strong> should at least be able to
-regenerate its own lexical scanner function <code>lex()</code>. 
+performed before the new version is released. <strong >Flexc++</strong> should at least be able to
+regenerate its own lexical scanner function <code >lex()</code>. 
 <p>
-In <strong>flexc++</strong>'s distribution the shell script <code>reflex</code> is found. In an
-interactive process it performs the required steps by which <strong>flexc++</strong> recreates
+In <strong >flexc++</strong>'s distribution the shell script <code >reflex</code> is found. In an
+interactive process it performs the required steps by which <strong >flexc++</strong> recreates
 its own scanner. The script assumes that a new binary program, representing
-the latest changes, is available as <code>./tmp/bin/flexc++</code>, relative to the
-directory in which the <code>reflex</code> script is found. When creating <code>flexc++</code>
-with the provided <code>build</code> script, these assumptions are automatically met.
+the latest changes, is available as <code >./tmp/bin/flexc++</code>, relative to the
+directory in which the <code >reflex</code> script is found. When creating <code >flexc++</code>
+with the provided <code >build</code> script, these assumptions are automatically met.
 <p>
-The <code>reflex</code> script then performs the following steps:
+The <code >reflex</code> script then performs the following steps:
     <ul>
     <li> It optionally creates and always cleans a working directory
-<code>./self</code>. 
+<code >./self</code>. 
 <p>
-<li> It copies <code>scanner/lexer</code> to <code>./self</code>, allowing <strong>flexc++</strong> to create a
-separate <code>lex.cc</code> and <code>Scannerbase.h</code>.
+<li> It copies <code >scanner/lexer</code> to <code >./self</code>, allowing <strong >flexc++</strong> to create a
+separate <code >lex.cc</code> and <code >Scannerbase.h</code>.
 <p>
-<li> In <code>./self</code> it executes 
+<li> In <code >./self</code> it executes 
         <pre>
 
     ../tmp/bin/flexc++ -S ../skeletons lexer
         
 </pre>
 
-        by which the new <strong>flexc++</strong> program creates a scanner from its own scanner
+        by which the new <strong >flexc++</strong> program creates a scanner from its own scanner
 specification file.<br/>
-        At this point realize that the new <strong>flexc++</strong> program still uses a
-<code>lex()</code> function that was created by an older scanner generator.
+        At this point realize that the new <strong >flexc++</strong> program still uses a
+<code >lex()</code> function that was created by an older scanner generator.
 <p>
-<li> Before taking this step <em>make sure that the original <code>lex.cc</code> and
-<code>scannerbase.h</code> files were properly backed up</em>.<br/>
-    The files <code>lex.cc</code> and <code>Scannerbase.h</code>, created in the previous step
-are now copied to the <code>./scanner</code> directory.
+<li> Before taking this step <em >make sure that the original <code >lex.cc</code> and
+<code >scannerbase.h</code> files were properly backed up</em>.<br/>
+    The files <code >lex.cc</code> and <code >Scannerbase.h</code>, created in the previous step
+are now copied to the <code >./scanner</code> directory.
 <p>
-<li> All of the sources of the <code>Scanner</code> and <code>Parser</code> classes as well
-as <code>flexc++.cc</code> itself must now be recompiled, unless absolutely no changes
-were made to the <code>Scanner</code>'s internal data organization were made, in which
-case <code>build program</code> will only recompile the modified source file
-<code>./scanner/lex.cc</code>.<br/>
-    At this point a new <strong>flexc++</strong> program has been created, using a <code>lex.cc</code>
-implementation generated by the latest release of <strong>flexc++</strong>.
+<li> All of the sources of the <code >Scanner</code> and <code >Parser</code> classes as well
+as <code >flexc++.cc</code> itself must now be recompiled, unless absolutely no changes
+were made to the <code >Scanner</code>'s internal data organization were made, in which
+case <code >build program</code> will only recompile the modified source file
+<code >./scanner/lex.cc</code>.<br/>
+    At this point a new <strong >flexc++</strong> program has been created, using a <code >lex.cc</code>
+implementation generated by the latest release of <strong >flexc++</strong>.
 <p>
-<li> Once again execute in <code>./self</code>
+<li> Once again execute in <code >./self</code>
         <pre>
 
     ../tmp/bin/flexc++ -S ../skeletons lexer
         
 </pre>
 
-        by which <strong>flexc++</strong> creates a scanner from its own scanner
+        by which <strong >flexc++</strong> creates a scanner from its own scanner
 specification file, now using its own generated implementation of the
-<code>lex()</code> function in <code>lex.cc</code>.
+<code >lex()</code> function in <code >lex.cc</code>.
 <p>
-<li> If <code>diff ./scanner/lex.cc self/</code> only shows different time
-stamps and if <code>diff ./scanner/Scannerbase.h self/</code> also 
-only shows different time stamps, then <strong>flexc++</strong> could recreate its own matching
+<li> If <code >diff ./scanner/lex.cc self/</code> only shows different time
+stamps and if <code >diff ./scanner/Scannerbase.h self/</code> also 
+only shows different time stamps, then <strong >flexc++</strong> could recreate its own matching
 function and a stable new release has been created.
     </ul>
 <p>
