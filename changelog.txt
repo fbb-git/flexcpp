@@ -1,3 +1,12 @@
+flexc++ (2.06.01)
+
+  * Somehow the timestamps of scanner/lexer and scanner/lex.cc were incorrect,
+    resulting in the build process attempting to rebuild lex.cc using flexc++
+    (which at this point clearly doesn't exist).  The timestamps were fixed in
+    this release.
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Sat, 04 Mar 2017 09:17:18 +0100
+  
 flexc++ (2.06.00)
 
   * Added directive %startcondition-name specifying a non-default name for the
