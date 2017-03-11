@@ -221,11 +221,11 @@ dit(tt(r$))
    a regular expression `r', occurring  at the end of a line. This
     pattern is identical to `r/\n';
 dit(tt(<s>r))
-   a regular exprression `r' in start condition `s';
+   a regular expression `r' in start condition `s';
 dit(tt(<s1,s2,s3>r))
-   a regular exprression `r' in start conditions s1, s2, or s3;
+   a regular expression `r' in start conditions s1, s2, or s3;
 dit(tt(<*>r))
-   a regular exprression `r' in all start conditions;
+   a regular expression `r' in all start conditions;
 dit(tt(<)tt(<EOF>)tt(>))
    an end-of-file;
 dit(tt(<s1,s2><)tt(<EOF>)tt(>))
