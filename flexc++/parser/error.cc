@@ -6,7 +6,7 @@ namespace
     string eoln("<EOLN>");
 }
 
-void Parser::error(char const *msg)
+void Parser::error()
 {
     if (!d_doError)         // this allows functions to call ERROR and handle
     {                       // their own error message
