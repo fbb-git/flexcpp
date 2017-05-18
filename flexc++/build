@@ -20,7 +20,6 @@ int g_echo = ON;        // MODIFIED, existing variable
 #include "icmake/logzip"
 #include "icmake/logfile"
 #include "icmake/uninstall"
-#include "icmake/precompileheaders"
 
 #include "icmake/clean"
 #include "icmake/manpage"
@@ -33,6 +32,7 @@ void main(int argc, list argv)
     string option;
     string psType;          // program or strip
     int idx;
+    int precomp = 1;
 
     for (idx = listlen(argv); idx--; )
     {
@@ -43,7 +43,7 @@ void main(int argc, list argv)
         }
         else if (argv[idx] == "-P")
         {
-            g_gch = 0;
+            precomp = 0;
             argv -= (list)"-P";
         }
         else if (strfind(argv[idx], "LOG:") == 0)
@@ -83,9 +83,21 @@ void main(int argc, list argv)
     if (option == "manual")
         manual();
 
+
+    if (precomp)
+        exec(P_NOCHECK, 
+            "sed -i 's,^//#define PRECOMP,#define PRECOMP,' icmconf");
+    else
+    {
+        exec(P_NOCHECK, 
+            "sed -i 's,^#define PRECOMP,//#define PRECOMP,' icmconf");
+        exec(P_NOCHECK, "rm -f *.ih.gch */*.ih.gch");
+    }
+    
+
+
     if (option == "library")
     {
-        precompileHeaders();
         run("icmbuild library");
         exit(0);
     }
@@ -97,14 +109,12 @@ void main(int argc, list argv)
     
     if (option == "program")
     {
-        precompileHeaders();
         run("icmbuild " + psType);
         exit(0);
     }
 
     if (option == "oxref")
     {
-        precompileHeaders();
         run("icmbuild " + psType);
         run("oxref -fxs tmp/lib" LIBRARY ".a > " PROGRAM ".xref");
         exit(0);
@@ -121,8 +131,8 @@ void main(int argc, list argv)
 
     printf("Usage: build [-q -P] what\n"
         "Where\n"
-        "   [-q]:   run quietly, do not show executed commands\n"
-        "   [-P]:   do not use precompiled headers\n"
+        "   -q:   run quietly, do not show executed commands\n"
+        "   -P:   do not use precompiled headers\n"
         "`what' is one of:\n"
         "   clean                - clean up remnants of previous "
                                                             "compilations\n"

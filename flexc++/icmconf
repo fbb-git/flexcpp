@@ -10,7 +10,7 @@
 #define SHAREDREQ           ""
 #define USE_ALL             "a"
 #define IH                  ".ih"
-#define PRECOMP             "-x c++-header"
+//#define PRECOMP             "-x c++-header"
 #define SOURCES             "*.cc"
 #define SCANGEN             "flexc++"
 #define SCANFLAGS           ""
