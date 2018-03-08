@@ -1779,7 +1779,7 @@ size_t ScannerBase::Input::get()
     {
         case '\n':
             ++d_lineNr;
-        // FALLING THROUGH
+        [[fallthrough]]
 
         default:
         return ch;

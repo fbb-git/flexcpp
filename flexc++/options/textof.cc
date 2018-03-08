@@ -11,7 +11,7 @@ string const &Options::textOf(TextType type)
             if (d_matched->find('"') == 0 )
                 return d_undelimit = 
                         d_matched->substr(1, d_matched->size() - 2);
-        // FALLING THROUGH
+        [[fallthrough]]
 
         case TextType::IDENT:
         return *d_matched;

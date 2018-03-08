@@ -50,7 +50,7 @@ inline void StateData::set(std::string const &str)
     v_set(str);
 }
 
-inline void StateData::v_set(std::string const &str)
+inline void StateData::v_set([[maybe_unused]] std::string const &str)
 {
     throw std::logic_error(
                 "StateData::set(string) attempt on plain StateData");

@@ -31,7 +31,7 @@ inline void \@::preCode()
     // optionally replace by your own code
 }
 
-inline void \@::postCode(PostEnum__ type) 
+inline void \@::postCode([[maybe_unused]] PostEnum__ type) 
 {
     // optionally replace by your own code
 }

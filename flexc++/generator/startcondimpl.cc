@@ -36,7 +36,7 @@ void Generator::startCondImpl(ostream &out) const
         out << "    if (s_debug__)\n"
                "        s_out__ << \"Switching to " << scName << 
                                    " # \" << as<int>(startCondition) << "
-                                                                "\\n;\n";
+                                                                "'\\n';\n";
     
                      // s_out__ << "Switching to <scName> # 5\n";
     }

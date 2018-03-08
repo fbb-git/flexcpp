@@ -25,7 +25,8 @@ inline Pattern Parser::rawText(string const &str)
     return Pattern::rawText(d_states, str);
 }
 
-inline void Parser::exceptionHandler(std::exception const &exc)         
+inline void Parser::exceptionHandler(
+                            [[maybe_unused]] std::exception const &exc)
 {
     throw;              // re-implement to handle exceptions thrown by actions
 }

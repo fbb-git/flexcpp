@@ -1,6 +1,6 @@
 #include "rule.ih"
 
-Rule::Rule(States &states, bool bol, Pattern const &pattern,
+Rule::Rule([[maybe_unused]] States &states, bool bol, Pattern const &pattern,
            Block const &block, RuleType type)
 :
     d_pattern(pattern),

@@ -32,7 +32,7 @@ size_t )" << d_baseclassScope << R"(Input::get()
     {
         case '\n':
             ++d_lineNr;
-        // FALLING THROUGH
+        [[fallthrough]]
 
         default:)";
 
