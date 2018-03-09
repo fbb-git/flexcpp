@@ -16,7 +16,7 @@
 <body text="#27408B" bgcolor="#FFFAF0">
 <hr/>
 <h1 id="title">flexc++(1)</h1>
-<h2 id="author">flexc++ scanner generator<br/>(flexc++.2.06.03.tar.gz)</h2>
+<h2 id="author">flexc++ scanner generator<br/>(flexc++.2.06.04.tar.gz)</h2>
 <h2 id="date">2008-2018</h2>
 
 
@@ -174,7 +174,7 @@ class):
         
 </pre>
 
-    This generates four files</ul>:<em >Scanner.h, Scanner.hh, Scannerbase.h</em>, and
+    This generates four files</ul>:<em >Scanner.h, Scanner.ih, Scannerbase.h</em>, and
 <em >lex.cc</em> 
 <p>
 <li> Edit <em >Scanner.h</em>, add the enum defining the token-symbols in
@@ -308,7 +308,7 @@ parser.
     
 </pre>
 
-    to the file <em >scanner/Scanner.hh</em>
+    to the file <em >scanner/Scanner.ih</em>
 <p>
 <li> Write a simple <em >main</em> function in the file <em >main.cc</em>. E.g.,
     <pre>
@@ -384,7 +384,7 @@ is explicitly ordered <em >not</em> to do so.
 <li> A file containing the <em >implementation header</em>. This file should
 contain includes and declarations that are only required when compiling the
 members of the scanner class. By default this file is named
-<em >Scanner.hh</em>. This file, like the file containing the scanner class's
+<em >Scanner.ih</em>. This file, like the file containing the scanner class's
 interface is never rewritten by <strong >flexc++</strong> unless <strong >flexc++</strong> is explicitly ordered to do
 so.
     </ul>
@@ -505,7 +505,7 @@ It is an error if this option is used and an already
 <li> <strong >--implementation-header</strong>=<em >filename</em> (<strong >-i</strong>)<br/> 
            Use <em >filename</em> as the name of the file to contain the
             implementation header. Defaults to the name of the generated
-            scanner class plus the suffix <em >.hh</em>. The implementation header
+            scanner class plus the suffix <em >.ih</em>. The implementation header
             should contain all directives and declarations <em >only</em> used by
             the implementations of the scanner's member functions. It is the
             only header file that is included by the source file containing
@@ -522,7 +522,7 @@ It is an error if this option is used and an already
 <li> <strong >--implementation-skeleton</strong>=<em >pathname</em> (<strong >-I</strong>)<br/>
            Use <em >pathname</em> as the path to the file containing the skeleton of
             the implementation header. Its filename defaults to
-            <em >flexc++.hh</em>.
+            <em >flexc++.ih</em>.
 <p>
 <li> <strong >--lex-skeleton</strong>=<em >pathname</em> (<strong >-L</strong>)<br/>
            Use <em >pathname</em> as the path to the file containing the
@@ -661,7 +661,7 @@ This option does <em >not</em> show the tokens returned and text matched
             interface. 
         <li> <em >Scannerbase.h</em>: the header file containing the interface of the 
             scanner class's base class.
-        <li> <em >Scanner.hh</em>: the internal header file that is meant to be included
+        <li> <em >Scanner.ih</em>: the internal header file that is meant to be included
             by the scanner class's source files (e.g., it is included by
             <em >lex.cc</em>, see the next item's file), and that should contain all
             declarations required for compiling the scanner class's sources.

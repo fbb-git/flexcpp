@@ -1,3 +1,10 @@
+flexc++ (2.06.04)
+
+  * Replaced (erroneously used) .hh extensions by (intended) .ih extensions in
+    the man-pages and manual. 
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Fri, 09 Mar 2018 22:13:56 +0100
+
 flexc++ (2.06.03)
 
   * Added C++-17 attributes like [[fallthrough]] and [[maybe_notused]] to

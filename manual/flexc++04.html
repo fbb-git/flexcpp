@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> Flexc++ (Version 2.06.03) User Guide </title>
+<title> Flexc++ (Version 2.06.04) User Guide </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -45,7 +45,7 @@ is explicitly ordered <em >not</em> to do so.
 <li> A file containing the <em >implementation header</em>. This file should
 contain includes and declarations that are only required when compiling the
 members of the scanner class. By default this file is named
-<code >Scanner.hh</code>. This file, like the file containing the scanner class's
+<code >Scanner.ih</code>. This file, like the file containing the scanner class's
 interface is never rewritten by <strong >flexc++</strong> unless <strong >flexc++</strong> is explicitly ordered to do
 so.
     </ul>
@@ -59,17 +59,17 @@ The file <code >Scannerbase.h</code> contains the <code >Scanner</code>'s base c
 <code >Scanner</code> class is derived from <code >ScannerBase</code>. The <code >Scannerbase.h</code> is
 `owned' by <strong >flexc++</strong>, and <strong >flexc++</strong> reqrites <code >Scannerbase.h</code> at each new <strong >flexc++</strong> run.
 <p>
-The other two files <code >Scanner.h</code> and <code >Scanner.hh</code> are created only once,
+The other two files <code >Scanner.h</code> and <code >Scanner.ih</code> are created only once,
 and can safely be edited by the programmer. The <code >Scanner.h</code> header file
 contains the final <code >Scanner</code> class, to which new members may be added. These
 members may be called from the actions defined in <strong >flexc++</strong>'s input file
 (<code >lexer</code>).
 <p>
-Finally, <code >Scanner.hh</code> contains declarations which are used by the
+Finally, <code >Scanner.ih</code> contains declarations which are used by the
 implementations of the <code >Scanner</code> members. One can place <code >using</code> statements
 here as well as includes which are only required by member implementations. In
 a well-designed classq, source files defining new members of the class
-<code >Scanner</code> should only have to include <code >Scanner.hh</code>.
+<code >Scanner</code> should only have to include <code >Scanner.ih</code>.
 <p>
 <a name="multiplestreams"></a><a name="l29"></a>
 <h2 >4.1: Multiple input streams</h2>

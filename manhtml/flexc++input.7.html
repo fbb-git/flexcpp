@@ -16,7 +16,7 @@
 <body text="#27408B" bgcolor="#FFFAF0">
 <hr/>
 <h1 id="title">flexc++input(7)</h1>
-<h2 id="author">flexc++ input file organization<br/>(flexc++.2.06.03.tar.gz)</h2>
+<h2 id="author">flexc++ input file organization<br/>(flexc++.2.06.04.tar.gz)</h2>
 <h2 id="date">2008-2018</h2>
 
 
@@ -212,7 +212,7 @@ It is an error if this directive is used and an already
             the generated code. 
 <p>
 <li> <strong >%filenames</strong> <em >= "basename"</em> <br/>
-           Defines the basename of the <em >Scanner.h, Scanner.hh,</em> and
+           Defines the basename of the <em >Scanner.h, Scanner.ih,</em> and
             <em >Scannerbase.h</em> files. E.g., when using the directive
                 <pre>
 
@@ -221,7 +221,7 @@ It is an error if this directive is used and an already
 </pre>
 
            the names of the generated files are, respectively, <em >scanner.h,
-            scanner.hh,</em> and <em >scannerbase.h</em>.  Corresponding command-line
+            scanner.ih,</em> and <em >scannerbase.h</em>.  Corresponding command-line
             option: <em >--filenames</em>. The name of the source file (by default
             <em >lex.cc</em>) is controlled by the <em >%lex-source</em> directive.
 <p>
