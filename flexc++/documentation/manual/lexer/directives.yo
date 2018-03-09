@@ -94,13 +94,13 @@ inconsistency. In those cases you may encounter compilation errors.
             
 
     it() bf(%filenames) tt(= "basename") nl()
-           Defines the basename of the tt(Scanner.h, Scanner.hh,) and
+           Defines the basename of the tt(Scanner.h, Scanner.ih,) and
             tt(Scannerbase.h) files. E.g., when using the directive
                 verb(
     %filenames = "scanner"
                 )
            the names of the generated files are, respectively, tt(scanner.h,
-            scanner.hh,) and tt(scannerbase.h).  Corresponding command-line
+            scanner.ih,) and tt(scannerbase.h).  Corresponding command-line
             option: tt(--filenames). The name of the source file (by default
             tt(lex.cc)) is controlled by the tt(%lex-source) directive.
 

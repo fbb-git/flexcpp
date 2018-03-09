@@ -20,7 +20,7 @@ class):
         verb(
     flexc++ lexer
         )
-    This generates four files):tt(Scanner.h, Scanner.hh, Scannerbase.h), and
+    This generates four files):tt(Scanner.h, Scanner.ih, Scannerbase.h), and
 tt(lex.cc) 
 
     it() Edit tt(Scanner.h), add the enum defining the token-symbols in
@@ -133,7 +133,7 @@ parser.
     verb(
 #include "../parser/Parserbase.h"
     )
-    to the file tt(scanner/Scanner.hh)
+    to the file tt(scanner/Scanner.ih)
 
     it() Write a simple tt(main) function in the file tt(main.cc). E.g.,
     verb(
@@ -194,7 +194,7 @@ is explicitly ordered em(not) to do so.
     it() A file containing the em(implementation header). This file should
 contain includes and declarations that are only required when compiling the
 members of the scanner class. By default this file is named
-tt(Scanner.hh). This file, like the file containing the scanner class's
+tt(Scanner.ih). This file, like the file containing the scanner class's
 interface is never rewritten by flc() unless flc() is explicitly ordered to do
 so.
     )

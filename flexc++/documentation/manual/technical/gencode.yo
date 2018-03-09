@@ -9,7 +9,7 @@ rewritten and declares data members used by the scanner.
 itt(Scanner.h.) This file represents the generated scanner's interface. It
 inherits from tt(ScannerBase) and is written only if not existing. 
 
-itt(Scanner.hh.) This file represents the generated scanner's em(internal
+itt(Scanner.ih.) This file represents the generated scanner's em(internal
 header file). The internal header file is part of a design philosophy
 according to which all source files belonging to a class should merely include
 the internal header file, which declares all headers and other elements that

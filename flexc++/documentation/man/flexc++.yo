@@ -176,7 +176,7 @@ manpagefiles()
             interface. 
         itt(Scannerbase.h): the header file containing the interface of the 
             scanner class's base class.
-        itt(Scanner.hh): the internal header file that is meant to be included
+        itt(Scanner.ih): the internal header file that is meant to be included
             by the scanner class's source files (e.g., it is included by
             tt(lex.cc), see the next item's file), and that should contain all
             declarations required for compiling the scanner class's sources.

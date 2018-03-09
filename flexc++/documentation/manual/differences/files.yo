@@ -1,10 +1,10 @@
 While bf(flex)(1) only generates a file tt(lex.yy.cc), flc() generates several
 files: several header files and a source file.  By default flc() generates a
-class header file (tt(Scanner.h)), and internal header file (tt(Scanner.hh)),
+class header file (tt(Scanner.h)), and internal header file (tt(Scanner.ih)),
 a base class header file (tt(Scannerbase.h)), and the file tt(lex.cc)
 containing the implementation of the required members of the tt(class
 Scanner).  tt(Scannerbase.h) and tt(lex.cc) should not be edited: they are
 overwritten whenever flc() is invoked. The other files (tt(Scanner.h) and
-tt(Scanner.hh)) are generated only once, and can thereafter be modified by the
+tt(Scanner.ih)) are generated only once, and can thereafter be modified by the
 user (e.g., to add members to the tt(Scanner) class).
 

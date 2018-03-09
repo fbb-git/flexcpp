@@ -21,7 +21,7 @@ is explicitly ordered em(not) to do so.
     it() A file containing the em(implementation header). This file should
 contain includes and declarations that are only required when compiling the
 members of the scanner class. By default this file is named
-tt(Scanner.hh). This file, like the file containing the scanner class's
+tt(Scanner.ih). This file, like the file containing the scanner class's
 interface is never rewritten by flc() unless flc() is explicitly ordered to do
 so.
     )
@@ -36,15 +36,15 @@ The file tt(Scannerbase.h) contains the tt(Scanner)'s base class The
 tt(Scanner) class is derived from tt(ScannerBase). The tt(Scannerbase.h) is
 `owned' by flc(), and flc() reqrites tt(Scannerbase.h) at each new flc() run.
 
-The other two files tt(Scanner.h) and tt(Scanner.hh) are created only once,
+The other two files tt(Scanner.h) and tt(Scanner.ih) are created only once,
 and can safely be edited by the programmer. The tt(Scanner.h) header file
 contains the final tt(Scanner) class, to which new members may be added. These
 members may be called from the actions defined in flc()'s input file
 (tt(lexer)).
 
-Finally, tt(Scanner.hh) contains declarations which are used by the
+Finally, tt(Scanner.ih) contains declarations which are used by the
 implementations of the tt(Scanner) members. One can place tt(using) statements
 here as well as includes which are only required by member implementations. In
 a well-designed classq, source files defining new members of the class
-tt(Scanner) should only have to include tt(Scanner.hh).
+tt(Scanner) should only have to include tt(Scanner.ih).
 
