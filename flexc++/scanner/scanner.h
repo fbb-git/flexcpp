@@ -45,7 +45,7 @@ class Scanner: public ScannerBase, private FlexTypes
         using ScannerBase::accept;
         void newDefinition();       // new named regex, 'line' miniscanner
                                     
-        void addDefinition(std::string const &spName, TextType textType);
+        void addDefinition(std::string const &spName);// , TextType textType);
 
         void blockEnds();
         void eolnDollar();

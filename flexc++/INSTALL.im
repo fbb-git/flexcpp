@@ -24,8 +24,8 @@
 
     // the compiler options to use.
 //#define CXXFLAGS            "--std=c++14 -Wall -O2 -g"
-#define CXXFLAGS            "-Wall -O2 -fdiagnostics-color=never"
-//  -Wunused-parameter
+#define CXXFLAGS            "-Wall -O2 -fdiagnostics-color=never" \
+  " -Wunused-parameter -Werror"
 
     // flags passed to the linker
 #define LDFLAGS             ""

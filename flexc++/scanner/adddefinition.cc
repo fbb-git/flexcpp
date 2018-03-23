@@ -1,6 +1,7 @@
 #include "scanner.ih"
 
-void Scanner::addDefinition(string const &name, TextType textType)
+void Scanner::addDefinition(string const &name)//, 
+//                            [[maybe_unused]] TextType textType)
 {
     string namePattern = '{' + name + '}';
 

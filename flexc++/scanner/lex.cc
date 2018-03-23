@@ -1861,7 +1861,7 @@ void ScannerBase::switchOstream(std::ostream &out)
 }
 
 // $insert debugFunctions
-void ScannerBase::setDebug(bool onOff)
+void ScannerBase::setDebug([[maybe_unused]] bool onOff)
 {}
 
 bool ScannerBase::debug() const

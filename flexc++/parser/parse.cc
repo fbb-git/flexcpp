@@ -2460,8 +2460,9 @@ std::ostream &ParserBase::dflush_(std::ostream &out)
     return out;
 }
 
-std::string ParserBase::stype_(char const *pre, 
-                 STYPE_ const &semVal, char const *post) const
+std::string ParserBase::stype_([[maybe_unused]] char const *pre, 
+                 [[maybe_unused]] STYPE_ const &semVal, 
+                 [[maybe_unused]] char const *post) const
 {
     return "";
 }
@@ -2820,7 +2821,8 @@ try
         case 13:
 #line 60 "inc/directives"
         {
-         d_scanner.addDefinition(vs_(-1).get<Tag_::STRING>(), vs_(0).get<Tag_::TEXTTYPE>());
+         d_scanner.addDefinition(vs_(-1).get<Tag_::STRING>()
+                );//, vs_(0).get<Tag_::TEXTTYPE>());
          }
         break;
 
