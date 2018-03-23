@@ -38,14 +38,14 @@ size_t )" << d_baseclassScope << R"(Input::get()
 
     if (d_debug)
         out << R"raw(
-            if (s_debug__)
+            if (s_debug_)
             {
-                s_out__ << "Input::get() returns ";
+                s_out_ << "Input::get() returns ";
                 if (isprint(ch))
-                    s_out__ << '`' << static_cast<char>(ch) << '\'';
+                    s_out_ << '`' << static_cast<char>(ch) << '\'';
                 else
-                    s_out__ << "(int)" << static_cast<int>(ch);
-                s_out__ << '\n' << dflush__;
+                    s_out_ << "(int)" << static_cast<int>(ch);
+                s_out_ << '\n' << dflush_;
             })raw";
 
     out << R"(
@@ -78,8 +78,8 @@ void )" << d_baseclassScope << R"(Input::reRead(size_t ch)
 
     if (d_debug)
         out << R"(
-        if (s_debug__)
-            s_out__ << "Input::reRead(" << ch << ")\n" << dflush__;)";
+        if (s_debug_)
+            s_out_ << "Input::reRead(" << ch << ")\n" << dflush_;)";
 
     out << R"(
         if (ch == '\n')

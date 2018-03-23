@@ -27,7 +27,7 @@ table(3)(lll)(
         cell(tt(accept()))
     )
     row(cell(tt(BEGIN startcondition))
-        cell(tt(begin(StartCondition__::startcondition)))
+        cell(tt(begin(StartCondition_::startcondition)))
     )
     row(cell(tt(YY_AT_BOL))
         cell(n.a.)

@@ -5,7 +5,7 @@ itemization(
         (Use data members to keep track of state, or if you want to execute
             some code everytime NOEXPAND(lex)() is called, redefine
             NOEXPAND(lex)() to do more than just call the generated function
-            NOEXPAND(lex__()).)
+            NOEXPAND(lex_()).)
     nosupport(Other indented text or tt(`%{ ... %}') blocks are copied
             to the output, but meaning is ill-defined and compiler errors may
             result.)

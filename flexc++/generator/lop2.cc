@@ -3,7 +3,7 @@
 void Generator::lop2(ostream &out) const
 {
     out <<
-"void " << d_baseclassScope << R"(lop2__()   // matched the tail
+"void " << d_baseclassScope << R"(lop2_()   // matched the tail
 {
     d_lopEnd = d_lopTail;                   // read the head
     d_lopIter = d_lopMatched.begin();
@@ -12,8 +12,8 @@ void Generator::lop2(ostream &out) const
     if (d_debug)
         out << 
 R"(
-    if (s_debug__)
-        s_out__ << "lop2__ matched tail `" << d_matched << "\'\n" << dflush__;
+    if (s_debug_)
+        s_out_ << "lop2_ matched tail `" << d_matched << "\'\n" << dflush_;
 )";
                                             
         out << 

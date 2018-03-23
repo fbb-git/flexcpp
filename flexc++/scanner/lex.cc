@@ -9,11 +9,11 @@
 #include "scanner.ih"
 
 
-    // s_ranges__: use (unsigned) characters as index to obtain
+    // s_ranges_: use (unsigned) characters as index to obtain
     //           that character's range-number.
     //           The range for EOF is defined in a constant in the
     //           class header file
-size_t const ScannerBase::s_ranges__[] =
+size_t const ScannerBase::s_ranges_[] =
 {
      0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
      4, 4, 4, 4, 4, 4, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15,16,17,18,19,20,21,22,
@@ -29,17 +29,17 @@ size_t const ScannerBase::s_ranges__[] =
 };
 
 // $insert startcondinfo
-    // s_dfa__ contains the rows of *all* DFAs ordered by start state.  The
+    // s_dfa_ contains the rows of *all* DFAs ordered by start state.  The
     // enum class StartCondition__is defined in the baseclass header.
-    // StartCondition__::INITIAL is always 0.  Each entry defines the row to
+    // StartCondition_::INITIAL is always 0.  Each entry defines the row to
     // transit to if the column's character range was sensed. Row numbers are
-    // relative to the used DFA, and d_dfaBase__ is set to the first row of
+    // relative to the used DFA, and d_dfaBase_ is set to the first row of
     // the subset to use.  The row's final two values are respectively the
     // rule that may be matched at this state, and the rule's FINAL flag. If
     // the final value equals FINAL (= 1) then, if there's no continuation,
     // the rule is matched. If the BOL flag (8) is also set (so FINAL + BOL (=
     // 9) is set) then the rule only matches when d_atBOL is also true.
-int const ScannerBase::s_dfa__[][78] =
+int const ScannerBase::s_dfa_[][78] =
 {
     // INITIAL
     { 1, 2, 3, 1, 1, 2, 1, 4, 1, 5, 6, 1, 7, 8, 8, 8, 8, 8, 8, 8,
@@ -1747,15 +1747,15 @@ int const ScannerBase::s_dfa__[][78] =
 };
 
 
-int const (*ScannerBase::s_dfaBase__[])[78] =
+int const (*ScannerBase::s_dfaBase_[])[78] =
 {
-    s_dfa__ + 0,
-    s_dfa__ + 154,
-    s_dfa__ + 403,
-    s_dfa__ + 406,
-    s_dfa__ + 411,
-    s_dfa__ + 416,
-    s_dfa__ + 421,
+    s_dfa_ + 0,
+    s_dfa_ + 154,
+    s_dfa_ + 403,
+    s_dfa_ + 406,
+    s_dfa_ + 411,
+    s_dfa_ + 416,
+    s_dfa_ + 421,
 };
 
 size_t ScannerBase::s_istreamNr = 0;
@@ -1827,10 +1827,10 @@ ScannerBase::ScannerBase(std::istream &in, std::ostream &out)
 // $insert interactiveInit
     d_in(0),
     d_input(new std::istream(in.rdbuf())),
-    d_dfaBase__(s_dfa__)
+    d_dfaBase_(s_dfa_)
 {}
 
-void ScannerBase::switchStream__(std::istream &in, size_t lineNr)
+void ScannerBase::switchStream_(std::istream &in, size_t lineNr)
 {
     d_input.close();
     d_input = Input(new std::istream(in.rdbuf()), lineNr);
@@ -1844,12 +1844,12 @@ ScannerBase::ScannerBase(std::string const &infilename, std::string const &outfi
           outfilename == ""     ? new std::ostream(std::cerr.rdbuf()) :
                                   new std::ofstream(outfilename)),
     d_input(new std::ifstream(infilename)),
-    d_dfaBase__(s_dfa__)
+    d_dfaBase_(s_dfa_)
 {}
 
 void ScannerBase::switchStreams(std::istream &in, std::ostream &out)
 {
-    switchStream__(in, 1);
+    switchStream_(in, 1);
     switchOstream(out);
 }
 
@@ -1921,7 +1921,7 @@ void ScannerBase::pushStream(std::string const &name)
 
 void ScannerBase::p_pushStream(std::string const &name, std::istream *streamPtr)
 {
-    if (d_streamStack.size() == s_maxSizeofStreamStack__)
+    if (d_streamStack.size() == s_maxSizeofStreamStack_)
     {
         delete streamPtr;
         throw std::length_error("Max stream stack size exceeded");
@@ -1950,7 +1950,7 @@ bool ScannerBase::popStream()
 }
 
 // $insert lopImplementation
-void ScannerBase::lopf__(size_t tail)
+void ScannerBase::lopf_(size_t tail)
 {
     tail = length() - tail;
     push(d_matched.substr(tail, std::string::npos));
@@ -1961,23 +1961,23 @@ void ScannerBase::lopf__(size_t tail)
 
   // See the manual's section `Run-time operations' section for an explanation
   // of this member.
-ScannerBase::ActionType__ ScannerBase::actionType__(size_t range)
+ScannerBase::ActionType_ ScannerBase::actionType_(size_t range)
 {
-    d_nextState = d_dfaBase__[d_state][range];
+    d_nextState = d_dfaBase_[d_state][range];
 
     if (d_nextState != -1)                  // transition is possible
-        return ActionType__::CONTINUE;
+        return ActionType_::CONTINUE;
 
     if (knownFinalState())                  // FINAL state reached
-        return ActionType__::MATCH;         
+        return ActionType_::MATCH;         
 
     if (d_matched.size())
-        return ActionType__::ECHO_FIRST;    // no match, echo the 1st char
+        return ActionType_::ECHO_FIRST;    // no match, echo the 1st char
 
-    return range != s_rangeOfEOF__ ? 
-                ActionType__::ECHO_CH 
+    return range != s_rangeOfEOF_ ? 
+                ActionType_::ECHO_CH 
             : 
-                ActionType__::RETURN;
+                ActionType_::RETURN;
 }
 
 void ScannerBase::accept(size_t nChars)          // old name: less
@@ -2001,7 +2001,7 @@ void ScannerBase::setMatchedSize(size_t length)
   // d_atBOL is updated. Finally the rule's index is returned.
   // The numbers behind the finalPtr assignments are explained in the 
   // manual's `Run-time operations' section.
-size_t ScannerBase::matched__(size_t ch)
+size_t ScannerBase::matched_(size_t ch)
 {
     d_input.reRead(ch);
 
@@ -2042,14 +2042,14 @@ size_t ScannerBase::matched__(size_t ch)
     return finalPtr->rule;
 }
 
-size_t ScannerBase::getRange__(int ch)       // using int to prevent casts
+size_t ScannerBase::getRange_(int ch)       // using int to prevent casts
 {
-    return ch == AT_EOF ? as<size_t>(s_rangeOfEOF__) : s_ranges__[ch];
+    return ch == AT_EOF ? as<size_t>(s_rangeOfEOF_) : s_ranges_[ch];
 }
 
   // At this point d_nextState contains the next state and continuation is
   // possible. The just read char. is appended to d_match
-void ScannerBase::continue__(int ch)
+void ScannerBase::continue_(int ch)
 {
     d_state = d_nextState;
 
@@ -2057,7 +2057,7 @@ void ScannerBase::continue__(int ch)
         d_matched += ch;
 }
 
-void ScannerBase::echoCh__(size_t ch)
+void ScannerBase::echoCh_(size_t ch)
 {
     *d_out << as<char>(ch);
     d_atBOL = ch == '\n';
@@ -2069,22 +2069,22 @@ void ScannerBase::echoCh__(size_t ch)
    // the buffer. The first char. in the buffer is echoed to stderr. 
    // If there isn't any 1st char yet then the current char doesn't fit any
    // rules and that char is then echoed
-void ScannerBase::echoFirst__(size_t ch)
+void ScannerBase::echoFirst_(size_t ch)
 {
     d_input.reRead(ch);
     d_input.reRead(d_matched, 1);
-    echoCh__(d_matched[0]);
+    echoCh_(d_matched[0]);
 }
 
     // Update the rules associated with the current state, do this separately
     // for BOL and std rules.
     // If a rule was set, update the rule index and the current d_matched
     // length. 
-void ScannerBase::updateFinals__()
+void ScannerBase::updateFinals_()
 {
     size_t len = d_matched.size();
 
-    int const *rf = d_dfaBase__[d_state] + s_finIdx__;
+    int const *rf = d_dfaBase_[d_state] + s_finIdx_;
 
     if (rf[0] != -1)        // update to the latest std rule
     {
@@ -2097,7 +2097,7 @@ void ScannerBase::updateFinals__()
     }
 }
 
-void ScannerBase::reset__()
+void ScannerBase::reset_()
 {
     d_final = Final{ 
                     FinalData{s_unavailable, 0}, 
@@ -2113,7 +2113,7 @@ void ScannerBase::reset__()
     d_more = false;
 }
 
-int Scanner::executeAction__(size_t ruleIdx)
+int Scanner::executeAction_(size_t ruleIdx)
 try
 {
     switch (ruleIdx)
@@ -2532,75 +2532,75 @@ try
         case 47:
         {
 #line 151 "lexer"
-            lopf__(1);
+            lopf_(1);
             return '$';
         }
         break;
     }
-    noReturn__();
+    noReturn_();
     return 0;
 }
-catch (Leave__ value)
+catch (Leave_ value)
 {
     return static_cast<int>(value);
 }
 
-int Scanner::lex__()
+int Scanner::lex_()
 {
-    reset__();
+    reset_();
     preCode();
 
     while (true)
     {
-        size_t ch = get__();                // fetch next char
-        size_t range = getRange__(ch);      // determine the range
+        size_t ch = get_();                // fetch next char
+        size_t range = getRange_(ch);      // determine the range
 
-        updateFinals__();                    // update the state's Final info
+        updateFinals_();                    // update the state's Final info
 
-        switch (actionType__(range))        // determine the action
+        switch (actionType_(range))        // determine the action
         {
-            case ActionType__::CONTINUE:
-                continue__(ch);
+            case ActionType_::CONTINUE:
+                continue_(ch);
             continue;
 
-            case ActionType__::MATCH:
+            case ActionType_::MATCH:
             {
-                d_token__ = executeAction__(matched__(ch));
-                if (return__())
+                d_token_ = executeAction_(matched_(ch));
+                if (return_())
                 {
                     print();
-                    postCode(PostEnum__::RETURN);
-                    return d_token__;
+                    postCode(PostEnum_::RETURN);
+                    return d_token_;
                 }
                 break;
             }
 
-            case ActionType__::ECHO_FIRST:
-                echoFirst__(ch);
+            case ActionType_::ECHO_FIRST:
+                echoFirst_(ch);
             break;
 
-            case ActionType__::ECHO_CH:
-                echoCh__(ch);
+            case ActionType_::ECHO_CH:
+                echoCh_(ch);
             break;
 
-            case ActionType__::RETURN:
+            case ActionType_::RETURN:
                 if (!popStream())
                 {
-                     postCode(PostEnum__::END);
+                     postCode(PostEnum_::END);
                      return 0;
                 }
-                postCode(PostEnum__::POP);
+                postCode(PostEnum_::POP);
              continue;
         } // switch
 
-        postCode(PostEnum__::WIP);
+        postCode(PostEnum_::WIP);
 
-        reset__();
+        reset_();
         preCode();
     } // while
 }
 
-void ScannerBase::print__() const
+void ScannerBase::print_() const
 {
 }
 

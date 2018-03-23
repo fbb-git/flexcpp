@@ -33,17 +33,17 @@ void Generator::startCondImpl(ostream &out) const
 
     if (debugTest())
     {
-        out << "    if (s_debug__)\n"
-               "        s_out__ << \"Switching to " << scName << 
+        out << "    if (s_debug_)\n"
+               "        s_out_ << \"Switching to " << scName << 
                                    " # \" << as<int>(startCondition) << "
                                                                 "'\\n';\n";
     
-                     // s_out__ << "Switching to <scName> # 5\n";
+                     // s_out_ << "Switching to <scName> # 5\n";
     }
 
     out <<
-"    // d_state is reset to 0 by reset__()\n"
-"    d_dfaBase__ = s_dfaBase__[d_startCondition = SC(startCondition)];\n"
+"    // d_state is reset to 0 by reset_()\n"
+"    d_dfaBase_ = s_dfaBase_[d_startCondition = SC(startCondition)];\n"
 "}\n";
 
 }

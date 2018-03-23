@@ -8,7 +8,7 @@
 // The FIRST element of SR arrays shown below uses `d_type', defining the
 // state's type, and `d_lastIdx' containing the last element's index. If
 // d_lastIdx contains the REQ_TOKEN bitflag (see below) then the state needs
-// a token: if in this state d_token is Reserved__::UNDETERMINED__, nextToken() will be
+// a token: if in this state d_token is Reserved_::UNDETERMINED_, nextToken() will be
 // called
 
 // The LAST element of SR arrays uses `d_token' containing the last retrieved
@@ -19,12 +19,12 @@
 // rule to reduce to.
 
 // `lookup()' tries to find d_token in the current SR array. If it fails, and
-// there is no default reduction UNEXPECTED_TOKEN__ is thrown, which is then
+// there is no default reduction UNEXPECTED_TOKEN_ is thrown, which is then
 // caught by the error-recovery function.
 
 // The error-recovery function will pop elements off the stack until a state
-// having bit flag ERR_ITEM is found. This state has a transition on errTok__
-// which is applied. In this errTok__ state, while the current token is not a
+// having bit flag ERR_ITEM is found. This state has a transition on errTok_
+// which is applied. In this errTok_ state, while the current token is not a
 // proper continuation, new tokens are obtained by nextToken(). If such a
 // token is found, error recovery is successful and the token is
 // handled according to the error state's SR table and parsing continues.
@@ -62,12 +62,12 @@ namespace // anonymous
 {
     char const author[] = "Frank B. Brokken (f.b.brokken@rug.nl)";
 
-    enum Reserved__
+    enum Reserved_
     {
-        PARSE_ACCEPT__   = 0,   // `ACCEPT' TRANSITION
-        UNDETERMINED__   = -2,
-        EOF__            = -1,
-        errTok__         = 256
+        PARSE_ACCEPT_   = 0,   // `ACCEPT' TRANSITION
+        UNDETERMINED_   = -2,
+        EOF_            = -1,
+        errTok_         = 256
     };
     enum StateType       // modify statetype/data.cc when this enum changes
     {
@@ -80,14 +80,14 @@ namespace // anonymous
         REQ_DEF,    // REQ_TOKEN | DEF_RED
         ERR_REQ_DEF // ERR_ITEM | REQ_TOKEN | DEF_RED
     };    
-    struct PI__     // Production Info
+    struct PI_     // Production Info
     {
         size_t d_nonTerm; // identification number of this production's
                             // non-terminal 
         size_t d_size;    // number of elements in this production 
     };
 
-    struct SR__     // Shift Reduce info, see its description above
+    struct SR_     // Shift Reduce info, see its description above
     {
         union
         {
@@ -110,11 +110,11 @@ namespace // anonymous
     
     enum                        // size to expand the state-stack with when
     {                           // full
-        STACK_EXPANSION__ = 10
+        STACK_EXPANSION_ = 10
     };
 
 // Productions Info Records:
-PI__ const s_productionInfo[] = 
+PI_ const s_productionInfo[] = 
 {
      {0, 0}, // not used: reduction values are negative
      {311, 3}, // 1: input ->  opt_directives section_delimiter rules
@@ -133,7 +133,7 @@ PI__ const s_productionInfo[] =
      {323, 1}, // 14: _directive ->  option
      {323, 1}, // 15: _directive ->  _start_condition_directive
      {323, 1}, // 16: _directive ->  _name_definition
-     {323, 1}, // 17: _directive (errTok__) ->  errTok__
+     {323, 1}, // 17: _directive (errTok_) ->  errTok_
      {323, 0}, // 18: _directive ->  <empty>
      {325, 2}, // 19: _directive_line ('\x0a') ->  _directive '\x0a'
      {312, 2}, // 20: opt_directives ->  opt_directives _directive_line
@@ -274,7 +274,7 @@ PI__ const s_productionInfo[] =
      {377, 1}, // 155: optMs_rule ->  _optMs_rule
      {377, 2}, // 156: optMs_rule ->  _optMs_rule action
      {378, 0}, // 157: _rule_def ->  <empty>
-     {378, 1}, // 158: _rule_def (errTok__) ->  errTok__
+     {378, 1}, // 158: _rule_def (errTok_) ->  errTok_
      {378, 1}, // 159: _rule_def ->  optMs_rule
      {378, 1}, // 160: _rule_def ->  msCompound
      {379, 3}, // 161: _rule ('\x0a') ->  _rule_def '\x0a' reset
@@ -283,10 +283,10 @@ PI__ const s_productionInfo[] =
      {380, 1}, // 164: input_$ ->  input
 };
 
-// State info and SR__ transitions for each state.
+// State info and SR_ transitions for each state.
 
 
-SR__ s_0[] =
+SR_ s_0[] =
 {
     { { DEF_RED}, {   3} },                  
     { {     311}, {   1} }, // input         
@@ -294,14 +294,14 @@ SR__ s_0[] =
     { {       0}, { -21} },                  
 };
 
-SR__ s_1[] =
+SR_ s_1[] =
 {
     { { REQ_TOKEN}, {              2} }, 
-    { {     EOF__}, { PARSE_ACCEPT__} }, 
+    { {     EOF_}, { PARSE_ACCEPT_} }, 
     { {         0}, {              0} }, 
 };
 
-SR__ s_2[] =
+SR_ s_2[] =
 {
     { { ERR_REQ_DEF}, {  46} },                              
     { {         313}, {   3} }, // section_delimiter         
@@ -311,7 +311,7 @@ SR__ s_2[] =
     { {         324}, {   7} }, // option                    
     { {         319}, {   8} }, // _start_condition_directive
     { {         322}, {   9} }, // _name_definition          
-    { {    errTok__}, {  10} }, // errTok__                  
+    { {    errTok_}, {  10} }, // errTok_                  
     { {         331}, {  11} }, // _inputinterface           
     { {         332}, {  12} }, // _inputimplementation      
     { {         328}, {  13} }, // _classname                
@@ -352,58 +352,58 @@ SR__ s_2[] =
     { {           0}, { -18} },                              
 };
 
-SR__ s_3[] =
+SR_ s_3[] =
 {
     { { DEF_RED}, {    2} },         
     { {     314}, {   48} }, // rules
     { {       0}, { -163} },         
 };
 
-SR__ s_4[] =
+SR_ s_4[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -20} }, 
 };
 
-SR__ s_5[] =
+SR_ s_5[] =
 {
     { { REQ_TOKEN}, {  2} },          
     { {        10}, { 49} }, // '\x0a'
     { {         0}, {  0} },          
 };
 
-SR__ s_6[] =
+SR_ s_6[] =
 {
     { { REQ_TOKEN}, {  2} },          
     { {        10}, { 50} }, // '\x0a'
     { {         0}, {  0} },          
 };
 
-SR__ s_7[] =
+SR_ s_7[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -14} }, 
 };
 
-SR__ s_8[] =
+SR_ s_8[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -15} }, 
 };
 
-SR__ s_9[] =
+SR_ s_9[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -16} }, 
 };
 
-SR__ s_10[] =
+SR_ s_10[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -17} }, 
 };
 
-SR__ s_11[] =
+SR_ s_11[] =
 {
     { { REQ_DEF}, {   3} },           
     { {     340}, {  51} }, // _opt_is
@@ -411,7 +411,7 @@ SR__ s_11[] =
     { {       0}, { -38} },           
 };
 
-SR__ s_12[] =
+SR_ s_12[] =
 {
     { { REQ_DEF}, {   3} },           
     { {     340}, {  53} }, // _opt_is
@@ -419,7 +419,7 @@ SR__ s_12[] =
     { {       0}, { -38} },           
 };
 
-SR__ s_13[] =
+SR_ s_13[] =
 {
     { { REQ_DEF}, {   3} },           
     { {     340}, {  54} }, // _opt_is
@@ -427,7 +427,7 @@ SR__ s_13[] =
     { {       0}, { -38} },           
 };
 
-SR__ s_14[] =
+SR_ s_14[] =
 {
     { { REQ_DEF}, {   3} },           
     { {     340}, {  55} }, // _opt_is
@@ -435,7 +435,7 @@ SR__ s_14[] =
     { {       0}, { -38} },           
 };
 
-SR__ s_15[] =
+SR_ s_15[] =
 {
     { { REQ_DEF}, {   3} },           
     { {     340}, {  56} }, // _opt_is
@@ -443,7 +443,7 @@ SR__ s_15[] =
     { {       0}, { -38} },           
 };
 
-SR__ s_16[] =
+SR_ s_16[] =
 {
     { { REQ_DEF}, {   3} },           
     { {     340}, {  57} }, // _opt_is
@@ -451,7 +451,7 @@ SR__ s_16[] =
     { {       0}, { -38} },           
 };
 
-SR__ s_17[] =
+SR_ s_17[] =
 {
     { { REQ_DEF}, {   3} },           
     { {     340}, {  58} }, // _opt_is
@@ -459,7 +459,7 @@ SR__ s_17[] =
     { {       0}, { -38} },           
 };
 
-SR__ s_18[] =
+SR_ s_18[] =
 {
     { { REQ_DEF}, {   3} },           
     { {     340}, {  59} }, // _opt_is
@@ -467,7 +467,7 @@ SR__ s_18[] =
     { {       0}, { -38} },           
 };
 
-SR__ s_19[] =
+SR_ s_19[] =
 {
     { { REQ_DEF}, {   3} },           
     { {     340}, {  60} }, // _opt_is
@@ -475,7 +475,7 @@ SR__ s_19[] =
     { {       0}, { -38} },           
 };
 
-SR__ s_20[] =
+SR_ s_20[] =
 {
     { { REQ_DEF}, {   3} },           
     { {     340}, {  61} }, // _opt_is
@@ -483,7 +483,7 @@ SR__ s_20[] =
     { {       0}, { -38} },           
 };
 
-SR__ s_21[] =
+SR_ s_21[] =
 {
     { { REQ_DEF}, {   3} },           
     { {     340}, {  62} }, // _opt_is
@@ -491,7 +491,7 @@ SR__ s_21[] =
     { {       0}, { -38} },           
 };
 
-SR__ s_22[] =
+SR_ s_22[] =
 {
     { { REQ_DEF}, {   3} },           
     { {     340}, {  63} }, // _opt_is
@@ -499,7 +499,7 @@ SR__ s_22[] =
     { {       0}, { -38} },           
 };
 
-SR__ s_23[] =
+SR_ s_23[] =
 {
     { { REQ_DEF}, {   3} },           
     { {     340}, {  64} }, // _opt_is
@@ -507,37 +507,37 @@ SR__ s_23[] =
     { {       0}, { -38} },           
 };
 
-SR__ s_24[] =
+SR_ s_24[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -53} }, 
 };
 
-SR__ s_25[] =
+SR_ s_25[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -54} }, 
 };
 
-SR__ s_26[] =
+SR_ s_26[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -55} }, 
 };
 
-SR__ s_27[] =
+SR_ s_27[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -56} }, 
 };
 
-SR__ s_28[] =
+SR_ s_28[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -57} }, 
 };
 
-SR__ s_29[] =
+SR_ s_29[] =
 {
     { { REQ_TOKEN}, {  4} },                          
     { {       318}, { 65} }, // _start_condition_names
@@ -546,7 +546,7 @@ SR__ s_29[] =
     { {         0}, {  0} },                          
 };
 
-SR__ s_30[] =
+SR_ s_30[] =
 {
     { { REQ_TOKEN}, {  4} },               
     { {       321}, { 67} }, // _stringType
@@ -555,116 +555,116 @@ SR__ s_30[] =
     { {         0}, {  0} },               
 };
 
-SR__ s_31[] =
+SR_ s_31[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -27} }, 
 };
 
-SR__ s_32[] =
+SR_ s_32[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -28} }, 
 };
 
-SR__ s_33[] =
+SR_ s_33[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -24} }, 
 };
 
-SR__ s_34[] =
+SR_ s_34[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -25} }, 
 };
 
-SR__ s_35[] =
+SR_ s_35[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -29} }, 
 };
 
-SR__ s_36[] =
+SR_ s_36[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -22} }, 
 };
 
-SR__ s_37[] =
+SR_ s_37[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -23} }, 
 };
 
-SR__ s_38[] =
+SR_ s_38[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -26} }, 
 };
 
-SR__ s_39[] =
+SR_ s_39[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -30} }, 
 };
 
-SR__ s_40[] =
+SR_ s_40[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -32} }, 
 };
 
-SR__ s_41[] =
+SR_ s_41[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -33} }, 
 };
 
-SR__ s_42[] =
+SR_ s_42[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -34} }, 
 };
 
-SR__ s_43[] =
+SR_ s_43[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -31} }, 
 };
 
-SR__ s_44[] =
+SR_ s_44[] =
 {
     { { DEF_RED}, {  2} },            
     { {     316}, { 70} }, // _sc_name
     { {       0}, { -4} },            
 };
 
-SR__ s_45[] =
+SR_ s_45[] =
 {
     { { DEF_RED}, {  2} },            
     { {     316}, { 71} }, // _sc_name
     { {       0}, { -4} },            
 };
 
-SR__ s_46[] =
+SR_ s_46[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -10} }, 
 };
 
-SR__ s_47[] =
+SR_ s_47[] =
 {
     { { DEF_RED}, {  1} }, 
     { {       0}, { -3} }, 
 };
 
-SR__ s_48[] =
+SR_ s_48[] =
 {
     { { ERR_REQ_DEF}, {   40} },                   
     { {         379}, {   72} }, // _rule          
     { {         378}, {   73} }, // _rule_def      
-    { {    errTok__}, {   74} }, // errTok__       
+    { {    errTok_}, {   74} }, // errTok_       
     { {         377}, {   75} }, // optMs_rule     
     { {         374}, {   76} }, // msCompound     
     { {         376}, {   77} }, // _optMs_rule    
@@ -700,23 +700,23 @@ SR__ s_48[] =
     { {         349}, {  107} }, // _cc_negated    
     { {         287}, {  108} }, // CC_START       
     { {         288}, {  109} }, // CC_NEGATED     
-    { {       EOF__}, {   -1} }, // EOF__          
+    { {       EOF_}, {   -1} }, // EOF_          
     { {           0}, { -157} },                   
 };
 
-SR__ s_49[] =
+SR_ s_49[] =
 {
     { { DEF_RED}, {  1} }, 
     { {       0}, { -2} }, 
 };
 
-SR__ s_50[] =
+SR_ s_50[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -19} }, 
 };
 
-SR__ s_51[] =
+SR_ s_51[] =
 {
     { { REQ_TOKEN}, {   5} },                  
     { {       339}, { 110} }, // _stringOrIdent
@@ -726,13 +726,13 @@ SR__ s_51[] =
     { {         0}, {   0} },                  
 };
 
-SR__ s_52[] =
+SR_ s_52[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -39} }, 
 };
 
-SR__ s_53[] =
+SR_ s_53[] =
 {
     { { REQ_TOKEN}, {   5} },                  
     { {       339}, { 114} }, // _stringOrIdent
@@ -742,7 +742,7 @@ SR__ s_53[] =
     { {         0}, {   0} },                  
 };
 
-SR__ s_54[] =
+SR_ s_54[] =
 {
     { { REQ_TOKEN}, {   5} },                  
     { {       339}, { 115} }, // _stringOrIdent
@@ -752,7 +752,7 @@ SR__ s_54[] =
     { {         0}, {   0} },                  
 };
 
-SR__ s_55[] =
+SR_ s_55[] =
 {
     { { REQ_TOKEN}, {   5} },                  
     { {       339}, { 116} }, // _stringOrIdent
@@ -762,7 +762,7 @@ SR__ s_55[] =
     { {         0}, {   0} },                  
 };
 
-SR__ s_56[] =
+SR_ s_56[] =
 {
     { { REQ_TOKEN}, {   5} },                  
     { {       339}, { 117} }, // _stringOrIdent
@@ -772,7 +772,7 @@ SR__ s_56[] =
     { {         0}, {   0} },                  
 };
 
-SR__ s_57[] =
+SR_ s_57[] =
 {
     { { REQ_TOKEN}, {   5} },                  
     { {       339}, { 118} }, // _stringOrIdent
@@ -782,7 +782,7 @@ SR__ s_57[] =
     { {         0}, {   0} },                  
 };
 
-SR__ s_58[] =
+SR_ s_58[] =
 {
     { { REQ_TOKEN}, {   5} },                  
     { {       339}, { 119} }, // _stringOrIdent
@@ -792,7 +792,7 @@ SR__ s_58[] =
     { {         0}, {   0} },                  
 };
 
-SR__ s_59[] =
+SR_ s_59[] =
 {
     { { REQ_TOKEN}, {   5} },                  
     { {       339}, { 120} }, // _stringOrIdent
@@ -802,7 +802,7 @@ SR__ s_59[] =
     { {         0}, {   0} },                  
 };
 
-SR__ s_60[] =
+SR_ s_60[] =
 {
     { { REQ_TOKEN}, {   5} },                  
     { {       339}, { 121} }, // _stringOrIdent
@@ -812,7 +812,7 @@ SR__ s_60[] =
     { {         0}, {   0} },                  
 };
 
-SR__ s_61[] =
+SR_ s_61[] =
 {
     { { REQ_TOKEN}, {   5} },                  
     { {       339}, { 122} }, // _stringOrIdent
@@ -822,7 +822,7 @@ SR__ s_61[] =
     { {         0}, {   0} },                  
 };
 
-SR__ s_62[] =
+SR_ s_62[] =
 {
     { { REQ_TOKEN}, {   5} },                  
     { {       339}, { 123} }, // _stringOrIdent
@@ -832,7 +832,7 @@ SR__ s_62[] =
     { {         0}, {   0} },                  
 };
 
-SR__ s_63[] =
+SR_ s_63[] =
 {
     { { REQ_TOKEN}, {   5} },                  
     { {       339}, { 124} }, // _stringOrIdent
@@ -842,7 +842,7 @@ SR__ s_63[] =
     { {         0}, {   0} },                  
 };
 
-SR__ s_64[] =
+SR_ s_64[] =
 {
     { { REQ_TOKEN}, {   5} },                  
     { {       339}, { 125} }, // _stringOrIdent
@@ -852,7 +852,7 @@ SR__ s_64[] =
     { {         0}, {   0} },                  
 };
 
-SR__ s_65[] =
+SR_ s_65[] =
 {
     { { REQ_DEF}, {   3} },              
     { {     315}, { 126} }, // identifier
@@ -860,74 +860,74 @@ SR__ s_65[] =
     { {       0}, {  -9} },              
 };
 
-SR__ s_66[] =
+SR_ s_66[] =
 {
     { { DEF_RED}, {  1} }, 
     { {       0}, { -8} }, 
 };
 
-SR__ s_67[] =
+SR_ s_67[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -13} }, 
 };
 
-SR__ s_68[] =
+SR_ s_68[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -11} }, 
 };
 
-SR__ s_69[] =
+SR_ s_69[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -12} }, 
 };
 
-SR__ s_70[] =
+SR_ s_70[] =
 {
     { { DEF_RED}, {  1} }, 
     { {       0}, { -5} }, 
 };
 
-SR__ s_71[] =
+SR_ s_71[] =
 {
     { { DEF_RED}, {  1} }, 
     { {       0}, { -6} }, 
 };
 
-SR__ s_72[] =
+SR_ s_72[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -162} }, 
 };
 
-SR__ s_73[] =
+SR_ s_73[] =
 {
     { { REQ_TOKEN}, {   2} },          
     { {        10}, { 127} }, // '\x0a'
     { {         0}, {   0} },          
 };
 
-SR__ s_74[] =
+SR_ s_74[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -158} }, 
 };
 
-SR__ s_75[] =
+SR_ s_75[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -159} }, 
 };
 
-SR__ s_76[] =
+SR_ s_76[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -160} }, 
 };
 
-SR__ s_77[] =
+SR_ s_77[] =
 {
     { { REQ_DEF}, {    4} },          
     { {     368}, {  128} }, // action
@@ -936,7 +936,7 @@ SR__ s_77[] =
     { {       0}, { -155} },          
 };
 
-SR__ s_78[] =
+SR_ s_78[] =
 {
     { { REQ_DEF}, {    3} },         
     { {     123}, {  131} }, // '{'  
@@ -944,13 +944,13 @@ SR__ s_78[] =
     { {       0}, { -141} },         
 };
 
-SR__ s_79[] =
+SR_ s_79[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -154} }, 
 };
 
-SR__ s_80[] =
+SR_ s_80[] =
 {
     { { REQ_TOKEN}, {   7} },                 
     { {       344}, { 133} }, // _ms_specs    
@@ -962,19 +962,19 @@ SR__ s_80[] =
     { {         0}, {   0} },                 
 };
 
-SR__ s_81[] =
+SR_ s_81[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -152} }, 
 };
 
-SR__ s_82[] =
+SR_ s_82[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -67} }, 
 };
 
-SR__ s_83[] =
+SR_ s_83[] =
 {
     { { REQ_DEF}, {    3} },       
     { {     124}, {  138} }, // '|'
@@ -982,13 +982,13 @@ SR__ s_83[] =
     { {       0}, { -138} },       
 };
 
-SR__ s_84[] =
+SR_ s_84[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -139} }, 
 };
 
-SR__ s_85[] =
+SR_ s_85[] =
 {
     { { REQ_DEF}, {   32} },                   
     { {     362}, {  140} }, // _open_curly    
@@ -1025,13 +1025,13 @@ SR__ s_85[] =
     { {       0}, { -135} },                   
 };
 
-SR__ s_86[] =
+SR_ s_86[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -130} }, 
 };
 
-SR__ s_87[] =
+SR_ s_87[] =
 {
     { { REQ_TOKEN}, {  27} },                   
     { {       366}, { 147} }, // _regex         
@@ -1063,61 +1063,61 @@ SR__ s_87[] =
     { {         0}, {   0} },                   
 };
 
-SR__ s_88[] =
+SR_ s_88[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -117} }, 
 };
 
-SR__ s_89[] =
+SR_ s_89[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -118} }, 
 };
 
-SR__ s_90[] =
+SR_ s_90[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -119} }, 
 };
 
-SR__ s_91[] =
+SR_ s_91[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -120} }, 
 };
 
-SR__ s_92[] =
+SR_ s_92[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -121} }, 
 };
 
-SR__ s_93[] =
+SR_ s_93[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -122} }, 
 };
 
-SR__ s_94[] =
+SR_ s_94[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -123} }, 
 };
 
-SR__ s_95[] =
+SR_ s_95[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -124} }, 
 };
 
-SR__ s_96[] =
+SR_ s_96[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -125} }, 
 };
 
-SR__ s_97[] =
+SR_ s_97[] =
 {
     { { REQ_DEF}, {    3} },            
     { {     292}, {  148} }, // CC_PLUS 
@@ -1125,55 +1125,55 @@ SR__ s_97[] =
     { {       0}, { -126} },            
 };
 
-SR__ s_98[] =
+SR_ s_98[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -114} }, 
 };
 
-SR__ s_99[] =
+SR_ s_99[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -112} }, 
 };
 
-SR__ s_100[] =
+SR_ s_100[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -113} }, 
 };
 
-SR__ s_101[] =
+SR_ s_101[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -107} }, 
 };
 
-SR__ s_102[] =
+SR_ s_102[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -58} }, 
 };
 
-SR__ s_103[] =
+SR_ s_103[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -59} }, 
 };
 
-SR__ s_104[] =
+SR_ s_104[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -60} }, 
 };
 
-SR__ s_105[] =
+SR_ s_105[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -61} }, 
 };
 
-SR__ s_106[] =
+SR_ s_106[] =
 {
     { { REQ_TOKEN}, {  35} },                    
     { {       350}, { 150} }, // _cc_end         
@@ -1213,7 +1213,7 @@ SR__ s_106[] =
     { {         0}, {   0} },                    
 };
 
-SR__ s_107[] =
+SR_ s_107[] =
 {
     { { REQ_TOKEN}, {  35} },                    
     { {       350}, { 180} }, // _cc_end         
@@ -1253,156 +1253,156 @@ SR__ s_107[] =
     { {         0}, {   0} },                    
 };
 
-SR__ s_108[] =
+SR_ s_108[] =
 {
     { { DEF_RED}, {   2} },               
     { {     347}, { 182} }, // _m_contents
     { {       0}, { -69} },               
 };
 
-SR__ s_109[] =
+SR_ s_109[] =
 {
     { { DEF_RED}, {   2} },               
     { {     347}, { 183} }, // _m_contents
     { {       0}, { -69} },               
 };
 
-SR__ s_110[] =
+SR_ s_110[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -40} }, 
 };
 
-SR__ s_111[] =
+SR_ s_111[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -35} }, 
 };
 
-SR__ s_112[] =
+SR_ s_112[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -36} }, 
 };
 
-SR__ s_113[] =
+SR_ s_113[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -37} }, 
 };
 
-SR__ s_114[] =
+SR_ s_114[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -41} }, 
 };
 
-SR__ s_115[] =
+SR_ s_115[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -42} }, 
 };
 
-SR__ s_116[] =
+SR_ s_116[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -43} }, 
 };
 
-SR__ s_117[] =
+SR_ s_117[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -44} }, 
 };
 
-SR__ s_118[] =
+SR_ s_118[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -45} }, 
 };
 
-SR__ s_119[] =
+SR_ s_119[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -46} }, 
 };
 
-SR__ s_120[] =
+SR_ s_120[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -47} }, 
 };
 
-SR__ s_121[] =
+SR_ s_121[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -48} }, 
 };
 
-SR__ s_122[] =
+SR_ s_122[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -49} }, 
 };
 
-SR__ s_123[] =
+SR_ s_123[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -50} }, 
 };
 
-SR__ s_124[] =
+SR_ s_124[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -51} }, 
 };
 
-SR__ s_125[] =
+SR_ s_125[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -52} }, 
 };
 
-SR__ s_126[] =
+SR_ s_126[] =
 {
     { { DEF_RED}, {  1} }, 
     { {       0}, { -7} }, 
 };
 
-SR__ s_127[] =
+SR_ s_127[] =
 {
     { { DEF_RED}, {    2} },         
     { {     369}, {  184} }, // reset
     { {       0}, { -141} },         
 };
 
-SR__ s_128[] =
+SR_ s_128[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -156} }, 
 };
 
-SR__ s_129[] =
+SR_ s_129[] =
 {
     { { REQ_TOKEN}, {   2} },          
     { {        10}, { 185} }, // '\x0a'
     { {         0}, {   0} },          
 };
 
-SR__ s_130[] =
+SR_ s_130[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -140} }, 
 };
 
-SR__ s_131[] =
+SR_ s_131[] =
 {
     { { DEF_RED}, {    2} },         
     { {     369}, {  186} }, // reset
     { {       0}, { -141} },         
 };
 
-SR__ s_132[] =
+SR_ s_132[] =
 {
     { { REQ_TOKEN}, {  29} },                   
     { {       367}, { 187} }, // regexOrEOF     
@@ -1436,39 +1436,39 @@ SR__ s_132[] =
     { {         0}, {   0} },                   
 };
 
-SR__ s_133[] =
+SR_ s_133[] =
 {
     { { REQ_TOKEN}, {   2} },       
     { {        62}, { 188} }, // '>'
     { {         0}, {   0} },       
 };
 
-SR__ s_134[] =
+SR_ s_134[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -65} }, 
 };
 
-SR__ s_135[] =
+SR_ s_135[] =
 {
     { { REQ_DEF}, {   2} },       
     { {      44}, { 189} }, // ','
     { {       0}, { -66} },       
 };
 
-SR__ s_136[] =
+SR_ s_136[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -64} }, 
 };
 
-SR__ s_137[] =
+SR_ s_137[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -62} }, 
 };
 
-SR__ s_138[] =
+SR_ s_138[] =
 {
     { { REQ_TOKEN}, {  27} },                   
     { {       366}, { 190} }, // _regex         
@@ -1500,7 +1500,7 @@ SR__ s_138[] =
     { {         0}, {   0} },                   
 };
 
-SR__ s_139[] =
+SR_ s_139[] =
 {
     { { REQ_TOKEN}, {  27} },                   
     { {       366}, { 191} }, // _regex         
@@ -1532,7 +1532,7 @@ SR__ s_139[] =
     { {         0}, {   0} },                   
 };
 
-SR__ s_140[] =
+SR_ s_140[] =
 {
     { { REQ_TOKEN}, {   4} },             
     { {       358}, { 192} }, // _interval
@@ -1541,13 +1541,13 @@ SR__ s_140[] =
     { {         0}, {   0} },             
 };
 
-SR__ s_141[] =
+SR_ s_141[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -132} }, 
 };
 
-SR__ s_142[] =
+SR_ s_142[] =
 {
     { { REQ_DEF}, {   16} },                  
     { {     362}, {  140} }, // _open_curly   
@@ -1568,31 +1568,31 @@ SR__ s_142[] =
     { {       0}, { -134} },                  
 };
 
-SR__ s_143[] =
+SR_ s_143[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -116} }, 
 };
 
-SR__ s_144[] =
+SR_ s_144[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -127} }, 
 };
 
-SR__ s_145[] =
+SR_ s_145[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -128} }, 
 };
 
-SR__ s_146[] =
+SR_ s_146[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -129} }, 
 };
 
-SR__ s_147[] =
+SR_ s_147[] =
 {
     { { REQ_TOKEN}, {   5} },                
     { {       361}, { 195} }, // _close_paren
@@ -1602,7 +1602,7 @@ SR__ s_147[] =
     { {         0}, {   0} },                
 };
 
-SR__ s_148[] =
+SR_ s_148[] =
 {
     { { REQ_TOKEN}, {   7} },                  
     { {       356}, { 197} }, // characterclass
@@ -1614,7 +1614,7 @@ SR__ s_148[] =
     { {         0}, {   0} },                  
 };
 
-SR__ s_149[] =
+SR_ s_149[] =
 {
     { { REQ_TOKEN}, {   7} },                  
     { {       356}, { 198} }, // characterclass
@@ -1626,13 +1626,13 @@ SR__ s_149[] =
     { {         0}, {   0} },                  
 };
 
-SR__ s_150[] =
+SR_ s_150[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -101} }, 
 };
 
-SR__ s_151[] =
+SR_ s_151[] =
 {
     { { REQ_TOKEN}, {  34} },                    
     { {       350}, { 199} }, // _cc_end         
@@ -1671,181 +1671,181 @@ SR__ s_151[] =
     { {         0}, {   0} },                    
 };
 
-SR__ s_152[] =
+SR_ s_152[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -72} }, 
 };
 
-SR__ s_153[] =
+SR_ s_153[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -100} }, 
 };
 
-SR__ s_154[] =
+SR_ s_154[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -96} }, 
 };
 
-SR__ s_155[] =
+SR_ s_155[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -97} }, 
 };
 
-SR__ s_156[] =
+SR_ s_156[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -98} }, 
 };
 
-SR__ s_157[] =
+SR_ s_157[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -94} }, 
 };
 
-SR__ s_158[] =
+SR_ s_158[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -95} }, 
 };
 
-SR__ s_159[] =
+SR_ s_159[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -73} }, 
 };
 
-SR__ s_160[] =
+SR_ s_160[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -74} }, 
 };
 
-SR__ s_161[] =
+SR_ s_161[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -75} }, 
 };
 
-SR__ s_162[] =
+SR_ s_162[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -76} }, 
 };
 
-SR__ s_163[] =
+SR_ s_163[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -77} }, 
 };
 
-SR__ s_164[] =
+SR_ s_164[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -78} }, 
 };
 
-SR__ s_165[] =
+SR_ s_165[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -79} }, 
 };
 
-SR__ s_166[] =
+SR_ s_166[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -80} }, 
 };
 
-SR__ s_167[] =
+SR_ s_167[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -81} }, 
 };
 
-SR__ s_168[] =
+SR_ s_168[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -82} }, 
 };
 
-SR__ s_169[] =
+SR_ s_169[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -83} }, 
 };
 
-SR__ s_170[] =
+SR_ s_170[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -84} }, 
 };
 
-SR__ s_171[] =
+SR_ s_171[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -85} }, 
 };
 
-SR__ s_172[] =
+SR_ s_172[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -86} }, 
 };
 
-SR__ s_173[] =
+SR_ s_173[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -87} }, 
 };
 
-SR__ s_174[] =
+SR_ s_174[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -88} }, 
 };
 
-SR__ s_175[] =
+SR_ s_175[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -89} }, 
 };
 
-SR__ s_176[] =
+SR_ s_176[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -90} }, 
 };
 
-SR__ s_177[] =
+SR_ s_177[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -91} }, 
 };
 
-SR__ s_178[] =
+SR_ s_178[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -92} }, 
 };
 
-SR__ s_179[] =
+SR_ s_179[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -93} }, 
 };
 
-SR__ s_180[] =
+SR_ s_180[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -102} }, 
 };
 
-SR__ s_181[] =
+SR_ s_181[] =
 {
     { { REQ_TOKEN}, {  34} },                    
     { {       350}, { 201} }, // _cc_end         
@@ -1884,51 +1884,51 @@ SR__ s_181[] =
     { {         0}, {   0} },                    
 };
 
-SR__ s_182[] =
+SR_ s_182[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -70} }, 
 };
 
-SR__ s_183[] =
+SR_ s_183[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -71} }, 
 };
 
-SR__ s_184[] =
+SR_ s_184[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -161} }, 
 };
 
-SR__ s_185[] =
+SR_ s_185[] =
 {
     { { DEF_RED}, {    2} },         
     { {     369}, {  202} }, // reset
     { {       0}, { -141} },         
 };
 
-SR__ s_186[] =
+SR_ s_186[] =
 {
     { { DEF_RED}, {    2} },                            
     { {     373}, {  203} }, // _opt_msCompound_nl_rules
     { {       0}, { -148} },                            
 };
 
-SR__ s_187[] =
+SR_ s_187[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -151} }, 
 };
 
-SR__ s_188[] =
+SR_ s_188[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -68} }, 
 };
 
-SR__ s_189[] =
+SR_ s_189[] =
 {
     { { REQ_TOKEN}, {   4} },              
     { {       342}, { 204} }, // _ms_name  
@@ -1937,82 +1937,82 @@ SR__ s_189[] =
     { {         0}, {   0} },              
 };
 
-SR__ s_190[] =
+SR_ s_190[] =
 {
     { { REQ_DEF}, {    1} }, 
     { {       0}, { -136} }, 
 };
 
-SR__ s_191[] =
+SR_ s_191[] =
 {
     { { REQ_DEF}, {    2} },       
     { {     124}, {  138} }, // '|'
     { {       0}, { -137} },       
 };
 
-SR__ s_192[] =
+SR_ s_192[] =
 {
     { { REQ_TOKEN}, {   2} },       
     { {       125}, { 205} }, // '}'
     { {         0}, {   0} },       
 };
 
-SR__ s_193[] =
+SR_ s_193[] =
 {
     { { REQ_DEF}, {    2} },       
     { {      44}, {  206} }, // ','
     { {       0}, { -109} },       
 };
 
-SR__ s_194[] =
+SR_ s_194[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -108} }, 
 };
 
-SR__ s_195[] =
+SR_ s_195[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -133} }, 
 };
 
-SR__ s_196[] =
+SR_ s_196[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -115} }, 
 };
 
-SR__ s_197[] =
+SR_ s_197[] =
 {
     { { REQ_DEF}, {    1} }, 
     { {       0}, { -105} }, 
 };
 
-SR__ s_198[] =
+SR_ s_198[] =
 {
     { { REQ_DEF}, {    1} }, 
     { {       0}, { -106} }, 
 };
 
-SR__ s_199[] =
+SR_ s_199[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -103} }, 
 };
 
-SR__ s_200[] =
+SR_ s_200[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -99} }, 
 };
 
-SR__ s_201[] =
+SR_ s_201[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -104} }, 
 };
 
-SR__ s_202[] =
+SR_ s_202[] =
 {
     { { REQ_TOKEN}, {  34} },                   
     { {       376}, { 207} }, // _optMs_rule    
@@ -2051,7 +2051,7 @@ SR__ s_202[] =
     { {         0}, {   0} },                   
 };
 
-SR__ s_203[] =
+SR_ s_203[] =
 {
     { { REQ_DEF}, {   33} },                          
     { {     125}, {  209} }, // '}'                   
@@ -2089,19 +2089,19 @@ SR__ s_203[] =
     { {       0}, { -144} },                          
 };
 
-SR__ s_204[] =
+SR_ s_204[] =
 {
     { { DEF_RED}, {   1} }, 
     { {       0}, { -63} }, 
 };
 
-SR__ s_205[] =
+SR_ s_205[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -131} }, 
 };
 
-SR__ s_206[] =
+SR_ s_206[] =
 {
     { { REQ_DEF}, {    3} },            
     { {     357}, {  214} }, // _decimal
@@ -2109,39 +2109,39 @@ SR__ s_206[] =
     { {       0}, { -111} },            
 };
 
-SR__ s_207[] =
+SR_ s_207[] =
 {
     { { REQ_DEF}, {    1} }, 
     { {       0}, { -153} }, 
 };
 
-SR__ s_208[] =
+SR_ s_208[] =
 {
     { { DEF_RED}, {    2} },         
     { {     369}, {  132} }, // reset
     { {       0}, { -141} },         
 };
 
-SR__ s_209[] =
+SR_ s_209[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -150} }, 
 };
 
-SR__ s_210[] =
+SR_ s_210[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -149} }, 
 };
 
-SR__ s_211[] =
+SR_ s_211[] =
 {
     { { REQ_TOKEN}, {   2} },          
     { {        10}, { 215} }, // '\x0a'
     { {         0}, {   0} },          
 };
 
-SR__ s_212[] =
+SR_ s_212[] =
 {
     { { REQ_DEF}, {    4} },          
     { {     368}, {  216} }, // action
@@ -2150,52 +2150,52 @@ SR__ s_212[] =
     { {       0}, { -145} },          
 };
 
-SR__ s_213[] =
+SR_ s_213[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -143} }, 
 };
 
-SR__ s_214[] =
+SR_ s_214[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -110} }, 
 };
 
-SR__ s_215[] =
+SR_ s_215[] =
 {
     { { DEF_RED}, {    2} },         
     { {     369}, {  218} }, // reset
     { {       0}, { -141} },         
 };
 
-SR__ s_216[] =
+SR_ s_216[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -146} }, 
 };
 
-SR__ s_217[] =
+SR_ s_217[] =
 {
     { { REQ_TOKEN}, {   2} },          
     { {        10}, { 219} }, // '\x0a'
     { {         0}, {   0} },          
 };
 
-SR__ s_218[] =
+SR_ s_218[] =
 {
     { { DEF_RED}, {    1} }, 
     { {       0}, { -147} }, 
 };
 
-SR__ s_219[] =
+SR_ s_219[] =
 {
     { { DEF_RED}, {    2} },         
     { {     369}, {  220} }, // reset
     { {       0}, { -141} },         
 };
 
-SR__ s_220[] =
+SR_ s_220[] =
 {
     { { REQ_TOKEN}, {  30} },                          
     { {       370}, { 221} }, // _msCompound_regex_list
@@ -2230,7 +2230,7 @@ SR__ s_220[] =
     { {         0}, {   0} },                          
 };
 
-SR__ s_221[] =
+SR_ s_221[] =
 {
     { { REQ_DEF}, {    1} }, 
     { {       0}, { -142} }, 
@@ -2238,7 +2238,7 @@ SR__ s_221[] =
 
 
 // State array:
-SR__ *s_state[] =
+SR_ *s_state[] =
 {
   s_0,  s_1,  s_2,  s_3,  s_4,  s_5,  s_6,  s_7,  s_8,  s_9,
   s_10,  s_11,  s_12,  s_13,  s_14,  s_15,  s_16,  s_17,  s_18,  s_19,
@@ -2270,9 +2270,9 @@ typedef SMap::value_type SMapVal;
 
 SMapVal s_symArr[] =
 {
-    SMapVal(-2, "Reserved__::UNDETERMINED__"),  // predefined symbols
-    SMapVal(-1, "Reserved__::EOF__"),
-    SMapVal(256, "errTok__"),
+    SMapVal(-2, "Reserved_::UNDETERMINED_"),  // predefined symbols
+    SMapVal(-1, "Reserved_::EOF_"),
+    SMapVal(256, "errTok_"),
 
     SMapVal(257, "EXCL_START_CONDITION"),
     SMapVal(258, "INCL_START_CONDITION"),
@@ -2393,12 +2393,12 @@ SMap s_symbol
 
 
 // $insert polymorphicCode
-namespace Meta__
+namespace Meta_
 {
 
 size_t const *t_nErrors;
 // $insert idoftag
-char const *idOfTag__[] = {
+char const *idOfTag_[] = {
     "INTERVAL",
     "VECTOR",
     "PATTERN",
@@ -2408,12 +2408,12 @@ char const *idOfTag__[] = {
     "<undefined>"
 };
 
-size_t const *s_nErrors__;
+size_t const *s_nErrors_;
 
 Base::~Base()
 {}
 
-}   // namespace Meta__
+}   // namespace Meta_
 
 // If the parsing function call (i.e., parse()' needs arguments, then provide
 // an overloaded function.  The code below doesn't rely on parameters, so no
@@ -2425,47 +2425,47 @@ Base::~Base()
 // base/base1
 ParserBase::ParserBase()
 :
-    d_token(Reserved__::UNDETERMINED__),
+    d_token(Reserved_::UNDETERMINED_),
     // $insert baseclasscode
-    d_requiredTokens__(0)
+    d_requiredTokens_(0)
 {
-    Meta__::t_nErrors = &d_nErrors__;
+    Meta_::t_nErrors = &d_nErrors_;
 }
 
 // base/clearin
-void ParserBase::clearin__()
+void ParserBase::clearin_()
 {
-    d_nErrors__ = 0;
+    d_nErrors_ = 0;
     d_stackIdx = -1;
     d_stateStack.clear();
-    d_token = Reserved__::UNDETERMINED__;
-    d_next = TokenPair{ Reserved__::UNDETERMINED__, STYPE__{} };
+    d_token = Reserved_::UNDETERMINED_;
+    d_next = TokenPair{ Reserved_::UNDETERMINED_, STYPE_{} };
     d_recovery = false;
-    d_acceptedTokens__ = d_requiredTokens__;
-    d_val__ = STYPE__{};
+    d_acceptedTokens_ = d_requiredTokens_;
+    d_val_ = STYPE_{};
 
-    push__(0);
+    push_(0);
 }
 
 // base/debugfunctions
 // $insert debugfunctions
-std::ostringstream ParserBase::s_out__;
-std::ostream &ParserBase::dflush__(std::ostream &out)
+std::ostringstream ParserBase::s_out_;
+std::ostream &ParserBase::dflush_(std::ostream &out)
 {
-    std::ostringstream &s_out__ = dynamic_cast<std::ostringstream &>(out);
+    std::ostringstream &s_out_ = dynamic_cast<std::ostringstream &>(out);
 
-    std::cout << "    " << s_out__.str() << std::flush;
-    s_out__.clear();
-    s_out__.str("");
+    std::cout << "    " << s_out_.str() << std::flush;
+    s_out_.clear();
+    s_out_.str("");
     return out;
 }
 
-std::string ParserBase::stype__(char const *pre, 
-                 STYPE__ const &semVal, char const *post) const
+std::string ParserBase::stype_(char const *pre, 
+                 STYPE_ const &semVal, char const *post) const
 {
     return "";
 }
-std::string ParserBase::symbol__(int value) const
+std::string ParserBase::symbol_(int value) const
 {
     using namespace std;
     ostringstream ostr;
@@ -2483,35 +2483,35 @@ std::string ParserBase::symbol__(int value) const
 
 void ParserBase::setDebug(bool mode)
 {
-    d_actionCases__ = false;
-    d_debug__ = mode;
+    d_actionCases_ = false;
+    d_debug_ = mode;
 }
 
-void ParserBase::setDebug(DebugMode__ mode)
+void ParserBase::setDebug(DebugMode_ mode)
 {
-    d_actionCases__ = mode & ACTIONCASES;
-    d_debug__ =       mode & ON;
+    d_actionCases_ = mode & ACTIONCASES;
+    d_debug_ =       mode & ON;
 }
 
 // base/lex
-void ParserBase::lex__(int token)
+void ParserBase::lex_(int token)
 {
     d_token = token;
 
     if (d_token <= 0)
-        d_token = Reserved__::EOF__;
+        d_token = Reserved_::EOF_;
 
     d_terminalToken = true;
 }
 
 // base/lookup
-int ParserBase::lookup__() const
+int ParserBase::lookup_() const
 {
     // if the final transition is negative, then we should reduce by the rule
     // given by its positive value.
 
-    SR__ const *sr = s_state[d_state];
-    SR__ const *last = sr + sr->d_lastIdx;
+    SR_ const *sr = s_state[d_state];
+    SR_ const *last = sr + sr->d_lastIdx;
 
     for ( ; ++sr != last; )           // visit all but the last SR entries
     {
@@ -2524,13 +2524,13 @@ int ParserBase::lookup__() const
         if (sr->d_action < 0)   // default reduction
         {
             // $insert debug
-            if (d_debug__)
-                s_out__ <<  "\nLOOKUP: [" << state__() << ", " << symbol__(d_token) << "] -> default reduce using rule " << -sr->d_action << '\n' << dflush__;
+            if (d_debug_)
+                s_out_ <<  "\nLOOKUP: [" << state_() << ", " << symbol_(d_token) << "] -> default reduce using rule " << -sr->d_action << '\n' << dflush_;
             return sr->d_action;                
         }
 
         // No default reduction, so token not found, so error.
-        throw UNEXPECTED_TOKEN__;
+        throw UNEXPECTED_TOKEN_;
     }
 
     // not at the last element: inspect the nature of the action
@@ -2539,35 +2539,35 @@ int ParserBase::lookup__() const
     int action = sr->d_action;
 
 // $insert debuglookup
-    if (d_debug__)
+    if (d_debug_)
     {
-        s_out__ <<  "encountered " << symbol__(token__()) << " in state " <<
-                    state__() << ": ";
+        s_out_ <<  "encountered " << symbol_(token_()) << " in state " <<
+                    state_() << ": ";
     
         if (action < 0)             // a reduction was found
-            s_out__ << ": reducing by rule " << -action;
+            s_out_ << ": reducing by rule " << -action;
         else if (action == 0)
-            s_out__ <<  "ACCEPT";
+            s_out_ <<  "ACCEPT";
         else
-            s_out__ <<  "next state: " << action;
+            s_out_ <<  "next state: " << action;
     
-        s_out__ << '\n' << dflush__;
+        s_out_ << '\n' << dflush_;
     }
 
     return action;
 }
 
 // base/pop
-void ParserBase::pop__(size_t count)
+void ParserBase::pop_(size_t count)
 {
     // $insert debug
-    if (d_debug__)
-        s_out__ <<  "pop " << count << " elements from the stack having size " << stackSize__() << '\n' << dflush__;
+    if (d_debug_)
+        s_out_ <<  "pop " << count << " elements from the stack having size " << stackSize_() << '\n' << dflush_;
     if (d_stackIdx < static_cast<int>(count))
     {
         // $insert debug
-        if (d_debug__)
-            s_out__ <<  "Terminating parse(): state stack underflow  at token " << symbol__(d_token) << '\n' << dflush__;
+        if (d_debug_)
+            s_out_ <<  "Terminating parse(): state stack underflow  at token " << symbol_(d_token) << '\n' << dflush_;
         ABORT();
     }
 
@@ -2576,102 +2576,102 @@ void ParserBase::pop__(size_t count)
     d_vsp = &d_stateStack[d_stackIdx];
 
     // $insert debug
-    if (d_debug__)
-        s_out__ <<  "next: [" << state__() << ", " << symbol__(d_token) << ']' << stype__(". Semantic: ", vs__(0)) << '\n' << dflush__;
+    if (d_debug_)
+        s_out_ <<  "next: [" << state_() << ", " << symbol_(d_token) << ']' << stype_(". Semantic: ", vs_(0)) << '\n' << dflush_;
 }
 
 // base/poptoken
-void ParserBase::popToken__()
+void ParserBase::popToken_()
 {
     d_token = d_next.first;
-    d_val__ = std::move(d_next.second);
+    d_val_ = std::move(d_next.second);
 
-    d_next.first = Reserved__::UNDETERMINED__;
+    d_next.first = Reserved_::UNDETERMINED_;
 }
 
 // base/push
-void ParserBase::push__(size_t state)
+void ParserBase::push_(size_t state)
 {
     size_t currentSize = d_stateStack.size();
-    if (stackSize__() == currentSize)
+    if (stackSize_() == currentSize)
     {
-        size_t newSize = currentSize + STACK_EXPANSION__;
+        size_t newSize = currentSize + STACK_EXPANSION_;
         d_stateStack.resize(newSize);
     }
 
     ++d_stackIdx;
     d_stateStack[d_stackIdx] = 
-                    StatePair{ d_state = state, std::move(d_val__) };
+                    StatePair{ d_state = state, std::move(d_val_) };
 
     d_vsp = &d_stateStack[d_stackIdx];
 
     if (d_stackIdx == 0)
     {
     // $insert debug
-    if (d_debug__)
-        s_out__ <<   "\nPUSH 0 (initializing the state stack)" << '\n' << dflush__;
+    if (d_debug_)
+        s_out_ <<   "\nPUSH 0 (initializing the state stack)" << '\n' << dflush_;
     }
     else
     {
     // $insert debug
-    if (d_debug__)
-        s_out__ <<   "\nPUSH:   [" << (d_vsp - 1)->first << ", " << symbol__(d_token) << "] -> " << state << stype__(" (semantic TOS = ", d_val__, ")") << '\n' << dflush__;
+    if (d_debug_)
+        s_out_ <<   "\nPUSH:   [" << (d_vsp - 1)->first << ", " << symbol_(d_token) << "] -> " << state << stype_(" (semantic TOS = ", d_val_, ")") << '\n' << dflush_;
     }
 }
 
 // base/pushtoken
-void ParserBase::pushToken__(int token)
+void ParserBase::pushToken_(int token)
 {
-    d_next = TokenPair{ d_token, std::move(d_val__) };
+    d_next = TokenPair{ d_token, std::move(d_val_) };
     d_token = token;
 }
 
 // base/redotoken
-void ParserBase::redoToken__()
+void ParserBase::redoToken_()
 {
-    if (d_token != Reserved__::UNDETERMINED__)
-        pushToken__(d_token);
+    if (d_token != Reserved_::UNDETERMINED_)
+        pushToken_(d_token);
 }
 
 // base/reduce
-void ParserBase::reduce__(int rule)
+void ParserBase::reduce_(int rule)
 {
-    PI__ const &pi = s_productionInfo[rule];
+    PI_ const &pi = s_productionInfo[rule];
 
     d_token = pi.d_nonTerm;
     // $insert debug
-    if (d_debug__)
-        s_out__ <<  "rule " << (&pi - s_productionInfo) << ": pop " << pi.d_size << " elements. Next will be: [" << d_stateStack[d_stackIdx - pi.d_size].first << ", " << symbol__(d_token) << ']' << '\n' << dflush__;
-    pop__(pi.d_size);
+    if (d_debug_)
+        s_out_ <<  "rule " << (&pi - s_productionInfo) << ": pop " << pi.d_size << " elements. Next will be: [" << d_stateStack[d_stackIdx - pi.d_size].first << ", " << symbol_(d_token) << ']' << '\n' << dflush_;
+    pop_(pi.d_size);
 
     d_terminalToken = false;
 }
 
 // base/shift
-void ParserBase::shift__(int action)
+void ParserBase::shift_(int action)
 {
-    push__(action);
-    popToken__();               // token processed
+    push_(action);
+    popToken_();               // token processed
 
     if (d_recovery and d_terminalToken)
     {
         // $insert debug
-        if (d_debug__)
-            s_out__ <<  "ERROR RECOVERED: next state " << action << '\n' << dflush__;
+        if (d_debug_)
+            s_out_ <<  "ERROR RECOVERED: next state " << action << '\n' << dflush_;
         d_recovery = false;
-        d_acceptedTokens__ = 0;
+        d_acceptedTokens_ = 0;
     }
 }
 
 // base/startrecovery
-void ParserBase::startRecovery__()
+void ParserBase::startRecovery_()
 {
     int lastToken = d_token;                    // give the unexpected token a
                                                 // chance to be processed
                                                 // again.
 
-    pushToken__(errTok__);                       // specify errTok__ as next token
-    push__(lookup__());                         // push the error state
+    pushToken_(errTok_);                       // specify errTok_ as next token
+    push_(lookup_());                         // push the error state
 
     d_token = lastToken;                        // reactivate the unexpected
                                                 // token (we're now in an
@@ -2681,13 +2681,13 @@ void ParserBase::startRecovery__()
 }
 
 // base/top
-inline size_t ParserBase::top__() const
+inline size_t ParserBase::top_() const
 {
     return d_stateStack[d_stackIdx].first;
 }
 
 // derived/errorrecovery
-void Parser::errorRecovery__()
+void Parser::errorRecovery_()
 {
     // When an error has occurred, pop elements off the stack until the top
     // state has an error-item. If none is found, the default recovery
@@ -2698,48 +2698,48 @@ void Parser::errorRecovery__()
     // (i.e., parsing terminates)
 
     // $insert debug
-    if (d_debug__)
-        s_out__ <<  "\nERROR:  [" << top__() << ", " << symbol__(token__()) << "] -> ??. Errors: " << (d_nErrors__ + 1) << '\n' << dflush__;
+    if (d_debug_)
+        s_out_ <<  "\nERROR:  [" << top_() << ", " << symbol_(token_()) << "] -> ??. Errors: " << (d_nErrors_ + 1) << '\n' << dflush_;
 
 
-    if (d_acceptedTokens__ >= d_requiredTokens__)// only generate an error-
+    if (d_acceptedTokens_ >= d_requiredTokens_)// only generate an error-
     {                                           // message if enough tokens 
-        ++d_nErrors__;                          // were accepted. Otherwise
+        ++d_nErrors_;                          // were accepted. Otherwise
         error();                                // simply skip input
     }
 
     // get the error state
-    while (not (s_state[top__()][0].d_type & ERR_ITEM))
+    while (not (s_state[top_()][0].d_type & ERR_ITEM))
     {
         // $insert debug
-        if (d_debug__)
-            s_out__ <<  "pop state: " << top__() << " (not an ERROR state)" << '\n' << dflush__;
-        pop__();
+        if (d_debug_)
+            s_out_ <<  "pop state: " << top_() << " (not an ERROR state)" << '\n' << dflush_;
+        pop_();
     }
     // $insert debug
-    if (d_debug__)
-        s_out__ <<  "Reached ERROR state " << top__() << '\n' << dflush__;
+    if (d_debug_)
+        s_out_ <<  "Reached ERROR state " << top_() << '\n' << dflush_;
 
     // In the error state, looking up a token allows us to proceed.
     // Continuation may be require multiple reductions, but eventually a
-    // terminal-token shift is used. See nextCycle__ for details.
+    // terminal-token shift is used. See nextCycle_ for details.
 
-    startRecovery__();
+    startRecovery_();
 }
 
 // derived/executeaction
-void Parser::executeAction__(int production)
+void Parser::executeAction_(int production)
 try
 {
-    if (token__() != Reserved__::UNDETERMINED__)
-        pushToken__(token__());     // save an already available token
+    if (token_() != Reserved_::UNDETERMINED_)
+        pushToken_(token_());     // save an already available token
     // $insert debug
-    if (d_debug__)
-        s_out__ <<  "execute action " << production << " ..." << '\n' << dflush__;
+    if (d_debug_)
+        s_out_ <<  "execute action " << production << " ..." << '\n' << dflush_;
 // $insert executeactioncases
 
-    if (d_actionCases__)
-        s_out__ << "executeAction case " << production << '\n' << dflush__;
+    if (d_actionCases_)
+        s_out_ << "executeAction case " << production << '\n' << dflush_;
     switch (production)
     {
         // $insert actioncases
@@ -2756,7 +2756,7 @@ try
         case 3:
 #line 98 "grammar"
         {
-         d_val__ = d_matched;
+         d_val_ = d_matched;
          }
         break;
 
@@ -2784,14 +2784,14 @@ try
         case 7:
 #line 23 "inc/directives"
         {
-         d_rules.defineStartCondition(vs__(0).get<Tag__::STRING>());
+         d_rules.defineStartCondition(vs_(0).get<Tag_::STRING>());
          }
         break;
 
         case 8:
 #line 28 "inc/directives"
         {
-         d_rules.defineStartCondition(vs__(0).get<Tag__::STRING>());
+         d_rules.defineStartCondition(vs_(0).get<Tag_::STRING>());
          }
         break;
 
@@ -2799,28 +2799,28 @@ try
 #line 40 "inc/directives"
         {
          d_scanner.newDefinition(); 
-         d_val__ = d_scanner.matched();
+         d_val_ = d_scanner.matched();
          }
         break;
 
         case 11:
 #line 48 "inc/directives"
         {
-         d_val__ = TextType::STRING;
+         d_val_ = TextType::STRING;
          }
         break;
 
         case 12:
 #line 53 "inc/directives"
         {
-         d_val__ = rawString();
+         d_val_ = rawString();
          }
         break;
 
         case 13:
 #line 60 "inc/directives"
         {
-         d_scanner.addDefinition(vs__(-1).get<Tag__::STRING>(), vs__(0).get<Tag__::TEXTTYPE>());
+         d_scanner.addDefinition(vs_(-1).get<Tag_::STRING>(), vs_(0).get<Tag_::TEXTTYPE>());
          }
         break;
 
@@ -2918,112 +2918,112 @@ try
         case 35:
 #line 94 "inc/options"
         {
-         d_val__ = TextType::STRING;
+         d_val_ = TextType::STRING;
          }
         break;
 
         case 36:
 #line 99 "inc/options"
         {
-         d_val__ = TextType::IDENT;
+         d_val_ = TextType::IDENT;
          }
         break;
 
         case 37:
 #line 104 "inc/options"
         {
-         d_val__ = rawString();
+         d_val_ = rawString();
          }
         break;
 
         case 40:
 #line 117 "inc/options"
         {
-         d_options.setInputInterfacePath(vs__(0).get<Tag__::TEXTTYPE>());
+         d_options.setInputInterfacePath(vs_(0).get<Tag_::TEXTTYPE>());
          }
         break;
 
         case 41:
 #line 122 "inc/options"
         {
-         d_options.setInputImplementationPath(vs__(0).get<Tag__::TEXTTYPE>());
+         d_options.setInputImplementationPath(vs_(0).get<Tag_::TEXTTYPE>());
          }
         break;
 
         case 42:
 #line 127 "inc/options"
         {
-         d_options.setClassName(vs__(0).get<Tag__::TEXTTYPE>());
+         d_options.setClassName(vs_(0).get<Tag_::TEXTTYPE>());
          }
         break;
 
         case 43:
 #line 132 "inc/options"
         {
-         d_options.setFilenames(vs__(0).get<Tag__::TEXTTYPE>());
+         d_options.setFilenames(vs_(0).get<Tag_::TEXTTYPE>());
          }
         break;
 
         case 44:
 #line 137 "inc/options"
         {
-         d_options.setLexFunctionName(vs__(0).get<Tag__::TEXTTYPE>());
+         d_options.setLexFunctionName(vs_(0).get<Tag_::TEXTTYPE>());
          }
         break;
 
         case 45:
 #line 142 "inc/options"
         {
-         d_options.setBaseClassHeader(vs__(0).get<Tag__::TEXTTYPE>());
+         d_options.setBaseClassHeader(vs_(0).get<Tag_::TEXTTYPE>());
          }
         break;
 
         case 46:
 #line 147 "inc/options"
         {
-         d_options.setClassHeader(vs__(0).get<Tag__::TEXTTYPE>());
+         d_options.setClassHeader(vs_(0).get<Tag_::TEXTTYPE>());
          }
         break;
 
         case 47:
 #line 152 "inc/options"
         {
-         d_options.setImplementationHeader(vs__(0).get<Tag__::TEXTTYPE>());
+         d_options.setImplementationHeader(vs_(0).get<Tag_::TEXTTYPE>());
          }
         break;
 
         case 48:
 #line 157 "inc/options"
         {
-         d_options.setLexSource(vs__(0).get<Tag__::TEXTTYPE>());
+         d_options.setLexSource(vs_(0).get<Tag_::TEXTTYPE>());
          }
         break;
 
         case 49:
 #line 162 "inc/options"
         {
-         d_options.setSkeletonDirectory(vs__(0).get<Tag__::TEXTTYPE>());
+         d_options.setSkeletonDirectory(vs_(0).get<Tag_::TEXTTYPE>());
          }
         break;
 
         case 50:
 #line 167 "inc/options"
         {
-         d_options.setStartConditionName(vs__(0).get<Tag__::TEXTTYPE>());
+         d_options.setStartConditionName(vs_(0).get<Tag_::TEXTTYPE>());
          }
         break;
 
         case 51:
 #line 172 "inc/options"
         {
-         d_options.setTargetDirectory(vs__(0).get<Tag__::TEXTTYPE>());
+         d_options.setTargetDirectory(vs_(0).get<Tag_::TEXTTYPE>());
          }
         break;
 
         case 52:
 #line 177 "inc/options"
         {
-         d_options.setNameSpace(vs__(0).get<Tag__::TEXTTYPE>());
+         d_options.setNameSpace(vs_(0).get<Tag_::TEXTTYPE>());
          }
         break;
 
@@ -3065,7 +3065,7 @@ try
         case 62:
 #line 3 "inc/msspec"
         {
-         d_rules.addStartCondition(vs__(0).get<Tag__::STRING>());
+         d_rules.addStartCondition(vs_(0).get<Tag_::STRING>());
          }
         break;
 
@@ -3102,14 +3102,14 @@ try
         case 70:
 #line 10 "inc/characterclass"
         {
-         d_val__ = CharClass(d_matched, 1); 
+         d_val_ = CharClass(d_matched, 1); 
          }
         break;
 
         case 71:
 #line 18 "inc/characterclass"
         { 
-         d_val__ = CharClass(d_matched, 2); 
+         d_val_ = CharClass(d_matched, 2); 
          }
         break;
 
@@ -3123,116 +3123,116 @@ try
         case 96:
 #line 83 "inc/characterclass"
         {
-         d_val__ = CharClass::chars(d_matched);
+         d_val_ = CharClass::chars(d_matched);
          }
         break;
 
         case 97:
 #line 88 "inc/characterclass"
         {
-         d_val__ = CharClass::predefined(d_matched);
+         d_val_ = CharClass::predefined(d_matched);
          }
         break;
 
         case 98:
 #line 93 "inc/characterclass"
         {
-         d_val__ = CharClass::chars(d_matched);
+         d_val_ = CharClass::chars(d_matched);
          }
         break;
 
         case 99:
 #line 100 "inc/characterclass"
         {
-         d_val__ = vs__(-1).get<Tag__::VECTOR>();
-         d_val__.get<Tag__::VECTOR>().push_back(vs__(0).get<Tag__::STRING>());
+         d_val_ = vs_(-1).get<Tag_::VECTOR>();
+         d_val_.get<Tag_::VECTOR>().push_back(vs_(0).get<Tag_::STRING>());
          }
         break;
 
         case 100:
 #line 106 "inc/characterclass"
         {
-         d_val__ = vector<string>(1, vs__(0).get<Tag__::STRING>());
+         d_val_ = vector<string>(1, vs_(0).get<Tag_::STRING>());
          }
         break;
 
         case 101:
 #line 113 "inc/characterclass"
         {
-         d_val__ = vs__(-1).get<Tag__::CHARCLASS>();
+         d_val_ = vs_(-1).get<Tag_::CHARCLASS>();
          }
         break;
 
         case 102:
 #line 118 "inc/characterclass"
         {
-         d_val__ = vs__(-1).get<Tag__::CHARCLASS>();
-         d_val__.get<Tag__::CHARCLASS>().negate();
+         d_val_ = vs_(-1).get<Tag_::CHARCLASS>();
+         d_val_.get<Tag_::CHARCLASS>().negate();
          }
         break;
 
         case 103:
 #line 124 "inc/characterclass"
         {
-         d_val__ = vs__(-2).get<Tag__::CHARCLASS>();
-         d_val__.get<Tag__::CHARCLASS>().append(vs__(-1).get<Tag__::VECTOR>());
+         d_val_ = vs_(-2).get<Tag_::CHARCLASS>();
+         d_val_.get<Tag_::CHARCLASS>().append(vs_(-1).get<Tag_::VECTOR>());
          }
         break;
 
         case 104:
 #line 130 "inc/characterclass"
         {
-         d_val__ = vs__(-2).get<Tag__::CHARCLASS>();
-         d_val__.get<Tag__::CHARCLASS>().negate(vs__(-1).get<Tag__::VECTOR>());
+         d_val_ = vs_(-2).get<Tag_::CHARCLASS>();
+         d_val_.get<Tag_::CHARCLASS>().negate(vs_(-1).get<Tag_::VECTOR>());
          }
         break;
 
         case 105:
 #line 138 "inc/characterclass"
         {
-         d_val__ = CharClass::unite(vs__(-2).get<Tag__::CHARCLASS>(), vs__(0).get<Tag__::CHARCLASS>());
+         d_val_ = CharClass::unite(vs_(-2).get<Tag_::CHARCLASS>(), vs_(0).get<Tag_::CHARCLASS>());
          }
         break;
 
         case 106:
 #line 143 "inc/characterclass"
         {
-         d_val__ = CharClass::difference(vs__(-2).get<Tag__::CHARCLASS>(), vs__(0).get<Tag__::CHARCLASS>());
+         d_val_ = CharClass::difference(vs_(-2).get<Tag_::CHARCLASS>(), vs_(0).get<Tag_::CHARCLASS>());
          }
         break;
 
         case 107:
 #line 148 "inc/characterclass"
         {
-         d_val__ = vs__(0).get<Tag__::CHARCLASS>();
+         d_val_ = vs_(0).get<Tag_::CHARCLASS>();
          }
         break;
 
         case 108:
 #line 3 "inc/regexoreof"
         {
-         d_val__ = d_matched;
+         d_val_ = d_matched;
          }
         break;
 
         case 109:
 #line 10 "inc/regexoreof"
         {
-         d_val__ = Interval::exact(vs__(0).get<Tag__::STRING>());
+         d_val_ = Interval::exact(vs_(0).get<Tag_::STRING>());
          }
         break;
 
         case 110:
 #line 15 "inc/regexoreof"
         {
-         d_val__ = Interval::range(vs__(-2).get<Tag__::STRING>(), vs__(0).get<Tag__::STRING>());
+         d_val_ = Interval::range(vs_(-2).get<Tag_::STRING>(), vs_(0).get<Tag_::STRING>());
          }
         break;
 
         case 111:
 #line 20 "inc/regexoreof"
         {
-         d_val__ = Interval::lowerBound(vs__(-1).get<Tag__::STRING>());
+         d_val_ = Interval::lowerBound(vs_(-1).get<Tag_::STRING>());
          }
         break;
 
@@ -3260,70 +3260,70 @@ try
         case 117:
 #line 54 "inc/regexoreof"
         {
-         d_val__ = boln();
+         d_val_ = boln();
          }
         break;
 
         case 118:
 #line 59 "inc/regexoreof"
         {
-         d_val__ = dollar();
+         d_val_ = dollar();
          }
         break;
 
         case 119:
 #line 64 "inc/regexoreof"
         {
-         d_val__ = eolnDollar();
+         d_val_ = eolnDollar();
          }
         break;
 
         case 120:
 #line 69 "inc/regexoreof"
         {
-         d_val__ = str();
+         d_val_ = str();
          }
         break;
 
         case 121:
 #line 74 "inc/regexoreof"
         {
-         d_val__ = rawText(d_scanner.rawStringContents());
+         d_val_ = rawText(d_scanner.rawStringContents());
          }
         break;
 
         case 122:
 #line 79 "inc/regexoreof"
         { 
-         d_val__ = quotes();
+         d_val_ = quotes();
          }
         break;
 
         case 123:
 #line 84 "inc/regexoreof"
         {
-         d_val__ = escape();
+         d_val_ = escape();
          }
         break;
 
         case 124:
 #line 89 "inc/regexoreof"
         {
-         d_val__ = Pattern::dot(d_states);
+         d_val_ = Pattern::dot(d_states);
          }
         break;
 
         case 125:
 #line 94 "inc/regexoreof"
         {
-         d_val__ = rawText();
+         d_val_ = rawText();
          }
         break;
 
         case 126:
 #line 99 "inc/regexoreof"
         {
-         d_val__ = Pattern::characterClass(d_states, vs__(0).get<Tag__::CHARCLASS>());
+         d_val_ = Pattern::characterClass(d_states, vs_(0).get<Tag_::CHARCLASS>());
          }
         break;
 
@@ -3331,35 +3331,35 @@ try
 #line 114 "inc/regexoreof"
         {
          Options::regexCall("unit");
-         d_val__ = vs__(0).get<Tag__::PATTERN>(); 
+         d_val_ = vs_(0).get<Tag_::PATTERN>(); 
          }
         break;
 
         case 131:
 #line 120 "inc/regexoreof"
         {
-         d_val__ = interval(vs__(-3).get<Tag__::PATTERN>(), vs__(-1).get<Tag__::INTERVAL>());
+         d_val_ = interval(vs_(-3).get<Tag_::PATTERN>(), vs_(-1).get<Tag_::INTERVAL>());
          }
         break;
 
         case 132:
 #line 125 "inc/regexoreof"
         {
-         d_val__ = Pattern::quantifier(d_states, vs__(-1).get<Tag__::PATTERN>(), d_matched[0]);
+         d_val_ = Pattern::quantifier(d_states, vs_(-1).get<Tag_::PATTERN>(), d_matched[0]);
          }
         break;
 
         case 133:
 #line 130 "inc/regexoreof"
         {
-         d_val__ = vs__(-1).get<Tag__::PATTERN>();
+         d_val_ = vs_(-1).get<Tag_::PATTERN>();
          }
         break;
 
         case 134:
 #line 135 "inc/regexoreof"
         {
-         d_val__ = Pattern::concatenate(d_states, vs__(-1).get<Tag__::PATTERN>(), vs__(0).get<Tag__::PATTERN>());
+         d_val_ = Pattern::concatenate(d_states, vs_(-1).get<Tag_::PATTERN>(), vs_(0).get<Tag_::PATTERN>());
          }
         break;
 
@@ -3367,35 +3367,35 @@ try
 #line 147 "inc/regexoreof"
         {
          Options::regexCall("regex-unit");
-         d_val__ = vs__(0).get<Tag__::PATTERN>();
+         d_val_ = vs_(0).get<Tag_::PATTERN>();
          }
         break;
 
         case 136:
 #line 153 "inc/regexoreof"
         { 
-         d_val__ = Pattern::alternatives(d_states, vs__(-2).get<Tag__::PATTERN>(), vs__(0).get<Tag__::PATTERN>());
+         d_val_ = Pattern::alternatives(d_states, vs_(-2).get<Tag_::PATTERN>(), vs_(0).get<Tag_::PATTERN>());
          }
         break;
 
         case 137:
 #line 158 "inc/regexoreof"
         {
-         d_val__ = lookahead(vs__(-2).get<Tag__::PATTERN>(), vs__(0).get<Tag__::PATTERN>());
+         d_val_ = lookahead(vs_(-2).get<Tag_::PATTERN>(), vs_(0).get<Tag_::PATTERN>());
          }
         break;
 
         case 138:
 #line 165 "inc/regexoreof"
         {
-         d_val__ = vs__(0).get<Tag__::PATTERN>();
+         d_val_ = vs_(0).get<Tag_::PATTERN>();
          }
         break;
 
         case 139:
 #line 170 "inc/regexoreof"
         {
-         d_val__ = Pattern::eof(d_states);
+         d_val_ = Pattern::eof(d_states);
          }
         break;
 
@@ -3423,7 +3423,7 @@ try
         case 143:
 #line 10 "inc/mscompound"
         {
-         addRule(vs__(0).get<Tag__::PATTERN>());
+         addRule(vs_(0).get<Tag_::PATTERN>());
          }
         break;
 
@@ -3451,14 +3451,14 @@ try
         case 151:
 #line 4 "inc/optmsrule"
         {
-         d_val__ = vs__(0).get<Tag__::PATTERN>();
+         d_val_ = vs_(0).get<Tag_::PATTERN>();
          }
         break;
 
         case 152:
 #line 9 "inc/optmsrule"
         {
-         d_val__ = vs__(0).get<Tag__::PATTERN>();
+         d_val_ = vs_(0).get<Tag_::PATTERN>();
          }
         break;
 
@@ -3472,7 +3472,7 @@ try
         case 154:
 #line 28 "inc/optmsrule"
         {
-         addRule(vs__(0).get<Tag__::PATTERN>(), true); 
+         addRule(vs_(0).get<Tag_::PATTERN>(), true); 
          }
         break;
 
@@ -3485,8 +3485,8 @@ try
 
     }
     // $insert debug
-    if (d_debug__)
-        s_out__ <<  "... completed" << stype__(", semantic: ", vs__(0)) << '\n' << dflush__;
+    if (d_debug_)
+        s_out_ <<  "... completed" << stype_(", semantic: ", vs_(0)) << '\n' << dflush_;
 }
 catch (std::exception const &exc)
 {
@@ -3494,91 +3494,91 @@ catch (std::exception const &exc)
 }
 
 // derived/nextcycle
-void Parser::nextCycle__()
+void Parser::nextCycle_()
 try
 {
-    if (s_state[state__()]->d_type & REQ_TOKEN)
-        nextToken__();              // obtain next token
+    if (s_state[state_()]->d_type & REQ_TOKEN)
+        nextToken_();              // obtain next token
 
 
-    int action = lookup__();        // lookup d_token in d_state
+    int action = lookup_();        // lookup d_token in d_state
 
     if (action > 0)                 // SHIFT: push a new state
     {
-        shift__(action);
+        shift_(action);
         return;
     }
 
     if (action < 0)            // REDUCE: execute and pop.
     {
         // $insert debug
-        if (d_debug__)
-            s_out__ <<  "\nREDUCE: rule " << -action << '\n' << dflush__;
+        if (d_debug_)
+            s_out_ <<  "\nREDUCE: rule " << -action << '\n' << dflush_;
 
-        if (recovery__())
-            redoToken__();
+        if (recovery_())
+            redoToken_();
         else
-            executeAction__(-action);
+            executeAction_(-action);
                                             // next token is the rule's LHS
-        reduce__(-action); 
+        reduce_(-action); 
         return;
     }
 
-    if (recovery__())
+    if (recovery_())
         ABORT();
     else 
         ACCEPT();
 }
-catch (ErrorRecovery__)
+catch (ErrorRecovery_)
 {
-    if (not recovery__())
-        errorRecovery__();
+    if (not recovery_())
+        errorRecovery_();
     else
     {
-        if (token__() == Reserved__::EOF__)
+        if (token_() == Reserved_::EOF_)
             ABORT();
-        popToken__();               // skip the failing token
+        popToken_();               // skip the failing token
     }
 }
 
 
 // derived/nexttoken
-void Parser::nextToken__()
+void Parser::nextToken_()
 {
-    // If d_token is Reserved__::UNDETERMINED__ then if savedToken__() is Reserved__::UNDETERMINED__ 
-    // another token is obtained from lex(). Then savedToken__() is assigned
+    // If d_token is Reserved_::UNDETERMINED_ then if savedToken_() is Reserved_::UNDETERMINED_ 
+    // another token is obtained from lex(). Then savedToken_() is assigned
     // to d_token.
 
-    if (token__() != Reserved__::UNDETERMINED__)        // no need for a token: got one
+    if (token_() != Reserved_::UNDETERMINED_)        // no need for a token: got one
     {
         // $insert debug
-        if (d_debug__)
-            s_out__ <<  "available token " << symbol__(token__()) << '\n' << dflush__;
+        if (d_debug_)
+            s_out_ <<  "available token " << symbol_(token_()) << '\n' << dflush_;
         return;                             // already
     }
 
-    if (savedToken__() != Reserved__::UNDETERMINED__)
+    if (savedToken_() != Reserved_::UNDETERMINED_)
     {
-        popToken__();                       // consume pending token
+        popToken_();                       // consume pending token
         // $insert debug
-        if (d_debug__)
-            s_out__ <<  "retrieved token " << symbol__(token__()) << stype__(", semantic = ", d_val__) << '\n' << dflush__;
+        if (d_debug_)
+            s_out_ <<  "retrieved token " << symbol_(token_()) << stype_(", semantic = ", d_val_) << '\n' << dflush_;
     }
     else
     {
-        ++d_acceptedTokens__;               // accept another token (see
+        ++d_acceptedTokens_;               // accept another token (see
                                             // errorRecover())
-        lex__(lex());
-        print__();
+        lex_(lex());
+        print_();
         // $insert debug
-        if (d_debug__)
-            s_out__ <<  "scanner token " << symbol__(token__()) << '\n' << dflush__;
+        if (d_debug_)
+            s_out_ <<  "scanner token " << symbol_(token_()) << '\n' << dflush_;
     }
     print();
 }
 
 // derived/print
-void Parser::print__()
+void Parser::print_()
 {
 // $insert print
 }
@@ -3589,7 +3589,7 @@ try
 {
     // The parsing algorithm:
     // Initially, state 0 is pushed on the stack, and all relevant variables
-    // are initialized by Base::clearin__.
+    // are initialized by Base::clearin_.
     //
     // Then, in an eternal loop:
     //
@@ -3610,26 +3610,26 @@ try
     //     default reduction.
 
     // $insert debug
-    if (d_debug__)
-        s_out__ <<  "parse(): Parsing starts" << '\n' << dflush__;
-    clearin__();                            // initialize, push(0)
+    if (d_debug_)
+        s_out_ <<  "parse(): Parsing starts" << '\n' << dflush_;
+    clearin_();                            // initialize, push(0)
 
     while (true)
     {
 // $insert prompt
 
-        if (d_debug__)
-            s_out__ << '\n';
+        if (d_debug_)
+            s_out_ << '\n';
 
-        nextCycle__();
+        nextCycle_();
     }
 }
-catch (Return__ retValue)
+catch (Return_ retValue)
 {
     // $insert debug
-    if (d_debug__)
-        s_out__ <<  "parse(): returns " << retValue << " or " << d_nErrors__  << '\n' << dflush__;
-    return retValue or d_nErrors__;
+    if (d_debug_)
+        s_out_ <<  "parse(): returns " << retValue << " or " << d_nErrors_  << '\n' << dflush_;
+    return retValue or d_nErrors_;
 }
 
 

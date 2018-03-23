@@ -35,7 +35,7 @@ OPTBL                   [[:blank:]]*
                                         return ' ';
                                 }
                                 
-<INITIAL,pre>{OPTBL}"/*"        push(StartCondition__::comment);
+<INITIAL,pre>{OPTBL}"/*"        push(StartCondition_::comment);
 <comment>{
     .|\n                        // ignore
     "*/"                        popSc();
@@ -45,7 +45,7 @@ OPTBL                   [[:blank:]]*
 <INITIAL,pre>\"                 {
                                     more();
                                     cout << "   ENTERING STRING\n";
-                                    push(StartCondition__::string);
+                                    push(StartCondition_::string);
                                 }
 <string>{
     "\\".                       more();
@@ -55,7 +55,7 @@ OPTBL                   [[:blank:]]*
 
 '                               {
                                     more();
-                                    push(StartCondition__::quote);
+                                    push(StartCondition_::quote);
                                 }
 <quote>{
     '                           return popSc(Parser::STRING);
@@ -115,7 +115,7 @@ OPTBL                   [[:blank:]]*
 
 <pre>{
     "%%"                        {
-                                    push(StartCondition__::INITIAL);
+                                    push(StartCondition_::INITIAL);
                                     return Parser::SECTION_DELIMITER;
                                 }
 

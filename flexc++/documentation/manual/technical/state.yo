@@ -2,7 +2,7 @@ Objects of the class tt(State) describe one single state of a RE
 link(pattern)(PATTERNS). A tt(State) contains/offers:
     itemization(
     itt(d_type): the type represented by the State (EMPTY, FINAL, CHARSET,
-        BOL), the internally used tt(UNDETERMINED__) and tt(EOF__) types, or
+        BOL), the internally used tt(UNDETERMINED_) and tt(EOF_) types, or
         (initially) the ascii-value of a single character. Once the character
         ranges have been determined (see section ref(RANGES)), which happens
         in ./main.cc `ranges.determineSubsets()' the type contains the

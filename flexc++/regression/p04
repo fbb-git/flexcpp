@@ -5,15 +5,15 @@
 
 %%
 
-"#include"[ \t]+"\""        d_p = "\"#include\"[ \\t]+\"\\\"";  begin(StartCondition__::inc); return 1;
-<inc>[^"]+"\""              d_p = "<inc>[^\"]+\"\\\"\""; begin(StartCondition__::INITIAL);pushStream(matched().substr(0, length()-1)); return 2;
+"#include"[ \t]+"\""        d_p = "\"#include\"[ \\t]+\"\\\"";  begin(StartCondition_::inc); return 1;
+<inc>[^"]+"\""              d_p = "<inc>[^\"]+\"\\\"\""; begin(StartCondition_::INITIAL);pushStream(matched().substr(0, length()-1)); return 2;
 
 .                           more();
-\n                          redo(1); begin(StartCondition__::eoln); return 4;
+\n                          redo(1); begin(StartCondition_::eoln); return 4;
 
 [[:space:]]+
 
-<eoln>\n                    begin(StartCondition__::INITIAL);
+<eoln>\n                    begin(StartCondition_::INITIAL);
 
 <<EOF>>                     d_p = "<<EOF>>"; return popStream() ? 7 : 0;
 

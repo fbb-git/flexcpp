@@ -23,7 +23,7 @@ been matched the tt(posCode) member is called, so this function can update the
 column and reset indicators:
 
         verb(
-    void Scanner::postCode(PostEnum__ type) 
+    void Scanner::postCode(PostEnum_ type) 
     {
         if (not d_reset)
             d_column += length();
@@ -35,7 +35,7 @@ column and reset indicators:
     }
         )
 
-The scanner's default rule (the tt(StartCondition__::INITIAL) scanner simply
+The scanner's default rule (the tt(StartCondition_::INITIAL) scanner simply
 reads the initial line, and then pushes the line back onto the scanner's
 queue. A simple tt(.*) will ensure that all the line's characters are
 read. Having matched a line it must still be broken down into tokens, for
@@ -46,13 +46,13 @@ scanner's rule looks like this:
     .*                                  {
                                             d_storedLine = matched();
                                             push(d_storedLine);
-                                            begin(StartCondition__::main);
+                                            begin(StartCondition_::main);
                                             d_reset = true;
                                         }
         )
 
 Now that the line has been stored, it's time to obtain its tokens, which is
-the responsibility of the tt(StartCondition__::main) start condition:
+the responsibility of the tt(StartCondition_::main) start condition:
 
         verb(
     <main>{
@@ -61,7 +61,7 @@ the responsibility of the tt(StartCondition__::main) start condition:
         [[:alpha:]_][[:alpha:][:digit:]_]*  return IDENTIFIER;
         [][]                                return SIGNAL;
         .                                   return matched()[0];
-        \n                                  begin(StartCondition__::INITIAL);
+        \n                                  begin(StartCondition_::INITIAL);
     }
         )
     

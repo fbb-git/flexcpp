@@ -10,7 +10,7 @@ void Generator::inlineLexFunction(std::ostream &out) const
             "inline int " << d_options.className() << "::" << 
                                         d_options.lexFunctionName() << "()\n"
             "{\n"
-            "    return lex__();\n"
+            "    return lex_();\n"
             "}\n";
     }
 }

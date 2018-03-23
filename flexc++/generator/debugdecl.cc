@@ -7,8 +7,8 @@ void Generator::debugDecl(std::ostream &out) const
 
     key(out);
     out << 
-        "        static bool s_debug__;\n"
-        "        static std::ostringstream s_out__;\n"
-        "        static std::ostream &dflush__(std::ostream &out);\n"
+        "        static bool s_debug_;\n"
+        "        static std::ostringstream s_out_;\n"
+        "        static std::ostream &dflush_(std::ostream &out);\n"
         "   private:\n";
 }

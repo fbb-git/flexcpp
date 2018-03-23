@@ -82,14 +82,14 @@ class Scanner: public ScannerBase, private FlexTypes
 
         using ScannerBase::push;
 
-        void push(StartCondition__ sc); // push and revert to sc
+        void push(StartCondition_ sc); // push and revert to sc
         int popSc(int token = 0);   // revert to the pushed StartCondition,
                                     // returning 'token'
 
             // the start-condition stack can only be used from push and popSC
-        class SCStack: private std::stack<StartCondition__> 
+        class SCStack: private std::stack<StartCondition_> 
         {
-            friend void Scanner::push(StartCondition__ sc);
+            friend void Scanner::push(StartCondition_ sc);
             friend int Scanner::popSc(int token);
         } d_scStack;
     
@@ -100,15 +100,15 @@ class Scanner: public ScannerBase, private FlexTypes
         void setLineTags(std::string const &filename) const;
         void pushNameExpansion();
 
-        int lex__();
-        int executeAction__(size_t ruleNr);
+        int lex_();
+        int executeAction_(size_t ruleNr);
 
         void print();
 
         void preCode();     // re-implement this function for code that must 
                             // be exec'ed before the patternmatching starts
 
-        void postCode(PostEnum__);
+        void postCode(PostEnum_);
 
         bool moreInput();
         bool secondSectionDelimiter();
@@ -118,7 +118,7 @@ class Scanner: public ScannerBase, private FlexTypes
 inline void Scanner::needCatchAll()
 {
     d_catchAll = "\n"
-                 ".|\\n  lop3__();\n";    
+                 ".|\\n  lop3_();\n";    
 }
 
 inline void Scanner::forceCaseSensitive()
@@ -151,7 +151,7 @@ inline void Scanner::preCode()
     // optionally replace by your own code
 }
 
-inline void Scanner::postCode(PostEnum__) 
+inline void Scanner::postCode(PostEnum_) 
 {
     // optionally replace by your own code
 }
@@ -159,17 +159,17 @@ inline void Scanner::postCode(PostEnum__)
 // $insert inlineLexFunction
 inline int Scanner::lex()
 {
-    return lex__();
+    return lex_();
 }
 
 inline void Scanner::print()
 {
-    print__();
+    print_();
 }
 
 inline void Scanner::ignoreWS()
 {
-    push(StartCondition__::optws);
+    push(StartCondition_::optws);
 }
     
 #endif // Scanner_H_INCLUDED_

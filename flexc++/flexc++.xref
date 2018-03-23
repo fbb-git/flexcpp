@@ -337,7 +337,7 @@ cxx11]
     predefined.cc: CharRange::predefined(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
 
 cxx11]
-  Full name: ParserBase::s_out__[abi:cxx11]
+  Full name: ParserBase::s_out_[abi:cxx11]
   Source:    parse.cc 
   Used By:
     lookahead.cc: GLOBALS lookahead.cc 10lookahead.o
@@ -387,7 +387,7 @@ cxx11](FlexTypes::TextType)
     setlexfunctionname.cc: Options::setLexFunctionName(FlexTypes::TextType)
 
 cxx11](int) const
-  Full name: ParserBase::symbol__[abi:cxx11](int) const
+  Full name: ParserBase::symbol_[abi:cxx11](int) const
   Source:    parse.cc 
   Used By:
     print.cc: Parser::print()
@@ -478,8 +478,8 @@ dfaTransitions(DFARow const&, std::ostream&)
   Used By:
     dfarow.cc: Generator::dfaRow(DFARow const&, unsigned long&, std::ostream&)
 
-dflush__(std::ostream&)
-  Full name: ParserBase::dflush__(std::ostream&)
+dflush_(std::ostream&)
+  Full name: ParserBase::dflush_(std::ostream&)
   Source:    parse.cc 
   Used By:
     lookahead.cc: GLOBALS lookahead.cc 10lookahead.o
@@ -540,7 +540,7 @@ endOfRawString()
   Full name: Scanner::endOfRawString()
   Source:    endofrawstring.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 eof(States&)
   Full name: Pattern::eof(States&)
@@ -618,19 +618,19 @@ handleCharAfterBlanks()
   Full name: Scanner::handleCharAfterBlanks()
   Source:    handlecharafterblanks.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 handleDquote()
   Full name: Scanner::handleDquote()
   Source:    handledquote.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 handleEOLNcomment()
   Full name: Scanner::handleEOLNcomment()
   Source:    handleeolncomment.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 handleFixedTailLopRule(Rule&)
   Full name: Rules::handleFixedTailLopRule(Rule&)
@@ -654,25 +654,25 @@ handleMulti(int)
   Full name: Scanner::handleMulti(int)
   Source:    handlemulti.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 handleOpenBracket()
   Full name: Scanner::handleOpenBracket()
   Source:    handleopenbracket.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 handleRawString()
   Full name: Scanner::handleRawString()
   Source:    handlerawstring.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 handleStdComment()
   Full name: Scanner::handleStdComment()
   Source:    handlestdcomment.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 inlineLexFunction(std::ostream&) const
   Full name: Generator::inlineLexFunction(std::ostream&) const
@@ -836,8 +836,8 @@ lex()
   Used By:
     parse.cc: Parser::nextToken()
 
-lex__()
-  Full name: Scanner::lex__()
+lex_()
+  Full name: Scanner::lex_()
   Source:    lex.cc 
   Used By:
     block.cc: Parser::block()
@@ -901,13 +901,13 @@ maybeSwitchStream()
   Full name: Scanner::maybeSwitchStream()
   Source:    maybeswitchstream.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 moreInput()
   Full name: Scanner::moreInput()
   Source:    moreinput.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 namespaceClose(std::ostream&) const
   Full name: Generator::namespaceClose(std::ostream&) const
@@ -1180,7 +1180,7 @@ popSc(int)
   Full name: Scanner::popSc(int)
   Source:    popsc.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 popStream()
   Full name: ScannerBase::popStream()
@@ -1192,7 +1192,7 @@ popStream()
   Full name: Scanner::popStream()
   Source:    popstream.cc 
   Used By:
-    lex.cc: Scanner::lex__()
+    lex.cc: Scanner::lex_()
     moreinput.cc: Scanner::moreInput()
 
 predefined(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
@@ -1239,8 +1239,8 @@ processCatchAllRule()
   Used By:
     addlopstartconditions.cc: Parser::addLopStartConditions()
 
-push(ScannerBase::StartCondition__)
-  Full name: Scanner::push(ScannerBase::StartCondition__)
+push(ScannerBase::StartCondition_)
+  Full name: Scanner::push(ScannerBase::StartCondition_)
   Source:    push.cc 
   Used By:
     parse.cc: Parser::executeAction(int)
@@ -1254,7 +1254,7 @@ pushNameExpansion()
   Full name: Scanner::pushNameExpansion()
   Source:    pushnameexpansion.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 pushStream(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: ScannerBase::pushStream(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
@@ -1413,12 +1413,12 @@ s_defaultSkeletonDirectory
   Used By:
     setaccessorvariables.cc: Options::setAccessorVariables()
 
-s_dfaBase__
-  Full name: ScannerBase::s_dfaBase__
+s_dfaBase_
+  Full name: ScannerBase::s_dfaBase_
   Source:    lex.cc 
   Used By:
     popsc.cc: Scanner::popSc(int)
-    push.cc: Scanner::push(ScannerBase::StartCondition__)
+    push.cc: Scanner::push(ScannerBase::StartCondition_)
     switchtoinitial.cc: Scanner::switchToINITIAL()
 
 s_ignoreToken
@@ -1496,7 +1496,7 @@ secondSectionDelimiter()
   Full name: Scanner::secondSectionDelimiter()
   Source:    secondsectiondelimiter.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 set()
   Full name: CharClass::set()
@@ -1686,7 +1686,7 @@ switchToINITIAL()
   Full name: Scanner::switchToINITIAL()
   Source:    switchtoinitial.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 tabulate(FBB::Table&) const
   Full name: DFARow::tabulate(FBB::Table&) const

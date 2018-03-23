@@ -15,6 +15,6 @@ bool Scanner::handleRawString()
     d_rawString.back() = '"';
 
     more();
-    push(StartCondition__::rawstring);
+    push(StartCondition_::rawstring);
     return true;
 }

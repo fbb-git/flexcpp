@@ -9,7 +9,7 @@ Scanner::Scanner(string const &fname)
     d_caseSensitive(true)
 {
     setLineTags(fname);
-    push(StartCondition__::pre);
+    push(StartCondition_::pre);
 }
 
 

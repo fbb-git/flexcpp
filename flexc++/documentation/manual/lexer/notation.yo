@@ -9,10 +9,10 @@ now using explicit start condition specifications:
 
 \"              {
                     more();
-                    begin(StartCondition__::string);
+                    begin(StartCondition_::string);
                 }
 <string>\"      {
-                    begin(StartCondition__::INITIAL);
+                    begin(StartCondition_::INITIAL);
                     return Token::STRING;
                 }
 <string>\\.|.   more();

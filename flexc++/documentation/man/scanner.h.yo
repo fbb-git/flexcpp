@@ -19,7 +19,7 @@ tt(Scanner) class. are covered below).
 manpagesection(3. NAMING CONVENTION)
 
     All symbols that are required by the generated scanner class end in two
-consecutive underscore characters (e.g., tt(executeAction__)). These names
+consecutive underscore characters (e.g., tt(executeAction_)). These names
 should not be redefined. As they are part of the tt(Scanner) and
 tt(ScannerBase) class their scope is immediately clear and confusion with
 identically named identifiers elsewhere is unlikely.
@@ -62,11 +62,11 @@ about intermediate stream-switching facilities). It returns an tt(int)
 representing the em(token) associated with the matched regular expression. The
 returned value 0 indicates end-of-file. Considering its default
 implementation, it could be redefined by the user. tt(Lex)'s default
-implementation merely calls tt(lex__):
+implementation merely calls tt(lex_):
         verb(
 inline int Scanner::lex()
 {
-    return lex__();
+    return lex_();
 }
         )
 
@@ -83,31 +83,31 @@ first having generated files implementing an interactive scanner.
 manpagesection(6. PRIVATE MEMBER FUNCTIONS)
 
     itemization(
-    itb(int lex__())
+    itb(int lex_())
         This function is used internally by tt(lex) and should not otherwise
 be used.
-    itb(int executeAction__())
+    itb(int executeAction_())
         This function is used internally by tt(lex) and should not otherwise
 be used.
     itb(void preCode())
         By default this function has an empty, inline implementation in
 tt(Scanner.h). It can safely be replaced by a user-defined
-implementation. This function is called by tt(lex__), just before it starts to
-match input characters against its rules: tt(preCode) is called by tt(lex__)
-when tt(lex__) is called and also after having executed the actions of a rule
-which did not execute a tt(return) statement. The outline of tt(lex__)'s
+implementation. This function is called by tt(lex_), just before it starts to
+match input characters against its rules: tt(preCode) is called by tt(lex_)
+when tt(lex_) is called and also after having executed the actions of a rule
+which did not execute a tt(return) statement. The outline of tt(lex_)'s
 implementation looks like this:
         verb(
-int Scanner::lex__()
+int Scanner::lex_()
 {
     ...
     preCode();
 
     while (true)
     {
-        size_t ch = get__();            // fetch next char
+        size_t ch = get_();            // fetch next char
         ...
-        switch (actionType__(range))    // determine the action
+        switch (actionType_(range))    // determine the action
         {
             ... maybe return
         }
@@ -116,14 +116,14 @@ int Scanner::lex__()
     } // while
 }
         )
-    itb(void postCode(PostEnum__ type))
+    itb(void postCode(PostEnum_ type))
         By default this function has an empty, inline implementation in
 tt(Scanner.h). It can safely be replaced by a user-defined
-implementation. This function is called by tt(lex__), just after a rule has
-been matched. Values of the tt(enum class PostEnum__) indicate the
-characteristic of the matched rule. tt(PostEnum__) has four values:
-tt(PostEnum__::END, PostEnum__::POP, PostEnum__::RETURN), and
-tt(PostEnum__::WIP). Refer to section 10 for their meanings.
+implementation. This function is called by tt(lex_), just after a rule has
+been matched. Values of the tt(enum class PostEnum_) indicate the
+characteristic of the matched rule. tt(PostEnum_) has four values:
+tt(PostEnum_::END, PostEnum_::POP, PostEnum_::RETURN), and
+tt(PostEnum_::WIP). Refer to section 10 for their meanings.
    itb(void print())
            When the tt(--print-tokens) or tt(%print-tokens) directive is used
             this function is called to display, on the standard output stream,
@@ -132,9 +132,9 @@ tt(PostEnum__::WIP). Refer to section 10 for their meanings.
 
            Displaying is suppressed when the tt(lex.cc) file is (re)generated
             without using this directive. The function actually showing the
-            tokens (tt(ScannerBase::print__)) is called from tt(print), which
+            tokens (tt(ScannerBase::print_)) is called from tt(print), which
             is defined in-line in tt(Scanner.h). Calling
-            tt(ScannerBase::print__), therefore, can also easily be controlled
+            tt(ScannerBase::print_), therefore, can also easily be controlled
             by an option controlled by the program using the scanner object.
      )
     
@@ -160,14 +160,14 @@ class Scanner: public ScannerBase
         int lex();
 
     private:
-        int lex__();
-        int executeAction__(size_t ruleNr);
+        int lex_();
+        int executeAction_(size_t ruleNr);
 
         void print();
         void preCode();     // re-implement this function for code that must 
                             // be exec'ed before the patternmatching starts
 
-        void postCode(PostEnum__ type);    
+        void postCode(PostEnum_ type);    
                             // re-implement this function for code that must 
                             // be exec'ed after the rules's actions.
 };
@@ -186,7 +186,7 @@ inline Scanner::Scanner(std::string const &infile, std::string const &outfile)
 // $insert inlineLexFunction
 inline int Scanner::lex()
 {
-    return lex__();
+    return lex_();
 }
 
 inline void Scanner::preCode() 
@@ -194,14 +194,14 @@ inline void Scanner::preCode()
     // optionally replace by your own code
 }
 
-inline void Scanner::postCode(PostEnum__ type) 
+inline void Scanner::postCode(PostEnum_ type) 
 {
     // optionally replace by your own code
 }
 
 inline void Scanner::print() 
 {
-    print__();
+    print_();
 }
 
 #endif // Scanner_H_INCLUDED_

@@ -9,7 +9,7 @@ void Generator::startCondInfo(ostream &out) const
                     // inserted in flexc++.cc
 
     out << 
-"    // s_dfa__ contains the rows of *all* DFAs ordered by start state.  "
+"    // s_dfa_ contains the rows of *all* DFAs ordered by start state.  "
                                                                     "The\n"
 "    // enum class " << scName << "is defined in the baseclass header.\n"
 "    // " << scName << "::INITIAL is always 0.  "

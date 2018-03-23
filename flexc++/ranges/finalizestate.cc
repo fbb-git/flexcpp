@@ -10,12 +10,12 @@ void Ranges::finalizeState(State &state)
             charsetToRanges(state.data(), d_alphabet);
         break;
 
-        case EOF__:
+        case EOF_:
             state.setType(d_eof);
         break;
 
         default:
-            if (type < UNDETERMINED__)
+            if (type < UNDETERMINED_)
                 state.setType(d_alphabet[type]);
         break;
     }

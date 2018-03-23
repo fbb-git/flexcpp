@@ -3,6 +3,6 @@
 void Scanner::newDefinition()
 {
     d_patternName.clear();
-    push(StartCondition__::line);
+    push(StartCondition_::line);
 }
 

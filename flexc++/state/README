@@ -19,14 +19,14 @@ State is a traditional class offering pointers. It has a copy constructor,
 overloaded assignment operator and swap-functionality.
 
 
-The special character EOF__
+The special character EOF_
 ===========================
 
 TODO: BOL handling has been changed, and there's no special BOL character
 anymore. This section of the README file needs an update -- FBB 7/5/2011
 
 
-The special characters BOL and EOF__ are transformed by Ranges to d_nsubsets +
+The special characters BOL and EOF_ are transformed by Ranges to d_nsubsets +
 1 and d_nsubsets + 2 and are entering the DFA as normal characters.
 
 However, when lex() executes it will inspect the DFA for a BOL transition when

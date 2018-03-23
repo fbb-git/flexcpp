@@ -2,7 +2,7 @@
 
 int Scanner::handleOpenBracket()
 {
-    if (startCondition() == StartCondition__::INITIAL)
+    if (startCondition() == StartCondition_::INITIAL)
     {
         if (d_inCharClass)
             return '[';

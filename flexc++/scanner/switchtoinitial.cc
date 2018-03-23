@@ -3,5 +3,5 @@
 void Scanner::switchToINITIAL()
 {
     d_scStack = SCStack();
-    begin(StartCondition__::INITIAL);
+    begin(StartCondition_::INITIAL);
 }

@@ -5,8 +5,8 @@ returns
     || 
     available(d_final.notAtBOL.rule);
         )
-    only if this is true, tt(ScannerBase::actionType__) returns
-tt(ActionType__::MATCH).
+    only if this is true, tt(ScannerBase::actionType_) returns
+tt(ActionType_::MATCH).
 
 Three variables are used here, resulting in 8 possibilities:
     center(
@@ -37,4 +37,4 @@ Three variables are used here, resulting in 8 possibilities:
     )
     )
     The numbers in this table are referred to by tt(skeleton/flexc++.cc's)
- member tt(matched__).
+ member tt(matched_).

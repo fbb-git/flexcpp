@@ -15,16 +15,16 @@ LOP-rules.
 Furthermore, a member tt(d_active) hold pointers to all currently active start
 conditions. E.g., when specifying tt(<INITIAL,str>) then the rules defined for
 this tag are active are added to the set if rules defined for
-tt(StartConditions__::INITIAL) and tt(StartConditions__::str).
+tt(StartConditions_::INITIAL) and tt(StartConditions_::str).
 
 When LOP-rules having variable sized tails are used, flc() defines a catch-all
-rule which is mathed while tt(lex__) is trying to match the LOP-rule's tail,
+rule which is mathed while tt(lex_) is trying to match the LOP-rule's tail,
 but as yet failed to do so. When it is defined this catch-all rule does not
 belong to a particular start condition. This is relized through the member
 tt(StartConditions::acceptRule), expecting a tt(bool) argument. By default
 recognized rules are added to the current set of active start conditions, but
 the catch-all rule should not be added to any active set. Instead it is
-added to the DFAs calling tt(lop3__). Once the input files have been
+added to the DFAs calling tt(lop3_). Once the input files have been
 processed, tt(Rules::handleLopRules) is called, and this member adds the final
 (catch-all) rule to tt(d_rules), without adding it to any of the available
 start conditions.

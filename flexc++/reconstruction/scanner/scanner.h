@@ -38,14 +38,14 @@ class Scanner: public ScannerBase
         void switchToINITIAL();
         using ScannerBase::push;
 
-        void push(StartCondition__ sc); // push and revert to sc
+        void push(StartCondition_ sc); // push and revert to sc
         int popSc(int token = 0);   // revert to the pushed StartCondition,
                                     // returning 'token'
 
             // the start-condition stack can only be used from push and popSC
-        class SCStack: private std::stack<StartCondition__> 
+        class SCStack: private std::stack<StartCondition_> 
         {
-            friend void Scanner::push(StartCondition__ sc);
+            friend void Scanner::push(StartCondition_ sc);
             friend int Scanner::popSc(int token);
         } d_scStack;
     
@@ -56,8 +56,8 @@ class Scanner: public ScannerBase
         void setLineTags(std::string const &filename) const;
         void pushNameExpansion();
 
-        int lex__();
-        int executeAction__(size_t ruleNr);
+        int lex_();
+        int executeAction_(size_t ruleNr);
 
         void preCode();     // re-implement this function for code that must 
                             // be exec'ed before the patternmatching starts
@@ -86,7 +86,7 @@ inline void Scanner::preCode()
 // $insert inlineLexFunction
 inline int Scanner::lex()
 {
-    return lex__();
+    return lex_();
 }
 
 

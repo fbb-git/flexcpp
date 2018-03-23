@@ -6,6 +6,6 @@ bool Scanner::handleDquote()
         return true;
 
     more();
-    push(StartCondition__::string);
+    push(StartCondition_::string);
     return false;
 }

@@ -17,14 +17,14 @@ size_t Rules::handleLopRule(size_t idx)
                                         // calling lop__1, pasing it the SC 
                                         // index of its 1st SC
     Block workBlock(action.lineNr(), action.filename());
-    workBlock += "lop1__(" + to_string(scIndex) + ");" ;
+    workBlock += "lop1_(" + to_string(scIndex) + ");" ;
     rule->assignBlock(workBlock);
 
-            // lop2__() is called when the LOP's tail was matched. 
+            // lop2_() is called when the LOP's tail was matched. 
             // It then switches to the 2nd SC and pushes the initial part of
             // the matched text on to the input stream
     workBlock.clear();
-    workBlock += "lop2__();";
+    workBlock += "lop2_();";
 
                                         // activate the LOP rule's 1st SCs:
     d_startConditions.activate(scIndex);
@@ -36,20 +36,20 @@ size_t Rules::handleLopRule(size_t idx)
                                         // rule, as the vector may have
                                         // resized
 
-    // lop3__() is called via the Scanner's needCatchAll() member in
+    // lop3_() is called via the Scanner's needCatchAll() member in
     // scanner.h, called by Parser::lookahead.
     
                                         // activate the LOP rule's 2nd SCs:
     d_startConditions.activate(scIndex + 1);
 
         // Code executed after the LOP's head has been matched
-    workBlock.clear();                  // lop4__ returns to the previous SC
-    workBlock += "lop4__();";           // and pushes the LOP's tail on to the
+    workBlock.clear();                  // lop4_ returns to the previous SC
+    workBlock += "lop4_();";           // and pushes the LOP's tail on to the
     workBlock += "\n";                  // input stream.
     workBlock.addContents(action);
 
     workBlock.setLineNr(workBlock.lineNr());    // compensate for the
-                                                // lop4__() line.
+                                                // lop4_() line.
 
                                         // add this rule to the 2nd SC
     add(false, pattern->lhs(), workBlock, RuleType::LOP_4);   
