@@ -19,8 +19,8 @@ class Scanner: public ScannerBase
         int lex();
 
     private:
-        int lex__();
-        int executeAction__(size_t ruleNr);
+        int lex_();
+        int executeAction_(size_t ruleNr);
 
         void preCode();     // re-implement this function for code that must 
                             // be exec'ed before the patternmatching starts
@@ -44,7 +44,7 @@ inline Scanner::Scanner(std::string const &infile, std::string const &outfile)
 // $insert inlineLexFunction
 inline int Scanner::lex()
 {
-    return lex__();
+    return lex_();
 }
 
 

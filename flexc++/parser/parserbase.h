@@ -22,12 +22,12 @@
 
 namespace // anonymous
 {
-    struct PI__;
+    struct PI_;
 }
 
 
 // $insert polymorphic
-enum class Tag__
+enum class Tag_
 {
     INTERVAL,
     VECTOR,
@@ -37,105 +37,105 @@ enum class Tag__
     STRING,
 };
 
-namespace Meta__
+namespace Meta_
 {
 
 extern size_t const *t_nErrors;
 
-extern size_t const *s_nErrors__;
+extern size_t const *s_nErrors_;
 
-template <Tag__ tag>
+template <Tag_ tag>
 struct TypeOf;
 
 template <typename Tp_>
 struct TagOf;
 
 // $insert polymorphicSpecializations
-enum { sizeofTag__ = 6 };
+enum { sizeofTag_ = 6 };
 
-extern char const *idOfTag__[];
+extern char const *idOfTag_[];
 template <>
 struct TagOf<Interval>
 {
-    static Tag__ const tag = Tag__::INTERVAL;
+    static Tag_ const tag = Tag_::INTERVAL;
 };
 
 template <>
 struct TagOf<std::vector<std::string>>
 {
-    static Tag__ const tag = Tag__::VECTOR;
+    static Tag_ const tag = Tag_::VECTOR;
 };
 
 template <>
 struct TagOf<Pattern>
 {
-    static Tag__ const tag = Tag__::PATTERN;
+    static Tag_ const tag = Tag_::PATTERN;
 };
 
 template <>
 struct TagOf<FlexTypes::TextType>
 {
-    static Tag__ const tag = Tag__::TEXTTYPE;
+    static Tag_ const tag = Tag_::TEXTTYPE;
 };
 
 template <>
 struct TagOf<CharClass>
 {
-    static Tag__ const tag = Tag__::CHARCLASS;
+    static Tag_ const tag = Tag_::CHARCLASS;
 };
 
 template <>
 struct TagOf<std::string>
 {
-    static Tag__ const tag = Tag__::STRING;
+    static Tag_ const tag = Tag_::STRING;
 };
 
 template <>
-struct TypeOf<Tag__::INTERVAL>
+struct TypeOf<Tag_::INTERVAL>
 {
     typedef Interval type;
 };
 
 template <>
-struct TypeOf<Tag__::VECTOR>
+struct TypeOf<Tag_::VECTOR>
 {
     typedef std::vector<std::string> type;
 };
 
 template <>
-struct TypeOf<Tag__::PATTERN>
+struct TypeOf<Tag_::PATTERN>
 {
     typedef Pattern type;
 };
 
 template <>
-struct TypeOf<Tag__::TEXTTYPE>
+struct TypeOf<Tag_::TEXTTYPE>
 {
     typedef FlexTypes::TextType type;
 };
 
 template <>
-struct TypeOf<Tag__::CHARCLASS>
+struct TypeOf<Tag_::CHARCLASS>
 {
     typedef CharClass type;
 };
 
 template <>
-struct TypeOf<Tag__::STRING>
+struct TypeOf<Tag_::STRING>
 {
     typedef std::string type;
 };
 
 
     // Individual semantic value classes are derived from Base, offering a
-    // member returning the value's Tag__, a member cloning the object of its
-    // derived Semantic<Tag__> and a member returning a pointerr to its
-    // derived Semantic<Tag__> data. See also Bisonc++'s distribution file
+    // member returning the value's Tag_, a member cloning the object of its
+    // derived Semantic<Tag_> and a member returning a pointerr to its
+    // derived Semantic<Tag_> data. See also Bisonc++'s distribution file
     // README.polymorphic-techical
 class Base
 {
     protected:
-        Tag__ d_baseTag;        // d_baseTag is assigned by Semantic.
+        Tag_ d_baseTag;        // d_baseTag is assigned by Semantic.
 
     public:
         Base() = default;
@@ -143,7 +143,7 @@ class Base
 
         virtual ~Base();
 
-        Tag__ tag() const;
+        Tag_ tag() const;
         Base *clone() const;
         void *data() const;        
 
@@ -162,13 +162,13 @@ inline void *Base::data() const
     return vData();
 }
 
-inline Tag__ Base::tag() const
+inline Tag_ Base::tag() const
 {
     return d_baseTag;
 }
 
     // The class Semantic stores a semantic value of the type matching tg_
-template <Tag__ tg_>
+template <Tag_ tg_>
 class Semantic: public Base
 {
     typename TypeOf<tg_>::type d_data;
@@ -188,13 +188,13 @@ class Semantic: public Base
         void *vData() const override;
 };
 
-template <Tag__ tg_>
+template <Tag_ tg_>
 Semantic<tg_>::Semantic()
 {
     d_baseTag = tg_;                // Base's data member:
 }
 
-template <Tag__ tg_>
+template <Tag_ tg_>
 Semantic<tg_>::Semantic(Semantic<tg_> const &other)
 :
     d_data(other.d_data)
@@ -202,7 +202,7 @@ Semantic<tg_>::Semantic(Semantic<tg_> const &other)
     d_baseTag = other.d_baseTag;
 }
 
-template <Tag__ tg_>
+template <Tag_ tg_>
 template <typename ...Params>
 Semantic<tg_>::Semantic(Params &&...params)
 :
@@ -212,13 +212,13 @@ Semantic<tg_>::Semantic(Params &&...params)
 }
 
 
-template <Tag__ tg_>
+template <Tag_ tg_>
 Base *Semantic<tg_>::vClone() const
 {
     return new Semantic<tg_>{*this};
 }
 
-template <Tag__ tg_>
+template <Tag_ tg_>
 void *Semantic<tg_>::vData() const 
 {
     return const_cast<typename TypeOf<tg_>::type *>(&d_data);
@@ -226,7 +226,7 @@ void *Semantic<tg_>::vData() const
 
 
     // The class SType wraps a pointer to Base.  It becomes the polymorphic
-    // STYPE__ type. It also defines get members, allowing constructions like
+    // STYPE_ type. It also defines get members, allowing constructions like
     // $$.get<INT> to be used.  
 class SType: private std::unique_ptr<Base>
 {
@@ -253,19 +253,19 @@ class SType: private std::unique_ptr<Base>
         template <typename Type>                // same, now moving
         SType &operator=(Type &&tmp);
 
-        template <Tag__ tag, typename ...Args>
+        template <Tag_ tag, typename ...Args>
         void assign(Args &&...args);
     
             // By default the get()-members check whether the specified <tag>
             // matches the tag returned by SType::tag (d_data's tag). If they
             // don't match a run-time fatal error results.
-        template <Tag__ tag>
+        template <Tag_ tag>
         typename TypeOf<tag>::type &get();
 
-        template <Tag__ tag>
+        template <Tag_ tag>
         typename TypeOf<tag>::type const &get() const;
 
-        Tag__ tag() const;
+        Tag_ tag() const;
         bool valid() const;
 };
 
@@ -318,13 +318,13 @@ inline SType &SType::operator=(Type &&tmp)
     return *this;
 }
 
-template <Tag__ tag, typename ...Args>
+template <Tag_ tag, typename ...Args>
 void SType::assign(Args &&...args)
 {
     reset(new Semantic<tag>(std::forward<Args>(args) ...));
 }
 
-template <Tag__ tg>
+template <Tag_ tg>
 typename TypeOf<tg>::type &SType::get()
 {
 // $insert warnTagMismatches
@@ -335,10 +335,10 @@ typename TypeOf<tg>::type &SType::get()
             const_cast<SType *>(this)->assign<tg>();
         else
         {
-            std::cerr << "[Fatal] calling `.get<Tag__::" << 
-                idOfTag__[static_cast<int>(tg)] << 
+            std::cerr << "[Fatal] calling `.get<Tag_::" << 
+                idOfTag_[static_cast<int>(tg)] << 
                 ">()', but Tag " <<
-                idOfTag__[static_cast<int>(tag())] << " is encountered. Try "
+                idOfTag_[static_cast<int>(tag())] << " is encountered. Try "
                 "option --debug and call setDebug(Parser::ACTIONCASES)\n";
             throw 1;        // ABORTs
         }
@@ -347,7 +347,7 @@ typename TypeOf<tg>::type &SType::get()
     return *static_cast<typename TypeOf<tg>::type *>( (*this)->data() );
 }
 
-template <Tag__ tg>
+template <Tag_ tg>
 typename TypeOf<tg>::type const &SType::get() const
 {
 // $insert warnTagMismatches
@@ -358,10 +358,10 @@ typename TypeOf<tg>::type const &SType::get() const
             const_cast<SType *>(this)->assign<tg>();
         else
         {
-            std::cerr << "[Fatal] calling `.get<Tag__::" << 
-                idOfTag__[static_cast<int>(tg)] << 
+            std::cerr << "[Fatal] calling `.get<Tag_::" << 
+                idOfTag_[static_cast<int>(tg)] << 
                 ">()', but Tag " <<
-                idOfTag__[static_cast<int>(tag())] << " is encountered. Try "
+                idOfTag_[static_cast<int>(tag())] << " is encountered. Try "
                 "option --debug and call setDebug(Parser::ACTIONCASES)\n";
             throw 1;        // ABORTs
         }
@@ -370,9 +370,9 @@ typename TypeOf<tg>::type const &SType::get() const
     return *static_cast<typename TypeOf<tg>::type *>( (*this)->data() );
 }
 
-inline Tag__ SType::tag() const
+inline Tag_ SType::tag() const
 {
-    return valid() ? (*this)->tag() : static_cast<Tag__>(sizeofTag__);
+    return valid() ? (*this)->tag() : static_cast<Tag_>(sizeofTag_);
 }
 
 inline bool SType::valid() const
@@ -380,12 +380,12 @@ inline bool SType::valid() const
     return BasePtr::get() != 0;
 }
 
-}  // namespace Meta__
+}  // namespace Meta_
 
 class ParserBase
 {
     public:
-        enum DebugMode__
+        enum DebugMode_
         {
             OFF           = 0,
             ON            = 1 << 0,
@@ -395,7 +395,7 @@ class ParserBase
 // $insert tokens
 
     // Symbolic tokens:
-    enum Tokens__
+    enum Tokens_
     {
         EXCL_START_CONDITION = 257,
         INCL_START_CONDITION,
@@ -437,14 +437,14 @@ class ParserBase
     };
 
 // $insert STYPE
-    typedef Meta__::SType STYPE__;
+    typedef Meta_::SType STYPE_;
 
 
     private:
                         // state  semval
-        typedef std::pair<size_t, STYPE__> StatePair;
+        typedef std::pair<size_t, STYPE_> StatePair;
                        // token   semval
-        typedef std::pair<int,    STYPE__> TokenPair;
+        typedef std::pair<int,    STYPE_> TokenPair;
 
         int d_stackIdx = -1;
         std::vector<StatePair> d_stateStack;
@@ -459,78 +459,78 @@ class ParserBase
 
 
     protected:
-        enum Return__
+        enum Return_
         {
-            PARSE_ACCEPT__ = 0,   // values used as parse()'s return values
-            PARSE_ABORT__  = 1
+            PARSE_ACCEPT_ = 0,   // values used as parse()'s return values
+            PARSE_ABORT_  = 1
         };
-        enum ErrorRecovery__
+        enum ErrorRecovery_
         {
-            UNEXPECTED_TOKEN__,
+            UNEXPECTED_TOKEN_,
         };
 
-        bool        d_actionCases__ = false;    // set by options/directives
-        bool        d_debug__ = true;
-        size_t      d_requiredTokens__;
-        size_t      d_nErrors__;                // initialized by clearin()
-        size_t      d_acceptedTokens__;
-        STYPE__     d_val__;
+        bool        d_actionCases_ = false;    // set by options/directives
+        bool        d_debug_ = true;
+        size_t      d_requiredTokens_;
+        size_t      d_nErrors_;                // initialized by clearin()
+        size_t      d_acceptedTokens_;
+        STYPE_     d_val_;
 
 
         ParserBase();
 
 // $insert debugdecl
-        static std::ostringstream s_out__;
+        static std::ostringstream s_out_;
         
-        std::string symbol__(int value) const;
-        std::string stype__(char const *pre, STYPE__ const &semVal,
+        std::string symbol_(int value) const;
+        std::string stype_(char const *pre, STYPE_ const &semVal,
                             char const *post = "") const;
-        static std::ostream &dflush__(std::ostream &out);
+        static std::ostream &dflush_(std::ostream &out);
         void ABORT() const;
         void ACCEPT() const;
         void ERROR() const;
 
-        STYPE__ &vs__(int idx);             // value stack element idx 
-        int  lookup__() const;
-        int  savedToken__() const;
-        int  token__() const;
-        size_t stackSize__() const;
-        size_t state__() const;
-        size_t top__() const;
-        void clearin__();
-        void errorVerbose__();
-        void lex__(int token);
-        void popToken__();
-        void pop__(size_t count = 1);
-        void pushToken__(int token);
-        void push__(size_t nextState);
-        void redoToken__();
-        bool recovery__() const;
-        void reduce__(int rule);
-        void shift__(int state);
-        void startRecovery__();
+        STYPE_ &vs_(int idx);             // value stack element idx 
+        int  lookup_() const;
+        int  savedToken_() const;
+        int  token_() const;
+        size_t stackSize_() const;
+        size_t state_() const;
+        size_t top_() const;
+        void clearin_();
+        void errorVerbose_();
+        void lex_(int token);
+        void popToken_();
+        void pop_(size_t count = 1);
+        void pushToken_(int token);
+        void push_(size_t nextState);
+        void redoToken_();
+        bool recovery_() const;
+        void reduce_(int rule);
+        void shift_(int state);
+        void startRecovery_();
 
     public:
         void setDebug(bool mode);
-        void setDebug(DebugMode__ mode);
+        void setDebug(DebugMode_ mode);
 }; 
 
 // hdr/abort
 inline void ParserBase::ABORT() const
 {
     // $insert debug
-    if (d_debug__)
-        s_out__ <<  "ABORT(): Parsing unsuccessful" << '\n' << dflush__;
-    throw PARSE_ABORT__;
+    if (d_debug_)
+        s_out_ <<  "ABORT(): Parsing unsuccessful" << '\n' << dflush_;
+    throw PARSE_ABORT_;
 }
 
 // hdr/accept
 inline void ParserBase::ACCEPT() const
 {
     // $insert debug
-    if (d_debug__)
-        s_out__ <<  "ACCEPT(): Parsing successful" << '\n' << dflush__;
-    throw PARSE_ACCEPT__;
+    if (d_debug_)
+        s_out_ <<  "ACCEPT(): Parsing successful" << '\n' << dflush_;
+    throw PARSE_ACCEPT_;
 }
 
 
@@ -538,58 +538,58 @@ inline void ParserBase::ACCEPT() const
 inline void ParserBase::ERROR() const
 {
     // $insert debug
-    if (d_debug__)
-        s_out__ <<  "ERROR(): Forced error condition" << '\n' << dflush__;
-    throw UNEXPECTED_TOKEN__;
+    if (d_debug_)
+        s_out_ <<  "ERROR(): Forced error condition" << '\n' << dflush_;
+    throw UNEXPECTED_TOKEN_;
 }
 
 // hdr/savedtoken
-inline int ParserBase::savedToken__() const
+inline int ParserBase::savedToken_() const
 {
     return d_next.first;
 }
 
 // hdr/opbitand
-inline ParserBase::DebugMode__ operator&(ParserBase::DebugMode__ lhs,
-                                     ParserBase::DebugMode__ rhs)
+inline ParserBase::DebugMode_ operator&(ParserBase::DebugMode_ lhs,
+                                     ParserBase::DebugMode_ rhs)
 {
-    return static_cast<ParserBase::DebugMode__>(
+    return static_cast<ParserBase::DebugMode_>(
             static_cast<int>(lhs) & rhs);
 }
 
 // hdr/opbitor
-inline ParserBase::DebugMode__ operator|(ParserBase::DebugMode__ lhs, 
-                                     ParserBase::DebugMode__ rhs)
+inline ParserBase::DebugMode_ operator|(ParserBase::DebugMode_ lhs, 
+                                     ParserBase::DebugMode_ rhs)
 {
-    return static_cast<ParserBase::DebugMode__>(static_cast<int>(lhs) | rhs);
+    return static_cast<ParserBase::DebugMode_>(static_cast<int>(lhs) | rhs);
 };
 
 // hdr/recovery
-inline bool ParserBase::recovery__() const
+inline bool ParserBase::recovery_() const
 {
     return d_recovery;
 }
 
 // hdr/stacksize
-inline size_t ParserBase::stackSize__() const
+inline size_t ParserBase::stackSize_() const
 {
     return d_stackIdx + 1;
 }
 
 // hdr/state
-inline size_t ParserBase::state__() const
+inline size_t ParserBase::state_() const
 {
     return d_state;
 }
 
 // hdr/token
-inline int ParserBase::token__() const
+inline int ParserBase::token_() const
 {
     return d_token;
 }
 
 // hdr/vs
-inline ParserBase::STYPE__ &ParserBase::vs__(int idx) 
+inline ParserBase::STYPE_ &ParserBase::vs_(int idx) 
 {
     return (d_vsp + idx)->second;
 }

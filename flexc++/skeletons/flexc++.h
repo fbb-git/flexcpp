@@ -10,14 +10,14 @@ $insert classHead
 $insert 8 lexFunctionDecl
 
     private:
-        int lex__();
-        int executeAction__(size_t ruleNr);
+        int lex_();
+        int executeAction_(size_t ruleNr);
 
         void print();
         void preCode();     // re-implement this function for code that must 
                             // be exec'ed before the patternmatching starts
 
-        void postCode(PostEnum__ type);    
+        void postCode(PostEnum_ type);    
                             // re-implement this function for code that must 
                             // be exec'ed after the rules's actions.
 };
@@ -31,14 +31,14 @@ inline void \@::preCode()
     // optionally replace by your own code
 }
 
-inline void \@::postCode([[maybe_unused]] PostEnum__ type) 
+inline void \@::postCode([[maybe_unused]] PostEnum_ type) 
 {
     // optionally replace by your own code
 }
 
 inline void \@::print() 
 {
-    print__();
+    print_();
 }
 
 $insert namespace-close

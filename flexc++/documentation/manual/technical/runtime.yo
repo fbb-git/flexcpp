@@ -32,7 +32,7 @@ The expression
 
 
 Depending on the current state and action several action types can be returned
-by the run-time function tt(actionType__):
+by the run-time function tt(actionType_):
     itemization(
     itt(CONTINUE): there exists a continuation from the current state/range
             combination; 
@@ -46,12 +46,12 @@ by the run-time function tt(actionType__):
     itt(RETURN): input exhausted, tt(lex) returns 0.
     )
 
-The following table shows how actions are determined by tt(actionType__). The
-function tt(actionType__) starts it tests at the first row of the table, and
+The following table shows how actions are determined by tt(actionType_). The
+function tt(actionType_) starts it tests at the first row of the table, and
 stops as soon as a condition hold true, returning the action type:
     center(
     table(3)(lll)(
-    row(cells(3)(Action determined by tt(actionType__)))
+    row(cells(3)(Action determined by tt(actionType_)))
     rowline()
     row(cell()cells(2)(Input Character))
     columnline(2)(2)
@@ -73,23 +73,23 @@ itemization(
     itt(MATCH:) push the just read char back to the input, copy the non-pseudo
         character (i.e., other than AT_EOF) to the match-buffer, set
         tt(d_atBOL) to tt(true) if the last character in the tt(d_matched)
-        buffer is tt('\n'), execute tt(postCode(PostEnum__::RETURN)), execute
+        buffer is tt('\n'), execute tt(postCode(PostEnum_::RETURN)), execute
         the rule's actions, continue scanning (but the action may end
         tt(lex)'s call).
     itt(ECHO1ST:) echo the 1st char. of the buffer to stderr, set tt(d_atBOL)
         to tt(true) if that character equals tt('\n'), otherwise to tt(false),
         return all but the first character in the buffer back to the input,
-        call tt(postCode(PostEnum__::WIP)), continue scanning.
+        call tt(postCode(PostEnum_::WIP)), continue scanning.
     itt(ECHOCHAR:) echo the just read character to stderr, set tt(d_atBOL)
         to tt(true) if that character equals tt('\n'), otherwise to tt(false),
         continue scanning.
     itt(RETURN:) if tt(popStream) returns false, then execute
-        tt(postCode(PostEnum__::END)) and member tt(lex__) returns with token
-        value 0; otherwise tt(postCode(PostEnum__::POP)) is called and
+        tt(postCode(PostEnum_::END)) and member tt(lex_) returns with token
+        value 0; otherwise tt(postCode(PostEnum_::POP)) is called and
         processing continues.
 )
 
-The data member tt(d_atBOL) is also set to tt(true) when tt(lex__) switches to
+The data member tt(d_atBOL) is also set to tt(true) when tt(lex_) switches to
 another input stream (either a new one, or returning to a previously stacked
 one). This handles the borderline case where a file's last line is not
 properly terminated with a tt('\n') character.

@@ -5,7 +5,7 @@ void Generator::dfas(ostream &out) const
     string const &className = d_options.className();
 
     out <<
-    "int const " << className << "Base::s_dfa__[][" << dfaCols() << "] =\n" 
+    "int const " << className << "Base::s_dfa_[][" << dfaCols() << "] =\n" 
     "{\n";
 
     // write the DFAs: INITIAL is first, because FBB::LinearMap is used.

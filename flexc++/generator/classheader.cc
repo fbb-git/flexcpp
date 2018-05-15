@@ -10,14 +10,14 @@ void Generator::classHeader() const
     if (Stat(classHeaderPath))
     {
         if (not grep(classHeaderPath, 
-          R"(void[[:blank:]]+postCode[[:blank:]]*\([[:blank:]]*PostEnum__)" ))
+          R"(void[[:blank:]]+postCode[[:blank:]]*\([[:blank:]]*PostEnum_)" ))
             wmsg << "`void postCode' not found in " << 
                                                     classHeaderPath << ".\n"
                 "       Advice: add the following member to the private "
                                                         "section of the\n"
                 "       scanner class in " << classHeaderPath << 
                                                 " (cf.: man 3 flexc++api):\n"
-                "           void postCode(PostEnum__)\n"
+                "           void postCode(PostEnum_)\n"
                 "           {}\n" <<
                 endl;
 

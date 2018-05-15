@@ -4,10 +4,10 @@ ostream &operator<<(ostream &out, State const &state)
 {
     size_t type = state.type();
 
-    if (type == State::UNDETERMINED__)
+    if (type == State::UNDETERMINED_)
         return out;
 
-    if (type < State::UNDETERMINED__)
+    if (type < State::UNDETERMINED_)
         out << type;
     else if (type == State::EMPTY)
         out << 'E';

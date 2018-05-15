@@ -18,7 +18,7 @@ class ScannerBase
                 // idx: rule, value: tail length (NO_INCREMENTS if no tail)
     typedef std::vector<int> VectorInt;
 
-    enum        // RuleFlagsCount Indices, see s_rfc__[]
+    enum        // RuleFlagsCount Indices, see s_rfc_[]
     {
         RULE = 0,
         FLAGS,
@@ -39,7 +39,7 @@ class ScannerBase
     };
 
 protected:
-    enum class ActionType__
+    enum class ActionType_
     {
         CONTINUE,               // transition succeeded, go on
         ECHO_CH,                // echo ch itself (d_matched empty)
@@ -49,7 +49,7 @@ protected:
     };
 
 public:
-    enum class StartCondition__ {
+    enum class StartCondition_ {
         // $insert startCondNames
         INITIAL
     };
@@ -111,7 +111,7 @@ private:
                                             // the name "<istream #>", where
                                             // # is the sequence number of the 
                                             // istream (starting at 1)
-    StartCondition__  d_startCondition;
+    StartCondition_  d_startCondition;
     size_t          d_state;
     int             d_nextState;
     std::shared_ptr<std::ostream> d_out;
@@ -125,25 +125,25 @@ private:
     bool            d_more;                 // set to true by more()
 
 protected:
-    size_t d_beginStep__;
-    size_t d_endStep__;
-    size_t d_step__;
+    size_t d_beginStep_;
+    size_t d_endStep_;
+    size_t d_step_;
 
 
 
-    int     const (*d_dfaBase__)[8];
+    int     const (*d_dfaBase_)[8];
 
-    static int     const s_dfa__[][8];
-    static int     const (*s_dfaBase__[])[8];
-    enum: bool { s_interactive__ = false };
+    static int     const s_dfa_[][8];
+    static int     const (*s_dfaBase_[])[8];
+    enum: bool { s_interactive_ = false };
     enum: size_t {
-        s_rangeOfEOF__           = 5,
-        s_finacIdx__             = 6,
-        s_nRules__               = 1,
-        s_maxSizeofStreamStack__ = 10
+        s_rangeOfEOF_           = 5,
+        s_finacIdx_             = 6,
+        s_nRules_               = 1,
+        s_maxSizeofStreamStack_ = 10
     };
-    static size_t  const s_ranges__[];
-    static size_t  const s_rfc__[][3];
+    static size_t  const s_ranges_[];
+    static size_t  const s_rfc_[][3];
 
 public:
     ScannerBase(ScannerBase const &other)             = delete;
@@ -166,10 +166,10 @@ protected:
     ScannerBase(std::istream &in, std::ostream &out);
     ScannerBase(std::string const &infilename, std::string const &outfilename);
 
-    StartCondition__  startCondition() const;   // current start condition
+    StartCondition_  startCondition() const;   // current start condition
     bool            popStream();
     std::ostream   &out();
-    void            begin(StartCondition__ startCondition);
+    void            begin(StartCondition_ startCondition);
     void            echo() const;
 
 //    `accept(n)' returns all but the first `n' characters of the current
@@ -190,24 +190,24 @@ protected:
     void            setFilename(std::string const &name);
     void            setMatched(std::string const &text);
 
-    static std::string istreamName__();
+    static std::string istreamName_();
         
-        // members used by lex__(): they end in __ and should not be used
+        // members used by lex_(): they end in _ and should not be used
         // otherwise.
 
-    ActionType__    actionType__(size_t range); // next action
-    bool            return__();                 // 'return' from codeblock
-    size_t          matched__(size_t ch);       // handles a matched rule
-    size_t          getRange__(int ch);         // convert char to range
-    size_t          get__();                    // next character
-    size_t          state__() const;            // current state 
-    void            continue__(int ch);         // handles a transition
-    void            echoCh__(size_t ch);        // echoes ch, sets d_atBOL
-    void            echoFirst__(size_t ch);     // handles unknown input
-    void            inspectRFCs__();            // update d_tailCount
-    void            noReturn__();               // d_return to false
-    void            pushFront__(size_t ch);     // return char to Input
-    void            reset__();                  // prepare for new cycle
+    ActionType_    actionType_(size_t range); // next action
+    bool            return_();                 // 'return' from codeblock
+    size_t          matched_(size_t ch);       // handles a matched rule
+    size_t          getRange_(int ch);         // convert char to range
+    size_t          get_();                    // next character
+    size_t          state_() const;            // current state 
+    void            continue_(int ch);         // handles a transition
+    void            echoCh_(size_t ch);        // echoes ch, sets d_atBOL
+    void            echoFirst_(size_t ch);     // handles unknown input
+    void            inspectRFCs_();            // update d_tailCount
+    void            noReturn_();               // d_return to false
+    void            pushFront_(size_t ch);     // return char to Input
+    void            reset_();                  // prepare for new cycle
 
 private:
     void pushStream(std::string const &name, std::istream *streamPtr);
@@ -251,7 +251,7 @@ inline std::string const &ScannerBase::matched() const
     return d_matched;
 }
 
-inline ScannerBase::StartCondition__ ScannerBase::startCondition() const
+inline ScannerBase::StartCondition_ ScannerBase::startCondition() const
 {
     return d_startCondition;
 }
@@ -281,28 +281,28 @@ inline void ScannerBase::more()
     d_more = true;
 }
 
-inline void ScannerBase::begin(StartCondition__ startCondition)
+inline void ScannerBase::begin(StartCondition_ startCondition)
 {
-    d_dfaBase__ = 
-        s_dfaBase__[static_cast<int>(d_startCondition = startCondition)];
+    d_dfaBase_ = 
+        s_dfaBase_[static_cast<int>(d_startCondition = startCondition)];
 }
 
-inline size_t ScannerBase::state__() const
+inline size_t ScannerBase::state_() const
 {
     return d_state;
 }
 
-inline size_t ScannerBase::get__()
+inline size_t ScannerBase::get_()
 {
     return d_input.get();
 }
 
-inline bool ScannerBase::return__()
+inline bool ScannerBase::return_()
 {
     return d_return;
 }
 
-inline void ScannerBase::noReturn__()
+inline void ScannerBase::noReturn_()
 {
     d_return = false;
 }

@@ -11,7 +11,7 @@ ostream &operator<<(ostream &out, States const &states)
         "---------------------------------------------------\n";
     for (size_t idx = 0, end = states.size(); idx != end; ++idx)
     {
-        if (states[idx].type() != States::UNDETERMINED__)
+        if (states[idx].type() != States::UNDETERMINED_)
             out << setw(3) << idx << ": " << states[idx] << '\n';
     }
     return out;

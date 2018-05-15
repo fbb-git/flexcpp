@@ -13,13 +13,13 @@ itbn(void accept(size_t nChars = 0))
     effectively sets tt(length)'s return value to tt(nChars) (note: with
     bf(flex++) this function was called tt(less));
 
-itbn(void begin(StartCondition__ startCondition))
+itbn(void begin(StartCondition_ startCondition))
    activate the regular expression rules associated with
-    tt(StartCondition__ startCondition). As this enumeration is a strongly
-    typed enum the tt(StartCondition__) scope must be specified as
+    tt(StartCondition_ startCondition). As this enumeration is a strongly
+    typed enum the tt(StartCondition_) scope must be specified as
     well. E.g., 
         verb(
-    begin(StartCondition__::INITIAL);
+    begin(StartCondition_::INITIAL);
         )
 
 itbn(bool debug() const)
@@ -63,22 +63,22 @@ itbn(bool popStream())
 itbn(void preCode())
    By default this function has an empty, inline implementation in
     tt(Scanner.h). It can safely be replaced by a user-defined
-    implementation. This function is called by tt(lex__), just before it
+    implementation. This function is called by tt(lex_), just before it
     starts to match input characters against its rules: tt(preCode) is called
-    by tt(lex__) when tt(lex__) is called and also after having executed the
+    by tt(lex_) when tt(lex_) is called and also after having executed the
     actions of a rule which did not execute a tt(return) statement. The
-    outline of tt(lex__)'s implementation looks like this: 
+    outline of tt(lex_)'s implementation looks like this: 
    verb(
-int Scanner::lex__()
+int Scanner::lex_()
 {
     ...
     preCode();
 
     while (true)
     {
-        size_t ch = get__();            // fetch next char
+        size_t ch = get_();            // fetch next char
         ...
-        switch (actionType__(range))    // determine the action
+        switch (actionType_(range))    // determine the action
         {
             ... maybe return
         }
@@ -88,23 +88,23 @@ int Scanner::lex__()
 }
         )
 
-itbn(void postCode(PostEnum__ type))
+itbn(void postCode(PostEnum_ type))
    By default this function has an empty, inline implementation in
     tt(Scanner.h). It can safely be replaced by a user-defined
-    implementation. This function is called by tt(lex__), just after a rule
-    has been matched, where tt(PostEnum__)'s value indicates the
-    characteristic of the matched rule. tt(PostEnum__) has four values:
+    implementation. This function is called by tt(lex_), just after a rule
+    has been matched, where tt(PostEnum_)'s value indicates the
+    characteristic of the matched rule. tt(PostEnum_) has four values:
         itemization(
-        itb(PostEnum__::END): the function tt(lex__)  immediately returns 0
+        itb(PostEnum_::END): the function tt(lex_)  immediately returns 0
             once tt(postCode) returns, indicating the end of the input was
             reached;
-        itb(PostEnum__::POP): the end of an input stream was reached, and
+        itb(PostEnum_::POP): the end of an input stream was reached, and
             processing continues with the previously pushed input stream. In
-            this case the function tt(lex__) doesn't return, it simply
+            this case the function tt(lex_) doesn't return, it simply
             coontinues processing the previously pushed stream;
-        itb(PostEnum__::RETURN): the function tt(lex__) immediately returns 
+        itb(PostEnum_::RETURN): the function tt(lex_) immediately returns 
             once tt(postCode) returns, returning the next token;
-        itb(PostEnum__::WIP): the function tt(lex__) has matched a
+        itb(PostEnum_::WIP): the function tt(lex_) has matched a
             non-returning rule, and continues its rule-matching process.
         )
 
@@ -178,7 +178,7 @@ itbn(void switchStreams(std::string const &infilename,
     tt(infilename) processing does not return to the original stream.nl()
     bf(This member is not available with interactive scanners.)
 
-itbn(StartCondition__  startCondition() const)
+itbn(StartCondition_  startCondition() const)
    returns the currently active start condition (mini scanner).
 )
 

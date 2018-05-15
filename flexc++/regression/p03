@@ -5,12 +5,12 @@
 
 %%
 
-"/*"            more(); begin(StartCondition__::com);
+"/*"            more(); begin(StartCondition_::com);
 <com>.|\n       more();
-<com>"*/"       d_p = "/* ... */";  begin(StartCondition__::INITIAL); return 1;
+<com>"*/"       d_p = "/* ... */";  begin(StartCondition_::INITIAL); return 1;
 
-"\""            more(); begin(StartCondition__::str);
-<str>"\""       d_p = "\" ... \""; more(); begin(StartCondition__::INITIAL); return 2;
+"\""            more(); begin(StartCondition_::str);
+<str>"\""       d_p = "\" ... \""; more(); begin(StartCondition_::INITIAL); return 2;
 <str>.|"\\".    more();
 
 [[:space:]]+

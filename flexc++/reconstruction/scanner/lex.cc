@@ -9,11 +9,11 @@
 #include "scanner.ih"
 
 
-    // s_ranges__: use (unsigned) characters as index to obtain
+    // s_ranges_: use (unsigned) characters as index to obtain
     //           that character's range-number.
     //           The range for EOF is defined in a constant in the
     //           class header file
-size_t const ScannerBase::s_ranges__[] =
+size_t const ScannerBase::s_ranges_[] =
 {
      0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
      3, 3, 3, 3, 3, 3, 3, 4, 5, 6, 7, 8, 9,10,11,11,11,12,13,14,15,16,17,18,19,
@@ -28,15 +28,15 @@ size_t const ScannerBase::s_ranges__[] =
     69,69,69,69,69,70,
 };
 
-    // s_dfa__ contains the rows of *all* DFAs ordered by start state.
-    // The enum class StartCondition__ is defined in the baseclass header
+    // s_dfa_ contains the rows of *all* DFAs ordered by start state.
+    // The enum class StartCondition_ is defined in the baseclass header
     // INITIAL is always 0.
     // Each entry defines the row to transit to if the column's
     // character range was sensed. Row numbers are relative to the
-    // used DFA and d_dfaBase__ is set to the first row of the subset to use.
+    // used DFA and d_dfaBase_ is set to the first row of the subset to use.
     // The row's final two values are begin and end indices in
-    // s_rfc__[] (rule, flags and count), defining the state's rule details
-int const ScannerBase::s_dfa__[][74] =
+    // s_rfc_[] (rule, flags and count), defining the state's rule details
+int const ScannerBase::s_dfa_[][74] =
 {
     // INITIAL
     {-1, 1, 2, 3, 1, 3, 4, 3, 5, 3, 3, 5, 5, 5, 5, 5, 3, 6, 7, 8,
@@ -1327,7 +1327,7 @@ int const ScannerBase::s_dfa__[][74] =
     // 2: Inc.      5: Final,Count  13: Final/BOL,Count
     // 3: Final,Inc 9: Final/BOL    
     // The third value is the LOP count value (valid for Count flags)
-size_t const ScannerBase::s_rfc__[][3] =
+size_t const ScannerBase::s_rfc_[][3] =
 {
 //     R  F  C
      { 4, 1, 0},  // 0
@@ -1423,13 +1423,13 @@ size_t const ScannerBase::s_rfc__[][3] =
      { 9, 1, 0},  // 90
 };
 
-int const (*ScannerBase::s_dfaBase__[])[74] =
+int const (*ScannerBase::s_dfaBase_[])[74] =
 {
-    s_dfa__ + 0,
-    s_dfa__ + 128,
-    s_dfa__ + 131,
-    s_dfa__ + 310,
-    s_dfa__ + 314,
+    s_dfa_ + 0,
+    s_dfa_ + 128,
+    s_dfa_ + 131,
+    s_dfa_ + 310,
+    s_dfa_ + 314,
 };
 
 size_t ScannerBase::s_istreamNr = 0;
@@ -1495,20 +1495,20 @@ void ScannerBase::Input::reRead(std::string const &str, size_t fm)
 ScannerBase::ScannerBase(std::istream &in, std::ostream &out)
 :
     d_filename("-"),
-    d_startCondition(StartCondition__::INITIAL),
+    d_startCondition(StartCondition_::INITIAL),
     d_state(0),
     d_out(new std::ostream(out.rdbuf())),
     d_sawEOF(false),
     d_atBOL(true),
     d_tailCount(45, UINT_MAX),
     d_input(new std::istream(in.rdbuf())),
-    d_dfaBase__(s_dfa__)
+    d_dfaBase_(s_dfa_)
 {}
 
 ScannerBase::ScannerBase(std::string const &infilename, std::string const &outfilename)
 :
     d_filename(infilename),
-    d_startCondition(StartCondition__::INITIAL),
+    d_startCondition(StartCondition_::INITIAL),
     d_state(0),
     d_out(outfilename == "-" ? 
                 new std::ostream(std::cout.rdbuf())
@@ -1518,7 +1518,7 @@ ScannerBase::ScannerBase(std::string const &infilename, std::string const &outfi
     d_atBOL(true),
     d_tailCount(45, UINT_MAX),
     d_input(new std::ifstream(infilename)),
-    d_dfaBase__(s_dfa__)
+    d_dfaBase_(s_dfa_)
 {}
 
 // $insert debugFunctions
@@ -1569,7 +1569,7 @@ void ScannerBase::switchStreams(std::string const &infilename,
 
 void ScannerBase::pushStream(std::string const &name, std::istream *streamPtr)
 {
-    if (d_streamStack.size() == s_maxSizeofStreamStack__)
+    if (d_streamStack.size() == s_maxSizeofStreamStack_)
     {
         delete streamPtr;
         throw std::length_error("Max stream stack size exceeded");
@@ -1609,23 +1609,23 @@ bool ScannerBase::popStream()
     return true;
 }
 
-ScannerBase::ActionType__ ScannerBase::actionType__(size_t range)
+ScannerBase::ActionType_ ScannerBase::actionType_(size_t range)
 {
-    d_nextState = d_dfaBase__[d_state][range];
+    d_nextState = d_dfaBase_[d_state][range];
 
     if (d_nextState != -1)                  // transition is possible
-        return ActionType__::CONTINUE;
+        return ActionType_::CONTINUE;
 
     if (atFinalState())                     // FINAL state reached
-        return ActionType__::MATCH;
+        return ActionType_::MATCH;
 
     if (d_matched.size())
-        return ActionType__::ECHO_FIRST;    // no match, echo the 1st char
+        return ActionType_::ECHO_FIRST;    // no match, echo the 1st char
 
-    return range != s_rangeOfEOF__ ? 
-                ActionType__::ECHO_CH 
+    return range != s_rangeOfEOF_ ? 
+                ActionType_::ECHO_CH 
             : 
-                ActionType__::RETURN;
+                ActionType_::RETURN;
 }
 
 void ScannerBase::accept(size_t nChars)          // old name: less
@@ -1639,7 +1639,7 @@ void ScannerBase::accept(size_t nChars)          // old name: less
 
   // The size of d_matched is determined:
   //    The current state is a known final state (as determined by 
-  // inspectRFCs__(), just prior to calling matched__). 
+  // inspectRFCs_(), just prior to calling matched_). 
   //    The contents of d_matched are reduced to d_final's size or (if set)
   // to the LOP-rule's tail size.
 void ScannerBase::determineMatchedSize(FinData const &final)
@@ -1656,7 +1656,7 @@ void ScannerBase::determineMatchedSize(FinData const &final)
   // the matched rule and is sent back to the input.  The final match length
   // is determined, the index of the matched rule is determined, and then
   // d_atBOL is updated. Finally the rule index is returned.
-size_t ScannerBase::matched__(size_t ch)
+size_t ScannerBase::matched_(size_t ch)
 {
     d_input.reRead(ch);
 
@@ -1676,18 +1676,18 @@ size_t ScannerBase::matched__(size_t ch)
     return final.rule;
 }
 
-size_t ScannerBase::getRange__(int ch)       // using int to prevent casts
+size_t ScannerBase::getRange_(int ch)       // using int to prevent casts
 {
     if (ch != AT_EOF)
         d_sawEOF = false;
 
-    return ch == AT_EOF ? static_cast<size_t>(s_rangeOfEOF__) : s_ranges__[ch];
+    return ch == AT_EOF ? static_cast<size_t>(s_rangeOfEOF_) : s_ranges_[ch];
 }
 
   // At this point d_nextState contains the next state and continuation is
   // possible. The just read char. is appended to d_match, and LOP counts
   // are updated.
-void ScannerBase::continue__(int ch)
+void ScannerBase::continue_(int ch)
 {
     d_state = d_nextState;
 
@@ -1695,7 +1695,7 @@ void ScannerBase::continue__(int ch)
         d_matched += ch;
 }
 
-void ScannerBase::echoCh__(size_t ch)
+void ScannerBase::echoCh_(size_t ch)
 {
     std::cerr << static_cast<char>(ch);
     d_atBOL = ch == '\n';
@@ -1707,33 +1707,33 @@ void ScannerBase::echoCh__(size_t ch)
    // the buffer. The first char. in the buffer is echoed to stderr. 
    // If there isn't any 1st char yet then the current char doesn't fit any
    // rules and that char is then echoed
-void ScannerBase::echoFirst__(size_t ch)
+void ScannerBase::echoFirst_(size_t ch)
 {
     d_input.reRead(ch);
     d_input.reRead(d_matched, 1);
-    echoCh__(d_matched[0]);
+    echoCh_(d_matched[0]);
 }
 
-    // Inspect all s_rfc__ elements associated with the current state
-    //  If the s_rfc__ element has its COUNT flag set then set the 
+    // Inspect all s_rfc_ elements associated with the current state
+    //  If the s_rfc_ element has its COUNT flag set then set the 
     // d_tailCount[rule] value to the element's tailCount value, if it has its 
     // INCREMENT flag set then increment d_tailCount[rule]
     //  If neither was set set the d_tailCount[rule] to UINT_MAX
     // 
-    // If the s_rfc__ element has its FINAL flag set then store the rule number
+    // If the s_rfc_ element has its FINAL flag set then store the rule number
     // in d_final.second. If it has its FINAL + BOL flags set then store the
     // rule number in d_final.first
-void ScannerBase::inspectRFCs__()
+void ScannerBase::inspectRFCs_()
 {
     for 
     (
-        size_t begin = d_dfaBase__[d_state][s_finacIdx__], 
-                 end = d_dfaBase__[d_state][s_finacIdx__ + 1];
+        size_t begin = d_dfaBase_[d_state][s_finacIdx_], 
+                 end = d_dfaBase_[d_state][s_finacIdx_ + 1];
             begin != end;
                 ++begin
     )
     {
-        size_t const *rfc = s_rfc__[begin];
+        size_t const *rfc = s_rfc_[begin];
         size_t flag = rfc[FLAGS];
         size_t rule = rfc[RULE];
 
@@ -1750,7 +1750,7 @@ void ScannerBase::inspectRFCs__()
     }
 }
 
-void ScannerBase::reset__()
+void ScannerBase::reset_()
 {
     d_final = Final { {UINT_MAX, UINT_MAX, UINT_MAX }, 
                       {UINT_MAX, UINT_MAX, UINT_MAX } };
@@ -1763,7 +1763,7 @@ void ScannerBase::reset__()
     d_more = false;
 }
 
-int Scanner::executeAction__(size_t ruleIdx)
+int Scanner::executeAction_(size_t ruleIdx)
 {
     switch (ruleIdx)
     {
@@ -1798,7 +1798,7 @@ int Scanner::executeAction__(size_t ruleIdx)
         case 5:
         {
 #line 38 "lexer"
-            push(StartCondition__::comment);
+            push(StartCondition_::comment);
         }
         break;
         case 7:
@@ -1813,7 +1813,7 @@ int Scanner::executeAction__(size_t ruleIdx)
             {
          more();
          cout << "   ENTERING STRING\n";
-         push(StartCondition__::string);
+         push(StartCondition_::string);
          }
         }
         break;
@@ -2037,52 +2037,52 @@ int Scanner::executeAction__(size_t ruleIdx)
         }
         break;
     }
-    noReturn__();
+    noReturn_();
     return 0;
 }
 
-int Scanner::lex__()
+int Scanner::lex_()
 {
-    reset__();
+    reset_();
     preCode();
 
     while (true)
     {
-        size_t ch = get__();                // fetch next char
-        size_t range = getRange__(ch);      // determine the range
+        size_t ch = get_();                // fetch next char
+        size_t range = getRange_(ch);      // determine the range
 
 
-        inspectRFCs__();                    // update d_tailCount values
+        inspectRFCs_();                    // update d_tailCount values
 
-        switch (actionType__(range))        // determine the action
+        switch (actionType_(range))        // determine the action
         {
-            case ActionType__::CONTINUE:
-                continue__(ch);
+            case ActionType_::CONTINUE:
+                continue_(ch);
             continue;
 
-            case ActionType__::MATCH:
+            case ActionType_::MATCH:
             {
-                int ret = executeAction__(matched__(ch));
-                if (return__())
+                int ret = executeAction_(matched_(ch));
+                if (return_())
                     return ret;
                 break;
             }
 
-            case ActionType__::ECHO_FIRST:
-                echoFirst__(ch);
+            case ActionType_::ECHO_FIRST:
+                echoFirst_(ch);
             break;
 
-            case ActionType__::ECHO_CH:
-                echoCh__(ch);
+            case ActionType_::ECHO_CH:
+                echoCh_(ch);
             break;
 
-            case ActionType__::RETURN:
+            case ActionType_::RETURN:
                 if (!popStream())
                     return 0;
             continue;
         } // switch
 
-        reset__();
+        reset_();
         preCode();
     } // while
 }

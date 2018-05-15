@@ -11,14 +11,14 @@ void Generator::getLOP(ostream &out) const
     if (d_debug)
         out << 
 R"raw(
-    if (s_debug__)
+    if (s_debug_)
     {
-        s_out__ << "getLOP() returns ";
+        s_out_ << "getLOP() returns ";
         if (isprint(ch))
-            s_out__ << '`' << as<char>(ch) << '\'';
+            s_out_ << '`' << as<char>(ch) << '\'';
         else
-            s_out__ << "(int)" << as<int>(ch);
-        s_out__ << '\n' << dflush__;
+            s_out_ << "(int)" << as<int>(ch);
+        s_out_ << '\n' << dflush_;
     }
 )raw";
 

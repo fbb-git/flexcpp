@@ -5,7 +5,7 @@ the first lines in the rules section.
 Flc() does not support code blocks. Since flc() generates a class with
 appropriate header files, initialization code can be activated bij flc()'s
 constructor, code to be executed when tt(lex) is called can be placed in the
-member tt(lex)'s body, just before calling tt(lex__), and tt(Scanner::preCode)
+member tt(lex)'s body, just before calling tt(lex_), and tt(Scanner::preCode)
 can be provided with any required pre-match code. See also lref(generated
 files)(files) below.
 

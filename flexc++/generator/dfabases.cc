@@ -5,7 +5,7 @@ void Generator::DFAbases(ostream &out) const
     string const &className = d_options.className();
 
     out << "\n"
-            "int const (*" << className << "Base::s_dfaBase__[])[" <<
+            "int const (*" << className << "Base::s_dfaBase_[])[" <<
                                             dfaCols() << "] =\n"
             "{\n";
 

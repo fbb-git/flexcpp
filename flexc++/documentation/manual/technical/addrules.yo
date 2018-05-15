@@ -20,7 +20,7 @@ Adding a rule (cf. tt(rules/add.cc)) means:
     it() associate its end-state with its index in tt(d_rules), so the DFA 
         construction knows which rule is matched when this state is
         reached. This rule-index is used as a case label in the scanner's
-        tt(executeAction__) member;
+        tt(executeAction_) member;
     it() calling tt(setRule(pair.first, ruleIdx)) to associate the rule's
         states with the rule's index;
     it() adding the rule index to the currently active set of start

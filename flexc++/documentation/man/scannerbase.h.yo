@@ -12,42 +12,42 @@ specifying flc()'s tt(--no-baseclass-header) option).
 manpagesection(9. PUBLIC ENUMS AND -TYPES)
 
     itemization(
-    itb(enum class StartCondition__)
+    itb(enum class StartCondition_)
         This strongly typed enumeration defines the names of the start
 conditions (i.e., mini scanners). It at least contains tt(INITIAL), but when
 the tt(%s) or tt(%x) directives were used it also contains the identifiers of
-the mini scanners declared by these directives. Since tt(StartCondition__) is
+the mini scanners declared by these directives. Since tt(StartCondition_) is
 a strongly typed enum its values must be preceded by its enum name. E.g.,
         verb(
-    begin(StartCondition__::INITIAL);
+    begin(StartCondition_::INITIAL);
         )
     )
 
 manpagesection(10. PROTECTED ENUMS AND -TYPES)
 
     itemization(
-    itb(enum class ActionType__)
+    itb(enum class ActionType_)
         This strongly typed enumeration is for internal use only.
-    itb(enum Leave__)
+    itb(enum Leave_)
         This enumeration is for internal use only.
-    itb(enum class PostEnum__)
+    itb(enum class PostEnum_)
         Values of this strongly typed enumeration are passed to the scanner's
         private member tt(postCode), indicating the scanner's action after
         matching a rule. The values of this enumeration are:
 
-        tt(PostEnum__::END): the function tt(lex__)  immediately returns 0
+        tt(PostEnum_::END): the function tt(lex_)  immediately returns 0
             once tt(postCode) returns, indicating the end of the input was
             reached;
 
-        tt(PostEnum__::POP): the end of an input stream was reached, and
+        tt(PostEnum_::POP): the end of an input stream was reached, and
             processing continues with the previously pushed input stream. In
-            this case the function tt(lex__) doesn't return, it simply
+            this case the function tt(lex_) doesn't return, it simply
             coontinues processing the previously pushed stream;
 
-        tt(PostEnum__::RETURN): the function tt(lex__) immediately returns 
+        tt(PostEnum_::RETURN): the function tt(lex_) immediately returns 
             once tt(postCode) returns, returning the next token;
 
-        tt(PostEnum__::WIP): the function tt(lex__) has matched a
+        tt(PostEnum_::WIP): the function tt(lex_) has matched a
             non-returning rule, and continues its rule-matching process.
     )
 
@@ -128,13 +128,13 @@ manpagesection(14. PROTECTED MEMBER FUNCTIONS)
         effectively sets tt(length)'s return value to tt(nChars) (note: with
         bf(flex++) this function was called tt(less));
 
-    itb(void begin(StartCondition__ startCondition))
+    itb(void begin(StartCondition_ startCondition))
        activate the regular expression rules associated with
-        tt(StartCondition__ startCondition). As this enumeration is a strongly
-        typed enum the tt(StartCondition__) scope must be specified as
+        tt(StartCondition_ startCondition). As this enumeration is a strongly
+        typed enum the tt(StartCondition_) scope must be specified as
         well. E.g., 
             verb(
-        begin(StartCondition__::INITIAL);
+        begin(StartCondition_::INITIAL);
             )
 
     itb(void echo() const) 
@@ -169,7 +169,7 @@ manpagesection(14. PROTECTED MEMBER FUNCTIONS)
         if (someCondition())
         {                           // any action, e.g., 
                                     // switch mini-scanner
-            begin(StartCondition__::INITIAL);
+            begin(StartCondition_::INITIAL);
 
             leave(Parser::TOKENVALUE);    // lex returns TOKENVALUE
             // this point is never reached
@@ -236,7 +236,7 @@ manpagesection(14. PROTECTED MEMBER FUNCTIONS)
        this function stores tt(text) in the matched text buffer. Following a
         call to this function tt(matched) returns tt(text).
 
-    itb(StartCondition__  startCondition() const)
+    itb(StartCondition_  startCondition() const)
        returns the currently active start condition (mini scanner);
 
     itb(std::vector<StreamStruct> const &streamStack() const)
@@ -255,7 +255,7 @@ manpagesection(14. PROTECTED MEMBER FUNCTIONS)
 
 manpagesection(15. PROTECTED DATA MEMBERS)
 
-    All protected data members are for internal use only, allowing tt(lex__)
+    All protected data members are for internal use only, allowing tt(lex_)
 to access them. All of them end in two underscore characters.
 
 manpagesection(16. FLEX++ TO FLEXC++ MEMBERS)

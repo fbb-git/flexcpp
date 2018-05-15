@@ -1,9 +1,28 @@
-flexc++ (2.06.05)
+flexc++ (2.07.00)
 
   * Nested namespace specifications (like my::nested::ns) cannot be used in
     include-guard specifications. In those cases only the alpha-numeric
     characters and the underscore of the namespace are used (thanks, avalchev,
     for bringing this to my attention).
+
+  * Since identifiers having series of two or more underscores are reserved by
+    the C++ standard, all identifiers ending in two trailing underscores were
+    redefined as identifiers ending in a single underscore. This involves the
+    enums 
+        ActionType_, Leave_, StartConditon_, PostEnum_, 
+    the members 
+        actionType_, continue_, echoCh_, echoFirst_, executeAction_,
+        getRange_, get_, istreamName_, lex_, lop1_, lop2_, lop3_, lop4_,
+        lopf_, matched_, noReturn_, print_, pushFront_, reset_, return_,
+        state_, switchStream_, updateFinals_,
+    and the protected data members
+        d_in_ d_token_ s_finIdx_, s_interactive_ s_maxSizeofStreamStack_,
+        s_nRules_, s_rangeOfEOF_, s_ranges_, s_rf_.
+    Existing code using the previously defined names (ending in two
+    underscores) can easily me updated by replacing the trailing double
+    underscores by single underscores. In practice this will most likely only
+    involve StartCondition_, PostEnum_ and maybe lex_ and print_, as the other
+    identifiers are intended for internal use only.
 
  -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 15 May 2018 12:23:40 +0200
 

@@ -2,6 +2,6 @@
 
 void Scanner::newDefinition()
 {
-    push(StartCondition__::line);
+    push(StartCondition_::line);
 }
 

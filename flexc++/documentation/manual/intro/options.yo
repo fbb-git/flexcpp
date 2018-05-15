@@ -221,9 +221,9 @@ cases you may encounter compilation errors.
             output stream, just before returning the token to tt(lex)'s
             caller. Displaying tokens and matched text is suppressed again
             when the tt(lex.cc) file is generated without using this
-            option. The function showing the tokens (tt(ScannerBase::print__))
+            option. The function showing the tokens (tt(ScannerBase::print_))
             is called from tt(Scanner::printTokens), which is defined in-line
-            in tt(Scanner.h). Calling tt(ScannerBase::print__), therefore, can
+            in tt(Scanner.h). Calling tt(ScannerBase::print_), therefore, can
             also easily be controlled by an option controlled by the program
             using the scanner object.
 

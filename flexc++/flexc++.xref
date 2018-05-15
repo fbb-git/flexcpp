@@ -1,7 +1,7 @@
 oxref by Frank B. Brokken (f.b.brokken@rug.nl)
 oxref V1.00.06 2012-2015
 
-CREATED Wed, 13 Apr 2016 09:32:30 +0000
+CREATED Tue, 15 May 2018 13:02:02 +0000
 CROSS REFERENCE FOR: -fxs tmp/libmodules.a 
 ----------------------------------------------------------------------
 
@@ -50,17 +50,17 @@ add(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char
     inspectstate.cc: Ranges::inspectState(State const&)
 
 add(unsigned long)
+  Full name: Ranges::add(unsigned long)
+  Source:    add3.cc 
+  Used By:
+    inspectstate.cc: Ranges::inspectState(State const&)
+
+add(unsigned long)
   Full name: StartConditions::add(unsigned long)
   Source:    add2.cc 
   Used By:
     add.cc: Rules::add(bool, Pattern const&, Block const&, FlexTypes::RuleType)
     addcatchall.cc: Rules::addCatchAll(unsigned long, unsigned long)
-
-add(unsigned long)
-  Full name: Ranges::add(unsigned long)
-  Source:    add3.cc 
-  Used By:
-    inspectstate.cc: Ranges::inspectState(State const&)
 
 addCatchAll(unsigned long, unsigned long)
   Full name: Rules::addCatchAll(unsigned long, unsigned long)
@@ -78,7 +78,7 @@ addDefinition(std::__cxx11::basic_string<char, std::char_traits<char>, std::allo
   Full name: Scanner::addDefinition(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, FlexTypes::TextType)
   Source:    adddefinition.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 addRange(std::set<char, std::less<char>, std::allocator<char> >&, unsigned long) const
   Full name: CharClass::addRange(std::set<char, std::less<char>, std::allocator<char> >&, unsigned long) const
@@ -90,13 +90,13 @@ addRule(Pattern const&, bool)
   Full name: Parser::addRule(Pattern const&, bool)
   Source:    addrule.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 addSC(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: StartConditions::addSC(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    addsc.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 allowNullMatches()
   Full name: Scanner::allowNullMatches()
@@ -108,13 +108,13 @@ alternatives(States&, Pattern const&, Pattern const&)
   Full name: Pattern::alternatives(States&, Pattern const&, Pattern const&)
   Source:    alternatives.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 append(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&)
   Full name: CharClass::append(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&)
   Source:    append.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
     negate2.cc: CharClass::negate(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&)
     dot.cc: Pattern::dot(States&)
 
@@ -122,13 +122,13 @@ assign(FlexTypes::TextType, std::__cxx11::basic_string<char, std::char_traits<ch
   Full name: Options::assign(FlexTypes::TextType, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, Options::PathType, char const*)
   Source:    assign.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 assignBlock()
   Full name: Parser::assignBlock()
   Source:    assignblock.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 baseClassH(std::ostream&) const
   Full name: Generator::baseClassH(std::ostream&) const
@@ -146,13 +146,13 @@ block()
   Full name: Parser::block()
   Source:    block.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 boln()
   Full name: Parser::boln()
   Source:    boln.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 build(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::vector<unsigned long, std::allocator<unsigned long> > const&)
   Full name: DFA::build(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::vector<unsigned long, std::allocator<unsigned long> > const&)
@@ -177,13 +177,14 @@ characterClass(States&, CharClass&)
   Full name: Pattern::characterClass(States&, CharClass&)
   Source:    characterclass.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
     dot.cc: Pattern::dot(States&)
 
 CharClass()
   Full name: CharClass::CharClass()
   Source:    charclass1.cc 
   Used By:
+    parse.cc: Parser::print_()
     difference.cc: CharClass::difference(CharClass&, CharClass&)
     unite.cc: CharClass::unite(CharClass&, CharClass&)
     dot.cc: Pattern::dot(States&)
@@ -192,13 +193,13 @@ CharClass(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocato
   Full name: CharClass::CharClass(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned long)
   Source:    charclass3.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 chars(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: CharClass::chars(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    chars.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 charsetToRanges(StateData&, unsigned long*)
   Full name: Ranges::charsetToRanges(StateData&, unsigned long*)
@@ -260,7 +261,7 @@ concatenate(States&, Pattern const&, Pattern const&)
   Full name: Pattern::concatenate(States&, Pattern const&, Pattern const&)
   Source:    concatenate.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
     join.cc: Pattern::join(States&, Pattern&, unsigned long, std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > > const&)
     pattern2.cc: Pattern::Pattern(States&, Pattern const&, Pattern const&, unsigned long)
     pattern3.cc: Pattern::Pattern(States&, unsigned long, Pattern const&, Pattern const&)
@@ -283,8 +284,8 @@ copyPattern(States&, unsigned long, std::vector<std::pair<unsigned long, unsigne
   Used By:
     copy.cc: Pattern::copy(States&, Pattern&, unsigned long, unsigned long)
 
-copyPattern(States&, unsigned long, unsigned long, FBB::LinearMap<unsigned long, unsigned long, std::allocator<std::pair<unsigned long const, unsigned long> > >&, std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > >&)
-  Full name: Pattern::copyPattern(States&, unsigned long, unsigned long, FBB::LinearMap<unsigned long, unsigned long, std::allocator<std::pair<unsigned long const, unsigned long> > >&, std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > >&)
+copyPattern(States&, unsigned long, unsigned long, FBB::LinearMap<unsigned long, unsigned long>&, std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > >&)
+  Full name: Pattern::copyPattern(States&, unsigned long, unsigned long, FBB::LinearMap<unsigned long, unsigned long>&, std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > >&)
   Source:    copypattern2.cc 
   Used By:
     optionalpatterns.cc: Pattern::optionalPatterns(States&, Pattern&, unsigned long, unsigned long, std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > >&)
@@ -296,12 +297,6 @@ countRanges(unsigned long&, std::vector<unsigned long, std::allocator<unsigned l
     update.cc: Ranges::update(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned long const*)
 
 cxx11]
-  Full name: Generator::s_insert[abi:cxx11]
-  Source:    data.cc 
-  Used By:
-    insert.cc: Generator::insert(std::ostream&) const
-
-cxx11]
   Full name: Options::s_warnOptions[abi:cxx11]
   Source:    data.cc 
   Used By:
@@ -309,13 +304,20 @@ cxx11]
     setaccessorvariables.cc: Options::setAccessorVariables()
     setclassname.cc: Options::setClassName(FlexTypes::TextType)
     setoptionpath.cc: Options::setOptionPath(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, char const*, char const*)
+    setstartconditionname.cc: Options::setStartConditionName(FlexTypes::TextType)
     errexisting.cc: Generator::errExisting(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
+
+cxx11]
+  Full name: Generator::s_insert[abi:cxx11]
+  Source:    data.cc 
+  Used By:
+    insert.cc: Generator::insert(std::ostream&) const
 
 cxx11]
   Full name: Parser::s_lastMsg[abi:cxx11]
   Source:    data.cc 
   Used By:
-    error.cc: Parser::error(char const*)
+    error.cc: Parser::error()
     reset.cc: Parser::reset()
 
 cxx11]
@@ -323,6 +325,13 @@ cxx11]
   Source:    data.cc 
   Used By:
     negate.cc: CharRange::negate(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+
+cxx11]
+  Full name: ParserBase::s_out_[abi:cxx11]
+  Source:    parse.cc 
+  Used By:
+    lookahead.cc: GLOBALS lookahead.cc 10lookahead.o
+    quotes.cc: GLOBALS quotes.cc 10quotes.o
 
 cxx11]
   Full name: CharRange::s_hash[abi:cxx11]
@@ -335,13 +344,6 @@ cxx11]
   Source:    data.cc 
   Used By:
     predefined.cc: CharRange::predefined(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-
-cxx11]
-  Full name: ParserBase::s_out__[abi:cxx11]
-  Source:    parse.cc 
-  Used By:
-    lookahead.cc: GLOBALS lookahead.cc 10lookahead.o
-    quotes.cc: Parser::quotes()
 
 cxx11]()
   Full name: CharClass::str[abi:cxx11]()
@@ -357,10 +359,17 @@ cxx11]() const
     classih.cc: Generator::classIH(std::ostream&) const
 
 cxx11]() const
+  Full name: Options::baseclassHeaderName[abi:cxx11]() const
+  Source:    baseclassheadername.cc 
+  Used By:
+    baseclassh.cc: Generator::baseClassH(std::ostream&) const
+    conflicts.cc: Generator::conflicts() const
+
+cxx11]() const
   Full name: Scanner::rawStringContents[abi:cxx11]() const
   Source:    rawstringcontents.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
     rawstring.cc: Parser::rawString()
 
 cxx11]() const
@@ -368,13 +377,6 @@ cxx11]() const
   Source:    classheadername.cc 
   Used By:
     classh.cc: Generator::classH(std::ostream&) const
-    conflicts.cc: Generator::conflicts() const
-
-cxx11]() const
-  Full name: Options::baseclassHeaderName[abi:cxx11]() const
-  Source:    baseclassheadername.cc 
-  Used By:
-    baseclassh.cc: Generator::baseClassH(std::ostream&) const
     conflicts.cc: Generator::conflicts() const
 
 cxx11](FlexTypes::TextType)
@@ -385,9 +387,10 @@ cxx11](FlexTypes::TextType)
     setclassname.cc: Options::setClassName(FlexTypes::TextType)
     setfilenames.cc: Options::setFilenames(FlexTypes::TextType)
     setlexfunctionname.cc: Options::setLexFunctionName(FlexTypes::TextType)
+    setstartconditionname.cc: Options::setStartConditionName(FlexTypes::TextType)
 
 cxx11](int) const
-  Full name: ParserBase::symbol__[abi:cxx11](int) const
+  Full name: ParserBase::symbol_[abi:cxx11](int) const
   Source:    parse.cc 
   Used By:
     print.cc: Parser::print()
@@ -417,6 +420,13 @@ debugFunctions(std::ostream&) const
   Used By:
     data.cc: GLOBALS data.cc 6data.o
 
+debugTest() const
+  Full name: Generator::debugTest() const
+  Source:    debugtest.cc 
+  Used By:
+    debug.cc: Generator::debug(std::ostream&) const
+    startcondimpl.cc: Generator::startCondImpl(std::ostream&) const
+
 declarations(std::ostream&) const
   Full name: Generator::declarations(std::ostream&) const
   Source:    declarations.cc 
@@ -428,7 +438,7 @@ define(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<c
   Source:    define.cc 
   Used By:
     addlopstartconditions.cc: Parser::addLopStartConditions()
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 DFA(Ranges&, Rules&, States&)
   Full name: DFA::DFA(Ranges&, Rules&, States&)
@@ -478,36 +488,36 @@ dfaTransitions(DFARow const&, std::ostream&)
   Used By:
     dfarow.cc: Generator::dfaRow(DFARow const&, unsigned long&, std::ostream&)
 
-dflush__(std::ostream&)
-  Full name: ParserBase::dflush__(std::ostream&)
+dflush_(std::ostream&)
+  Full name: ParserBase::dflush_(std::ostream&)
   Source:    parse.cc 
   Used By:
     lookahead.cc: GLOBALS lookahead.cc 10lookahead.o
-    quotes.cc: Parser::quotes()
+    quotes.cc: GLOBALS quotes.cc 10quotes.o
 
 difference(CharClass&, CharClass&)
   Full name: CharClass::difference(CharClass&, CharClass&)
   Source:    difference.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 dollar()
   Full name: Parser::dollar()
   Source:    dollar.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 dot(States&)
   Full name: Pattern::dot(States&)
   Source:    dot.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 dup(State const&, unsigned long, unsigned long)
   Full name: State::dup(State const&, unsigned long, unsigned long)
   Source:    dup.cc 
   Used By:
-    duppattern.cc: Pattern::dupPattern(FBB::LinearMap<unsigned long, unsigned long, std::allocator<std::pair<unsigned long const, unsigned long> > >&, States&, unsigned long)
+    duppattern.cc: Pattern::dupPattern(FBB::LinearMap<unsigned long, unsigned long>&, States&, unsigned long)
 
 duplicate(States&) const
   Full name: Pattern::duplicate(States&) const
@@ -515,12 +525,12 @@ duplicate(States&) const
   Used By:
     pattern2.cc: Pattern::Pattern(States&, Pattern const&, Pattern const&, unsigned long)
 
-dupPattern(FBB::LinearMap<unsigned long, unsigned long, std::allocator<std::pair<unsigned long const, unsigned long> > >&, States&, unsigned long)
-  Full name: Pattern::dupPattern(FBB::LinearMap<unsigned long, unsigned long, std::allocator<std::pair<unsigned long const, unsigned long> > >&, States&, unsigned long)
+dupPattern(FBB::LinearMap<unsigned long, unsigned long>&, States&, unsigned long)
+  Full name: Pattern::dupPattern(FBB::LinearMap<unsigned long, unsigned long>&, States&, unsigned long)
   Source:    duppattern.cc 
   Used By:
     copypattern1.cc: Pattern::copyPattern(States&, unsigned long, std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > >&)
-    copypattern2.cc: Pattern::copyPattern(States&, unsigned long, unsigned long, FBB::LinearMap<unsigned long, unsigned long, std::allocator<std::pair<unsigned long const, unsigned long> > >&, std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > >&)
+    copypattern2.cc: Pattern::copyPattern(States&, unsigned long, unsigned long, FBB::LinearMap<unsigned long, unsigned long>&, std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > >&)
     duplicate.cc: Pattern::duplicate(States&) const
 
 eClosure(std::set<unsigned long, std::less<unsigned long>, std::allocator<unsigned long> >&) const
@@ -540,19 +550,19 @@ endOfRawString()
   Full name: Scanner::endOfRawString()
   Source:    endofrawstring.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 eof(States&)
   Full name: Pattern::eof(States&)
   Source:    eof.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 eolnDollar()
   Full name: Parser::eolnDollar()
   Source:    eolndollar.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 errExisting(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
   Full name: Generator::errExisting(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
@@ -560,23 +570,23 @@ errExisting(std::__cxx11::basic_string<char, std::char_traits<char>, std::alloca
   Used By:
     conflicts.cc: Generator::conflicts() const
 
-error(char const*)
-  Full name: Parser::error(char const*)
+error()
+  Full name: Parser::error()
   Source:    error.cc 
   Used By:
-    parse.cc: Parser::errorRecovery()
+    parse.cc: Parser::errorRecovery_()
 
 escape(States&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: Pattern::escape(States&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    escape.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 exact(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: Interval::exact(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    exact.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 filename(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: Generator::filename(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
@@ -618,19 +628,19 @@ handleCharAfterBlanks()
   Full name: Scanner::handleCharAfterBlanks()
   Source:    handlecharafterblanks.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 handleDquote()
   Full name: Scanner::handleDquote()
   Source:    handledquote.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 handleEOLNcomment()
   Full name: Scanner::handleEOLNcomment()
   Source:    handleeolncomment.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 handleFixedTailLopRule(Rule&)
   Full name: Rules::handleFixedTailLopRule(Rule&)
@@ -654,25 +664,25 @@ handleMulti(int)
   Full name: Scanner::handleMulti(int)
   Source:    handlemulti.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 handleOpenBracket()
   Full name: Scanner::handleOpenBracket()
   Source:    handleopenbracket.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 handleRawString()
   Full name: Scanner::handleRawString()
   Source:    handlerawstring.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 handleStdComment()
   Full name: Scanner::handleStdComment()
   Source:    handlestdcomment.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 inlineLexFunction(std::ostream&) const
   Full name: Generator::inlineLexFunction(std::ostream&) const
@@ -760,7 +770,7 @@ interval(Pattern&, Interval const&)
   Full name: Parser::interval(Pattern&, Interval const&)
   Source:    interval.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 interval(States&, Pattern&, Interval const&)
   Full name: Pattern::interval(States&, Pattern&, Interval const&)
@@ -788,8 +798,8 @@ join(States&, Pattern&, unsigned long, std::vector<std::pair<unsigned long, unsi
     optionalpatterns.cc: Pattern::optionalPatterns(States&, Pattern&, unsigned long, unsigned long, std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > >&)
     optrepeatlastpattern.cc: Pattern::optRepeatLastPattern(States&, Pattern&, unsigned long, std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > >&)
 
-jumpToEnd(States&, std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > >&, unsigned long, unsigned long, FBB::LinearMap<unsigned long, unsigned long, std::allocator<std::pair<unsigned long const, unsigned long> > >&)
-  Full name: Pattern::jumpToEnd(States&, std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > >&, unsigned long, unsigned long, FBB::LinearMap<unsigned long, unsigned long, std::allocator<std::pair<unsigned long const, unsigned long> > >&)
+jumpToEnd(States&, std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > >&, unsigned long, unsigned long, FBB::LinearMap<unsigned long, unsigned long>&)
+  Full name: Pattern::jumpToEnd(States&, std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > >&, unsigned long, unsigned long, FBB::LinearMap<unsigned long, unsigned long>&)
   Source:    jumptoend.cc 
   Used By:
     optionalpatterns.cc: Pattern::optionalPatterns(States&, Pattern&, unsigned long, unsigned long, std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > >&)
@@ -828,16 +838,19 @@ key(std::ostream&) const
     namespaceuse.cc: Generator::namespaceUse(std::ostream&) const
     print.cc: Generator::print(std::ostream&) const
     scannerconstructors.cc: Generator::scannerConstructors(std::ostream&) const
-    startcondnames.cc: Generator::startCondNames(std::ostream&) const
+    startconddecl.cc: Generator::startCondDecl(std::ostream&) const
+    startcondenum.cc: Generator::startCondEnum(std::ostream&) const
+    startcondimpl.cc: Generator::startCondImpl(std::ostream&) const
+    startcondinfo.cc: Generator::startCondInfo(std::ostream&) const
 
 lex()
   Full name: Parser::lex()
   Source:    lex.cc 
   Used By:
-    parse.cc: Parser::nextToken()
+    parse.cc: Parser::nextToken_()
 
-lex__()
-  Full name: Scanner::lex__()
+lex_()
+  Full name: Scanner::lex_()
   Source:    lex.cc 
   Used By:
     block.cc: Parser::block()
@@ -853,7 +866,7 @@ lookahead(Pattern const&, Pattern const&)
   Full name: Parser::lookahead(Pattern const&, Pattern const&)
   Source:    lookahead.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 lop1(std::ostream&) const
   Full name: Generator::lop1(std::ostream&) const
@@ -895,19 +908,19 @@ lowerBound(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocat
   Full name: Interval::lowerBound(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    lowerbound.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 maybeSwitchStream()
   Full name: Scanner::maybeSwitchStream()
   Source:    maybeswitchstream.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 moreInput()
   Full name: Scanner::moreInput()
   Source:    moreinput.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 namespaceClose(std::ostream&) const
   Full name: Generator::namespaceClose(std::ostream&) const
@@ -931,7 +944,7 @@ negate()
   Full name: CharClass::negate()
   Source:    negate1.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
     negate2.cc: CharClass::negate(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&)
 
 negate(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
@@ -945,13 +958,13 @@ negate(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std:
   Full name: CharClass::negate(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&)
   Source:    negate2.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 newDefinition()
   Full name: Scanner::newDefinition()
   Source:    newdefinition.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 next()
   Full name: States::next()
@@ -959,8 +972,8 @@ next()
   Used By:
     next2.cc: States::next2()
     next3.cc: States::next(unsigned long)
-    copypattern2.cc: Pattern::copyPattern(States&, unsigned long, unsigned long, FBB::LinearMap<unsigned long, unsigned long, std::allocator<std::pair<unsigned long const, unsigned long> > >&, std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > >&)
-    duppattern.cc: Pattern::dupPattern(FBB::LinearMap<unsigned long, unsigned long, std::allocator<std::pair<unsigned long const, unsigned long> > >&, States&, unsigned long)
+    copypattern2.cc: Pattern::copyPattern(States&, unsigned long, unsigned long, FBB::LinearMap<unsigned long, unsigned long>&, std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > >&)
+    duppattern.cc: Pattern::dupPattern(FBB::LinearMap<unsigned long, unsigned long>&, States&, unsigned long)
     questionmark.cc: Pattern::questionMark(States&, Pattern const&)
 
 next(unsigned long)
@@ -992,7 +1005,7 @@ noActions()
   Full name: Rules::noActions()
   Source:    noactions.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 open(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: Block::open(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
@@ -1012,9 +1025,9 @@ operator()(int) const
   Used By:
     parser1.cc: Parser::Parser(Rules&, States&)
     construction.cc: Generator::construction(States const&)
-    debug.cc: Generator::debug(std::ostream&) const
     debugdecl.cc: Generator::debugDecl(std::ostream&) const
     debugfunctions.cc: Generator::debugFunctions(std::ostream&) const
+    debugtest.cc: Generator::debugTest() const
 
 operator+=(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: Block::operator+=(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
@@ -1143,6 +1156,7 @@ Pattern(std::pair<unsigned long, unsigned long> const&)
   Source:    pattern1.cc 
   Used By:
     lookahead.cc: Parser::lookahead(Pattern const&, Pattern const&)
+    parse.cc: Parser::print_()
     handleloprule.cc: Rules::handleLopRule(unsigned long)
     rules1.cc: Rules::Rules(States&)
     alternatives.cc: Pattern::alternatives(States&, Pattern const&, Pattern const&)
@@ -1180,20 +1194,20 @@ popSc(int)
   Full name: Scanner::popSc(int)
   Source:    popsc.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
+
+popStream()
+  Full name: Scanner::popStream()
+  Source:    popstream.cc 
+  Used By:
+    lex.cc: Scanner::lex_()
+    moreinput.cc: Scanner::moreInput()
 
 popStream()
   Full name: ScannerBase::popStream()
   Source:    lex.cc 
   Used By:
     popstream.cc: Scanner::popStream()
-
-popStream()
-  Full name: Scanner::popStream()
-  Source:    popstream.cc 
-  Used By:
-    lex.cc: Scanner::lex__()
-    moreinput.cc: Scanner::moreInput()
 
 predefined(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: CharRange::predefined(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
@@ -1205,7 +1219,7 @@ predefined(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocat
   Full name: CharClass::predefined(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    predefined.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
     dot.cc: Pattern::dot(States&)
 
 predefinedAfter(unsigned long) const
@@ -1225,7 +1239,7 @@ print()
   Source:    print.cc 
   Used By:
     lex.cc: Parser::lex()
-    parse.cc: Parser::nextToken()
+    parse.cc: Parser::nextToken_()
 
 print(std::ostream&) const
   Full name: Generator::print(std::ostream&) const
@@ -1239,11 +1253,11 @@ processCatchAllRule()
   Used By:
     addlopstartconditions.cc: Parser::addLopStartConditions()
 
-push(ScannerBase::StartCondition__)
-  Full name: Scanner::push(ScannerBase::StartCondition__)
+push(ScannerBase::StartCondition_)
+  Full name: Scanner::push(ScannerBase::StartCondition_)
   Source:    push.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
     handledquote.cc: Scanner::handleDquote()
     handlerawstring.cc: Scanner::handleRawString()
     handlestdcomment.cc: Scanner::handleStdComment()
@@ -1254,7 +1268,7 @@ pushNameExpansion()
   Full name: Scanner::pushNameExpansion()
   Source:    pushnameexpansion.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 pushStream(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: ScannerBase::pushStream(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
@@ -1266,7 +1280,7 @@ quantifier(States&, Pattern const&, unsigned long)
   Full name: Pattern::quantifier(States&, Pattern const&, unsigned long)
   Source:    quantifier.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 questionMark(States&, Pattern const&)
   Full name: Pattern::questionMark(States&, Pattern const&)
@@ -1279,13 +1293,13 @@ quotes()
   Full name: Parser::quotes()
   Source:    quotes.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 range(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: Interval::range(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Source:    range.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 rangeAfterRange(__gnu_cxx::__normal_iterator<unsigned long*, std::vector<unsigned long, std::allocator<unsigned long> > >) const
   Full name: CharClass::rangeAfterRange(__gnu_cxx::__normal_iterator<unsigned long*, std::vector<unsigned long, std::allocator<unsigned long> > >) const
@@ -1315,7 +1329,7 @@ rawString()
   Full name: Parser::rawString()
   Source:    rawstring.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 rawText(States&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
   Full name: Pattern::rawText(States&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
@@ -1324,7 +1338,7 @@ rawText(States&, std::__cxx11::basic_string<char, std::char_traits<char>, std::a
     boln.cc: Parser::boln()
     dollar.cc: Parser::dollar()
     eolndollar.cc: Parser::eolnDollar()
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
     quotes.cc: Parser::quotes()
 
 redo(unsigned long)
@@ -1363,7 +1377,7 @@ reset()
   Full name: Parser::reset()
   Source:    reset.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 Rule(States&, bool, Pattern const&, Block const&, FlexTypes::RuleType)
   Full name: Rule::Rule(States&, bool, Pattern const&, Block const&, FlexTypes::RuleType)
@@ -1413,12 +1427,18 @@ s_defaultSkeletonDirectory
   Used By:
     setaccessorvariables.cc: Options::setAccessorVariables()
 
-s_dfaBase__
-  Full name: ScannerBase::s_dfaBase__
+s_defaultStartConditionName
+  Full name: Options::s_defaultStartConditionName
+  Source:    data.cc 
+  Used By:
+    setaccessorvariables.cc: Options::setAccessorVariables()
+
+s_dfaBase_
+  Full name: ScannerBase::s_dfaBase_
   Source:    lex.cc 
   Used By:
     popsc.cc: Scanner::popSc(int)
-    push.cc: Scanner::push(ScannerBase::StartCondition__)
+    push.cc: Scanner::push(ScannerBase::StartCondition_)
     switchtoinitial.cc: Scanner::switchToINITIAL()
 
 s_ignoreToken
@@ -1452,7 +1472,7 @@ s_regexCall
   Used By:
     interval.cc: Parser::interval(Pattern&, Interval const&)
     lookahead.cc: Parser::lookahead(Pattern const&, Pattern const&)
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
     alternatives.cc: Pattern::alternatives(States&, Pattern const&, Pattern const&)
     concatenate.cc: Pattern::concatenate(States&, Pattern const&, Pattern const&)
     quantifier.cc: Pattern::quantifier(States&, Pattern const&, unsigned long)
@@ -1468,8 +1488,8 @@ s_verbose
     setverbose.cc: DFA::setVerbose(bool)
     shrinkdfa.cc: DFA::shrinkDFA(std::vector<unsigned long, std::allocator<unsigned long> >&)
 
-sameTransits(FBB::LinearMap<unsigned long, unsigned long, std::allocator<std::pair<unsigned long const, unsigned long> > > const&, FBB::LinearMap<unsigned long, unsigned long, std::allocator<std::pair<unsigned long const, unsigned long> > > const&)
-  Full name: DFARow::sameTransits(FBB::LinearMap<unsigned long, unsigned long, std::allocator<std::pair<unsigned long const, unsigned long> > > const&, FBB::LinearMap<unsigned long, unsigned long, std::allocator<std::pair<unsigned long const, unsigned long> > > const&)
+sameTransits(FBB::LinearMap<unsigned long, unsigned long> const&, FBB::LinearMap<unsigned long, unsigned long> const&)
+  Full name: DFARow::sameTransits(FBB::LinearMap<unsigned long, unsigned long> const&, FBB::LinearMap<unsigned long, unsigned long> const&)
   Source:    sametransits.cc 
   Used By:
     operatorequal.cc: DFARow::operator==(DFARow const&) const
@@ -1496,7 +1516,7 @@ secondSectionDelimiter()
   Full name: Scanner::secondSectionDelimiter()
   Source:    secondsectiondelimiter.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 set()
   Full name: CharClass::set()
@@ -1522,7 +1542,7 @@ setClassName(FlexTypes::TextType)
   Full name: Options::setClassName(FlexTypes::TextType)
   Source:    setclassname.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 setDebug(bool)
   Full name: ParserBase::setDebug(bool)
@@ -1534,7 +1554,7 @@ setFilenames(FlexTypes::TextType)
   Full name: Options::setFilenames(FlexTypes::TextType)
   Source:    setfilenames.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 setFinal(unsigned long)
   Full name: DFARow::setFinal(unsigned long)
@@ -1546,7 +1566,7 @@ setLexFunctionName(FlexTypes::TextType)
   Full name: Options::setLexFunctionName(FlexTypes::TextType)
   Source:    setlexfunctionname.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 setLineTags(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
   Full name: Scanner::setLineTags(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const
@@ -1561,6 +1581,12 @@ setLopBlocks()
   Source:    setlopblocks.cc 
   Used By:
     handleloprules.cc: Rules::handleLopRules()
+
+setNameSpaceIdentifier()
+  Full name: Options::setNameSpaceIdentifier()
+  Source:    setnamespaceidentifier.cc 
+  Used By:
+    setaccessorvariables.cc: Options::setAccessorVariables()
 
 setOptionPath(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, char const*, char const*)
   Full name: Options::setOptionPath(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, char const*, char const*)
@@ -1586,6 +1612,12 @@ setRule(unsigned long, unsigned long)
   Used By:
     add.cc: Rules::add(bool, Pattern const&, Block const&, FlexTypes::RuleType)
 
+setStartConditionName(FlexTypes::TextType)
+  Full name: Options::setStartConditionName(FlexTypes::TextType)
+  Source:    setstartconditionname.cc 
+  Used By:
+    parse.cc: Parser::executeAction_(int)
+
 showFilenames() const
   Full name: Options::showFilenames() const
   Source:    showfilenames.cc 
@@ -1605,17 +1637,35 @@ star(States&, Pattern const&)
     interval.cc: Pattern::interval(States&, Pattern&, Interval const&)
     quantifier.cc: Pattern::quantifier(States&, Pattern const&, unsigned long)
 
+startCondDecl(std::ostream&) const
+  Full name: Generator::startCondDecl(std::ostream&) const
+  Source:    startconddecl.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 6data.o
+
+startCondEnum(std::ostream&) const
+  Full name: Generator::startCondEnum(std::ostream&) const
+  Source:    startcondenum.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 6data.o
+
+startCondImpl(std::ostream&) const
+  Full name: Generator::startCondImpl(std::ostream&) const
+  Source:    startcondimpl.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 6data.o
+
+startCondInfo(std::ostream&) const
+  Full name: Generator::startCondInfo(std::ostream&) const
+  Source:    startcondinfo.cc 
+  Used By:
+    data.cc: GLOBALS data.cc 6data.o
+
 StartConditions()
   Full name: StartConditions::StartConditions()
   Source:    startconditions1.cc 
   Used By:
     rules1.cc: Rules::Rules(States&)
-
-startCondNames(std::ostream&) const
-  Full name: Generator::startCondNames(std::ostream&) const
-  Source:    startcondnames.cc 
-  Used By:
-    data.cc: GLOBALS data.cc 6data.o
 
 State()
   Full name: State::State()
@@ -1654,7 +1704,7 @@ State(unsigned long, unsigned long, unsigned long)
     alternatives.cc: Pattern::alternatives(States&, Pattern const&, Pattern const&)
     eof.cc: Pattern::eof(States&)
     interval.cc: Pattern::interval(States&, Pattern&, Interval const&)
-    jumptoend.cc: Pattern::jumpToEnd(States&, std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > >&, unsigned long, unsigned long, FBB::LinearMap<unsigned long, unsigned long, std::allocator<std::pair<unsigned long const, unsigned long> > >&)
+    jumptoend.cc: Pattern::jumpToEnd(States&, std::vector<std::pair<unsigned long, unsigned long>, std::allocator<std::pair<unsigned long, unsigned long> > >&, unsigned long, unsigned long, FBB::LinearMap<unsigned long, unsigned long>&)
     plus.cc: Pattern::plus(States&, Pattern const&)
     questionmark.cc: Pattern::questionMark(States&, Pattern const&)
     rawtext.cc: Pattern::rawText(States&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
@@ -1686,7 +1736,7 @@ switchToINITIAL()
   Full name: Scanner::switchToINITIAL()
   Source:    switchtoinitial.cc 
   Used By:
-    lex.cc: Scanner::executeAction__(unsigned long)
+    lex.cc: Scanner::executeAction_(unsigned long)
 
 tabulate(FBB::Table&) const
   Full name: DFARow::tabulate(FBB::Table&) const
@@ -1734,7 +1784,7 @@ unite(CharClass&, CharClass&)
   Full name: CharClass::unite(CharClass&, CharClass&)
   Source:    unite.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
 
 update(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned long const*)
   Full name: Ranges::update(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned long const*)
@@ -1746,7 +1796,13 @@ useAll()
   Full name: StartConditions::useAll()
   Source:    useall.cc 
   Used By:
-    parse.cc: Parser::executeAction(int)
+    parse.cc: Parser::executeAction_(int)
+
+v_clone() const
+  Full name: StateData::v_clone() const
+  Source:    vclone.cc 
+  Used By:
+    destructor.cc: StateData::~StateData()
 
 v_clone() const
   Full name: StateString::v_clone() const
@@ -1783,12 +1839,6 @@ v_clone() const
     state4.cc: State::State(unsigned long, unsigned long, unsigned long)
     state5.cc: State::State(unsigned long, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, unsigned long, unsigned long)
     state6.cc: State::State(unsigned char, unsigned long)
-
-v_clone() const
-  Full name: StateData::v_clone() const
-  Source:    vclone.cc 
-  Used By:
-    destructor.cc: StateData::~StateData()
 
 validRange(__gnu_cxx::__normal_iterator<unsigned long*, std::vector<unsigned long, std::allocator<unsigned long> > >) const
   Full name: CharClass::validRange(__gnu_cxx::__normal_iterator<unsigned long*, std::vector<unsigned long, std::allocator<unsigned long> > >) const

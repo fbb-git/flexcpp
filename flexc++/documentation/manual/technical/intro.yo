@@ -15,7 +15,7 @@ file becomes rule 0.
 were recognized the LOP start conditions need a catch-all rule. The catch-all
 rule looks like this:
         verb(
-    .|\n        lop3__();
+    .|\n        lop3_();
         )
     and is added by the scanner to the input once all input files have been
 processed. This rule is then used in the LOP-tail matching procedure,
@@ -24,7 +24,7 @@ explained in section ref(LOOKAHEAD).
 
 After parsing the tt(Rules) object's tt(handleLopRules) adds a catch-all rule
 to the tt(LOP) rule processing code. This member also updates the LOP-rules
-action blocks, calling tt(lop1__, lop2__, lop3__) and tt(lop4__). Again:
+action blocks, calling tt(lop1_, lop2_, lop3_) and tt(lop4_). Again:
 refer to section ref(LOOKAHEAD) for details.
 
 Rather than using the characters groups of characters are combined, forming

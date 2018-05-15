@@ -6,7 +6,7 @@ int Scanner::popSc(int token)
         d_scStack.pop();
         
     begin(d_scStack.empty() ? 
-                StartCondition__::INITIAL
+                StartCondition_::INITIAL
             :
                 d_scStack.top()
     );

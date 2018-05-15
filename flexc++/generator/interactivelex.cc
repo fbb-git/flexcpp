@@ -20,15 +20,15 @@ void Generator::interactiveLex(ostream &out) const
         "    line += '\\n';\n"
         "    d_line->clear();\n"
         "    d_line->str(line);\n"
-        "    switchStream__(*d_line, lineNr());\n"
+        "    switchStream_(*d_line, lineNr());\n"
         "\n"
         "    return true;\n"
         "}\n"
         "\n"
         "int " << name << "::" << d_options.lexFunctionName() << "()\n"
         "{\n"
-        "    return lex__() != 0        ? d_token__ :\n"
-        "           interactiveLine() ?   lex__()   :\n"
+        "    return lex_() != 0        ? d_token_ :\n"
+        "           interactiveLine() ?   lex_()   :\n"
         "                                 0;\n"
         "}\n";
 }

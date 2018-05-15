@@ -15,7 +15,7 @@ class State: private FlexTypes
 
     std::shared_ptr<StateData> d_data;
 
-    size_t d_type;      // if less than UNDETERMINED__: a simple character
+    size_t d_type;      // if less than UNDETERMINED_: a simple character
                         // or character range value (thus, this variable
                         // should not have type `Type')
 
@@ -47,7 +47,7 @@ class State: private FlexTypes
 
 
         void setType(size_t type);      // change the char. type
-        size_t type() const;            // if < UNDETERMINED__ it's a char
+        size_t type() const;            // if < UNDETERMINED_ it's a char
 
         void setRule(size_t idx);       // set the state's rule index
         size_t rule() const;

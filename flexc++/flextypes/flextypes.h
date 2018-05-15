@@ -18,11 +18,11 @@ class FlexTypes
             
         enum Type       // values in the Alphabet range are simple characters
         {
-            UNDETERMINED__ =  NCHARS,
+            UNDETERMINED_ =  NCHARS,
             EMPTY,                              
             FINAL,
             CHARSET,                            // string contents of [ ... ]
-            EOF__                               // EOF becomes a special char
+            EOF_                               // EOF becomes a special char
         };                                      // see README
 
         enum RuleType

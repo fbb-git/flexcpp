@@ -74,12 +74,12 @@ The function performs the following tasks:
     )
 
     The function tt(Generator::declarations) adds the declarations of
-tt((*d_dfaBase__)[], s_dfa__[][], s_dfaBase__[][]) etc. to tt(ScannerBase.h),
+tt((*d_dfaBase_)[], s_dfa_[][], s_dfaBase_[][]) etc. to tt(ScannerBase.h),
 providing these declarations with their required (higher order) dimension
 values. 
 
     The function tt(Generator::actions) inserts the actions in the function
-tt(ScannerBase::executeAction__), implemented in tt(lex.cc). Actions are
+tt(ScannerBase::executeAction_), implemented in tt(lex.cc). Actions are
 inserted separately for each tt(RuleType) that was used. Each tt(NORMAL,
 LOP_1, LOP_4) and tt(LOP_FIXED) (fixed-tail LOP rule) type of rule has its own
 action block, and their action blocks are inserted first. tt(LOP_2) and

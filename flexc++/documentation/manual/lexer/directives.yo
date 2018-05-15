@@ -164,9 +164,9 @@ inconsistency. In those cases you may encounter compilation errors.
             be displayed on the standard output stream, just before returning
             the token to tt(lex)'s caller. Displaying is suppressed again when
             the tt(lex.cc) file is generated without using this directive. The
-            function showing the tokens (tt(ScannerBase::print__)) is called
+            function showing the tokens (tt(ScannerBase::print_)) is called
             from tt(Scanner::print()), which is defined in-line in
-            tt(Scanner.h). Calling tt(ScannerBase::print__), therefore, can
+            tt(Scanner.h). Calling tt(ScannerBase::print_), therefore, can
             also easily be controlled by an option controlled by the program
             using the scanner object.
            this directive does em(not) show the tokens returned and text
@@ -186,7 +186,7 @@ inconsistency. In those cases you may encounter compilation errors.
 
 
     it() bf(startcondition-name) tt( = "startconditionName") nl()
-           By default, flc() defines the enum tt(StartCondition__) defining
+           By default, flc() defines the enum tt(StartCondition_) defining
             the names of start-conditions. The tt(%startcondition-name)
             directive can be used to configure another name for the enum
             containing the names of the start-conditions.  It may be defined

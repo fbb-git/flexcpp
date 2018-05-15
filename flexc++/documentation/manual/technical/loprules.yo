@@ -5,11 +5,11 @@ rules, adding additional rules for tt(LOP_1) type of rules.
 
 First tt(Rules::setLopBlocks) ensures that each variable length LOP rule has
 its own action block. The variable tail length LOP rules receive their own
-tt(lop1__(size_t sc)) action block, but their original action blocks must
-remain available, to be added eventually to the tt(lop4__()) action, after
+tt(lop1_(size_t sc)) action block, but their original action blocks must
+remain available, to be added eventually to the tt(lop4_()) action, after
 matching the LOP rule's tt({head}) pattern. Comparable considerations hold
 true for fixed-sized tail length LOP rules. Here the rule's original action is
-appended to the rule's tt(lopf__(size_t tailLength)) call.
+appended to the rule's tt(lopf_(size_t tailLength)) call.
 
 To prepare the rules for their appropriate actions, consider figure
 ref(LOPRULES). 
@@ -31,7 +31,7 @@ After tt(setLopBlock) all LOP rules have their own true (i.e., not or-actions)
 action blocks.
 
 Next, all fixed tail length LOP rules are processed: each fixed tail length
-LOP rule's action block receives an initial tt(lopf__(tailSize);) statement,
+LOP rule's action block receives an initial tt(lopf_(tailSize);) statement,
 where tt(tailSize) is obtained from the rule's tt(pattern.lopTailLength())
 member.
 
@@ -39,20 +39,20 @@ If there are variable tail length LOP rules then these are processed next (by
 tt(Rules::handleLopRule(idx))). 
 
 tt(Rules::handleLopRule) receives the index of a variable tail length LOP
-rule and changes its action block to tt(lop1__(scIndex)), where tt(scIndex) is
+rule and changes its action block to tt(lop1_(scIndex)), where tt(scIndex) is
 the start condition index matching this LOP rule's tail. tt(ScIndex) is
 obtained from the rule's tt(pattern->scIndex()) member. 
 
 Next, the lop rule's start condition is activated at tt(d_startConditions) and
 the LOP rule's tt({tail}) pattern is added to this start condition, using
 tt(RuleType::LOP_2). This start condition also needs a catch-all rule, using
-action block tt(lop3__()), but as all variable tail length LOP rules share
+action block tt(lop3_()), but as all variable tail length LOP rules share
 this catch-all rule, they are handled separately, see below.
 
 Finally, the lop rule's 2nd start condition is activated and
 the LOP rule's tt({head}) pattern is added to this start condition, using
 tt(RuleType::LOP_4), prefixing the original rule's action block by the
-statement tt(lop4__()) (see also section ref(LOPSCs)).
+statement tt(lop4_()) (see also section ref(LOPSCs)).
 
 Once all variable tail length LOP rules have been processed the catch-all rule
 is added to the tt(Rules) object, using tt(RuleType::LOP_3), and the catch-all

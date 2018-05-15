@@ -68,9 +68,9 @@ inline void Parser::print()
 {
     enum { _UNDETERMINED_ = -2 };
 
-    if (d_print && d_token__ != _UNDETERMINED_ )
+    if (d_print && d_token_ != _UNDETERMINED_ )
     {
-        std::cout << "Token: " << symbol__(d_token__) <<
+        std::cout << "Token: " << symbol_(d_token_) <<
                     ", text: `" <<  d_scanner.matched() << "'\n";
     }
 }

@@ -3,7 +3,7 @@
 void Generator::lopf(ostream &out) const
 {
     out << 
-"void " << d_baseclassScope << R"(lopf__(size_t tail)
+"void " << d_baseclassScope << R"(lopf_(size_t tail)
 {
     tail = length() - tail;
     push(d_matched.substr(tail, std::string::npos));

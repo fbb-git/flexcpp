@@ -25,6 +25,6 @@ These start conditions are for internal use only. Their names are not made
 available in the generated tt(ScannerBase.h) header file. They start with a
 blank space, which can therefore not be specified in user-defined input
 files. Furthermore, the code generator only adds the user-defined start
-condition names to the tt(enum class StartCondition__), defined in
+condition names to the tt(enum class StartCondition_), defined in
 tt(ScannerBase.h), so the variable tail LOP rules' start conditions cannot be
 specified by user-called tt(begin) statements.

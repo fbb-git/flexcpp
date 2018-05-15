@@ -25,10 +25,10 @@ class \@Base
     };
 
 protected:
-    enum Leave__
+    enum Leave_
     {};
 
-    enum class ActionType__
+    enum class ActionType_
     {
         CONTINUE,               // transition succeeded, go on
         ECHO_CH,                // echo ch itself (d_matched empty)
@@ -37,11 +37,11 @@ protected:
         RETURN,                 // no further continuation, lex returns 0.
     };
 
-    enum class PostEnum__
+    enum class PostEnum_
     {
-        END,                    // postCode called when lex__() ends 
+        END,                    // postCode called when lex_() ends 
         POP,                    // postCode called after switching files
-        RETURN,                 // postCode called when lex__() returns
+        RETURN,                 // postCode called when lex_() returns
         WIP                     // postCode called when a non-returning rule
                                 // was matched
     };
@@ -100,21 +100,21 @@ private:
     std::string::iterator d_lopTail;
     std::string::iterator d_lopEnd;
 
-    size_t          d_lopPending;           // # pending input chars at lop1__
+    size_t          d_lopPending;           // # pending input chars at lop1_
     bool            d_return;               // return after a rule's action 
     bool            d_more = false;         // set to true by more()
 
     size_t (\@Base::*d_get)() = &\@Base::getInput;
 
 protected:
-    std::istream   *d_in__;
-    int d_token__;                          // returned by lex__
+    std::istream   *d_in_;
+    int d_token_;                          // returned by lex_
 
 $insert 4 debugDecl
 
 $insert 4 declarations
-    static size_t  const s_ranges__[];
-    static size_t  const s_rf__[][2];
+    static size_t  const s_ranges_[];
+    static size_t  const s_rf_[][2];
 
 public:
     \@Base(\@Base const &other)             = delete;
@@ -182,32 +182,32 @@ $ignoreInteractive END      end ignored section by generator/filter.cc
     void            setFilename(std::string const &name);
     void            setMatched(std::string const &text);
 
-    static std::string istreamName__();
+    static std::string istreamName_();
         
-        // members used by lex__(): they end in __ and should not be used
+        // members used by lex_(): they end in _ and should not be used
         // otherwise.
 
-    ActionType__    actionType__(size_t range); // next action
-    bool            return__();                 // 'return' from codeblock
-    size_t          matched__(size_t ch);       // handles a matched rule
-    size_t          getRange__(int ch);         // convert char to range
-    size_t          get__();                    // next character
-    size_t          state__() const;            // current state 
-    void            continue__(int ch);         // handles a transition
-    void            echoCh__(size_t ch);        // echoes ch, sets d_atBOL
-    void            echoFirst__(size_t ch);     // handles unknown input
-    void            updateFinals__();           // update a state's Final info
-    void            noReturn__();               // d_return to false
-    void            print__() const;            // optionally print token
-    void            pushFront__(size_t ch);     // return char to Input
-    void            reset__();                  // prepare for new cycle
+    ActionType_    actionType_(size_t range); // next action
+    bool            return_();                 // 'return' from codeblock
+    size_t          matched_(size_t ch);       // handles a matched rule
+    size_t          getRange_(int ch);         // convert char to range
+    size_t          get_();                    // next character
+    size_t          state_() const;            // current state 
+    void            continue_(int ch);         // handles a transition
+    void            echoCh_(size_t ch);        // echoes ch, sets d_atBOL
+    void            echoFirst_(size_t ch);     // handles unknown input
+    void            updateFinals_();           // update a state's Final info
+    void            noReturn_();               // d_return to false
+    void            print_() const;            // optionally print token
+    void            pushFront_(size_t ch);     // return char to Input
+    void            reset_();                  // prepare for new cycle
                                                 // next input stream:
-    void            switchStream__(std::istream &in, size_t lineNr);   
-    void            lopf__(size_t tail);        // matched fixed size tail
-    void            lop1__(int lopSC);          // matched ab for a/b
-    void            lop2__();                   // matches the LOP's b tail
-    void            lop3__();                   // catch-all while matching b
-    void            lop4__();                   // matches the LOP's a head
+    void            switchStream_(std::istream &in, size_t lineNr);   
+    void            lopf_(size_t tail);        // matched fixed size tail
+    void            lop1_(int lopSC);          // matched ab for a/b
+    void            lop2_();                   // matches the LOP's b tail
+    void            lop3_();                   // catch-all while matching b
+    void            lop4_();                   // matches the LOP's a head
 
 $insert startconddecl
 
@@ -293,7 +293,7 @@ inline size_t \@Base::length() const
 
 inline void \@Base::leave(int retValue) const
 {
-    throw as<Leave__>(retValue);
+    throw as<Leave_>(retValue);
 }
 
 inline size_t \@Base::lineNr() const
@@ -306,12 +306,12 @@ inline void \@Base::more()
     d_more = true;
 }
 
-inline size_t \@Base::state__() const
+inline size_t \@Base::state_() const
 {
     return d_state;
 }
 
-inline size_t \@Base::get__()
+inline size_t \@Base::get_()
 {
     return (this->*d_get)();
 }
@@ -321,12 +321,12 @@ inline size_t \@Base::getInput()
     return d_input.get();
 }
 
-inline bool \@Base::return__()
+inline bool \@Base::return_()
 {
     return d_return;
 }
 
-inline void \@Base::noReturn__()
+inline void \@Base::noReturn_()
 {
     d_return = false;
 }

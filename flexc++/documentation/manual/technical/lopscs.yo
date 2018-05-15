@@ -9,35 +9,35 @@ defined only for handling this LOP-pattern. Flc() generates code in which the
 above regular expression is transformed into rules that would have looked like
 this in a flc() specification file:
         verb(
-    {head}{tail}       lop1__(x);
+    {head}{tail}       lop1_(x);
 
     <x>{
-        {tail}          lop2__();
-        .|\n            lop3__();
+        {tail}          lop2_();
+        .|\n            lop3_();
     }
 
     <x+1>{head}         {
-                            lop4__();
+                            lop4_();
                             action-block
                         }
         )
     Once tt({head}{tail}) is matched (see also figure ref(LOPPROCEDURE)), an
-internally defined member tt(lop1__(x)) is called. This function prepares the
+internally defined member tt(lop1_(x)) is called. This function prepares the
 scanner for matching the LOP-expression (cf. section ref(LOPRUNTIME)), and
 switches to start condition tt(x).
 
     In start condition tt(x), an attempt is made to match tt({tail}). If this
-does em(not) succeed, the catch-all rule is matched, and tt(lop3__())
+does em(not) succeed, the catch-all rule is matched, and tt(lop3_())
 pushes two characters back on to the input stream: the character preceding the
 currently first character of the tail and the just-matched character. Thus the
 input now contains an incremented potential tail, and the scanner again tries
-to match tt({tail}). This eventually succeeds, and tt(lop2__()) is called. 
+to match tt({tail}). This eventually succeeds, and tt(lop2_()) is called. 
 
-The member tt(lop2__()) pushes all characters initially matched for
+The member tt(lop2_()) pushes all characters initially matched for
 tt({head}{tail}), except for the final tt(|tail|) number of characters, on to
 the input stream, and switches to start condition tt(x+1).
 
-At start condition tt(x+1) tt(lop4__()) is called, which pushes the characters
+At start condition tt(x+1) tt(lop4_()) is called, which pushes the characters
 of the originally matched input em(beyond) the currently matched input
 characters back on the input stream. This returns the tail beyond the string
 matched for tt({head}) on to the input. Next it resets the scanner to the
@@ -50,10 +50,10 @@ they need catch-all rules. When the above LOP-expression uses a
 fixed-length tail tt(t), it is transformed to
         verb(
     {head}{tail}        {
-                            lopf__(t);
+                            lopf_(t);
                             action-block
                         }
         )
-    The member tt(lopf__(t)) simply pushed the final tt(t) characters of the
+    The member tt(lopf_(t)) simply pushed the final tt(t) characters of the
 matched input back on to the input stream, resizing tt(d_matched) to
 tt(d_matched.length() - t). 

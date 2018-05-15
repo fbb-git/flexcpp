@@ -28,7 +28,7 @@ class Ranges: private FlexTypes
     size_t d_alphabetSize;
 
     size_t d_nRanges;
-    size_t d_bol;           // nrs for EOF__ and BOL
+    size_t d_bol;           // nrs for EOF_ and BOL
     size_t d_eof;
     States &d_states;
 

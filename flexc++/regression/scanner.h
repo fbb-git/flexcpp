@@ -25,14 +25,14 @@ class Scanner: public ScannerBase
         void clearPattern();
 
     private:
-        int lex__();
-        int executeAction__(size_t ruleNr);
+        int lex_();
+        int executeAction_(size_t ruleNr);
 
         void print();
         void preCode();     // re-implement this function for code that must 
                             // be exec'ed before the patternmatching starts
 
-        void postCode(PostEnum__  type);
+        void postCode(PostEnum_  type);
 };
 
 inline void Scanner::clearPattern()
@@ -59,7 +59,7 @@ inline Scanner::Scanner(std::string const &infile, std::string const &outfile)
 // $insert inlineLexFunction
 inline int Scanner::lex()
 {
-    return lex__();
+    return lex_();
 }
 
 inline void Scanner::preCode() 
@@ -67,14 +67,14 @@ inline void Scanner::preCode()
     // optionally replace by your own code
 }
 
-inline void Scanner::postCode(PostEnum__  type)
+inline void Scanner::postCode(PostEnum_  type)
 {
     // optionally replace by your own code
 }
 
 inline void Scanner::print() 
 {
-    print__();
+    print_();
 }
 
 

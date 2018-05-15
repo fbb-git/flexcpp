@@ -1,6 +1,6 @@
 tt(ScannerBase.h) adds the following data members to tt(ScannerBase.h):
         verb(
-    int             d_lopSC = 0;        // the active SC when lop1__() 
+    int             d_lopSC = 0;        // the active SC when lop1_() 
                                         // is called
     std::string     d_lopMatched;       // matched lop-rule characters 
     std::string::iterator d_lopTail;    // iterator pointing to the first 
@@ -13,18 +13,18 @@ tt(ScannerBase.h) adds the following data members to tt(ScannerBase.h):
     std::string::iterator d_lopIter;    // iterator iterating from d_lopTail
                                         // to d_lopEnd while trying to match
                                         // {tail}
-    size_t          d_lopPending;       // # pending input chars when lop1__
+    size_t          d_lopPending;       // # pending input chars when lop1_
                                         // is called
                                         // pointer to the input function.
     size_t (\@Base::*d_get)() = &\@Base::getInput;
         )
 
 After matching tt{{head}{tail}) of fixed length tail LOP rules, the matched
-text is first processed by tt(lopf__(tailLength)), before the LOP rule's
+text is first processed by tt(lopf_(tailLength)), before the LOP rule's
 original action block is executed. If fixed length tail LOP rules are used,
-then tt(lopf__(tailLength)) is implemented in tt(lex.cc) and looks like this:
+then tt(lopf_(tailLength)) is implemented in tt(lex.cc) and looks like this:
         verb(
-    void ScannerBase::lopf__(size_t tail)
+    void ScannerBase::lopf_(size_t tail)
     {
         tail = length() - tail;
         push(d_matched.substr(tail, string::npos));
@@ -35,10 +35,10 @@ then tt(lopf__(tailLength)) is implemented in tt(lex.cc) and looks like this:
 the input stream, and removes them from tt(d_matched).
 
 After matching tt{{head}{tail}) of variable length tail LOP rules,
-tt(lop1__(size_t lopSc)) is called. This member prepares the scanner for
+tt(lop1_(size_t lopSc)) is called. This member prepares the scanner for
 finding the shortest tail. It's implementation is:
         verb(
-    void ScannerBase::lop1__(int lopSC)
+    void ScannerBase::lop1_(int lopSC)
     {
         d_lopMatched = d_matched;               // local copy of the matched
                                                 // text
@@ -62,22 +62,22 @@ the class tt(Input's) interface and should return the number of characters
 currently in the tt(Input) object's pending queue. In the default
 implementation it simply returns the tt(Input) object's tt(d_deque)'s length.
 
-To match the shortest tail tt(lop2__) and tt(lop3__) are used. The member
-tt(lop3__) is called when the current tail characters do not match
+To match the shortest tail tt(lop2_) and tt(lop3_) are used. The member
+tt(lop3_) is called when the current tail characters do not match
 tt({tail}). It increments the tail, and resets tt(d_lopIter):
         verb(
-    void ScannerBase::lop3__()
+    void ScannerBase::lop3_()
     {
         d_lopIter = --d_lopTail;                // increase the tail
     }
         )
 
-The member tt(lop2__) is called when tt({tail}) has been matched. It defines
+The member tt(lop2_) is called when tt({tail}) has been matched. It defines
 the initial characters, up to tt(d_lopTail) as the characters to match agains
 tt({head}) and starts the next next start condition, which handles the matched
-tt({head}). Here is tt(lop2__)'s implementation:
+tt({head}). Here is tt(lop2_)'s implementation:
         verb(
-    void ScannerBase::lop2__()
+    void ScannerBase::lop2_()
     {
         d_lopEnd = d_lopTail;                   // read the head
         d_lopIter = d_lopMatched.begin();
@@ -87,11 +87,11 @@ tt({head}). Here is tt(lop2__)'s implementation:
     }
         )
     
-Finally, tt(lop4__) returns the scanner to its original state, having matched
+Finally, tt(lop4_) returns the scanner to its original state, having matched
 tt({head}), and pushes the remaining characters (the actual tail) on to the
 input stream:
         verb(
-    void ScannerBase::lop4__()
+    void ScannerBase::lop4_()
     {
         begin(SC(d_lopSC));                     // restore original SC
         d_get = &ScannerBase::getInput;         // restore get function

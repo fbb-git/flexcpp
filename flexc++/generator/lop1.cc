@@ -3,7 +3,7 @@
 void Generator::lop1(ostream &out) const
 {
     out <<
-"void " << d_baseclassScope << R"(lop1__(int lopSC)
+"void " << d_baseclassScope << R"(lop1_(int lopSC)
 {
     d_lopMatched = d_matched;
     d_lopPending = d_input.nPending();
@@ -16,9 +16,9 @@ void Generator::lop1(ostream &out) const
     if (d_debug)
         out << 
 R"(     
-    if (s_debug__)
-        s_out__ << "lop1__ received `" << )"
-                                R"(d_lopMatched << "\'\n" << dflush__;
+    if (s_debug_)
+        s_out_ << "lop1_ received `" << )"
+                                R"(d_lopMatched << "\'\n" << dflush_;
 )";
 
     out << 
