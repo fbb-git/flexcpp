@@ -103,6 +103,9 @@ the following sections:
         required public members of a self-made tt(Input) class
     )
 
+manpagesection(UNDERSCORES)
+includefile(include/underscores)
+
 includefile(interactive.yo)
 includefile(scanner.h.yo)
 includefile(scannerbase.h.yo)

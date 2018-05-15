@@ -70,6 +70,8 @@ sections:
     it() bf(8. SPECIFICATION EXAMPLE): an example of a specification file
     )
 
+manpagesection(UNDERSCORES)
+includefile(include/underscores)
 
 includefile(rules.yo)
 

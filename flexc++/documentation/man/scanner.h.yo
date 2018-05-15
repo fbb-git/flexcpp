@@ -18,8 +18,8 @@ tt(Scanner) class. are covered below).
 
 manpagesection(3. NAMING CONVENTION)
 
-    All symbols that are required by the generated scanner class end in two
-consecutive underscore characters (e.g., tt(executeAction_)). These names
+    All symbols that are required by the generated scanner class end in an
+underscore character (e.g., tt(executeAction_)). These names
 should not be redefined. As they are part of the tt(Scanner) and
 tt(ScannerBase) class their scope is immediately clear and confusion with
 identically named identifiers elsewhere is unlikely.

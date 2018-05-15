@@ -112,7 +112,7 @@ manpagesection(13. PROTECTED CONSTRUCTORS)
 
 manpagesection(14. PROTECTED MEMBER FUNCTIONS)
 
-    All member functions ending in two underscore characters are for internal
+    All member functions ending in an underscore character are for internal
         use only and should not be called by user-defined members of the
         tt(Scanner) class. 
 
@@ -256,7 +256,7 @@ manpagesection(14. PROTECTED MEMBER FUNCTIONS)
 manpagesection(15. PROTECTED DATA MEMBERS)
 
     All protected data members are for internal use only, allowing tt(lex_)
-to access them. All of them end in two underscore characters.
+to access them. All of them end in an underscore character.
 
 manpagesection(16. FLEX++ TO FLEXC++ MEMBERS)
     
