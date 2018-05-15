@@ -1,3 +1,12 @@
+flexc++ (2.06.05)
+
+  * Nested namespace specifications (like my::nested::ns) cannot be used in
+    include-guard specifications. In those cases only the alpha-numeric
+    characters and the underscore of the namespace are used (thanks, avalchev,
+    for bringing this to my attention).
+
+ -- Frank B. Brokken <f.b.brokken@rug.nl>  Tue, 15 May 2018 12:23:40 +0200
+
 flexc++ (2.06.04)
 
   * Replaced (erroneously used) .hh extensions by (intended) .ih extensions in

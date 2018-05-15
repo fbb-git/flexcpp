@@ -20,7 +20,7 @@ class):
         verb(
     flexc++ lexer
         )
-    This generates four files):tt(Scanner.h, Scanner.ih, Scannerbase.h), and
+    This generates four files): tt(Scanner.h, Scanner.ih, Scannerbase.h), and
 tt(lex.cc) 
 
     it() Edit tt(Scanner.h), add the enum defining the token-symbols in
@@ -87,10 +87,9 @@ To interface flc() to the bf(bisonc++)(1) parser generator proceed as follows:
 that the scanner and parser are developed in, respectively, the
 sub-directories tt(scanner) and tt(parser), then a simple grammar
 specification that can be used with the scanner developed in the previous
-section is, e.g., write the file tt(parser/grammar):
+section is (e.g., write the file tt(./parser/grammar)):
         verb(
 %scanner                ../scanner/Scanner.h
-%scanner-token-function d_scanner.lex()
 
 %token IDENTIFIER NUMBER CHAR
 
@@ -117,7 +116,9 @@ token:
     CHAR
 ;
     )
-    it() Write a scanner specification file. E.g.,
+    it() Now that the tokens have been identified, change to the (mentioned)
+tt(./scanner) directory and write a scanner specification file
+tt(lexer). E.g., 
     verb(
 %%
 
@@ -128,6 +129,12 @@ token:
     )
     This causes the scanner to  return tt(Parser) tokens to the generated
 parser. 
+    it() Execute:
+        verb(
+    flexc++ lexer
+        )
+    This generates four files): tt(Scanner.h, Scanner.ih, Scannerbase.h), and
+tt(lex.cc) 
 
     it() Add the line
     verb(
@@ -135,7 +142,16 @@ parser.
     )
     to the file tt(scanner/Scanner.ih)
 
-    it() Write a simple tt(main) function in the file tt(main.cc). E.g.,
+
+    it() Change back to the tt(./parser) directory and execute:
+    verb(
+bisonc++ grammar
+    )
+    This generates four files): tt(parse.cc, Parserbase.h, Parser.h,) and
+tt(Parser.ih) 
+    
+    it() Return to tt(./parser's) parent directory and write a simple tt(main)
+function in the file tt(main.cc). E.g., 
     verb(
 #include "parser/Parser.h"
 
@@ -145,16 +161,6 @@ int main(int argc, char **argv)
 
     parser.parse();
 }
-    )
-    
-    it() Generate a scanner in the tt(scanner) subdirectory:
-    verb(
-flexc++ lexer
-    )
-    
-    it() Generate a parser in the tt(parser) subdirectory:
-    verb(
-bisonc++ grammar
     )
     
     it() Compile all sources:

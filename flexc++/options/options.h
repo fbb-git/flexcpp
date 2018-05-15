@@ -47,6 +47,7 @@ class Options: private FlexTypes
     std::string d_lexFunctionName;
     std::string d_lexSkeleton;
     std::string d_nameSpace;
+    std::string d_nameSpaceIdentifier;      // only alnum and _ characters
     std::string d_skeletonDirectory;
     std::string d_targetDirectory;
     std::string d_infile;
@@ -134,6 +135,7 @@ class Options: private FlexTypes
         std::string const &lexFunctionName() const;
         std::string const &lexSkeleton() const;
         std::string const &nameSpace() const;
+        std::string const &nameSpaceIdentifier() const;
         std::string const &infile() const;
         std::string const &constructionPath() const;
         std::string const &startConditionName() const;
@@ -179,6 +181,8 @@ class Options: private FlexTypes
                            std::string const &defaultFile, 
                            char const *defaultSuffix,
                            char const *optionName);
+
+        void setNameSpaceIdentifier();
 
         static void nop(char const *funName);
         static void show(char const *funName);
@@ -298,6 +302,11 @@ inline std::string const &Options::className() const
 inline std::string const &Options::nameSpace() const
 {
     return d_nameSpace;
+}
+
+inline std::string const &Options::nameSpaceIdentifier() const
+{
+    return d_nameSpaceIdentifier;
 }
 
 inline std::string const &Options::infile() const

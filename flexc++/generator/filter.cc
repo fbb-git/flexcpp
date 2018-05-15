@@ -42,7 +42,7 @@ void Generator::filter(istream &in, ostream &out) const
 
             if (d_line.find(s_namespaceBaseFlag) == pos)
                 d_line.replace(pos, s_namespaceBaseFlagSize, 
-                               d_options.nameSpace() + className);
+                               d_options.nameSpaceIdentifier() + className);
             else 
                 d_line.replace(pos, s_baseFlagSize, className);
         }

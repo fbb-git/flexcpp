@@ -1,5 +1,7 @@
 #include "options.h"
 
+#include <cctype>
+
 #include <bobcat/arg>
 #include <bobcat/string>
 #include <bobcat/mstream>

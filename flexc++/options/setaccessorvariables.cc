@@ -32,7 +32,10 @@ void Options::setAccessorVariables()
                     MAX_DEPTH;
 
     if (arg.option(&d_nameSpace, 'n'))
+    {
         s_warnOptions.insert("namespace");
+        setNameSpaceIdentifier();
+    }
 
     // Skeletons
     if (!arg.option(&d_skeletonDirectory, 'S') && d_skeletonDirectory.empty())
