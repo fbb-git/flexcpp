@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> Flexc++ (Version 2.06.04) User Guide </title>
+<title> Flexc++ (Version 2.07.00) User Guide </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -39,7 +39,7 @@ were recognized the LOP start conditions need a catch-all rule. The catch-all
 rule looks like this:
         <pre>
 
-    .|\n        lop3__();
+    .|\n        lop3_();
         
 </pre>
 
@@ -50,7 +50,7 @@ explained in section <a href="flexc++06.html#LOOKAHEAD">6.10</a>.
 <p>
 After parsing the <code >Rules</code> object's <code >handleLopRules</code> adds a catch-all rule
 to the <code >LOP</code> rule processing code. This member also updates the LOP-rules
-action blocks, calling <code >lop1__, lop2__, lop3__</code> and <code >lop4__</code>. Again:
+action blocks, calling <code >lop1_, lop2_, lop3_</code> and <code >lop4_</code>. Again:
 refer to section <a href="flexc++06.html#LOOKAHEAD">6.10</a> for details.
 <p>
 Rather than using the characters groups of characters are combined, forming
@@ -329,16 +329,16 @@ LOP-rules.
 Furthermore, a member <code >d_active</code> hold pointers to all currently active start
 conditions. E.g., when specifying <code >&lt;INITIAL,str&gt;</code> then the rules defined for
 this tag are active are added to the set if rules defined for
-<code >StartConditions__::INITIAL</code> and <code >StartConditions__::str</code>.
+<code >StartConditions_::INITIAL</code> and <code >StartConditions_::str</code>.
 <p>
 When LOP-rules having variable sized tails are used, <strong >flexc++</strong> defines a catch-all
-rule which is mathed while <code >lex__</code> is trying to match the LOP-rule's tail,
+rule which is mathed while <code >lex_</code> is trying to match the LOP-rule's tail,
 but as yet failed to do so. When it is defined this catch-all rule does not
 belong to a particular start condition. This is relized through the member
 <code >StartConditions::acceptRule</code>, expecting a <code >bool</code> argument. By default
 recognized rules are added to the current set of active start conditions, but
 the catch-all rule should not be added to any active set. Instead it is
-added to the DFAs calling <code >lop3__</code>. Once the input files have been
+added to the DFAs calling <code >lop3_</code>. Once the input files have been
 processed, <code >Rules::handleLopRules</code> is called, and this member adds the final
 (catch-all) rule to <code >d_rules</code>, without adding it to any of the available
 start conditions.
@@ -362,7 +362,7 @@ processing by <code >Rules::add</code>.
 <a href="flexc++06.html#PATTERNS">pattern</a>. A <code >State</code> contains/offers:
     <ul>
     <li><code >d_type</code>: the type represented by the State (EMPTY, FINAL, CHARSET,
-        BOL), the internally used <code >UNDETERMINED__</code> and <code >EOF__</code> types, or
+        BOL), the internally used <code >UNDETERMINED_</code> and <code >EOF_</code> types, or
         (initially) the ascii-value of a single character. Once the character
         ranges have been determined (see section <a href="flexc++06.html#RANGES">6.11</a>), which happens
         in ./main.cc `ranges.determineSubsets()' the type contains the
@@ -798,37 +798,37 @@ above regular expression is transformed into rules that would have looked like
 this in a <strong >flexc++</strong> specification file:
         <pre>
 
-    {head}{tail}       lop1__(x);
+    {head}{tail}       lop1_(x);
 
     &lt;x&gt;{
-        {tail}          lop2__();
-        .|\n            lop3__();
+        {tail}          lop2_();
+        .|\n            lop3_();
     }
 
     &lt;x+1&gt;{head}         {
-                            lop4__();
+                            lop4_();
                             action-block
                         }
         
 </pre>
 
     Once <code >{head}{tail}</code> is matched (see also figure <a href="flexc++06.html#LOPPROCEDURE">11</a>), an
-internally defined member <code >lop1__(x)</code> is called. This function prepares the
+internally defined member <code >lop1_(x)</code> is called. This function prepares the
 scanner for matching the LOP-expression (cf. section <a href="flexc++06.html#LOPRUNTIME">6.18</a>), and
 switches to start condition <code >x</code>.
 <p>
 In start condition <code >x</code>, an attempt is made to match <code >{tail}</code>. If this
-does <em >not</em> succeed, the catch-all rule is matched, and <code >lop3__()</code>
+does <em >not</em> succeed, the catch-all rule is matched, and <code >lop3_()</code>
 pushes two characters back on to the input stream: the character preceding the
 currently first character of the tail and the just-matched character. Thus the
 input now contains an incremented potential tail, and the scanner again tries
-to match <code >{tail}</code>. This eventually succeeds, and <code >lop2__()</code> is called. 
+to match <code >{tail}</code>. This eventually succeeds, and <code >lop2_()</code> is called. 
 <p>
-The member <code >lop2__()</code> pushes all characters initially matched for
+The member <code >lop2_()</code> pushes all characters initially matched for
 <code >{head}{tail}</code>, except for the final <code >|tail|</code> number of characters, on to
 the input stream, and switches to start condition <code >x+1</code>.
 <p>
-At start condition <code >x+1</code> <code >lop4__()</code> is called, which pushes the characters
+At start condition <code >x+1</code> <code >lop4_()</code> is called, which pushes the characters
 of the originally matched input <em >beyond</em> the currently matched input
 characters back on the input stream. This returns the tail beyond the string
 matched for <code >{head}</code> on to the input. Next it resets the scanner to the
@@ -841,13 +841,13 @@ fixed-length tail <code >t</code>, it is transformed to
         <pre>
 
     {head}{tail}        {
-                            lopf__(t);
+                            lopf_(t);
                             action-block
                         }
         
 </pre>
 
-    The member <code >lopf__(t)</code> simply pushed the final <code >t</code> characters of the
+    The member <code >lopf_(t)</code> simply pushed the final <code >t</code> characters of the
 matched input back on to the input stream, resizing <code >d_matched</code> to
 <code >d_matched.length() - t</code>. 
 <p>
@@ -944,7 +944,7 @@ Adding a rule (cf. <code >rules/add.cc</code>) means:
     <li> associate its end-state with its index in <code >d_rules</code>, so the DFA 
         construction knows which rule is matched when this state is
         reached. This rule-index is used as a case label in the scanner's
-        <code >executeAction__</code> member;
+        <code >executeAction_</code> member;
     <li> calling <code >setRule(pair.first, ruleIdx)</code> to associate the rule's
         states with the rule's index;
     <li> adding the rule index to the currently active set of start
@@ -979,7 +979,7 @@ These start conditions are for internal use only. Their names are not made
 available in the generated <code >ScannerBase.h</code> header file. They start with a
 blank space, which can therefore not be specified in user-defined input
 files. Furthermore, the code generator only adds the user-defined start
-condition names to the <code >enum class StartCondition__</code>, defined in
+condition names to the <code >enum class StartCondition_</code>, defined in
 <code >ScannerBase.h</code>, so the variable tail LOP rules' start conditions cannot be
 specified by user-called <code >begin</code> statements.
 <p>
@@ -992,11 +992,11 @@ rules, adding additional rules for <code >LOP_1</code> type of rules.
 <p>
 First <code >Rules::setLopBlocks</code> ensures that each variable length LOP rule has
 its own action block. The variable tail length LOP rules receive their own
-<code >lop1__(size_t sc)</code> action block, but their original action blocks must
-remain available, to be added eventually to the <code >lop4__()</code> action, after
+<code >lop1_(size_t sc)</code> action block, but their original action blocks must
+remain available, to be added eventually to the <code >lop4_()</code> action, after
 matching the LOP rule's <code >{head}</code> pattern. Comparable considerations hold
 true for fixed-sized tail length LOP rules. Here the rule's original action is
-appended to the rule's <code >lopf__(size_t tailLength)</code> call.
+appended to the rule's <code >lopf_(size_t tailLength)</code> call.
 <p>
 To prepare the rules for their appropriate actions, consider figure
 <a href="flexc++06.html#LOPRULES">13</a>. 
@@ -1022,7 +1022,7 @@ After <code >setLopBlock</code> all LOP rules have their own true (i.e., not or-
 action blocks.
 <p>
 Next, all fixed tail length LOP rules are processed: each fixed tail length
-LOP rule's action block receives an initial <code >lopf__(tailSize);</code> statement,
+LOP rule's action block receives an initial <code >lopf_(tailSize);</code> statement,
 where <code >tailSize</code> is obtained from the rule's <code >pattern.lopTailLength()</code>
 member.
 <p>
@@ -1030,20 +1030,20 @@ If there are variable tail length LOP rules then these are processed next (by
 <code >Rules::handleLopRule(idx)</code>). 
 <p>
 <code >Rules::handleLopRule</code> receives the index of a variable tail length LOP
-rule and changes its action block to <code >lop1__(scIndex)</code>, where <code >scIndex</code> is
+rule and changes its action block to <code >lop1_(scIndex)</code>, where <code >scIndex</code> is
 the start condition index matching this LOP rule's tail. <code >ScIndex</code> is
 obtained from the rule's <code >pattern-&gt;scIndex()</code> member. 
 <p>
 Next, the lop rule's start condition is activated at <code >d_startConditions</code> and
 the LOP rule's <code >{tail}</code> pattern is added to this start condition, using
 <code >RuleType::LOP_2</code>. This start condition also needs a catch-all rule, using
-action block <code >lop3__()</code>, but as all variable tail length LOP rules share
+action block <code >lop3_()</code>, but as all variable tail length LOP rules share
 this catch-all rule, they are handled separately, see below.
 <p>
 Finally, the lop rule's 2nd start condition is activated and
 the LOP rule's <code >{head}</code> pattern is added to this start condition, using
 <code >RuleType::LOP_4</code>, prefixing the original rule's action block by the
-statement <code >lop4__()</code> (see also section <a href="flexc++06.html#LOPSCs">6.10.1.1</a>).
+statement <code >lop4_()</code> (see also section <a href="flexc++06.html#LOPSCs">6.10.1.1</a>).
 <p>
 Once all variable tail length LOP rules have been processed the catch-all rule
 is added to the <code >Rules</code> object, using <code >RuleType::LOP_3</code>, and the catch-all
@@ -1550,12 +1550,12 @@ The function performs the following tasks:
     </ul>
 <p>
 The function <code >Generator::declarations</code> adds the declarations of
-<code >(*d_dfaBase__)[], s_dfa__[][], s_dfaBase__[][]</code> etc. to <code >ScannerBase.h</code>,
+<code >(*d_dfaBase_)[], s_dfa_[][], s_dfaBase_[][]</code> etc. to <code >ScannerBase.h</code>,
 providing these declarations with their required (higher order) dimension
 values. 
 <p>
 The function <code >Generator::actions</code> inserts the actions in the function
-<code >ScannerBase::executeAction__</code>, implemented in <code >lex.cc</code>. Actions are
+<code >ScannerBase::executeAction_</code>, implemented in <code >lex.cc</code>. Actions are
 inserted separately for each <code >RuleType</code> that was used. Each <code >NORMAL,
 LOP_1, LOP_4</code> and <code >LOP_FIXED</code> (fixed-tail LOP rule) type of rule has its own
 action block, and their action blocks are inserted first. <code >LOP_2</code> and
@@ -1681,7 +1681,7 @@ The expression
     If equal -1 then there is no continuation for the current rule. 
 <p>
 Depending on the current state and action several action types can be returned
-by the run-time function <code >actionType__</code>:
+by the run-time function <code >actionType_</code>:
     <ul>
     <li><code >CONTINUE</code>: there exists a continuation from the current state/range
             combination; 
@@ -1695,15 +1695,15 @@ by the run-time function <code >actionType__</code>:
     <li><code >RETURN</code>: input exhausted, <code >lex</code> returns 0.
     </ul>
 <p>
-The following table shows how actions are determined by <code >actionType__</code>. The
-function <code >actionType__</code> starts it tests at the first row of the table, and
+The following table shows how actions are determined by <code >actionType_</code>. The
+function <code >actionType_</code> starts it tests at the first row of the table, and
 stops as soon as a condition hold true, returning the action type:
     <div style="text-align: center">
     <table>
 
     
 <tr >
-<td colspan=3 style="text-align: center" >Action determined by <code >actionType__</code></td>
+<td colspan=3 style="text-align: center" >Action determined by <code >actionType_</code></td>
  
 </tr>
 
@@ -1762,23 +1762,23 @@ For each of the returned action types actions must be performed:
     <li><code >MATCH:</code> push the just read char back to the input, copy the non-pseudo
         character (i.e., other than AT_EOF) to the match-buffer, set
         <code >d_atBOL</code> to <code >true</code> if the last character in the <code >d_matched</code>
-        buffer is <code >'\n'</code>, execute <code >postCode(PostEnum__::RETURN)</code>, execute
+        buffer is <code >'\n'</code>, execute <code >postCode(PostEnum_::RETURN)</code>, execute
         the rule's actions, continue scanning (but the action may end
         <code >lex</code>'s call).
     <li><code >ECHO1ST:</code> echo the 1st char. of the buffer to stderr, set <code >d_atBOL</code>
         to <code >true</code> if that character equals <code >'\n'</code>, otherwise to <code >false</code>,
         return all but the first character in the buffer back to the input,
-        call <code >postCode(PostEnum__::WIP)</code>, continue scanning.
+        call <code >postCode(PostEnum_::WIP)</code>, continue scanning.
     <li><code >ECHOCHAR:</code> echo the just read character to stderr, set <code >d_atBOL</code>
         to <code >true</code> if that character equals <code >'\n'</code>, otherwise to <code >false</code>,
         continue scanning.
     <li><code >RETURN:</code> if <code >popStream</code> returns false, then execute
-        <code >postCode(PostEnum__::END)</code> and member <code >lex__</code> returns with token
-        value 0; otherwise <code >postCode(PostEnum__::POP)</code> is called and
+        <code >postCode(PostEnum_::END)</code> and member <code >lex_</code> returns with token
+        value 0; otherwise <code >postCode(PostEnum_::POP)</code> is called and
         processing continues.
 </ul>
 <p>
-The data member <code >d_atBOL</code> is also set to <code >true</code> when <code >lex__</code> switches to
+The data member <code >d_atBOL</code> is also set to <code >true</code> when <code >lex_</code> switches to
 another input stream (either a new one, or returning to a previously stacked
 one). This handles the borderline case where a file's last line is not
 properly terminated with a <code >'\n'</code> character.
@@ -1795,8 +1795,8 @@ returns
         
 </pre>
 
-    only if this is true, <code >ScannerBase::actionType__</code> returns
-<code >ActionType__::MATCH</code>.
+    only if this is true, <code >ScannerBase::actionType_</code> returns
+<code >ActionType_::MATCH</code>.
 <p>
 Three variables are used here, resulting in 8 possibilities:
     <div style="text-align: center">
@@ -1904,14 +1904,14 @@ Three variables are used here, resulting in 8 possibilities:
 </table>
     </div>
     The numbers in this table are referred to by <code >skeleton/flexc++.cc's</code>
- member <code >matched__</code>.
+ member <code >matched_</code>.
 <p>
 <a name="LOPRUNTIME"></a><a name="l68"></a>
 <h2 >6.18: Run-time handling of LOP-patterns</h2>
     <code >ScannerBase.h</code> adds the following data members to <code >ScannerBase.h</code>:
         <pre>
 
-    int             d_lopSC = 0;        // the active SC when lop1__() 
+    int             d_lopSC = 0;        // the active SC when lop1_() 
                                         // is called
     std::string     d_lopMatched;       // matched lop-rule characters 
     std::string::iterator d_lopTail;    // iterator pointing to the first 
@@ -1924,7 +1924,7 @@ Three variables are used here, resulting in 8 possibilities:
     std::string::iterator d_lopIter;    // iterator iterating from d_lopTail
                                         // to d_lopEnd while trying to match
                                         // {tail}
-    size_t          d_lopPending;       // # pending input chars when lop1__
+    size_t          d_lopPending;       // # pending input chars when lop1_
                                         // is called
                                         // pointer to the input function.
     size_t (\@Base::*d_get)() = &amp;\@Base::getInput;
@@ -1933,12 +1933,12 @@ Three variables are used here, resulting in 8 possibilities:
 
 <p>
 After matching tt{{head}{tail}) of fixed length tail LOP rules, the matched
-text is first processed by <code >lopf__(tailLength)</code>, before the LOP rule's
+text is first processed by <code >lopf_(tailLength)</code>, before the LOP rule's
 original action block is executed. If fixed length tail LOP rules are used,
-then <code >lopf__(tailLength)</code> is implemented in <code >lex.cc</code> and looks like this:
+then <code >lopf_(tailLength)</code> is implemented in <code >lex.cc</code> and looks like this:
         <pre>
 
-    void ScannerBase::lopf__(size_t tail)
+    void ScannerBase::lopf_(size_t tail)
     {
         tail = length() - tail;
         push(d_matched.substr(tail, string::npos));
@@ -1951,11 +1951,11 @@ then <code >lopf__(tailLength)</code> is implemented in <code >lex.cc</code> and
 the input stream, and removes them from <code >d_matched</code>.
 <p>
 After matching tt{{head}{tail}) of variable length tail LOP rules,
-<code >lop1__(size_t lopSc)</code> is called. This member prepares the scanner for
+<code >lop1_(size_t lopSc)</code> is called. This member prepares the scanner for
 finding the shortest tail. It's implementation is:
         <pre>
 
-    void ScannerBase::lop1__(int lopSC)
+    void ScannerBase::lop1_(int lopSC)
     {
         d_lopMatched = d_matched;               // local copy of the matched
                                                 // text
@@ -1981,12 +1981,12 @@ the class <code >Input's</code> interface and should return the number of charac
 currently in the <code >Input</code> object's pending queue. In the default
 implementation it simply returns the <code >Input</code> object's <code >d_deque</code>'s length.
 <p>
-To match the shortest tail <code >lop2__</code> and <code >lop3__</code> are used. The member
-<code >lop3__</code> is called when the current tail characters do not match
+To match the shortest tail <code >lop2_</code> and <code >lop3_</code> are used. The member
+<code >lop3_</code> is called when the current tail characters do not match
 <code >{tail}</code>. It increments the tail, and resets <code >d_lopIter</code>:
         <pre>
 
-    void ScannerBase::lop3__()
+    void ScannerBase::lop3_()
     {
         d_lopIter = --d_lopTail;                // increase the tail
     }
@@ -1994,13 +1994,13 @@ To match the shortest tail <code >lop2__</code> and <code >lop3__</code> are use
 </pre>
 
 <p>
-The member <code >lop2__</code> is called when <code >{tail}</code> has been matched. It defines
+The member <code >lop2_</code> is called when <code >{tail}</code> has been matched. It defines
 the initial characters, up to <code >d_lopTail</code> as the characters to match agains
 <code >{head}</code> and starts the next next start condition, which handles the matched
-<code >{head}</code>. Here is <code >lop2__</code>'s implementation:
+<code >{head}</code>. Here is <code >lop2_</code>'s implementation:
         <pre>
 
-    void ScannerBase::lop2__()
+    void ScannerBase::lop2_()
     {
         d_lopEnd = d_lopTail;                   // read the head
         d_lopIter = d_lopMatched.begin();
@@ -2012,12 +2012,12 @@ the initial characters, up to <code >d_lopTail</code> as the characters to match
 </pre>
 
 <p>
-Finally, <code >lop4__</code> returns the scanner to its original state, having matched
+Finally, <code >lop4_</code> returns the scanner to its original state, having matched
 <code >{head}</code>, and pushes the remaining characters (the actual tail) on to the
 input stream:
         <pre>
 
-    void ScannerBase::lop4__()
+    void ScannerBase::lop4_()
     {
         begin(SC(d_lopSC));                     // restore original SC
         d_get = &amp;ScannerBase::getInput;         // restore get function

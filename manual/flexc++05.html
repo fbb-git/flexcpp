@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> Flexc++ (Version 2.06.04) User Guide </title>
+<title> Flexc++ (Version 2.07.00) User Guide </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -109,7 +109,7 @@ column and reset indicators:
 <p>
 <pre>
 
-    void Scanner::postCode(PostEnum__ type) 
+    void Scanner::postCode(PostEnum_ type) 
     {
         if (not d_reset)
             d_column += length();
@@ -123,7 +123,7 @@ column and reset indicators:
 </pre>
 
 <p>
-The scanner's default rule (the <code >StartCondition__::INITIAL</code> scanner simply
+The scanner's default rule (the <code >StartCondition_::INITIAL</code> scanner simply
 reads the initial line, and then pushes the line back onto the scanner's
 queue. A simple <code >.*</code> will ensure that all the line's characters are
 read. Having matched a line it must still be broken down into tokens, for
@@ -135,7 +135,7 @@ scanner's rule looks like this:
     .*                                  {
                                             d_storedLine = matched();
                                             push(d_storedLine);
-                                            begin(StartCondition__::main);
+                                            begin(StartCondition_::main);
                                             d_reset = true;
                                         }
         
@@ -143,7 +143,7 @@ scanner's rule looks like this:
 
 <p>
 Now that the line has been stored, it's time to obtain its tokens, which is
-the responsibility of the <code >StartCondition__::main</code> start condition:
+the responsibility of the <code >StartCondition_::main</code> start condition:
 <p>
 <pre>
 
@@ -153,7 +153,7 @@ the responsibility of the <code >StartCondition__::main</code> start condition:
         [[:alpha:]_][[:alpha:][:digit:]_]*  return IDENTIFIER;
         [][]                                return SIGNAL;
         .                                   return matched()[0];
-        \n                                  begin(StartCondition__::INITIAL);
+        \n                                  begin(StartCondition_::INITIAL);
     }
         
 </pre>

@@ -16,7 +16,7 @@
 <body text="#27408B" bgcolor="#FFFAF0">
 <hr/>
 <h1 id="title">flexc++(1)</h1>
-<h2 id="author">flexc++ scanner generator<br/>(flexc++.2.06.04.tar.gz)</h2>
+<h2 id="author">flexc++ scanner generator<br/>(flexc++.2.07.00.tar.gz)</h2>
 <h2 id="date">2008-2018</h2>
 
 
@@ -174,7 +174,7 @@ class):
         
 </pre>
 
-    This generates four files</ul>:<em >Scanner.h, Scanner.ih, Scannerbase.h</em>, and
+    This generates four files</ul>: <em >Scanner.h, Scanner.ih, Scannerbase.h</em>, and
 <em >lex.cc</em> 
 <p>
 <li> Edit <em >Scanner.h</em>, add the enum defining the token-symbols in
@@ -253,11 +253,10 @@ To interface <strong >flexc++</strong> to the <strong >bisonc++</strong>(1) pars
 that the scanner and parser are developed in, respectively, the
 sub-directories <em >scanner</em> and <em >parser</em>, then a simple grammar
 specification that can be used with the scanner developed in the previous
-section is, e.g., write the file <em >parser/grammar</em>:
+section is (e.g., write the file <em >./parser/grammar</em>):
         <pre>
 
 %scanner                ../scanner/Scanner.h
-%scanner-token-function d_scanner.lex()
 
 %token IDENTIFIER NUMBER CHAR
 
@@ -286,7 +285,9 @@ token:
     
 </pre>
 
-    <li> Write a scanner specification file. E.g.,
+    <li> Now that the tokens have been identified, change to the (mentioned)
+<em >./scanner</em> directory and write a scanner specification file
+<em >lexer</em>. E.g., 
     <pre>
 
 %%
@@ -300,6 +301,15 @@ token:
 
     This causes the scanner to  return <em >Parser</em> tokens to the generated
 parser. 
+    <li> Execute:
+        <pre>
+
+    flexc++ lexer
+        
+</pre>
+
+    This generates four files</ul>: <em >Scanner.h, Scanner.ih, Scannerbase.h</em>, and
+<em >lex.cc</em> 
 <p>
 <li> Add the line
     <pre>
@@ -310,7 +320,18 @@ parser.
 
     to the file <em >scanner/Scanner.ih</em>
 <p>
-<li> Write a simple <em >main</em> function in the file <em >main.cc</em>. E.g.,
+<li> Change back to the <em >./parser</em> directory and execute:
+    <pre>
+
+bisonc++ grammar
+    
+</pre>
+
+    This generates four files): <em >parse.cc, Parserbase.h, Parser.h,</em> and
+<em >Parser.ih</em> 
+<p>
+<li> Return to <em >./parser's</em> parent directory and write a simple <em >main</em>
+function in the file <em >main.cc</em>. E.g., 
     <pre>
 
 #include "parser/Parser.h"
@@ -321,22 +342,6 @@ int main(int argc, char **argv)
 
     parser.parse();
 }
-    
-</pre>
-
-<p>
-<li> Generate a scanner in the <em >scanner</em> subdirectory:
-    <pre>
-
-flexc++ lexer
-    
-</pre>
-
-<p>
-<li> Generate a parser in the <em >parser</em> subdirectory:
-    <pre>
-
-bisonc++ grammar
     
 </pre>
 
@@ -356,7 +361,7 @@ a.out &lt; main.cc
     
 </pre>
 
-        </ul>
+        )
 <p>
 <h2 >3. GENERATED FILES</h2>
 <p>
@@ -610,9 +615,9 @@ This option does <em >not</em> result in the generated program displaying
             output stream, just before returning the token to <em >lex</em>'s
             caller. Displaying tokens and matched text is suppressed again
             when the <em >lex.cc</em> file is generated without using this
-            option. The function showing the tokens (<em >ScannerBase::print__</em>)
+            option. The function showing the tokens (<em >ScannerBase::print_</em>)
             is called from <em >Scanner::printTokens</em>, which is defined in-line
-            in <em >Scanner.h</em>. Calling <em >ScannerBase::print__</em>, therefore, can
+            in <em >Scanner.h</em>. Calling <em >ScannerBase::print_</em>, therefore, can
             also easily be controlled by an option controlled by the program
             using the scanner object.
 <p>

@@ -16,7 +16,7 @@
 <body text="#27408B" bgcolor="#FFFAF0">
 <hr/>
 <h1 id="title">flexc++input(7)</h1>
-<h2 id="author">flexc++ input file organization<br/>(flexc++.2.06.04.tar.gz)</h2>
+<h2 id="author">flexc++ input file organization<br/>(flexc++.2.07.00.tar.gz)</h2>
 <h2 id="date">2008-2018</h2>
 
 
@@ -50,6 +50,33 @@ sections:
     <li> <strong >7. REGULAR EXPRESSIONS</strong>: regular expressions supported by <strong >flexc++</strong>
     <li> <strong >8. SPECIFICATION EXAMPLE</strong>: an example of a specification file
     </ul>
+<p>
+<h2 >UNDERSCORES</h2>
+Starting with version 2.07.00 <strong >flexc++</strong> reserved identifiers no longer end in two
+underscore characters, but in one. This modification was necessary because
+according to the <strong >C++</strong> standard identifiers having two or more consecutive
+underscore characters are reserved by the language. In practice this could
+require some minor modifications of existing source files  using <strong >flexc++</strong>'s
+facilities, most likely limited to changing <em >StartCondition__</em> into
+<em >StartCondition_</em> and changing <em >PostEnum__</em> into <em >PostEnum_</em>. 
+<p>
+The complete list of affected names is:
+    <dl>
+    <dt ><strong>Enums:</strong></dt> <blockquote >
+ActionType_, Leave_, StartConditon_, PostEnum_;
+</blockquote>
+    <dt ><strong>Member functions:</strong></dt> <blockquote >
+actionType_, continue_, echoCh_, echoFirst_,
+executeAction_, getRange_, get_, istreamName_, lex_, lop1_, 
+lop2_, lop3_, lop4_, lopf_, matched_, noReturn_, print_, 
+pushFront_, reset_, return_;
+</blockquote>
+    <dt ><strong>Protected data members:</strong></dt> <blockquote >
+d_in_ d_token_ s_finIdx_, s_interactive_, 
+s_maxSizeofStreamStack_, s_nRules_, s_rangeOfEOF_, 
+s_ranges_, s_rf_.
+</blockquote>
+    </dl>
 <p>
 <h2 >1. SPECIFICATION FILE(S)</h2>
 <p>
@@ -285,9 +312,9 @@ It is an error if this directive is used and an already
             be displayed on the standard output stream, just before returning
             the token to <em >lex</em>'s caller. Displaying is suppressed again when
             the <em >lex.cc</em> file is generated without using this directive. The
-            function showing the tokens (<em >ScannerBase::print__</em>) is called
+            function showing the tokens (<em >ScannerBase::print_</em>) is called
             from <em >Scanner::print()</em>, which is defined in-line in
-            <em >Scanner.h</em>. Calling <em >ScannerBase::print__</em>, therefore, can
+            <em >Scanner.h</em>. Calling <em >ScannerBase::print_</em>, therefore, can
             also easily be controlled by an option controlled by the program
             using the scanner object.
            this directive does <em >not</em> show the tokens returned and text
@@ -306,7 +333,7 @@ It is an error if this directive is used and an already
             <em >--skeleton-directory</em>.
 <p>
 <li> <strong >startcondition-name</strong> <em > = "startconditionName"</em> <br/>
-           By default, <strong >flexc++</strong> defines the enum <em >StartCondition__</em> defining
+           By default, <strong >flexc++</strong> defines the enum <em >StartCondition_</em> defining
             the names of start-conditions. The <em >%startcondition-name</em>
             directive can be used to configure another name for the enum
             containing the names of the start-conditions.  It may be defined
@@ -677,10 +704,10 @@ NAME    [[:alpha:]][_[:alnum:]]*
 
 "//".*          // ignore
 
-"/*"            begin(StartCondition__::comment);
+"/*"            begin(StartCondition_::comment);
 
 &lt;comment&gt;.|\n   // ignore
-&lt;comment&gt;"*/"   begin(StartCondition__::INITIAL);
+&lt;comment&gt;"*/"   begin(StartCondition_::INITIAL);
 
 ^a              return 1;
 a               return 2;

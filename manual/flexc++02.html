@@ -1,6 +1,6 @@
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8">
-<title> Flexc++ (Version 2.06.04) User Guide </title>
+<title> Flexc++ (Version 2.07.00) User Guide </title>
 <style type="text/css">
     figure {text-align: center;}
     img {vertical-align: center;}
@@ -36,7 +36,7 @@ the first lines in the rules section.
 <strong >Flexc++</strong> does not support code blocks. Since <strong >flexc++</strong> generates a class with
 appropriate header files, initialization code can be activated bij <strong >flexc++</strong>'s
 constructor, code to be executed when <code >lex</code> is called can be placed in the
-member <code >lex</code>'s body, just before calling <code >lex__</code>, and <code >Scanner::preCode</code>
+member <code >lex</code>'s body, just before calling <code >lex_</code>, and <code >Scanner::preCode</code>
 can be provided with any required pre-match code. See also <a href="flexc++02.html#files">generated
 files 2.3</a> below.
 <p>
@@ -90,7 +90,7 @@ items which are no longer supported in <strong >flexc++</strong>, offering alter
         <li> <strong >Flexc++</strong>'s alternative: Use data members to keep track of state, or if you want to execute
             some code everytime lex() is called, redefine
             lex() to do more than just call the generated function
-            lex__().
+            lex_().
         </ul>
     </blockquote>
     <li> Supported by <strong >flex</strong>(1), not supported by <strong >flexc++</strong>: Other indented text or <code >`%{ ... %}'</code> blocks are copied
@@ -213,7 +213,7 @@ macros can (should) be used.  See the conversion table below.
     
 <tr >
 <td > <code >BEGIN startcondition</code></td>
-        <td > <code >begin(StartCondition__::startcondition)</code></td>
+        <td > <code >begin(StartCondition_::startcondition)</code></td>
      
 </tr>
 
